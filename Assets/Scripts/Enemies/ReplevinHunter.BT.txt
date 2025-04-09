@@ -1,0 +1,29 @@
+tree("Root")
+	repeat mute tree("Alert")
+
+tree("Alert")
+	sequence
+		PlayerLockOn
+		PlayerSeek
+		fallback
+			while IsPlayerFar
+				tree ("RangedAttack")						
+			while IsPlayerClose
+				tree("MeleeAttack")
+			fallback
+				while Agitated
+					sequence
+						tree("ChargeAttack")
+							
+			
+tree("MeleeAttack")
+	while PlayerFound
+		AttackMelee
+
+tree("RangedAttack")
+	while PlayerFound
+		AttackRange
+
+tree("ChargeAttack")
+	while PlayerFound
+		AttackCharge

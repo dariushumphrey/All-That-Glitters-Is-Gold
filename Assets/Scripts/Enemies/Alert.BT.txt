@@ -1,0 +1,6 @@
+tree("Root")
+	while HaveIBeenShot
+		sequence
+			PlayerLockOn
+			LookAtFocus
+			PlayerSeek		

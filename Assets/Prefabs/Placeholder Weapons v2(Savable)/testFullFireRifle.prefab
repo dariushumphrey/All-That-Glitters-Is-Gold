@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4542455032712949400
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4036329082999486626, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329082999486626, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329082999486626, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329082999486626, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329082999486626, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329082999486626, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329082999486626, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329082999486626, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329082999486626, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329082999486626, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329082999486626, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329082999486630, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_Name
+      value: testFullFireRifle Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329082999486631, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: saved
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2528b365871386747b8d73e91279a4f0, type: 3}

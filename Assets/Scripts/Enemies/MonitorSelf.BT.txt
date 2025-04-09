@@ -1,0 +1,8 @@
+tree("Root")
+	sequence
+		random(2, 1, 1)
+			Monitor(90.0)
+			Monitor(-45.0)
+			Monitor(135.0)
+		LookAtFocus
+		WaitRandom(2.0, 4.0)

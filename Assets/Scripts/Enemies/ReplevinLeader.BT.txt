@@ -1,0 +1,50 @@
+tree("Root")
+	parallel
+		repeat mute tree("MonitorSelf")
+		repeat mute tree("Alert")
+
+tree("MonitorSelf")
+	while not PlayerFound
+		sequence
+			tree("Scour")
+			random(2, 1, 3)
+				Monitor(90.0)
+				Monitor(-45.0)
+				Monitor(135.0)
+			LookAtFocus
+			WaitRandom(3.0, 5.0)		
+
+tree("Scour")
+	sequence
+		ChooseNextWaypoint
+		VisitWaypoint
+		Wait(0.5)
+
+tree("Alert")
+	while PlayerFound	
+		sequence
+			AlertMyCluster
+			PlayerLockOn
+			PlayerSeek
+			fallback
+				while IsPlayerFar
+					tree ("RangedAttack")						
+				while IsPlayerClose
+					tree("MeleeAttack")
+				fallback
+					while Agitated
+						sequence
+							tree("ChargeAttack")
+							
+			
+tree("MeleeAttack")
+	while PlayerFound
+		AttackMelee
+
+tree("RangedAttack")
+	while PlayerFound
+		AttackRange
+
+tree("ChargeAttack")
+	while PlayerFound
+		AttackCharge
