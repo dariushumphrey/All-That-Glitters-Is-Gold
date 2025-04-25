@@ -47,10 +47,10 @@ public class PlayerMoveScript : MonoBehaviour
             playerRigid.AddForce(forward * speed - playerRigid.velocity);
         }
 
-        if((horizInput != 0 || vertInput != 0) && OnSlope())
-        {
-            playerRigid.AddForce(forward * speed + ((c - a) * slopeForce));
-        }     
+        //if((horizInput != 0 || vertInput != 0) && OnSlope())
+        //{
+        //    playerRigid.AddForce(forward * speed + ((c - a) * slopeForce));
+        //}     
 
         //if (Input.GetKey(KeyCode.W))
         //{
