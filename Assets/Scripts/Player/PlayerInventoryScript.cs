@@ -12,6 +12,7 @@ public class PlayerInventoryScript : MonoBehaviour
     public int lucentFunds;
     public List<GameObject> inventory = new List<GameObject>(10);
     public Transform gunPlace;
+    public bool blueKey, redKey = false;
     private Text weaponStatus, weaponLoad;
     private Image weaponPage;
     private Image reticleSprite;
