@@ -13,6 +13,7 @@ public class DoorScript : MonoBehaviour
 
     private float state = 0f;
     private float closedConstraint = 0f;
+    private int consoleCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -32,28 +33,27 @@ public class DoorScript : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player" && locked)
         {
-            if(Input.GetKeyDown(KeyCode.E))
+            for (int i = 0; i < console.Count; i++)
             {
-                for(int i = 0; i < console.Count; i++)
+                if (console[i].GetComponent<DoorConsoleScript>().accepted == true)
                 {
-                    if(console[i].GetComponent<DoorConsoleScript>().accepted == false)
-                    {
-                        Debug.Log("Denied");
-                    }
-
-                    else
-                    {
-                        Debug.Log("Accepted");
-                        locked = false;
-                    }
+                    console.Remove(console[i]);                  
                 }
-            }           
-        }
+            }
 
+            if(console.Count <= 0)
+            {
+                locked = false;
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {     
         if (other.gameObject.tag == "Player" && !locked)
         {
             proximity = true;

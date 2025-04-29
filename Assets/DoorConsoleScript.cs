@@ -32,6 +32,12 @@ public class DoorConsoleScript : MonoBehaviour
                     accepted = true;
                     console.GetComponent<MeshRenderer>().material = activeColor;
                 }
+
+                if (redConsole && other.gameObject.GetComponent<PlayerInventoryScript>().redKey)
+                {
+                    accepted = true;
+                    console.GetComponent<MeshRenderer>().material = activeColor;
+                }
             }                    
         }
     }
