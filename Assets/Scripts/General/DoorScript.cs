@@ -7,13 +7,14 @@ public class DoorScript : MonoBehaviour
     public GameObject door;
     public List<GameObject> console = new List<GameObject>();
     public float openConstraint = 4f;
+    public float closedConstraint = 0f;
     public int openSpeed = 5;
     public bool proximity = false;
     public bool locked = false;
+    public bool elevator = false;
+    public bool invert = false;
 
     private float state = 0f;
-    private float closedConstraint = 0f;
-    private int consoleCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +27,16 @@ public class DoorScript : MonoBehaviour
     {
         if(!proximity)
         {
-            state -= openSpeed * Time.deltaTime;
+            if(invert)
+            {
+                state += openSpeed * Time.deltaTime;
+            }
+
+            else
+            {
+                state -= openSpeed * Time.deltaTime;
+            }
+
             state = Mathf.Clamp(state, closedConstraint, openConstraint);
 
             door.transform.position = new Vector3(door.transform.position.x, state, door.transform.position.z);
@@ -35,6 +45,11 @@ public class DoorScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(other.gameObject.tag == "Player" && elevator)
+        {
+            other.gameObject.transform.parent = door.gameObject.transform;
+        }
+
         if (other.gameObject.tag == "Player" && locked)
         {
             for (int i = 0; i < console.Count; i++)
@@ -58,7 +73,16 @@ public class DoorScript : MonoBehaviour
         {
             proximity = true;
 
-            state += openSpeed * Time.deltaTime;
+            if(invert)
+            {
+                state -= openSpeed * Time.deltaTime;
+            }
+
+            else
+            {
+                state += openSpeed * Time.deltaTime;
+            }
+
             state = Mathf.Clamp(state, closedConstraint, openConstraint);
 
             door.transform.position = new Vector3(door.transform.position.x, state, door.transform.position.z);           
@@ -67,6 +91,11 @@ public class DoorScript : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.tag == "Player" && elevator)
+        {
+            other.gameObject.transform.parent = null;
+        }
+
         if (other.gameObject.tag == "Player" && !locked)
         {
             proximity = false;
