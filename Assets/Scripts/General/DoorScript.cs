@@ -69,7 +69,7 @@ public class DoorScript : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {     
-        if (other.gameObject.tag == "Player" && !locked)
+        if (other.gameObject.tag == "Player" && !locked || other.gameObject.tag == "Enemy" && !locked)
         {
             proximity = true;
 
@@ -96,7 +96,7 @@ public class DoorScript : MonoBehaviour
             other.gameObject.transform.parent = null;
         }
 
-        if (other.gameObject.tag == "Player" && !locked)
+        if (other.gameObject.tag == "Player" && !locked || other.gameObject.tag == "Enemy" && !locked)
         {
             proximity = false;
         }

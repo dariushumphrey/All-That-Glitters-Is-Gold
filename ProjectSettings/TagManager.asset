@@ -18,6 +18,7 @@ TagManager:
   - Projectile
   - Ammo
   - Corpse
+  - Surface
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - UI
   - Enemy
   - Corpse
-  - 
+  - Surface
   - 
   - 
   - 

@@ -25,20 +25,17 @@ public class DoorConsoleScript : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (blueConsole && other.gameObject.GetComponent<PlayerInventoryScript>().blueKey)
             {
-                if (blueConsole && other.gameObject.GetComponent<PlayerInventoryScript>().blueKey)
-                {
-                    accepted = true;
-                    console.GetComponent<MeshRenderer>().material = activeColor;
-                }
+                accepted = true;
+                console.GetComponent<MeshRenderer>().material = activeColor;
+            }
 
-                if (redConsole && other.gameObject.GetComponent<PlayerInventoryScript>().redKey)
-                {
-                    accepted = true;
-                    console.GetComponent<MeshRenderer>().material = activeColor;
-                }
-            }                    
+            if (redConsole && other.gameObject.GetComponent<PlayerInventoryScript>().redKey)
+            {
+                accepted = true;
+                console.GetComponent<MeshRenderer>().material = activeColor;
+            }
         }
     }
 }

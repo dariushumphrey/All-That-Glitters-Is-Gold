@@ -54,7 +54,7 @@ public class ReplevinScript : MonoBehaviour
     private Vector3 focus;
     private Vector3 distance, lastKnownDistance;
     private Vector3 lastPlayerPosition;
-    private LayerMask layer;
+    private LayerMask layer, layerTwo, layerTotal;
 
     private GameObject[] waypoint;
     private int waypointNext;
@@ -77,6 +77,8 @@ public class ReplevinScript : MonoBehaviour
     void Start()
     {
         layer = LayerMask.GetMask("Player");
+        layerTwo = LayerMask.GetMask("Surface");
+        layerTotal = layer | layerTwo;
 
         self = GetComponent<NavMeshAgent>();
         waypoint = GameObject.FindGameObjectsWithTag("Waypoint");
@@ -155,7 +157,7 @@ public class ReplevinScript : MonoBehaviour
         RaycastHit rayInfo;
         Vector3 rayToTarget = player.transform.position - transform.position;
         Debug.DrawRay(transform.position, rayToTarget);
-        if(Physics.Raycast(transform.position, rayToTarget, out rayInfo, Mathf.Infinity, layer))
+        if(Physics.Raycast(transform.position, rayToTarget, out rayInfo, Mathf.Infinity, layerTotal))
         {
             if(rayInfo.transform.gameObject.tag == "Player")
             {
