@@ -14,8 +14,8 @@ public class PlayerCameraScript : MonoBehaviour
     public float zoomSpeed = 0.2f;
     public float collideCheck = 3.0f; //Governs Ray length to check for threats of surface clipping
     public float offsetMult = 2.0f; //Governs additional distance for Camera offset from surface
-    //public float offsetPushZ = 1.0f; //Governed physical pushing of Camera in the 'Z' direction of its resting position
-    //public float offsetPushX = 1.0f; //Governed physical pushing of Camera in the 'X' direction of its resting position
+    public float offsetPushZ = 1.0f; //Governed physical pushing of Camera in the 'Z' direction of its resting position
+    public float offsetPushX = 1.0f; //Governed physical pushing of Camera in the 'X' direction of its resting position
     public Vector3 cameraPosition; //Governs Camera offset position from Player-Character
     public Transform offsetCheckPos; //Empty GameObject, used to cast Rays from when checking surface collision
     public Image reticleSprite;
@@ -29,6 +29,7 @@ public class PlayerCameraScript : MonoBehaviour
     private Camera playerCamera;
     private PlayerInventoryScript player;
     private PlayerMoveScript move;
+    private PlayerMeleeScript melee;
     internal float yaw = 0.0f;
     internal float pitch = 0.0f;
     // Start is called before the first frame update
@@ -38,6 +39,7 @@ public class PlayerCameraScript : MonoBehaviour
         playerCamera = Camera.main;
         player = FindObjectOfType<PlayerInventoryScript>();
         move = FindObjectOfType<PlayerMoveScript>();
+        melee = FindObjectOfType<PlayerMeleeScript>();
         playerCamera.fieldOfView = zoomDefault;
         zoomReset = zoomDefault;
     }
@@ -75,6 +77,7 @@ public class PlayerCameraScript : MonoBehaviour
         Zoom();
         CollisionCheck();
         AimAssistance();
+        MeleeAssistance();
 
     }
 
@@ -105,7 +108,7 @@ public class PlayerCameraScript : MonoBehaviour
     {
         Vector3 offset;
         RaycastHit hit;
-        if (Physics.Raycast(offsetCheckPos.transform.position, offsetCheckPos.forward, out hit, collideCheck) ||
+        if (Physics.Raycast(offsetCheckPos.transform.position, offsetCheckPos.forward, out hit, collideCheck)   ||
             Physics.Raycast(offsetCheckPos.transform.position, -offsetCheckPos.right, out hit, collideCheck) ||
             Physics.Raycast(offsetCheckPos.transform.position, offsetCheckPos.right, out hit, collideCheck) /* ||
             Physics.Raycast(playerCamera.transform.position, -playerCamera.transform.forward, out hit, collideCheck) ||
@@ -121,11 +124,11 @@ public class PlayerCameraScript : MonoBehaviour
                 
                 else
                 {
-                    offset = hit.normal * offsetMult;
-                    playerCamera.transform.position = hit.point + offset + (transform.rotation * cameraPosition);
-                    //cameraPosition.z = -hit.distance * offsetPushZ;
-                    //cameraPosition.x = hit.distance * offsetPushX;
-                    Debug.DrawLine(offsetCheckPos.transform.position, hit.point, Color.red);
+                    //offset = hit.normal * offsetMult;
+                    //playerCamera.transform.position = hit.point + offset + (transform.rotation * cameraPosition);
+                    cameraPosition.z = -hit.distance * offsetPushZ;
+                    cameraPosition.x = hit.distance * offsetPushX;
+                    //Debug.DrawLine(offsetCheckPos.transform.position, hit.point, Color.red);
                 }
             }           
         }      
@@ -162,5 +165,23 @@ public class PlayerCameraScript : MonoBehaviour
                 }
             }
         }           
-    }   
+    }
+
+    private void MeleeAssistance()
+    {
+        rayOrigin = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
+
+        if (Physics.Raycast(rayOrigin, playerCamera.transform.forward, out hit, melee.meleeRangeMax))
+        {
+            if(hit.collider.tag == "Enemy")
+            {
+                melee.meleeTarget = hit.collider.gameObject;
+            }
+            
+            else
+            {
+                melee.meleeTarget = null;
+            }
+        }
+    }
 }

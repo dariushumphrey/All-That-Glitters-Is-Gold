@@ -151,11 +151,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateH: 5
   rotateV: 2
+  vClamp: 30
+  characterTurnSpeed: 100
   zoomDefault: 60
   zoomMax: 40
   zoomSpeed: 100
-  collideCheck: 1
+  collideCheck: 2
   offsetMult: 3
+  offsetPushZ: 0.1
+  offsetPushX: 1
   cameraPosition: {x: 1.154395, y: 0.956768, z: -2.61}
   offsetCheckPos: {fileID: 2543731785493937072}
   reticleSprite: {fileID: 0}
@@ -175,6 +179,8 @@ MonoBehaviour:
   lucentFunds: 30000
   inventory: []
   gunPlace: {fileID: 722000160863628844}
+  blueKey: 0
+  redKey: 0
 --- !u!114 &722000160554778764
 MonoBehaviour:
   m_ObjectHideFlags: 0

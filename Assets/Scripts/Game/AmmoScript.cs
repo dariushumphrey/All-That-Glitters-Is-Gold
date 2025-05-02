@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class AmmoScript : MonoBehaviour
 {
-    public int ammoStore = 100;
+
+    //This value buffs reserve ammo gains:
+    //-Increasing this number returns more ammunition to the held Weapon's reserves
+    public float ammoPercent = 40f;
+
     private FirearmScript firearm;
+    private int ammoStore = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +35,12 @@ public class AmmoScript : MonoBehaviour
             else
             {
                 firearm = other.gameObject.GetComponentInChildren<FirearmScript>();
+                ammoStore = firearm.reserveSize;
+
+                ammoPercent /= 100;
+                ammoPercent *= ammoStore;
+                ammoStore = (int)ammoPercent;
+
                 firearm.reserveAmmo += ammoStore;
 
                 if (firearm.reserveAmmo >= firearm.reserveSize)

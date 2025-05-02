@@ -10,6 +10,9 @@ public class SpawnerScript : MonoBehaviour
     public Vector3 spawnArena;
     public List<GameObject> spawned = new List<GameObject>();
     public List<GameObject> spawnedCluster = new List<GameObject>();
+
+    public Collider field;
+    private Bounds spawnField;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,11 +49,15 @@ public class SpawnerScript : MonoBehaviour
     void SpawnObject()
     {
         int picker = Random.Range(0, spawned.Count);
-        Vector3 spawnSite = new Vector3(transform.position.x + Random.Range(-spawnArena.x, spawnArena.x), 0, transform.position.z - Random.Range(-spawnArena.z, spawnArena.z));
+        spawnField = field.bounds;
+        Vector3 spawnSite = spawnField.center + new Vector3(Random.Range(-spawnField.extents.x, spawnField.extents.x), 0, Random.Range(-spawnField.extents.z, spawnField.extents.z));
+
+        //Vector3 spawnSite = new Vector3(transform.position.x + Random.Range(-spawnArena.x, spawnArena.x), 0, transform.position.z - Random.Range(-spawnArena.z, spawnArena.z));
         if(spawned[picker].GetComponent<EnemyHealthScript>() != null)
         {
             spawned[picker].GetComponent<EnemyHealthScript>().difficultyValue = difficultySpawn;           
         }
+
         GameObject fresh = Instantiate(spawned[picker], spawnSite, transform.rotation);
         fresh.name = spawned[picker].name;
     }
@@ -76,8 +83,10 @@ public class SpawnerScript : MonoBehaviour
                 for (int s = 0; s < spawnRepeat; s++)
                 {
                     SpawnObject();
-                    GetComponent<BoxCollider>().enabled = false;
+                    //GetComponent<BoxCollider>().enabled = false;
                 }
+
+                gameObject.SetActive(false);
             }
             
             if(spawnClust == true)
@@ -85,14 +94,17 @@ public class SpawnerScript : MonoBehaviour
                 for (int s = 0; s < spawnRepeat; s++)
                 {
                     SpawnCluster();
-                    GetComponent<BoxCollider>().enabled = false;
+                    //GetComponent<BoxCollider>().enabled = false;
                 }
+
+                gameObject.SetActive(false);
+
             }
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireCube(transform.position, spawnArena);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireCube(transform.position, field.bounds.size);
+    //}
 }
