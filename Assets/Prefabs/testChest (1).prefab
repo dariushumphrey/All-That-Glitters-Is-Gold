@@ -23,8 +23,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8233089632965830858}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.625, y: 0, z: 0.0050001144}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8233089634025867008}
@@ -57,14 +57,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8233089634025867012}
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 6.01, y: 1, z: 10.01}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 8233089632965830859}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8233089634025867011
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -143,12 +143,14 @@ MonoBehaviour:
   raritySpawn: 1
   kioskPrice: 0
   gamblePrice: 0
+  spawnCount: 1
   pricePercent: 10
   gamblePercent: 60
   isDrop: 0
   isChest: 1
   isKiosk: 0
   drop: {fileID: 0}
+  exoticDrop: {fileID: 0}
   loot:
   - {fileID: 4036329082999486630, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
   - {fileID: 1358942852155973169, guid: 377cbf7d40de48b429110cefefee5025, type: 3}

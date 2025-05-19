@@ -46,7 +46,7 @@ public class SpawnerScript : MonoBehaviour
         }
     }
 
-    void SpawnObject()
+    public void SpawnObject()
     {
         int picker = Random.Range(0, spawned.Count);
         spawnField = field.bounds;

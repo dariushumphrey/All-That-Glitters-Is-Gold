@@ -109,18 +109,26 @@ public class RudeAwakening : MonoBehaviour
             Collider[] affected = Physics.OverlapSphere(transform.position, 7.5f);
             foreach (Collider hit in affected)
             {
-                Rigidbody inflict = hit.GetComponent<Rigidbody>();
-                if (inflict != null)
+                if (hit.gameObject.CompareTag("Enemy"))
                 {
-                    if (inflict.GetComponent<EnemyHealthScript>() != null)
+                    if (hit.GetComponent<EnemyHealthScript>() != null)
                     {
-                        inflict.GetComponent<EnemyHealthScript>().inflictDamage(waveDamage);
-                        if (inflict.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
-                        {
-                            inflict.AddExplosionForce(30f, epicenter, 7.5f, 40.0f, ForceMode.Impulse);
-                        }
+                        hit.GetComponent<EnemyHealthScript>().inflictDamage(waveDamage);
                     }
                 }
+
+                //Rigidbody inflict = hit.GetComponent<Rigidbody>();
+                //if (inflict != null)
+                //{
+                //    if (inflict.GetComponent<EnemyHealthScript>() != null)
+                //    {
+                //        inflict.GetComponent<EnemyHealthScript>().inflictDamage(waveDamage);
+                //        if (inflict.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
+                //        {
+                //            inflict.AddExplosionForce(30f, epicenter, 7.5f, 40.0f, ForceMode.Impulse);
+                //        }
+                //    }
+                //}
             }
         }
     }

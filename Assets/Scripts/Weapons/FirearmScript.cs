@@ -36,7 +36,7 @@ public class FirearmScript : MonoBehaviour
     public TextMesh DPSNumbers; //TextMesh that displays damage in-environment when hitting an Enemy
     public Sprite reticle;
     internal GameObject targetHit;
-    internal GameObject procOne, procTwo;
+    internal GameObject procOne, procTwo, dpsText;
     internal PlayerInventoryScript inv;
     internal Vector3 fatedCadencePosition;
 
@@ -65,11 +65,18 @@ public class FirearmScript : MonoBehaviour
         {
             procOne.GetComponent<Text>().text = " ";
         }
+
         procTwo = GameObject.Find("weaponCheatText (2)");
         if (procTwo.GetComponent<Text>() != null)
         {
             procTwo.GetComponent<Text>().text = " ";
         }
+
+        dpsText = GameObject.Find("dpsText");
+        //if (dpsText.GetComponent<Text>() != null)
+        //{
+        //    dpsText.GetComponent<Text>().text = " ";
+        //}
 
         RarityAugment();
         AmmoCheats();
@@ -621,7 +628,20 @@ public class FirearmScript : MonoBehaviour
                     //For damage falloff checks
                     if (hit.distance <= effectiveRange)
                     {
-                        DPSNumbers.text = damage.ToString();
+                        if(hit.collider.GetComponent<EnemyHealthScript>().isImmune)
+                        {
+                            DPSNumbers.text = "Immune";
+                            dpsText.GetComponent<Text>().text += "\n" + "Immune";
+                            dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                        }
+
+                        else
+                        {
+                            DPSNumbers.text = damage.ToString();
+                            dpsText.GetComponent<Text>().text += "\n" + damage.ToString();
+                            dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                        }
+
                         Instantiate(DPSNumbers, hit.point, transform.rotation);
                         hit.collider.GetComponent<EnemyHealthScript>().inflictDamage(damage);
                         if(hit.collider.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
@@ -657,14 +677,30 @@ public class FirearmScript : MonoBehaviour
                                 gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
                             }
 
-                            hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 0.5f, ForceMode.Impulse);
+                            //if(hit.collider.GetComponent<Rigidbody>() != null)
+                            //{
+                            //    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 0.5f, ForceMode.Impulse);
+                            //}
 
                         }
                     }
 
                     if (hit.distance > effectiveRange)
                     {
-                        DPSNumbers.text = (damage / 2).ToString();
+                        if (hit.collider.GetComponent<EnemyHealthScript>().isImmune)
+                        {
+                            DPSNumbers.text = "Immune";
+                            dpsText.GetComponent<Text>().text += "\n" + "Immune";
+                            dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                        }
+
+                        else
+                        {
+                            DPSNumbers.text = (damage / 2).ToString();
+                            dpsText.GetComponent<Text>().text += "\n" + (damage / 2).ToString();
+                            dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                        }
+
                         Instantiate(DPSNumbers, hit.point, transform.rotation);
                         hit.collider.GetComponent<EnemyHealthScript>().inflictDamage(damage / 2);
                         if (hit.collider.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
@@ -700,7 +736,10 @@ public class FirearmScript : MonoBehaviour
                                 gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
                             }
 
-                            hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 0.5f, ForceMode.Impulse);
+                            //if (hit.collider.GetComponent<Rigidbody>() != null)
+                            //{
+                            //    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 0.5f, ForceMode.Impulse);
+                            //}
                         }
                     }
 

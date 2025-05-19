@@ -17,6 +17,8 @@ public class LevelManagerScript : MonoBehaviour
     public GameObject[] chests;
     public GameObject[] spawners;
     public GameObject kioskAdjust;
+
+    public int level = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -59,10 +61,10 @@ public class LevelManagerScript : MonoBehaviour
         }
 
         kioskAdjust = GameObject.FindGameObjectWithTag("Kiosk");
+        if(kioskAdjust != null)
         {
             kioskAdjust.GetComponent<LootScript>().raritySpawn = gameSettingState;
             kioskAdjust.GetComponent<LootScript>().PriceAdjust();
-
         }
 
     }
@@ -100,7 +102,7 @@ public class LevelManagerScript : MonoBehaviour
             gameSettingState = 5;
         }
 
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(level);
     }
 
     private void OnLevelWasLoaded(int level)

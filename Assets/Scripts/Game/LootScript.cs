@@ -8,6 +8,7 @@ public class LootScript : MonoBehaviour
     public int raritySpawn;
     public int kioskPrice;
     public int gamblePrice;
+    public int lootSpamMax = 3;
     public float pricePercent = 10f;
     public float gamblePercent = 60f;
     private int priceAdd;
@@ -21,23 +22,29 @@ public class LootScript : MonoBehaviour
     public Transform lootSpawn;
     public Material deactivated;
     public bool debug;
+    public bool spamLoot = false;
 
+    private float spawnAgain, spawnRate;
     private int lootGrant;
     private PlayerInventoryScript player;
     private bool inProx;
     private bool turnOff;
+    private int spawnCount = 0;
     // Start is called before the first frame update
     void Start()
     {
+        spawnAgain = 0.0f;
+        spawnRate = 0.08f;
+
         percentReset = pricePercent;
         gambleReset = gamblePercent;
         RarityCorrection();
 
         if(isChest == true)
         {
-            if (debug != true)
+            if (debug == true)
             {              
-                //SpawnLoot();
+                SpawnLoot();
                 return;
             }
         }
@@ -55,14 +62,28 @@ public class LootScript : MonoBehaviour
     {
         if(isChest == true)
         {
-            if (debug != true)
+            if (debug == true)
             {
-                return;
+                if (Input.GetKeyDown(KeyCode.Alpha0))
+                {
+                    SpawnLoot();
+                }
             }
 
-            if (Input.GetKeyDown(KeyCode.Alpha0))
+            if(spamLoot == true)
             {
-                SpawnLoot();
+                Debug.Log(spawnCount);
+                spawnAgain += Time.deltaTime;
+                if(spawnAgain >= spawnRate)
+                {
+                    StartCoroutine(SpawnRepeatedly());
+                    spawnCount++;
+
+                    if (spawnCount >= lootSpamMax)
+                    {
+                        spamLoot = false;
+                    }
+                }               
             }
         }
         
@@ -204,7 +225,8 @@ public class LootScript : MonoBehaviour
             }
         }
 
-        reward.GetComponent<Rigidbody>().AddForce((-Vector3.right + Vector3.up) * 3f, ForceMode.Impulse);
+        //reward.GetComponent<Rigidbody>().AddForce((lootSpawn.transform.forward + lootSpawn.transform.up) * 3f, ForceMode.Impulse);
+        reward.GetComponent<Rigidbody>().AddExplosionForce(500f, lootSpawn.transform.position, 10f, 500f);
     }
 
     public void SpawnExotic()
@@ -219,7 +241,8 @@ public class LootScript : MonoBehaviour
             reward.GetComponent<ColorLerpScript>().colorTwo = Color.white;
         }
 
-        reward.GetComponent<Rigidbody>().AddForce((-Vector3.right + Vector3.up) * 3f, ForceMode.Impulse);
+        //reward.GetComponent<Rigidbody>().AddForce((-Vector3.right + Vector3.up) * 3f, ForceMode.Impulse);
+        reward.GetComponent<Rigidbody>().AddExplosionForce(500f, lootSpawn.transform.position, 10f, 500f);
     }
 
     public void SpawnLoot()
@@ -249,6 +272,13 @@ public class LootScript : MonoBehaviour
 
         //Removes (Clone) from name
         reward.name = loot[lootGrant].name;
+    }
+
+    IEnumerator SpawnRepeatedly()
+    {
+        spawnAgain = 0.0f;
+        SpawnDrop();
+        yield return new WaitForSeconds(spawnRate);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -305,4 +335,5 @@ public class LootScript : MonoBehaviour
             }
         }
     }
+
 }

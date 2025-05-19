@@ -104,7 +104,7 @@ public class SingleFireFirearm : FirearmScript
                                 gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
                             }
 
-                            hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 1f, ForceMode.Impulse);
+                            //hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 1f, ForceMode.Impulse);
                         }
                     }
 
@@ -146,7 +146,7 @@ public class SingleFireFirearm : FirearmScript
                                 gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
                             }
 
-                            hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 1f, ForceMode.Impulse);
+                            //hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 1f, ForceMode.Impulse);
                         }
                     }
 

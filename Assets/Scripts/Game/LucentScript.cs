@@ -23,14 +23,24 @@ public class LucentScript : MonoBehaviour
             Collider[] affected = Physics.OverlapSphere(transform.position, 5f);
             foreach (Collider hit in affected)
             {
-                Rigidbody inflict = hit.GetComponent<Rigidbody>();
-                if (inflict != null)
+                //Debug.Log(affected.Length);
+
+                if(hit.gameObject.CompareTag("Enemy"))
                 {
-                    if (inflict.GetComponent<EnemyHealthScript>() != null)
+                    if (hit.GetComponent<EnemyHealthScript>() != null)
                     {
-                        inflict.GetComponent<EnemyHealthScript>().inflictDamage(shatterDamage);
+                        hit.GetComponent<EnemyHealthScript>().inflictDamage(shatterDamage);
                     }
                 }
+
+                //Rigidbody inflict = hit.GetComponent<Rigidbody>();
+                //if (inflict != null)
+                //{
+                //    if (inflict.GetComponent<EnemyHealthScript>() != null)
+                //    {
+                //        inflict.GetComponent<EnemyHealthScript>().inflictDamage(shatterDamage);
+                //    }
+                //}
             }
 
             Destroy(gameObject);

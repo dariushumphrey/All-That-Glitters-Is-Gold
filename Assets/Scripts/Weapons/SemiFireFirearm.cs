@@ -219,7 +219,7 @@ public class SemiFireFirearm : FirearmScript
                             gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
                         }
 
-                        hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 1.5f, ForceMode.Impulse);
+                        //hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 1.5f, ForceMode.Impulse);
                     }
                 }
 
@@ -261,7 +261,7 @@ public class SemiFireFirearm : FirearmScript
                             gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
                         }
 
-                        hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 1.5f, ForceMode.Impulse);
+                        //hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 1.5f, ForceMode.Impulse);
                     }
                 }
 

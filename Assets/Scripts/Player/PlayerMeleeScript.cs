@@ -5,8 +5,7 @@ using UnityEngine;
 public class PlayerMeleeScript : MonoBehaviour
 {
     public int meleeDamage = 5000;
-    public float meleeRangeMax = 7f;
-    public float meleeRange = 3f;
+    public float meleeRange = 4f;
     public float meleeSpeed = 3f;
 
     internal bool meleeLock;
@@ -20,7 +19,9 @@ public class PlayerMeleeScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F))
+        //Debug.Log(meleeTarget);
+
+        if (Input.GetKeyDown(KeyCode.F))
         {
             if (meleeTarget == null)
             {
@@ -33,9 +34,10 @@ public class PlayerMeleeScript : MonoBehaviour
             }
         }
 
-        if (meleeLock)
+        if (meleeLock && meleeTarget != null)
         {
             transform.position = Vector3.Lerp(transform.position, meleeTarget.transform.position, meleeSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(meleeTarget.transform.position - transform.position, Vector3.up), 2f);
             MeleeStrike();
         }
     }
@@ -43,14 +45,17 @@ public class PlayerMeleeScript : MonoBehaviour
     void MeleeStrike()
     {
         RaycastHit hit;        
-        if (Physics.Raycast(transform.position, transform.forward * meleeRange, out hit, meleeRangeMax))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, meleeRange))
         {
             if (hit.collider.tag == "Enemy")
             {
                 hit.collider.gameObject.GetComponent<EnemyHealthScript>().inflictDamage(meleeDamage);
                 if(hit.collider.gameObject.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                 {
-                    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 0.5f, ForceMode.Impulse);
+                    if(hit.collider.GetComponent<Rigidbody>() != null)
+                    {
+                        hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 0.5f, ForceMode.Impulse);
+                    }
                 }
 
                 meleeLock = false;

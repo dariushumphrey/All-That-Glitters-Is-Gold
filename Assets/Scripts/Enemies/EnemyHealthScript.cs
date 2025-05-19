@@ -19,6 +19,7 @@ public class EnemyHealthScript : MonoBehaviour
     //-Increasing base Lucent yield allows this number to add more Lucent in return
     public float lucentPercent = 20f;
 
+    public bool isImmune;
     public bool isDummy;
     public GameObject corpse;
     public GameObject ammoReward;
@@ -240,6 +241,11 @@ public class EnemyHealthScript : MonoBehaviour
 
     public void inflictDamage(int damageTaken)
     {
+        if(isImmune)
+        {
+            return;
+        }
+
         enemyHit = true;
         damageHit = damageTaken;
 
@@ -291,14 +297,22 @@ public class EnemyHealthScript : MonoBehaviour
                 Collider[] affected = Physics.OverlapSphere(transform.position, 10f);
                 foreach (Collider hit in affected)
                 {
-                    Rigidbody inflict = hit.GetComponent<Rigidbody>();
-                    if (inflict != null)
+                    if (hit.gameObject.CompareTag("Enemy"))
                     {
-                        if (inflict.GetComponent<EnemyHealthScript>() != null)
+                        if (hit.GetComponent<EnemyHealthScript>() != null)
                         {
-                            inflict.GetComponent<EnemyHealthScript>().inflictDamage(GetComponent<SDPHealthDebuff>().dmgShare);
+                            hit.GetComponent<EnemyHealthScript>().inflictDamage(GetComponent<SDPHealthDebuff>().dmgShare);
                         }
                     }
+
+                    //Rigidbody inflict = hit.GetComponent<Rigidbody>();
+                    //if (inflict != null)
+                    //{
+                    //    if (inflict.GetComponent<EnemyHealthScript>() != null)
+                    //    {
+                    //        inflict.GetComponent<EnemyHealthScript>().inflictDamage(GetComponent<SDPHealthDebuff>().dmgShare);
+                    //    }
+                    //}
                 }
             }
 
@@ -308,7 +322,12 @@ public class EnemyHealthScript : MonoBehaviour
             }
 
             player.lucentFunds += lucentYield;
-            gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            if(gameObject.GetComponent<Rigidbody>() == null)
+            {
+                gameObject.AddComponent<Rigidbody>();
+            }
+          
+            //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             visual.gameObject.SetActive(false);
             //gameObject.GetComponent<Rigidbody>().freezeRotation = false;
             done = true;

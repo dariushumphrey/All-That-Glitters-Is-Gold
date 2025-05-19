@@ -72,7 +72,10 @@ public class PlayerCameraScript : MonoBehaviour
         if(move.horizInput != 0 || move.vertInput != 0 || Input.GetButton("Fire1"))
         {
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(pitch, yaw, 0), Time.deltaTime * characterTurnSpeed);
         }
+
+        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(pitch, yaw, 0), Time.deltaTime * characterTurnSpeed);
 
         Zoom();
         CollisionCheck();
@@ -171,11 +174,12 @@ public class PlayerCameraScript : MonoBehaviour
     {
         rayOrigin = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
 
-        if (Physics.Raycast(rayOrigin, playerCamera.transform.forward, out hit, melee.meleeRangeMax))
+        if (Physics.Raycast(rayOrigin, playerCamera.transform.forward, out hit, Mathf.Infinity))
         {
             if(hit.collider.tag == "Enemy")
             {
                 melee.meleeTarget = hit.collider.gameObject;
+                
             }
             
             else
@@ -183,5 +187,13 @@ public class PlayerCameraScript : MonoBehaviour
                 melee.meleeTarget = null;
             }
         }
+
+        if(melee.meleeTarget != null)
+        {
+            if (melee.meleeTarget.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
+            {
+                melee.meleeTarget = null;
+            }
+        }       
     }
 }

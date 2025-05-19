@@ -145,7 +145,11 @@ public class ShotgunFirearm: FirearmScript
                                     gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
                                 }
 
-                                hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 2f, ForceMode.Impulse);
+                                //if (hit.collider.GetComponent<Rigidbody>() != null)
+                                //{
+                                //    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 2f, ForceMode.Impulse);
+                                //}
+
                             }
                         }
 
@@ -187,7 +191,10 @@ public class ShotgunFirearm: FirearmScript
                                     gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
                                 }
 
-                                hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 2f, ForceMode.Impulse);
+                                //if (hit.collider.GetComponent<Rigidbody>() != null)
+                                //{
+                                //    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 2f, ForceMode.Impulse);
+                                //}
                             }
                         }
 
