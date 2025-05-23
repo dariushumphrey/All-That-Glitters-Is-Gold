@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
+using UnityEngine.UI;
 
 public class LevelManagerScript : MonoBehaviour
 {
     static LevelManagerScript instance = null;
 
+    public enum Setting
+    {
+        Navigation = 0, Campaign = 1, Viricide = 2
+    }
+
+    public Setting setting;
     //Determines Loot rarity and Enemy difficulty. 
     public int gameSettingState = 1;
 
@@ -19,6 +26,9 @@ public class LevelManagerScript : MonoBehaviour
     public GameObject kioskAdjust;
 
     public int level = 0;
+    public GameObject pauseMenu;
+    private bool paused = false;
+    private GameObject continueButton, restartButton, quitButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +77,24 @@ public class LevelManagerScript : MonoBehaviour
             kioskAdjust.GetComponent<LootScript>().PriceAdjust();
         }
 
+        pauseMenu = GameObject.Find("pauseBG");
+
+        continueButton = GameObject.Find("continueButton");
+        continueButton.GetComponent<Button>().onClick.AddListener(ResumeGame);
+
+        restartButton = GameObject.Find("restartButton");
+        restartButton.GetComponent<Button>().onClick.AddListener(RestartGame);
+
+        quitButton = GameObject.Find("gameQuitButton");
+        quitButton.GetComponent<Button>().onClick.AddListener(QuitGame);
+
+        pauseMenu.gameObject.SetActive(false);
+
+        if(Time.timeScale != 1)
+        {
+            Time.timeScale = 1;
+        }
+      
     }
 
     // Update is called once per frame
@@ -78,6 +106,34 @@ public class LevelManagerScript : MonoBehaviour
             {
                 player.GetComponent<PlayerInventoryScript>().WriteOnReset();
                 LoadScene();
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(player.isDead)
+            {
+                return;
+            }
+
+            if(!paused)
+            {
+                Time.timeScale = 0;
+                if(pauseMenu.gameObject.activeSelf == false)
+                {
+                    pauseMenu.gameObject.SetActive(true);
+                }
+                paused = true;
+            }
+
+            else if(paused)
+            {
+                Time.timeScale = 1;
+                paused = false;
+                if (pauseMenu.gameObject.activeSelf != false)
+                {
+                    pauseMenu.gameObject.SetActive(false);
+                }
             }
         }
 
@@ -108,5 +164,27 @@ public class LevelManagerScript : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         Start();
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+        VanishPauseMenu();
+    }
+
+    public void RestartGame()
+    {
+        player.GetComponent<PlayerInventoryScript>().WriteOnReset();
+        LoadScene();
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    private void VanishPauseMenu()
+    {
+        pauseMenu.gameObject.SetActive(false);
     }
 }

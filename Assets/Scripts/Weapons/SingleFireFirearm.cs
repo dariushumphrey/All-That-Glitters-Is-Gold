@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SingleFireFirearm : FirearmScript
 {
@@ -68,7 +69,20 @@ public class SingleFireFirearm : FirearmScript
                     //For damage falloff checks
                     if (hit.distance <= effectiveRange)
                     {
-                        DPSNumbers.text = damage.ToString();
+                        if (hit.collider.GetComponent<EnemyHealthScript>().isImmune)
+                        {
+                            DPSNumbers.text = "Immune";
+                            dpsText.GetComponent<Text>().text += "\n" + "Immune";
+                            dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                        }
+
+                        else
+                        {
+                            DPSNumbers.text = damage.ToString();
+                            dpsText.GetComponent<Text>().text += "\n" + damage.ToString();
+                            dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                        }
+
                         Instantiate(DPSNumbers, hit.point, transform.rotation);
                         hit.collider.GetComponent<EnemyHealthScript>().inflictDamage(damage);
                         if (hit.collider.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
@@ -110,7 +124,20 @@ public class SingleFireFirearm : FirearmScript
 
                     if (hit.distance > effectiveRange)
                     {
-                        DPSNumbers.text = (damage / 2).ToString();
+                        if (hit.collider.GetComponent<EnemyHealthScript>().isImmune)
+                        {
+                            DPSNumbers.text = "Immune";
+                            dpsText.GetComponent<Text>().text += "\n" + "Immune";
+                            dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                        }
+
+                        else
+                        {
+                            DPSNumbers.text = (damage / 2).ToString();
+                            dpsText.GetComponent<Text>().text += "\n" + (damage / 2).ToString();
+                            dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                        }
+
                         Instantiate(DPSNumbers, hit.point, transform.rotation);
                         hit.collider.GetComponent<EnemyHealthScript>().inflictDamage(damage / 2);
                         if (hit.collider.GetComponent<EnemyHealthScript>().healthCurrent <= 0)

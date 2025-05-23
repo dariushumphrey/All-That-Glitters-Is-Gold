@@ -61,27 +61,34 @@ public class PlayerCameraScript : MonoBehaviour
 
     private void LateUpdate()
     {
-        yaw += rotateH * Input.GetAxis("Mouse X");
-        pitch -= rotateV * Input.GetAxis("Mouse Y");
-        pitch = Mathf.Clamp(pitch, -vClamp, vClamp);
-
-        playerCamera.transform.position = transform.position + (Quaternion.Euler(pitch, yaw, 0) * cameraPosition);
-        playerCamera.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
-
-        forwardDirection = (playerCamera.transform.position - transform.position);
-        if(move.horizInput != 0 || move.vertInput != 0 || Input.GetButton("Fire1"))
+        if(Time.timeScale == 0)
         {
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
-            //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(pitch, yaw, 0), Time.deltaTime * characterTurnSpeed);
+            return;
         }
 
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(pitch, yaw, 0), Time.deltaTime * characterTurnSpeed);
+        else
+        {
+            yaw += rotateH * Input.GetAxis("Mouse X");
+            pitch -= rotateV * Input.GetAxis("Mouse Y");
+            pitch = Mathf.Clamp(pitch, -vClamp, vClamp);
 
-        Zoom();
-        CollisionCheck();
-        AimAssistance();
-        MeleeAssistance();
+            playerCamera.transform.position = transform.position + (Quaternion.Euler(pitch, yaw, 0) * cameraPosition);
+            playerCamera.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
 
+            forwardDirection = (playerCamera.transform.position - transform.position);
+            if (move.horizInput != 0 || move.vertInput != 0 || Input.GetButton("Fire1"))
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
+                //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(pitch, yaw, 0), Time.deltaTime * characterTurnSpeed);
+            }
+
+            //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(pitch, yaw, 0), Time.deltaTime * characterTurnSpeed);
+
+            Zoom();
+            CollisionCheck();
+            AimAssistance();
+            MeleeAssistance();
+        }      
     }
 
     private void Zoom()

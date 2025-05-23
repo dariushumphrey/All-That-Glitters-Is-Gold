@@ -100,20 +100,28 @@ public class FirearmScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DPSNumbers.text = damage.ToString();
-        AmmoReloadCheck();
-
-        if(isReloading)
+        if(Time.timeScale == 0)
         {
-            reloadSpeed -= Time.deltaTime;
-            if(reloadSpeed <= 0f)
-            {
-                reloadSpeed = reloadReset;
-                ReloadWeapon();
-            }
+            return;
         }
 
-        FireWeapon();     
+        else
+        {
+            DPSNumbers.text = damage.ToString();
+            AmmoReloadCheck();
+
+            if (isReloading)
+            {
+                reloadSpeed -= Time.deltaTime;
+                if (reloadSpeed <= 0f)
+                {
+                    reloadSpeed = reloadReset;
+                    ReloadWeapon();
+                }
+            }
+
+            FireWeapon();
+        }         
     }
 
     public virtual void RarityAugment()
