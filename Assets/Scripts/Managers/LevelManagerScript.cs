@@ -28,7 +28,7 @@ public class LevelManagerScript : MonoBehaviour
     public int level = 0;
     public GameObject pauseMenu;
     private bool paused = false;
-    private GameObject continueButton, restartButton, quitButton;
+    private GameObject continueButton, restartButton, quitButton, mainMenuButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +42,16 @@ public class LevelManagerScript : MonoBehaviour
         {
             instance = this;
             GameObject.DontDestroyOnLoad(gameObject);
-            GameSet();
+
+            if(setting == Setting.Navigation)
+            {
+                return;
+            }
+
+            else
+            {
+                GameSet();
+            }
         }
     }
 
@@ -88,6 +97,9 @@ public class LevelManagerScript : MonoBehaviour
         quitButton = GameObject.Find("gameQuitButton");
         quitButton.GetComponent<Button>().onClick.AddListener(QuitGame);
 
+        mainMenuButton = GameObject.Find("menuQuitButton");
+        mainMenuButton.GetComponent<Button>().onClick.AddListener(ReturnToMainMenu);
+
         pauseMenu.gameObject.SetActive(false);
 
         if(Time.timeScale != 1)
@@ -100,42 +112,50 @@ public class LevelManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.isDead == true)
+        if(setting == Setting.Navigation)
         {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                player.GetComponent<PlayerInventoryScript>().WriteOnReset();
-                LoadScene();
-            }
+            return;
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        else
         {
-            if(player.isDead)
+            if (player.isDead == true)
             {
-                return;
-            }
-
-            if(!paused)
-            {
-                Time.timeScale = 0;
-                if(pauseMenu.gameObject.activeSelf == false)
+                if (Input.GetKeyDown(KeyCode.F))
                 {
-                    pauseMenu.gameObject.SetActive(true);
-                }
-                paused = true;
-            }
-
-            else if(paused)
-            {
-                Time.timeScale = 1;
-                paused = false;
-                if (pauseMenu.gameObject.activeSelf != false)
-                {
-                    pauseMenu.gameObject.SetActive(false);
+                    player.GetComponent<PlayerInventoryScript>().WriteOnReset();
+                    LoadScene();
                 }
             }
-        }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (player.isDead)
+                {
+                    return;
+                }
+
+                if (!paused)
+                {
+                    Time.timeScale = 0;
+                    if (pauseMenu.gameObject.activeSelf == false)
+                    {
+                        pauseMenu.gameObject.SetActive(true);
+                    }
+                    paused = true;
+                }
+
+                else if (paused)
+                {
+                    Time.timeScale = 1;
+                    paused = false;
+                    if (pauseMenu.gameObject.activeSelf != false)
+                    {
+                        pauseMenu.gameObject.SetActive(false);
+                    }
+                }
+            }
+        }     
 
         //if (Input.GetKeyDown(KeyCode.Tab))
         //{
@@ -183,8 +203,26 @@ public class LevelManagerScript : MonoBehaviour
         Application.Quit();
     }
 
+    public void ReturnToMainMenu()
+    {
+        level = 0;
+        setting = Setting.Navigation;
+        LoadScene();
+    }
+
     private void VanishPauseMenu()
     {
         pauseMenu.gameObject.SetActive(false);
+        paused = false;
+    }
+
+    public void OpenPage(GameObject page)
+    {
+        page.gameObject.SetActive(true);
+    }
+
+    public void ClosePage(GameObject page)
+    {
+        page.gameObject.SetActive(false);
     }
 }

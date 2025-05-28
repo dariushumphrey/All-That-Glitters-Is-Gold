@@ -53,7 +53,7 @@ Shader "Custom/PlanetShader"
             fixed4 c = tex2D (_cloudsTexture, IN.uv_cloudsTexture + float2(_xScroll, _yScroll)) * _cloudStrength;
 
 			o.Albedo = tex2D(_planetTex, IN.uv_planetTex) + c;
-			o.Normal = UnpackNormal(tex2D(_planetNormals, IN.uv_planetNormals + float2(_xScroll, _yScroll)));
+			o.Normal = UnpackNormal(tex2D(_planetNormals, IN.uv_planetNormals));
 			o.Normal *= float3(_planetNormalStrength, _planetNormalStrength, 1);
 			//o.Alpha = c.a;
 			o.Emission = _rim.rgb * pow(rim, _rimPower);

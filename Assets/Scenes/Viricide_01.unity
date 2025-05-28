@@ -8241,7 +8241,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 405269758}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 799839032}
+        m_TargetAssemblyTypeName: LevelManagerScript, Assembly-CSharp
+        m_MethodName: ReturnToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &405269758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15710,7 +15722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f0239cfc9f33f4789ba384c248998e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setting: 0
+  setting: 2
   gameSettingState: 2
   player: {fileID: 0}
   manager: {fileID: 0}
@@ -15725,7 +15737,7 @@ MonoBehaviour:
   - {fileID: 176351484}
   - {fileID: 745776799}
   kioskAdjust: {fileID: 0}
-  level: 1
+  level: 2
   pauseMenu: {fileID: 254236117}
 --- !u!4 &799839033
 Transform:
