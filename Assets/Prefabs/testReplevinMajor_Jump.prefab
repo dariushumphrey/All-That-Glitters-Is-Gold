@@ -272,17 +272,25 @@ MonoBehaviour:
   damagePercent: 25
   moveSpeed: 8
   boostSpeed: 10
+  nmaAccel: 8
+  meleeRangeCheck: 0
   meleeRangeMin: 20
+  meleeAttackTimer: 0.8
+  meleeLimit: 1
+  meleeTimeout: 0
+  meleeAttackForce: 5000
+  chargeRangeCheck: 0
   chargeRangeMin: 1
+  chargeLimit: 1
+  chargeOvershoot: 2
+  chargeTimeout: 2
+  chargeAttackForce: 5000
   rotationStrength: 2
   gapClose: 0.02
   pounceLimit: 1.5
   jumpLimit: 6
   jumpForce: 8
-  meleeAttackForce: 5000
-  chargeAttackForce: 5000
   rangedAttackForce: 0
-  chargeTimeout: 2
   punchTimeout: 2
   jumpTimeout: 2
   airtimeShort: 1
@@ -292,6 +300,7 @@ MonoBehaviour:
   amLeader: 0
   amFollower: 0
   amHunter: 1
+  amBoss: 0
   attackStartPoint: {fileID: 521107326973885396}
   jumpCheck: {fileID: 9046807996112585156}
   attackLine: {fileID: 521107327305974620}
@@ -318,6 +327,7 @@ MonoBehaviour:
   healthPercent: 20
   lucentYield: 400
   lucentPercent: 20
+  isImmune: 0
   isDummy: 0
   corpse: {fileID: 7694598711731921811, guid: a287dccb421b2ea4a87cdb6d33d1cf26, type: 3}
   ammoReward: {fileID: 7365210831971423931, guid: f6da525fb110dbe44889874ff9230cc0, type: 3}

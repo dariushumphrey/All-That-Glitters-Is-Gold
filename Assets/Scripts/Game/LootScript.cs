@@ -226,7 +226,7 @@ public class LootScript : MonoBehaviour
         }
 
         //reward.GetComponent<Rigidbody>().AddForce((lootSpawn.transform.forward + lootSpawn.transform.up) * 3f, ForceMode.Impulse);
-        reward.GetComponent<Rigidbody>().AddExplosionForce(500f, lootSpawn.transform.position, 10f, 500f);
+        reward.GetComponent<Rigidbody>().AddExplosionForce(400f, lootSpawn.transform.position, 10f, 500f);
     }
 
     public void SpawnExotic()
@@ -242,7 +242,7 @@ public class LootScript : MonoBehaviour
         }
 
         //reward.GetComponent<Rigidbody>().AddForce((-Vector3.right + Vector3.up) * 3f, ForceMode.Impulse);
-        reward.GetComponent<Rigidbody>().AddExplosionForce(500f, lootSpawn.transform.position, 10f, 500f);
+        reward.GetComponent<Rigidbody>().AddExplosionForce(400f, lootSpawn.transform.position, 10f, 500f);
     }
 
     public void SpawnLoot()

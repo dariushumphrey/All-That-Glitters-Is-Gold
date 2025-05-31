@@ -10,11 +10,14 @@ public class BossManagerScript : MonoBehaviour
     public List<GameObject> chestRewards = new List<GameObject>();
     internal bool isAlive = true;
     private EnemyManagerScript enemyManager;
+    private LevelManagerScript levelManager;
     private bool done = false;
   
     void Awake()
     {
         enemyManager = FindObjectOfType<EnemyManagerScript>();
+        levelManager = FindObjectOfType<LevelManagerScript>();
+
         for (int c = 0; c < chestRewards.Count; c++)
         {
             chestRewards[c].gameObject.SetActive(false);            
@@ -49,6 +52,7 @@ public class BossManagerScript : MonoBehaviour
             }
 
             done = true;
+            levelManager.gameComplete = true;
         }
     }
 

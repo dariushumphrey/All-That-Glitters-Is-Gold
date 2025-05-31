@@ -26,9 +26,12 @@ public class LevelManagerScript : MonoBehaviour
     public GameObject kioskAdjust;
 
     public int level = 0;
-    public GameObject pauseMenu;
+    public GameObject pauseMenu, resultsMenu;
+    private float gameEndDelay = 10f;
     private bool paused = false;
+    internal bool gameComplete = false;
     private GameObject continueButton, restartButton, quitButton, mainMenuButton;
+    private GameObject menuReturnButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +48,11 @@ public class LevelManagerScript : MonoBehaviour
 
             if(setting == Setting.Navigation)
             {
+                if(gameComplete)
+                {
+                    gameComplete = false;
+                }
+
                 return;
             }
 
@@ -87,7 +95,6 @@ public class LevelManagerScript : MonoBehaviour
         }
 
         pauseMenu = GameObject.Find("pauseBG");
-
         continueButton = GameObject.Find("continueButton");
         continueButton.GetComponent<Button>().onClick.AddListener(ResumeGame);
 
@@ -102,7 +109,13 @@ public class LevelManagerScript : MonoBehaviour
 
         pauseMenu.gameObject.SetActive(false);
 
-        if(Time.timeScale != 1)
+
+        resultsMenu = GameObject.Find("completeBG");
+        menuReturnButton = GameObject.Find("menuReturnButton");
+        menuReturnButton.GetComponent<Button>().onClick.AddListener(ReturnToMainMenu);
+        resultsMenu.gameObject.SetActive(false);
+
+        if (Time.timeScale != 1)
         {
             Time.timeScale = 1;
         }
@@ -128,7 +141,7 @@ public class LevelManagerScript : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) && !gameComplete)
             {
                 if (player.isDead)
                 {
@@ -153,6 +166,23 @@ public class LevelManagerScript : MonoBehaviour
                     {
                         pauseMenu.gameObject.SetActive(false);
                     }
+                }
+            }
+
+            if(gameComplete)
+            {
+                gameEndDelay -= Time.deltaTime;
+                if(gameEndDelay <= 0f)
+                {
+                    gameEndDelay = 10f;
+                    Time.timeScale = 0;
+                    if (pauseMenu.gameObject.activeSelf != false)
+                    {
+                        pauseMenu.gameObject.SetActive(false);
+                    }
+                    //paused = true;
+
+                    resultsMenu.gameObject.SetActive(true);
                 }
             }
         }     
@@ -207,6 +237,7 @@ public class LevelManagerScript : MonoBehaviour
     {
         level = 0;
         setting = Setting.Navigation;
+        player.GetComponent<PlayerInventoryScript>().WriteOnReset();
         LoadScene();
     }
 
