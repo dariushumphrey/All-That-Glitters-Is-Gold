@@ -282,7 +282,7 @@ MonoBehaviour:
   chargeLimit: 1.5
   chargeOvershoot: 0.5
   chargeTimeout: 2
-  chargeAttackForce: 200000
+  chargeAttackForce: 75000
   rotationStrength: 2
   gapClose: 0
   pounceLimit: 1.5

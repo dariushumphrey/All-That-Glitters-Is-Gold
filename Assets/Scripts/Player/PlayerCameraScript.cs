@@ -165,7 +165,7 @@ public class PlayerCameraScript : MonoBehaviour
                     {
                         playerCamera.transform.rotation = Quaternion.Lerp(playerCamera.transform.rotation, Quaternion.LookRotation(distance), player.inventory[player.selection].GetComponent<FirearmScript>().aimAssistStrength);
                         reticleSprite.color = Color.red;
-                    }                  
+                    }                 
 
                 }
 

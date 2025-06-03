@@ -276,7 +276,7 @@ MonoBehaviour:
   meleeAttackTimer: 0.8
   meleeLimit: 1.5
   meleeTimeout: 1.5
-  meleeAttackForce: 100000
+  meleeAttackForce: 50000
   chargeRangeCheck: 0
   chargeRangeMin: 1
   chargeLimit: 1
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b4fa109f4ef7141b00f5657e3beeef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficultyValue: 1
+  difficultyValue: 2
   healthCurrent: 2000
   healthMax: 500
   healthPercent: 20

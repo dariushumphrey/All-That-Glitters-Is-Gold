@@ -1636,7 +1636,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 292639395}
   m_Direction: 0
   m_MinValue: 1
-  m_MaxValue: 5
+  m_MaxValue: 1
   m_WholeNumbers: 1
   m_Value: 1
   m_OnValueChanged:
@@ -2961,7 +2961,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 828917813}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1875232103}
+        m_TargetAssemblyTypeName: MenuManagerScript, Assembly-CSharp
+        m_MethodName: InitializeCampaignGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &828917813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4020,6 +4032,7 @@ MonoBehaviour:
   kioskAdjust: {fileID: 0}
   level: 0
   pauseMenu: {fileID: 0}
+  resultsMenu: {fileID: 0}
 --- !u!4 &1192333462
 Transform:
   m_ObjectHideFlags: 0
@@ -5781,8 +5794,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vcDifficulty: {fileID: 250760821}
   vcLevel: {fileID: 2057322032}
-  caDifficulty: {fileID: 0}
-  caLevel: {fileID: 0}
+  caDifficulty: {fileID: 1765459321}
+  caLevel: {fileID: 494825789}
 --- !u!4 &1875232104
 Transform:
   m_ObjectHideFlags: 0

@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 722000160554778762}
   - component: {fileID: 722000160554778765}
   - component: {fileID: 722000160554778764}
+  - component: {fileID: 5227237248083403080}
+  - component: {fileID: 6660650644845861729}
   m_Layer: 3
   m_Name: testPlayerV2
   m_TagString: Player
@@ -207,6 +209,36 @@ MonoBehaviour:
   shieldPercent: 20
   regenShieldSeconds: 7
   isDead: 0
+--- !u!114 &5227237248083403080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722000160554778757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a4ffaa2bb559f341a21f6c225336d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleeDamage: 5000
+  meleeRange: 3
+  meleeSpeed: 5
+--- !u!114 &6660650644845861729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722000160554778757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a4ffaa2bb559f341a21f6c225336d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleeDamage: 5000
+  meleeRange: 3
+  meleeSpeed: 5
 --- !u!1 &722000160863628845
 GameObject:
   m_ObjectHideFlags: 0

@@ -278,7 +278,7 @@ MonoBehaviour:
   meleeAttackTimer: 0.8
   meleeLimit: 1
   meleeTimeout: 0
-  meleeAttackForce: 5000
+  meleeAttackForce: 50000
   chargeRangeCheck: 0
   chargeRangeMin: 1
   chargeLimit: 1

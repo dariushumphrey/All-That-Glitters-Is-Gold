@@ -21,9 +21,7 @@ public class AdvanceScript : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            level.player.GetComponent<PlayerInventoryScript>().WriteOnReset();
-            level.gameSettingState++;
-            level.LoadScene();
+            level.ReturnToMainMenu();
         }
     }
 }

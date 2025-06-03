@@ -58,7 +58,7 @@ public class ShotgunFirearm: FirearmScript
                 //bulletTrail.SetPosition(0, barrel.position)  
 
                 GameObject start = new GameObject();
-                GameObject.Destroy(start, 1f);
+                GameObject.Destroy(start, 0.1f);
 
                 start.name = "Trail";
 
@@ -112,19 +112,33 @@ public class ShotgunFirearm: FirearmScript
                         {
                             if (hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                             {
-                                DPSNumbers.text = "Immune";
-                                dpsText.GetComponent<Text>().text += "\n" + "Immune";
+                                string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
+                                newDPSLine = indent + "Immune";
+                                currentDPSLine = newDPSLine + "\n" + currentDPSLine;
+                                dpsText.GetComponent<Text>().text = currentDPSLine;
                                 dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                                dpsLinesClear = dpsLinesReset;
+
+                                DPSNumbers.text = "Immune";
+                                //dpsText.GetComponent<Text>().text += "\n" + "Immune";
+                                //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
                             }
 
                             else
                             {
-                                DPSNumbers.text = damage.ToString();
-                                dpsText.GetComponent<Text>().text += "\n" + damage.ToString();
+                                string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
+                                newDPSLine = indent + damage.ToString();
+                                currentDPSLine = newDPSLine + "\n" + currentDPSLine;
+                                dpsText.GetComponent<Text>().text = currentDPSLine;
                                 dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                                dpsLinesClear = dpsLinesReset;
+
+                                DPSNumbers.text = damage.ToString();
+                                //dpsText.GetComponent<Text>().text += "\n" + damage.ToString();
+                                //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
                             }
 
-                            Instantiate(DPSNumbers, hit.point, transform.rotation);
+                            //Instantiate(DPSNumbers, hit.point, transform.rotation);
                             hit.collider.GetComponent<EnemyHealthScript>().inflictDamage(damage);
                             if (hit.collider.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                             {
@@ -171,19 +185,33 @@ public class ShotgunFirearm: FirearmScript
                         {
                             if (hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                             {
-                                DPSNumbers.text = "Immune";
-                                dpsText.GetComponent<Text>().text += "\n" + "Immune";
+                                string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
+                                newDPSLine = indent + "Immune";
+                                currentDPSLine = newDPSLine + "\n" + currentDPSLine;
+                                dpsText.GetComponent<Text>().text = currentDPSLine;
                                 dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                                dpsLinesClear = dpsLinesReset;
+
+                                DPSNumbers.text = "Immune";
+                                //dpsText.GetComponent<Text>().text += "\n" + "Immune";
+                                //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
                             }
 
                             else
                             {
-                                DPSNumbers.text = (damage / 2).ToString();
-                                dpsText.GetComponent<Text>().text += "\n" + (damage / 2).ToString();
+                                string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
+                                newDPSLine = indent + (damage / 2).ToString();
+                                currentDPSLine = newDPSLine + "\n" + currentDPSLine;
+                                dpsText.GetComponent<Text>().text = currentDPSLine;
                                 dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                                dpsLinesClear = dpsLinesReset;
+
+                                DPSNumbers.text = (damage / 2).ToString();
+                                //dpsText.GetComponent<Text>().text += "\n" + (damage / 2).ToString();
+                                //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
                             }
 
-                            Instantiate(DPSNumbers, hit.point, transform.rotation);
+                            //Instantiate(DPSNumbers, hit.point, transform.rotation);
                             hit.collider.GetComponent<EnemyHealthScript>().inflictDamage(damage / 2);
                             if (hit.collider.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                             {

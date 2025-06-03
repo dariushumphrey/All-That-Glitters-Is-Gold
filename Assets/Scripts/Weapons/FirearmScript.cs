@@ -47,6 +47,11 @@ public class FirearmScript : MonoBehaviour
     internal float reloadReset;
     internal bool confirmHit; //Tracks whether weapon shot is a confirmed hit on Enemy
     internal bool confirmKill;
+    internal string currentDPSLine = "";
+    internal string newDPSLine;
+    internal int indentSpace = 0;
+    internal float dpsLinesClear = 2f;
+    internal float dpsLinesReset;
 
     //RNG numbers
     internal int ammoCheatOne; // Determines Current Ammo augments
@@ -77,6 +82,7 @@ public class FirearmScript : MonoBehaviour
         //{
         //    dpsText.GetComponent<Text>().text = " ";
         //}
+        dpsLinesReset = dpsLinesClear;
 
         RarityAugment();
         AmmoCheats();
@@ -108,6 +114,16 @@ public class FirearmScript : MonoBehaviour
         else
         {
             DPSNumbers.text = damage.ToString();
+            if(currentDPSLine.Length != 0)
+            {
+                dpsLinesClear -= Time.deltaTime;
+                if(dpsLinesClear <= 0f)
+                {
+                    currentDPSLine = "";
+                    dpsLinesClear = dpsLinesReset;
+                }
+            }
+
             AmmoReloadCheck();
 
             if (isReloading)
@@ -597,11 +613,24 @@ public class FirearmScript : MonoBehaviour
             Vector3 rayOrigin = gunCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hit;
 
-            bulletTrail.SetPosition(0, barrel.position);
+            GameObject start = new GameObject();
+            GameObject.Destroy(start, 0.1f);
+
+            start.name = "Trail";
+            start.AddComponent<LineRenderer>();
+            start.GetComponent<LineRenderer>().startWidth = 0.1f;
+            start.GetComponent<LineRenderer>().endWidth = 0.1f;
+            start.GetComponent<LineRenderer>().material = bulletTrail.GetComponent<LineRenderer>().material;
+            start.GetComponent<LineRenderer>().SetPosition(0, barrel.transform.position);
+
+            //bulletTrail.SetPosition(0, barrel.position);
 
             if (Physics.Raycast(rayOrigin, gunCam.transform.forward, out hit, range, 7))
             {
-                bulletTrail.SetPosition(1, hit.point);
+                start.gameObject.transform.position = hit.point;
+                start.GetComponent<LineRenderer>().SetPosition(1, hit.point);
+
+                //bulletTrail.SetPosition(1, hit.point);
                 //Instantiate(DPSNumbers, hit.point, transform.rotation);
 
                 if(hit.collider.tag == "Enemy")
@@ -638,19 +667,33 @@ public class FirearmScript : MonoBehaviour
                     {
                         if(hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                         {
-                            DPSNumbers.text = "Immune";
-                            dpsText.GetComponent<Text>().text += "\n" + "Immune";
+                            string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
+                            newDPSLine = indent + "Immune";
+                            currentDPSLine = newDPSLine + "\n" + currentDPSLine;
+                            dpsText.GetComponent<Text>().text = currentDPSLine;
                             dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                            dpsLinesClear = dpsLinesReset;
+
+                            DPSNumbers.text = "Immune";
+                            //dpsText.GetComponent<Text>().text += "\n" + "Immune";
+                            //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
                         }
 
                         else
                         {
-                            DPSNumbers.text = damage.ToString();
-                            dpsText.GetComponent<Text>().text += "\n" + damage.ToString();
+                            string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
+                            newDPSLine = indent + damage.ToString();
+                            currentDPSLine = newDPSLine + "\n" + currentDPSLine;
+                            dpsText.GetComponent<Text>().text = currentDPSLine;
                             dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                            dpsLinesClear = dpsLinesReset;
+
+                            DPSNumbers.text = damage.ToString();
+                            //dpsText.GetComponent<Text>().text += "\n" + damage.ToString();
+                            //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
                         }
 
-                        Instantiate(DPSNumbers, hit.point, transform.rotation);
+                        //Instantiate(DPSNumbers, hit.point, transform.rotation);
                         hit.collider.GetComponent<EnemyHealthScript>().inflictDamage(damage);
                         if(hit.collider.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                         {
@@ -697,19 +740,33 @@ public class FirearmScript : MonoBehaviour
                     {
                         if (hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                         {
-                            DPSNumbers.text = "Immune";
-                            dpsText.GetComponent<Text>().text += "\n" + "Immune";
+                            string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
+                            newDPSLine = indent + "Immune";
+                            currentDPSLine = newDPSLine + "\n" + currentDPSLine;
+                            dpsText.GetComponent<Text>().text = currentDPSLine;
                             dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                            dpsLinesClear = dpsLinesReset;
+
+                            DPSNumbers.text = "Immune";
+                            //dpsText.GetComponent<Text>().text += "\n" + "Immune";
+                            //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
                         }
 
                         else
                         {
-                            DPSNumbers.text = (damage / 2).ToString();
-                            dpsText.GetComponent<Text>().text += "\n" + (damage / 2).ToString();
+                            string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
+                            newDPSLine = indent + (damage / 2).ToString();
+                            currentDPSLine = newDPSLine + "\n" + currentDPSLine;
+                            dpsText.GetComponent<Text>().text = currentDPSLine;
                             dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                            dpsLinesClear = dpsLinesReset;
+
+                            DPSNumbers.text = (damage / 2).ToString();
+                            //dpsText.GetComponent<Text>().text += "\n" + (damage / 2).ToString();
+                            //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
                         }
 
-                        Instantiate(DPSNumbers, hit.point, transform.rotation);
+                        //Instantiate(DPSNumbers, hit.point, transform.rotation);
                         hit.collider.GetComponent<EnemyHealthScript>().inflictDamage(damage / 2);
                         if (hit.collider.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                         {
@@ -780,7 +837,10 @@ public class FirearmScript : MonoBehaviour
 
             else
             {
-                bulletTrail.SetPosition(1, rayOrigin + (gunCam.transform.forward * range));
+                //bulletTrail.SetPosition(1, rayOrigin + (gunCam.transform.forward * range));
+
+                start.gameObject.transform.position = rayOrigin + (gunCam.transform.forward * range);
+                start.GetComponent<LineRenderer>().SetPosition(1, rayOrigin + (gunCam.transform.forward * range));
             }
 
         }

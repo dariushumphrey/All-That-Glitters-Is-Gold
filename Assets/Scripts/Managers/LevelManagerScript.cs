@@ -127,6 +127,7 @@ public class LevelManagerScript : MonoBehaviour
     {
         if(setting == Setting.Navigation)
         {
+            Cursor.lockState = CursorLockMode.None;
             return;
         }
 

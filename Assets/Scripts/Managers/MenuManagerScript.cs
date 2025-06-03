@@ -35,6 +35,11 @@ public class MenuManagerScript : MonoBehaviour
 
     public void InitializeCampaignGame()
     {
+        levelManager.setting = LevelManagerScript.Setting.Campaign;
+        levelManager.gameSettingState = (int)caDifficulty.value;
+        levelManager.level = (int)caLevel.value;
+
+        levelManager.LoadScene();
 
     }
 

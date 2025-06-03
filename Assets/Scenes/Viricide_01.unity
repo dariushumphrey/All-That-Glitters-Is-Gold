@@ -199,7 +199,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -3172,15 +3172,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 51
-    m_Alignment: 6
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 0.65
-  m_Text: '
-
-'
+    m_LineSpacing: 0.75
+  m_Text: 
 --- !u!222 &131296330
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -40662,26 +40660,6 @@ Transform:
   m_Father: {fileID: 229571575}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2097463541 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 722000160554778757, guid: 7f844c855b4288f45a69611ce3f1531b, type: 3}
-  m_PrefabInstance: {fileID: 1957537512}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2097463551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2097463541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a4ffaa2bb559f341a21f6c225336d55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meleeDamage: 5000
-  meleeRange: 3
-  meleeSpeed: 5
 --- !u!1 &2097528011
 GameObject:
   m_ObjectHideFlags: 0
