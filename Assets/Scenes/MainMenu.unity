@@ -1636,7 +1636,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 292639395}
   m_Direction: 0
   m_MinValue: 1
-  m_MaxValue: 1
+  m_MaxValue: 2
   m_WholeNumbers: 1
   m_Value: 1
   m_OnValueChanged:
@@ -5603,8 +5603,8 @@ MonoBehaviour:
 
     A
     vermin threat infects the Resplendent from the top down in the aftermath of a
-    terrorist attack. The station now silently sits, shining and sickly. Investigate
-    the damage.'
+    terrorist attack. Now unresponsive, and before any repairs can be done, the danger
+    must be upended.'
 --- !u!222 &1796270983
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6051,8 +6051,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 1145075902}
   m_HandleRect: {fileID: 1846742962}
   m_Direction: 0
-  m_MinValue: 2
-  m_MaxValue: 2
+  m_MinValue: 3
+  m_MaxValue: 3
   m_WholeNumbers: 1
   m_Value: 2
   m_OnValueChanged:

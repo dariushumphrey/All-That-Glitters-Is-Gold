@@ -15,7 +15,7 @@ public class EnemyManagerScript : MonoBehaviour
     public float lucentThreshold; //A goal number to be at or below in order to spawn Lucent
     //This value governs the escalation or de-escalation of Lucent drop rates as Difficulty increases (though this Script will increase it through Rarity)
     //-Increasing this number increases lucentThreshold, spawning Lucent drops more frequently
-    //-Inversely, turning this value negative decreases dropThreshold, spawning Lucent drops less frequently
+    //-Inversely, turning this value negative decreases lucentThreshold, spawning Lucent drops less frequently
     public float lucentPercent = -4.25f;
 
     public GameObject loot, exoticLoot, lucent;

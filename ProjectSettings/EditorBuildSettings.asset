@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Lvl_01.unity
     guid: d4438eda513e56b4fa2dec36ae97f87d
   - enabled: 1
+    path: Assets/Scenes/Lvl_02.unity
+    guid: c733adbe052740349b8cde001853104b
+  - enabled: 1
     path: Assets/Scenes/Viricide_01.unity
     guid: febf45ee1fc99a148ad5e7b640158a47
   m_configObjects: {}

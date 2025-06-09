@@ -223,6 +223,11 @@ public class LevelManagerScript : MonoBehaviour
         VanishPauseMenu();
     }
 
+    public void SaveInventory()
+    {
+        player.GetComponent<PlayerInventoryScript>().WriteOnReset();
+    }
+
     public void RestartGame()
     {
         player.GetComponent<PlayerInventoryScript>().WriteOnReset();

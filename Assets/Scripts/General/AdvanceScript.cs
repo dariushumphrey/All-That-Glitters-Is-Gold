@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AdvanceScript : MonoBehaviour
 {
+    public int levelIndex = 0;
+    public bool incomingMenu;
     private LevelManagerScript level;
     // Start is called before the first frame update
     void Start()
@@ -21,7 +23,17 @@ public class AdvanceScript : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            level.ReturnToMainMenu();
+            if(incomingMenu)
+            {
+                level.ReturnToMainMenu();
+            }
+
+            else
+            {
+                level.level = levelIndex;
+                level.SaveInventory();
+                level.LoadScene();
+            }           
         }
     }
 }
