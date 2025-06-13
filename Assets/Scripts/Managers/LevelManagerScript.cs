@@ -26,12 +26,16 @@ public class LevelManagerScript : MonoBehaviour
     public GameObject kioskAdjust;
 
     public int level = 0;
+    public float gameTime = 0f;
+    public Text eogStatsText;
     public GameObject pauseMenu, resultsMenu;
+
     private float gameEndDelay = 10f;
     private bool paused = false;
-    internal bool gameComplete = false;
     private GameObject continueButton, restartButton, quitButton, mainMenuButton;
     private GameObject menuReturnButton;
+    internal bool gameComplete = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +57,7 @@ public class LevelManagerScript : MonoBehaviour
                     gameComplete = false;
                 }
 
+                gameTime = 0f;
                 return;
             }
 
@@ -78,7 +83,6 @@ public class LevelManagerScript : MonoBehaviour
         {
             chests[c].GetComponent<LootScript>().raritySpawn = gameSettingState;
             chests[c].GetComponent<LootScript>().SpawnDrop();
-
         }
 
         spawners = GameObject.FindGameObjectsWithTag("Spawner");
@@ -108,7 +112,6 @@ public class LevelManagerScript : MonoBehaviour
         mainMenuButton.GetComponent<Button>().onClick.AddListener(ReturnToMainMenu);
 
         pauseMenu.gameObject.SetActive(false);
-
 
         resultsMenu = GameObject.Find("completeBG");
         menuReturnButton = GameObject.Find("menuReturnButton");
@@ -141,6 +144,12 @@ public class LevelManagerScript : MonoBehaviour
                     LoadScene();
                 }
             }
+
+            gameTime += Time.deltaTime;
+            //missionTimerText.gameObject.SetActive(false);
+            //DisplayTimer(gametype.gameTimer);
+            //missionTimerText.gameObject.SetActive(false);
+            //missionTimerText = GameObject.Find("MissionTimer");
 
             if (Input.GetKeyDown(KeyCode.Escape) && !gameComplete)
             {
@@ -181,9 +190,18 @@ public class LevelManagerScript : MonoBehaviour
                     {
                         pauseMenu.gameObject.SetActive(false);
                     }
-                    //paused = true;
 
+                    Cursor.lockState = CursorLockMode.None;
+                    
+                    float minutes = Mathf.FloorToInt(gameTime / 60);
+                    float seconds = Mathf.FloorToInt(gameTime % 60);
+                    //paused = true;
                     resultsMenu.gameObject.SetActive(true);
+                    eogStatsText.text = "Viricide Accomplished:" + "\n" +
+                        "Time: " + string.Format("{0:00}:{1:00}", minutes, seconds) + "\n" +
+                        "Kills: " + manager.killCount + "\n" +
+                        "Damage Dealt: " + manager.damageReceived.ToString("N0") + "\n" +
+                        "Damage Received: " + manager.damageDealt.ToString("N0");
                 }
             }
         }     
@@ -262,4 +280,11 @@ public class LevelManagerScript : MonoBehaviour
     {
         page.gameObject.SetActive(false);
     }
+
+    //void DisplayTimer(float timer)
+    //{
+    //    float minutes = Mathf.FloorToInt(timer / 60);
+    //    float seconds = Mathf.FloorToInt(timer % 60);
+    //    missionTimerText.GetComponent<Text>().text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    //}
 }

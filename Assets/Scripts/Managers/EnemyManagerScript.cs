@@ -19,13 +19,17 @@ public class EnemyManagerScript : MonoBehaviour
     public float lucentPercent = -4.25f;
 
     public GameObject loot, exoticLoot, lucent;
-    public GameObject[] enemies;
+    public List<GameObject> combatants = new List<GameObject>();
+    private GameObject[] enemies;
     public bool enemyDied = false;
 
     private float dropThreshReset;
     private int deathRewardChance;
     internal int cadenceDeadCount = 0;
     internal Vector3 slainPosition, woundedPosition;
+    internal int killCount = 0;
+    internal int damageReceived = 0;
+    internal int damageDealt = 0;
     private PlayerInventoryScript player;
 
     // Start is called before the first frame update
@@ -42,30 +46,14 @@ public class EnemyManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-        if (enemyDied == true)
+        //enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if(enemyDied)
         {
             //cadenceDeadCount++;
+            killCount++;
             enemyDied = false;
             //StartCoroutine(EnemyDiedReset());
         }
-
-        for (int e = 0; e < enemies.Length; e++)
-        {
-            if (enemies[e].GetComponent<EnemyHealthScript>().healthCurrent <= 0)
-            {
-                enemyDied = true;
-                //if (enemies[e].GetComponent<EnemyHealthScript>().isDummy == true)
-                //{
-                //    //return;
-                //}
-
-                //enemies[e] = null;            
-                StartCoroutine(EnemyDiedReset());
-                //DeathReward();              
-            }           
-        }              
     }
 
     void RarityCheck()
@@ -225,10 +213,25 @@ public class EnemyManagerScript : MonoBehaviour
         rewardTwo.GetComponent<LucentScript>().ShatterCalculation();
         rewardTwo.name = loot.name;
     }
-
-    public IEnumerator EnemyDiedReset()
+   
+    public void CatalogEnemies()
     {
-        yield return new WaitForSeconds(0.001f);
-        enemyDied = false;
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            combatants.Add(enemy);
+        }
+    }
+
+    public void RemoveEnemies()
+    {
+        for (int e = 0; e < combatants.Count; e++)
+        {
+            if (combatants[e].GetComponent<EnemyHealthScript>().healthCurrent <= 0)
+            {
+                combatants.Remove(combatants[e]);
+                
+            }
+        }
     }
 }

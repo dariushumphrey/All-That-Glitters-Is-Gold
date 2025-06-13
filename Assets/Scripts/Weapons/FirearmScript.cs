@@ -106,6 +106,8 @@ public class FirearmScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DeconfirmKill();
+
         if(Time.timeScale == 0)
         {
             return;
@@ -732,7 +734,6 @@ public class FirearmScript : MonoBehaviour
                             //{
                             //    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 0.5f, ForceMode.Impulse);
                             //}
-
                         }
                     }
 
@@ -805,6 +806,7 @@ public class FirearmScript : MonoBehaviour
                             //{
                             //    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 0.5f, ForceMode.Impulse);
                             //}
+
                         }
                     }
 
@@ -826,6 +828,7 @@ public class FirearmScript : MonoBehaviour
                             hit.collider.GetComponent<EnemyFollowerScript>().leader.Pursuit();
                         }
                     }
+
                 }
 
                 if (hit.collider.tag == "Lucent")
@@ -875,8 +878,15 @@ public class FirearmScript : MonoBehaviour
     {
         yield return new WaitForSeconds(0.01f);
         confirmHit = false;
+    }
 
-    }    
+    public virtual void DeconfirmKill()
+    {
+        if(confirmKill)
+        {
+            confirmKill = false;
+        }
+    }
 
     //The Following method helps Cadence determine where to spawn Lucent clusters.
     public virtual void FatedCadenceRewardPosition(Vector3 shotPosition)

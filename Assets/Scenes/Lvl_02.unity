@@ -11053,14 +11053,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropRarity: 1
   lucentYield: 2500
-  dropThreshold: 30
+  dropThreshold: 15
   dropPercent: -10
   lucentThreshold: 20
   lucentPercent: 10
   loot: {fileID: 8142452723782106145, guid: 18936b7a51b7a64459dd409e2262c2fb, type: 3}
   exoticLoot: {fileID: 8142452723782106145, guid: ec80dd49abe7a68478a9711d5ceac05b, type: 3}
   lucent: {fileID: 130336942800207938, guid: 7320e224a8085bb48baf1c3368d58ca0, type: 3}
-  enemies: []
+  combatants: []
   enemyDied: 0
 --- !u!4 &424555190
 Transform:
@@ -44024,6 +44024,8 @@ MonoBehaviour:
   - {fileID: 0}
   kioskAdjust: {fileID: 0}
   level: 2
+  gameTime: 0
+  eogStatsText: {fileID: 0}
   pauseMenu: {fileID: 360493692}
   resultsMenu: {fileID: 259422361}
 --- !u!4 &1615753149

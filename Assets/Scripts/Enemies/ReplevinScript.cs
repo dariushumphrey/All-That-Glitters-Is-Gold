@@ -57,6 +57,7 @@ public class ReplevinScript : MonoBehaviour
 
     internal NavMeshAgent self;
     private EnemyHealthScript enemy;
+    private EnemyManagerScript manager;
     internal BossManagerScript boss; //For bosses only -- Used to spawn enemies when returning immune
     private Vector3 focus;
     private Vector3 distance, lastKnownDistance;
@@ -102,6 +103,7 @@ public class ReplevinScript : MonoBehaviour
         waypointNext = Random.Range(0, waypoint.Length);
         player = GameObject.FindGameObjectWithTag("Player");
         enemy = GetComponent<EnemyHealthScript>();
+        manager = FindObjectOfType<EnemyManagerScript>();
 
         if(amBoss)
         {
@@ -380,9 +382,10 @@ public class ReplevinScript : MonoBehaviour
                                     //knockbackDir.y = 0;
                                     hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
 
+                                    manager.damageDealt += damage;
+
                                     attackLock = false;
                                     meleeAttackTimer = meleeReset;
-
 
                                     //if (GetComponent<EnemyFollowerScript>() != null)
                                     //{
@@ -494,6 +497,7 @@ public class ReplevinScript : MonoBehaviour
 
                         projectile.AddComponent<ProjectileScript>();
                         projectile.GetComponent<ProjectileScript>().damage = damage;
+
                     }
                 }
             }
@@ -573,7 +577,7 @@ public class ReplevinScript : MonoBehaviour
 
                 self.SetDestination(lastPlayerPosition);
                 lastKnownDistance = lastPlayerPosition - transform.position;
-                Debug.Log(lastKnownDistance.magnitude + " | " + self.stoppingDistance);
+                //Debug.Log(lastKnownDistance.magnitude + " | " + self.stoppingDistance);
 
                 if(lastKnownDistance.magnitude <= chargeLimit)
                 {
@@ -614,6 +618,8 @@ public class ReplevinScript : MonoBehaviour
                             Vector3 knockbackDir = -hit.collider.transform.forward;
                             knockbackDir.y = 0;
                             hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * chargeAttackForce);
+
+                            manager.damageDealt += damage;
 
                             //if (GetComponent<EnemyFollowerScript>() != null)
                             //{
@@ -736,6 +742,8 @@ public class ReplevinScript : MonoBehaviour
                         hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
                         hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
 
+                        manager.damageDealt += damage;
+
                         slamTimeout = true;
                         canAttackAgain = false;
                     }
@@ -814,6 +822,8 @@ public class ReplevinScript : MonoBehaviour
                         Vector3 knockbackDir = transform.forward;
                         knockbackDir.y = 0;
                         hitTheSequel.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
+
+                        manager.damageDealt += damage;
 
                         slamTimeout = true;
                         canAttackAgain = false;

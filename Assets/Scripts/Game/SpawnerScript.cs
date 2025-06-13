@@ -10,6 +10,7 @@ public class SpawnerScript : MonoBehaviour
     public Vector3 spawnArena;
     public List<GameObject> spawned = new List<GameObject>();
     public List<GameObject> spawnedCluster = new List<GameObject>();
+    private EnemyManagerScript enemy;
 
     public Collider field;
     private Bounds spawnField;
@@ -17,6 +18,7 @@ public class SpawnerScript : MonoBehaviour
     void Start()
     {
         DifficultyCorrection();
+        enemy = FindObjectOfType<EnemyManagerScript>();
     }
 
     void DifficultyCorrection()
@@ -86,6 +88,7 @@ public class SpawnerScript : MonoBehaviour
                     //GetComponent<BoxCollider>().enabled = false;
                 }
 
+                enemy.CatalogEnemies();
                 gameObject.SetActive(false);
             }
             
@@ -97,6 +100,7 @@ public class SpawnerScript : MonoBehaviour
                     //GetComponent<BoxCollider>().enabled = false;
                 }
 
+                enemy.CatalogEnemies();
                 gameObject.SetActive(false);
 
             }

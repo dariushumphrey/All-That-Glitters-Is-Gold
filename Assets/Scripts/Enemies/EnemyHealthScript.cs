@@ -82,7 +82,7 @@ public class EnemyHealthScript : MonoBehaviour
                 return;
             }
 
-            manager.enemyDied = true;
+            //manager.enemyDied = true;
             EnemyDeath();
         }
     }
@@ -248,6 +248,7 @@ public class EnemyHealthScript : MonoBehaviour
 
         enemyHit = true;
         damageHit = damageTaken;
+        manager.damageReceived += damageHit;
 
         if(healthBar.gameObject.activeInHierarchy != true)
         {
@@ -285,7 +286,8 @@ public class EnemyHealthScript : MonoBehaviour
                 Instantiate(ammoReward, transform.position, transform.rotation);
             }
 
-            //manager.enemyDied = true;
+            manager.enemyDied = true;
+            manager.RemoveEnemies();
             manager.DeathReward(transform.position);
 
             manager.CadenceRewardPosition(gameObject.transform.position); //For Cadence positioning only

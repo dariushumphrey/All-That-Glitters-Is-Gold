@@ -5,10 +5,11 @@ using UnityEngine;
 public class ProjectileScript : MonoBehaviour
 {
     public int damage = 100;
+    private EnemyManagerScript manager;
     // Start is called before the first frame update
     void Start()
     {
-
+        manager = FindObjectOfType<EnemyManagerScript>();
     }
 
     // Update is called once per frame
@@ -21,7 +22,9 @@ public class ProjectileScript : MonoBehaviour
     {
         if(collision.collider.gameObject.tag == "Player")
         {
+            manager.damageDealt += damage;
             Destroy(gameObject);
+
         }
     }
 
@@ -30,7 +33,9 @@ public class ProjectileScript : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             other.gameObject.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+            manager.damageDealt += damage;
             Destroy(gameObject);
+
         }
     }
 }
