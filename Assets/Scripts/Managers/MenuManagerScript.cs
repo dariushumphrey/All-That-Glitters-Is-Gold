@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class MenuManagerScript : MonoBehaviour
 {
+    public Button vcButton;
     public Slider vcDifficulty, vcLevel, caDifficulty, caLevel;
     private LevelManagerScript levelManager;
     private void Awake()
@@ -15,7 +16,7 @@ public class MenuManagerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Progression();
     }
 
     // Update is called once per frame
@@ -56,5 +57,40 @@ public class MenuManagerScript : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void Progression()
+    {
+        if (PlayerPrefs.GetInt("unlockLevel02") == 1)
+        {
+            caLevel.maxValue = 2;
+        }
+
+        else
+        {
+            caLevel.maxValue = 1;
+        }
+
+        if (PlayerPrefs.GetInt("unlockDifficulty5") == 1)
+        {
+            caDifficulty.maxValue = 5;
+            vcDifficulty.maxValue = 5;
+        }
+
+        else
+        {
+            caDifficulty.maxValue = 4;
+            vcDifficulty.maxValue = 4;
+        }
+
+        if (PlayerPrefs.GetInt("unlockViricide") == 1)
+        {
+            vcButton.interactable = true;
+        }
+
+        else
+        {
+            vcButton.interactable = false;
+        }
     }
 }

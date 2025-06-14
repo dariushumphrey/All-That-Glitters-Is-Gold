@@ -25,15 +25,66 @@ public class AdvanceScript : MonoBehaviour
         {
             if(incomingMenu)
             {
+                if (level.setting == LevelManagerScript.Setting.Campaign)
+                {
+                    CheckForLevelEntitlement();
+                    CheckForDifficultyEntitlement();
+                    CheckForViricideEntitlement();
+                }               
+
                 level.ReturnToMainMenu();
             }
 
             else
             {
+                if(level.setting == LevelManagerScript.Setting.Campaign)
+                {
+                    CheckForLevelEntitlement();
+                }
+
                 level.level = levelIndex;
                 level.SaveInventory();
                 level.LoadScene();
             }           
+        }
+    }
+
+    void CheckForLevelEntitlement()
+    {
+        if (PlayerPrefs.GetInt("unlockLevel02") == 1)
+        {
+            return;
+        }
+
+        else
+        {
+            PlayerPrefs.SetInt("unlockLevel02", 1);
+        }
+    }
+
+    void CheckForDifficultyEntitlement()
+    {
+        if (PlayerPrefs.GetInt("unlockDifficulty5") == 1)
+        {
+            return;
+        }
+
+        else
+        {
+            PlayerPrefs.SetInt("unlockDifficulty5", 1);
+        }
+    }
+
+    void CheckForViricideEntitlement()
+    {
+        if (PlayerPrefs.GetInt("unlockViricide") == 1)
+        {
+            return;
+        }
+
+        else
+        {
+            PlayerPrefs.SetInt("unlockViricide", 1);
         }
     }
 }

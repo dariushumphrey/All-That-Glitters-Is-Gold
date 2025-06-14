@@ -46,7 +46,7 @@ public class EnemyManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
         if(enemyDied)
         {
             //cadenceDeadCount++;
@@ -216,6 +216,7 @@ public class EnemyManagerScript : MonoBehaviour
    
     public void CatalogEnemies()
     {
+        combatants.Clear();
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemies)
         {
@@ -224,7 +225,7 @@ public class EnemyManagerScript : MonoBehaviour
     }
 
     public void RemoveEnemies()
-    {
+    {       
         for (int e = 0; e < combatants.Count; e++)
         {
             if (combatants[e].GetComponent<EnemyHealthScript>().healthCurrent <= 0)

@@ -4031,6 +4031,8 @@ MonoBehaviour:
   spawners: []
   kioskAdjust: {fileID: 0}
   level: 0
+  gameTime: 0
+  eogStatsText: {fileID: 0}
   pauseMenu: {fileID: 0}
   resultsMenu: {fileID: 0}
 --- !u!4 &1192333462
@@ -4588,6 +4590,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1444989667}
   m_CullTransparentMesh: 1
+--- !u!1 &1475215321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1475215323}
+  - component: {fileID: 1475215322}
+  m_Layer: 0
+  m_Name: PlayerPrefsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1475215322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475215321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c53b53340a9eb74fb11a4bb6e6720c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1475215323
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475215321}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 106.87532, y: 9.814047, z: 29.004608}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1503034344
 GameObject:
   m_ObjectHideFlags: 0
@@ -5792,6 +5837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8395577a2f97df44299226f90be9a456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vcButton: {fileID: 90193947}
   vcDifficulty: {fileID: 250760821}
   vcLevel: {fileID: 2057322032}
   caDifficulty: {fileID: 1765459321}

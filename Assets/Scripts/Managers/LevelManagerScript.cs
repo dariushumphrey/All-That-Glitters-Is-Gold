@@ -82,7 +82,7 @@ public class LevelManagerScript : MonoBehaviour
         for(int c = 0; c < chests.Length; c++)
         {
             chests[c].GetComponent<LootScript>().raritySpawn = gameSettingState;
-            chests[c].GetComponent<LootScript>().SpawnDrop();
+            //chests[c].GetComponent<LootScript>().SpawnDrop();
         }
 
         spawners = GameObject.FindGameObjectsWithTag("Spawner");
@@ -233,7 +233,7 @@ public class LevelManagerScript : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         Start();
-    }
+    }    
 
     public void ResumeGame()
     {
