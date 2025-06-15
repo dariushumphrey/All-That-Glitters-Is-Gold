@@ -1745,7 +1745,7 @@ RectTransform:
   - {fileID: 353367324}
   - {fileID: 1504173094}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2533,7 +2533,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &701196809
 GameObject:
@@ -2838,8 +2838,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 250.86, y: -128}
-  m_SizeDelta: {x: 778.2504, y: 464}
+  m_AnchoredPosition: {x: 247.18384, y: -124.32388}
+  m_SizeDelta: {x: 770.8981, y: 456.6478}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &820031278
 MonoBehaviour:
@@ -2861,8 +2861,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 2
+  m_Sprite: {fileID: 21300000, guid: 580435a41c7471a4c8fe39d71fbdaf18, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3445,7 +3445,7 @@ Transform:
   m_LocalScale: {x: 10000, y: 10000, z: 10000}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 33.073, y: 10.874, z: 5.984}
 --- !u!1 &1035351117
 GameObject:
@@ -4119,12 +4119,12 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.05
-  m_Text: "W - Forward\r\nA - Left\r\nS - Backward\r\nD - Right\r\nX - Dismantle
-    Active Item\r\nE - Interact/Buy Weapon (at Kiosk)\r\nQ - Raise Rarity (at Kiosk)\r\nSpace
-    - Activate Cheat (When applicable)\r\nF - Melee\nMouse Button 0 - Fire\r\nMouse
-    Button 1  - Aim\r\nUp Arrow - Show Inventory\r\nDown Arrow - Hide Inventory\r\nLeft
-    Arrow - Switch Weapon (left)\r\nRight Arrow - Switch Weapon (right)\r\n\u20181\u2019
-    - Lock Cursor\r\n\u20182\u2019 - Unlock Cursor\r\nEsc - Pause\r\n"
+  m_Text: "\nW - Forward\r\nA - Left\r\nS - Backward\r\nD - Right\r\nX - Dismantle
+    Active Item\r\nSpace - Activate Cheat (When applicable)\r\nF - Melee\nMouse Button
+    0 - Fire\r\nMouse Button 1  - Aim\r\nUp Arrow - Show Inventory\r\nDown Arrow
+    - Hide Inventory\r\nLeft Arrow - Switch Weapon (left)\r\nRight Arrow - Switch
+    Weapon (right)\r\n\u20181\u2019 - Lock Cursor\r\n\u20182\u2019 - Unlock Cursor\r\nEsc
+    - Pause\r"
 --- !u!222 &1214180145
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4631,7 +4631,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1503034344
 GameObject:
@@ -5054,8 +5054,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 250.86, y: -128}
-  m_SizeDelta: {x: 778.2504, y: 464}
+  m_AnchoredPosition: {x: 247.54999, y: -124.304504}
+  m_SizeDelta: {x: 771.6468, y: 456.609}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1707311916
 MonoBehaviour:
@@ -5077,11 +5077,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 2
+  m_Sprite: {fileID: 21300000, guid: 9fd246b6272cbd949853392938b6a7e1, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -5837,6 +5837,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8395577a2f97df44299226f90be9a456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  caThumbnail: {fileID: 1707311916}
+  vcThumbnail: {fileID: 820031278}
+  caLevelOne: {fileID: 21300000, guid: 9fd246b6272cbd949853392938b6a7e1, type: 3}
+  caLevelTwo: {fileID: 21300000, guid: 58d36a8d50618d84293aaa0238479fc2, type: 3}
+  vcLevelOne: {fileID: 21300000, guid: 580435a41c7471a4c8fe39d71fbdaf18, type: 3}
+  caDiffText: {fileID: 1444989669}
+  vcDiffText: {fileID: 829714510}
+  caLevelText: {fileID: 565712413}
+  vcLevelText: {fileID: 762924663}
   vcButton: {fileID: 90193947}
   vcDifficulty: {fileID: 250760821}
   vcLevel: {fileID: 2057322032}
@@ -6100,7 +6109,7 @@ MonoBehaviour:
   m_MinValue: 3
   m_MaxValue: 3
   m_WholeNumbers: 1
-  m_Value: 2
+  m_Value: 3
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

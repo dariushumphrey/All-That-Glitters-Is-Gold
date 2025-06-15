@@ -23,14 +23,14 @@ public class WaitNowImReady : MonoBehaviour
         {
             shieldPercent = 20f;
             shieldPercent /= 100;
-            shieldPercent *= player.playerShield;
+            shieldPercent *= player.playerShieldMax;
             shieldGain = (int)shieldPercent;
         }
 
         else
         {
             shieldPercent /= 100;
-            shieldPercent *= player.playerShield;
+            shieldPercent *= player.playerShieldMax;
             shieldGain = (int)shieldPercent;
         }
 

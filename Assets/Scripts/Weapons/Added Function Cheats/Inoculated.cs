@@ -26,14 +26,14 @@ public class Inoculated : MonoBehaviour
         {
             healthPercent = 10f;
             healthPercent /= 100;
-            healthPercent *= player.playerHealth;
+            healthPercent *= player.playerHealthMax;
             healthGain = (int)healthPercent;
         }
 
         else
         {
             healthPercent /= 100;
-            healthPercent *= player.playerHealth;
+            healthPercent *= player.playerHealthMax;
             healthGain = (int)healthPercent;
         }
     }

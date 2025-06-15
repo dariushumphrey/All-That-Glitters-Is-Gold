@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class MenuManagerScript : MonoBehaviour
 {
+    public Image caThumbnail, vcThumbnail;
+    public Sprite caLevelOne, caLevelTwo, vcLevelOne;
+    public Text caDiffText, vcDiffText, caLevelText, vcLevelText;
     public Button vcButton;
     public Slider vcDifficulty, vcLevel, caDifficulty, caLevel;
     private LevelManagerScript levelManager;
@@ -22,7 +25,27 @@ public class MenuManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(caLevel.value == 1)
+        {
+            caThumbnail.sprite = caLevelOne;
+        }
+
+        else if (caLevel.value == 2)
+        {
+            caThumbnail.sprite = caLevelTwo;
+        }
+
+
+        if (vcLevel.value == 1)
+        {
+            vcThumbnail.sprite = vcLevelOne;
+        }
+
+        caDiffText.text = "Difficulty: " + caDifficulty.value;
+        vcDiffText.text = "Difficulty: " + vcDifficulty.value;
+
+        caLevelText.text = "Level " + caLevel.value;
+        vcLevelText.text = "Viricide: " + (vcLevel.value - 2);
     }
 
     public void InitializeViricideGame()

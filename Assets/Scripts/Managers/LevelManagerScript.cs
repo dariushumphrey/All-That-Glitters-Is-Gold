@@ -27,7 +27,7 @@ public class LevelManagerScript : MonoBehaviour
 
     public int level = 0;
     public float gameTime = 0f;
-    public Text eogStatsText;
+    public GameObject eogStatsText;
     public GameObject pauseMenu, resultsMenu;
 
     private float gameEndDelay = 10f;
@@ -114,9 +114,10 @@ public class LevelManagerScript : MonoBehaviour
         pauseMenu.gameObject.SetActive(false);
 
         resultsMenu = GameObject.Find("completeBG");
+        eogStatsText = GameObject.Find("completeText");
         menuReturnButton = GameObject.Find("menuReturnButton");
         menuReturnButton.GetComponent<Button>().onClick.AddListener(ReturnToMainMenu);
-        resultsMenu.gameObject.SetActive(false);
+        resultsMenu.gameObject.SetActive(false);      
 
         if (Time.timeScale != 1)
         {
@@ -197,7 +198,7 @@ public class LevelManagerScript : MonoBehaviour
                     float seconds = Mathf.FloorToInt(gameTime % 60);
                     //paused = true;
                     resultsMenu.gameObject.SetActive(true);
-                    eogStatsText.text = "Viricide Accomplished:" + "\n" +
+                    eogStatsText.gameObject.GetComponent<Text>().text = "Viricide Accomplished:" + "\n" +
                         "Time: " + string.Format("{0:00}:{1:00}", minutes, seconds) + "\n" +
                         "Kills: " + manager.killCount + "\n" +
                         "Damage Dealt: " + manager.damageReceived.ToString("N0") + "\n" +

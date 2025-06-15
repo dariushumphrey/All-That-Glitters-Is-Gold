@@ -30,6 +30,7 @@ Shader "Custom/NewStandard"
             // Albedo comes from a texture tinted by color
 			fixed4 c = _Color;
             o.Albedo = c.rgb;
+			//o.Alpha = c.a;
         }
         ENDCG
     }

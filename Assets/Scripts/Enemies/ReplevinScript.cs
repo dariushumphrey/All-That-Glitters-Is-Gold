@@ -691,6 +691,12 @@ public class ReplevinScript : MonoBehaviour
                         //lastKnownDistance = lastPlayerPosition - transform.position;
                         recorded = true;
 
+                        if (gameObject.GetComponent<Rigidbody>() == null)
+                        {
+                            gameObject.AddComponent<Rigidbody>();
+                            gameObject.GetComponent<Rigidbody>().freezeRotation = true;
+                        }
+
                         gameObject.GetComponent<Rigidbody>().AddForce((lastPlayerPosition + Vector3.up) * jumpForce, ForceMode.Impulse);
                         //Debug.Log(lastPlayerPosition);
                         //Debug.Log(lastKnownDistance.magnitude);
@@ -701,6 +707,7 @@ public class ReplevinScript : MonoBehaviour
 
                 if (AmIGrounded())
                 {
+
                     airtimeShort -= Time.deltaTime;
                     if (airtimeShort <= 0f)
                     {
@@ -755,8 +762,14 @@ public class ReplevinScript : MonoBehaviour
                 if (self.enabled == false)
                 {
                     self.enabled = true;
-                    gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                    gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+                    if (gameObject.GetComponent<Rigidbody>() != null)
+                    {
+                        Destroy(gameObject.GetComponent<Rigidbody>());
+                    }
+
+                    //gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                    //gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
                 }
 

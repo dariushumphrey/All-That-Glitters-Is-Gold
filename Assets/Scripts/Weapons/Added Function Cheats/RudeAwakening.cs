@@ -114,6 +114,22 @@ public class RudeAwakening : MonoBehaviour
                     if (hit.GetComponent<EnemyHealthScript>() != null)
                     {
                         hit.GetComponent<EnemyHealthScript>().inflictDamage(waveDamage);
+                        //if (hit.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
+                        //{
+                        //    if(hit.GetComponent<Rigidbody>() != null)
+                        //    {
+                        //        hit.GetComponent<Rigidbody>().AddExplosionForce(30f, epicenter, 7.5f, 40.0f, ForceMode.Impulse);
+                        //    }
+
+                        //    else
+                        //    {
+                        //        hit.gameObject.AddComponent<Rigidbody>();
+                        //        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                        //        gameObject.GetComponent<Rigidbody>().freezeRotation = false;
+
+                        //        hit.GetComponent<Rigidbody>().AddExplosionForce(30f, epicenter, 7.5f, 40.0f, ForceMode.Impulse);
+                        //    }
+                        //}
                     }
                 }
 

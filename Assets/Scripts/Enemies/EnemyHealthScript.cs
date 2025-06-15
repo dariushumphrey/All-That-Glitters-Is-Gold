@@ -327,11 +327,17 @@ public class EnemyHealthScript : MonoBehaviour
             if(gameObject.GetComponent<Rigidbody>() == null)
             {
                 gameObject.AddComponent<Rigidbody>();
+                gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                gameObject.GetComponent<Rigidbody>().freezeRotation = false;
             }
-          
-            //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+
+            else
+            {
+                gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                gameObject.GetComponent<Rigidbody>().freezeRotation = false;
+            }
+
             visual.gameObject.SetActive(false);
-            //gameObject.GetComponent<Rigidbody>().freezeRotation = false;
             done = true;
         }
 
