@@ -11053,7 +11053,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropRarity: 1
   lucentYield: 2500
-  dropThreshold: 10
+  dropThreshold: 7.5
   dropPercent: -10
   lucentThreshold: 20
   lucentPercent: 10
