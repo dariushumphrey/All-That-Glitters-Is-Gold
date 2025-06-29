@@ -62,84 +62,109 @@ public class FirearmScript : MonoBehaviour
     internal int fcnChtOne;
     internal int fcnChtTwo;
     public bool saved; // If checked, weapon will not generate cheats for itself -- savable weapons only
+    public bool display; //If checked, Weapon will not do anything -- for Inventory screen only
 
     void Awake()
     {
-        procOne = GameObject.Find("weaponCheatText (1)");
-        if(procOne.GetComponent<Text>() != null)
-        {
-            procOne.GetComponent<Text>().text = " ";
-        }
-
-        procTwo = GameObject.Find("weaponCheatText (2)");
-        if (procTwo.GetComponent<Text>() != null)
-        {
-            procTwo.GetComponent<Text>().text = " ";
-        }
-
-        dpsText = GameObject.Find("dpsText");
-        //if (dpsText.GetComponent<Text>() != null)
-        //{
-        //    dpsText.GetComponent<Text>().text = " ";
-        //}
-        dpsLinesReset = dpsLinesClear;
-
-        RarityAugment();
-        AmmoCheats();
-        RangeCheats();
-        ReloadSpeedCheats();
-        CheatGenerator();
-        enabled = false;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        bulletTrail = GetComponent<LineRenderer>();
-        inv = FindObjectOfType<PlayerInventoryScript>();
-        gunCam = Camera.main;
-        confirmHit = false;
-        confirmKill = false;
-        reloadReset = reloadSpeed;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        DeconfirmKill();
-
-        if(Time.timeScale == 0)
+        if(display)
         {
             return;
         }
 
         else
         {
-            DPSNumbers.text = damage.ToString();
-            if(currentDPSLine.Length != 0)
+            procOne = GameObject.Find("weaponCheatText (1)");
+            if (procOne.GetComponent<Text>() != null)
             {
-                dpsLinesClear -= Time.deltaTime;
-                if(dpsLinesClear <= 0f)
-                {
-                    currentDPSLine = "";
-                    dpsLinesClear = dpsLinesReset;
-                }
+                procOne.GetComponent<Text>().text = " ";
             }
 
-            AmmoReloadCheck();
-
-            if (isReloading)
+            procTwo = GameObject.Find("weaponCheatText (2)");
+            if (procTwo.GetComponent<Text>() != null)
             {
-                reloadSpeed -= Time.deltaTime;
-                if (reloadSpeed <= 0f)
-                {
-                    reloadSpeed = reloadReset;
-                    ReloadWeapon();
-                }
+                procTwo.GetComponent<Text>().text = " ";
             }
 
-            FireWeapon();
-        }         
+            dpsText = GameObject.Find("dpsText");
+            //if (dpsText.GetComponent<Text>() != null)
+            //{
+            //    dpsText.GetComponent<Text>().text = " ";
+            //}
+            dpsLinesReset = dpsLinesClear;
+
+            RarityAugment();
+            AmmoCheats();
+            RangeCheats();
+            ReloadSpeedCheats();
+            CheatGenerator();
+            enabled = false;
+        }      
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        if(display)
+        {
+            return;
+        }
+
+        else
+        {
+            bulletTrail = GetComponent<LineRenderer>();
+            inv = FindObjectOfType<PlayerInventoryScript>();
+            gunCam = Camera.main;
+            confirmHit = false;
+            confirmKill = false;
+            reloadReset = reloadSpeed;
+        }      
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(display)
+        {
+            return; 
+        }
+
+        else
+        {
+            DeconfirmKill();
+
+            if (Time.timeScale == 0)
+            {
+                return;
+            }
+
+            else
+            {
+                DPSNumbers.text = damage.ToString();
+                if (currentDPSLine.Length != 0)
+                {
+                    dpsLinesClear -= Time.deltaTime;
+                    if (dpsLinesClear <= 0f)
+                    {
+                        currentDPSLine = "";
+                        dpsLinesClear = dpsLinesReset;
+                    }
+                }
+
+                AmmoReloadCheck();
+
+                if (isReloading)
+                {
+                    reloadSpeed -= Time.deltaTime;
+                    if (reloadSpeed <= 0f)
+                    {
+                        reloadSpeed = reloadReset;
+                        ReloadWeapon();
+                    }
+                }
+
+                FireWeapon();
+            }
+        }       
     }
 
     public virtual void RarityAugment()

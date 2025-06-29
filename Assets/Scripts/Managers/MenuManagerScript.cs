@@ -7,13 +7,16 @@ public class MenuManagerScript : MonoBehaviour
 {
     public Image caThumbnail, vcThumbnail;
     public Sprite caLevelOne, caLevelTwo, vcLevelOne;
-    public Text caDiffText, vcDiffText, caLevelText, vcLevelText;
+    public Text caDiffText, vcDiffText, caLevelText, vcLevelText, invText;
     public Button vcButton;
     public Slider vcDifficulty, vcLevel, caDifficulty, caLevel;
     private LevelManagerScript levelManager;
+    private WeaponManagerScript weaponManager;
+
     private void Awake()
     {
         levelManager = FindObjectOfType<LevelManagerScript>();
+        weaponManager = FindObjectOfType<WeaponManagerScript>();
     }
 
     // Start is called before the first frame update
