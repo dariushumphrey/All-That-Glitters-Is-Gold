@@ -399,12 +399,16 @@ MonoBehaviour:
   aimAssistStrength: 0.15
   isExotic: 1
   flavorText: '"Isn''t it wonderful when we all do our part?" '
+  contactOnly:
+    serializedVersion: 2
+    m_Bits: 832
   gunCam: {fileID: 0}
   bulletTrail: {fileID: 699337693104839780}
   barrel: {fileID: 699337692789952376}
   DPSNumbers: {fileID: 5234994289257708790, guid: d5df90bddb669ef4fa3d8f2d8c2773a4, type: 3}
   reticle: {fileID: 21300000, guid: 77d8a4da14139db488713bdc3acc9d49, type: 3}
   saved: 0
+  display: 0
   pellets: 9
   spread: 0.3
 --- !u!1 &699337693747348053

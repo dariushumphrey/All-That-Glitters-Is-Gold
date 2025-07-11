@@ -13,16 +13,19 @@ public class PlayerInventoryScript : MonoBehaviour
     public List<GameObject> inventory = new List<GameObject>(10);
     public Transform gunPlace;
     public bool blueKey, redKey = false;
-    private Text weaponStatus, weaponLoad;
+    public Text weaponCurAmmo, weaponResAmmo, lucentText;
+    public Slider weaponLoad;
+    public Image weaponAmmoPage;
     private Image weaponPage;
     private Image reticleSprite;
     private Text wepName, wepStats, flavor;
     private Text cheatOne, cheatTwo, cheatThree, cheatFour, cheatTraitOne, cheatTraitTwo;
     private Text invMonitor, rarityCheck, dismantleText;
-    internal Text lucentText, kioskText;
     internal int selection;
     private float dismantleTimer = 1f;
     private float dismantleTimerReset;
+    internal float wepStateTimer = 0.5f;
+    internal float wepStateTimerReset;
 
     internal List<string> readdedWeps = new List<string>(10);
     
@@ -32,8 +35,6 @@ public class PlayerInventoryScript : MonoBehaviour
 
         selection = -1;
 
-        weaponStatus = GameObject.Find("weaponAmmoText").GetComponent<Text>();
-        weaponLoad = GameObject.Find("weaponReloadText").GetComponent<Text>();
         weaponPage = GameObject.Find("weaponPagePanel").GetComponent<Image>();
         wepName = GameObject.Find("weaponName").GetComponent<Text>();
         wepStats = GameObject.Find("weaponStats").GetComponent<Text>();
@@ -47,17 +48,21 @@ public class PlayerInventoryScript : MonoBehaviour
         invMonitor = GameObject.Find("invMonitor").GetComponent<Text>();
         rarityCheck = GameObject.Find("weaponRarity").GetComponent<Text>();
         dismantleText = GameObject.Find("deletingText").GetComponent<Text>();
-        lucentText = GameObject.Find("lucentText").GetComponent<Text>();
-        kioskText = GameObject.Find("kioskText").GetComponent<Text>();
         reticleSprite = GameObject.Find("reticleImage").GetComponent<Image>();
 
-        weaponLoad.text = " ";
-        weaponStatus.text = " ";
         dismantleText.text = " ";
-        kioskText.text = " ";
         weaponPage.gameObject.SetActive(false);
         reticleSprite.gameObject.SetActive(false);
         dismantleTimerReset = dismantleTimer;
+        weaponLoad.value = 0;
+
+        lucentFunds = PlayerPrefs.GetInt("lucentBalance");
+
+        weaponAmmoPage.gameObject.SetActive(false);
+        //weaponLoad.gameObject.SetActive(false);
+        lucentText.gameObject.SetActive(false);
+        wepStateTimerReset = wepStateTimer;
+        
     }
 
     // Update is called once per frame
@@ -65,12 +70,24 @@ public class PlayerInventoryScript : MonoBehaviour
     {
         //Debug.Log(selection + " || " + inventory.Count);
 
-        SwitchInv();
-        DismantleInv();
+        if(Time.timeScale == 1)
+        {
+            SwitchInv();
+            DismantleInv();
+        }
+
+        wepStateTimer -= Time.deltaTime;
+        if (wepStateTimer <= 0f)
+        {
+            weaponAmmoPage.gameObject.SetActive(false);
+            //weaponLoad.gameObject.SetActive(false);
+            lucentText.gameObject.SetActive(false);
+        }
+
         //WriteOnReset();
         //WriteInventory();
 
-        if(Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) && Time.timeScale != 0)
         {
             if(inventory.Count <= 0)
             {
@@ -83,24 +100,25 @@ public class PlayerInventoryScript : MonoBehaviour
             }         
         }
 
-        if(Input.GetKeyDown(KeyCode.DownArrow))
+        if(Input.GetKeyDown(KeyCode.DownArrow) && Time.timeScale != 0)
         {
             weaponPage.gameObject.SetActive(false);
         }
 
         if(inventory.Count > 0)
         {
-            weaponStatus.text = inventory[selection].GetComponent<FirearmScript>().currentAmmo.ToString() + " | " +
-                                inventory[selection].GetComponent<FirearmScript>().reserveAmmo.ToString();
+            weaponCurAmmo.text = inventory[selection].GetComponent<FirearmScript>().currentAmmo.ToString();
+            weaponResAmmo.text = inventory[selection].GetComponent<FirearmScript>().reserveAmmo.ToString();
+            weaponLoad.maxValue = inventory[selection].GetComponent<FirearmScript>().reloadSpeed;
 
-            if(inventory[selection].GetComponent<FirearmScript>().isReloading == true)
+            if (inventory[selection].GetComponent<FirearmScript>().isReloading == true)
             {
-                weaponLoad.text = "Reloading";
+                weaponLoad.value += Time.deltaTime;
             }
 
             if(inventory[selection].GetComponent<FirearmScript>().isReloading == false)
             {
-                weaponLoad.text = " ";
+                weaponLoad.value = 0;
             }
 
             wepName.text = inventory[selection].name;
@@ -186,7 +204,7 @@ public class PlayerInventoryScript : MonoBehaviour
             DisplayCheats();
         }
 
-        lucentText.text = "Lucent: " + lucentFunds;
+        lucentText.text = lucentFunds.ToString("N0");
     }
 
     public void AddInv(GameObject g)
@@ -215,7 +233,7 @@ public class PlayerInventoryScript : MonoBehaviour
         if(inventory.Count >= 1)
         {          
             inventory.Add(g);
-            
+
             g.transform.SetParent(gunPlace, true);
             g.transform.position = gunPlace.transform.position;
             g.transform.rotation = gunPlace.transform.rotation;
@@ -250,15 +268,45 @@ public class PlayerInventoryScript : MonoBehaviour
                 return;
             }
 
+            //selection--;
+
+            //Activates the Weapon at the end of the Inventory if you switch at the front. Otherwise, index goes left.
+            if (selection <= 0 && inventory.Count >= 1)
+            {
+                selection = inventory.Count - 1;
+
+                inventory[selection].GetComponent<FirearmScript>().enabled = true;
+                reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
+                inventory[selection].GetComponent<LineRenderer>().enabled = true;
+                inventory[selection].GetComponent<ReloadSpeedScript>().enabled = true;
+                inventory[selection].GetComponent<RangeScript>().enabled = true;
+                inventory[selection].GetComponent<MagazineScript>().enabled = true;
+                inventory[selection].gameObject.SetActive(true);
+
+                inventory[0].GetComponent<FirearmScript>().enabled = false;
+                inventory[0].GetComponent<LineRenderer>().enabled = false;
+                //inventory[selection + 1].GetComponent<ReloadSpeedScript>().enabled = false;
+                //inventory[selection + 1].GetComponent<RangeScript>().enabled = false;
+                //inventory[selection + 1].GetComponent<MagazineScript>().enabled = false;
+                inventory[0].gameObject.SetActive(false);
+
+                weaponAmmoPage.gameObject.SetActive(true);
+                //weaponLoad.gameObject.SetActive(true);
+                lucentText.gameObject.SetActive(true);
+                wepStateTimer = wepStateTimerReset;
+                return;
+
+            }
+
             else
             {
-                selection--;               
+                selection--;
 
                 //Prevents running off the inventory backwards
-                if(selection <= -1 && inventory.Count >= 1)
-                {
-                    selection = 0;
-                }
+                //if (selection <= -1 && inventory.Count >= 1)
+                //{
+                //    selection = 0;
+                //}
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
                 reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
@@ -274,6 +322,11 @@ public class PlayerInventoryScript : MonoBehaviour
                 //inventory[selection + 1].GetComponent<RangeScript>().enabled = false;
                 //inventory[selection + 1].GetComponent<MagazineScript>().enabled = false;
                 inventory[selection + 1].gameObject.SetActive(false);
+
+                weaponAmmoPage.gameObject.SetActive(true);
+                //weaponLoad.gameObject.SetActive(true);
+                lucentText.gameObject.SetActive(true);
+                wepStateTimer = wepStateTimerReset;
                 return;
             }
 
@@ -295,15 +348,43 @@ public class PlayerInventoryScript : MonoBehaviour
                 return;
             }
 
+            //Activates the Weapon at the front of the Inventory if you switch at the end. Otherwise, index goes right.
+            if (selection >= inventory.Count - 1 && inventory.Count >= 1)
+            {
+                selection = 0;
+
+                inventory[selection].GetComponent<FirearmScript>().enabled = true;
+                reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
+                inventory[selection].GetComponent<LineRenderer>().enabled = true;
+                inventory[selection].GetComponent<ReloadSpeedScript>().enabled = true;
+                inventory[selection].GetComponent<RangeScript>().enabled = true;
+                inventory[selection].GetComponent<MagazineScript>().enabled = true;
+                inventory[selection].gameObject.SetActive(true);
+
+                inventory[inventory.Count - 1].GetComponent<FirearmScript>().enabled = false;
+                inventory[inventory.Count - 1].GetComponent<LineRenderer>().enabled = false;
+                //inventory[selection - 1].GetComponent<ReloadSpeedScript>().enabled = false;
+                //inventory[selection - 1].GetComponent<RangeScript>().enabled = false;
+                //inventory[selection - 1].GetComponent<MagazineScript>().enabled = false;
+                inventory[inventory.Count - 1].gameObject.SetActive(false);
+
+                weaponAmmoPage.gameObject.SetActive(true);
+                //weaponLoad.gameObject.SetActive(true);
+                lucentText.gameObject.SetActive(true);
+                wepStateTimer = wepStateTimerReset;
+
+                return;
+            }
+
             else
             {
                 selection++;
 
                 //Prevents running off the inventory forwards
-                if(selection >= inventory.Count)
-                {
-                    selection = inventory.Count - 1;
-                }
+                //if (selection >= inventory.Count)
+                //{
+                //    selection = inventory.Count - 1;
+                //}
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
                 reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
@@ -319,6 +400,12 @@ public class PlayerInventoryScript : MonoBehaviour
                 //inventory[selection - 1].GetComponent<RangeScript>().enabled = false;
                 //inventory[selection - 1].GetComponent<MagazineScript>().enabled = false;
                 inventory[selection - 1].gameObject.SetActive(false);
+
+                weaponAmmoPage.gameObject.SetActive(true);
+                //weaponLoad.gameObject.SetActive(true);
+                lucentText.gameObject.SetActive(true);
+                wepStateTimer = wepStateTimerReset;
+
                 return;
             }          
         }
@@ -383,6 +470,11 @@ public class PlayerInventoryScript : MonoBehaviour
 
                 dismantleTimer = dismantleTimerReset;
 
+                weaponAmmoPage.gameObject.SetActive(true);
+                //weaponLoad.gameObject.SetActive(true);
+                lucentText.gameObject.SetActive(true);
+                wepStateTimer = wepStateTimerReset;
+
             }
         }
 
@@ -411,12 +503,12 @@ public class PlayerInventoryScript : MonoBehaviour
         //Stores -- Cheat 2
         if (inventory[selection].GetComponent<FirearmScript>().ammoCheatTwo <= 150)
         {
-            cheatTwo.text = "Deep Stores (+15% RVS)";
+            cheatTwo.text = "Deep Stores (+15% RES)";
         }
 
         if (inventory[selection].GetComponent<FirearmScript>().ammoCheatTwo > 150 || inventory[selection].GetComponent<FirearmScript>().isExotic == true)
         {
-            cheatTwo.text = "Deeper Stores (+30% RVS)";
+            cheatTwo.text = "Deeper Stores (+30% RES)";
         }
 
         //Sights -- Cheat 3
@@ -454,50 +546,49 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 450)
             {
                 cheatTraitOne.text = "Wait! Now I'm Ready!" + '\n' +
-                    "Kills with this weapon restore 10% of Shield strength.";               
+                    "Kills with this Weapon restore 10% of Shield strength.";               
             }
 
             //Efficacy
             if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 450 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 500)
             {
                 cheatTraitOne.text = "Efficacy" + '\n' +
-                    "Enemy hits increases this weapon's base damage by 1%. Reloading this weapon resets its base damage.";
+                    "Enemy hits increases this Weapon's base damage by 1%.";
             }
 
             //Inoculated
             if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 500 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 550)
             {
                 cheatTraitOne.text = "Inoculated" + '\n' +
-                    "Kills with this weapon restore 5% of Health.";
+                    "Kills with this Weapon restore 5% of Health.";
             }
 
             //Rude Awakening
             if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 550 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 600)
             {
                 cheatTraitOne.text = "Rude Awakening" + '\n' +
-                    "Kills grant up to three stacks of a lethal AOE blast that inflicts 1,000% of Weapon damage." + '\n' +
-                    "'Space' - Cast Blast";
+                    "[Space] - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
             }
 
             //Not with a Stick
             if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 600 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 650)
             {
                 cheatTraitOne.text = "Not with a Stick" + '\n' +
-                    "Kills with this weapon increase Effective Range by 30% of max Range until your next reload.";
+                    "Kills with this Weapon increase Effective Range by 30% of max Range.";
             }
 
             //Malicious Wind-Up
             if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 650 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 700)
             {
                 cheatTraitOne.text = "Malicious Wind-Up" + '\n' +
-                    "Inflicting Damage increases Reload Speed by 0.75%. This bonus activates on your next reload.";
+                    "Inflicting Damage increases Reload Speed by 0.75%.";
             }
 
             //Positive-Negative
             if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 700 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 750)
             {
                 cheatTraitOne.text = "Positive-Negative" + '\n' +
-                    "Moving generates a charge. When charged at least halfway, hitting an Enemy applies damage-over-time for ten seconds, inflicting 100% of Weapon damage once every second.";
+                    "Moving generates a charge. While halfway charged, Enemy hits apply damage-over-time.";
             }
 
             //Cadence
@@ -511,18 +602,14 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 800 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 850)
             {
                 cheatTraitOne.text = "Good Things Come" + '\n' +
-                "Being in combat for three seconds grants:" + '\n' +
-                "25% Movement Speed increase" + '\n' +
-                "20% Damage reduction" + '\n' +
-                "45% Recoil reduction" + '\n' +
-                "Leaving combat for five seconds ends the bonus.";
+                "Being in combat grants increased movement and reduces recoil and damage taken.";
             }
 
             //All Else Fails
             if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 850)
             {
                 cheatTraitOne.text = "All Else Fails" + '\n' +
-                    "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
+                    "When Shield depletes, all incoming Enemy damage is nullified for three seconds.";
             }
 
             cheatTraitTwo.text = " ";
@@ -534,12 +621,12 @@ public class PlayerInventoryScript : MonoBehaviour
             if(inventory[selection].GetComponent<FirearmScript>().fcnChtOne <= 410)
             {
                 cheatTraitOne.text = "All Else Fails" + '\n' +
-                    "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
+                    "When Shield depletes, all incoming Enemy damage is nullified for three seconds.";
 
                 if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
                 {
                     cheatTraitOne.text = "All Else Fails" + " (Fated)" + '\n' +
-                    "When Shield is depleted, all incoming Enemy damage is nullified for five seconds. Cooldown: 10 Seconds.";
+                    "When Shield depletes, all incoming Enemy damage is nullified for five seconds.";
                 }
             }
 
@@ -547,12 +634,12 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 410 && inventory[selection].GetComponent<FirearmScript>().fcnChtOne <= 420)
             {
                 cheatTraitOne.text = "Not with a Stick" + '\n' +
-                    "Kills with this weapon increase Effective Range by 30% of max Range until your next reload.";
+                    "Kills with this Weapon increase Effective Range by 30% of max Range.";
 
                 if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
                 {
                     cheatTraitOne.text = "Not with a Stick" + " (Fated)" + '\n' +
-                    "Kills with this weapon increase Effective Range by 30% of max Range. Maximizing Effective Range increases Aim Assist halfway to full strength. Lasts 20 seconds.";
+                    "Maximizing Effective Range through kills increases Aim Assist by 50% for 20 seconds.";
                 }
             }
 
@@ -560,12 +647,12 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 420 && inventory[selection].GetComponent<FirearmScript>().fcnChtOne <= 430)
             {
                 cheatTraitOne.text = "Malicious Wind-Up" + '\n' +
-                    "Inflicting Damage increases Reload Speed by 0.75%. This bonus activates on your next reload.";
+                    "Inflicting Damage increases Reload Speed by 0.75%.";
 
                 if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
                 {
                     cheatTraitOne.text = "Malicious Wind-Up" + " (Fated)" + '\n' +
-                    "Inflicting Damage increases Reload Speed by 1.5%. This bonus activates on your next reload. Kills restore 5% of this weapon's reserves.";
+                    "Inflicting Damage increases Reload Speed by 1.5%. Kills restore 5% of Max Reserves.";
                 }
             }
 
@@ -573,12 +660,12 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 430 && inventory[selection].GetComponent<FirearmScript>().fcnChtOne <= 440)
             {
                 cheatTraitOne.text = "Positive-Negative" + '\n' +
-                    "Moving generates a charge. When charged at least halfway, hitting an Enemy applies damage-over-time for ten seconds, inflicting 100% of Weapon damage once every second.";
+                    "Moving generates a charge. While halfway charged, Enemy hits apply damage-over-time.";
 
                 if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
                 {
                     cheatTraitOne.text = "Positive-Negative" + " (Fated)" + '\n' +
-                    "Moving generates a charge. When charged at least halfway, hitting an Enemy applies damage-over-time for ten seconds, inflicting 200% of Weapon damage once every half-second.";
+                    "While halfway charged, Enemy hits apply stronger damage-over-time that triggers twice as fast.";
                 }
             }
 
@@ -586,21 +673,13 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 440)
             {
                 cheatTraitOne.text = "Good Things Come" + '\n' +
-                "Being in combat for three seconds grants:" + '\n' +
-                "25% Movement Speed increase" + '\n' +
-                "20% Damage reduction" + '\n' +
-                "45% Recoil reduction" + '\n' +
-                "Leaving combat for five seconds ends the bonus.";
+                "Being in combat grants increased movement and reduces recoil and damage taken.";
 
                 if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
                 {
+
                     cheatTraitOne.text = "Good Things Come" + " (Fated)" + '\n' +
-                    "Being in combat instantly grants:" + '\n' +
-                    "50% Movement Speed increase" + '\n' +
-                    "40% Damage reduction" + '\n' +
-                    "90% Recoil reduction" + '\n' +
-                    "Infinite Ammunition" + '\n' +
-                    "Leaving combat for five seconds ends the bonus.";
+                        "Being in combat grants Infinite Ammo, and doubles increased movement, recoil and damage reduction.";
                 }
             }
 
@@ -608,12 +687,12 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 460)
             {
                 cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
-                    "Kills with this weapon restore 10% of Shield strength.";
+                    "Kills with this Weapon restore 10% of Shield strength.";
 
                 if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
                 {
                     cheatTraitTwo.text = "Wait! Now I'm Ready!" + " (Fated)" + '\n' +
-                    "Kills with this weapon restore 20% of Shield strength.";
+                    "Kills with this Weapon restore 20% of Shield strength.";
                 }
             }
 
@@ -621,12 +700,12 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 460 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 470)
             {
                 cheatTraitTwo.text = "Efficacy" + '\n' +
-                    "Enemy hits increases this weapon's base damage by 1%. Reloading this weapon resets its base damage.";
+                    "Enemy hits increases this Weapon's base damage by 1%.";
 
                 if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
                 {
                     cheatTraitTwo.text = "Efficacy" + " (Fated)" + '\n' +
-                    "Enemy hits increases this weapon's base damage by 2%. Base damage can increase up to 125%.";
+                    "Enemy hits increases this Weapon's base damage by 2%, up to 125%, and cannot reset.";
                 }
             }
 
@@ -634,12 +713,12 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 470 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 480)
             {
                 cheatTraitTwo.text = "Inoculated" + '\n' +
-                    "Kills with this weapon restore 5% of Health.";
+                    "Kills with this Weapon restore 5% of Health.";
 
                 if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
                 {
                     cheatTraitTwo.text = "Inoculated" + " (Fated)" + '\n' +
-                    "Kills with this weapon restore 10% of Health.";
+                    "Kills with this Weapon restore 10% of Health.";
                 }
             }
 
@@ -660,14 +739,12 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 490)
             {
                 cheatTraitTwo.text = "Rude Awakening" + '\n' +
-                    "Kills grant up to three stacks of a lethal AOE blast that inflicts 1,000% of Weapon damage." + '\n' +
-                    "'Space' - Cast Blast";
+                    "[Space] - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
 
-                if(inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
+                if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
                 {
                     cheatTraitTwo.text = "Rude Awakening" + " (Fated)" + '\n' +
-                    "Kills grant up to six stacks of a lethal AOE blast that inflicts 1,000% of Weapon damage. One kill counts for two stacks. Having any stack increases Weapon damage by 20%." + '\n' +
-                    "'Space' - Cast Blast";
+                    "[Space] - Cast a lethal AOE blast. Stacks 6x. Having stacks increases base damage by 20%.";
                 }
             }          
         }
@@ -677,7 +754,7 @@ public class PlayerInventoryScript : MonoBehaviour
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -1)
         {
             cheatTraitOne.text = "Equivalent Exchange" + '\n' +
-                "Taking enemy damage adds 35% of damage received to this weapon's base damage. Base damage can increase up to 150%. 35% of enemy damage received is added back as health.";
+                "Taking Enemy damage adds 35% of the hit to this Weapon's base damage and as Health.";
 
             cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
                    "Kills with this weapon restore 10% of Shield strength.";
@@ -686,64 +763,55 @@ public class PlayerInventoryScript : MonoBehaviour
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -2)
         {
             cheatTraitOne.text = "Absolutely No Stops" + '\n' +
-                "Expending your magazine fills it from reserves, amplifies damage by 200%, and increases Rate of Fire by 50%. This bonus ends when ammo reserves are depleted or if you stop firing.";
+                "Expending your magazine instantly reloads, and increases damage and Rate of Fire.";
 
             cheatTraitTwo.text = "Good Things Come" + '\n' +
-                "Being in combat for three seconds grants:" + '\n' +
-                "25% Movement Speed increase" + '\n' +
-                "20% Damage reduction" + '\n' +
-                "45% Recoil reduction" + '\n' +
-                "Leaving combat for five seconds ends the bonus.";
+                "Being in combat grants increased movement and reduces recoil and damage taken.";
         } //Absolutely No Stops + Good Things Come
 
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -3)
         {
             cheatTraitOne.text = "Shelter in Place" + '\n' +
-                "Refraining from moving amplifies damage by 100% and reduces incoming damage by 80%. Resuming movement ends the bonus. Knockback from enemy attacks cannot remove this bonus.";
+                "Refraining from moving amplifies Weapon damage by 100% and provides 80% damage reduction.";
 
             cheatTraitTwo.text = "Positive-Negative" + '\n' +
-                    "Moving generates a charge. When charged at least halfway, hitting an Enemy applies damage-over-time for ten seconds, inflicting 100% of Weapon damage once every second.";
+                    "Moving generates a charge. While halfway charged, Enemy hits apply damage-over-time.";
         } //Shelter in Place + Positive-Negative
 
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -4)
         {
             cheatTraitOne.text = "Social Distance, please!" + '\n' +
-                "Hitting an enemy applies a debuff that doubles damage taken by this weapon and increases damage by 30%. Hitting un-debuffed enemies refreshes the timer. Kills spread 400% of damage to nearby enemies.";
+                "Enemy hits apply a debuff and increases base damage by 30%. Kills spread 400% of damage.";
 
             cheatTraitTwo.text = "Not with a Stick" + '\n' +
-                    "Kills with this weapon increase Effective Range by 30% of max Range until your next reload.";
+                    "Kills with this Weapon increase Effective Range by 30% of max Range.";
         } //Social Distance, Please! + Not with a Stick
 
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -5)
         {
             cheatTraitOne.text = "The Early Berth gets the Hearst" + '\n' +
-                "Enemy hits have a chance to trigger a Replevy Berth explosion.";
+                "Enemy hits have a 10% chance to trigger a Berth explosion.";
 
             cheatTraitTwo.text = "Efficacy" + '\n' +
-                    "Enemy hits increases this weapon's base damage by 1%. Reloading this weapon resets its base damage.";
+                    "Enemy hits increases this Weapon's base damage by 1%.";
         } //Early Berth gets the Hearst + Efficacy
 
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -6)
         {
             cheatTraitOne.text = "Off Your Own Supply" + '\n' +
-                "'Space' - Sacrifice your shield for:" + '\n' +
-                "10% Movement Speed increase" + '\n' +
-                "80% Reload Speed increase" + '\n' +
-                "Zeroed Recoil" + '\n' + 
-                "140% Weapon damage increase" + '\n' +
-                "The Shield's regeneration delay is paused until the bonus ends.";
+                "[Space] - Sacrificing your Shield grants increased movement, Reload Speed, Weapon damage and zero Recoil.";
 
             cheatTraitTwo.text = "Inoculated" + '\n' +
-                    "Kills with this weapon restore 5% of Health.";
+                    "Kills with this Weapon restore 5% of Health.";
         } //Off your own Supply + Inoculated
 
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -7)
         {
             cheatTraitOne.text = "Pay to Win" + '\n' +
-                "'Space' - Consume 10,000 Lucent currency to create 150 stacks of a 50% base damage increase. Enemy hits removes three stacks.";
+                "[Space] - Consume 10,000 Lucent for a 50% Weapon damage increase. Stacks 150x.";
 
             cheatTraitTwo.text = "Malicious Wind-Up" + '\n' +
-                    "Inflicting Damage increases Reload Speed by 0.75%. This bonus activates on your next reload.";
+                    "Inflicting Damage increases Reload Speed by 0.75%.";
         } //Pay to Win + Malicious Wind-Up
     }
 

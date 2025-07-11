@@ -72,7 +72,7 @@ public class ShotgunFirearm: FirearmScript
                 start.GetComponent<LineRenderer>().SetPosition(0, barrel.transform.position);
                 //start.GetComponent<LineRenderer>().SetPosition(1, rayOrigin + (gunCam.transform.forward * range));
 
-                if (Physics.Raycast(rayOrigin, gunCam.transform.forward, out hit, range))
+                if (Physics.Raycast(rayOrigin, gunCam.transform.forward, out hit, range, contactOnly))
                 {
                     //bulletTrail.SetPosition(1, hit.point);
                     //Instantiate(DPSNumbers, hit.point, transform.rotation);

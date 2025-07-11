@@ -28,7 +28,7 @@ public class LevelManagerScript : MonoBehaviour
     public int level = 0;
     public float gameTime = 0f;
     public GameObject eogStatsText;
-    public GameObject pauseMenu, resultsMenu;
+    public GameObject pauseMenu, resultsMenu, controlsMenu;
 
     private float gameEndDelay = 10f;
     private bool paused = false;
@@ -111,6 +111,9 @@ public class LevelManagerScript : MonoBehaviour
         mainMenuButton = GameObject.Find("menuQuitButton");
         mainMenuButton.GetComponent<Button>().onClick.AddListener(ReturnToMainMenu);
 
+        controlsMenu = GameObject.Find("controlsPage");
+        controlsMenu.gameObject.SetActive(false);
+
         pauseMenu.gameObject.SetActive(false);
 
         resultsMenu = GameObject.Find("completeBG");
@@ -152,7 +155,7 @@ public class LevelManagerScript : MonoBehaviour
             //missionTimerText.gameObject.SetActive(false);
             //missionTimerText = GameObject.Find("MissionTimer");
 
-            if (Input.GetKeyDown(KeyCode.Escape) && !gameComplete)
+            if (Input.GetKeyDown(KeyCode.Escape) && !gameComplete && controlsMenu.activeInHierarchy == false)
             {
                 if (player.isDead)
                 {

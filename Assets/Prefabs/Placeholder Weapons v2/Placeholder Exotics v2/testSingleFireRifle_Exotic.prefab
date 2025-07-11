@@ -372,12 +372,16 @@ MonoBehaviour:
   flavorText: The Resplendence, for all its igneous light, could never have thwarted
     the terrible plot. Civilians. Servicemembers. Even the Replevin. These victims
     are owed retribution of a thermobaric kind.
+  contactOnly:
+    serializedVersion: 2
+    m_Bits: 832
   gunCam: {fileID: 0}
   bulletTrail: {fileID: 1640342962202232331}
   barrel: {fileID: 1640342963350316065}
   DPSNumbers: {fileID: 5234994289257708790, guid: d5df90bddb669ef4fa3d8f2d8c2773a4, type: 3}
   reticle: {fileID: 21300000, guid: 77531d269d4b7df408f0963ad90f97bc, type: 3}
   saved: 0
+  display: 0
 --- !u!1 &1640342962337783882
 GameObject:
   m_ObjectHideFlags: 0

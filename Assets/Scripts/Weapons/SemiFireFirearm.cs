@@ -156,7 +156,7 @@ public class SemiFireFirearm : FirearmScript
 
         //bulletTrail.SetPosition(0, barrel.position);
 
-        if (Physics.Raycast(rayOrigin, gunCam.transform.forward, out hit, range))
+        if (Physics.Raycast(rayOrigin, gunCam.transform.forward, out hit, range, contactOnly))
         {
             start.gameObject.transform.position = hit.point;
             start.GetComponent<LineRenderer>().SetPosition(1, hit.point);

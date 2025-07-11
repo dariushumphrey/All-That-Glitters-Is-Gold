@@ -304,12 +304,16 @@ MonoBehaviour:
   isExotic: 1
   flavorText: Using this Weapon feels like a perpetual Calvary charge. For where
     you're going, you won't be needing any breaks.
+  contactOnly:
+    serializedVersion: 2
+    m_Bits: 832
   gunCam: {fileID: 0}
   bulletTrail: {fileID: 4946270343591226300}
   barrel: {fileID: 4946270342749705521}
   DPSNumbers: {fileID: 5234994289257708790, guid: d5df90bddb669ef4fa3d8f2d8c2773a4, type: 3}
   reticle: {fileID: 21300000, guid: bf0954672952bed4bac2f60319debf44, type: 3}
   saved: 0
+  display: 0
 --- !u!1 &4946270343868550004
 GameObject:
   m_ObjectHideFlags: 0

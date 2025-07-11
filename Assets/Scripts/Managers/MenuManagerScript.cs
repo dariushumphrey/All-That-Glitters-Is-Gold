@@ -5,9 +5,16 @@ using UnityEngine.UI;
 
 public class MenuManagerScript : MonoBehaviour
 {
+    public enum Setting
+    {
+        Menu = 0, Game = 1
+    }
+
+    public Setting setting;
+
     public Image caThumbnail, vcThumbnail;
     public Sprite caLevelOne, caLevelTwo, vcLevelOne;
-    public Text caDiffText, vcDiffText, caLevelText, vcLevelText, invText;
+    public Text caDiffText, vcDiffText, caLevelText, vcLevelText;
     public Button vcButton;
     public Slider vcDifficulty, vcLevel, caDifficulty, caLevel;
     private LevelManagerScript levelManager;
@@ -15,40 +22,51 @@ public class MenuManagerScript : MonoBehaviour
 
     private void Awake()
     {
-        levelManager = FindObjectOfType<LevelManagerScript>();
-        weaponManager = FindObjectOfType<WeaponManagerScript>();
+        if(setting == Setting.Menu)
+        {
+            levelManager = FindObjectOfType<LevelManagerScript>();
+            weaponManager = FindObjectOfType<WeaponManagerScript>();
+        }
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        Progression();
+        if (setting == Setting.Menu)
+        {
+            Progression();
+        }    
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(caLevel.value == 1)
+        if (setting == Setting.Menu)
         {
-            caThumbnail.sprite = caLevelOne;
+            if (caLevel.value == 1)
+            {
+                caThumbnail.sprite = caLevelOne;
+            }
+
+            else if (caLevel.value == 2)
+            {
+                caThumbnail.sprite = caLevelTwo;
+            }
+
+
+            if (vcLevel.value == 1)
+            {
+                vcThumbnail.sprite = vcLevelOne;
+            }
+
+            caDiffText.text = "Difficulty: " + caDifficulty.value;
+            vcDiffText.text = "Difficulty: " + vcDifficulty.value;
+
+            caLevelText.text = "Level " + caLevel.value;
+            vcLevelText.text = "Viricide: " + (vcLevel.value - 2);
         }
-
-        else if (caLevel.value == 2)
-        {
-            caThumbnail.sprite = caLevelTwo;
-        }
-
-
-        if (vcLevel.value == 1)
-        {
-            vcThumbnail.sprite = vcLevelOne;
-        }
-
-        caDiffText.text = "Difficulty: " + caDifficulty.value;
-        vcDiffText.text = "Difficulty: " + vcDifficulty.value;
-
-        caLevelText.text = "Level " + caLevel.value;
-        vcLevelText.text = "Viricide: " + (vcLevel.value - 2);
+        
     }
 
     public void InitializeViricideGame()

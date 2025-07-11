@@ -303,12 +303,16 @@ MonoBehaviour:
   aimAssistStrength: 0.2
   isExotic: 1
   flavorText: '"Such is the law." '
+  contactOnly:
+    serializedVersion: 2
+    m_Bits: 832
   gunCam: {fileID: 0}
   bulletTrail: {fileID: 4036329082999486628}
   barrel: {fileID: 4036329082904990596}
   DPSNumbers: {fileID: 5234994289257708790, guid: d5df90bddb669ef4fa3d8f2d8c2773a4, type: 3}
   reticle: {fileID: 21300000, guid: bf0954672952bed4bac2f60319debf44, type: 3}
   saved: 0
+  display: 0
 --- !u!1 &4036329083052133171
 GameObject:
   m_ObjectHideFlags: 0

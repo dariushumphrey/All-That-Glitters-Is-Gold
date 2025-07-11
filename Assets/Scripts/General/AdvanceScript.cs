@@ -7,10 +7,12 @@ public class AdvanceScript : MonoBehaviour
     public int levelIndex = 0;
     public bool incomingMenu;
     private LevelManagerScript level;
+    private PlayerInventoryScript player;
     // Start is called before the first frame update
     void Start()
     {
         level = FindObjectOfType<LevelManagerScript>();
+        player = FindObjectOfType<PlayerInventoryScript>();
     }
 
     // Update is called once per frame
@@ -30,8 +32,9 @@ public class AdvanceScript : MonoBehaviour
                     CheckForLevelEntitlement();
                     CheckForDifficultyEntitlement();
                     CheckForViricideEntitlement();
-                }               
+                }
 
+                PlayerPrefs.SetInt("lucentBalance", player.lucentFunds);
                 level.ReturnToMainMenu();
             }
 
@@ -41,6 +44,8 @@ public class AdvanceScript : MonoBehaviour
                 {
                     CheckForLevelEntitlement();
                 }
+
+                PlayerPrefs.SetInt("lucentBalance", player.lucentFunds);
 
                 level.level = levelIndex;
                 level.SaveInventory();

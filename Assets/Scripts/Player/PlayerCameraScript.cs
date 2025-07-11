@@ -19,6 +19,7 @@ public class PlayerCameraScript : MonoBehaviour
     public Vector3 cameraPosition; //Governs Camera offset position from Player-Character
     public Transform offsetCheckPos; //Empty GameObject, used to cast Rays from when checking surface collision
     public Image reticleSprite;
+    public LayerMask contactOnly;
 
     private float zoomReset = 60f;
     private Vector3 forwardDirection; //Used to determine where Camera is looking when compared to the body
@@ -102,6 +103,35 @@ public class PlayerCameraScript : MonoBehaviour
             {
                 zoomDefault = zoomMax;
             }
+
+            forwardDirection = (playerCamera.transform.position - transform.position);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
+
+            rayOrigin = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
+            if (Physics.Raycast(rayOrigin, playerCamera.transform.forward, out hit, Mathf.Infinity, 7))
+            {
+                if(hit.collider.tag == "Enemy")
+                {
+                    if(hit.collider.gameObject.GetComponent<EnemyHealthScript>().visual.enabled == false)
+                    {
+                        hit.collider.gameObject.GetComponent<EnemyHealthScript>().visual.gameObject.SetActive(true);
+                        hit.collider.gameObject.GetComponent<EnemyHealthScript>().canvasTimer = hit.collider.gameObject.GetComponent<EnemyHealthScript>().canvasTimerReset;
+
+                    }
+
+                    else
+                    {
+                        hit.collider.gameObject.GetComponent<EnemyHealthScript>().visual.gameObject.SetActive(true);
+                        hit.collider.gameObject.GetComponent<EnemyHealthScript>().canvasTimer = hit.collider.gameObject.GetComponent<EnemyHealthScript>().canvasTimerReset;
+                    }
+                }
+            }
+
+
+            player.weaponAmmoPage.gameObject.SetActive(true);
+            //player.weaponLoad.gameObject.SetActive(true);
+            player.lucentText.gameObject.SetActive(true);          
+            player.wepStateTimer = player.wepStateTimerReset;
         }
 
         else
@@ -155,21 +185,25 @@ public class PlayerCameraScript : MonoBehaviour
 
         if(player.selection != -1)
         {
-            if (Physics.Raycast(rayOrigin, playerCamera.transform.forward, out hit, player.inventory[player.selection].GetComponent<FirearmScript>().range, 7))
+            if (Physics.Raycast(rayOrigin, playerCamera.transform.forward, out hit, Mathf.Infinity, contactOnly))
             {
                 if (hit.collider.tag == "Enemy")
                 {
-                    distance = (hit.transform.position - rayOrigin).normalized;
-
+                    distance = (hit.transform.position - rayOrigin);
                     if (distance.magnitude <= player.inventory[player.selection].GetComponent<FirearmScript>().effectiveRange)
                     {
                         playerCamera.transform.rotation = Quaternion.Lerp(playerCamera.transform.rotation, Quaternion.LookRotation(distance), player.inventory[player.selection].GetComponent<FirearmScript>().aimAssistStrength);
                         reticleSprite.color = Color.red;
-                    }                 
+                    }
+
+                    else
+                    {
+                        reticleSprite.color = Color.white;
+                    }
 
                 }
 
-                else
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Surface"))
                 {
                     reticleSprite.color = Color.white;
                 }

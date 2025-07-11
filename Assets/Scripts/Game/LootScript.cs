@@ -87,63 +87,63 @@ public class LootScript : MonoBehaviour
             }
         }
         
-        if(isKiosk == true)
-        {
-            if(Input.GetKeyDown(KeyCode.E))
-            {
-                if(player.lucentFunds < kioskPrice)
-                {
-                    //The Player cannot buy a Weapon; There is too little or no Lucent to spend
-                }
+        //if(isKiosk == true)
+        //{
+        //    if(Input.GetKeyDown(KeyCode.E))
+        //    {
+        //        if(player.lucentFunds < kioskPrice)
+        //        {
+        //            //The Player cannot buy a Weapon; There is too little or no Lucent to spend
+        //        }
 
-                if (inProx == true && turnOff == false && player.lucentFunds >= kioskPrice)
-                {
-                    player.lucentFunds -= kioskPrice;
+        //        if (inProx == true && turnOff == false && player.lucentFunds >= kioskPrice)
+        //        {
+        //            player.lucentFunds -= kioskPrice;
 
-                    if(raritySpawn == 5)
-                    {
-                        SpawnExotic();
-                    }
+        //            if(raritySpawn == 5)
+        //            {
+        //                SpawnExotic();
+        //            }
 
-                    else
-                    {
-                        SpawnDrop();
-                    }
-                }
-            }
+        //            else
+        //            {
+        //                SpawnDrop();
+        //            }
+        //        }
+        //    }
 
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                if (inProx == true && turnOff == false)
-                {
-                    if(player.lucentFunds < gamblePrice)
-                    {
-                        //The Player cannot spawn a higher rarity Weapon; There is too little or no Lucent to forfeit
-                    }
+        //    if (Input.GetKeyDown(KeyCode.Q))
+        //    {
+        //        if (inProx == true && turnOff == false)
+        //        {
+        //            if(player.lucentFunds < gamblePrice)
+        //            {
+        //                //The Player cannot spawn a higher rarity Weapon; There is too little or no Lucent to forfeit
+        //            }
                    
-                    else
-                    {
-                        if(raritySpawn >= 5)
-                        {
-                            player.lucentFunds -= gamblePrice;
-                            SpawnDrop();
-                        }
+        //            else
+        //            {
+        //                if(raritySpawn >= 5)
+        //                {
+        //                    player.lucentFunds -= gamblePrice;
+        //                    SpawnDrop();
+        //                }
 
-                        else
-                        {
-                            player.lucentFunds -= gamblePrice;
-                            raritySpawn++;
-                            SpawnDrop();
+        //                else
+        //                {
+        //                    player.lucentFunds -= gamblePrice;
+        //                    raritySpawn++;
+        //                    SpawnDrop();
 
-                            player.kioskText.text = " ";
-                            //GetComponent<Renderer>().material = deactivated;
-                            player.kioskText.text = "Unavailable";
-                            turnOff = true;
-                        }                       
-                    }                   
-                }
-            }
-        }
+        //                    player.kioskText.text = " ";
+        //                    //GetComponent<Renderer>().material = deactivated;
+        //                    player.kioskText.text = "Unavailable";
+        //                    turnOff = true;
+        //                }                       
+        //            }                   
+        //        }
+        //    }
+        //}
     }
 
     void RarityCorrection()
@@ -305,21 +305,21 @@ public class LootScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<PlayerInventoryScript>().kioskText.text = "'E' Purchase Random Weapon: " + kioskPrice + "\n" +
-                    "'Q' Raise Rarity (Spawns rarer weapon, closes Kiosk on purchase): " + gamblePrice;
+            //other.gameObject.GetComponent<PlayerInventoryScript>().kioskText.text = "'E' Purchase Random Weapon: " + kioskPrice + "\n" +
+            //        "'Q' Raise Rarity (Spawns rarer weapon, closes Kiosk on purchase): " + gamblePrice;
 
-            if(raritySpawn == 5)
-            {
-                other.gameObject.GetComponent<PlayerInventoryScript>().kioskText.text = "'E' Purchase Exotic Weapon: " + kioskPrice + "\n" +
-                    "'Q' Purchase Random Weapon: " + gamblePrice;
-            }
+            //if(raritySpawn == 5)
+            //{
+            //    other.gameObject.GetComponent<PlayerInventoryScript>().kioskText.text = "'E' Purchase Exotic Weapon: " + kioskPrice + "\n" +
+            //        "'Q' Purchase Random Weapon: " + gamblePrice;
+            //}
 
-            inProx = true;
+            //inProx = true;
             
-            if(turnOff == true)
-            {
-                other.gameObject.GetComponent<PlayerInventoryScript>().kioskText.text = "Unavailable.";
-            }
+            //if(turnOff == true)
+            //{
+            //    other.gameObject.GetComponent<PlayerInventoryScript>().kioskText.text = "Unavailable.";
+            //}
         }
     }
 
@@ -329,10 +329,10 @@ public class LootScript : MonoBehaviour
         {
             inProx = false;
 
-            if (isKiosk == true)
-            {
-                other.gameObject.GetComponent<PlayerInventoryScript>().kioskText.text = " ";
-            }
+            //if (isKiosk == true)
+            //{
+            //    other.gameObject.GetComponent<PlayerInventoryScript>().kioskText.text = " ";
+            //}
         }
     }
 

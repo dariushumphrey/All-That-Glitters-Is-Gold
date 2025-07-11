@@ -24,8 +24,8 @@ public class PlayerStatusScript : MonoBehaviour
     public float regenShieldSeconds = 7.0f;
     public bool isDead;
 
-    private Text healthText;
-    private Text shieldText;
+    public Slider health, shield;
+    public Image hBar, sBar;
     private int healthAdd;
     private int shieldAdd;
     private float regenShieldResetSeconds;
@@ -43,9 +43,10 @@ public class PlayerStatusScript : MonoBehaviour
         cam = GetComponent<PlayerCameraScript>();
         inv = GetComponent<PlayerInventoryScript>();
 
-        healthText = GameObject.Find("healthText").GetComponent<Text>();
-        shieldText = GameObject.Find("shieldText").GetComponent<Text>();
-
+        health.maxValue = playerHealthMax;
+        health.value = playerHealth;
+        shield.maxValue = playerShieldMax;
+        shield.value = playerShield;
 
         //StatusCorrections();
         //StatusScaling();
@@ -58,12 +59,32 @@ public class PlayerStatusScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthText.text = "Health: " + playerHealth;
-        shieldText.text = "Shield: " + playerShield;
+        health.value = playerHealth;
+        shield.value = playerShield;
 
-        if(playerShield <= 0)
+        if (playerHealth >= playerHealthMax / 2)
         {
-            shieldText.text = "[Depleted]";
+            hBar.color = Color.green;
+        }
+
+        if (playerHealth < playerHealthMax / 2)
+        {
+            hBar.color = Color.cyan;
+        }
+
+        if (playerHealth > 0 && playerHealth <= playerHealthMax / 4)
+        {
+            hBar.color = Color.blue;
+        }
+
+        if (playerShield <= 0)
+        {
+            sBar.color = Color.Lerp(Color.red, Color.white, Mathf.PingPong(Time.time, 0.9f));
+        }
+
+        else
+        {
+            sBar.color = Color.black;
         }
 
         ShieldDamageCheck();
@@ -86,6 +107,9 @@ public class PlayerStatusScript : MonoBehaviour
         {
             playerHealth = playerHealthMax;
             playerShield = playerShieldMax;
+
+            health.maxValue = playerHealthMax;
+            shield.maxValue = playerShieldMax;
         }
 
         if (playerScaling == 2)
@@ -94,6 +118,9 @@ public class PlayerStatusScript : MonoBehaviour
             playerShield = playerShieldMax + shieldAdd;
             playerHealthMax = playerHealth;
             playerShieldMax = playerShield;
+
+            health.maxValue = playerHealthMax;
+            shield.maxValue = playerShieldMax;
         }
 
         if (playerScaling == 3)
@@ -102,6 +129,9 @@ public class PlayerStatusScript : MonoBehaviour
             playerShield = playerShieldMax + shieldAdd;
             playerHealthMax = playerHealth;
             playerShieldMax = playerShield;
+
+            health.maxValue = playerHealthMax;
+            shield.maxValue = playerShieldMax;
         }
 
         if (playerScaling == 4)
@@ -110,6 +140,9 @@ public class PlayerStatusScript : MonoBehaviour
             playerShield = playerShieldMax + shieldAdd;
             playerHealthMax = playerHealth;
             playerShieldMax = playerShield;
+
+            health.maxValue = playerHealthMax;
+            shield.maxValue = playerShieldMax;
         }
 
         if (playerScaling == 5)
@@ -118,6 +151,9 @@ public class PlayerStatusScript : MonoBehaviour
             playerShield = playerShieldMax + shieldAdd;
             playerHealthMax = playerHealth;
             playerShieldMax = playerShield;
+
+            health.maxValue = playerHealthMax;
+            shield.maxValue = playerShieldMax;
         }
     }
 
@@ -171,9 +207,7 @@ public class PlayerStatusScript : MonoBehaviour
 
             inv.enabled = false;
 
-            healthText.text = " ";
-            shieldText.text = " ";
-            inv.lucentText.text = " ";
+            //inv.lucentText.text = " ";
             
         }
     }  
@@ -187,7 +221,7 @@ public class PlayerStatusScript : MonoBehaviour
                 regenShieldSeconds -= Time.deltaTime;
                 if (regenShieldSeconds <= 0.0f)
                 {
-                    shieldText.text = "Recharging...";
+                    //shieldText.text = "Recharging...";
                     StartCoroutine(RechargeShield());
                     return;
                 }

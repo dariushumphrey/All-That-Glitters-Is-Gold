@@ -26,6 +26,7 @@ public class FirearmScript : MonoBehaviour
     public float aimAssistStrength = 0.2f; //Value that governs strength of Aim Assist pull towards target
     public bool isExotic; //Exotics only -- Determines whether weapon is Exotic and can take Exotic cheats
     public string flavorText; //Optional Text "Lore" for weapons
+    public LayerMask contactOnly;
     private int damageAdd; //adds additional damage onto total damage
     private float dmgPctReset;
 
@@ -152,15 +153,17 @@ public class FirearmScript : MonoBehaviour
 
                 AmmoReloadCheck();
 
-                if (isReloading)
-                {
-                    reloadSpeed -= Time.deltaTime;
-                    if (reloadSpeed <= 0f)
-                    {
-                        reloadSpeed = reloadReset;
-                        ReloadWeapon();
-                    }
-                }
+                //if (isReloading)
+                //{
+                //    reloadSpeed = reloadReset;
+                //    StartCoroutine(ReloadWep());
+                //    reloadSpeed -= Time.deltaTime;
+                //    if (reloadSpeed <= 0f)
+                //    {
+                //        reloadSpeed = reloadReset;
+                //        ReloadWeapon();
+                //    }
+                //}
 
                 FireWeapon();
             }
@@ -588,29 +591,51 @@ public class FirearmScript : MonoBehaviour
             if(Input.GetButton("Fire1") || Input.GetButtonDown("Fire1"))
             {
                 Debug.Log("Cannot reload; Weapon is being actively fired!");
+
+                inv.weaponAmmoPage.gameObject.SetActive(true);
+                //weaponLoad.gameObject.SetActive(true);
+                inv.lucentText.gameObject.SetActive(true);
+                inv.wepStateTimer = inv.wepStateTimerReset;
                 return;
             }
 
             if (currentAmmo >= 0 && reserveAmmo <= 0)
             {
                 Debug.Log("Cannot reload; no spare ammo!");
+
+                inv.weaponAmmoPage.gameObject.SetActive(true);
+                //weaponLoad.gameObject.SetActive(true);
+                inv.lucentText.gameObject.SetActive(true);
+                inv.wepStateTimer = inv.wepStateTimerReset;
                 //return;
             }
 
             else if (currentAmmo <= 0 && reserveAmmo <= 0)
             {
                 Debug.Log("Cannot reload; no ammo!");
+
+                inv.weaponAmmoPage.gameObject.SetActive(true);
+                //weaponLoad.gameObject.SetActive(true);
+                inv.lucentText.gameObject.SetActive(true);
+                inv.wepStateTimer = inv.wepStateTimerReset;
                 //return;
             }
 
             else if (currentAmmo >= ammoSize)
             {
                 Debug.Log("Cannot reload; magazine is full!");
+
+                inv.weaponAmmoPage.gameObject.SetActive(true);
+                //weaponLoad.gameObject.SetActive(true);
+                inv.lucentText.gameObject.SetActive(true);
+                inv.wepStateTimer = inv.wepStateTimerReset;
             }
 
             else
             {
-                isReloading = true;              
+                isReloading = true;
+                StartCoroutine(ReloadWep());
+
                 //return;
             }
         }
@@ -652,7 +677,7 @@ public class FirearmScript : MonoBehaviour
 
             //bulletTrail.SetPosition(0, barrel.position);
 
-            if (Physics.Raycast(rayOrigin, gunCam.transform.forward, out hit, range, 7))
+            if (Physics.Raycast(rayOrigin, gunCam.transform.forward, out hit, range, contactOnly))
             {
                 start.gameObject.transform.position = hit.point;
                 start.GetComponent<LineRenderer>().SetPosition(1, hit.point);
@@ -896,6 +921,34 @@ public class FirearmScript : MonoBehaviour
 
         ammoSpent = 0;
         isReloading = false;
+
+    }
+
+    public virtual IEnumerator ReloadWep()
+    {
+        yield return new WaitForSeconds(reloadSpeed);
+        if (reserveAmmo <= ammoSpent)
+        {
+            currentAmmo += reserveAmmo;
+        }
+
+        else
+        {
+            currentAmmo = ammoSize;
+        }
+
+        reserveAmmo -= ammoSpent;
+
+        if (reserveAmmo <= 0)
+        {
+            reserveAmmo = 0;
+        }
+
+        ammoSpent = 0;
+        isReloading = false;
+
+        reloadSpeed = reloadReset;
+
 
     }
 

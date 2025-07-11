@@ -35,12 +35,19 @@ public class ReplevinScript : MonoBehaviour
     public float pounceLimit = 1.5f; //Governs how far Enemy will pounce on position before timing out
     public float jumpLimit = 4f; //Governs how far Enemy will jump towards Player before timing out
     public float jumpForce = 5f;
+    public float forwardForce = 4f;
     public float rangedAttackForce;
     public float punchTimeout; //Time to wait before pouncing again
     public float jumpTimeout; //Time to wait before jumping again
     public float airtimeShort = 2f;
     public float rangeATKMin;
     public float attackRate;
+
+    //This value buffs attack rate of Ranged enemies:
+    //-Increasing this number adds a percentage of fire rate onto itself, allowing for faster firing.
+    //-Note: The code that increases this number by difficulty is in the EnemyHealthScript.
+    public float rangeAttackRate;
+    public float rangeAttackChange = 15f;
     public float agitationLimit;
     public bool amLeader;
     public bool amFollower;
@@ -468,7 +475,7 @@ public class ReplevinScript : MonoBehaviour
                 //attackLine.SetPosition(1, player.transform.position);
                 //attackLine.material = inRangeColor;
 
-                if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeATKMin) && attackAgain >= attackRate)
+                if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeATKMin) && attackAgain >= rangeAttackRate)
                 {
                     if (hit.collider.tag == "Enemy")
                     {
@@ -698,6 +705,7 @@ public class ReplevinScript : MonoBehaviour
                         }
 
                         gameObject.GetComponent<Rigidbody>().AddForce((lastPlayerPosition + Vector3.up) * jumpForce, ForceMode.Impulse);
+                        gameObject.GetComponent<Rigidbody>().AddForce((transform.forward * forwardForce), ForceMode.Impulse);
                         //Debug.Log(lastPlayerPosition);
                         //Debug.Log(lastKnownDistance.magnitude);
                         //slamTimeout = true;

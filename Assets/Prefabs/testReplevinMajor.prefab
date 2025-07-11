@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 78844624512772188}
   - component: {fileID: 6590982941324376749}
   - component: {fileID: 3032971409008874515}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: testReplevinMajor
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -271,20 +271,40 @@ MonoBehaviour:
   damagePercent: 25
   moveSpeed: 5
   boostSpeed: 10
+  nmaAccel: 8
+  meleeRangeCheck: 0
   meleeRangeMin: 2
-  chargeRangeMin: 1
+  meleeAttackTimer: 0.8
+  meleeLimit: 1
+  meleeTimeout: 0
   meleeAttackForce: 1750
-  chargeAttackForce: 5000
-  rangedAttackForce: 0
+  chargeRangeCheck: 0
+  chargeRangeMin: 1
+  chargeLimit: 1
+  chargeOvershoot: 2
   chargeTimeout: 2
+  chargeAttackForce: 5000
+  rotationStrength: 2
+  gapClose: 0
+  pounceLimit: 1.5
+  jumpLimit: 4
+  jumpForce: 5
+  forwardForce: 4
+  rangedAttackForce: 0
+  punchTimeout: 0
+  jumpTimeout: 0
+  airtimeShort: 2
   rangeATKMin: 7
   attackRate: 1
+  rangeAttackRate: 1
+  rangeAttackChange: 15
   agitationLimit: 1
   amLeader: 0
   amFollower: 0
   amHunter: 1
-  ramTimeout: 0
+  amBoss: 0
   attackStartPoint: {fileID: 78844624223129820}
+  jumpCheck: {fileID: 0}
   attackLine: {fileID: 78844624512772180}
   outRangeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
   inRangeColor: {fileID: 2100000, guid: aa464ac6daaf7fd4fb018725e761b99e, type: 2}
@@ -309,11 +329,19 @@ MonoBehaviour:
   healthPercent: 20
   lucentYield: 400
   lucentPercent: 20
+  isImmune: 0
   isDummy: 0
   corpse: {fileID: 7694598711731921811, guid: a287dccb421b2ea4a87cdb6d33d1cf26, type: 3}
   ammoReward: {fileID: 7365210831971423931, guid: f6da525fb110dbe44889874ff9230cc0, type: 3}
-  healthBar: {fileID: 5052733670266631497}
-  barColor: {fileID: 8153504741762517691}
+  visual: {fileID: 0}
+  currentHealth: {fileID: 0}
+  healthLost: {fileID: 0}
+  curHealthColor: {fileID: 0}
+  losHealthColor: {fileID: 0}
+  debuffNotice: {fileID: 0}
+  dotNotice: {fileID: 0}
+  slowNotice: {fileID: 0}
+  enemyName: {fileID: 0}
 --- !u!114 &6590982941324376749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,25 +490,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3064948634573819004, guid: 032ddff71c3ba8e498939a2d14e4ec55, type: 3}
   m_PrefabInstance: {fileID: 4387400124700898329}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5052733670266631497 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8862459181817971024, guid: 032ddff71c3ba8e498939a2d14e4ec55, type: 3}
-  m_PrefabInstance: {fileID: 4387400124700898329}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8153504741762517691 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5603670314119265954, guid: 032ddff71c3ba8e498939a2d14e4ec55, type: 3}
-  m_PrefabInstance: {fileID: 4387400124700898329}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

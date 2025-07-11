@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerPrefsManagerScript : MonoBehaviour
-{ 
+{
+    private KioskScript kiosk;
     void Awake()
     {
-        LevelEntitlement();
-        DifficultyEntitlement();
-        ViricideEntitlement();
+        kiosk = FindObjectOfType<KioskScript>();
+        //LevelEntitlement();
+        //DifficultyEntitlement();
+        //ViricideEntitlement();
+        LucentEntitlement();
         //Debug.Log(PlayerPrefs.GetInt("unlockLevel02"));
+
+        PlayerPrefs.SetInt("unlockLevel02", 1);
+        PlayerPrefs.SetInt("unlockDifficulty5", 1);
+        PlayerPrefs.SetInt("unlockViricide", 1);
     }
 
     // Update is called once per frame
@@ -55,5 +62,10 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         {
             PlayerPrefs.SetInt("unlockViricide", 0);
         }
+    }
+
+    void LucentEntitlement()
+    {
+        kiosk.lucentFunds = PlayerPrefs.GetInt("lucentBalance");
     }
 }

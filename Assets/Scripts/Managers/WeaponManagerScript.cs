@@ -17,16 +17,20 @@ public class WeaponManagerScript : MonoBehaviour
 
     public List<string> observedWeps = new List<string>(10);
     public string filepath = "inventory.txt";
-    public Text wepName, flavor, rarityCheck, invMonitor, stats, dismantleText;
+    public Text wepName, flavor, rarityCheck, invMonitor, stats, dismantleText, appraisal;
     public Text cheatOne, cheatTwo, cheatThree, cheatFour, cheatTraitOne, cheatTraitTwo;
+    public Text lucentText;
+    public GameObject invNavigation;
     public float dismantleTimer;
 
     internal int selection;
     private PlayerInventoryScript player;
     private MenuManagerScript menu;
+    private KioskScript kiosk;
     string wepStr, rarStr, exoStr, cOneStr, cTwoStr, cThreeStr, cFourStr, cFiveStr, cSixStr;
     char wep, rar, exo, cOne, cTwo, cThree, cFour, cFive, cSix;
-    float dismantleTimerReset;
+    float dismantleTimerReset, spawnDelayTimer;
+    bool track = true;
 
     void Awake()
     {
@@ -40,7 +44,9 @@ public class WeaponManagerScript : MonoBehaviour
             }
 
             ReadOnReload();
-            RespawnWeapons();
+
+            spawnDelayTimer = 0.02f;
+            StartCoroutine(RespawnWeapons());
         }
 
         else
@@ -48,7 +54,12 @@ public class WeaponManagerScript : MonoBehaviour
             selection = -1;
 
             menu = FindObjectOfType<MenuManagerScript>();
-            ObserveOnLoad();
+            kiosk = FindObjectOfType<KioskScript>();
+            if(observedWeps.Count <= 0)
+            {
+                ObserveOnLoad();
+            }
+            //ObserveOnLoad();
             //foreach (string item in observedWeps)
             //{
             //    menu.invText.text += item + "\n";
@@ -68,12 +79,32 @@ public class WeaponManagerScript : MonoBehaviour
     {
         if(setting == Setting.Menu)
         {
-            if (observedWeps.Count >= 0)
+            if(observedWeps.Count <= 0)
             {
-                selection++;
-                DisplayWeapons();
+                wepName.text = "Your Inventory is empty! Acquire weapons in order to inspect them here.";
+                flavor.text = "";
+                rarityCheck.text = "";
+                invMonitor.text = "";
+                stats.text = "";
+                dismantleText.text = "";
+                cheatOne.text = "";
+                cheatTwo.text = "";
+                cheatThree.text = "";
+                cheatFour.text = "";
+                cheatTraitOne.text = "";
+                cheatTraitTwo.text = "";
+                appraisal.text = "";
+
+                invNavigation.SetActive(false);
             }
-        }       
+
+            if (observedWeps.Count > 0)
+            {
+                //selection++;
+                //DisplayWeapons();
+            }
+
+        }
     }
 
     // Update is called once per frame
@@ -81,13 +112,47 @@ public class WeaponManagerScript : MonoBehaviour
     {
         if(setting == Setting.Menu)
         {
-            SwitchInv();
-            DismantleInv();
+            if (observedWeps.Count <= 0)
+            {
+                wepName.text = "Your Inventory is empty! Acquire weapons in order to inspect them here.";
+                flavor.text = "";
+                rarityCheck.text = "";
+                invMonitor.text = "";
+                stats.text = "";
+                dismantleText.text = "";
+                cheatOne.text = "";
+                cheatTwo.text = "";
+                cheatThree.text = "";
+                cheatFour.text = "";
+                cheatTraitOne.text = "";
+                cheatTraitTwo.text = "";
+                appraisal.text = "";
+
+                invNavigation.SetActive(false);
+
+            }
+
+            else
+            {
+                SwitchInv();
+                DismantleInv();
+                invMonitor.text = (selection + 1) + " / " + observedWeps.Count;
+            }
+
+            lucentText.text = "Lucent: " + kiosk.lucentFunds.ToString("N0");
+
         }
 
+        if(setting == Setting.Gameplay)
+        {
+            if(track)
+            {
+                gameObject.transform.position = player.gameObject.transform.position;
+            }
+        }
     }
 
-    private void ObserveOnLoad()
+    public void ObserveOnLoad()
     {
         if (File.Exists(filepath))
         {
@@ -99,6 +164,11 @@ public class WeaponManagerScript : MonoBehaviour
                    
                 }
             }
+        }
+
+        else
+        {
+            CreateInventoryFile();
         }
     }
 
@@ -251,7 +321,7 @@ public class WeaponManagerScript : MonoBehaviour
 
             if (cTwoStr == "3")
             {
-                cheatTwo.text = "Deep Stores" + "\n" + "15% Magazine Size";
+                cheatTwo.text = "Deep Stores" + "\n" + "15% Reserves Size";
 
                 item.GetComponent<FirearmScript>().ammoCheatTwo = 150;
                 item.AddComponent<DeepStores>();
@@ -259,7 +329,7 @@ public class WeaponManagerScript : MonoBehaviour
 
             if (cTwoStr == "4")
             {
-                cheatTwo.text = "Deeper Stores" + "\n" + "30% Magazine Size";
+                cheatTwo.text = "Deeper Stores" + "\n" + "30% Reserves Size";
 
                 item.GetComponent<FirearmScript>().ammoCheatTwo = 151;
                 item.AddComponent<DeeperStores>();
@@ -1979,7 +2049,7 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<FirearmScript>().isExotic = true;
                     //item.GetComponent<FirearmScript>().damagePercent = 60f;
                     item.GetComponent<FirearmScript>().RarityAugment();
-                    item.GetComponent<FirearmScript>().flavorText = "''The Resplendence, for all its igneous light, could never have unveiled the shaded plot. The victims are owed retribution of a thermobaric kind.''";
+                    item.GetComponent<FirearmScript>().flavorText = "''The Resplendent, for all its igneous light, could never have unveiled the shaded plot. The victims are owed retribution of a thermobaric kind.''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                     item.name = weapons[0].name + "_Exotic";
                 }
@@ -2137,7 +2207,7 @@ public class WeaponManagerScript : MonoBehaviour
                 if (cFiveStr == "E")
                 {
                     cheatTraitOne.text = "The Early Berth gets the Hearst" + '\n' +
-                        "Enemy hits have a chance to trigger a Replevin Berth explosion.";
+                        "Enemy hits have a 10% chance to trigger a Berth explosion.";
                 }
 
                 if (cFiveStr == "9")
@@ -2627,9 +2697,9 @@ public class WeaponManagerScript : MonoBehaviour
                 }
             }
         }
-    }
+    } //This method displays Weapons from the Player's Inventory for inspetion on the Main Menu.
 
-    private void RespawnWeapons()
+    private IEnumerator RespawnWeapons()
     {
         string c = "Comic Sans";
 
@@ -2674,7 +2744,7 @@ public class WeaponManagerScript : MonoBehaviour
 
             if (wepStr == "1")
             {
-                Debug.Log("Respawning Full Fire Rifle");
+                //Debug.Log("Respawning Full Fire Rifle");
                 GameObject item = Instantiate(weapons[0], transform.position, transform.rotation);
                 item.name = weapons[0].name;
                 //item.GetComponent<FirearmScript>().damage = 350;
@@ -2957,11 +3027,13 @@ public class WeaponManagerScript : MonoBehaviour
 
                     }
                 }
+
+                yield return new WaitForSeconds(spawnDelayTimer);
             }
 
             if (wepStr == "2")
             {
-                Debug.Log("Respawning Machine Gun");
+                //Debug.Log("Respawning Machine Gun");
                 GameObject item = Instantiate(weapons[1], transform.position, transform.rotation);
                 item.name = weapons[1].name;
                 item.GetComponent<FirearmScript>().damage = 600;
@@ -3254,11 +3326,13 @@ public class WeaponManagerScript : MonoBehaviour
 
                     }
                 }
+
+                yield return new WaitForSeconds(spawnDelayTimer);
             }
 
             if (wepStr == "3")
             {
-                Debug.Log("Respawning Pistol");
+                //Debug.Log("Respawning Pistol");
                 GameObject item = Instantiate(weapons[2], transform.position, transform.rotation);
                 item.name = weapons[2].name;
                 item.GetComponent<FirearmScript>().damage = 580;
@@ -3552,11 +3626,13 @@ public class WeaponManagerScript : MonoBehaviour
 
                     }
                 }
+
+                yield return new WaitForSeconds(spawnDelayTimer);
             }
 
             if (wepStr == "4")
             {
-                Debug.Log("Respawning Semi Fire Rifle");
+                //Debug.Log("Respawning Semi Fire Rifle");
                 GameObject item = Instantiate(weapons[3], transform.position, transform.rotation);
                 item.name = weapons[3].name;
                 item.GetComponent<FirearmScript>().damage = 470;
@@ -3841,11 +3917,13 @@ public class WeaponManagerScript : MonoBehaviour
 
                     }
                 }
+
+                yield return new WaitForSeconds(spawnDelayTimer);
             }
 
             if (wepStr == "5")
             {
-                Debug.Log("Respawning Shotgun");
+                //Debug.Log("Respawning Shotgun");
                 GameObject item = Instantiate(weapons[4], transform.position, transform.rotation);
                 item.name = weapons[4].name;
                 item.GetComponent<FirearmScript>().damage = 300;
@@ -4136,11 +4214,13 @@ public class WeaponManagerScript : MonoBehaviour
 
                     }
                 }
+
+                yield return new WaitForSeconds(spawnDelayTimer);
             }
 
             if (wepStr == "6")
             {
-                Debug.Log("Respawning Single Fire Rifle");
+                //Debug.Log("Respawning Single Fire Rifle");
                 GameObject item = Instantiate(weapons[5], transform.position, transform.rotation);
                 item.name = weapons[5].name;
                 item.GetComponent<FirearmScript>().damage = 1044;
@@ -4424,11 +4504,13 @@ public class WeaponManagerScript : MonoBehaviour
 
                     }
                 }
+
+                yield return new WaitForSeconds(spawnDelayTimer);
             }
 
             if (wepStr == "7")
             {
-                Debug.Log("Respawning SMG");
+                //Debug.Log("Respawning SMG");
                 GameObject item = Instantiate(weapons[6], transform.position, transform.rotation);
                 item.name = weapons[6].name;
                 item.GetComponent<FirearmScript>().damage = 330;
@@ -4719,9 +4801,13 @@ public class WeaponManagerScript : MonoBehaviour
 
                     }
                 }
+
+                yield return new WaitForSeconds(spawnDelayTimer);
             }
         }
-    }
+
+        track = false;
+    } //This method respawns Weapons previously held in their Inventory.
 
     private void SwitchInv()
     {
@@ -4752,6 +4838,8 @@ public class WeaponManagerScript : MonoBehaviour
                 }
 
                 DisplayWeapons();
+                appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+
             }
 
         }
@@ -4783,6 +4871,7 @@ public class WeaponManagerScript : MonoBehaviour
                 }
 
                 DisplayWeapons();
+                appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
 
             }
         }
@@ -4793,8 +4882,8 @@ public class WeaponManagerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.X))
         {
             dismantleTimer -= Time.deltaTime;
-            dismantleText.text = "Dismantling...";
-            dismantleText.color = Color.Lerp(Color.red, Color.black, dismantleTimer);
+            dismantleText.text = "Selling...";
+            dismantleText.color = Color.Lerp(Color.cyan, Color.black, dismantleTimer);
 
             if (dismantleTimer <= 0.0f)
             {
@@ -4804,7 +4893,11 @@ public class WeaponManagerScript : MonoBehaviour
                     return;
                 }
 
+                kiosk.lucentFunds += (int)kiosk.inventoryWorth[selection];
+
                 observedWeps.RemoveAt(selection);
+                kiosk.inventoryWorth.RemoveAt(selection);
+
                 if (gameObject.transform.childCount > 0)
                 {
                     foreach (Transform child in transform)
@@ -4816,10 +4909,13 @@ public class WeaponManagerScript : MonoBehaviour
                 if (selection >= observedWeps.Count)
                 {
                     selection--;
+                    dismantleTimer = dismantleTimerReset;
 
                     if (selection <= -1 && observedWeps.Count <= 0)
                     {
                         selection = -1;
+                        invNavigation.SetActive(false);
+
                         return;
                     }
 
@@ -4832,6 +4928,8 @@ public class WeaponManagerScript : MonoBehaviour
                 }
 
                 DisplayWeapons();
+                SaveInventory();
+                appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
 
                 dismantleTimer = dismantleTimerReset;
             }         
@@ -4862,7 +4960,7 @@ public class WeaponManagerScript : MonoBehaviour
         }
     }
 
-    private void WriteInventory()
+    public void WriteInventory()
     {
         CreateInventoryFile();
 
@@ -4878,7 +4976,7 @@ public class WeaponManagerScript : MonoBehaviour
         }
     }
 
-    //These four methods are used for button actions when interacting with the Inventory.
+    //These six methods are used for button actions when interacting with the Inventory or the WeaponManager itself.
     public void SwitchInvLeft()
     {
         //Prevents switching when inventory is empty
@@ -4906,6 +5004,7 @@ public class WeaponManagerScript : MonoBehaviour
             }
 
             DisplayWeapons();
+            appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
         }
     }
 
@@ -4936,6 +5035,7 @@ public class WeaponManagerScript : MonoBehaviour
             }
 
             DisplayWeapons();
+            appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
 
         }
     }
@@ -4948,7 +5048,11 @@ public class WeaponManagerScript : MonoBehaviour
             return;
         }
 
+        kiosk.lucentFunds += (int)kiosk.inventoryWorth[selection];
+
         observedWeps.RemoveAt(selection);
+        kiosk.inventoryWorth.RemoveAt(selection);
+
         if (gameObject.transform.childCount > 0)
         {
             foreach (Transform child in transform)
@@ -4960,10 +5064,14 @@ public class WeaponManagerScript : MonoBehaviour
         if (selection >= observedWeps.Count)
         {
             selection--;
+            dismantleTimer = dismantleTimerReset;
 
             if (selection <= -1 && observedWeps.Count <= 0)
             {
                 selection = -1;
+                invNavigation.SetActive(false);
+                appraisal.text = "";
+
                 return;
             }
 
@@ -4976,10 +5084,50 @@ public class WeaponManagerScript : MonoBehaviour
         }
 
         DisplayWeapons();
+        SaveInventory();
+        appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
     }
 
     public void SaveInventory()
     {
         WriteInventory();
+    }
+
+    public void CheckForInventoryUpdate()
+    {
+        if (observedWeps.Count > 0 && selection == -1)
+        {
+            selection++;
+            DisplayWeapons();
+
+            invNavigation.SetActive(true);
+
+        }
+
+        if (observedWeps.Count > 0 && selection >= 0)
+        {
+            DisplayWeapons();
+
+            invNavigation.SetActive(true);
+
+        }
+
+        kiosk.AppraiseInquiry();
+        if(observedWeps.Count > 0)
+        {
+            appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+        }
+
+    }
+
+    public void ClearChildren()
+    {
+        if (gameObject.transform.childCount > 0)
+        {
+            foreach (Transform child in transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
     }
 }

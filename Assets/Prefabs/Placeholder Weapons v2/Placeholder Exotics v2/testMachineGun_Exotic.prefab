@@ -181,12 +181,16 @@ MonoBehaviour:
   isExotic: 1
   flavorText: '"Only a fool would strike Lucent deals with no exploitable loopholes
     for themselves. Wealth is found in the hoard."'
+  contactOnly:
+    serializedVersion: 2
+    m_Bits: 832
   gunCam: {fileID: 0}
   bulletTrail: {fileID: 704968434686661855}
   barrel: {fileID: 5875407823686912471}
   DPSNumbers: {fileID: 5234994289257708790, guid: d5df90bddb669ef4fa3d8f2d8c2773a4, type: 3}
   reticle: {fileID: 21300000, guid: bf0954672952bed4bac2f60319debf44, type: 3}
   saved: 0
+  display: 0
 --- !u!1 &2076142987824462105
 GameObject:
   m_ObjectHideFlags: 0

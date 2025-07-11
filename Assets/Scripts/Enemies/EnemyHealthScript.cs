@@ -23,13 +23,20 @@ public class EnemyHealthScript : MonoBehaviour
     public bool isDummy;
     public GameObject corpse;
     public GameObject ammoReward;
+
     public Canvas visual;
-    public Slider healthBar;
-    public Image barColor;
+    public Slider currentHealth, healthLost;
+    public Image curHealthColor, losHealthColor, debuffNotice, dotNotice, slowNotice;
+    public Text enemyName;
+    private float lhUpdateTimer = 1f;
+    private float lhUpdateReset;
+    internal float canvasTimer = 2f;
+    internal float canvasTimerReset;
 
     private int healthAdd;
     private int damageAdd;
     private int lucentAdd;
+    private float fireRateAdd;
     private int ammoRewardChance;
     private EnemyManagerScript manager;
     private ReplevinScript attack;
@@ -49,7 +56,17 @@ public class EnemyHealthScript : MonoBehaviour
         player = FindObjectOfType<PlayerInventoryScript>();
 
         DifficultyMatch();
-        healthBar.gameObject.SetActive(false);
+
+        debuffNotice.gameObject.SetActive(false);
+        dotNotice.gameObject.SetActive(false);
+        slowNotice.gameObject.SetActive(false);
+        lhUpdateReset = lhUpdateTimer;
+        canvasTimerReset = canvasTimer;
+
+        healthLost.maxValue = healthMax;
+        healthLost.value = healthCurrent;
+        enemyName.text = gameObject.name;
+        visual.gameObject.SetActive(false);
 
         if (GetComponent<BerthScript>() == null)
         {
@@ -68,7 +85,86 @@ public class EnemyHealthScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthBar.value = healthCurrent;
+        currentHealth.value = healthCurrent;
+        lhUpdateTimer -= Time.deltaTime;
+        if(lhUpdateTimer <= 0f)
+        {
+            lhUpdateTimer = 0f;
+            healthLost.value = healthCurrent;
+        }
+
+        if(attack.boss && healthCurrent > 0)
+        {
+            canvasTimer = canvasTimerReset;
+            visual.gameObject.SetActive(true);
+        }
+
+        canvasTimer -= Time.deltaTime;
+        if (canvasTimer <= 0f)
+        {
+            canvasTimer = 0f;
+            if (visual.gameObject.activeInHierarchy == true)
+            {
+                visual.gameObject.SetActive(false);
+            }
+
+            else
+            {
+                visual.gameObject.SetActive(false);
+            }
+        }
+
+        if (GetComponent<PosNegDOT>() != null)
+        {
+            if (dotNotice.gameObject.activeInHierarchy == false)
+            {
+                dotNotice.gameObject.SetActive(true);
+            }
+
+            else
+            {
+                //do nothing
+            }
+        }
+
+        if (GetComponent<PosNegDOT>() == null)
+        {
+            if (dotNotice.gameObject.activeInHierarchy == true)
+            {
+                dotNotice.gameObject.SetActive(false);
+            }
+
+            else
+            {
+                //do nothing
+            }
+        }
+
+        if (GetComponent<SDPHealthDebuff>() != null)
+        {
+            if (debuffNotice.gameObject.activeInHierarchy == false)
+            {
+                debuffNotice.gameObject.SetActive(true);
+            }
+
+            else
+            {
+                //do nothing
+            }
+        }
+
+        if (GetComponent<SDPHealthDebuff>() == null)
+        {
+            if (debuffNotice.gameObject.activeInHierarchy == true)
+            {
+                debuffNotice.gameObject.SetActive(false);
+            }
+
+            else
+            {
+                //do nothing
+            }
+        }
 
         if (isDummy == true)
         {
@@ -96,9 +192,10 @@ public class EnemyHealthScript : MonoBehaviour
             healthCurrent = healthMax;
             attack.damage *= difficultyValue;
 
-            healthBar.maxValue = healthMax;
-            healthBar.value = healthCurrent;
-            barColor.color = Color.grey;
+            currentHealth.maxValue = healthMax;
+            currentHealth.value = healthCurrent;
+            curHealthColor.color = Color.grey;
+            losHealthColor.color = Color.red;
         }
 
         if (difficultyValue == 1)
@@ -107,9 +204,11 @@ public class EnemyHealthScript : MonoBehaviour
             healthCurrent = healthMax;
             attack.damage *= difficultyValue;
 
-            healthBar.maxValue = healthMax;
-            healthBar.value = healthCurrent;
-            barColor.color = Color.grey;
+            currentHealth.maxValue = healthMax;
+            currentHealth.value = healthCurrent;
+            curHealthColor.color = Color.grey;
+            losHealthColor.color = Color.red;
+
         }
 
         if (difficultyValue == 2)
@@ -124,6 +223,11 @@ public class EnemyHealthScript : MonoBehaviour
             attack.damagePercent *= attack.damage;
             damageAdd = (int)attack.damagePercent;
 
+            attack.rangeAttackChange *= difficultyValue;
+            attack.rangeAttackChange /= 100;
+            attack.rangeAttackChange *= attack.rangeAttackRate;
+            attack.rangeAttackRate -= attack.rangeAttackChange;
+
             lucentPercent *= difficultyValue;
             lucentPercent /= 100;
             lucentPercent *= lucentYield;
@@ -134,9 +238,11 @@ public class EnemyHealthScript : MonoBehaviour
             healthCurrent = healthMax;
             attack.damage += damageAdd;
 
-            healthBar.maxValue = healthMax;
-            healthBar.value = healthCurrent;
-            barColor.color = Color.green;
+            currentHealth.maxValue = healthMax;
+            currentHealth.value = healthCurrent;
+            curHealthColor.color = Color.green;
+            losHealthColor.color = Color.red;
+
         }
 
         if (difficultyValue == 3)
@@ -151,6 +257,11 @@ public class EnemyHealthScript : MonoBehaviour
             attack.damagePercent *= attack.damage;
             damageAdd = (int)attack.damagePercent;
 
+            attack.rangeAttackChange *= difficultyValue;
+            attack.rangeAttackChange /= 100;
+            attack.rangeAttackChange *= attack.rangeAttackRate;
+            attack.rangeAttackRate -= attack.rangeAttackChange;
+
             lucentPercent *= difficultyValue;
             lucentPercent /= 100;
             lucentPercent *= lucentYield;
@@ -161,9 +272,11 @@ public class EnemyHealthScript : MonoBehaviour
             healthCurrent = healthMax;
             attack.damage += damageAdd;
 
-            healthBar.maxValue = healthMax;
-            healthBar.value = healthCurrent;
-            barColor.color = Color.red;
+            currentHealth.maxValue = healthMax;
+            currentHealth.value = healthCurrent;
+            curHealthColor.color = Color.red;
+            losHealthColor.color = Color.white;
+
         }
 
         if (difficultyValue == 4)
@@ -178,6 +291,11 @@ public class EnemyHealthScript : MonoBehaviour
             attack.damagePercent *= attack.damage;
             damageAdd = (int)attack.damagePercent;
 
+            attack.rangeAttackChange *= difficultyValue;
+            attack.rangeAttackChange /= 100;
+            attack.rangeAttackChange *= attack.rangeAttackRate;
+            attack.rangeAttackRate -= attack.rangeAttackChange;
+
             lucentPercent *= difficultyValue;
             lucentPercent /= 100;
             lucentPercent *= lucentYield;
@@ -188,9 +306,11 @@ public class EnemyHealthScript : MonoBehaviour
             healthCurrent = healthMax;
             attack.damage += damageAdd;
 
-            healthBar.maxValue = healthMax;
-            healthBar.value = healthCurrent;
-            barColor.color = Color.yellow;
+            currentHealth.maxValue = healthMax;
+            currentHealth.value = healthCurrent;
+            curHealthColor.color = Color.yellow;
+            losHealthColor.color = Color.red;
+
         }
 
         if (difficultyValue == 5)
@@ -205,6 +325,11 @@ public class EnemyHealthScript : MonoBehaviour
             attack.damagePercent *= attack.damage;
             damageAdd = (int)attack.damagePercent;
 
+            attack.rangeAttackChange *= difficultyValue;
+            attack.rangeAttackChange /= 100;
+            attack.rangeAttackChange *= attack.rangeAttackRate;
+            attack.rangeAttackRate -= attack.rangeAttackChange;
+
             lucentPercent *= difficultyValue;
             lucentPercent /= 100;
             lucentPercent *= lucentYield;
@@ -215,9 +340,11 @@ public class EnemyHealthScript : MonoBehaviour
             healthCurrent = healthMax;
             attack.damage += damageAdd;
 
-            healthBar.maxValue = healthMax;
-            healthBar.value = healthCurrent;
-            barColor.color = Color.cyan;
+            currentHealth.maxValue = healthMax;
+            currentHealth.value = healthCurrent;
+            curHealthColor.color = Color.cyan;
+            losHealthColor.color = Color.red;
+
         }
 
         //If difficulty value 6 or more, auto-corrects to highest difficulty.
@@ -233,9 +360,11 @@ public class EnemyHealthScript : MonoBehaviour
             healthCurrent = healthMax;
             attack.damage *= difficultyValue;
 
-            healthBar.maxValue = healthMax;
-            healthBar.value = healthCurrent;
-            barColor.color = Color.cyan;
+            currentHealth.maxValue = healthMax;
+            currentHealth.value = healthCurrent;
+            curHealthColor.color = Color.cyan;
+            losHealthColor.color = Color.red;
+
         }
     }
 
@@ -250,14 +379,20 @@ public class EnemyHealthScript : MonoBehaviour
         damageHit = damageTaken;
         manager.damageReceived += damageHit;
 
-        if(healthBar.gameObject.activeInHierarchy != true)
+        if (visual.gameObject.activeInHierarchy != true)
         {
-            healthBar.gameObject.SetActive(true);
+            visual.gameObject.SetActive(true);
         }
 
-        if(GetComponent<SDPHealthDebuff>() != null)
+        //if(GetComponent<PosNegDOT>() != null)
+        //{
+        //    dotNotice.gameObject.SetActive(true);
+        //}
+
+        if (GetComponent<SDPHealthDebuff>() != null)
         {
             healthCurrent -= (damageHit * GetComponent<SDPHealthDebuff>().damageAmp);
+            //debuffNotice.gameObject.SetActive(true);
         }
 
         else
@@ -266,7 +401,10 @@ public class EnemyHealthScript : MonoBehaviour
         }
 
         //healthCurrent -= damageHit;
-        healthBar.value = healthCurrent;
+        currentHealth.value = healthCurrent;
+        lhUpdateTimer = lhUpdateReset;
+        canvasTimer = canvasTimerReset;
+        //StartCoroutine(HealthLostDelayedUpdate());
     }
 
     void EnemyDeath()
@@ -343,4 +481,10 @@ public class EnemyHealthScript : MonoBehaviour
 
         Destroy(gameObject, 4f);
     }
+
+    //public IEnumerator HealthLostDelayedUpdate()
+    //{
+    //    yield return new WaitForSeconds(0.75f);
+    //    healthLost.value = healthCurrent;
+    //}
 }

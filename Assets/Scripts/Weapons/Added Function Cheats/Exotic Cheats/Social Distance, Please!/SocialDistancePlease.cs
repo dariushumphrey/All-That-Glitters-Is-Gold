@@ -61,8 +61,7 @@ public class SocialDistancePlease : MonoBehaviour
                 proc.GetComponent<Text>().text = "Social Distance, please!";
                 firearm.GetComponent<ShotgunFirearm>().targetHit = null;
                 firearm.damage = damageIncrease;
-                damageTimer = 0.0f;
-
+                damageTimer = 0.0f;            
             }
 
             else
