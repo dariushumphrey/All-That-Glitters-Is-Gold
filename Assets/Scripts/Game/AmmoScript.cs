@@ -10,6 +10,7 @@ public class AmmoScript : MonoBehaviour
     public float ammoPercent = 40f;
 
     private FirearmScript firearm;
+    private PlayerInventoryScript player;
     private int ammoStore = 0;
     // Start is called before the first frame update
     void Start()
@@ -48,8 +49,21 @@ public class AmmoScript : MonoBehaviour
                     firearm.reserveAmmo = firearm.reserveSize;
                 }
 
+                if (other.gameObject.GetComponent<PlayerInventoryScript>() == null)
+                {
+                    return;
+                }
+
+                else
+                {
+                    player = other.gameObject.GetComponent<PlayerInventoryScript>();
+                    player.fogGrenadeCharges++;
+                    player.solGrenadeCharges++;
+                    player.desGrenadeCharges++;
+                }
+
                 Destroy(gameObject);
-            }         
+            }        
         }
     }
 }

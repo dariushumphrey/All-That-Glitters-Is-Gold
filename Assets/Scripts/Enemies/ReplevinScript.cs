@@ -77,6 +77,15 @@ public class ReplevinScript : MonoBehaviour
     private GameObject player;
     internal bool playerFound = false;
 
+    private float slowedPercent = 50f;
+    private float slowPctReset;
+    private int moveSpeedSlow;
+    private int boostSpeedSlow;
+    private int nmaAccelSlow;
+    internal int moveSpeedReset;
+    internal int boostSpeedReset;
+    internal int nmaAccelReset;
+
     private int accelReset;
     private float meleeReset;
     private float chargeReset;
@@ -101,6 +110,11 @@ public class ReplevinScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        slowPctReset = slowedPercent;
+        moveSpeedReset = moveSpeed;
+        boostSpeedReset = boostSpeed;
+        nmaAccelReset = nmaAccel;
+
         layer = LayerMask.GetMask("Player");
         layerTwo = LayerMask.GetMask("Surface");
         layerTotal = layer | layerTwo;
@@ -116,6 +130,20 @@ public class ReplevinScript : MonoBehaviour
         {
             boss = FindObjectOfType<BossManagerScript>();
         }
+
+        slowedPercent /= 100;
+        slowedPercent *= moveSpeed;
+        moveSpeedSlow = (int)slowedPercent;
+
+        slowedPercent = slowPctReset;
+        slowedPercent /= 100;
+        slowedPercent *= boostSpeed;
+        boostSpeedSlow = (int)slowedPercent;
+
+        slowedPercent = slowPctReset;
+        slowedPercent /= 100;
+        slowedPercent *= nmaAccel;
+        nmaAccelSlow = (int)slowedPercent;
 
         playerFound = false;
 
@@ -152,6 +180,7 @@ public class ReplevinScript : MonoBehaviour
         ClusterManagement();
         CanSeePlayer();
         HaveIDied();
+        CheckForSlowedDebuff();
 
         if(jumpCheck != null)
         {
@@ -226,6 +255,24 @@ public class ReplevinScript : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void CheckForSlowedDebuff()
+    {
+        if(gameObject.GetComponent<SlowedScript>())
+        {
+            if(amBoss)
+            {
+                Destroy(gameObject.GetComponent<SlowedScript>());
+            }
+
+            else
+            {
+                moveSpeed = moveSpeedSlow;
+                boostSpeed = boostSpeedSlow;
+                nmaAccel = nmaAccelSlow;
+            }
+        }
     }
 
     [Task]
@@ -380,6 +427,15 @@ public class ReplevinScript : MonoBehaviour
                                 if (hit.collider.tag == "Player" && attackAgain >= attackRate)
                                 {
                                     attackAgain = 0.0f;
+
+                                    if(hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
+                                    {
+                                        if(gameObject.GetComponent<DebuffScript>() == null)
+                                        {
+                                            gameObject.AddComponent<DebuffScript>();
+                                        }
+                                    }
+
                                     hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
                                     hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
 
@@ -616,7 +672,14 @@ public class ReplevinScript : MonoBehaviour
 
                         if (hit.collider.tag == "Player")
                         {
-                            
+                            if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
+                            {
+                                if (gameObject.GetComponent<DebuffScript>() == null)
+                                {
+                                    gameObject.AddComponent<DebuffScript>();
+                                }
+                            }
+
                             hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
                             hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
 
@@ -754,6 +817,14 @@ public class ReplevinScript : MonoBehaviour
                         knockbackDir.y = 0;
                         hitTheSequel.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
 
+                        if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
+                        {
+                            if (gameObject.GetComponent<DebuffScript>() == null)
+                            {
+                                gameObject.AddComponent<DebuffScript>();
+                            }
+                        }
+
                         hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
                         hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
 
@@ -837,6 +908,14 @@ public class ReplevinScript : MonoBehaviour
                 {
                     if (hitTheSequel.collider.tag == "Player" && canAttackAgain)
                     {
+                        if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
+                        {
+                            if (gameObject.GetComponent<DebuffScript>() == null)
+                            {
+                                gameObject.AddComponent<DebuffScript>();
+                            }
+                        }
+
                         hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
                         hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
 

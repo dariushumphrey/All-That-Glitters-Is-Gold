@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMoveScript : MonoBehaviour
 {
     public int speed = 20;
+    public int sprintSpeed = 22;
     public float speedDampening = -1f; //Governs time taken to slow to a stop after letting go of movement input.
     public float speedAccelerant = 0.5f; //Multiplier to exponentially increase movement speed
     public float slopeForce;
@@ -12,10 +14,18 @@ public class PlayerMoveScript : MonoBehaviour
     public float slopeCheckLength;
     public float airborneCheck;
     public float airbornePull = 0.1f; //Multipler to force Player downwards if airborne
+    public float evasionUpForce = 8f;
+    public float evasionForwardForce = 16f;
+    public float evasionTimeout = 0.8f;
+    public Sprite blankReticle;
+    private PlayerInventoryScript inventory;
     private Rigidbody playerRigid;
     private Camera playerCamera;
     private Vector3 a, b, c;
     private Vector3 input;
+    internal bool sprinting = false;
+    internal bool evading = false;
+    internal bool evaded = false;
     internal float horizInput;
     internal float vertInput;
     // Start is called before the first frame update
@@ -23,12 +33,32 @@ public class PlayerMoveScript : MonoBehaviour
     {
         playerRigid = GetComponent<Rigidbody>();
         playerCamera = Camera.main;
+
+        inventory = FindObjectOfType<PlayerInventoryScript>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Space) && !evading && !evaded)
+        {
+            evading = true;
+        }
 
+        if (Input.GetKeyUp(KeyCode.LeftShift) && sprinting || vertInput == 0)
+        {
+            sprinting = false;
+
+            if(inventory.gunPlace.gameObject.activeInHierarchy == false)
+            {
+                inventory.gunPlace.gameObject.SetActive(true);
+                inventory.reticleSprite.sprite = inventory.inventory[inventory.selection].GetComponent<FirearmScript>().reticle;
+
+            }
+
+            //inventory.reticleSprite.sprite = inventory.inventory[inventory.selection].GetComponent<FirearmScript>().reticle;
+
+        }
     }
 
     private void FixedUpdate()
@@ -49,7 +79,23 @@ public class PlayerMoveScript : MonoBehaviour
 
         if (Input.GetButton("Vertical"))
         {
-            playerRigid.AddForce(forward * speed * speedAccelerant);
+            if (Input.GetKey(KeyCode.LeftShift) && vertInput == 1)
+            {
+                sprinting = true;
+                playerRigid.AddForce(forward * sprintSpeed * speedAccelerant);
+
+                if(!inventory.inventory[inventory.selection].GetComponent<FirearmScript>().isReloading)
+                {
+                    inventory.gunPlace.gameObject.SetActive(false);
+                }
+
+                inventory.reticleSprite.sprite = blankReticle;
+            }
+
+            else
+            {
+                playerRigid.AddForce(forward * speed * speedAccelerant);
+            }
         }
 
         if(Airborne())
@@ -83,7 +129,44 @@ public class PlayerMoveScript : MonoBehaviour
         {
             SlopeVector();
         }
-       
+
+        if(evading)
+        {
+            playerRigid.velocity = Vector3.zero;
+
+            //Not moving or moving backwards will make the Player dodge backwards
+            if (horizInput == 0 && vertInput == 0 || vertInput < 0)
+            {
+                playerRigid.AddForce(-transform.forward * evasionForwardForce, ForceMode.Impulse);
+                playerRigid.AddForce(Vector3.up * evasionUpForce, ForceMode.Impulse);
+            }
+
+            //Moving forward will make the Player dodge forwards
+            if (vertInput > 0)
+            {
+                playerRigid.AddForce(transform.forward * evasionForwardForce, ForceMode.Impulse);
+                playerRigid.AddForce(Vector3.up * evasionUpForce, ForceMode.Impulse);
+            }
+
+            //Moving left will make the Player dodge left
+            if (horizInput < 0)
+            {
+                playerRigid.AddForce(-transform.right * evasionForwardForce, ForceMode.Impulse);
+                playerRigid.AddForce(Vector3.up * evasionUpForce, ForceMode.Impulse);
+            }
+
+            //Moving right will make the Player dodge right
+            if (horizInput > 0)
+            {
+                playerRigid.AddForce(transform.right * evasionForwardForce, ForceMode.Impulse);
+                playerRigid.AddForce(Vector3.up * evasionUpForce, ForceMode.Impulse);
+            }
+
+            evading = false;
+            evaded = true;
+            StartCoroutine(ResetEvade());
+        }      
+
         //if((horizInput != 0 || vertInput != 0) && OnSlope())
         //{
         //    playerRigid.AddForce(forward * speed + ((c - a) * slopeForce));
@@ -245,5 +328,11 @@ public class PlayerMoveScript : MonoBehaviour
                 //Debug.Log("Perpendicular");
             }
         }        
+    }
+
+    private IEnumerator ResetEvade()
+    {
+        yield return new WaitForSeconds(evasionTimeout);
+        evaded = false;
     }
 }

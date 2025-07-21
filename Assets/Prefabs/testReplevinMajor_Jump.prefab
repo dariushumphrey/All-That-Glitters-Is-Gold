@@ -289,7 +289,7 @@ MonoBehaviour:
   pounceLimit: 1.5
   jumpLimit: 6
   jumpForce: 8
-  forwardForce: 4
+  forwardForce: 12
   rangedAttackForce: 0
   punchTimeout: 2
   jumpTimeout: 2
@@ -327,7 +327,7 @@ MonoBehaviour:
   healthCurrent: 4000
   healthMax: 4000
   healthPercent: 30
-  lucentYield: 400
+  lucentYield: 200
   lucentPercent: 20
   isImmune: 0
   isDummy: 0

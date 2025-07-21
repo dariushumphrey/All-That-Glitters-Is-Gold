@@ -19,6 +19,8 @@ public class PlayerCameraScript : MonoBehaviour
     public Vector3 cameraPosition; //Governs Camera offset position from Player-Character
     public Transform offsetCheckPos; //Empty GameObject, used to cast Rays from when checking surface collision
     public Image reticleSprite;
+    public Image meleeReticle;
+    public Sprite meleeSprite;
     public LayerMask contactOnly;
 
     private float zoomReset = 60f;
@@ -43,6 +45,8 @@ public class PlayerCameraScript : MonoBehaviour
         melee = FindObjectOfType<PlayerMeleeScript>();
         playerCamera.fieldOfView = zoomDefault;
         zoomReset = zoomDefault;
+        meleeReticle.sprite = move.blankReticle;
+
     }
 
     // Update is called once per frame
@@ -77,7 +81,7 @@ public class PlayerCameraScript : MonoBehaviour
             playerCamera.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
 
             forwardDirection = (playerCamera.transform.position - transform.position);
-            if (move.horizInput != 0 || move.vertInput != 0 || Input.GetButton("Fire1"))
+            if (move.horizInput != 0 || move.vertInput != 0 || Input.GetButton("Fire1") || player.throwing)
             {
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
                 //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(pitch, yaw, 0), Time.deltaTime * characterTurnSpeed);
@@ -108,7 +112,7 @@ public class PlayerCameraScript : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
 
             rayOrigin = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
-            if (Physics.Raycast(rayOrigin, playerCamera.transform.forward, out hit, Mathf.Infinity, 7))
+            if (Physics.Raycast(rayOrigin, playerCamera.transform.forward, out hit, Mathf.Infinity, contactOnly))
             {
                 if(hit.collider.tag == "Enemy")
                 {
@@ -130,7 +134,8 @@ public class PlayerCameraScript : MonoBehaviour
 
             player.weaponAmmoPage.gameObject.SetActive(true);
             //player.weaponLoad.gameObject.SetActive(true);
-            player.lucentText.gameObject.SetActive(true);          
+            player.lucentText.gameObject.SetActive(true);
+            player.grenadeText.gameObject.SetActive(true);
             player.wepStateTimer = player.wepStateTimerReset;
         }
 
@@ -214,26 +219,35 @@ public class PlayerCameraScript : MonoBehaviour
     private void MeleeAssistance()
     {
         rayOrigin = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
-
-        if (Physics.Raycast(rayOrigin, playerCamera.transform.forward, out hit, Mathf.Infinity))
+        if (Physics.Raycast(rayOrigin, playerCamera.transform.forward, out hit, melee.meleeRange, contactOnly))
         {
-            if(hit.collider.tag == "Enemy")
+
+            if (hit.collider.tag == "Enemy")
             {
                 melee.meleeTarget = hit.collider.gameObject;
+
+                meleeReticle.sprite = meleeSprite;
+                meleeReticle.color = Color.yellow;
+                Vector3 reticlePos = Camera.main.WorldToScreenPoint(melee.meleeTarget.transform.position);
+                meleeReticle.rectTransform.position = reticlePos;
                 
-            }
-            
-            else
-            {
-                melee.meleeTarget = null;
-            }
+            }          
         }
 
-        if(melee.meleeTarget != null)
+        else
+        {
+            melee.meleeTarget = null;
+            meleeReticle.color = Color.white;
+            meleeReticle.sprite = move.blankReticle;
+        }
+
+        if (melee.meleeTarget != null)
         {
             if (melee.meleeTarget.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
             {
                 melee.meleeTarget = null;
+                meleeReticle.sprite = move.blankReticle;
+                meleeReticle.color = Color.white;
             }
         }       
     }

@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyManagerScript : MonoBehaviour
 {
     public int dropRarity;
-    public int lucentYield;
     public float dropThreshold; //A goal number to be at or below in order to spawn Loot
     //This value governs the escalation or de-escalation of Loot drop rates as Rarity increases
     //-Increasing this number increases dropThreshold, spawning Loot drops more frequently
@@ -124,7 +123,7 @@ public class EnemyManagerScript : MonoBehaviour
 
         if (deathRewardChance <= dropThreshold)
         {
-            GameObject reward = Instantiate(loot, deathPos, loot.transform.rotation);
+            GameObject reward = Instantiate(loot, deathPos + Vector3.up, loot.transform.rotation);
             if (dropRarity == 1)
             {
                 reward.GetComponent<Renderer>().material.color = Color.gray;
@@ -160,7 +159,7 @@ public class EnemyManagerScript : MonoBehaviour
             deathRewardChance = Random.Range(0, 103);
             if (deathRewardChance >= 100)
             {
-                GameObject reward = Instantiate(exoticLoot, deathPos, loot.transform.rotation);
+                GameObject reward = Instantiate(exoticLoot, deathPos + Vector3.up, loot.transform.rotation);
                 if(reward.GetComponent<ColorLerpScript>() != null)
                 {
                     reward.GetComponent<ColorLerpScript>().colorOne = Color.cyan;
@@ -178,7 +177,7 @@ public class EnemyManagerScript : MonoBehaviour
 
         if (deathRewardChance <= lucentThreshold)
         {
-            GameObject rewardTwo = Instantiate(lucent, deathPos, loot.transform.rotation);
+            GameObject rewardTwo = Instantiate(lucent, deathPos + Vector3.up, loot.transform.rotation);
             rewardTwo.GetComponent<LucentScript>().lucentGift *= dropRarity;
             rewardTwo.GetComponent<LucentScript>().ShatterCalculation();
 
@@ -195,7 +194,7 @@ public class EnemyManagerScript : MonoBehaviour
 
     public void CadenceReward()
     {
-        GameObject rewardTwo = Instantiate(lucent, slainPosition, loot.transform.rotation);
+        GameObject rewardTwo = Instantiate(lucent, slainPosition + Vector3.up, loot.transform.rotation);
         rewardTwo.GetComponent<LucentScript>().lucentGift *= dropRarity;
         rewardTwo.GetComponent<LucentScript>().ShatterCalculation();
         rewardTwo.name = loot.name;
@@ -208,7 +207,7 @@ public class EnemyManagerScript : MonoBehaviour
     
     public void FatedCadenceReward(Vector3 shotPosition)
     {
-        GameObject rewardTwo = Instantiate(lucent, shotPosition, loot.transform.rotation);
+        GameObject rewardTwo = Instantiate(lucent, shotPosition + Vector3.up, loot.transform.rotation);
         rewardTwo.GetComponent<LucentScript>().lucentGift *= dropRarity;
         rewardTwo.GetComponent<LucentScript>().ShatterCalculation();
         rewardTwo.name = loot.name;

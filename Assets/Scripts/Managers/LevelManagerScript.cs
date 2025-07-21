@@ -253,6 +253,7 @@ public class LevelManagerScript : MonoBehaviour
     public void RestartGame()
     {
         player.GetComponent<PlayerInventoryScript>().WriteOnReset();
+        PlayerPrefs.SetInt("lucentBalance", player.GetComponent<PlayerInventoryScript>().lucentFunds);
         LoadScene();
     }
 
@@ -266,6 +267,7 @@ public class LevelManagerScript : MonoBehaviour
         level = 0;
         setting = Setting.Navigation;
         player.GetComponent<PlayerInventoryScript>().WriteOnReset();
+        PlayerPrefs.SetInt("lucentBalance", player.GetComponent<PlayerInventoryScript>().lucentFunds);
         LoadScene();
     }
 

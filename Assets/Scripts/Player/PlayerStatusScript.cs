@@ -22,7 +22,10 @@ public class PlayerStatusScript : MonoBehaviour
     public float shieldPercent = 20f;
 
     public float regenShieldSeconds = 7.0f;
+    public float invincibilityDuration = 0.3f;
     public bool isDead;
+    public bool isInvincible;
+    public GameObject immunity;
 
     public Slider health, shield;
     public Image hBar, sBar;
@@ -85,6 +88,13 @@ public class PlayerStatusScript : MonoBehaviour
         else
         {
             sBar.color = Color.black;
+        }
+
+        if(move.evading)
+        {
+            isInvincible = true;
+            immunity.SetActive(true);
+            StartCoroutine(CancelInvulnerable());
         }
 
         ShieldDamageCheck();
@@ -173,21 +183,30 @@ public class PlayerStatusScript : MonoBehaviour
     public void InflictDamage(int damageTaken)
     {
         playerHit = true;
-        dmgReceived = damageTaken;
 
-        if (playerShield > 0)
+        if(isInvincible)
         {
-            playerShield -= dmgReceived;
-            regenShieldSeconds = regenShieldResetSeconds;
-            StopCoroutine(RechargeShield());        
             return;
         }
 
         else
         {
-            playerHealth -= dmgReceived;
-            return;
-        }
+            dmgReceived = damageTaken;
+
+            if (playerShield > 0)
+            {
+                playerShield -= dmgReceived;
+                regenShieldSeconds = regenShieldResetSeconds;
+                StopCoroutine(RechargeShield());
+                return;
+            }
+
+            else
+            {
+                playerHealth -= dmgReceived;
+                return;
+            }
+        }      
     }
 
     void PlayerDeath()
@@ -200,7 +219,7 @@ public class PlayerStatusScript : MonoBehaviour
             cam.enabled = false;
 
             inv.lucentFunds = 0;
-            if (inv.inventory.Count > 0)
+            if (inv.inventory.Count > 0 && !move.sprinting)
             {
                 inv.GetComponentInChildren<FirearmScript>().enabled = false;            
             }
@@ -238,5 +257,12 @@ public class PlayerStatusScript : MonoBehaviour
             playerShield = playerShieldMax;
             regenShieldSeconds = regenShieldResetSeconds;
         }
+    }
+
+    private IEnumerator CancelInvulnerable()
+    {
+        yield return new WaitForSeconds(invincibilityDuration);
+        isInvincible = false;
+        immunity.SetActive(false);
     }
 }

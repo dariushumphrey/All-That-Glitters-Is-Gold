@@ -45,7 +45,7 @@ public class PlayerMeleeScript : MonoBehaviour
     void MeleeStrike()
     {
         RaycastHit hit;        
-        if (Physics.Raycast(transform.position, transform.forward, out hit, meleeRange))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, meleeRange - 3))
         {
             if (hit.collider.tag == "Enemy")
             {

@@ -60,8 +60,17 @@ public class MaliciousWindUp : MonoBehaviour
 
         if (firearm.isReloading == true && firearm.enabled == true)
         {
-            proc.GetComponent<Text>().text = "Malicious Wind Up";
-            StartCoroutine(ResetReload());
+            if(firearm.reloadSpeed < reloadReset)
+            {
+                proc.GetComponent<Text>().text = "Malicious Wind Up";
+                StartCoroutine(ResetReload());
+            }
+
+            else
+            {
+                proc.GetComponent<Text>().text = " ";
+
+            }
         }
 
         if(firearm.weaponRarity == 5 && !firearm.isExotic)

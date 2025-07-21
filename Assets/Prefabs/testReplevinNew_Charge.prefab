@@ -326,7 +326,7 @@ MonoBehaviour:
   healthCurrent: 2000
   healthMax: 2000
   healthPercent: 30
-  lucentYield: 200
+  lucentYield: 100
   lucentPercent: 20
   isImmune: 0
   isDummy: 0

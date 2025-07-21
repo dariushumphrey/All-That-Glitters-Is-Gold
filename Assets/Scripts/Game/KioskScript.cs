@@ -3352,7 +3352,7 @@ public class KioskScript : MonoBehaviour
                 if (fcOneStr == "G")
                 {
                     cheatTraitOne.text = "Pay to Win" + '\n' +
-                        "Consume 10,000 Lucent to grant stacks of a 50% Weapon damage increase. Stacks 150x." + "\n" +
+                        "Consume 5,280 Lucent to grant stacks of a 50% Weapon damage increase. Stacks 150x." + "\n" +
                         "'Space' - Consume Lucent";
 
                 }
@@ -4985,5 +4985,9 @@ public class KioskScript : MonoBehaviour
     public void AssignLucentBalance()
     {
         lucentFunds = PlayerPrefs.GetInt("lucentBalance");
+        if(lucentFunds >= 100000)
+        {
+            lucentFunds = 100000;
+        }
     }
 }

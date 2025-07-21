@@ -138,6 +138,8 @@ public class SingleFireFirearm : FirearmScript
                             if (gameObject.GetComponent<Cadence>())
                             {
                                 gameObject.GetComponent<Cadence>().killConfirmed = true;
+                                CadenceRewardPosition(hit.collider.transform.position);
+
                             }
 
                             if (gameObject.GetComponent<RudeAwakening>())
@@ -207,6 +209,8 @@ public class SingleFireFirearm : FirearmScript
                             if (gameObject.GetComponent<Cadence>())
                             {
                                 gameObject.GetComponent<Cadence>().killConfirmed = true;
+                                CadenceRewardPosition(hit.collider.transform.position);
+
                             }
 
                             if (gameObject.GetComponent<RudeAwakening>())
@@ -243,6 +247,10 @@ public class SingleFireFirearm : FirearmScript
                 if (hit.collider.tag == "Lucent")
                 {
                     inv.lucentFunds += hit.collider.GetComponent<LucentScript>().lucentGift;
+                    if (inv.lucentFunds >= 100000)
+                    {
+                        inv.lucentFunds = 100000;
+                    }
                     hit.collider.GetComponent<LucentScript>().lucentGift = 0;
                 }
             }

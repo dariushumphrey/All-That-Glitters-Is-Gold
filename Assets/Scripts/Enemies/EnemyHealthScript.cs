@@ -140,6 +140,32 @@ public class EnemyHealthScript : MonoBehaviour
             }
         }
 
+        if (GetComponent<DamageOverTimeScript>() != null)
+        {
+            if (dotNotice.gameObject.activeInHierarchy == false)
+            {
+                dotNotice.gameObject.SetActive(true);
+            }
+
+            else
+            {
+                //do nothing
+            }
+        }
+
+        if (GetComponent<DamageOverTimeScript>() == null)
+        {
+            if (dotNotice.gameObject.activeInHierarchy == true)
+            {
+                dotNotice.gameObject.SetActive(false);
+            }
+
+            else
+            {
+                //do nothing
+            }
+        }
+
         if (GetComponent<SDPHealthDebuff>() != null)
         {
             if (debuffNotice.gameObject.activeInHierarchy == false)
@@ -158,6 +184,59 @@ public class EnemyHealthScript : MonoBehaviour
             if (debuffNotice.gameObject.activeInHierarchy == true)
             {
                 debuffNotice.gameObject.SetActive(false);
+            }
+
+            else
+            {
+                //do nothing
+            }
+        }
+
+        if (GetComponent<DebuffScript>() != null)
+        {
+            if (debuffNotice.gameObject.activeInHierarchy == false)
+            {
+                debuffNotice.gameObject.SetActive(true);
+            }
+
+            else
+            {
+                //do nothing
+            }
+        }
+
+        if (GetComponent<DebuffScript>() == null)
+        {
+            if (debuffNotice.gameObject.activeInHierarchy == true)
+            {
+                debuffNotice.gameObject.SetActive(false);
+            }
+
+            else
+            {
+                //do nothing
+            }
+        }
+
+        if (GetComponent<SlowedScript>() != null)
+        {
+            if (slowNotice.gameObject.activeInHierarchy == false)
+            {
+                slowNotice.gameObject.SetActive(true);
+            }
+
+            else
+            {
+                //do nothing
+            }
+        }
+
+        if (GetComponent<SlowedScript>() == null)
+        {
+            if (slowNotice.gameObject.activeInHierarchy == true)
+            {
+                slowNotice.gameObject.SetActive(false);
+                StartCoroutine(RestoreMovement());
             }
 
             else
@@ -395,6 +474,11 @@ public class EnemyHealthScript : MonoBehaviour
             //debuffNotice.gameObject.SetActive(true);
         }
 
+        else if (GetComponent<DebuffScript>() != null)
+        {
+            healthCurrent -= (damageHit * (int)GetComponent<DebuffScript>().damageAmp);
+        }
+
         else
         {
             healthCurrent -= damageHit;
@@ -462,6 +546,11 @@ public class EnemyHealthScript : MonoBehaviour
             }
 
             player.lucentFunds += lucentYield;
+            if(player.lucentFunds >= 100000)
+            {
+                player.lucentFunds = 100000;
+            }
+
             if(gameObject.GetComponent<Rigidbody>() == null)
             {
                 gameObject.AddComponent<Rigidbody>();
@@ -480,6 +569,14 @@ public class EnemyHealthScript : MonoBehaviour
         }
 
         Destroy(gameObject, 4f);
+    }
+
+    IEnumerator RestoreMovement()
+    {
+        yield return new WaitForSeconds(0.1f);
+        attack.moveSpeed = attack.moveSpeedReset;
+        attack.boostSpeed = attack.boostSpeedReset;
+        attack.nmaAccel = attack.nmaAccelReset;
     }
 
     //public IEnumerator HealthLostDelayedUpdate()

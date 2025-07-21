@@ -794,7 +794,7 @@ public class WeaponManagerScript : MonoBehaviour
                 if (cFiveStr == "G")
                 {
                     cheatTraitOne.text = "Pay to Win" + '\n' +
-                        "Consume 10,000 Lucent to grant stacks of a 50% Weapon damage increase. Stacks 150x." + "\n" +
+                        "Consume 5,280 Lucent to grant stacks of a 50% Weapon damage increase. Stacks 150x." + "\n" +
                         "'Space' - Consume Lucent";
                 }
 

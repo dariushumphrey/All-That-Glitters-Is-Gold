@@ -39,7 +39,7 @@ public class FirearmScript : MonoBehaviour
     internal GameObject targetHit;
     internal GameObject procOne, procTwo, dpsText;
     internal PlayerInventoryScript inv;
-    internal Vector3 fatedCadencePosition;
+    internal Vector3 cadencePosition, fatedCadencePosition;
 
     //Hidden variables
     internal float fireAgain; //Seconds to wait until weapon can fire
@@ -773,6 +773,7 @@ public class FirearmScript : MonoBehaviour
                             if (gameObject.GetComponent<Cadence>())
                             {
                                 gameObject.GetComponent<Cadence>().killConfirmed = true;
+                                CadenceRewardPosition(hit.collider.transform.position);
                             }
 
                             if (gameObject.GetComponent<RudeAwakening>())
@@ -845,6 +846,8 @@ public class FirearmScript : MonoBehaviour
                             if (gameObject.GetComponent<Cadence>())
                             {
                                 gameObject.GetComponent<Cadence>().killConfirmed = true;
+                                CadenceRewardPosition(hit.collider.transform.position);
+
                             }
 
                             if (gameObject.GetComponent<RudeAwakening>())
@@ -884,6 +887,11 @@ public class FirearmScript : MonoBehaviour
                 if (hit.collider.tag == "Lucent")
                 {
                     inv.lucentFunds += hit.collider.GetComponent<LucentScript>().lucentGift;
+                    if(inv.lucentFunds >= 100000)
+                    {
+                        inv.lucentFunds = 100000;
+                    }
+
                     hit.collider.GetComponent<LucentScript>().lucentGift = 0;
                 }
             }
@@ -966,9 +974,15 @@ public class FirearmScript : MonoBehaviour
         }
     }
 
-    //The Following method helps Cadence determine where to spawn Lucent clusters.
+    //The Following methods helps Cadence determine where to spawn Lucent clusters.
+
+    public virtual void CadenceRewardPosition(Vector3 killPosition)
+    {
+        cadencePosition = killPosition;
+    }
+
     public virtual void FatedCadenceRewardPosition(Vector3 shotPosition)
     {
         fatedCadencePosition = shotPosition;
-    }   
+    }  
 }

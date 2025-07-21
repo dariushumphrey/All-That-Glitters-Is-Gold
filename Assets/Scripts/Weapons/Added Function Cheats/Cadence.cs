@@ -37,6 +37,7 @@ public class Cadence : MonoBehaviour
         if (deadCount >= triggerCount)
         {
             deadCount = 0;
+            enemy.CadenceRewardPosition(firearm.cadencePosition);
             enemy.CadenceReward();
             proc.GetComponent<Text>().text = "Cadence";
             StartCoroutine(ClearText());

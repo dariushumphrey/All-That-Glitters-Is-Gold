@@ -10,22 +10,31 @@ public class PlayerInventoryScript : MonoBehaviour
     public string filepath = "inventory.txt";
 
     public int lucentFunds;
+    public int fogGrenadeCharges = 0;
+    public int solGrenadeCharges = 0;
+    public int desGrenadeCharges = 0;
     public List<GameObject> inventory = new List<GameObject>(10);
+    public List<GameObject> grenades = new List<GameObject>(2);
     public Transform gunPlace;
+    public float throwStrength;
+    public float throwMin, throwMax;
+    public GameObject foggerGrenade;
     public bool blueKey, redKey = false;
-    public Text weaponCurAmmo, weaponResAmmo, lucentText;
-    public Slider weaponLoad;
+    public Text weaponCurAmmo, weaponResAmmo, lucentText, grenadeText;
+    public Slider weaponLoad, grenadeThrow;
     public Image weaponAmmoPage;
+
     private Image weaponPage;
-    private Image reticleSprite;
+    internal Image reticleSprite;
     private Text wepName, wepStats, flavor;
     private Text cheatOne, cheatTwo, cheatThree, cheatFour, cheatTraitOne, cheatTraitTwo;
     private Text invMonitor, rarityCheck, dismantleText;
-    internal int selection;
+    internal int selection, grenadeSelection;
     private float dismantleTimer = 1f;
     private float dismantleTimerReset;
     internal float wepStateTimer = 0.5f;
     internal float wepStateTimerReset;
+    internal bool throwing = false;
 
     internal List<string> readdedWeps = new List<string>(10);
     
@@ -34,6 +43,7 @@ public class PlayerInventoryScript : MonoBehaviour
     {      
 
         selection = -1;
+        grenadeSelection = 0;
 
         weaponPage = GameObject.Find("weaponPagePanel").GetComponent<Image>();
         wepName = GameObject.Find("weaponName").GetComponent<Text>();
@@ -55,12 +65,18 @@ public class PlayerInventoryScript : MonoBehaviour
         reticleSprite.gameObject.SetActive(false);
         dismantleTimerReset = dismantleTimer;
         weaponLoad.value = 0;
+        grenadeThrow.value = 0;
 
         lucentFunds = PlayerPrefs.GetInt("lucentBalance");
+        if(lucentFunds >= 100000)
+        {
+            lucentFunds = 100000;
+        }
 
         weaponAmmoPage.gameObject.SetActive(false);
         //weaponLoad.gameObject.SetActive(false);
         lucentText.gameObject.SetActive(false);
+        grenadeText.gameObject.SetActive(false);
         wepStateTimerReset = wepStateTimer;
         
     }
@@ -69,11 +85,14 @@ public class PlayerInventoryScript : MonoBehaviour
     void Update()
     {
         //Debug.Log(selection + " || " + inventory.Count);
+        //Debug.Log(grenadeSelection + " || " + grenades.Count);
 
         if(Time.timeScale == 1)
         {
             SwitchInv();
             DismantleInv();
+            SwitchGrenades();
+            ThrowGrenade();
         }
 
         wepStateTimer -= Time.deltaTime;
@@ -82,6 +101,7 @@ public class PlayerInventoryScript : MonoBehaviour
             weaponAmmoPage.gameObject.SetActive(false);
             //weaponLoad.gameObject.SetActive(false);
             lucentText.gameObject.SetActive(false);
+            grenadeText.gameObject.SetActive(false);
         }
 
         //WriteOnReset();
@@ -204,7 +224,37 @@ public class PlayerInventoryScript : MonoBehaviour
             DisplayCheats();
         }
 
+        if(grenadeSelection == 0)
+        {
+            grenadeText.text = "Fog: " + fogGrenadeCharges;
+        }
+
+        if (grenadeSelection == 1)
+        {
+            grenadeText.text = "Sol: " + solGrenadeCharges;
+        }
+
+        if (grenadeSelection == 2)
+        {
+            grenadeText.text = "Des: " + desGrenadeCharges;
+        }
+
         lucentText.text = lucentFunds.ToString("N0");
+
+        if(fogGrenadeCharges >= 3)
+        {
+            fogGrenadeCharges = 3;
+        }
+
+        if(solGrenadeCharges >= 3)
+        {
+            solGrenadeCharges = 3;
+        }
+
+        if (desGrenadeCharges >= 3)
+        {
+            desGrenadeCharges = 3;
+        }
     }
 
     public void AddInv(GameObject g)
@@ -808,11 +858,167 @@ public class PlayerInventoryScript : MonoBehaviour
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -7)
         {
             cheatTraitOne.text = "Pay to Win" + '\n' +
-                "[Space] - Consume 10,000 Lucent for a 50% Weapon damage increase. Stacks 150x.";
+                "[Space] - Consume 5,280 Lucent for a 50% Weapon damage increase. Stacks 150x.";
 
             cheatTraitTwo.text = "Malicious Wind-Up" + '\n' +
                     "Inflicting Damage increases Reload Speed by 0.75%.";
         } //Pay to Win + Malicious Wind-Up
+    }
+
+    private void SwitchGrenades()
+    {
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            if(grenadeSelection >= grenades.Count - 1)
+            {
+                grenadeSelection = 0;
+                grenadeText.gameObject.SetActive(true);
+                wepStateTimer = wepStateTimerReset;
+
+            }
+
+            else
+            {
+                grenadeSelection++;
+                grenadeText.gameObject.SetActive(true);
+                wepStateTimer = wepStateTimerReset;
+            }
+        }
+    }
+
+    private void ThrowGrenade()
+    {
+        if(Input.GetKey(KeyCode.G))
+        {
+            if(grenadeSelection == 0)
+            {
+                if (fogGrenadeCharges <= 0)
+                {
+                    Debug.Log("Cannot throw Fogger Grenade; No charges available");
+                }
+
+                else
+                {
+                    throwing = true;
+                    grenadeThrow.maxValue = throwMax;
+                    grenadeThrow.minValue = throwMin;
+
+                    throwStrength = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
+                    grenadeThrow.value = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
+
+                }
+            } //Fogger Grenade
+
+            if (grenadeSelection == 1)
+            {
+                if (solGrenadeCharges <= 0)
+                {
+                    Debug.Log("Cannot throw Solution Grenade; No charges available");
+                }
+
+                else
+                {
+                    throwing = true;
+                    grenadeThrow.maxValue = throwMax;
+                    grenadeThrow.minValue = throwMin;
+
+                    throwStrength = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
+                    grenadeThrow.value = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
+
+                }
+            } //Solution Grenade
+
+            if (grenadeSelection == 2)
+            {
+                if (desGrenadeCharges <= 0)
+                {
+                    Debug.Log("Cannot throw Destruct Grenade; No charges available");
+                }
+
+                else
+                {
+                    throwing = true;
+                    grenadeThrow.maxValue = throwMax;
+                    grenadeThrow.minValue = throwMin;
+
+                    throwStrength = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
+                    grenadeThrow.value = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
+
+                }
+            } //Destruct Grenade
+        }
+
+        if (Input.GetKeyUp(KeyCode.G))
+        {
+            if(grenadeSelection == 0)
+            {
+                if (fogGrenadeCharges <= 0)
+                {
+                    Debug.Log("Cannot throw Fogger Grenade; No charges available");
+                }
+
+                else
+                {
+                    fogGrenadeCharges--;
+                    GameObject brand = Instantiate(grenades[grenadeSelection], transform.position + transform.forward, transform.rotation);
+                    brand.name = grenades[grenadeSelection].name;
+                    brand.GetComponent<Rigidbody>().AddForce(transform.forward * throwStrength, ForceMode.Impulse);
+                    throwing = false;
+
+                    throwStrength = 0;
+                    grenadeThrow.value = throwMin;
+
+                    grenadeText.gameObject.SetActive(true);
+                    wepStateTimer = wepStateTimerReset;
+                }
+            } //Fogger Grenade
+
+            if (grenadeSelection == 1)
+            {
+                if (solGrenadeCharges <= 0)
+                {
+                    Debug.Log("Cannot throw Solution Grenade; No charges available");
+                }
+
+                else
+                {
+                    solGrenadeCharges--;
+                    GameObject brand = Instantiate(grenades[grenadeSelection], transform.position + transform.forward, transform.rotation);
+                    brand.name = grenades[grenadeSelection].name;
+                    brand.GetComponent<Rigidbody>().AddForce(transform.forward * throwStrength, ForceMode.Impulse);
+                    throwing = false;
+
+                    throwStrength = 0;
+                    grenadeThrow.value = throwMin;
+
+                    grenadeText.gameObject.SetActive(true);
+                    wepStateTimer = wepStateTimerReset;
+                }
+            } //Solution Grenade
+
+            if (grenadeSelection == 2)
+            {
+                if (desGrenadeCharges <= 0)
+                {
+                    Debug.Log("Cannot throw Destruct Grenade; No charges available");
+                }
+
+                else
+                {
+                    desGrenadeCharges--;
+                    GameObject brand = Instantiate(grenades[grenadeSelection], transform.position + transform.forward, transform.rotation);
+                    brand.name = grenades[grenadeSelection].name;
+                    brand.GetComponent<Rigidbody>().AddForce(transform.forward * throwStrength, ForceMode.Impulse);
+                    throwing = false;
+
+                    throwStrength = 0;
+                    grenadeThrow.value = throwMin;
+
+                    grenadeText.gameObject.SetActive(true);
+                    wepStateTimer = wepStateTimerReset;
+                }
+            } //Destruct Grenade
+        }
     }
 
     private void CreateInventoryFile()

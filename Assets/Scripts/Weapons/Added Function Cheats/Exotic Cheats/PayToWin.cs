@@ -89,15 +89,15 @@ public class PayToWin : MonoBehaviour
                 return;
             }
 
-            else if (player.lucentFunds < 10000)
+            else if (player.lucentFunds < 4400)
             {
-                //If the Player has less than 10,000 Lucent funds, they cannot create stacks. 
+                //If the Player has less than 5,280 Lucent funds, they cannot create stacks. 
                 return;
             }
 
             else
             {
-                player.lucentFunds -= 10000;              
+                player.lucentFunds -= 5280;              
                 stackNum = 150;
                 if(firearm.currentAmmo <= 0)
                 {
