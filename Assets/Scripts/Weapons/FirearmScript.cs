@@ -781,10 +781,12 @@ public class FirearmScript : MonoBehaviour
                                 gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
                             }
 
-                            //if(hit.collider.GetComponent<Rigidbody>() != null)
-                            //{
-                            //    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 0.5f, ForceMode.Impulse);
-                            //}
+
+                            if (hit.collider.GetComponent<Rigidbody>() == null)
+                            {
+                                hit.collider.gameObject.AddComponent<Rigidbody>();
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 10f, ForceMode.Impulse);
+                            }
                         }
                     }
 
@@ -855,6 +857,12 @@ public class FirearmScript : MonoBehaviour
                                 gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
                             }
 
+                            if (hit.collider.GetComponent<Rigidbody>() == null)
+                            {
+                                hit.collider.gameObject.AddComponent<Rigidbody>();
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 10f, ForceMode.Impulse);
+                            }
+
                             //if (hit.collider.GetComponent<Rigidbody>() != null)
                             //{
                             //    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 0.5f, ForceMode.Impulse);
@@ -893,6 +901,7 @@ public class FirearmScript : MonoBehaviour
                     }
 
                     hit.collider.GetComponent<LucentScript>().lucentGift = 0;
+                    hit.collider.GetComponent<LucentScript>().shot = true;
                 }
             }
 

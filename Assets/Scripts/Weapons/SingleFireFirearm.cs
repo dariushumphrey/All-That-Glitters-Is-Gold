@@ -147,6 +147,12 @@ public class SingleFireFirearm : FirearmScript
                                 gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
                             }
 
+                            if (hit.collider.GetComponent<Rigidbody>() == null)
+                            {
+                                hit.collider.gameObject.AddComponent<Rigidbody>();
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 5f, ForceMode.Impulse);
+                            }
+
                             //hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 1f, ForceMode.Impulse);
                         }
                     }
@@ -218,6 +224,11 @@ public class SingleFireFirearm : FirearmScript
                                 gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
                             }
 
+                            if (hit.collider.GetComponent<Rigidbody>() == null)
+                            {
+                                hit.collider.gameObject.AddComponent<Rigidbody>();
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 5f, ForceMode.Impulse);
+                            }
                             //hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 1f, ForceMode.Impulse);
                         }
                     }
@@ -252,6 +263,7 @@ public class SingleFireFirearm : FirearmScript
                         inv.lucentFunds = 100000;
                     }
                     hit.collider.GetComponent<LucentScript>().lucentGift = 0;
+                    hit.collider.GetComponent<LucentScript>().shot = true;
                 }
             }
 

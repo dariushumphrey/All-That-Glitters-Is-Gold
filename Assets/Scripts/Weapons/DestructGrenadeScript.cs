@@ -48,11 +48,39 @@ public class DestructGrenadeScript : MonoBehaviour
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
         Destroy(gameObject.GetComponent<CapsuleCollider>());
 
-        gameObject.AddComponent<SphereCollider>();
-        gameObject.GetComponent<SphereCollider>().radius = explosiveRange;
-        gameObject.GetComponent<SphereCollider>().isTrigger = true;
+        //gameObject.AddComponent<SphereCollider>();
+        //gameObject.GetComponent<SphereCollider>().radius = explosiveRange;
+        //gameObject.GetComponent<SphereCollider>().isTrigger = true;
 
-        Destroy(gameObject, 0.1f);
+        RaycastHit hit;
+        Vector3 epicenter = transform.position;
+        Collider[] affected = Physics.OverlapSphere(transform.position, explosiveRange);
+        foreach (Collider contact in affected)
+        {
+            if (!Physics.Raycast(transform.position, (contact.transform.position - transform.position).normalized, out hit, explosiveRange, contactOnly))
+            {
+                if (contact.gameObject.CompareTag("Enemy"))
+                {
+                    if (contact.GetComponent<EnemyHealthScript>() != null)
+                    {
+                        contact.GetComponent<EnemyHealthScript>().inflictDamage(explosiveDamage);
+                        if(contact.GetComponent<EnemyHealthScript>().healthCurrent <= 0 && contact.GetComponent<Rigidbody>() == null)                    
+                        {
+                            contact.gameObject.AddComponent<Rigidbody>();
+                            contact.gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
+                        }
+                    }
+                }
+
+                if(contact.gameObject.CompareTag("Lucent"))
+                {
+                    contact.gameObject.GetComponent<LucentScript>().lucentGift = 0;
+                    contact.gameObject.GetComponent<LucentScript>().shot = true;
+                }
+            }
+        }
+
+        Destroy(gameObject);
 
     }
 
@@ -65,25 +93,25 @@ public class DestructGrenadeScript : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        RaycastHit hit;
-        Vector3 epicenter = transform.position;
-        Collider[] affected = Physics.OverlapSphere(transform.position, explosiveRange);
-        foreach (Collider contact in affected)
-        {
-            if(!Physics.Raycast(transform.position, (contact.transform.position - transform.position).normalized, out hit, explosiveRange, contactOnly))
-            {
-                if (contact.gameObject.CompareTag("Enemy"))
-                {
-                    if (contact.GetComponent<EnemyHealthScript>() != null)
-                    {
-                        contact.GetComponent<EnemyHealthScript>().inflictDamage(explosiveDamage);
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    RaycastHit hit;
+    //    Vector3 epicenter = transform.position;
+    //    Collider[] affected = Physics.OverlapSphere(transform.position, explosiveRange);
+    //    foreach (Collider contact in affected)
+    //    {
+    //        if(!Physics.Raycast(transform.position, (contact.transform.position - transform.position).normalized, out hit, explosiveRange, contactOnly))
+    //        {
+    //            if (contact.gameObject.CompareTag("Enemy"))
+    //            {
+    //                if (contact.GetComponent<EnemyHealthScript>() != null)
+    //                {
+    //                    contact.GetComponent<EnemyHealthScript>().inflictDamage(explosiveDamage);
 
-                    }
-                }
-            }                
-        }
+    //                }
+    //            }
+    //        }                
+    //    }
 
-    }
+    //}
 }

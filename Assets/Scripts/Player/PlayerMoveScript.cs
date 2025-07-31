@@ -40,7 +40,7 @@ public class PlayerMoveScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && !evading && !evaded)
+        if(Input.GetKeyDown(KeyCode.Space) && !evading && !evaded && !Airborne())
         {
             evading = true;
         }
@@ -79,7 +79,7 @@ public class PlayerMoveScript : MonoBehaviour
 
         if (Input.GetButton("Vertical"))
         {
-            if (Input.GetKey(KeyCode.LeftShift) && vertInput == 1)
+            if (Input.GetKey(KeyCode.LeftShift) && vertInput == 1 && !Airborne())
             {
                 sprinting = true;
                 playerRigid.AddForce(forward * sprintSpeed * speedAccelerant);

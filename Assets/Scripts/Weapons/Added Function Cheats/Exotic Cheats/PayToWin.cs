@@ -74,7 +74,7 @@ public class PayToWin : MonoBehaviour
 
     void StackGranter()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             if (stackNum >= 1)
             {
@@ -89,7 +89,7 @@ public class PayToWin : MonoBehaviour
                 return;
             }
 
-            else if (player.lucentFunds < 4400)
+            else if (player.lucentFunds < 5280)
             {
                 //If the Player has less than 5,280 Lucent funds, they cannot create stacks. 
                 return;

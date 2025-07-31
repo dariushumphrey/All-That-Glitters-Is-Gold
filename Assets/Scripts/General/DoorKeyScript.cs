@@ -26,11 +26,14 @@ public class DoorKeyScript : MonoBehaviour
                 if(isBlueKey)
                 {
                     other.gameObject.GetComponent<PlayerInventoryScript>().blueKey = true;
+                    other.gameObject.GetComponent<PlayerInventoryScript>().bKey.gameObject.SetActive(true);
                 }
 
                 if (isRedKey)
                 {
                     other.gameObject.GetComponent<PlayerInventoryScript>().redKey = true;
+                    other.gameObject.GetComponent<PlayerInventoryScript>().rKey.gameObject.SetActive(true);
+
                 }
             }
 

@@ -66,7 +66,7 @@ public class OffYourOwnSupply : MonoBehaviour
         //-20% increase in base damage amplified by x2
         //The duration before your Shield begins regenerating will not resume until the bonus ends.
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.E))
         {
             if (procConfirm != true)
             {

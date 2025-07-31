@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayerPrefsManagerScript : MonoBehaviour
 {
     private KioskScript kiosk;
+    private MenuManagerScript menu;
     void Awake()
     {
         kiosk = FindObjectOfType<KioskScript>();
+        menu = FindObjectOfType<MenuManagerScript>();
         //LevelEntitlement();
         //DifficultyEntitlement();
         //ViricideEntitlement();
@@ -67,5 +69,16 @@ public class PlayerPrefsManagerScript : MonoBehaviour
     void LucentEntitlement()
     {
         kiosk.lucentFunds = PlayerPrefs.GetInt("lucentBalance");
+    }
+
+    public void FormatProgression()
+    {
+        PlayerPrefs.SetInt("unlockLevel02", 0);
+        PlayerPrefs.SetInt("unlockDifficulty5", 0);
+        PlayerPrefs.SetInt("unlockViricide", 0);
+        PlayerPrefs.SetInt("lucentBalance", 0);
+
+        LucentEntitlement();
+        menu.Progression();
     }
 }

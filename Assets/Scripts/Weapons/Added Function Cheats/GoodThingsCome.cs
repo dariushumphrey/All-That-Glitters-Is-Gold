@@ -20,6 +20,8 @@ public class GoodThingsCome : MonoBehaviour
     private float granterStop = 5f;
     private float granterReset;
     private int movementReset;
+    private int reserveCurrent;
+    private int reserveReset;
     private float resistanceReset;
     private float recoilReset;
     internal bool hitConfirmed;
@@ -98,7 +100,10 @@ public class GoodThingsCome : MonoBehaviour
 
                 firearm.wepRecoil = recoilNew;
 
-                firearm.currentAmmo = firearm.ammoSize;
+                reserveReset = firearm.reserveAmmo;
+                firearm.reserveAmmo = reserveReset;
+
+                //firearm.currentAmmo = firearm.ammoSize;
                 firearm.ammoSpent = 0;
 
                 proc.GetComponent<Text>().text = "Good Things Come Instantly";

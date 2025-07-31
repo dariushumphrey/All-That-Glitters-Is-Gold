@@ -69,6 +69,12 @@ public class SolutionGrenadeScript : MonoBehaviour
             other.gameObject.AddComponent<DamageOverTimeScript>();
             other.gameObject.GetComponent<DamageOverTimeScript>().dotDamage = 1750;
         }
+
+        if(other.gameObject.tag == "Lucent")
+        {
+            other.gameObject.GetComponent<LucentScript>().shatterDelayTime = 1f;
+            other.gameObject.GetComponent<LucentScript>().StartCoroutine(other.gameObject.GetComponent<LucentScript>().Shatter());
+        }
     }
 
     private void OnTriggerExit(Collider other)

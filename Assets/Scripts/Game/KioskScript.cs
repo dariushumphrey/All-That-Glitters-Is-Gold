@@ -72,7 +72,7 @@ public class KioskScript : MonoBehaviour
 
             //else
             //{
-            //    determinate = Random.Range(1, 6);
+            //    determinate = Random.Range(3, 6);
             //}
 
             determinate = Random.Range(1, 6);
@@ -3007,7 +3007,7 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                 }
 
@@ -3132,7 +3132,7 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E - Cast Blast";
 
                 }
             }
@@ -3297,7 +3297,7 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                 }
 
@@ -3353,7 +3353,7 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Pay to Win" + '\n' +
                         "Consume 5,280 Lucent to grant stacks of a 50% Weapon damage increase. Stacks 150x." + "\n" +
-                        "'Space' - Consume Lucent";
+                        "'E' - Consume Lucent";
 
                 }
 
@@ -3430,7 +3430,7 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                 }
             }
@@ -3595,7 +3595,7 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                 }
 
@@ -3727,7 +3727,7 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                 }
             }
@@ -3892,7 +3892,7 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                 }
 
@@ -4017,7 +4017,7 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                 }
             }
@@ -4182,7 +4182,7 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                 }
 
@@ -4314,7 +4314,7 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                 }
             }
@@ -4479,7 +4479,7 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                 }
 
@@ -4604,7 +4604,7 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                 }
             }
@@ -4769,7 +4769,7 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                 }
 
@@ -4901,7 +4901,7 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                 }
             }

@@ -9,14 +9,15 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Smoke 3
   m_Shader: {fileID: 211, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: EFFECT_BUMP _ALPHABLEND_ON _COLORADDSUBDIFF_ON _EMISSION _FADING_ON
+  m_ShaderKeywords: _ALPHABLEND_ON _COLOROVERLAY_ON _EMISSION
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
   stringTagMap:
     RenderType: Transparent
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - ALWAYS
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -60,15 +61,15 @@ Material:
     m_Floats:
     - _BlendOp: 0
     - _BumpScale: 1
-    - _CameraFadingEnabled: 1
-    - _CameraFarFadeDistance: 25
+    - _CameraFadingEnabled: 0
+    - _CameraFarFadeDistance: 10.38
     - _CameraNearFadeDistance: 1
-    - _ColorMode: 2
+    - _ColorMode: 3
     - _Cull: 2
-    - _Cutoff: 0.5
+    - _Cutoff: 0.567
     - _DetailNormalMapScale: 1
-    - _DistortionBlend: 1
-    - _DistortionEnabled: 1
+    - _DistortionBlend: 0.246
+    - _DistortionEnabled: 0
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0.1
     - _DstBlend: 1
@@ -83,7 +84,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
-    - _SoftParticlesEnabled: 1
+    - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
     - _SoftParticlesNearFadeDistance: 0
     - _SpecularHighlights: 1
@@ -91,9 +92,9 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _CameraFadeParams: {r: 1, g: 0.041666668, b: 0, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
+    - _Color: {r: 0.015691057, g: 0.015691057, b: 0.015691057, a: 1}
     - _ColorAddSubDiff: {r: -1, g: 0, b: 0, a: 0}
-    - _EmissionColor: {r: 0, g: 0.11953845, b: 0.005181517, a: 1}
-    - _SoftParticleFadeParams: {r: 0, g: 1, b: 0, a: 0}
+    - _EmissionColor: {r: 0.011764706, g: 0.019607844, b: 0.011764706, a: 1}
+    - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

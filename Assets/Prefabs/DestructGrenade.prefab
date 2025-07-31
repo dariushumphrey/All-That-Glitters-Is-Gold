@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 715d79b0340729d4c86fd33113437966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosiveDamage: 3000
+  explosiveDamage: 9000
   explosiveRange: 7
   armingTime: 1
   destructFlash: {fileID: 2192323443827568716, guid: 9aaef38306a2c134d9ba71c63c5d08ff, type: 3}

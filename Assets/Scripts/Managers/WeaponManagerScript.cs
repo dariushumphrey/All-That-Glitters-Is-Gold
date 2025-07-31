@@ -402,7 +402,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
                 }
 
                 if (cFiveStr == "4")
@@ -571,7 +571,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                     if (rarStr == "5")
                     {
@@ -747,7 +747,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
                 }
 
                 if (cFiveStr == "4")
@@ -795,7 +795,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Pay to Win" + '\n' +
                         "Consume 5,280 Lucent to grant stacks of a 50% Weapon damage increase. Stacks 150x." + "\n" +
-                        "'Space' - Consume Lucent";
+                        "'E' - Consume Lucent";
                 }
 
                 if (cFiveStr == "9")
@@ -928,7 +928,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                     if (rarStr == "5")
                     {
@@ -1104,7 +1104,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
                 }
 
                 if (cFiveStr == "4")
@@ -1284,7 +1284,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                     if (rarStr == "5")
                     {
@@ -1460,7 +1460,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
                 }
 
                 if (cFiveStr == "4")
@@ -1628,7 +1628,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                     if (rarStr == "5")
                     {
@@ -1804,7 +1804,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
                 }
 
                 if (cFiveStr == "4")
@@ -1984,7 +1984,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                     if (rarStr == "5")
                     {
@@ -2160,7 +2160,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
                 }
 
                 if (cFiveStr == "4")
@@ -2328,7 +2328,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                     if (rarStr == "5")
                     {
@@ -2504,7 +2504,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
                 }
 
                 if (cFiveStr == "4")
@@ -2686,7 +2686,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'Space' - Cast Blast";
+                        "'E' - Cast Blast";
 
                     if (rarStr == "5")
                     {
@@ -4829,13 +4829,31 @@ public class WeaponManagerScript : MonoBehaviour
 
             else
             {
-                selection--;
+                //selection--;
+
+                //Activates the Weapon at the end of the Inventory if you switch at the front. Otherwise, index goes left.
+                if (selection <= 0 && observedWeps.Count >= 1)
+                {
+                    selection = observedWeps.Count - 1;
+                }
+
+                else
+                {
+                    selection--;
+
+                    //Prevents running off the inventory backwards
+                    //if (selection <= -1 && inventory.Count >= 1)
+                    //{
+                    //    selection = 0;
+                    //}
+
+                }
 
                 //Prevents running off the inventory backwards
-                if (selection <= -1 && observedWeps.Count >= 1)
-                {
-                    selection = 0;
-                }
+                //if (selection <= -1 && observedWeps.Count >= 1)
+                //{
+                //    selection = 0;
+                //}
 
                 DisplayWeapons();
                 appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
@@ -4862,13 +4880,30 @@ public class WeaponManagerScript : MonoBehaviour
 
             else
             {
-                selection++;
+                //selection++;
+
+                //Activates the Weapon at the front of the Inventory if you switch at the end. Otherwise, index goes right.
+                if (selection >= observedWeps.Count - 1 && observedWeps.Count >= 1)
+                {
+                    selection = 0;
+                }
+
+                else
+                {
+                    selection++;
+
+                    //Prevents running off the inventory forwards
+                    //if (selection >= inventory.Count)
+                    //{
+                    //    selection = inventory.Count - 1;
+                    //}             
+                }
 
                 //Prevents running off the inventory forwards
-                if (selection >= observedWeps.Count)
-                {
-                    selection = observedWeps.Count - 1;
-                }
+                //if (selection >= observedWeps.Count)
+                //{
+                //    selection = observedWeps.Count - 1;
+                //}
 
                 DisplayWeapons();
                 appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
@@ -4894,6 +4929,10 @@ public class WeaponManagerScript : MonoBehaviour
                 }
 
                 kiosk.lucentFunds += (int)kiosk.inventoryWorth[selection];
+                if (kiosk.lucentFunds >= 100000)
+                {
+                    kiosk.lucentFunds = 100000;
+                }
 
                 observedWeps.RemoveAt(selection);
                 kiosk.inventoryWorth.RemoveAt(selection);
@@ -4995,13 +5034,31 @@ public class WeaponManagerScript : MonoBehaviour
 
         else
         {
-            selection--;
+            //selection--;
+
+            //Activates the Weapon at the end of the Inventory if you switch at the front. Otherwise, index goes left.
+            if (selection <= 0 && observedWeps.Count >= 1)
+            {
+                selection = observedWeps.Count - 1;            
+            }
+
+            else
+            {
+                selection--;
+
+                //Prevents running off the inventory backwards
+                //if (selection <= -1 && inventory.Count >= 1)
+                //{
+                //    selection = 0;
+                //}
+                
+            }
 
             //Prevents running off the inventory backwards
-            if (selection <= -1 && observedWeps.Count >= 1)
-            {
-                selection = 0;
-            }
+            //if (selection <= -1 && observedWeps.Count >= 1)
+            //{
+            //    selection = 0;
+            //}
 
             DisplayWeapons();
             appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
@@ -5026,13 +5083,30 @@ public class WeaponManagerScript : MonoBehaviour
 
         else
         {
-            selection++;
+            //selection++;
+
+            //Activates the Weapon at the front of the Inventory if you switch at the end. Otherwise, index goes right.
+            if (selection >= observedWeps.Count - 1 && observedWeps.Count >= 1)
+            {
+                selection = 0;             
+            }
+
+            else
+            {
+                selection++;
+
+                //Prevents running off the inventory forwards
+                //if (selection >= inventory.Count)
+                //{
+                //    selection = inventory.Count - 1;
+                //}             
+            }
 
             //Prevents running off the inventory forwards
-            if (selection >= observedWeps.Count)
-            {
-                selection = observedWeps.Count - 1;
-            }
+            //if (selection >= observedWeps.Count)
+            //{
+            //    selection = observedWeps.Count - 1;
+            //}
 
             DisplayWeapons();
             appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
@@ -5049,6 +5123,10 @@ public class WeaponManagerScript : MonoBehaviour
         }
 
         kiosk.lucentFunds += (int)kiosk.inventoryWorth[selection];
+        if(kiosk.lucentFunds >= 100000)
+        {
+            kiosk.lucentFunds = 100000;
+        }
 
         observedWeps.RemoveAt(selection);
         kiosk.inventoryWorth.RemoveAt(selection);

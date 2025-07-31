@@ -114,108 +114,30 @@ public class EnemyHealthScript : MonoBehaviour
             }
         }
 
-        if (GetComponent<PosNegDOT>() != null)
+        if (GetComponent<PosNegDOT>() != null || GetComponent<DamageOverTimeScript>() != null)
         {
             if (dotNotice.gameObject.activeInHierarchy == false)
             {
                 dotNotice.gameObject.SetActive(true);
             }
-
-            else
-            {
-                //do nothing
-            }
         }
 
-        if (GetComponent<PosNegDOT>() == null)
+        else
         {
-            if (dotNotice.gameObject.activeInHierarchy == true)
-            {
-                dotNotice.gameObject.SetActive(false);
-            }
+            dotNotice.gameObject.SetActive(false);
+        }    
 
-            else
-            {
-                //do nothing
-            }
-        }
-
-        if (GetComponent<DamageOverTimeScript>() != null)
-        {
-            if (dotNotice.gameObject.activeInHierarchy == false)
-            {
-                dotNotice.gameObject.SetActive(true);
-            }
-
-            else
-            {
-                //do nothing
-            }
-        }
-
-        if (GetComponent<DamageOverTimeScript>() == null)
-        {
-            if (dotNotice.gameObject.activeInHierarchy == true)
-            {
-                dotNotice.gameObject.SetActive(false);
-            }
-
-            else
-            {
-                //do nothing
-            }
-        }
-
-        if (GetComponent<SDPHealthDebuff>() != null)
+        if (GetComponent<SDPHealthDebuff>() != null || GetComponent<DebuffScript>() != null)
         {
             if (debuffNotice.gameObject.activeInHierarchy == false)
             {
                 debuffNotice.gameObject.SetActive(true);
-            }
-
-            else
-            {
-                //do nothing
-            }
+            }          
         }
 
-        if (GetComponent<SDPHealthDebuff>() == null)
+        else
         {
-            if (debuffNotice.gameObject.activeInHierarchy == true)
-            {
-                debuffNotice.gameObject.SetActive(false);
-            }
-
-            else
-            {
-                //do nothing
-            }
-        }
-
-        if (GetComponent<DebuffScript>() != null)
-        {
-            if (debuffNotice.gameObject.activeInHierarchy == false)
-            {
-                debuffNotice.gameObject.SetActive(true);
-            }
-
-            else
-            {
-                //do nothing
-            }
-        }
-
-        if (GetComponent<DebuffScript>() == null)
-        {
-            if (debuffNotice.gameObject.activeInHierarchy == true)
-            {
-                debuffNotice.gameObject.SetActive(false);
-            }
-
-            else
-            {
-                //do nothing
-            }
+            debuffNotice.gameObject.SetActive(false);
         }
 
         if (GetComponent<SlowedScript>() != null)
@@ -224,27 +146,14 @@ public class EnemyHealthScript : MonoBehaviour
             {
                 slowNotice.gameObject.SetActive(true);
             }
-
-            else
-            {
-                //do nothing
-            }
+         
         }
 
-        if (GetComponent<SlowedScript>() == null)
+        else
         {
-            if (slowNotice.gameObject.activeInHierarchy == true)
-            {
-                slowNotice.gameObject.SetActive(false);
-                StartCoroutine(RestoreMovement());
-            }
-
-            else
-            {
-                //do nothing
-            }
+            slowNotice.gameObject.SetActive(false);
         }
-
+    
         if (isDummy == true)
         {
             return;
@@ -458,11 +367,6 @@ public class EnemyHealthScript : MonoBehaviour
         damageHit = damageTaken;
         manager.damageReceived += damageHit;
 
-        if (visual.gameObject.activeInHierarchy != true)
-        {
-            visual.gameObject.SetActive(true);
-        }
-
         //if(GetComponent<PosNegDOT>() != null)
         //{
         //    dotNotice.gameObject.SetActive(true);
@@ -482,6 +386,19 @@ public class EnemyHealthScript : MonoBehaviour
         else
         {
             healthCurrent -= damageHit;
+        }
+
+        if (visual.gameObject.activeInHierarchy != true)
+        {
+            if(healthCurrent <= 0)
+            {
+                visual.gameObject.SetActive(false);
+            }
+
+            else
+            {
+                visual.gameObject.SetActive(true);
+            }
         }
 
         //healthCurrent -= damageHit;

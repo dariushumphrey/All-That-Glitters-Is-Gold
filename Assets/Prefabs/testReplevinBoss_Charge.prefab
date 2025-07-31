@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 521107326973885395}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 521107327305974609}
@@ -63,7 +63,7 @@ Transform:
   m_GameObject: {fileID: 521107327305974619}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_Children:
   - {fileID: 521107326973885396}
   - {fileID: 9046807996112585156}
@@ -78,7 +78,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 521107327305974619}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 2290173704888665768, guid: 2c1ddc73175a74a4b8b1c9d546ac549e, type: 3}
 --- !u!23 &521107327305974623
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -99,6 +99,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: 86830a873e7092747abada611fbab726, type: 2}
+  - {fileID: 2100000, guid: 7a2288c2219ed044cac0a54337e95e52, type: 2}
   - {fileID: 2100000, guid: 79dc7ad5e1577524ab6d93b8f98f06b6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -325,8 +327,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultyValue: 1
   healthCurrent: 4000
-  healthMax: 30000
-  healthPercent: 20
+  healthMax: 40000
+  healthPercent: 30
   lucentYield: 400
   lucentPercent: 20
   isImmune: 1

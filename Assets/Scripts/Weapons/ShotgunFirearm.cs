@@ -175,6 +175,12 @@ public class ShotgunFirearm: FirearmScript
                                     gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
                                 }
 
+                                if (hit.collider.GetComponent<Rigidbody>() == null)
+                                {
+                                    hit.collider.gameObject.AddComponent<Rigidbody>();
+                                    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 30f, ForceMode.Impulse);
+                                }
+
                                 //if (hit.collider.GetComponent<Rigidbody>() != null)
                                 //{
                                 //    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 2f, ForceMode.Impulse);
@@ -250,6 +256,12 @@ public class ShotgunFirearm: FirearmScript
                                     gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
                                 }
 
+                                if (hit.collider.GetComponent<Rigidbody>() == null)
+                                {
+                                    hit.collider.gameObject.AddComponent<Rigidbody>();
+                                    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 30f, ForceMode.Impulse);
+                                }
+
                                 //if (hit.collider.GetComponent<Rigidbody>() != null)
                                 //{
                                 //    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 2f, ForceMode.Impulse);
@@ -290,6 +302,7 @@ public class ShotgunFirearm: FirearmScript
                             inv.lucentFunds = 100000;
                         }
                         hit.collider.GetComponent<LucentScript>().lucentGift = 0;
+                        hit.collider.GetComponent<LucentScript>().shot = true;
                     }
                 }
 

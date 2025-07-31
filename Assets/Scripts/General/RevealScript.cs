@@ -11,6 +11,7 @@ public class RevealScript : MonoBehaviour
     public List<GameObject> hideGame = new List<GameObject>(); 
 
     public int startConcealOn = 2;
+    public bool hideOnTrigger;
     private LevelManagerScript level;
 
     private void Awake()
@@ -34,27 +35,36 @@ public class RevealScript : MonoBehaviour
         }
 
         //For concealing objects with no intentions of revealing them at a certain point in Difficulty
-        if (hideWorld.Count > 0)
+        if(hideOnTrigger)
         {
-            if(level.gameSettingState >= startConcealOn)
-            {
-                for (int v = 0; v < hideWorld.Count; v++)
-                {
-                    hideWorld[v].gameObject.SetActive(false);
-                }
-            }           
+            return;
         }
 
-        if (hideGame.Count > 0)
+        else
         {
-            if (level.gameSettingState >= startConcealOn)
+            if (hideWorld.Count > 0)
             {
-                for (int v = 0; v < hideGame.Count; v++)
+                if (level.gameSettingState >= startConcealOn)
                 {
-                    hideGame[v].gameObject.SetActive(false);
+                    for (int v = 0; v < hideWorld.Count; v++)
+                    {
+                        hideWorld[v].gameObject.SetActive(false);
+                    }
                 }
-            }          
+            }
+
+            if (hideGame.Count > 0)
+            {
+                if (level.gameSettingState >= startConcealOn)
+                {
+                    for (int v = 0; v < hideGame.Count; v++)
+                    {
+                        hideGame[v].gameObject.SetActive(false);
+                    }
+                }
+            }
         }
+        
     }
 
     // Start is called before the first frame update
@@ -78,6 +88,25 @@ public class RevealScript : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
+            if(hideOnTrigger)
+            {
+                if (hideWorld.Count > 0)
+                {
+                    for (int v = 0; v < hideWorld.Count; v++)
+                    {
+                        hideWorld[v].gameObject.SetActive(false);
+                    }
+                }
+
+                if (hideGame.Count > 0)
+                {
+                    for (int v = 0; v < hideGame.Count; v++)
+                    {
+                        hideGame[v].gameObject.SetActive(false);
+                    }
+                }
+            }
+
             if(unhideWorld.Count > 0)
             {
                 for (int u = 0; u < unhideWorld.Count; u++)

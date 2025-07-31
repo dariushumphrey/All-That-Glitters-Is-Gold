@@ -50,12 +50,10 @@ public class PlayerMeleeScript : MonoBehaviour
             if (hit.collider.tag == "Enemy")
             {
                 hit.collider.gameObject.GetComponent<EnemyHealthScript>().inflictDamage(meleeDamage);
-                if(hit.collider.gameObject.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
+                if(hit.collider.gameObject.GetComponent<EnemyHealthScript>().healthCurrent <= 0 && hit.collider.gameObject.GetComponent<Rigidbody>() == null)
                 {
-                    if(hit.collider.GetComponent<Rigidbody>() != null)
-                    {
-                        hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 0.5f, ForceMode.Impulse);
-                    }
+                    hit.collider.gameObject.AddComponent<Rigidbody>();
+                    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 20f, ForceMode.Impulse);
                 }
 
                 meleeLock = false;

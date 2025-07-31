@@ -20,6 +20,7 @@ public class PlayerInventoryScript : MonoBehaviour
     public float throwMin, throwMax;
     public GameObject foggerGrenade;
     public bool blueKey, redKey = false;
+    public GameObject bKey, rKey;
     public Text weaponCurAmmo, weaponResAmmo, lucentText, grenadeText;
     public Slider weaponLoad, grenadeThrow;
     public Image weaponAmmoPage;
@@ -617,7 +618,7 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 550 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 600)
             {
                 cheatTraitOne.text = "Rude Awakening" + '\n' +
-                    "[Space] - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
+                    "[E] - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
             }
 
             //Not with a Stick
@@ -789,12 +790,12 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 490)
             {
                 cheatTraitTwo.text = "Rude Awakening" + '\n' +
-                    "[Space] - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
+                    "[E] - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
 
                 if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
                 {
                     cheatTraitTwo.text = "Rude Awakening" + " (Fated)" + '\n' +
-                    "[Space] - Cast a lethal AOE blast. Stacks 6x. Having stacks increases base damage by 20%.";
+                    "[E] - Cast a lethal AOE blast. Stacks 6x. Having stacks increases base damage by 20%.";
                 }
             }          
         }
@@ -849,7 +850,7 @@ public class PlayerInventoryScript : MonoBehaviour
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -6)
         {
             cheatTraitOne.text = "Off Your Own Supply" + '\n' +
-                "[Space] - Sacrificing your Shield grants increased movement, Reload Speed, Weapon damage and zero Recoil.";
+                "[E] - Sacrificing your Shield grants increased movement, Reload Speed, Weapon damage and zero Recoil.";
 
             cheatTraitTwo.text = "Inoculated" + '\n' +
                     "Kills with this Weapon restore 5% of Health.";
