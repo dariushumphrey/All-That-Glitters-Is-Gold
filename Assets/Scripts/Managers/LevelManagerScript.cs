@@ -206,6 +206,7 @@ public class LevelManagerScript : MonoBehaviour
                         "Kills: " + manager.killCount + "\n" +
                         "Damage Dealt: " + manager.damageReceived.ToString("N0") + "\n" +
                         "Damage Received: " + manager.damageDealt.ToString("N0");
+                    
                 }
             }
         }     
@@ -237,7 +238,20 @@ public class LevelManagerScript : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         Start();
-    }    
+    }
+    
+    public void CheckForFirstViricideClear()
+    {
+        if (PlayerPrefs.GetInt("firstViricideClear") == 1)
+        {
+            return;
+        }
+
+        else
+        {
+            PlayerPrefs.SetInt("firstViricideClear", 1);
+        }
+    }
 
     public void ResumeGame()
     {

@@ -53,6 +53,7 @@ public class BossManagerScript : MonoBehaviour
 
             done = true;
             levelManager.gameComplete = true;
+            levelManager.CheckForFirstViricideClear();
         }
     }
 

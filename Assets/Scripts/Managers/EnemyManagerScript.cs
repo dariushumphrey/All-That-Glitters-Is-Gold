@@ -156,7 +156,7 @@ public class EnemyManagerScript : MonoBehaviour
         //For Exotic Loot
         if(dropRarity >= 4)
         {
-            deathRewardChance = Random.Range(0, 103);
+            deathRewardChance = Random.Range(0, 102);
             if (deathRewardChance >= 100)
             {
                 GameObject reward = Instantiate(exoticLoot, deathPos + Vector3.up, loot.transform.rotation);

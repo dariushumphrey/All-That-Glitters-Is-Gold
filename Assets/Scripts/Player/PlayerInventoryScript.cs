@@ -841,7 +841,7 @@ public class PlayerInventoryScript : MonoBehaviour
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -5)
         {
             cheatTraitOne.text = "The Early Berth gets the Hearst" + '\n' +
-                "Enemy hits have a 10% chance to trigger a Berth explosion.";
+                "Every other Enemy hit triggers a Berth detonation, inflicting 200% of Weapon damage.";
 
             cheatTraitTwo.text = "Efficacy" + '\n' +
                     "Enemy hits increases this Weapon's base damage by 1%.";

@@ -2207,7 +2207,7 @@ public class WeaponManagerScript : MonoBehaviour
                 if (cFiveStr == "E")
                 {
                     cheatTraitOne.text = "The Early Berth gets the Hearst" + '\n' +
-                        "Enemy hits have a 10% chance to trigger a Berth explosion.";
+                        "Every other Enemy hit triggers a Berth detonation, inflicting 200% of Weapon damage.";
                 }
 
                 if (cFiveStr == "9")
@@ -4264,7 +4264,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().isExotic = true;
                         //item.GetComponent<FirearmScript>().damagePercent = 60f;
                         item.GetComponent<FirearmScript>().RarityAugment();
-                        item.GetComponent<FirearmScript>().flavorText = "The Resplendence, for all its igneous light, could never have thwarted the terrible plot. Civilians. Servicemembers. Even the Replevin. These victims are owed retribution of a thermobaric kind.";
+                        item.GetComponent<FirearmScript>().flavorText = "The Resplendence, for all its igneous light, could never have thwarted the terrible plot. These victims are owed retribution of a thermobaric kind.";
                         item.name = weapons[5].name + "_Exotic";
                     }
 

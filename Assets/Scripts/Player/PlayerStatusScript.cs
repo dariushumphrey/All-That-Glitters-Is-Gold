@@ -218,7 +218,7 @@ public class PlayerStatusScript : MonoBehaviour
             move.enabled = false;
             cam.enabled = false;
 
-            inv.lucentFunds = 0;
+            //inv.lucentFunds = 0;
             if (inv.inventory.Count > 0 && !move.sprinting)
             {
                 inv.GetComponentInChildren<FirearmScript>().enabled = false;            

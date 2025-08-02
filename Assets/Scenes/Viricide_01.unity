@@ -60147,7 +60147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropRarity: 1
-  dropThreshold: 10
+  dropThreshold: 4
   dropPercent: -10
   lucentThreshold: 20
   lucentPercent: 10

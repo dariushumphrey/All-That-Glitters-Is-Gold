@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class BerthScript : MonoBehaviour
 {
-    public int additionalDamage = 75;
-    public float explodeRadius = 10.0f;
+    public int additionalDamage = 375;
+    public float explodeRadius = 5.0f;
     public float explodeForce = 50.0f;
 
     private EnemyHealthScript foe;
@@ -20,7 +20,7 @@ public class BerthScript : MonoBehaviour
         //itself = gameObject;
         enemy = GetComponent<NavMeshAgent>();
         foe = GetComponent<EnemyHealthScript>();
-        BerthDifficultyMatch();
+        //BerthDifficultyMatch();
     }
 
     //Update is called once per frame
@@ -68,37 +68,48 @@ public class BerthScript : MonoBehaviour
         Collider[] affected = Physics.OverlapSphere(transform.position, explodeRadius);
         foreach (Collider hit in affected)
         {
-            Rigidbody inflict = hit.GetComponent<Rigidbody>();
-            if (inflict != null)
+            if(hit.gameObject.CompareTag("Enemy"))
             {
-                if (inflict.GetComponent<EnemyHealthScript>() != null)
+                if (hit.GetComponent<EnemyHealthScript>() != null)
                 {
-                    inflict.GetComponent<EnemyHealthScript>().inflictDamage(additionalDamage * enemyDamageMultiplier);
-                }
-
-                if (inflict.GetComponent<PlayerStatusScript>() != null)
-                {
-                    inflict.GetComponent<PlayerStatusScript>().InflictDamage(additionalDamage);
-
-                    if(inflict.GetComponent<PlayerStatusScript>().playerShield <= 0)
+                    hit.GetComponent<EnemyHealthScript>().inflictDamage(additionalDamage);
+                    if (hit.GetComponent<EnemyHealthScript>().healthCurrent <= 0 && hit.GetComponent<Rigidbody>() == null)
                     {
-                        inflict.GetComponent<PlayerStatusScript>().playerHealth -= additionalDamage;
+                        hit.gameObject.AddComponent<Rigidbody>();
+                        hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 5f, 500f);
                     }
                 }
+            }
 
-                inflict.AddExplosionForce(explodeForce, epicenter, explodeRadius, 40.0f, ForceMode.Impulse);
+            //if (hit.gameObject.CompareTag("Player"))
+            //{
+            //    if (hit.GetComponent<PlayerStatusScript>() != null)
+            //    {
+            //        hit.GetComponent<PlayerStatusScript>().InflictDamage(additionalDamage);
+            //        if (hit.GetComponent<PlayerStatusScript>().playerShield <= 0)
+            //        {
+            //            hit.GetComponent<PlayerStatusScript>().playerHealth -= additionalDamage;
+            //        }
+
+            //        if(hit.GetComponent<PlayerStatusScript>().playerHealth <= 0)
+            //        {
+            //            hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(explodeForce, epicenter, explodeRadius, 40.0f, ForceMode.Impulse);
+            //        }
+            //    }
+            //}
+
+            if (hit.gameObject.CompareTag("Lucent"))
+            {
+                hit.gameObject.GetComponent<LucentScript>().lucentGift = 0;
+                hit.gameObject.GetComponent<LucentScript>().shot = true;
             }
         }
-
-        Destroy(gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
+    public IEnumerator RemoveSelf()
     {
-        if(other.gameObject.CompareTag("Player"))
-        {
-            Explode();
-        }
+        yield return new WaitForSeconds(1f);
+        Destroy(this);
     }
 
     private void OnDrawGizmos()

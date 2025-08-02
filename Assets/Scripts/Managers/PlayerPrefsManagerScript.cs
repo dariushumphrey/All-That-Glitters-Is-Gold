@@ -10,15 +10,15 @@ public class PlayerPrefsManagerScript : MonoBehaviour
     {
         kiosk = FindObjectOfType<KioskScript>();
         menu = FindObjectOfType<MenuManagerScript>();
-        //LevelEntitlement();
-        //DifficultyEntitlement();
-        //ViricideEntitlement();
+        LevelEntitlement();
+        DifficultyEntitlement();
+        ViricideEntitlement();
         LucentEntitlement();
         //Debug.Log(PlayerPrefs.GetInt("unlockLevel02"));
 
-        PlayerPrefs.SetInt("unlockLevel02", 1);
-        PlayerPrefs.SetInt("unlockDifficulty5", 1);
-        PlayerPrefs.SetInt("unlockViricide", 1);
+        //PlayerPrefs.SetInt("unlockLevel02", 1);
+        //PlayerPrefs.SetInt("unlockDifficulty5", 1);
+        //PlayerPrefs.SetInt("unlockViricide", 1);
     }
 
     // Update is called once per frame
@@ -63,6 +63,7 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         else
         {
             PlayerPrefs.SetInt("unlockViricide", 0);
+            PlayerPrefs.SetInt("firstViricideClear", 0);
         }
     }
 
@@ -77,6 +78,7 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         PlayerPrefs.SetInt("unlockDifficulty5", 0);
         PlayerPrefs.SetInt("unlockViricide", 0);
         PlayerPrefs.SetInt("lucentBalance", 0);
+        PlayerPrefs.SetInt("firstViricideClear", 0);
 
         LucentEntitlement();
         menu.Progression();

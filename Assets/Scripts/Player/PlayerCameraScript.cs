@@ -14,14 +14,14 @@ public class PlayerCameraScript : MonoBehaviour
     public float zoomSpeed = 0.2f;
     public float collideCheck = 3.0f; //Governs Ray length to check for threats of surface clipping
     public float offsetMult = 2.0f; //Governs additional distance for Camera offset from surface
-    public float offsetPushZ = 1.0f; //Governed physical pushing of Camera in the 'Z' direction of its resting position
-    public float offsetPushX = 1.0f; //Governed physical pushing of Camera in the 'X' direction of its resting position
+    public float offsetPushZ = 1.0f; //Governs physical pushing of Camera in the 'Z' direction of offset point
+    public float offsetPushY = 1.0f; //Governs physical pushing of Camera in the 'Y' direction of offset point
     public Vector3 cameraPosition; //Governs Camera offset position from Player-Character
     public Transform offsetCheckPos; //Empty GameObject, used to cast Rays from when checking surface collision
     public Image reticleSprite;
     public Image meleeReticle;
     public Sprite meleeSprite;
-    public LayerMask contactOnly;
+    public LayerMask contactOnly, cameraOnly;
 
     private float zoomReset = 60f;
     private Vector3 forwardDirection; //Used to determine where Camera is looking when compared to the body
@@ -77,8 +77,13 @@ public class PlayerCameraScript : MonoBehaviour
             pitch -= rotateV * Input.GetAxis("Mouse Y");
             pitch = Mathf.Clamp(pitch, -vClamp, vClamp);
 
-            playerCamera.transform.position = transform.position + (Quaternion.Euler(pitch, yaw, 0) * cameraPosition);
-            playerCamera.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+            if(!SurfaceIntersection())
+            {
+                playerCamera.transform.position = transform.position + (Quaternion.Euler(pitch, yaw, 0) * cameraPosition);
+                playerCamera.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+
+                //Debug.DrawRay(offsetCheckPos.transform.position, (playerCamera.transform.position - offsetCheckPos.transform.position).normalized * slider, Color.blue);
+            }
 
             forwardDirection = (playerCamera.transform.position - transform.position);
             if (move.horizInput != 0 || move.vertInput != 0 || Input.GetButton("Fire1") || player.throwing)
@@ -90,7 +95,7 @@ public class PlayerCameraScript : MonoBehaviour
             //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(pitch, yaw, 0), Time.deltaTime * characterTurnSpeed);
 
             Zoom();
-            CollisionCheck();
+            CameraClipCountermeasure();
             AimAssistance();
             MeleeAssistance();
         }      
@@ -149,16 +154,11 @@ public class PlayerCameraScript : MonoBehaviour
         }
     }
 
-    private void CollisionCheck()
+    private void CameraClipCountermeasure()
     {
         Vector3 offset;
         RaycastHit hit;
-        if (Physics.Raycast(offsetCheckPos.transform.position, offsetCheckPos.forward, out hit, collideCheck)   ||
-            Physics.Raycast(offsetCheckPos.transform.position, -offsetCheckPos.right, out hit, collideCheck) ||
-            Physics.Raycast(offsetCheckPos.transform.position, offsetCheckPos.right, out hit, collideCheck) /* ||
-            Physics.Raycast(playerCamera.transform.position, -playerCamera.transform.forward, out hit, collideCheck) ||
-            Physics.Raycast(playerCamera.transform.position, playerCamera.transform.right, out hit, collideCheck) ||
-            Physics.Raycast(playerCamera.transform.position, -playerCamera.transform.right, out hit, collideCheck)*/)
+        if (Physics.Raycast(offsetCheckPos.transform.position, (playerCamera.transform.position - offsetCheckPos.transform.position).normalized, out hit, collideCheck, cameraOnly))
         {
             if (hit.point != null)
             {
@@ -169,20 +169,43 @@ public class PlayerCameraScript : MonoBehaviour
                 
                 else
                 {
-                    //offset = hit.normal * offsetMult;
-                    //playerCamera.transform.position = hit.point + offset + (transform.rotation * cameraPosition);
-                    cameraPosition.z = -hit.distance * offsetPushZ;
-                    cameraPosition.x = hit.distance * offsetPushX;
-                    //Debug.DrawLine(offsetCheckPos.transform.position, hit.point, Color.red);
-                }
-            }           
-        }      
+                    //hit.normal = new Vector3(0, offsetPushY, offsetPushZ);
+                    offset = hit.point + (hit.normal + new Vector3(0, offsetPushY, offsetPushZ));
+                    playerCamera.transform.position = offset * offsetMult;
 
-        else
+                    //cameraPosition.z = -hit.distance * offsetPushZ;
+                    //cameraPosition.x = hit.distance * offsetPushX;
+                    //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
+
+                    Debug.DrawRay(offsetCheckPos.transform.position, (playerCamera.transform.position - offsetCheckPos.transform.position).normalized * collideCheck, Color.yellow);
+                    Debug.DrawLine(hit.point, offset * offsetMult, Color.red);
+                    //Debug.DrawRay(hit.point, hit.normal + new Vector3(offsetPushX, 0, 0), Color.red);
+                    //Debug.DrawRay(hit.point, hit.normal + new Vector3(0, 0, offsetPushZ), Color.blue);
+                    //Debug.DrawRay(hit.point, hit.normal + new Vector3(0, offsetPushY, 0), Color.green);
+                    //Debug.DrawLine(transform.position, playerCamera.transform.position, Color.blue);
+
+                }
+            }                  
+        }      
+    }
+    
+    public bool SurfaceIntersection()
+    {      
+        if (Physics.Raycast(offsetCheckPos.transform.position, (playerCamera.transform.position - offsetCheckPos.transform.position).normalized, out hit, collideCheck, cameraOnly))
         {
-            cameraPosition = camPosReset;
+            if (hit.point != null)
+            {
+                if (hit.collider.tag == "Projectile" || hit.collider.tag == "Enemy" || hit.collider.tag == "Lucent" || hit.collider.tag == "Ammo" || hit.collider.tag == "Corpse")
+                {
+                    //Do nothing
+                }
+
+                return true;
+            }       
         }
-    }  
+
+        return false;
+    }
 
     private void AimAssistance()
     {

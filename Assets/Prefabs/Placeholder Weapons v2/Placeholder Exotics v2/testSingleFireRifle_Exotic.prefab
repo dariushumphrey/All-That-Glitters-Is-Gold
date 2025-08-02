@@ -370,8 +370,7 @@ MonoBehaviour:
   aimAssistStrength: 0.35
   isExotic: 1
   flavorText: The Resplendence, for all its igneous light, could never have thwarted
-    the terrible plot. Civilians. Servicemembers. Even the Replevin. These victims
-    are owed retribution of a thermobaric kind.
+    the terrible plot. These victims are owed retribution of a thermobaric kind.
   contactOnly:
     serializedVersion: 2
     m_Bits: 832

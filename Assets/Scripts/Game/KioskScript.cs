@@ -63,19 +63,19 @@ public class KioskScript : MonoBehaviour
             determinate = Random.Range(1, 8);
             wepTypeStr = determinate.ToString();
 
-            //Determines Weapon Rarity -- capped to Rarity 4 if Difficulty 5 is not unlocked
-            //When Difficulty 5 unlocks, Weapons starting from Rarity 3 will be sellable (speculative)
-            //if(PlayerPrefs.GetInt("unlockDifficulty5") != 1)
-            //{
-            //    determinate = Random.Range(1, 5);
-            //}
+            //Determines Weapon Rarity -- capped to Rarity 3 if Viricide has not been cleared at least once
+            //If Viricide has been completed at least once, Weapons starting from Rarity 4 will be sellable
+            if (PlayerPrefs.GetInt("firstViricideClear") != 1)
+            {
+                determinate = Random.Range(1, 4);
+            }
 
-            //else
-            //{
-            //    determinate = Random.Range(3, 6);
-            //}
+            else
+            {
+                determinate = Random.Range(4, 6);
+            }
 
-            determinate = Random.Range(1, 6);
+            //determinate = Random.Range(1, 6);
 
             wepRarStr = determinate.ToString();
 
@@ -4534,7 +4534,7 @@ public class KioskScript : MonoBehaviour
                 if (fcOneStr == "E")
                 {
                     cheatTraitOne.text = "The Early Berth gets the Hearst" + '\n' +
-                        "Enemy hits have a 10% chance to trigger a Berth explosion.";
+                        "Every other Enemy hit triggers a Berth detonation, inflicting 200% of Weapon damage.";
 
                 }
 
