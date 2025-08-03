@@ -58,6 +58,10 @@ public class LevelManagerScript : MonoBehaviour
                 }
 
                 gameTime = 0f;
+                if (Time.timeScale != 1)
+                {
+                    Time.timeScale = 1;
+                }
                 return;
             }
 
@@ -282,6 +286,12 @@ public class LevelManagerScript : MonoBehaviour
         setting = Setting.Navigation;
         player.GetComponent<PlayerInventoryScript>().WriteOnReset();
         PlayerPrefs.SetInt("lucentBalance", player.GetComponent<PlayerInventoryScript>().lucentFunds);
+
+        if (Time.timeScale != 1)
+        {
+            Time.timeScale = 1;
+        }
+
         LoadScene();
     }
 
