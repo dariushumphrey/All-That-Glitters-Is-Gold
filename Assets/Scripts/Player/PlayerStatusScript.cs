@@ -90,12 +90,12 @@ public class PlayerStatusScript : MonoBehaviour
             sBar.color = Color.black;
         }
 
-        if(move.evading)
-        {
-            isInvincible = true;
-            immunity.SetActive(true);
-            StartCoroutine(CancelInvulnerable());
-        }
+        //if(move.evading)
+        //{
+        //    isInvincible = true;
+        //    immunity.SetActive(true);
+        //    StartCoroutine(CancelInvulnerable());
+        //}
 
         ShieldDamageCheck();
         PlayerDeath();
@@ -259,7 +259,7 @@ public class PlayerStatusScript : MonoBehaviour
         }
     }
 
-    private IEnumerator CancelInvulnerable()
+    public IEnumerator CancelInvulnerable()
     {
         yield return new WaitForSeconds(invincibilityDuration);
         isInvincible = false;

@@ -19,6 +19,7 @@ public class PlayerMoveScript : MonoBehaviour
     public float evasionTimeout = 0.8f;
     public Sprite blankReticle;
     private PlayerInventoryScript inventory;
+    private PlayerStatusScript status;
     private Rigidbody playerRigid;
     private Camera playerCamera;
     private Vector3 a, b, c;
@@ -35,6 +36,7 @@ public class PlayerMoveScript : MonoBehaviour
         playerCamera = Camera.main;
 
         inventory = FindObjectOfType<PlayerInventoryScript>();
+        status = FindObjectOfType<PlayerStatusScript>();
     }
 
     // Update is called once per frame
@@ -43,6 +45,9 @@ public class PlayerMoveScript : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && !evading && !evaded && !Airborne())
         {
             evading = true;
+            status.isInvincible = true;
+            status.immunity.SetActive(true);
+            status.StartCoroutine(status.CancelInvulnerable());
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift) && sprinting || vertInput == 0)
