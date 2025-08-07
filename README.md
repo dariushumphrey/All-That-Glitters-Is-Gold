@@ -1,46 +1,49 @@
-Experience
+ATGIG MVP 0.1.5
 
-There are two modes available for play: 
+Welcome! 
 
-Campaign - A linear 2-mission string involving travel to a level's end. Between your start and end goal are 
-enemy encounters of varying densities. Clearing the encounters are not required, but engagement is encouraged. 
+1.) Experience: 
 
-Viricide - A small experience that culminates in a boss encounter with a simple damage mechanic. Successful 
-Viricide completions rewards Weapons, with more being awarded on higher difficulties. One campaign clear is required to unlock Viricide.
+There are two modes available for play and two new features available for use: 
 
-You assume the avatar of a capsule-character. This character can move and look in any direction you wish, though
-the angle of Vertical view is clamped to not be too high or low. This character starts with 500 Health and 550 
-Shield. You cannot take Health damage while your Shield is active, though if it ever depletes, there is a seven-
-second delay before it begins to regenerate. Health cannot regenerate itself. You are defeated when your 
-Health reaches zero, and pressing 'F' will reload the level. You have access to an Inventory with no capacity 
-limit, and holding 'X' on your current item will destroy it. For self-defense, press 'F' to commit a melee attack 
-when in range of an enemy. 
+	Campaign - A linear 2-mission string involving travel to a level's end. Between your start and end goal are 
+	enemy encounters of varying densities. Clearing the encounters are not required, but engagement is encouraged. 
 
-Enemy Combatants
+	Viricide - A small experience that culminates in a boss encounter with a simple damage mechanic. Successful 
+	Viricide completions rewards Weapons, with more being awarded on higher difficulties. One campaign clear is required to unlock Viricide.
 
-Enemies in this game are also capsule-characters, denoted by both size and color. There are five attack types that
-you will encounter: 
+	Inventory - A space that allows you to look over your current Weapons and study their stats and rolled Cheats. This page offers more detailed 
+	explanations of Cheats rolled, and allows Weapons to be sold at 80% of their worth instead of being destroyed.
 
-	Charge - Enemies that prefer to ram into you directly for high damage. Successful contact will daze them for two
-	seconds before attempting to charge again. They are magenta-colored small capsules.
-  
-	Melee - Enemies that slowly move towards you to inflict constant damage. Successful contact will physically
-	knock you back a short distance. They are red-colored small capsules.
+	Requisitions - A space that offers six Weapons at random to be purchased for Lucent. This Kiosk changes its selection on every return visit to
+	the Main Menu, and Weapons' rarities begin between Rarity 1 and 3, upgrading to Rarity 4 and 5 when Viricide is completed for the first time.  
 
-	Range - Enemies that stand a great distance away to fire low-damage projectiles at you. The projectiles are fast-
-	moving, but are easily dodged. They are orange-colored small capsules.
+2.) Your Player-character
 
-	Pounce - Enemies that deftly skip towards you from a great distance away. Successful contact will pause their next
-	attack for one second before attempting again. They are large capsules with a metallic orange color.
+You assume the avatar of a capsule-character. This character can move and look in any direction you wish. 
+This character starts with 500 Health and 550 Shield. Your shield will take damage before your Health does, though if it ever depletes, there is 
+a seven-second delay before it begins to regenerate. 
 
-	Jump - Enemies that commit a large leap in your direction. Being too close to this enemy as they are airborne
-	coverts the jump into a guided attack, scoring a guaranteed hit on you. Idling for one second while within range of
-	you will force them to jump. They are large capsules with a metallic red color.
+	Pressing 'F' will reload the level when you are defeated. 
+ 	You have access to an Inventory with no capacity limit, and holding 'X' on your current item will destroy it. 
+  	Press 'F' to commit a melee attack when an 'X' reticle appears on an enemy. 
+   	Holding 'G' will prepare a grenade to be thrown, and letting go will throw it. 
+	To sprint, hold the 'Shift' key to increase your speed, but know that Weapons are unusable during sprint. 
+ 	To evade danger, press the 'Space' key with directional input. 
 
-Each combat encounter will generate a combination of enemies with these attack types. Once they spawn, they never
-stop seeking you out.
+3.) Enemy Combatants
 
-Game Difficulty
+Enemies in this game are also capsule-characters, denoted by both size and color. Combatants are all black with colored grafts that denote 
+attack style: 
+
+	Charge - Enemies that prefer to ram into you directly for high damage. Their grafts are magenta colored.  
+	Melee - Enemies that prepare an attack after a short delay when in range of you. Their grafts are black, though in a Horde, they are red.
+	Range - Enemies that stand a great distance away to fire low-damage projectiles at you. Their grafts are orange colored.
+	Pounce - Enemies that deftly skip towards you from a great distance away. Their grafts are a metallic orange color.
+	Jump - Enemies that commit a large leap with high forward force in your direction. Being too close to this enemy as they are airborne
+	coverts the jump into a guided attack, scoring a guaranteed hit on you. Their grafts are a metallic red color.
+
+4.) Game Difficulty
 
 There are five total difficulties, and the first four are immediately available for play. Be advised: 
 
@@ -51,7 +54,7 @@ There are five total difficulties, and the first four are immediately available 
  
 Completing the Campaign for the first time will unlock Difficulty 5 for play. 
 
-Weapons & RNG
+5.) Weapons & RNG
 
 There are seven firearm types available to you:
 
@@ -75,6 +78,11 @@ types:
 	Statistical - Cheats that alter a Weapon's performance through manipulating ammo counts, reload speeds and ranges.
 	Functional - Cheats that require a condition to be met to receive a particular benefit.
  
-Rarity 1 Weapons do not spawn with Functional Cheats. Rarity 2 and 3 Weapons spawn with one 
-random Functional Cheat. Rarity 4 and 5 Weapons spawn with two random Functional Cheats. Functional 
-Cheats rolled on Rarity 5 Weapons are significantly more powerful than their standard behaviors, within reason.
+	Rarity 1 - Statistical Cheats only
+	Rarity 2, 3 - Statistical Cheats + 1 Functional Cheat
+	Rarity 4, 5 - Statistical Cheats + 2 Functional Cheats
+ 
+Functional Cheats rolled on Rarity 5 Weapons are significantly more powerful than their standard behaviors. Exotic Weapons, also Rarity 5, 
+come with one Functional Cheat unique to that Weapon type, paired with one standard Functional Cheat. 
+
+Thank you for playing. Have fun!
