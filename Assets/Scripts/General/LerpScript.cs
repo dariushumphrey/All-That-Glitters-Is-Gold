@@ -7,6 +7,9 @@ public class LerpScript : MonoBehaviour
     public Transform positionOne, positionTwo;
     public GameObject thing;
     public float rate = 0.1f;
+    public float lerpProgress = 0f;
+    public float lerpSpeed = 2f;
+    public bool automated;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +19,20 @@ public class LerpScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        thing.transform.position = Vector3.Lerp(positionOne.transform.position, positionTwo.transform.position, rate);
+        if(automated)
+        {
+            lerpProgress += Time.deltaTime * lerpSpeed;
+            thing.transform.position = Vector3.Lerp(positionOne.transform.position, positionTwo.transform.position, lerpProgress);
+
+            if(lerpProgress >= 1f)
+            {
+                lerpProgress = 0f;
+            }
+        }
+
+        else
+        {
+            thing.transform.position = Vector3.Lerp(positionOne.transform.position, positionTwo.transform.position, rate);
+        }
     }
 }

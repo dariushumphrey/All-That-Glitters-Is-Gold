@@ -13,6 +13,9 @@ public class DoorScript : MonoBehaviour
     public bool locked = false;
     public bool elevator = false;
     public bool invert = false;
+    public bool vertical = false;
+    public bool horizontal = false;
+    public bool diagonal = false;
 
     private float state = 0f;
 
@@ -39,7 +42,20 @@ public class DoorScript : MonoBehaviour
 
             state = Mathf.Clamp(state, closedConstraint, openConstraint);
 
-            door.transform.position = new Vector3(door.transform.position.x, state, door.transform.position.z);
+            if(horizontal)
+            {
+                door.transform.position = new Vector3(state, door.transform.position.y, door.transform.position.z);
+            }
+
+            if(vertical)
+            {
+                door.transform.position = new Vector3(door.transform.position.x, state, door.transform.position.z);
+            }
+
+            if(diagonal)
+            {
+                door.transform.position = new Vector3(door.transform.position.x, door.transform.position.y, state);
+            }           
         }
     }
 
@@ -95,7 +111,21 @@ public class DoorScript : MonoBehaviour
 
             state = Mathf.Clamp(state, closedConstraint, openConstraint);
 
-            door.transform.position = new Vector3(door.transform.position.x, state, door.transform.position.z);           
+            if(horizontal)
+            {
+                door.transform.position = new Vector3(state, door.transform.position.y, door.transform.position.z);
+
+            }
+
+            if(vertical)
+            {
+                door.transform.position = new Vector3(door.transform.position.x, state, door.transform.position.z);
+            }
+
+            if (diagonal)
+            {
+                door.transform.position = new Vector3(door.transform.position.x, door.transform.position.y, state);
+            }
         }      
     }
 
