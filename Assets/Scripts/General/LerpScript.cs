@@ -10,6 +10,9 @@ public class LerpScript : MonoBehaviour
     public float lerpProgress = 0f;
     public float lerpSpeed = 2f;
     public bool automated;
+    public float targetSpeed = 0f;
+    public bool accelerating, decelerating = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +30,26 @@ public class LerpScript : MonoBehaviour
             if(lerpProgress >= 1f)
             {
                 lerpProgress = 0f;
+            }
+
+            if(accelerating)
+            {
+                lerpSpeed += Time.deltaTime;
+                if(lerpSpeed >= targetSpeed)
+                {
+                    lerpSpeed = targetSpeed;
+                    accelerating = false;
+                }
+            }
+
+            if (decelerating)
+            {
+                lerpSpeed -= Time.deltaTime;
+                if (lerpSpeed <= targetSpeed)
+                {
+                    lerpSpeed = targetSpeed;
+                    decelerating = false;
+                }
             }
         }
 

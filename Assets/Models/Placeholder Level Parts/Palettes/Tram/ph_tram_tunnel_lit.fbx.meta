@@ -7,6 +7,21 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: SM_tunnel_lit_body
+    second: {fileID: 2100000, guid: cef1a2e4b974c85449874f390435b00b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SM_tunnel_lit_floor
+    second: {fileID: 2100000, guid: 792a3d76681183044ba7edac7b0bbd57, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SM_tunnel_lit_lights
+    second: {fileID: 2100000, guid: 5297cce71a1ce224fa99ef1855d05b8b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: testTunnel
     second: {fileID: 2100000, guid: cb460cff3453e1948a0aa3d91ae8898b, type: 2}
   materials:
@@ -50,7 +65,7 @@ ModelImporter:
     importLights: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
