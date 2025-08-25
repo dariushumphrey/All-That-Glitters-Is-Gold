@@ -107,6 +107,21 @@ public class SpawnerScript : MonoBehaviour
         }
     }
 
+    public void RemoteSpawn()
+    {
+        if (spawnIndiv == true)
+        {
+            for (int s = 0; s < spawnRepeat; s++)
+            {
+                SpawnObject();
+                //GetComponent<BoxCollider>().enabled = false;
+            }
+
+            enemy.CatalogEnemies();
+            gameObject.SetActive(false);
+        }
+    }
+
     //private void OnDrawGizmos()
     //{
     //    Gizmos.DrawWireCube(transform.position, field.bounds.size);

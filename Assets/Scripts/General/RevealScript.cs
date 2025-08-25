@@ -18,21 +18,21 @@ public class RevealScript : MonoBehaviour
     {
         level = FindObjectOfType<LevelManagerScript>();
 
-        if(unhideWorld.Count > 0)
-        {
-            for (int v = 0; v < unhideWorld.Count; v++)
-            {
-                unhideWorld[v].gameObject.SetActive(false);
-            }
-        }
+        //if(unhideWorld.Count > 0)
+        //{
+        //    for (int v = 0; v < unhideWorld.Count; v++)
+        //    {
+        //        unhideWorld[v].gameObject.SetActive(false);
+        //    }
+        //}
        
-        if (unhideGame.Count > 0)
-        {
-            for (int v = 0; v < unhideGame.Count; v++)
-            {
-                unhideGame[v].gameObject.SetActive(false);
-            }
-        }
+        //if (unhideGame.Count > 0)
+        //{
+        //    for (int v = 0; v < unhideGame.Count; v++)
+        //    {
+        //        unhideGame[v].gameObject.SetActive(false);
+        //    }
+        //}
 
         //For concealing objects with no intentions of revealing them at a certain point in Difficulty
         if(hideOnTrigger)

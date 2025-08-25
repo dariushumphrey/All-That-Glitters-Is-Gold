@@ -16,6 +16,7 @@ public class DoorScript : MonoBehaviour
     public bool vertical = false;
     public bool horizontal = false;
     public bool diagonal = false;
+    public bool overrideOpen = false;
 
     private float state = 0f;
 
@@ -57,6 +58,12 @@ public class DoorScript : MonoBehaviour
                 door.transform.position = new Vector3(door.transform.position.x, door.transform.position.y, state);
             }           
         }
+
+        if(overrideOpen)
+        {
+            proximity = true;
+            ForceOpen();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -95,7 +102,7 @@ public class DoorScript : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {     
-        if (other.gameObject.tag == "Player" && !locked || other.gameObject.tag == "Enemy" && !locked)
+        if (other.gameObject.tag == "Player" && !locked && !overrideOpen || other.gameObject.tag == "Enemy" && !locked && !overrideOpen)
         {
             proximity = true;
 
@@ -148,6 +155,37 @@ public class DoorScript : MonoBehaviour
                 Destroy(other.gameObject.GetComponent<Rigidbody>());
             }
 
+        }
+    }
+
+    private void ForceOpen()
+    {
+        if (invert)
+        {
+            state -= openSpeed * Time.deltaTime;
+        }
+
+        else
+        {
+            state += openSpeed * Time.deltaTime;
+        }
+
+        state = Mathf.Clamp(state, closedConstraint, openConstraint);
+
+        if (horizontal)
+        {
+            door.transform.position = new Vector3(state, door.transform.position.y, door.transform.position.z);
+
+        }
+
+        if (vertical)
+        {
+            door.transform.position = new Vector3(door.transform.position.x, state, door.transform.position.z);
+        }
+
+        if (diagonal)
+        {
+            door.transform.position = new Vector3(door.transform.position.x, door.transform.position.y, state);
         }
     }
 }
