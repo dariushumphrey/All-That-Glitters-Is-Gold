@@ -68,7 +68,10 @@ MonoBehaviour:
   locked: 0
   elevator: 0
   invert: 1
+  vertical: 0
   horizontal: 1
+  diagonal: 0
+  overrideOpen: 0
 --- !u!114 &1775319229942575449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,7 +93,10 @@ MonoBehaviour:
   locked: 0
   elevator: 0
   invert: 0
+  vertical: 0
   horizontal: 1
+  diagonal: 0
+  overrideOpen: 0
 --- !u!54 &1775319229942575453
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -365,9 +371,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ab851f881e33bff49b6f36c4463169a6, type: 2}
   - {fileID: 2100000, guid: 516e27150dff7fb42a3c6a2fdd245f8a, type: 2}
-  - {fileID: 2100000, guid: 325d2ceb0d12c6546aed2ee3cf0faae6, type: 2}
+  - {fileID: 2100000, guid: 86830a873e7092747abada611fbab726, type: 2}
+  - {fileID: 2100000, guid: 516e27150dff7fb42a3c6a2fdd245f8a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

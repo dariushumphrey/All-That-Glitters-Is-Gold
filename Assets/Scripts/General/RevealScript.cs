@@ -155,7 +155,7 @@ public class RevealScript : MonoBehaviour
                 }
             }
 
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
