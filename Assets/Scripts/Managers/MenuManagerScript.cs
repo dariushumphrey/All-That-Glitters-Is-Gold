@@ -13,7 +13,7 @@ public class MenuManagerScript : MonoBehaviour
     public Setting setting;
 
     public Image caThumbnail, vcThumbnail;
-    public Sprite caLevelOne, caLevelTwo, vcLevelOne;
+    public Sprite caLevelOne, caLevelTwo, caLevelThree, vcLevelOne;
     public Text caDiffText, vcDiffText, caLevelText, vcLevelText;
     public Button vcButton;
     public Slider vcDifficulty, vcLevel, caDifficulty, caLevel;
@@ -52,6 +52,11 @@ public class MenuManagerScript : MonoBehaviour
             else if (caLevel.value == 2)
             {
                 caThumbnail.sprite = caLevelTwo;
+            }
+
+            else if (caLevel.value == 3)
+            {
+                caThumbnail.sprite = caLevelThree;
             }
 
 
@@ -105,7 +110,12 @@ public class MenuManagerScript : MonoBehaviour
 
     public void Progression()
     {
-        if (PlayerPrefs.GetInt("unlockLevel02") == 1)
+        if (PlayerPrefs.GetInt("unlockLevel03") == 1)
+        {
+            caLevel.maxValue = 3;
+        }
+
+        else if(PlayerPrefs.GetInt("unlockLevel02") == 1)
         {
             caLevel.maxValue = 2;
         }

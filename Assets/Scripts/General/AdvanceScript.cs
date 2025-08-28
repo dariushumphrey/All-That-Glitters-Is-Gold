@@ -56,14 +56,30 @@ public class AdvanceScript : MonoBehaviour
 
     void CheckForLevelEntitlement()
     {
-        if (PlayerPrefs.GetInt("unlockLevel02") == 1)
+        if(levelIndex == 2)
         {
-            return;
+            if (PlayerPrefs.GetInt("unlockLevel02") == 1)
+            {
+                //Do nothing
+            }
+
+            else
+            {
+                PlayerPrefs.SetInt("unlockLevel02", 1);
+            }
         }
 
-        else
+        if (levelIndex == 3)
         {
-            PlayerPrefs.SetInt("unlockLevel02", 1);
+            if (PlayerPrefs.GetInt("unlockLevel03") == 1)
+            {
+                //Do nothing
+            }
+
+            else
+            {
+                PlayerPrefs.SetInt("unlockLevel03", 1);
+            }
         }
     }
 
