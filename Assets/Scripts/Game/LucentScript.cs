@@ -5,6 +5,7 @@ using UnityEngine;
 public class LucentScript : MonoBehaviour
 {
     public int lucentGift;
+    public bool threat = false;
 
     private float shatterPercent = 150f;
     private int shatterDamage;
@@ -30,6 +31,24 @@ public class LucentScript : MonoBehaviour
 
                 if(hit.gameObject.CompareTag("Enemy"))
                 {
+                    if(gameObject.transform.parent != null && gameObject.transform.parent.GetComponent<ReplevinScript>().amBoss)
+                    {
+                        if(gameObject.GetComponent<Rigidbody>() == null)
+                        {
+                            gameObject.AddComponent<Rigidbody>();
+                        }
+
+                        gameObject.transform.parent.GetComponent<ReplevinScript>().stunMechanic = null;
+                        //gameObject.transform.parent.GetComponent<ReplevinScript>().stunMechanic.transform.parent = null;
+                        gameObject.transform.parent.GetComponent<ReplevinScript>().enemy.isImmune = false;
+
+                        if (gameObject.transform.parent.GetComponent<ReplevinScript>().interrupted == false)
+                        {
+                            gameObject.transform.parent.GetComponent<ReplevinScript>().interrupted = true;
+
+                        }
+                    }
+
                     if (hit.GetComponent<EnemyHealthScript>() != null)
                     {
                         hit.GetComponent<EnemyHealthScript>().inflictDamage(shatterDamage);
@@ -70,16 +89,37 @@ public class LucentScript : MonoBehaviour
 
     public IEnumerator Shatter()
     {
-        gameObject.GetComponent<Rigidbody>().AddExplosionForce(10f, transform.position, 10f, 50f);
+        if(gameObject.GetComponent<Rigidbody>() != null)
+        {
+            gameObject.GetComponent<Rigidbody>().AddExplosionForce(10f, transform.position, 10f, 50f);
+        }
 
         yield return new WaitForSeconds(shatterDelayTime);
         Vector3 epicenter = transform.position;
         Collider[] affected = Physics.OverlapSphere(transform.position, 5f);
         foreach (Collider hit in affected)
         {
+            if(hit.gameObject.CompareTag("Player") && threat)
+            {
+                ShatterCalculation();
+                hit.gameObject.GetComponent<PlayerStatusScript>().InflictDamage(shatterDamage);
+                hit.gameObject.GetComponent<PlayerStatusScript>().playerHit = true;
+            }
 
             if (hit.gameObject.CompareTag("Enemy"))
             {
+                if (gameObject.transform.parent != null && gameObject.transform.parent.GetComponent<ReplevinScript>().amBoss)
+                {
+                    if (gameObject.GetComponent<Rigidbody>() == null)
+                    {
+                        gameObject.AddComponent<Rigidbody>();
+                    }
+
+                    gameObject.transform.parent.GetComponent<ReplevinScript>().stunMechanic = null;
+                    //gameObject.transform.parent.GetComponent<ReplevinScript>().stunMechanic.transform.parent = null;
+                    gameObject.transform.parent.GetComponent<ReplevinScript>().enemy.isImmune = false;
+                }
+
                 if (hit.GetComponent<EnemyHealthScript>() != null)
                 {
                     hit.GetComponent<EnemyHealthScript>().inflictDamage(shatterDamage);

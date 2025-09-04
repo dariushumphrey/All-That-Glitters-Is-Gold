@@ -40,20 +40,9 @@ public class BossManagerScript : MonoBehaviour
     {
         if(!isAlive && !done)
         {
-            for(int c = 0; c < chestRewards.Count; c++)
-            {
-                chestRewards[c].gameObject.SetActive(true);
-                chestRewards[c].GetComponent<LootScript>().raritySpawn = bossDifficulty;
-                if(chestRewards[c].GetComponent<LootScript>().spamLoot != true)
-                {
-                    chestRewards[c].GetComponent<LootScript>().lootSpamMax = bossDifficulty;
-                    chestRewards[c].GetComponent<LootScript>().spamLoot = true;
-                }
-            }
-
+            StartCoroutine(RewardOnDelay());
             done = true;
-            levelManager.gameComplete = true;
-            levelManager.CheckForFirstViricideClear();
+
         }
     }
 
@@ -66,5 +55,23 @@ public class BossManagerScript : MonoBehaviour
                 addSpawners[a].GetComponent<SpawnerScript>().SpawnObject();
             }
         }
-    }   
+    }
+    
+    private IEnumerator RewardOnDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        for (int c = 0; c < chestRewards.Count; c++)
+        {
+            chestRewards[c].gameObject.SetActive(true);
+            chestRewards[c].GetComponent<LootScript>().raritySpawn = bossDifficulty;
+            if (chestRewards[c].GetComponent<LootScript>().spamLoot != true)
+            {
+                chestRewards[c].GetComponent<LootScript>().lootSpamMax = bossDifficulty;
+                chestRewards[c].GetComponent<LootScript>().spamLoot = true;
+            }
+        }
+
+        levelManager.gameComplete = true;
+        levelManager.CheckForFirstViricideClear();
+    }
 }

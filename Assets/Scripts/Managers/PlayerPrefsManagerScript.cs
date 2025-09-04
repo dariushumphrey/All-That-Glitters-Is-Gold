@@ -15,7 +15,7 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         ViricideEntitlement();
         LucentEntitlement();
         //Debug.Log(PlayerPrefs.GetInt("unlockLevel02"));
-        Debug.Log(PlayerPrefs.GetInt("unlockLevel03"));
+        //Debug.Log(PlayerPrefs.GetInt("unlockLevel03"));
 
         //PlayerPrefs.SetInt("unlockLevel02", 1);
         //PlayerPrefs.SetInt("unlockDifficulty5", 1);

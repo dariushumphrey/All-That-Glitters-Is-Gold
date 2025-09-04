@@ -462,6 +462,14 @@ public class EnemyHealthScript : MonoBehaviour
                 berth.Explode();
             }
 
+            if(attack.amBoss)
+            {
+                if(attack.boss.isAlive)
+                {
+                    attack.boss.isAlive = false;
+                }
+            }
+
             player.lucentFunds += lucentYield;
             if(player.lucentFunds >= 100000)
             {

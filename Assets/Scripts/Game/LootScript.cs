@@ -72,7 +72,7 @@ public class LootScript : MonoBehaviour
 
             if(spamLoot == true)
             {
-                Debug.Log(spawnCount);
+                //Debug.Log(spawnCount);
                 spawnAgain += Time.deltaTime;
                 if(spawnAgain >= spawnRate)
                 {

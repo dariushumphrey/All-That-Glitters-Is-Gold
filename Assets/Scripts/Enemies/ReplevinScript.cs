@@ -61,9 +61,10 @@ public class ReplevinScript : MonoBehaviour
     public Material rangeHitColor;
     public List<GameObject> cluster = new List<GameObject>();
     public GameObject leader;
+    public GameObject stunningLucent, stunMechanic;
 
     internal NavMeshAgent self;
-    private EnemyHealthScript enemy;
+    internal EnemyHealthScript enemy;
     private EnemyManagerScript manager;
     internal BossManagerScript boss; //For bosses only -- Used to spawn enemies when returning immune
     private Vector3 focus;
@@ -95,12 +96,16 @@ public class ReplevinScript : MonoBehaviour
     private float attackAgain;
     private float agitationTimer;
     private float gapCloseReset;
+    private bool destinationSet = false;
+    private bool gathered = false;
+    private bool throwTarget = false;
     private bool agitated;
     private bool canAttackAgain = true;
     private bool recorded = false;
     private bool fireSequence = false;
     private bool attackLock = false;
     private bool meleePause = false;
+    public bool interrupted = false;
     private bool ramTimeout = false;
     private bool slamTimeout = false;
     private bool fireTimeout = false;
@@ -388,97 +393,301 @@ public class ReplevinScript : MonoBehaviour
     {
         if(!HaveIDied())
         {
-            self.speed = moveSpeed;
-            //self.SetDestination(player.transform.position);
-            distance = transform.position - player.transform.position;
-            attackAgain += Time.deltaTime;
             Vector3 rayOrigin = attackStartPoint.transform.position;
             RaycastHit hit;
 
-            //attackLine.SetPosition(0, attackStartPoint.position);
-            //attackLine.SetPosition(1, rayOrigin + (attackStartPoint.transform.forward * meleeRangeMin));
-            //attackLine.material = inRangeColor;
-
-            if(CanSeePlayer())
+            if(amBoss)
             {
-                self.SetDestination(player.transform.position);
-                //self.ResetPath();
-                self.speed = boostSpeed;               
+                self.speed = moveSpeed;
+                //self.SetDestination(player.transform.position);
+                distance = transform.position - player.transform.position;
+                attackAgain += Time.deltaTime;
                 
-                if(distance.magnitude <= meleeRangeCheck)
+                if(!destinationSet)
                 {
-                    self.speed = moveSpeed / 2;
-                    self.acceleration = nmaAccel / 2;
+                    waypointNext = Random.Range(0, waypoint.Length);
+                    self.SetDestination(waypoint[waypointNext].transform.position);
+                    destinationSet = true;
+                }
 
-                    meleeAttackTimer -= Time.deltaTime;
-                    if(meleeAttackTimer <= 0f)
+                if (Vector3.Distance(waypoint[waypointNext].transform.position, self.transform.position) < accuracy)
+                {
+                    Vector3 waypointDistance = waypoint[waypointNext].transform.position - transform.position;
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(waypointDistance, Vector3.up), rotationStrength);
+                }
+
+                if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin))
+                {
+                    //attackLine.SetPosition(1, hit.point);
+                    //attackLine.material = rangeHitColor;
+
+                    if (hit.collider.tag == "Hard Lucent" && !gathered)
                     {
-                        attackLock = true;
-                        self.speed = moveSpeed * 2;       
-                        
-                        if(attackLock)
+                        stunMechanic = Instantiate(stunningLucent, attackStartPoint.transform.position + transform.forward, attackStartPoint.transform.rotation, gameObject.transform);
+
+                        if (stunMechanic.GetComponent<Rigidbody>())
                         {
-                            meleeAttackTimer = 0f;
-                            if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin))
+                            Destroy(stunMechanic.GetComponent<Rigidbody>());
+                        }
+
+                        //if (stunMechanic.GetComponent<BoxCollider>())
+                        //{
+                        //    stunMechanic.GetComponent<BoxCollider>().enabled = false;
+                        //}
+
+                        gathered = true;
+                        throwTarget = true;
+                    }
+                }
+
+                if (interrupted)
+                {
+                    addWave = true;
+                    self.speed = 0;
+                    //self.acceleration = 0;
+                    meleeTimeout -= Time.deltaTime;
+                    if (meleeTimeout <= 0f)
+                    {
+                        self.speed = moveSpeedReset;
+                        //self.acceleration = nmaAccelReset;
+
+                        destinationSet = false;
+                        gathered = false;
+                        recorded = false;
+                        throwTarget = false;
+                        interrupted = false;
+                        enemy.isImmune = true;
+
+                        if (boss != null && addWave == true)
+                        {
+                            if (enemy.healthCurrent >= 1)
                             {
+                                boss.TriggerAdds();
+                                addWave = false;
+                            }
+
+                            else
+                            {
+                                boss.isAlive = false;
+                                addWave = false;
+                            }
+                        }
+
+                        meleeTimeout = 4f;
+                       
+                    }
+                }
+
+                if (throwTarget && !interrupted)
+                {
+                    if(CanSeePlayer())
+                    {
+                        self.SetDestination(player.transform.position);
+                        //self.ResetPath();
+                        self.speed = moveSpeed;                  
+
+                        if (distance.magnitude <= meleeRangeCheck)
+                        {
+                            if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeCheck) && !recorded && stunMechanic != null)
+                            {
+                                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-distance, Vector3.up), rotationStrength);
+
                                 //attackLine.SetPosition(1, hit.point);
                                 //attackLine.material = rangeHitColor;
 
-                                if (hit.collider.tag == "Player" && attackAgain >= attackRate)
-                                {
-                                    attackAgain = 0.0f;
+                                lastPlayerPosition = (hit.point - transform.position).normalized;
+                                //lastKnownDistance = lastPlayerPosition - transform.position;
+                                recorded = true;
 
-                                    if(hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
+                                if (stunMechanic.GetComponent<Rigidbody>() == null)
+                                {
+                                    stunMechanic.AddComponent<Rigidbody>();
+                                }
+
+                                stunMechanic.GetComponent<LucentScript>().shatterDelayTime = 0.6f;
+                                stunMechanic.GetComponent<LucentScript>().threat = true;
+                                stunMechanic.GetComponent<LucentScript>().StartCoroutine(stunMechanic.GetComponent<LucentScript>().Shatter());
+
+                                stunMechanic.transform.parent = null;
+                                stunMechanic.GetComponent<Rigidbody>().AddForce((lastPlayerPosition + Vector3.up) * jumpForce, ForceMode.Impulse);
+                                stunMechanic.GetComponent<Rigidbody>().AddForce((transform.forward * forwardForce), ForceMode.Impulse);
+                                stunMechanic = null;
+                            }
+
+                            self.speed = moveSpeed / 2;
+                            //self.acceleration = nmaAccel / 2;
+
+                            meleeAttackTimer -= Time.deltaTime;
+                            if (meleeAttackTimer <= 0f)
+                            {
+                                attackLock = true;
+                                self.speed = moveSpeed * 2;
+
+                                if(attackLock)
+                                {
+                                    meleeAttackTimer = 0f;
+                                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin))
                                     {
-                                        if(gameObject.GetComponent<DebuffScript>() == null)
+                                        //attackLine.SetPosition(1, hit.point);
+                                        //attackLine.material = rangeHitColor;
+
+                                        if (hit.collider.tag == "Player" && attackAgain >= attackRate)
                                         {
-                                            gameObject.AddComponent<DebuffScript>();
+                                            attackAgain = 0.0f;
+
+                                            if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
+                                            {
+                                                if (gameObject.GetComponent<DebuffScript>() == null)
+                                                {
+                                                    gameObject.AddComponent<DebuffScript>();
+                                                }
+                                            }
+
+                                            hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+                                            hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+
+                                            //This code shoves the Player with particular force in their opposite direction.
+                                            //This is a melee attack, shoving the player with less force, subtly offsetting the player upwards to distinguish it from a charge.
+                                            Vector3 knockbackDir = -hit.collider.transform.forward;
+                                            //knockbackDir.y = 0;
+                                            hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
+
+                                            manager.damageDealt += damage;
+
+                                            attackLock = false;
+                                            meleeAttackTimer = meleeReset;
+
+                                            destinationSet = false;
+                                            gathered = false;
+                                            recorded = false;
+                                            throwTarget = false;
+
+                                            //if (GetComponent<EnemyFollowerScript>() != null)
+                                            //{
+                                            //    if (GetComponent<EnemyFollowerScript>().leader != null && GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
+                                            //    {
+                                            //        GetComponent<EnemyFollowerScript>().leader.Pursuit();
+                                            //    }
+
+                                            //    GetComponent<EnemyFollowerScript>().ChasePlayer();
+                                            //}              
                                         }
                                     }
-
-                                    hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
-                                    hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
-
-                                    //This code shoves the Player with particular force in their opposite direction.
-                                    //This is a melee attack, shoving the player with less force, subtly offsetting the player upwards to distinguish it from a charge.
-                                    Vector3 knockbackDir = -hit.collider.transform.forward;
-                                    //knockbackDir.y = 0;
-                                    hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
-
-                                    manager.damageDealt += damage;
-
-                                    attackLock = false;
-                                    meleeAttackTimer = meleeReset;
-
-                                    //if (GetComponent<EnemyFollowerScript>() != null)
-                                    //{
-                                    //    if (GetComponent<EnemyFollowerScript>().leader != null && GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
-                                    //    {
-                                    //        GetComponent<EnemyFollowerScript>().leader.Pursuit();
-                                    //    }
-
-                                    //    GetComponent<EnemyFollowerScript>().ChasePlayer();
-                                    //}              
                                 }
+
                             }
                         }
-                        
-                    }                  
-                }
 
-                else
-                {
-                    meleeAttackTimer = meleeReset;
+                        else
+                        {
+                            meleeAttackTimer = meleeReset;
+                        }
+                    }
+
+                    else
+                    {
+                        self.speed = moveSpeed;
+                        self.SetDestination(player.transform.position);
+                        self.acceleration = accelReset;
+                        //attackLine.material = inRangeColor;
+                    }
                 }
             }
 
             else
             {
                 self.speed = moveSpeed;
-                self.SetDestination(player.transform.position);
-                self.acceleration = accelReset;
+                //self.SetDestination(player.transform.position);
+                distance = transform.position - player.transform.position;
+                attackAgain += Time.deltaTime;
+                //Vector3 rayOrigin = attackStartPoint.transform.position;
+                //RaycastHit hit;
+
+                //attackLine.SetPosition(0, attackStartPoint.position);
+                //attackLine.SetPosition(1, rayOrigin + (attackStartPoint.transform.forward * meleeRangeMin));
                 //attackLine.material = inRangeColor;
-            }
+
+                if (CanSeePlayer())
+                {
+                    self.SetDestination(player.transform.position);
+                    //self.ResetPath();
+                    self.speed = boostSpeed;
+
+                    if (distance.magnitude <= meleeRangeCheck)
+                    {
+                        self.speed = moveSpeed / 2;
+                        self.acceleration = nmaAccel / 2;
+
+                        meleeAttackTimer -= Time.deltaTime;
+                        if (meleeAttackTimer <= 0f)
+                        {
+                            attackLock = true;
+                            self.speed = moveSpeed * 2;
+
+                            if (attackLock)
+                            {
+                                meleeAttackTimer = 0f;
+                                if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin))
+                                {
+                                    //attackLine.SetPosition(1, hit.point);
+                                    //attackLine.material = rangeHitColor;
+
+                                    if (hit.collider.tag == "Player" && attackAgain >= attackRate)
+                                    {
+                                        attackAgain = 0.0f;
+
+                                        if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
+                                        {
+                                            if (gameObject.GetComponent<DebuffScript>() == null)
+                                            {
+                                                gameObject.AddComponent<DebuffScript>();
+                                            }
+                                        }
+
+                                        hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+                                        hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+
+                                        //This code shoves the Player with particular force in their opposite direction.
+                                        //This is a melee attack, shoving the player with less force, subtly offsetting the player upwards to distinguish it from a charge.
+                                        Vector3 knockbackDir = -hit.collider.transform.forward;
+                                        //knockbackDir.y = 0;
+                                        hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
+
+                                        manager.damageDealt += damage;
+
+                                        attackLock = false;
+                                        meleeAttackTimer = meleeReset;
+
+                                        //if (GetComponent<EnemyFollowerScript>() != null)
+                                        //{
+                                        //    if (GetComponent<EnemyFollowerScript>().leader != null && GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
+                                        //    {
+                                        //        GetComponent<EnemyFollowerScript>().leader.Pursuit();
+                                        //    }
+
+                                        //    GetComponent<EnemyFollowerScript>().ChasePlayer();
+                                        //}              
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                    else
+                    {
+                        meleeAttackTimer = meleeReset;
+                    }
+                }
+
+                else
+                {
+                    self.speed = moveSpeed;
+                    self.SetDestination(player.transform.position);
+                    self.acceleration = accelReset;
+                    //attackLine.material = inRangeColor;
+                }
+            }          
         }
 
         else
@@ -954,89 +1163,6 @@ public class ReplevinScript : MonoBehaviour
             self.enabled = false;
         }
         
-    }  
-
-    [Task]
-    public void BossAttackCharge()
-    {
-        if (!HaveIDied())
-        {
-            self.speed = boostSpeed;
-            self.SetDestination(player.transform.position);
-            Vector3 rayOrigin = attackStartPoint.transform.position;
-            RaycastHit hit, hitTheSequel;
-
-            //attackLine.SetPosition(0, attackStartPoint.position);
-            //attackLine.SetPosition(1, rayOrigin + (attackStartPoint.transform.forward * chargeRangeMin));
-            //attackLine.material = inRangeColor;
-
-            //if (distance.magnitude <= chargeRangeMin && CanSeePlayer())
-            //{
-            //    self.ResetPath();
-            //    //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
-
-            //    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, chargeRangeMin) && !recorded)
-            //    {
-            //        //attackLine.SetPosition(1, hit.point);
-            //        //attackLine.material = rangeHitColor;
-
-            //        if (hit.collider.tag == "Player")
-            //        {
-            //            lastPlayerPosition = hit.point * chargeOvershoot;
-            //            recorded = true;
-            //        }
-
-            //        self.SetDestination(lastPlayerPosition);
-            //        lastKnownDistance = lastPlayerPosition - transform.position;
-
-            //        if (lastKnownDistance.magnitude <= pounceLimit)
-            //        {
-                        
-            //        }
-
-            //        if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hitTheSequel, 2f))
-            //        {
-            //            if (hitTheSequel.collider.tag == "Player" && canAttackAgain)
-            //            {
-            //                hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
-            //                hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
-
-            //                Vector3 knockbackDir = transform.forward;
-            //                knockbackDir.y = 0;
-            //                hitTheSequel.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
-
-            //                canAttackAgain = false;
-            //            }
-            //        }
-
-            //        //attackLine.SetPosition(1, hit.point);
-            //        //attackLine.material = rangeHitColor;
-
-
-            //    }
-            //}
-
-            //else
-            //{
-            //    if (self.enabled == false)
-            //    {
-            //        self.enabled = true;
-            //    }
-
-            //    recorded = false;
-            //    self.SetDestination(player.transform.position);
-            //}
-
-        }
-
-        else
-        {
-            self.enabled = false;
-            attackLine.SetPosition(0, attackStartPoint.position);
-            attackLine.SetPosition(1, attackStartPoint.position);
-        }
-
-        Task.current.Succeed();
     }  
 
     [Task]
