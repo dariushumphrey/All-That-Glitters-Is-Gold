@@ -18,12 +18,14 @@ public class PlayerMoveScript : MonoBehaviour
     public float evasionForwardForce = 16f;
     public float evasionTimeout = 0.8f;
     public Sprite blankReticle;
+    public bool zeroGravity = false; //Governs if Player can freely move in open space; no longer zeroes movement on Y-axis if true
     private PlayerInventoryScript inventory;
     private PlayerStatusScript status;
     private Rigidbody playerRigid;
     private Camera playerCamera;
     private Vector3 a, b, c;
     private Vector3 input;
+    internal float airbornePullReset = 0.0f;
     internal bool sprinting = false;
     internal bool evading = false;
     internal bool evaded = false;
@@ -37,6 +39,8 @@ public class PlayerMoveScript : MonoBehaviour
 
         inventory = FindObjectOfType<PlayerInventoryScript>();
         status = FindObjectOfType<PlayerStatusScript>();
+
+        airbornePullReset = airbornePull;
     }
 
     // Update is called once per frame
@@ -74,8 +78,17 @@ public class PlayerMoveScript : MonoBehaviour
         Vector3 forward = transform.forward * vertInput;
         Vector3 sideways = transform.right * horizInput;
 
-        forward.y = 0f;
-        sideways.y = 0f;
+        if(!zeroGravity)
+        {
+            forward.y = 0f;
+            sideways.y = 0f;
+        }
+
+        else
+        {
+            playerRigid.useGravity = false;
+            airbornePull = 0f;
+        }
 
         if(Input.GetButton("Horizontal"))
         {
@@ -106,6 +119,19 @@ public class PlayerMoveScript : MonoBehaviour
         if(Airborne())
         {
             playerRigid.AddForce(-Vector3.up * airbornePull);
+
+            if(zeroGravity)
+            {
+                if(Input.GetKey(KeyCode.Z))
+                {
+                    playerRigid.AddForce(transform.up * speed * speedAccelerant);
+                }
+
+                if (Input.GetKey(KeyCode.C))
+                {
+                    playerRigid.AddForce(-transform.up * speed * speedAccelerant);
+                }
+            }
 
             //float radius = collider.radius;
             //float height = collider.height;

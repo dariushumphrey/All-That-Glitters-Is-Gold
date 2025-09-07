@@ -28,6 +28,7 @@ public class EnemyHealthScript : MonoBehaviour
     public Slider currentHealth, healthLost;
     public Image curHealthColor, losHealthColor, debuffNotice, dotNotice, slowNotice;
     public Text enemyName;
+    public float ammoRewardThreshold = 80f; //Required number to be at or above in order to spawn Ammunition.
     private float lhUpdateTimer = 1f;
     private float lhUpdateReset;
     internal float canvasTimer = 2f;
@@ -420,7 +421,7 @@ public class EnemyHealthScript : MonoBehaviour
             corpse.layer = 7;
 
             ammoRewardChance = Random.Range(0, 101);
-            if (ammoRewardChance >= 80)
+            if (ammoRewardChance >= ammoRewardThreshold)
             {
                 Instantiate(ammoReward, transform.position, transform.rotation);
             }

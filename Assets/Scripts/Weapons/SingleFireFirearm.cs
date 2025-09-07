@@ -158,6 +158,11 @@ public class SingleFireFirearm : FirearmScript
                                 hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 5f, ForceMode.Impulse);
                             }
 
+                            else
+                            {
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 5f, ForceMode.Impulse);
+                            }
+
                             //hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 1f, ForceMode.Impulse);
                         }
                     }
@@ -232,6 +237,11 @@ public class SingleFireFirearm : FirearmScript
                             if (hit.collider.GetComponent<Rigidbody>() == null)
                             {
                                 hit.collider.gameObject.AddComponent<Rigidbody>();
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 3.5f, ForceMode.Impulse);
+                            }
+
+                            else
+                            {
                                 hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 3.5f, ForceMode.Impulse);
                             }
                             //hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 1f, ForceMode.Impulse);

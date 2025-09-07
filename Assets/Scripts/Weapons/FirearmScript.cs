@@ -787,6 +787,11 @@ public class FirearmScript : MonoBehaviour
                                 hit.collider.gameObject.AddComponent<Rigidbody>();
                                 hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 10f, ForceMode.Impulse);
                             }
+
+                            else
+                            {
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 10f, ForceMode.Impulse);
+                            }
                         }
                     }
 
@@ -861,6 +866,11 @@ public class FirearmScript : MonoBehaviour
                             {
                                 hit.collider.gameObject.AddComponent<Rigidbody>();
                                 hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 5f, ForceMode.Impulse);
+                            }
+
+                            else
+                            {
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 10f, ForceMode.Impulse);
                             }
 
                             //if (hit.collider.GetComponent<Rigidbody>() != null)

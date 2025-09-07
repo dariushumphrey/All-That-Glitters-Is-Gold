@@ -69,7 +69,7 @@ public class MenuManagerScript : MonoBehaviour
             vcDiffText.text = "Difficulty: " + vcDifficulty.value;
 
             caLevelText.text = "Level " + caLevel.value;
-            vcLevelText.text = "Viricide: " + (vcLevel.value - 2);
+            vcLevelText.text = "Viricide: " + (vcLevel.value - 3);
         }
         
     }

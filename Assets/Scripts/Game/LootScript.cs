@@ -26,7 +26,7 @@ public class LootScript : MonoBehaviour
 
     private float spawnAgain, spawnRate;
     private int lootGrant;
-    private PlayerInventoryScript player;
+    private PlayerMoveScript player;
     private bool inProx;
     private bool turnOff;
     private int spawnCount = 0;
@@ -49,12 +49,8 @@ public class LootScript : MonoBehaviour
             }
         }
 
-        if(isKiosk == true)
-        {
-            player = FindObjectOfType<PlayerInventoryScript>();
-
-            turnOff = false;
-        }
+        player = FindObjectOfType<PlayerMoveScript>();
+        
     }
 
     // Update is called once per frame
@@ -225,8 +221,13 @@ public class LootScript : MonoBehaviour
             }
         }
 
+        if (player.zeroGravity)
+        {
+            reward.GetComponent<Rigidbody>().useGravity = false;
+        }
         //reward.GetComponent<Rigidbody>().AddForce((lootSpawn.transform.forward + lootSpawn.transform.up) * 3f, ForceMode.Impulse);
         reward.GetComponent<Rigidbody>().AddExplosionForce(400f, lootSpawn.transform.position, 10f, 500f);
+
     }
 
     public void SpawnExotic()
@@ -241,6 +242,10 @@ public class LootScript : MonoBehaviour
             reward.GetComponent<ColorLerpScript>().colorTwo = Color.white;
         }
 
+        if (player.zeroGravity)
+        {
+            reward.GetComponent<Rigidbody>().useGravity = false;
+        }
         //reward.GetComponent<Rigidbody>().AddForce((-Vector3.right + Vector3.up) * 3f, ForceMode.Impulse);
         reward.GetComponent<Rigidbody>().AddExplosionForce(400f, lootSpawn.transform.position, 10f, 500f);
     }

@@ -79,13 +79,12 @@ public class DoorScript : MonoBehaviour
             {
                 if (console[i].GetComponent<DoorConsoleScript>().accepted == true)
                 {
-                    console.Remove(console[i]);                  
+                    console.Remove(console[i]);
+                    if (console.Count <= 0)
+                    {
+                        locked = false;
+                    }
                 }
-            }
-
-            if(console.Count <= 0)
-            {
-                locked = false;
             }
         }
 
@@ -101,7 +100,23 @@ public class DoorScript : MonoBehaviour
     }
 
     private void OnTriggerStay(Collider other)
-    {     
+    {
+        if (other.gameObject.tag == "Player" && locked && console.Count >= 1)
+        {
+            for (int i = 0; i < console.Count; i++)
+            {
+                if (console[i].GetComponent<DoorConsoleScript>().accepted == true)
+                {
+                    console.Remove(console[i]);                   
+                }
+
+                if (console.Count <= 0)
+                {
+                    locked = false;
+                }
+            }
+        }
+
         if (other.gameObject.tag == "Player" && !locked && !overrideOpen || other.gameObject.tag == "Enemy" && !locked && !overrideOpen)
         {
             proximity = true;

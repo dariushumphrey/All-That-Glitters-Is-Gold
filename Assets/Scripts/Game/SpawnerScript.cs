@@ -52,7 +52,9 @@ public class SpawnerScript : MonoBehaviour
     {
         int picker = Random.Range(0, spawned.Count);
         spawnField = field.bounds;
-        Vector3 spawnSite = spawnField.center + new Vector3(Random.Range(-spawnField.extents.x, spawnField.extents.x), 0, Random.Range(-spawnField.extents.z, spawnField.extents.z));
+        Vector3 spawnSite = spawnField.center + new Vector3(Random.Range(-spawnField.extents.x, spawnField.extents.x), 
+                                                            Random.Range(-spawnField.extents.y, spawnField.extents.y), 
+                                                            Random.Range(-spawnField.extents.z, spawnField.extents.z));
 
         //Vector3 spawnSite = new Vector3(transform.position.x + Random.Range(-spawnArena.x, spawnArena.x), 0, transform.position.z - Random.Range(-spawnArena.z, spawnArena.z));
         if(spawned[picker].GetComponent<EnemyHealthScript>() != null)

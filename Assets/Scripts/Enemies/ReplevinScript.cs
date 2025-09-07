@@ -53,6 +53,7 @@ public class ReplevinScript : MonoBehaviour
     public bool amFollower;
     public bool amHunter;
     public bool amBoss;
+    public bool amSentry;
     public Transform attackStartPoint;
     public Transform jumpCheck;
     public LineRenderer attackLine;
@@ -86,6 +87,7 @@ public class ReplevinScript : MonoBehaviour
     internal int moveSpeedReset;
     internal int boostSpeedReset;
     internal int nmaAccelReset;
+    internal bool interrupted = false;
 
     private int accelReset;
     private float meleeReset;
@@ -105,7 +107,6 @@ public class ReplevinScript : MonoBehaviour
     private bool fireSequence = false;
     private bool attackLock = false;
     private bool meleePause = false;
-    public bool interrupted = false;
     private bool ramTimeout = false;
     private bool slamTimeout = false;
     private bool fireTimeout = false;
@@ -396,6 +397,7 @@ public class ReplevinScript : MonoBehaviour
             Vector3 rayOrigin = attackStartPoint.transform.position;
             RaycastHit hit;
 
+            //This behavior dictates Melee combat for Bosses
             if(amBoss)
             {
                 self.speed = moveSpeed;
@@ -594,6 +596,7 @@ public class ReplevinScript : MonoBehaviour
                 }
             }
 
+            //This behavior dictates Melee combat for standard Enemies
             else
             {
                 self.speed = moveSpeed;
@@ -709,17 +712,22 @@ public class ReplevinScript : MonoBehaviour
         if(!HaveIDied())
         {
             self.speed = moveSpeed;
-
-            if (self.enabled != true)
+            
+            if(amSentry)
             {
-                self.enabled = true;
-                self.SetDestination(player.transform.position);
+                self.enabled = false;
             }
 
-            else
-            {
-                self.SetDestination(player.transform.position);
-            }
+            //if (self.enabled != true)
+            //{
+            //    self.enabled = true;
+            //    self.SetDestination(player.transform.position);
+            //}
+
+            //else
+            //{
+            //    self.SetDestination(player.transform.position);
+            //}
 
             distance = transform.position - player.transform.position;
             attackAgain += Time.deltaTime;
@@ -731,54 +739,75 @@ public class ReplevinScript : MonoBehaviour
             //attackLine.SetPosition(1, rayOrigin + (attackStartPoint.transform.forward * rangeATKMin));
             //attackLine.material = outRangeColor;
 
-            transform.LookAt(player.transform.position);
+            //transform.LookAt(player.transform.position);        
 
-            if (distance.magnitude <= rangeATKMin && CanSeePlayer())
+            if(CanSeePlayer())
             {
-                self.enabled = false;
+                if(amSentry)
+                {
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-distance, Vector3.up), rotationStrength);
+                }
+
+                else
+                {
+                    self.SetDestination(player.transform.position);
+                }
 
                 //attackLine.SetPosition(1, player.transform.position);
                 //attackLine.material = inRangeColor;
 
-                if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeATKMin) && attackAgain >= rangeAttackRate)
+                if (distance.magnitude <= rangeATKMin)
                 {
-                    if (hit.collider.tag == "Enemy")
+                    if(!amSentry)
                     {
-                        //attackLine.SetPosition(1, hit.collider.transform.position);
-                        Debug.Log("Danger of Friendly Fire; Aborting!");
-                        Task.current.Fail();
+                        //self.enabled = false;
+                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-distance, Vector3.up), rotationStrength);
                     }
 
-                    else
+                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeATKMin) && attackAgain >= rangeAttackRate)
                     {
-                        attackAgain = 0.0f;
+                        if (hit.collider.tag == "Enemy")
+                        {
+                            //attackLine.SetPosition(1, hit.collider.transform.position);
+                            //Debug.Log("Danger of Friendly Fire; Aborting!");
+                            Task.current.Fail();
+                        }
 
-                        //attackLine.SetPosition(1, player.transform.position);
-                        //attackLine.material = rangeHitColor;
+                        else
+                        {
+                            attackAgain = 0.0f;
 
-                        GameObject projectile = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                        projectile.transform.position = attackStartPoint.transform.position;
-                        projectile.transform.rotation = attackStartPoint.transform.rotation;
-                        projectile.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-                        projectile.name = "Projectile";
-                        projectile.tag = "Projectile";
+                            //attackLine.SetPosition(1, player.transform.position);
+                            //attackLine.material = rangeHitColor;
 
-                        projectile.GetComponent<SphereCollider>().isTrigger = true;
-                        projectile.AddComponent<Rigidbody>();
-                        projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * rangedAttackForce);
+                            GameObject projectile = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                            projectile.transform.position = attackStartPoint.transform.position;
+                            projectile.transform.rotation = attackStartPoint.transform.rotation;
+                            projectile.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                            projectile.name = "Projectile";
+                            projectile.tag = "Projectile";
 
-                        projectile.AddComponent<ProjectileScript>();
-                        projectile.GetComponent<ProjectileScript>().damage = damage;
+                            projectile.GetComponent<SphereCollider>().isTrigger = true;
+                            projectile.AddComponent<Rigidbody>();
+                            projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * rangedAttackForce);
 
+                            projectile.AddComponent<ProjectileScript>();
+                            projectile.GetComponent<ProjectileScript>().damage = damage;
+
+                        }
                     }
-                }
+                }            
             }
 
             else
             {
-                if (self.enabled != true)
+                if (amSentry)
                 {
-                    self.enabled = true;
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-distance, Vector3.up), rotationStrength);
+                }
+
+                else
+                {
                     self.SetDestination(player.transform.position);
                 }
             }

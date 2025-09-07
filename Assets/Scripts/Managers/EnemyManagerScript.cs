@@ -29,14 +29,14 @@ public class EnemyManagerScript : MonoBehaviour
     internal int killCount = 0;
     internal int damageReceived = 0;
     internal int damageDealt = 0;
-    private PlayerInventoryScript player;
+    private PlayerMoveScript player;
 
     // Start is called before the first frame update
     void Start()
     {
         dropThreshReset = dropThreshold;
 
-        player = FindObjectOfType<PlayerInventoryScript>();
+        player = FindObjectOfType<PlayerMoveScript>();
         enemyDied = false;
         //enemies = GameObject.FindGameObjectsWithTag("Enemy");
         RarityCheck();
@@ -151,6 +151,10 @@ public class EnemyManagerScript : MonoBehaviour
 
             //Removes (Clone) from name
             reward.name = loot.name;
+            if(player.zeroGravity)
+            {
+                reward.GetComponent<Rigidbody>().useGravity = false;
+            }
         }
 
         //For Exotic Loot
@@ -168,6 +172,10 @@ public class EnemyManagerScript : MonoBehaviour
 
                 //Removes (Clone) from name
                 reward.name = loot.name;
+                if (player.zeroGravity)
+                {
+                    reward.GetComponent<Rigidbody>().useGravity = false;
+                }
             }
         }
         
@@ -183,6 +191,10 @@ public class EnemyManagerScript : MonoBehaviour
 
             //Removes (Clone) from name
             rewardTwo.name = loot.name;
+            if (player.zeroGravity)
+            {
+                rewardTwo.GetComponent<Rigidbody>().useGravity = false;
+            }
         }
     }
 
@@ -198,6 +210,10 @@ public class EnemyManagerScript : MonoBehaviour
         rewardTwo.GetComponent<LucentScript>().lucentGift *= dropRarity;
         rewardTwo.GetComponent<LucentScript>().ShatterCalculation();
         rewardTwo.name = loot.name;
+        if (player.zeroGravity)
+        {
+            rewardTwo.GetComponent<Rigidbody>().useGravity = false;
+        }
     }
 
     public void FatedCadenceRewardPosition(Vector3 alivePos)
@@ -211,6 +227,10 @@ public class EnemyManagerScript : MonoBehaviour
         rewardTwo.GetComponent<LucentScript>().lucentGift *= dropRarity;
         rewardTwo.GetComponent<LucentScript>().ShatterCalculation();
         rewardTwo.name = loot.name;
+        if (player.zeroGravity)
+        {
+            rewardTwo.GetComponent<Rigidbody>().useGravity = false;
+        }
     }
    
     public void CatalogEnemies()

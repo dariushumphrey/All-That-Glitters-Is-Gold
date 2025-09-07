@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Viricide_01.unity
     guid: febf45ee1fc99a148ad5e7b640158a47
+  - enabled: 1
+    path: Assets/Scenes/Viricide_02.unity
+    guid: 99a60b636f3d90949940b70959865b9e
   m_configObjects: {}
