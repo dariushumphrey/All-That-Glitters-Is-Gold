@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 8466046589840961171}
   - component: {fileID: 5951937698652510809}
   - component: {fileID: 3317564905828932522}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_couch_ph
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4815099045165900086
 Transform:

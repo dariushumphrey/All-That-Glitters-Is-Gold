@@ -78,7 +78,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5849227831087065624}
-  m_Mesh: {fileID: 2290173704888665768, guid: 2c1ddc73175a74a4b8b1c9d546ac549e, type: 3}
+  m_Mesh: {fileID: -5543079335629802374, guid: 09d3eb028daa086409c88e5deafaa210, type: 3}
 --- !u!23 &5849227831087065628
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -100,8 +100,9 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 86830a873e7092747abada611fbab726, type: 2}
-  - {fileID: 2100000, guid: 7a2288c2219ed044cac0a54337e95e52, type: 2}
-  - {fileID: 2100000, guid: 79dc7ad5e1577524ab6d93b8f98f06b6, type: 2}
+  - {fileID: 2100000, guid: b20e8d325efdec64d875825f90da9f44, type: 2}
+  - {fileID: 2100000, guid: b20e8d325efdec64d875825f90da9f44, type: 2}
+  - {fileID: 2100000, guid: ba552f6beb6994d4b9a39e292026cdf8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -305,6 +306,7 @@ MonoBehaviour:
   amFollower: 0
   amHunter: 1
   amBoss: 1
+  amSentry: 0
   attackStartPoint: {fileID: 5849227831947121303}
   jumpCheck: {fileID: 3142191004654545031}
   attackLine: {fileID: 5849227831087065631}
@@ -315,7 +317,6 @@ MonoBehaviour:
   leader: {fileID: 0}
   stunningLucent: {fileID: 130336942800207938, guid: 258ebae35e746864fab23c14795d4ec1, type: 3}
   stunMechanic: {fileID: 0}
-  interrupted: 0
 --- !u!114 &5849227831087065623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,6 +348,7 @@ MonoBehaviour:
   dotNotice: {fileID: 1254329160739193459}
   slowNotice: {fileID: 2227457885782782506}
   enemyName: {fileID: 807861120565943975}
+  ammoRewardThreshold: 80
 --- !u!114 &811595080262613222
 MonoBehaviour:
   m_ObjectHideFlags: 0
