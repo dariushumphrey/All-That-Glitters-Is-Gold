@@ -19,12 +19,18 @@ public class PlayerMoveScript : MonoBehaviour
     public float evasionTimeout = 0.8f;
     public Sprite blankReticle;
     public bool zeroGravity = false; //Governs if Player can freely move in open space; no longer zeroes movement on Y-axis if true
+
+    public List<ParticleSystem> backThrust = new List<ParticleSystem>();
+    public List<ParticleSystem> frontThrust = new List<ParticleSystem>();
+    public List<ParticleSystem> rightThrust = new List<ParticleSystem>();
+    public List<ParticleSystem> leftThrust = new List<ParticleSystem>();
     private PlayerInventoryScript inventory;
     private PlayerStatusScript status;
     private Rigidbody playerRigid;
     private Camera playerCamera;
     private Vector3 a, b, c;
     private Vector3 input;
+    private bool done = false;
     internal float airbornePullReset = 0.0f;
     internal bool sprinting = false;
     internal bool evading = false;
@@ -63,6 +69,17 @@ public class PlayerMoveScript : MonoBehaviour
                 inventory.gunPlace.gameObject.SetActive(true);
                 inventory.reticleSprite.sprite = inventory.inventory[inventory.selection].GetComponent<FirearmScript>().reticle;
 
+            }
+
+            if(done)
+            {
+                for (int p = 0; p < backThrust.Count; p++)
+                {
+                    backThrust[p].loop = false;
+                    backThrust[p].Stop();
+                }
+
+                done = false;
             }
 
             //inventory.reticleSprite.sprite = inventory.inventory[inventory.selection].GetComponent<FirearmScript>().reticle;
@@ -108,11 +125,23 @@ public class PlayerMoveScript : MonoBehaviour
                 }
 
                 inventory.reticleSprite.sprite = blankReticle;
+
+                if(!done)
+                {
+                    for(int p = 0; p < backThrust.Count; p++)
+                    {
+                        backThrust[p].loop = true;
+                        backThrust[p].Play();
+                    }
+
+                    done = true;
+                }               
+
             }
 
             else
             {
-                playerRigid.AddForce(forward * speed * speedAccelerant);
+                playerRigid.AddForce(forward * speed * speedAccelerant);              
             }
         }
 
@@ -170,6 +199,11 @@ public class PlayerMoveScript : MonoBehaviour
             {
                 playerRigid.AddForce(-transform.forward * evasionForwardForce, ForceMode.Impulse);
                 playerRigid.AddForce(Vector3.up * evasionUpForce, ForceMode.Impulse);
+
+                for (int p = 0; p < frontThrust.Count; p++)
+                {
+                    frontThrust[p].Play();
+                }
             }
 
             //Moving forward will make the Player dodge forwards
@@ -177,6 +211,11 @@ public class PlayerMoveScript : MonoBehaviour
             {
                 playerRigid.AddForce(transform.forward * evasionForwardForce, ForceMode.Impulse);
                 playerRigid.AddForce(Vector3.up * evasionUpForce, ForceMode.Impulse);
+
+                for (int p = 0; p < backThrust.Count; p++)
+                {
+                    backThrust[p].Play();
+                }
             }
 
             //Moving left will make the Player dodge left
@@ -184,6 +223,11 @@ public class PlayerMoveScript : MonoBehaviour
             {
                 playerRigid.AddForce(-transform.right * evasionForwardForce, ForceMode.Impulse);
                 playerRigid.AddForce(Vector3.up * evasionUpForce, ForceMode.Impulse);
+
+                for (int p = 0; p < rightThrust.Count; p++)
+                {
+                    rightThrust[p].Play();
+                }
             }
 
             //Moving right will make the Player dodge right
@@ -191,6 +235,11 @@ public class PlayerMoveScript : MonoBehaviour
             {
                 playerRigid.AddForce(transform.right * evasionForwardForce, ForceMode.Impulse);
                 playerRigid.AddForce(Vector3.up * evasionUpForce, ForceMode.Impulse);
+
+                for (int p = 0; p < leftThrust.Count; p++)
+                {
+                    leftThrust[p].Play();
+                }
             }
 
             evading = false;

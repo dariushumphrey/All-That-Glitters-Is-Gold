@@ -29,10 +29,14 @@ public class PlayerStatusScript : MonoBehaviour
 
     public Slider health, shield;
     public Image hBar, sBar;
+    public ParticleSystem shieldHit;
+    public ParticleSystem shieldBreak;
+    public ParticleSystem shieldRecharge;
     private int healthAdd;
     private int shieldAdd;
     private float regenShieldResetSeconds;
     private float regenHealthResetSeconds;
+    private bool done = false;
     internal PlayerMoveScript move;
     internal PlayerCameraScript cam;
     internal PlayerInventoryScript inv;
@@ -83,11 +87,23 @@ public class PlayerStatusScript : MonoBehaviour
         if (playerShield <= 0)
         {
             sBar.color = Color.Lerp(Color.red, Color.white, Mathf.PingPong(Time.time, 0.9f));
+
+            if(!done)
+            {
+                shieldBreak.Play();
+                done = true;
+            }
         }
 
         else
         {
             sBar.color = Color.black;
+            if (done)
+            {
+                shieldBreak.Stop();
+                shieldRecharge.Play();
+                done = false;
+            }
         }
 
         //if(move.evading)
@@ -195,6 +211,7 @@ public class PlayerStatusScript : MonoBehaviour
 
             if (playerShield > 0)
             {
+                shieldHit.Play();
                 playerShield -= dmgReceived;
                 regenShieldSeconds = regenShieldResetSeconds;
                 StopCoroutine(RechargeShield());
