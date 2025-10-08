@@ -8,6 +8,8 @@ public class PositiveNegative : MonoBehaviour
     private FirearmScript firearm;
     internal GameObject proc;
     private PlayerMoveScript move;
+    private GameObject activation, secondTry;
+    private Material originalBullet, electricBullet;
     private float chargePercentage = 0f;
     private int chargeAccelerant = 20;
     private float dotPercent = 100f;
@@ -17,6 +19,9 @@ public class PositiveNegative : MonoBehaviour
     {
         firearm = GetComponent<FirearmScript>();
         move = FindObjectOfType<PlayerMoveScript>();
+        activation = Resources.Load<GameObject>("Particles/PositiveNegativeActive");
+        electricBullet = Resources.Load<Material>("Materials/PositiveNegativeElectricity");
+        originalBullet = firearm.bulletTrail;
 
         if (firearm.weaponRarity == 5 && !firearm.isExotic)
         {
@@ -43,7 +48,17 @@ public class PositiveNegative : MonoBehaviour
         //Positive-Negative
         //___.text = Moving generates a charge. When charged at least halfway, hitting an Enemy applies damage-over-time for ten seconds, inflicting 100% of Weapon damage once every second.     
 
-        if(chargePercentage > 0)
+        if (chargePercentage < 50f)
+        {
+            firearm.bulletTrail = originalBullet;
+        }
+
+        else
+        {
+            firearm.bulletTrail = electricBullet;
+        }
+
+        if (chargePercentage > 0)
         {
             proc.GetComponent<Text>().text = "Positive-Negative: " + chargePercentage.ToString("F0") + "%";
         }
@@ -56,7 +71,13 @@ public class PositiveNegative : MonoBehaviour
         if(move.horizInput != 0 || move.vertInput != 0)
         {
             chargePercentage += Time.deltaTime * chargeAccelerant;
-            if(chargePercentage >= 100f)
+                      
+            if (chargePercentage >= 50f && Time.timeScale == 1)
+            {
+                GameObject secondTry = Instantiate(activation, gameObject.transform.root.gameObject.transform.position + Vector3.down, transform.rotation);
+            }
+
+            if (chargePercentage >= 100f)
             {
                 chargePercentage = 100f;
             }
@@ -116,5 +137,5 @@ public class PositiveNegative : MonoBehaviour
         {
             proc.GetComponent<Text>().text = " ";
         }
-    }
+    }  
 }

@@ -37,6 +37,7 @@ public class FirearmScript : MonoBehaviour
     public TextMesh DPSNumbers; //TextMesh that displays damage in-environment when hitting an Enemy
     public Sprite reticle;
     public ParticleSystem muzzleFlash; //Effect that plays when firing a Weapon
+    public ParticleSystem sparks; //Effect that plays when striking an object with the "Surface" layer;
     internal GameObject targetHit;
     internal GameObject procOne, procTwo, dpsText;
     internal PlayerInventoryScript inv;
@@ -745,6 +746,8 @@ public class FirearmScript : MonoBehaviour
                             DPSNumbers.text = damage.ToString();
                             //dpsText.GetComponent<Text>().text += "\n" + damage.ToString();
                             //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+
+                            Instantiate(hit.collider.GetComponent<EnemyHealthScript>().blood, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
                         }
 
                         //Instantiate(DPSNumbers, hit.point, transform.rotation);
@@ -825,6 +828,9 @@ public class FirearmScript : MonoBehaviour
                             DPSNumbers.text = (damage / 2).ToString();
                             //dpsText.GetComponent<Text>().text += "\n" + (damage / 2).ToString();
                             //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+
+                            Instantiate(hit.collider.GetComponent<EnemyHealthScript>().blood, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+
                         }
 
                         //Instantiate(DPSNumbers, hit.point, transform.rotation);
@@ -914,6 +920,11 @@ public class FirearmScript : MonoBehaviour
 
                     hit.collider.GetComponent<LucentScript>().lucentGift = 0;
                     hit.collider.GetComponent<LucentScript>().shot = true;
+                }
+
+                if (hit.collider.gameObject.layer == 8) //If this Weapon strikes an object with the "Surface" layer
+                {
+                    Instantiate(sparks, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
                 }
             }
 

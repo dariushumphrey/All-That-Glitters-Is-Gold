@@ -305,6 +305,7 @@ MonoBehaviour:
   amFollower: 0
   amHunter: 1
   amBoss: 0
+  amSentry: 0
   attackStartPoint: {fileID: 78844624223129820}
   jumpCheck: {fileID: 0}
   attackLine: {fileID: 78844624512772180}
@@ -313,6 +314,8 @@ MonoBehaviour:
   rangeHitColor: {fileID: 2100000, guid: 045b48683895ab741b3e522c518d31a2, type: 2}
   cluster: []
   leader: {fileID: 0}
+  stunningLucent: {fileID: 0}
+  stunMechanic: {fileID: 0}
 --- !u!114 &78844624512772188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,6 +347,8 @@ MonoBehaviour:
   dotNotice: {fileID: 4046833312919928407}
   slowNotice: {fileID: 4010734647937895950}
   enemyName: {fileID: 2483561078528123523}
+  blood: {fileID: 7072170553810055041, guid: 9f892db6ca1cf5d4e9b62828e30f13c5, type: 3}
+  ammoRewardThreshold: 80
 --- !u!114 &6590982941324376749
 MonoBehaviour:
   m_ObjectHideFlags: 0

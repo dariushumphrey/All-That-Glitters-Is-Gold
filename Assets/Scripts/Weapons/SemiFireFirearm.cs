@@ -224,6 +224,9 @@ public class SemiFireFirearm : FirearmScript
                         DPSNumbers.text = damage.ToString();
                         //dpsText.GetComponent<Text>().text += "\n" + damage.ToString();
                         //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+
+                        Instantiate(hit.collider.GetComponent<EnemyHealthScript>().blood, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+
                     }
 
                     //Instantiate(DPSNumbers, hit.point, transform.rotation);
@@ -306,6 +309,9 @@ public class SemiFireFirearm : FirearmScript
                         DPSNumbers.text = (damage / 2).ToString();
                         //dpsText.GetComponent<Text>().text += "\n" + (damage / 2).ToString();
                         //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+
+                        Instantiate(hit.collider.GetComponent<EnemyHealthScript>().blood, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+
                     }
 
                     //Instantiate(DPSNumbers, hit.point, transform.rotation);
@@ -391,6 +397,11 @@ public class SemiFireFirearm : FirearmScript
                 }
                 hit.collider.GetComponent<LucentScript>().lucentGift = 0;
                 hit.collider.GetComponent<LucentScript>().shot = true;
+            }
+
+            if (hit.collider.gameObject.layer == 8) //If this Weapon strikes an object with the "Surface" layer
+            {
+                Instantiate(sparks, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
             }
         }
 

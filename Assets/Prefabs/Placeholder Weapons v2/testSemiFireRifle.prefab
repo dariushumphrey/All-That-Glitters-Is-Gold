@@ -322,7 +322,7 @@ MonoBehaviour:
   ammoSize: 27
   reserveAmmo: 0
   reserveSize: 282
-  weaponRarity: 4
+  weaponRarity: 1
   cheatOverride: 0
   fireRate: 0.08
   effectiveRange: 40
@@ -342,6 +342,7 @@ MonoBehaviour:
   DPSNumbers: {fileID: 5234994289257708790, guid: d5df90bddb669ef4fa3d8f2d8c2773a4, type: 3}
   reticle: {fileID: 21300000, guid: 6e7845fc409d61143b87112359fd9bdf, type: 3}
   muzzleFlash: {fileID: 4339914621463982815}
+  sparks: {fileID: 7193588280022282015, guid: 7e86620f782720041b9300eda8cfef98, type: 3}
   saved: 0
   display: 0
   maximumShots: 3

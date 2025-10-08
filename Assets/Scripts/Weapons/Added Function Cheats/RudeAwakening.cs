@@ -7,6 +7,7 @@ public class RudeAwakening : MonoBehaviour
 {
     private FirearmScript firearm;
     private PlayerStatusScript player;
+    private GameObject activation, effect;
     internal GameObject proc;
 
     private int waveStacks = 0;
@@ -23,6 +24,7 @@ public class RudeAwakening : MonoBehaviour
     {
         firearm = GetComponent<FirearmScript>();
         player = firearm.GetComponentInParent<PlayerStatusScript>();
+        activation = Resources.Load<GameObject>("Particles/RudeAwakeningActive");
         proc.GetComponent<Text>().text = " ";
 
         if(firearm.weaponRarity == 5)
@@ -158,6 +160,9 @@ public class RudeAwakening : MonoBehaviour
                 //    }
                 //}
             }
+
+            GameObject effect = Instantiate(activation, gameObject.transform.root.gameObject.transform.position, transform.rotation);
+
         }
     }
 

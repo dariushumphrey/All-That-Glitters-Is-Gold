@@ -282,4 +282,9 @@ public class PlayerStatusScript : MonoBehaviour
         isInvincible = false;
         immunity.SetActive(false);
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(transform.position, 7.5f);
+    //}
 }

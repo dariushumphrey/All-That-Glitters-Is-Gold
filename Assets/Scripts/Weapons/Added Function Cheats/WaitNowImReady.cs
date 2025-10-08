@@ -8,6 +8,8 @@ public class WaitNowImReady : MonoBehaviour
     private FirearmScript firearm;
     private PlayerStatusScript player;
     private EnemyManagerScript enemy;
+    private ParticleSystem activation;
+    private Color color = Color.yellow;
     internal GameObject proc;
     private float shieldPercent = 10f;
     private int shieldGain;
@@ -18,6 +20,7 @@ public class WaitNowImReady : MonoBehaviour
         firearm = GetComponent<FirearmScript>();
         enemy = FindObjectOfType<EnemyManagerScript>();
         player = FindObjectOfType<PlayerStatusScript>();
+        activation = Resources.Load<ParticleSystem>("Particles/cheatProcEffect");
 
         if(firearm.weaponRarity == 5 && !firearm.isExotic)
         {
@@ -64,6 +67,9 @@ public class WaitNowImReady : MonoBehaviour
                     StartCoroutine(ClearText());
                     killConfirmed = false;
                     //enemy.StartCoroutine(enemy.EnemyDiedReset());
+
+                    activation.GetComponent<ParticleSystem>().startColor = color;
+                    Instantiate(activation, gameObject.transform.root.gameObject.transform.position, transform.rotation);
                     return;
                 }
             }

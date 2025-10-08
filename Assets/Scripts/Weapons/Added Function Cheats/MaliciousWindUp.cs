@@ -7,10 +7,13 @@ public class MaliciousWindUp : MonoBehaviour
 {
     private FirearmScript firearm;
     private EnemyManagerScript enemy;
+    private ParticleSystem activation;
+    private Color color = Color.white;
     internal GameObject proc;
     private float decreasePercent = 0.75f;
     private float fatedDecreasePercent = 1.5f;
     private float reserveRestore = 5f;
+    private bool done = false;
 
     private float reloadReset;
     private int reserveAdd;
@@ -21,6 +24,8 @@ public class MaliciousWindUp : MonoBehaviour
     {
         firearm = GetComponent<FirearmScript>();
         enemy = FindObjectOfType<EnemyManagerScript>();
+        activation = Resources.Load<ParticleSystem>("Particles/cheatProcEffect");
+
         reloadReset = firearm.reloadSpeed;
 
         decreasePercent /= 100;
@@ -62,7 +67,15 @@ public class MaliciousWindUp : MonoBehaviour
         {
             if(firearm.reloadSpeed < reloadReset)
             {
-                proc.GetComponent<Text>().text = "Malicious Wind Up";
+                proc.GetComponent<Text>().text = "Malicious Wind Up";      
+                
+                if(!done)
+                {
+                    activation.GetComponent<ParticleSystem>().startColor = color;
+                    Instantiate(activation, gameObject.transform.root.gameObject.transform.position, transform.rotation);
+                    done = true;
+                }
+
                 StartCoroutine(ResetReload());
             }
 
@@ -92,6 +105,7 @@ public class MaliciousWindUp : MonoBehaviour
     {
         yield return new WaitForSeconds(firearm.reloadSpeed);
         proc.GetComponent<Text>().text = " ";
+        done = false;
     }
 
     private void OnDisable()

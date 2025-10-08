@@ -8,23 +8,27 @@ public class AllElseFails : MonoBehaviour
     private FirearmScript firearm;
     internal GameObject proc;
     private PlayerStatusScript player;
+    private GameObject activation, effect;
     private int dmgNullify = 0;
     private float nullifyTimer = 3f;
     private float cooldownTimer = 20f;
     private float nullifyReset, cooldownReset;
     private bool invulnerable, cooldown = false;
+    private bool done = false;
 
     // Start is called before the first frame update
     void Start()
     {
         firearm = GetComponent<FirearmScript>();
         player = FindObjectOfType<PlayerStatusScript>();
+        activation = Resources.Load<GameObject>("Particles/AllElseFailsActive");
         proc.GetComponent<Text>().text = " ";
 
         if(firearm.weaponRarity == 5)
         {
             nullifyTimer = 5f;
             nullifyReset = nullifyTimer;
+            activation.GetComponent<ParticleSystem>().startLifetime = 5f;
 
             cooldownTimer = 10f;
             cooldownReset = cooldownTimer;
@@ -80,11 +84,30 @@ public class AllElseFails : MonoBehaviour
                 nullifyTimer -= Time.deltaTime;
                 proc.GetComponent<Text>().text = "All Else Fails: " + nullifyTimer.ToString("F0") + "s";
 
+                if(!done)
+                {
+                    GameObject effect = Instantiate(activation, gameObject.transform.root.gameObject.transform.position + (Vector3.up * 1.5f), transform.rotation, gameObject.transform.root.gameObject.transform);
+                    if (firearm.weaponRarity == 5)
+                    {
+                        effect.AddComponent<DestroyScript>();
+                        effect.GetComponent<DestroyScript>().destroyTimer = 6f;
+                    }
+
+                    else
+                    {
+                        effect.AddComponent<DestroyScript>();
+                        effect.GetComponent<DestroyScript>().destroyTimer = 4f;
+                    }
+
+                    done = true;
+                }
+                
+
                 if (nullifyTimer <= 0f)
                 {
                     nullifyTimer = nullifyReset;
                     invulnerable = false;
-                    cooldown = true;                                    
+                    cooldown = true;
                 }
             }
         }
@@ -96,10 +119,10 @@ public class AllElseFails : MonoBehaviour
 
             if (cooldownTimer <= 0f)
             {
+                done = false;
                 cooldownTimer = cooldownReset;
                 cooldown = false;
                 proc.GetComponent<Text>().text = " ";
-
             }
         }
     }

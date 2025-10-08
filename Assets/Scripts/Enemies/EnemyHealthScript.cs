@@ -28,6 +28,7 @@ public class EnemyHealthScript : MonoBehaviour
     public Slider currentHealth, healthLost;
     public Image curHealthColor, losHealthColor, debuffNotice, dotNotice, slowNotice;
     public Text enemyName;
+    public ParticleSystem blood; //Effect that plays when Enemy has been damaged
     public float ammoRewardThreshold = 80f; //Required number to be at or above in order to spawn Ammunition.
     private float lhUpdateTimer = 1f;
     private float lhUpdateReset;

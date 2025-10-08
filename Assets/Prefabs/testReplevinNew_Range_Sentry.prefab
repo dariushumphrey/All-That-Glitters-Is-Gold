@@ -348,6 +348,7 @@ MonoBehaviour:
   dotNotice: {fileID: 8039837884038349355}
   slowNotice: {fileID: 6922874208706507378}
   enemyName: {fileID: 8488547680442457855}
+  blood: {fileID: 7072170553810055041, guid: 9f892db6ca1cf5d4e9b62828e30f13c5, type: 3}
   ammoRewardThreshold: 101
 --- !u!114 &6590982941324376749
 MonoBehaviour:

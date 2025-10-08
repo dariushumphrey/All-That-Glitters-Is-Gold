@@ -8,6 +8,8 @@ public class Inoculated : MonoBehaviour
     private FirearmScript firearm;
     private PlayerStatusScript player;
     private EnemyManagerScript enemy;
+    private ParticleSystem activation;
+    private Color color = Color.green;
     internal GameObject proc;
     private float healthPercent = 5f;
     private int healthGain;
@@ -19,6 +21,7 @@ public class Inoculated : MonoBehaviour
         firearm = GetComponent<FirearmScript>();
         enemy = FindObjectOfType<EnemyManagerScript>();
         proc.GetComponent<Text>().text = " ";
+        activation = Resources.Load<ParticleSystem>("Particles/cheatProcEffect");
 
         player = FindObjectOfType<PlayerStatusScript>();
 
@@ -63,6 +66,9 @@ public class Inoculated : MonoBehaviour
                     proc.GetComponent<Text>().text = "Inoculated";
                     StartCoroutine(ClearText());
                     killConfirmed = false;
+
+                    activation.GetComponent<ParticleSystem>().startColor = color;
+                    Instantiate(activation, gameObject.transform.root.gameObject.transform.position, transform.rotation);
                     //enemy.StartCoroutine(enemy.EnemyDiedReset());
                     return;
                 }
