@@ -37,7 +37,8 @@ public class SingleFireFirearm : FirearmScript
             start.AddComponent<LineRenderer>();
             start.GetComponent<LineRenderer>().startWidth = 0.1f;
             start.GetComponent<LineRenderer>().endWidth = 0.1f;
-            start.GetComponent<LineRenderer>().material = bulletTrail.GetComponent<LineRenderer>().material;
+            start.GetComponent<LineRenderer>().material = bulletTrail;
+            start.GetComponent<LineRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             start.GetComponent<LineRenderer>().SetPosition(0, barrel.transform.position);
 
             //bulletTrail.SetPosition(0, barrel.position);
@@ -289,6 +290,9 @@ public class SingleFireFirearm : FirearmScript
 
                 //bulletTrail.SetPosition(1, rayOrigin + (gunCam.transform.forward * range));
             }
+
+            muzzleFlash.Play();
+
         }
     }
 }

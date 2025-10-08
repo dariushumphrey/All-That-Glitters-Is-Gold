@@ -270,7 +270,7 @@ public class PlayerInventoryScript : MonoBehaviour
             g.GetComponent<FirearmScript>().enabled = true;
             reticleSprite.gameObject.SetActive(true);
             reticleSprite.sprite = g.GetComponent<FirearmScript>().reticle;
-            g.GetComponent<LineRenderer>().enabled = true;
+            //g.GetComponent<LineRenderer>().enabled = true;
             //g.GetComponent<ReloadSpeedScript>().enabled = true;
             //g.GetComponent<RangeScript>().enabled = true;
             //g.GetComponent<MagazineScript>().enabled = true;
@@ -289,7 +289,7 @@ public class PlayerInventoryScript : MonoBehaviour
             g.transform.position = gunPlace.transform.position;
             g.transform.rotation = gunPlace.transform.rotation;
             g.GetComponent<FirearmScript>().enabled = false;
-            g.GetComponent<LineRenderer>().enabled = false;
+            //g.GetComponent<LineRenderer>().enabled = false;
             //g.GetComponent<ReloadSpeedScript>().enabled = false;
             //g.GetComponent<RangeScript>().enabled = false;
             //g.GetComponent<MagazineScript>().enabled = false;
@@ -328,14 +328,14 @@ public class PlayerInventoryScript : MonoBehaviour
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
                 reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                inventory[selection].GetComponent<LineRenderer>().enabled = true;
+                //inventory[selection].GetComponent<LineRenderer>().enabled = true;
                 inventory[selection].GetComponent<ReloadSpeedScript>().enabled = true;
                 inventory[selection].GetComponent<RangeScript>().enabled = true;
                 inventory[selection].GetComponent<MagazineScript>().enabled = true;
                 inventory[selection].gameObject.SetActive(true);
 
                 inventory[0].GetComponent<FirearmScript>().enabled = false;
-                inventory[0].GetComponent<LineRenderer>().enabled = false;
+                //inventory[0].GetComponent<LineRenderer>().enabled = false;
                 //inventory[selection + 1].GetComponent<ReloadSpeedScript>().enabled = false;
                 //inventory[selection + 1].GetComponent<RangeScript>().enabled = false;
                 //inventory[selection + 1].GetComponent<MagazineScript>().enabled = false;
@@ -361,14 +361,14 @@ public class PlayerInventoryScript : MonoBehaviour
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
                 reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                inventory[selection].GetComponent<LineRenderer>().enabled = true;
+                //inventory[selection].GetComponent<LineRenderer>().enabled = true;
                 inventory[selection].GetComponent<ReloadSpeedScript>().enabled = true;
                 inventory[selection].GetComponent<RangeScript>().enabled = true;
                 inventory[selection].GetComponent<MagazineScript>().enabled = true;
                 inventory[selection].gameObject.SetActive(true);
 
                 inventory[selection + 1].GetComponent<FirearmScript>().enabled = false;
-                inventory[selection + 1].GetComponent<LineRenderer>().enabled = false;
+                //inventory[selection + 1].GetComponent<LineRenderer>().enabled = false;
                 //inventory[selection + 1].GetComponent<ReloadSpeedScript>().enabled = false;
                 //inventory[selection + 1].GetComponent<RangeScript>().enabled = false;
                 //inventory[selection + 1].GetComponent<MagazineScript>().enabled = false;
@@ -406,14 +406,14 @@ public class PlayerInventoryScript : MonoBehaviour
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
                 reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                inventory[selection].GetComponent<LineRenderer>().enabled = true;
+                //inventory[selection].GetComponent<LineRenderer>().enabled = true;
                 inventory[selection].GetComponent<ReloadSpeedScript>().enabled = true;
                 inventory[selection].GetComponent<RangeScript>().enabled = true;
                 inventory[selection].GetComponent<MagazineScript>().enabled = true;
                 inventory[selection].gameObject.SetActive(true);
 
                 inventory[inventory.Count - 1].GetComponent<FirearmScript>().enabled = false;
-                inventory[inventory.Count - 1].GetComponent<LineRenderer>().enabled = false;
+                //inventory[inventory.Count - 1].GetComponent<LineRenderer>().enabled = false;
                 //inventory[selection - 1].GetComponent<ReloadSpeedScript>().enabled = false;
                 //inventory[selection - 1].GetComponent<RangeScript>().enabled = false;
                 //inventory[selection - 1].GetComponent<MagazineScript>().enabled = false;
@@ -439,14 +439,14 @@ public class PlayerInventoryScript : MonoBehaviour
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
                 reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                inventory[selection].GetComponent<LineRenderer>().enabled = true;
+                //inventory[selection].GetComponent<LineRenderer>().enabled = true;
                 inventory[selection].GetComponent<ReloadSpeedScript>().enabled = true;
                 inventory[selection].GetComponent<RangeScript>().enabled = true;
                 inventory[selection].GetComponent<MagazineScript>().enabled = true;
                 inventory[selection].gameObject.SetActive(true);
 
                 inventory[selection - 1].GetComponent<FirearmScript>().enabled = false;
-                inventory[selection - 1].GetComponent<LineRenderer>().enabled = false;
+                //inventory[selection - 1].GetComponent<LineRenderer>().enabled = false;
                 //inventory[selection - 1].GetComponent<ReloadSpeedScript>().enabled = false;
                 //inventory[selection - 1].GetComponent<RangeScript>().enabled = false;
                 //inventory[selection - 1].GetComponent<MagazineScript>().enabled = false;
@@ -495,7 +495,7 @@ public class PlayerInventoryScript : MonoBehaviour
                     else
                     {
                         inventory[selection].GetComponent<FirearmScript>().enabled = true;
-                        inventory[selection].GetComponent<LineRenderer>().enabled = true;
+                        //inventory[selection].GetComponent<LineRenderer>().enabled = true;
                         inventory[selection].gameObject.SetActive(true);
                         reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
 
@@ -506,7 +506,7 @@ public class PlayerInventoryScript : MonoBehaviour
                 {
                     selection = 0;
                     inventory[selection].GetComponent<FirearmScript>().enabled = true;
-                    inventory[selection].GetComponent<LineRenderer>().enabled = true;
+                    //inventory[selection].GetComponent<LineRenderer>().enabled = true;
                     inventory[selection].gameObject.SetActive(true);
                     reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
                 }
@@ -514,7 +514,7 @@ public class PlayerInventoryScript : MonoBehaviour
                 else
                 {
                     inventory[selection].GetComponent<FirearmScript>().enabled = true;
-                    inventory[selection].GetComponent<LineRenderer>().enabled = true;
+                    //inventory[selection].GetComponent<LineRenderer>().enabled = true;
                     inventory[selection].gameObject.SetActive(true);
                     reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
                 }

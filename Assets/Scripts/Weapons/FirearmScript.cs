@@ -32,10 +32,11 @@ public class FirearmScript : MonoBehaviour
 
     //Additional Components
     public Camera gunCam; //Camera used to determine start of Raycast
-    public LineRenderer bulletTrail;
+    public Material bulletTrail;
     public Transform barrel;
     public TextMesh DPSNumbers; //TextMesh that displays damage in-environment when hitting an Enemy
     public Sprite reticle;
+    public ParticleSystem muzzleFlash; //Effect that plays when firing a Weapon
     internal GameObject targetHit;
     internal GameObject procOne, procTwo, dpsText;
     internal PlayerInventoryScript inv;
@@ -112,7 +113,7 @@ public class FirearmScript : MonoBehaviour
 
         else
         {
-            bulletTrail = GetComponent<LineRenderer>();
+            //bulletTrail = GetComponent<LineRenderer>();
             inv = FindObjectOfType<PlayerInventoryScript>();
             gunCam = Camera.main;
             confirmHit = false;
@@ -672,7 +673,8 @@ public class FirearmScript : MonoBehaviour
             start.AddComponent<LineRenderer>();
             start.GetComponent<LineRenderer>().startWidth = 0.1f;
             start.GetComponent<LineRenderer>().endWidth = 0.1f;
-            start.GetComponent<LineRenderer>().material = bulletTrail.GetComponent<LineRenderer>().material;
+            start.GetComponent<LineRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            start.GetComponent<LineRenderer>().material = bulletTrail;
             start.GetComponent<LineRenderer>().SetPosition(0, barrel.transform.position);
 
             //bulletTrail.SetPosition(0, barrel.position);
@@ -922,6 +924,8 @@ public class FirearmScript : MonoBehaviour
                 start.gameObject.transform.position = rayOrigin + (gunCam.transform.forward * range);
                 start.GetComponent<LineRenderer>().SetPosition(1, rayOrigin + (gunCam.transform.forward * range));
             }
+
+            muzzleFlash.Play();
 
         }
         

@@ -66,8 +66,9 @@ public class ShotgunFirearm: FirearmScript
 
                 start.GetComponent<LineRenderer>().startWidth = 0.1f;
                 start.GetComponent<LineRenderer>().endWidth = 0.1f;
-                
-                start.GetComponent<LineRenderer>().material = bulletTrail.GetComponent<LineRenderer>().material;
+                start.GetComponent<LineRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+
+                start.GetComponent<LineRenderer>().material = bulletTrail;
 
                 start.GetComponent<LineRenderer>().SetPosition(0, barrel.transform.position);
                 //start.GetComponent<LineRenderer>().SetPosition(1, rayOrigin + (gunCam.transform.forward * range));
@@ -323,7 +324,10 @@ public class ShotgunFirearm: FirearmScript
                     start.gameObject.transform.position = rayOrigin + (gunCam.transform.forward * range);
                     start.GetComponent<LineRenderer>().SetPosition(1, rayOrigin + (gunCam.transform.forward * range));
                 }               
-            }                
+            }
+
+            muzzleFlash.Play();
+
         }
     }  
 }
