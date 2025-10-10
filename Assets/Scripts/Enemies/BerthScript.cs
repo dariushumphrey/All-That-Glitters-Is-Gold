@@ -5,22 +5,40 @@ using UnityEngine.AI;
 
 public class BerthScript : MonoBehaviour
 {
-    public int additionalDamage = 375;
-    public float explodeRadius = 5.0f;
+    public int berthDamage = 375;
+    //This value buffs damage performed by Berth explosions:
+    //-Increasing this number adds a percentage of Berth damage onto itself
+    //-Increasing Berth damage allows this number to increase damage in return
+    public float berthPercent = 120f;
+    public float explodeRadius = 3.0f;
     public float explodeForce = 50.0f;
 
     private EnemyHealthScript foe;
-    private NavMeshAgent enemy;
+    private GameObject activation;
     //private GameObject itself;
     private int enemyDamageMultiplier = 30;
+    private int berthDamageAdd;
+    internal bool exoticOverride = false;
+
+    public void Awake()
+    {
+        foe = GetComponent<EnemyHealthScript>();
+        activation = Resources.Load<GameObject>("Particles/BerthExplosionActive");
+    }
 
     // Start is called before the first frame update
     public void Start()
     {
         //itself = gameObject;
-        enemy = GetComponent<NavMeshAgent>();
-        foe = GetComponent<EnemyHealthScript>();
-        //BerthDifficultyMatch();
+        if(exoticOverride)
+        {
+            //Do nothing - Exotic Single Fire Weapon added this Script and only needs to change base Damage.
+        }
+
+        else
+        {
+            BerthDifficultyMatch();
+        }
     }
 
     //Update is called once per frame
@@ -33,32 +51,38 @@ public class BerthScript : MonoBehaviour
     {
         if(foe.difficultyValue <= 1)
         {
-            additionalDamage *= foe.difficultyValue;
-            enemyDamageMultiplier *= foe.difficultyValue;
+            //additionalDamage *= foe.difficultyValue;
+            //enemyDamageMultiplier *= foe.difficultyValue;
         }
 
-        if (foe.difficultyValue == 2)
+        if (foe.difficultyValue >= 2)
         {
-            additionalDamage *= foe.difficultyValue;
-            enemyDamageMultiplier *= foe.difficultyValue;
+            //additionalDamage *= foe.difficultyValue;
+            //enemyDamageMultiplier *= foe.difficultyValue;
+            berthPercent *= foe.difficultyValue;
+            berthPercent /= 100;
+            berthPercent *= berthDamage;
+            berthDamageAdd = (int)berthPercent;
+            berthDamage += berthDamageAdd;
+            
         }
 
         if (foe.difficultyValue == 3)
         {
-            additionalDamage *= foe.difficultyValue;
-            enemyDamageMultiplier *= foe.difficultyValue;
+            //additionalDamage *= foe.difficultyValue;
+            //enemyDamageMultiplier *= foe.difficultyValue;
         }
 
         if (foe.difficultyValue == 4)
         {
-            additionalDamage *= foe.difficultyValue;
-            enemyDamageMultiplier *= foe.difficultyValue;
+            //additionalDamage *= foe.difficultyValue;
+            //enemyDamageMultiplier *= foe.difficultyValue;
         }
 
         if (foe.difficultyValue >= 5)
         {
-            additionalDamage *= foe.difficultyValue;
-            enemyDamageMultiplier *= foe.difficultyValue;
+            //additionalDamage *= foe.difficultyValue;
+            //enemyDamageMultiplier *= foe.difficultyValue;
         }
     }
 
@@ -72,7 +96,7 @@ public class BerthScript : MonoBehaviour
             {
                 if (hit.GetComponent<EnemyHealthScript>() != null)
                 {
-                    hit.GetComponent<EnemyHealthScript>().inflictDamage(additionalDamage);
+                    hit.GetComponent<EnemyHealthScript>().inflictDamage(berthDamage);
                     if (hit.GetComponent<EnemyHealthScript>().healthCurrent <= 0 && hit.GetComponent<Rigidbody>() == null)
                     {
                         hit.gameObject.AddComponent<Rigidbody>();
@@ -81,22 +105,30 @@ public class BerthScript : MonoBehaviour
                 }
             }
 
-            //if (hit.gameObject.CompareTag("Player"))
-            //{
-            //    if (hit.GetComponent<PlayerStatusScript>() != null)
-            //    {
-            //        hit.GetComponent<PlayerStatusScript>().InflictDamage(additionalDamage);
-            //        if (hit.GetComponent<PlayerStatusScript>().playerShield <= 0)
-            //        {
-            //            hit.GetComponent<PlayerStatusScript>().playerHealth -= additionalDamage;
-            //        }
+            if (hit.gameObject.CompareTag("Player") && !exoticOverride)
+            {
+                if (hit.GetComponent<PlayerStatusScript>() != null)
+                {
+                    if(hit.GetComponent<PlayerStatusScript>().isInvincible == true)
+                    {
+                        //Do nothing
+                    }
 
-            //        if(hit.GetComponent<PlayerStatusScript>().playerHealth <= 0)
-            //        {
-            //            hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(explodeForce, epicenter, explodeRadius, 40.0f, ForceMode.Impulse);
-            //        }
-            //    }
-            //}
+                    else
+                    {
+                        hit.GetComponent<PlayerStatusScript>().InflictDamage(berthDamage);
+                        if (hit.GetComponent<PlayerStatusScript>().playerShield <= 0)
+                        {
+                            hit.GetComponent<PlayerStatusScript>().playerHealth -= berthDamage;
+                        }
+
+                        if (hit.GetComponent<PlayerStatusScript>().playerHealth <= 0)
+                        {
+                            hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(explodeForce, epicenter, explodeRadius, 40.0f, ForceMode.Impulse);
+                        }
+                    }                    
+                }
+            }
 
             if (hit.gameObject.CompareTag("Lucent"))
             {
@@ -104,6 +136,8 @@ public class BerthScript : MonoBehaviour
                 hit.gameObject.GetComponent<LucentScript>().shot = true;
             }
         }
+
+        Instantiate(activation, transform.position, Quaternion.identity);
     }
 
     public IEnumerator RemoveSelf()

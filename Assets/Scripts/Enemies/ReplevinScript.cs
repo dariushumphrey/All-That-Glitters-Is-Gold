@@ -43,6 +43,8 @@ public class ReplevinScript : MonoBehaviour
     public float airtimeShort = 2f;
     public float rangeATKMin;
     public float attackRate;
+    private float berthJumpCarpetBombTimer = 0.1f;
+    private float berthJumpTimerReset;
 
     //This value buffs attack rate of Ranged enemies:
     //-Increasing this number adds a percentage of fire rate onto itself, allowing for faster firing.
@@ -162,6 +164,7 @@ public class ReplevinScript : MonoBehaviour
         punchReset = punchTimeout;
         jumpReset = jumpTimeout;
         airtimeReset = airtimeShort;
+        berthJumpTimerReset = berthJumpCarpetBombTimer;
         agitationTimer = 0.0f;
         agitated = false;
 
@@ -176,7 +179,12 @@ public class ReplevinScript : MonoBehaviour
                     cluster[f].GetComponent<ReplevinScript>().leader = gameObject;
                 }
             }
-        }  
+        }
+
+        if(GetComponent<BerthScript>())
+        {
+            rangeProjectile.GetComponent<ProjectileScript>().berthFlag = true;
+        }
     }
 
     // Update is called once per frame
@@ -428,6 +436,7 @@ public class ReplevinScript : MonoBehaviour
                     if (hit.collider.tag == "Hard Lucent" && !gathered)
                     {
                         stunMechanic = Instantiate(stunningLucent, attackStartPoint.transform.position + transform.forward, attackStartPoint.transform.rotation, gameObject.transform);
+                        stunMechanic.name = stunningLucent.name;
 
                         if (stunMechanic.GetComponent<Rigidbody>())
                         {
@@ -918,30 +927,37 @@ public class ReplevinScript : MonoBehaviour
                                 }
                             }
 
-                            hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
-                            hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+                            if(GetComponent<BerthScript>())
+                            {
+                                GetComponent<BerthScript>().Explode();
+                            }
 
-                            //This code shoves the Player with particular force in their opposite direction.
-                            //This is a charge attack, knocking the player with more force and keeping them grounded to distinguish it from a melee.
-                            Vector3 knockbackDir = -hit.collider.transform.forward;
-                            knockbackDir.y = 0;
-                            hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * chargeAttackForce);
+                            else
+                            {
+                                hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+                                hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
 
-                            manager.damageDealt += damage;
+                                //This code shoves the Player with particular force in their opposite direction.
+                                //This is a charge attack, knocking the player with more force and keeping them grounded to distinguish it from a melee.
+                                Vector3 knockbackDir = -hit.collider.transform.forward;
+                                knockbackDir.y = 0;
+                                hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * chargeAttackForce);
 
-                            //if (GetComponent<EnemyFollowerScript>() != null)
-                            //{
-                            //    if (GetComponent<EnemyFollowerScript>().leader != null && GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
-                            //    {
-                            //        GetComponent<EnemyFollowerScript>().leader.Pursuit();
-                            //    }
+                                manager.damageDealt += damage;
 
-                            //    GetComponent<EnemyFollowerScript>().ChasePlayer();
-                            //}
+                                //if (GetComponent<EnemyFollowerScript>() != null)
+                                //{
+                                //    if (GetComponent<EnemyFollowerScript>().leader != null && GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
+                                //    {
+                                //        GetComponent<EnemyFollowerScript>().leader.Pursuit();
+                                //    }
 
-                            attackLock = false;
-                            ramTimeout = true;
+                                //    GetComponent<EnemyFollowerScript>().ChasePlayer();
+                                //}
 
+                                attackLock = false;
+                                ramTimeout = true;
+                            }                         
                         }
                     }
                 }               
@@ -1016,9 +1032,8 @@ public class ReplevinScript : MonoBehaviour
 
                 }
 
-                if (AmIGrounded())
+                if(AmIGrounded())
                 {
-
                     airtimeShort -= Time.deltaTime;
                     if (airtimeShort <= 0f)
                     {
@@ -1030,6 +1045,21 @@ public class ReplevinScript : MonoBehaviour
                 else
                 {
                     airtimeShort = airtimeReset;
+
+                    if(GetComponent<BerthScript>() && !lockOn)
+                    {
+                        berthJumpCarpetBombTimer -= Time.deltaTime;
+                        if(berthJumpCarpetBombTimer <= 0f)
+                        {
+                            berthJumpCarpetBombTimer = berthJumpTimerReset;
+
+                            stunMechanic = Instantiate(stunningLucent, attackStartPoint.transform.position + (Vector3.down * 2f), Quaternion.identity);
+                            stunMechanic.GetComponent<LucentScript>().threat = true;
+                            stunMechanic.GetComponent<LucentScript>().shatterDelayTime = 2f;
+                            stunMechanic.GetComponent<LucentScript>().StartCoroutine(stunMechanic.GetComponent<LucentScript>().Shatter());
+                            stunMechanic.name = stunningLucent.name;
+                        }
+                    }
                 }
 
                 //transform.position = Vector3.Lerp(transform.position, lastPlayerPosition, gapClose);
@@ -1401,6 +1431,16 @@ public class ReplevinScript : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public IEnumerator BerthJumpCarpetBomb()
+    {
+        yield return new WaitForSeconds(0.5f);
+        stunMechanic = Instantiate(stunningLucent, attackStartPoint.transform.position + (Vector3.down * 2f), Quaternion.identity);
+        stunMechanic.GetComponent<LucentScript>().threat = true;
+        stunMechanic.GetComponent<LucentScript>().shatterDelayTime = 2f;
+        stunMechanic.GetComponent<LucentScript>().StartCoroutine(stunMechanic.GetComponent<LucentScript>().Shatter());
+        stunMechanic.name = stunningLucent.name;
     }
 
 }

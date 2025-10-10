@@ -63,6 +63,18 @@ public class SpawnerScript : MonoBehaviour
         }
 
         GameObject fresh = Instantiate(spawned[picker], spawnSite, transform.rotation);
+        int berthCondition = Random.Range(0, 101);
+        if (berthCondition > 70 && !spawned[picker].GetComponent<ReplevinScript>().amBoss)
+        {
+            fresh.AddComponent<BerthScript>();
+            fresh.AddComponent<ColorLerpScript>();
+
+            fresh.GetComponent<ColorLerpScript>().enemyUse = true;
+            fresh.GetComponent<ColorLerpScript>().materialIndex = 1;
+            fresh.GetComponent<ColorLerpScript>().colorOne = Color.red;
+            fresh.GetComponent<ColorLerpScript>().colorTwo = Color.yellow;
+        }
+
         fresh.name = spawned[picker].name;
     }
 

@@ -295,11 +295,13 @@ MonoBehaviour:
   rangedAttackForce: 0
   punchTimeout: 0
   jumpTimeout: 0
+  jumpTakeoff: {fileID: 0}
   airtimeShort: 2
   rangeATKMin: 7
   attackRate: 1
   rangeAttackRate: 1
   rangeAttackChange: 15
+  rangeProjectile: {fileID: 7101181237062747686, guid: 70bd89594efeb624f9d56ec2e948ce2a, type: 3}
   agitationLimit: 1
   amLeader: 0
   amFollower: 0

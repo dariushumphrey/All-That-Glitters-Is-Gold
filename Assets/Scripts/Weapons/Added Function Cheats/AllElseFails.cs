@@ -54,31 +54,32 @@ public class AllElseFails : MonoBehaviour
 
             if(invulnerable)
             {
-                if (player.playerHit == true)
-                {
-                    dmgNullify = player.dmgReceived;
-                    player.dmgReceived = 0;
+                player.isInvincible = true;
+                //if (player.playerHit == true)
+                //{
+                //    dmgNullify = player.dmgReceived;
+                //    player.dmgReceived = 0;
 
-                    if (player.playerShield <= 0)
-                    {
-                        if (player.playerHealth >= player.playerHealthMax)
-                        {
-                            player.playerHealth = player.playerHealthMax;
-                        }
+                //    if (player.playerShield <= 0)
+                //    {
+                //        if (player.playerHealth >= player.playerHealthMax)
+                //        {
+                //            player.playerHealth = player.playerHealthMax;
+                //        }
 
-                        else
-                        {
-                            player.playerHealth += dmgNullify;
-                        }
-                    }
+                //        else
+                //        {
+                //            player.playerHealth += dmgNullify;
+                //        }
+                //    }
 
-                    else
-                    {
-                        player.playerShield += dmgNullify;
-                    }
+                //    else
+                //    {
+                //        player.playerShield += dmgNullify;
+                //    }
 
-                    player.playerHit = false;
-                }
+                //    player.playerHit = false;
+                //}
 
 
                 nullifyTimer -= Time.deltaTime;
@@ -107,6 +108,7 @@ public class AllElseFails : MonoBehaviour
                 {
                     nullifyTimer = nullifyReset;
                     invulnerable = false;
+                    player.StartCoroutine(player.CancelInvulnerable());
                     cooldown = true;
                 }
             }

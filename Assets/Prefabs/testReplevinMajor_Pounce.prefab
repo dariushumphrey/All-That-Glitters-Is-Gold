@@ -300,7 +300,7 @@ MonoBehaviour:
   attackRate: 1
   rangeAttackRate: 1
   rangeAttackChange: 15
-  rangeProjectile: {fileID: 0}
+  rangeProjectile: {fileID: 7101181237062747686, guid: 70bd89594efeb624f9d56ec2e948ce2a, type: 3}
   agitationLimit: 1
   amLeader: 0
   amFollower: 0
@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b4fa109f4ef7141b00f5657e3beeef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficultyValue: 1
+  difficultyValue: 5
   healthCurrent: 4000
   healthMax: 4000
   healthPercent: 30

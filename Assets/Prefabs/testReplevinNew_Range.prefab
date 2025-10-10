@@ -292,9 +292,10 @@ MonoBehaviour:
   jumpLimit: 4
   jumpForce: 5
   forwardForce: 4
-  rangedAttackForce: 2000
+  rangedAttackForce: 2250
   punchTimeout: 0
   jumpTimeout: 0
+  jumpTakeoff: {fileID: 0}
   airtimeShort: 2
   rangeATKMin: 20
   attackRate: 1
@@ -329,7 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b4fa109f4ef7141b00f5657e3beeef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficultyValue: 1
+  difficultyValue: 5
   healthCurrent: 2000
   healthMax: 2000
   healthPercent: 30

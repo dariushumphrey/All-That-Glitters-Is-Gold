@@ -5,15 +5,32 @@ using UnityEngine;
 public class DamageOverTimeScript : MonoBehaviour
 {
     private EnemyHealthScript enemy;
+    private PlayerStatusScript player;
     internal int dotDamage;
+    internal bool playerHarm = false;
+    internal float damageOverTimeLength = 20f;
     private float dotTimer = 0f;
     private float damageOverTimeProc = 0.25f;
-    private float damageOverTimeLength = 20f;
+
+    private void Awake()
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        enemy = gameObject.GetComponent<EnemyHealthScript>();
-        KillDamageOverTime();
+        if (playerHarm)
+        {
+            player = gameObject.GetComponent<PlayerStatusScript>();
+        }
+
+        else
+        {
+            enemy = gameObject.GetComponent<EnemyHealthScript>();
+        }
+
+        StartCoroutine(KillDamageOverTime());
     }
 
     // Update is called once per frame
@@ -22,12 +39,21 @@ public class DamageOverTimeScript : MonoBehaviour
         dotTimer += Time.deltaTime;
         if(dotTimer >= damageOverTimeProc)
         {
-            enemy.inflictDamage(dotDamage);
+            if(playerHarm && player != null)
+            {
+                player.InflictDamage(dotDamage);
+            }
+
+            if(enemy != null)
+            {
+                enemy.inflictDamage(dotDamage);
+            }
+
             dotTimer = 0f;
         }
     }
 
-    IEnumerator KillDamageOverTime()
+    public IEnumerator KillDamageOverTime()
     {
         yield return new WaitForSeconds(damageOverTimeLength);
         Destroy(this);

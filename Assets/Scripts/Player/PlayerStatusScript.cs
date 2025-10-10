@@ -283,8 +283,8 @@ public class PlayerStatusScript : MonoBehaviour
         immunity.SetActive(false);
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(transform.position, 10f);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, 3f);
+    }
 }

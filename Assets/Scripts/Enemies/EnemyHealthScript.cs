@@ -447,7 +447,7 @@ public class EnemyHealthScript : MonoBehaviour
                             hit.GetComponent<EnemyHealthScript>().inflictDamage(GetComponent<SDPHealthDebuff>().dmgShare);
                             if (hit.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                             {
-                                Instantiate(GetComponent<SDPHealthDebuff>().activation, hit.transform.position, hit.transform.rotation);
+                                Instantiate(GetComponent<SDPHealthDebuff>().activation, hit.transform.position, Quaternion.identity);
                             }
                         }
                     }
@@ -462,7 +462,7 @@ public class EnemyHealthScript : MonoBehaviour
                     //}
                 }
 
-                Instantiate(GetComponent<SDPHealthDebuff>().activation, transform.position, transform.rotation);
+                Instantiate(GetComponent<SDPHealthDebuff>().activation, transform.position, Quaternion.identity);
             }
 
             if (berth != null)

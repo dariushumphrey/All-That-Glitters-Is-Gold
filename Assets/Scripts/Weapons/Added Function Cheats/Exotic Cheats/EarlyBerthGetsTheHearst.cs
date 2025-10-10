@@ -54,9 +54,10 @@ public class EarlyBerthGetsTheHearst : MonoBehaviour
             shotCount = 0;
 
             firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.AddComponent<BerthScript>();
-            firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().additionalDamage = ebgthDamage;
+            firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().exoticOverride = true;
+
+            firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().berthDamage = ebgthDamage;
             firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().explodeForce = 30.0f;
-            //firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().Start();
             firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().Explode();
             firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().StartCoroutine(
                 firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().RemoveSelf());
