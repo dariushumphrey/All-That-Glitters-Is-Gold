@@ -231,6 +231,7 @@ MonoBehaviour:
   destructFlash: {fileID: 2192323443827568716, guid: 9aaef38306a2c134d9ba71c63c5d08ff, type: 3}
   destructSmoke: {fileID: 3330989083844010088, guid: 269f64a7f68f8db469aff67b8ecda505, type: 3}
   destructSparks: {fileID: 823351190682730462, guid: be18fb6084c06f142a2ccea022508e2c, type: 3}
+  detonationEffect: {fileID: 8036011574378228872, guid: 848c25a14ff7c70498b490e26f7c30f2, type: 3}
   contactOnly:
     serializedVersion: 2
     m_Bits: 256

@@ -17,12 +17,15 @@ public class EquivalentExchange : MonoBehaviour
     private FirearmScript firearm;
     internal GameObject proc;
     private PlayerStatusScript player;
+    private GameObject activation;
+    private Color color = Color.red;
     // Start is called before the first frame update
     void Start()
     {
         firearm = GetComponent<FirearmScript>();
         proc.GetComponent<Text>().text = " ";
         player = FindObjectOfType<PlayerStatusScript>();
+        activation = Resources.Load<GameObject>("Particles/cheatProcEffect");
 
         percentCap /= 100;
         percentCap *= firearm.damage;
@@ -73,6 +76,9 @@ public class EquivalentExchange : MonoBehaviour
             proc.GetComponent<Text>().text = "Equivalent Exchange";
             StartCoroutine(DeconfirmProc());
             player.playerHit = false;
+
+            activation.GetComponent<ParticleSystem>().startColor = color;
+            Instantiate(activation, gameObject.transform.root.gameObject.transform.position, transform.rotation);
         }
     }
 

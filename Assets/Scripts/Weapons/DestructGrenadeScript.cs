@@ -8,6 +8,7 @@ public class DestructGrenadeScript : MonoBehaviour
     public float explosiveRange = 8f;
     public float armingTime;
     public GameObject destructFlash, destructSmoke, destructSparks;
+    public GameObject detonationEffect;
     public LayerMask contactOnly;
     private bool hitOnce = false;
     // Start is called before the first frame update
@@ -27,23 +28,23 @@ public class DestructGrenadeScript : MonoBehaviour
         yield return new WaitForSeconds(armingTime);
         //destructFlash.GetComponent<ParticleSystem>().Play();
 
-        GameObject flash = Instantiate(destructFlash, transform.position, Quaternion.identity);
-        flash.name = destructFlash.name;
-        flash.GetComponent<ParticleSystem>().Play();
-        flash.AddComponent<DestroyScript>();
-        flash.GetComponent<DestroyScript>().destroyTimer = 2f;
+        //GameObject flash = Instantiate(destructFlash, transform.position, Quaternion.identity);
+        //flash.name = destructFlash.name;
+        //flash.GetComponent<ParticleSystem>().Play();
+        //flash.AddComponent<DestroyScript>();
+        //flash.GetComponent<DestroyScript>().destroyTimer = 2f;
 
-        GameObject smoke = Instantiate(destructSmoke, transform.position, Quaternion.identity);
-        smoke.name = destructSmoke.name;
-        smoke.GetComponent<ParticleSystem>().Play();
-        smoke.AddComponent<DestroyScript>();
-        smoke.GetComponent<DestroyScript>().destroyTimer = 2f;
+        //GameObject smoke = Instantiate(destructSmoke, transform.position, Quaternion.identity);
+        //smoke.name = destructSmoke.name;
+        //smoke.GetComponent<ParticleSystem>().Play();
+        //smoke.AddComponent<DestroyScript>();
+        //smoke.GetComponent<DestroyScript>().destroyTimer = 2f;
 
-        GameObject sparks = Instantiate(destructSparks, transform.position, Quaternion.identity);
-        sparks.name = destructSparks.name;
-        sparks.GetComponent<ParticleSystem>().Play();
-        sparks.AddComponent<DestroyScript>();
-        sparks.GetComponent<DestroyScript>().destroyTimer = 2f;
+        //GameObject sparks = Instantiate(destructSparks, transform.position, Quaternion.identity);
+        //sparks.name = destructSparks.name;
+        //sparks.GetComponent<ParticleSystem>().Play();
+        //sparks.AddComponent<DestroyScript>();
+        //sparks.GetComponent<DestroyScript>().destroyTimer = 2f;
 
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
         Destroy(gameObject.GetComponent<CapsuleCollider>());
@@ -80,6 +81,8 @@ public class DestructGrenadeScript : MonoBehaviour
             }
         }
 
+        GameObject effect = Instantiate(detonationEffect, transform.position, Quaternion.identity);
+        effect.name = "Detonation VFX";
         Destroy(gameObject);
 
     }

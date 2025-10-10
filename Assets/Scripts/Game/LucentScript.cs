@@ -6,6 +6,7 @@ public class LucentScript : MonoBehaviour
 {
     public int lucentGift;
     public bool threat = false;
+    public GameObject shatterEffect;
 
     private float shatterPercent = 150f;
     private int shatterDamage;
@@ -76,6 +77,9 @@ public class LucentScript : MonoBehaviour
                 //}
             }
 
+            GameObject effect = Instantiate(shatterEffect, transform.position, Quaternion.identity);
+            effect.name = "Shatter VFX";
+
             Destroy(gameObject);
         }      
     }
@@ -139,6 +143,8 @@ public class LucentScript : MonoBehaviour
             }
         }
 
+        GameObject effect = Instantiate(shatterEffect, transform.position, Quaternion.identity);
+        effect.name = "Shatter VFX";
         Destroy(gameObject);
     }
 }

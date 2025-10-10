@@ -42,6 +42,7 @@ public class FirearmScript : MonoBehaviour
     internal GameObject procOne, procTwo, dpsText;
     internal PlayerInventoryScript inv;
     internal Vector3 cadencePosition, fatedCadencePosition;
+    internal Color bulletTrailColor = Color.yellow;
 
     //Hidden variables
     internal float fireAgain; //Seconds to wait until weapon can fire

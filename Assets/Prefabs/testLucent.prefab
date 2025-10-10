@@ -77,6 +77,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lucentGift: 350
+  threat: 0
+  shatterEffect: {fileID: 8036011574378228872, guid: f0e64055bfbd2c24aa479856cd64c1f9, type: 3}
 --- !u!1 &8756919970870728932
 GameObject:
   m_ObjectHideFlags: 0

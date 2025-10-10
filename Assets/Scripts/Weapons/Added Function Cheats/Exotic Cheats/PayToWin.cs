@@ -8,6 +8,9 @@ public class PayToWin : MonoBehaviour
     private FirearmScript firearm;
     internal GameObject proc;
     private PlayerInventoryScript player;
+    private GameObject activation;
+    private Color color = Color.blue;
+
     private float damageBuff = 50f;
     private float reloadReset;
     private int damageAdd;
@@ -20,6 +23,7 @@ public class PayToWin : MonoBehaviour
         firearm = GetComponent<FirearmScript>();
         proc.GetComponent<Text>().text = " ";
         player = FindObjectOfType<PlayerInventoryScript>();
+        activation = Resources.Load<GameObject>("Particles/cheatProcEffect");
 
         reloadReset = firearm.reloadSpeed;
 
@@ -105,8 +109,11 @@ public class PayToWin : MonoBehaviour
                     //firearm.ReloadWeapon();
                 }
 
+                activation.GetComponent<ParticleSystem>().startColor = color;
+                Instantiate(activation, gameObject.transform.root.gameObject.transform.position, transform.rotation);
+
                 //firearm.reloadSpeed = reloadReset;
-            }                 
+            }
         }
     }
 

@@ -161,7 +161,7 @@ public class RudeAwakening : MonoBehaviour
                 //}
             }
 
-            GameObject effect = Instantiate(activation, gameObject.transform.root.gameObject.transform.position, transform.rotation);
+            GameObject effect = Instantiate(activation, gameObject.transform.root.gameObject.transform.position, Quaternion.identity);
 
         }
     }

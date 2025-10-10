@@ -20,7 +20,7 @@ public class PositiveNegative : MonoBehaviour
         firearm = GetComponent<FirearmScript>();
         move = FindObjectOfType<PlayerMoveScript>();
         activation = Resources.Load<GameObject>("Particles/PositiveNegativeActive");
-        electricBullet = Resources.Load<Material>("Materials/PositiveNegativeElectricity");
+        electricBullet = Resources.Load<Material>("Materials/BulletMaterialPositiveNegative");
         originalBullet = firearm.bulletTrail;
 
         if (firearm.weaponRarity == 5 && !firearm.isExotic)
@@ -74,7 +74,7 @@ public class PositiveNegative : MonoBehaviour
                       
             if (chargePercentage >= 50f && Time.timeScale == 1)
             {
-                GameObject secondTry = Instantiate(activation, gameObject.transform.root.gameObject.transform.position + Vector3.down, transform.rotation);
+                GameObject secondTry = Instantiate(activation, gameObject.transform.root.gameObject.transform.position + Vector3.down, transform.rotation, gameObject.transform.root);
             }
 
             if (chargePercentage >= 100f)

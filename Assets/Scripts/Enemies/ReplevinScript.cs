@@ -39,6 +39,7 @@ public class ReplevinScript : MonoBehaviour
     public float rangedAttackForce;
     public float punchTimeout; //Time to wait before pouncing again
     public float jumpTimeout; //Time to wait before jumping again
+    public GameObject jumpTakeoff;
     public float airtimeShort = 2f;
     public float rangeATKMin;
     public float attackRate;
@@ -48,6 +49,7 @@ public class ReplevinScript : MonoBehaviour
     //-Note: The code that increases this number by difficulty is in the EnemyHealthScript.
     public float rangeAttackRate;
     public float rangeAttackChange = 15f;
+    public GameObject rangeProjectile;
     public float agitationLimit;
     public bool amLeader;
     public bool amFollower;
@@ -780,19 +782,17 @@ public class ReplevinScript : MonoBehaviour
                             //attackLine.SetPosition(1, player.transform.position);
                             //attackLine.material = rangeHitColor;
 
-                            GameObject projectile = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                            projectile.transform.position = attackStartPoint.transform.position;
-                            projectile.transform.rotation = attackStartPoint.transform.rotation;
-                            projectile.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-                            projectile.name = "Projectile";
-                            projectile.tag = "Projectile";
-
-                            projectile.GetComponent<SphereCollider>().isTrigger = true;
-                            projectile.AddComponent<Rigidbody>();
+                            GameObject projectile = Instantiate(rangeProjectile, attackStartPoint.transform.position, attackStartPoint.transform.rotation);
                             projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * rangedAttackForce);
-
-                            projectile.AddComponent<ProjectileScript>();
                             projectile.GetComponent<ProjectileScript>().damage = damage;
+                            //projectile.transform.position = attackStartPoint.transform.position;
+                            //projectile.transform.rotation = attackStartPoint.transform.rotation;
+                            //projectile.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+                            //projectile.GetComponent<SphereCollider>().isTrigger = true;
+                            //projectile.AddComponent<Rigidbody>();
+
+                            //projectile.AddComponent<ProjectileScript>();
 
                         }
                     }
@@ -1003,10 +1003,12 @@ public class ReplevinScript : MonoBehaviour
                         {
                             gameObject.AddComponent<Rigidbody>();
                             gameObject.GetComponent<Rigidbody>().freezeRotation = true;
-                        }
+                        }                      
 
                         gameObject.GetComponent<Rigidbody>().AddForce((lastPlayerPosition + Vector3.up) * jumpForce, ForceMode.Impulse);
                         gameObject.GetComponent<Rigidbody>().AddForce((transform.forward * forwardForce), ForceMode.Impulse);
+                        GameObject takeoff = Instantiate(jumpTakeoff, transform.position + Vector3.down, transform.rotation);
+
                         //Debug.Log(lastPlayerPosition);
                         //Debug.Log(lastKnownDistance.magnitude);
                         //slamTimeout = true;
@@ -1130,6 +1132,8 @@ public class ReplevinScript : MonoBehaviour
                         recorded = true;
                         //Debug.Log(lastPlayerPosition);
                         //Debug.Log(lastKnownDistance.magnitude);
+                        GameObject takeoff = Instantiate(jumpTakeoff, transform.position + Vector3.down, transform.rotation);
+
                     }
                 }
 

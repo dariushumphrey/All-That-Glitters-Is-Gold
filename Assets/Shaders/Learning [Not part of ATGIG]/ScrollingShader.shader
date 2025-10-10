@@ -4,6 +4,8 @@ Shader "Shaders/ScrollingShader"
     {
         //_Color ("Color", Color) = (1,1,1,1)
 		_MainTint ("Diffuse Tint", Color) = (1,1,1,1)
+		_tintStrength("Tint Strength", Range(0, 100)) = 1
+		_MainEmissive ("Emissive Tint", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
 		_ScrollXSpeed ("X Scroll Speed", Range(0,10)) = 2
 		_ScrollYSpeed("Y Scroll Speed", Range(0,10)) = 2
@@ -29,8 +31,10 @@ Shader "Shaders/ScrollingShader"
 
         half _Glossiness;
         half _Metallic;
+		float _tintStrength;
         //fixed4 _Color;
 		fixed4 _MainTint;
+		fixed4 _MainEmissive;
 		fixed _ScrollXSpeed;
 		fixed _ScrollYSpeed;
 
@@ -50,11 +54,12 @@ Shader "Shaders/ScrollingShader"
 
             // Albedo comes from a texture tinted by color
             half4 c = tex2D (_MainTex, scrolledUV);
-            o.Albedo = c.rgb * _MainTint;
+            o.Albedo = c.rgb * _MainTint * _tintStrength;
             // Metallic and smoothness come from slider variables
             //o.Metallic = _Metallic;
             //o.Smoothness = _Glossiness;
             o.Alpha = c.a;
+			o.Emission = _MainEmissive;
         }
         ENDCG
     }

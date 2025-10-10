@@ -13,7 +13,7 @@ public class MenuManagerScript : MonoBehaviour
     public Setting setting;
 
     public Image caThumbnail, vcThumbnail;
-    public Sprite caLevelOne, caLevelTwo, caLevelThree, vcLevelOne;
+    public Sprite caLevelOne, caLevelTwo, caLevelThree, vcLevelOne, vcLevelTwo;
     public Text caDiffText, vcDiffText, caLevelText, vcLevelText;
     public Button vcButton;
     public Slider vcDifficulty, vcLevel, caDifficulty, caLevel;
@@ -60,9 +60,14 @@ public class MenuManagerScript : MonoBehaviour
             }
 
 
-            if (vcLevel.value == 1)
+            if (vcLevel.value == 4)
             {
                 vcThumbnail.sprite = vcLevelOne;
+            }
+
+            else if (vcLevel.value == 5)
+            {
+                vcThumbnail.sprite = vcLevelTwo;
             }
 
             caDiffText.text = "Difficulty: " + caDifficulty.value;

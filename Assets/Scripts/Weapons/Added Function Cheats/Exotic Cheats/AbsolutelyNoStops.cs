@@ -7,6 +7,8 @@ public class AbsolutelyNoStops : MonoBehaviour
 {
     private FirearmScript firearm;
     internal GameObject proc;
+    private GameObject activation, secondTry;
+
     private bool tick;
     private int dmgIncrease;
     private float rofPercent = 50f;
@@ -20,6 +22,7 @@ public class AbsolutelyNoStops : MonoBehaviour
     {
         firearm = GetComponent<FirearmScript>();
         proc.GetComponent<Text>().text = " ";
+        activation = Resources.Load<GameObject>("Particles/AbsolutelyNoBreaksActive");
 
         tick = false;
 
@@ -40,7 +43,13 @@ public class AbsolutelyNoStops : MonoBehaviour
         //Absolutely No Stops
         //___.text = Expending your magazine automatically fills it from reserves, amplifies damage by 200%, and reduces Recoil and increases Rate of Fire by 50%. 
         //This bonus ends when ammo reserves are depleted or if you stop firing.
-        if(firearm.currentAmmo <= 0 && firearm.reserveAmmo > 0)
+
+        if(tick)
+        {
+            GameObject secondTry = Instantiate(activation, gameObject.transform.position, transform.rotation, gameObject.transform);
+        }
+
+        if (firearm.currentAmmo <= 0 && firearm.reserveAmmo > 0)
         {
             if (tick)
             {
@@ -56,7 +65,8 @@ public class AbsolutelyNoStops : MonoBehaviour
                 firearm.ReloadWeapon();
                 firearm.fireRate = rofPercent;
                 proc.GetComponent<Text>().text = "Absolutely No Stops";
-            }                   
+
+            }
         }
 
         if (firearm.reserveAmmo <= 0 || Input.GetButtonUp("Fire1") && tick)
