@@ -43,7 +43,7 @@ public class ReplevinScript : MonoBehaviour
     public float airtimeShort = 2f;
     public float rangeATKMin;
     public float attackRate;
-    private float berthJumpCarpetBombTimer = 0.1f;
+    private float berthJumpCarpetBombTimer = 0.15f;
     private float berthJumpTimerReset;
 
     //This value buffs attack rate of Ranged enemies:
@@ -179,11 +179,6 @@ public class ReplevinScript : MonoBehaviour
                     cluster[f].GetComponent<ReplevinScript>().leader = gameObject;
                 }
             }
-        }
-
-        if(GetComponent<BerthScript>())
-        {
-            rangeProjectile.GetComponent<ProjectileScript>().berthFlag = true;
         }
     }
 
@@ -792,8 +787,14 @@ public class ReplevinScript : MonoBehaviour
                             //attackLine.material = rangeHitColor;
 
                             GameObject projectile = Instantiate(rangeProjectile, attackStartPoint.transform.position, attackStartPoint.transform.rotation);
-                            projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * rangedAttackForce);
                             projectile.GetComponent<ProjectileScript>().damage = damage;
+                            if (GetComponent<BerthScript>())
+                            {
+                                projectile.GetComponent<ProjectileScript>().berthFlag = true;
+                            }
+
+                            projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * rangedAttackForce);
+                          
                             //projectile.transform.position = attackStartPoint.transform.position;
                             //projectile.transform.rotation = attackStartPoint.transform.rotation;
                             //projectile.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);

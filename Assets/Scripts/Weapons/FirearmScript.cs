@@ -362,7 +362,7 @@ public class FirearmScript : MonoBehaviour
 
                 gameObject.GetComponent<EquivalentExchange>().proc = procOne;
                 gameObject.GetComponent<WaitNowImReady>().proc = procTwo;
-            }
+            } //Equivalent Exchange + Wait! Now I'm Ready
 
             if (cheatRNG == -2)
             {
@@ -371,7 +371,7 @@ public class FirearmScript : MonoBehaviour
 
                 gameObject.GetComponent<AbsolutelyNoStops>().proc = procOne;
                 gameObject.GetComponent<GoodThingsCome>().proc = procTwo;
-            }
+            } //Absolutely No Stops + Good Things Come
 
             if(cheatRNG == -3)
             {
@@ -380,7 +380,7 @@ public class FirearmScript : MonoBehaviour
 
                 gameObject.GetComponent<ShelterInPlace>().proc = procOne;
                 gameObject.GetComponent<PositiveNegative>().proc = procTwo;
-            }
+            } //Shelter In Place + Positive-Negative
 
             if(cheatRNG == -4)
             {
@@ -389,7 +389,7 @@ public class FirearmScript : MonoBehaviour
 
                 gameObject.GetComponent<SocialDistancePlease>().proc = procOne;
                 gameObject.GetComponent<NotWithAStick>().proc = procTwo;
-            }
+            } //Social Distance, Please! + Not with a Stick
 
             if(cheatRNG == -5)
             {
@@ -399,7 +399,7 @@ public class FirearmScript : MonoBehaviour
                 gameObject.GetComponent<EarlyBerthGetsTheHearst>().proc = procOne;
                 gameObject.GetComponent<Efficacy>().proc = procTwo;
 
-            }
+            } //Early Berth gets the Hearst + Efficacy
 
             if(cheatRNG == -6)
             {
@@ -409,7 +409,7 @@ public class FirearmScript : MonoBehaviour
                 gameObject.GetComponent<OffYourOwnSupply>().proc = procOne;
                 gameObject.GetComponent<Inoculated>().proc = procTwo;
 
-            }
+            } //Off your Own Supply + Inoculated
 
             if(cheatRNG == -7)
             {
@@ -418,7 +418,7 @@ public class FirearmScript : MonoBehaviour
 
                 gameObject.GetComponent<PayToWin>().proc = procOne;
                 gameObject.GetComponent<MaliciousWindUp>().proc = procTwo;
-            }
+            } //Pay to Win + Malicious Wind-Up
 
             return;
         }
@@ -430,8 +430,8 @@ public class FirearmScript : MonoBehaviour
 
         if(weaponRarity == 2 || weaponRarity == 3)
         {
-            cheatRNG = Random.Range(400, 901);
-            //cheatRNG = 851;
+            cheatRNG = Random.Range(400, 951);
+            //cheatRNG = 901;
             if (cheatRNG <= 450)
             {
                 gameObject.AddComponent<WaitNowImReady>();
@@ -503,18 +503,26 @@ public class FirearmScript : MonoBehaviour
 
             }
 
-            if (cheatRNG > 850)
+            if (cheatRNG > 850 && cheatRNG <= 900)
             {
                 gameObject.AddComponent<AllElseFails>();
                 gameObject.GetComponent<AllElseFails>().proc = procOne;
                 procTwo.GetComponent<Text>().text = " ";
 
-            }
+            } //New
+
+            if (cheatRNG > 900)
+            {
+                gameObject.AddComponent<TheMostResplendent>();
+                gameObject.GetComponent<TheMostResplendent>().proc = procOne;
+                procTwo.GetComponent<Text>().text = " ";
+
+            } //New
         }
         
         if(weaponRarity >= 4)
         {
-            fcnChtOne = Random.Range(400, 451);
+            fcnChtOne = Random.Range(400, 461); //New
             if(fcnChtOne <= 410)
             {
                 gameObject.AddComponent<AllElseFails>();
@@ -542,43 +550,49 @@ public class FirearmScript : MonoBehaviour
 
             }
 
-            if (fcnChtOne > 440)
+            if (fcnChtOne > 440 && fcnChtOne <= 450)
             {
                 gameObject.AddComponent<GoodThingsCome>();
                 gameObject.GetComponent<GoodThingsCome>().proc = procOne;
 
             }
 
-            fcnChtTwo = Random.Range(450, 501);
-            if (fcnChtTwo <= 460)
+            if(fcnChtOne > 450)
+            {
+                gameObject.AddComponent<TheMostResplendent>();
+                gameObject.GetComponent<TheMostResplendent>().proc = procOne;
+            }
+
+            fcnChtTwo = Random.Range(460, 511);
+            if (fcnChtTwo <= 470)
             {
                 gameObject.AddComponent<WaitNowImReady>();
                 gameObject.GetComponent<WaitNowImReady>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 460 && fcnChtTwo <= 470)
+            if (fcnChtTwo > 470 && fcnChtTwo <= 480)
             {
                 gameObject.AddComponent<Efficacy>();
                 gameObject.GetComponent<Efficacy>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 470 && fcnChtTwo <= 480)
+            if (fcnChtTwo > 480 && fcnChtTwo <= 490)
             {
                 gameObject.AddComponent<Inoculated>();
                 gameObject.GetComponent<Inoculated>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 480 && fcnChtTwo <= 490)
+            if (fcnChtTwo > 490 && fcnChtTwo <= 500)
             {
                 gameObject.AddComponent<Cadence>();
                 gameObject.GetComponent<Cadence>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 490)
+            if (fcnChtTwo > 500)
             {
                 gameObject.AddComponent<RudeAwakening>();
                 gameObject.GetComponent<RudeAwakening>().proc = procTwo;
@@ -712,13 +726,34 @@ public class FirearmScript : MonoBehaviour
                         gameObject.GetComponent<GoodThingsCome>().hitConfirmed = true;
                     }
 
+                    if (gameObject.GetComponent<TheMostResplendent>())
+                    {
+                        gameObject.GetComponent<TheMostResplendent>().hitConfirmed = true;
+
+                        if (gameObject.GetComponent<TheMostResplendent>().stackCount >= 1 && gameObject.GetComponent<TheMostResplendent>().toggle)
+                        {
+                            GameObject lucentHard = Instantiate(gameObject.GetComponent<TheMostResplendent>().hardLucent, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal), hit.collider.gameObject.transform);
+                            lucentHard.name = gameObject.GetComponent<TheMostResplendent>().hardLucent.name;
+
+                            if (weaponRarity == 5)
+                            {
+                                lucentHard.GetComponent<TMRHardLucentScript>().fatedCrystal = true;
+                            }
+
+                            lucentHard.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+
+                            gameObject.GetComponent<TheMostResplendent>().stackCount--;
+                            gameObject.GetComponent<TheMostResplendent>().toggle = false;
+                        }
+                    }
+
                     StartCoroutine(DeconfirmHit());
                     FatedCadenceRewardPosition(hit.collider.transform.position);
                     targetHit = hit.transform.gameObject;
 
                     //Debug.Log(hit.transform.gameObject);
 
-                    //For damage falloff checks
+                    //For damage falloff checks/kill triggers within Effective Range
                     if (hit.distance <= effectiveRange)
                     {
                         if(hit.collider.GetComponent<EnemyHealthScript>().isImmune)
@@ -801,6 +836,7 @@ public class FirearmScript : MonoBehaviour
                         }
                     }
 
+                    //For damage falloff checks/kill triggers while out of Effective Range
                     if (hit.distance > effectiveRange)
                     {
                         if (hit.collider.GetComponent<EnemyHealthScript>().isImmune)
@@ -925,6 +961,35 @@ public class FirearmScript : MonoBehaviour
 
                 if (hit.collider.gameObject.layer == 8) //If this Weapon strikes an object with the "Surface" layer
                 {
+                    if (gameObject.GetComponent<TheMostResplendent>())
+                    {
+                        if(gameObject.GetComponent<TheMostResplendent>().stackCount >= 1 && gameObject.GetComponent<TheMostResplendent>().toggle)
+                        {
+                            GameObject lucentHard = Instantiate(gameObject.GetComponent<TheMostResplendent>().hardLucent, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+                            lucentHard.name = gameObject.GetComponent<TheMostResplendent>().hardLucent.name;
+
+                            if(weaponRarity == 5)
+                            {
+                                lucentHard.GetComponent<TMRHardLucentScript>().fatedCrystal = true;
+                            }
+
+                            gameObject.GetComponent<TheMostResplendent>().stackCount--;
+                            gameObject.GetComponent<TheMostResplendent>().toggle = false;
+                        }
+                    }
+
+                    if(hit.collider.gameObject.GetComponent<TMRHardLucentScript>())
+                    {
+                        GameObject miniCluster = Instantiate(hit.collider.gameObject.GetComponent<TMRHardLucentScript>().lucentCluster, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+                        miniCluster.name = hit.collider.gameObject.GetComponent<TMRHardLucentScript>().lucentCluster.name;
+                        miniCluster.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+                        miniCluster.GetComponent<LucentScript>().lucentGift *= weaponRarity;
+                        miniCluster.GetComponent<LucentScript>().ShatterCalculation();
+
+                        hit.collider.gameObject.GetComponent<TMRHardLucentScript>().crystalHealth -= damage;
+                    }
+
                     Instantiate(sparks, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
                 }
             }
@@ -1010,7 +1075,6 @@ public class FirearmScript : MonoBehaviour
     }
 
     //The Following methods helps Cadence determine where to spawn Lucent clusters.
-
     public virtual void CadenceRewardPosition(Vector3 killPosition)
     {
         cadencePosition = killPosition;

@@ -103,6 +103,27 @@ public class ShotgunFirearm: FirearmScript
                             gameObject.GetComponent<GoodThingsCome>().hitConfirmed = true;
                         }
 
+                        if (gameObject.GetComponent<TheMostResplendent>())
+                        {
+                            gameObject.GetComponent<TheMostResplendent>().hitConfirmed = true;
+
+                            if (gameObject.GetComponent<TheMostResplendent>().stackCount >= 1 && gameObject.GetComponent<TheMostResplendent>().toggle)
+                            {
+                                GameObject lucentHard = Instantiate(gameObject.GetComponent<TheMostResplendent>().hardLucent, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal), hit.collider.gameObject.transform);
+                                lucentHard.name = gameObject.GetComponent<TheMostResplendent>().hardLucent.name;
+
+                                if (weaponRarity == 5)
+                                {
+                                    lucentHard.GetComponent<TMRHardLucentScript>().fatedCrystal = true;
+                                }
+
+                                lucentHard.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+
+                                gameObject.GetComponent<TheMostResplendent>().stackCount--;
+                                gameObject.GetComponent<TheMostResplendent>().toggle = false;
+                            }
+                        }
+
                         StartCoroutine(DeconfirmHit());
                         FatedCadenceRewardPosition(hit.collider.transform.position);
 
@@ -324,6 +345,35 @@ public class ShotgunFirearm: FirearmScript
 
                     if (hit.collider.gameObject.layer == 8) //If this Weapon strikes an object with the "Surface" layer
                     {
+                        if (gameObject.GetComponent<TheMostResplendent>())
+                        {
+                            if (gameObject.GetComponent<TheMostResplendent>().stackCount >= 1 && gameObject.GetComponent<TheMostResplendent>().toggle)
+                            {
+                                GameObject lucentHard = Instantiate(gameObject.GetComponent<TheMostResplendent>().hardLucent, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+                                lucentHard.name = gameObject.GetComponent<TheMostResplendent>().hardLucent.name;
+
+                                if (weaponRarity == 5)
+                                {
+                                    lucentHard.GetComponent<TMRHardLucentScript>().fatedCrystal = true;
+                                }
+
+                                gameObject.GetComponent<TheMostResplendent>().stackCount--;
+                                gameObject.GetComponent<TheMostResplendent>().toggle = false;
+                            }
+                        }
+
+                        if (hit.collider.gameObject.GetComponent<TMRHardLucentScript>())
+                        {
+                            GameObject miniCluster = Instantiate(hit.collider.gameObject.GetComponent<TMRHardLucentScript>().lucentCluster, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+                            miniCluster.name = hit.collider.gameObject.GetComponent<TMRHardLucentScript>().lucentCluster.name;
+                            miniCluster.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+                            miniCluster.GetComponent<LucentScript>().lucentGift *= weaponRarity;
+                            miniCluster.GetComponent<LucentScript>().ShatterCalculation();
+
+                            hit.collider.gameObject.GetComponent<TMRHardLucentScript>().crystalHealth -= damage;
+                        }
+
                         Instantiate(sparks, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
                     }
                 }

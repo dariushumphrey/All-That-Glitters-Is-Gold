@@ -657,10 +657,17 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //All Else Fails
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 850)
+            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 850 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 900)
             {
                 cheatTraitOne.text = "All Else Fails" + '\n' +
                     "When Shield depletes, all incoming Enemy damage is nullified for three seconds.";
+            } //New
+
+            //The Most Resplendent
+            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 900) //New
+            {
+                cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
             }
 
             cheatTraitTwo.text = " ";
@@ -721,7 +728,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Good Things Come
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 440)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 440 && inventory[selection].GetComponent<FirearmScript>().fcnChtOne <= 450)
             {
                 cheatTraitOne.text = "Good Things Come" + '\n' +
                 "Being in combat grants increased movement and reduces recoil and damage taken.";
@@ -732,10 +739,24 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitOne.text = "Good Things Come" + " (Fated)" + '\n' +
                         "Being in combat grants Infinite Ammo, and doubles increased movement, recoil and damage reduction.";
                 }
-            }
+            } //New
+
+            //The Most Resplendent
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 450) //The Most Resplendent
+            {
+                cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
+
+                if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
+                {
+
+                    cheatTraitOne.text = "The Most Resplendent" + " (Fated)" + '\n' +
+                    "[E] - Create a Hard Lucent crystal. Stacks 2x. Physically shattering the crystal restores 35% of Health.";
+                }
+            } //New
 
             //Wait! Now I'm Ready
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 460)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 470)
             {
                 cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
                     "Kills with this Weapon restore 10% of Shield strength.";
@@ -745,10 +766,10 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitTwo.text = "Wait! Now I'm Ready!" + " (Fated)" + '\n' +
                     "Kills with this Weapon restore 20% of Shield strength.";
                 }
-            }
+            } //New
 
             //Efficacy
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 460 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 470)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 470 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 480)
             {
                 cheatTraitTwo.text = "Efficacy" + '\n' +
                     "Enemy hits increases this Weapon's base damage by 1%.";
@@ -758,10 +779,10 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitTwo.text = "Efficacy" + " (Fated)" + '\n' +
                     "Enemy hits increases this Weapon's base damage by 2%, up to 125%, and cannot reset.";
                 }
-            }
+            } //New
 
             //Inoculated
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 470 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 480)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 480 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 490)
             {
                 cheatTraitTwo.text = "Inoculated" + '\n' +
                     "Kills with this Weapon restore 5% of Health.";
@@ -771,10 +792,10 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitTwo.text = "Inoculated" + " (Fated)" + '\n' +
                     "Kills with this Weapon restore 10% of Health.";
                 }
-            }
+            } //New
 
             //Cadence
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 480 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 490)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 490 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 500)
             {
                 cheatTraitTwo.text = "Cadence" + '\n' +
                     "Every third Enemy kill spawns a Lucent cluster.";
@@ -784,10 +805,10 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitTwo.text = "Cadence" + " (Fated)" + '\n' +
                     "Every third shot spawns a Lucent cluster.";
                 }
-            }
+            } //New
 
             //Rude Awakening
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 490)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 500)
             {
                 cheatTraitTwo.text = "Rude Awakening" + '\n' +
                     "[E] - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
@@ -797,7 +818,7 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitTwo.text = "Rude Awakening" + " (Fated)" + '\n' +
                     "[E] - Cast a lethal AOE blast. Stacks 6x. Having stacks increases base damage by 20%.";
                 }
-            }          
+            } //New
         }
 
 
@@ -1239,6 +1260,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             {
                                 write.WriteLine("9");
                             }
+
+                            if (inventory[i].GetComponent<TheMostResplendent>())
+                            {
+                                write.WriteLine("!");
+                            } //New
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -1323,6 +1349,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 {
                                     write.Write("8");
                                 }
+
+                                if (inventory[i].GetComponent<TheMostResplendent>())
+                                {
+                                    write.Write("!");
+                                } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
                                 {
@@ -1526,6 +1557,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             {
                                 write.WriteLine("9");
                             }
+
+                            if (inventory[i].GetComponent<TheMostResplendent>())
+                            {
+                                write.WriteLine("!");
+                            } //New
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -1610,6 +1646,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 {
                                     write.Write("8");
                                 }
+
+                                if (inventory[i].GetComponent<TheMostResplendent>())
+                                {
+                                    write.Write("!");
+                                } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
                                 {
@@ -1812,6 +1853,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             {
                                 write.WriteLine("9");
                             }
+
+                            if (inventory[i].GetComponent<TheMostResplendent>())
+                            {
+                                write.WriteLine("!");
+                            } //New
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -1896,6 +1942,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 {
                                     write.Write("8");
                                 }
+
+                                if (inventory[i].GetComponent<TheMostResplendent>())
+                                {
+                                    write.Write("!");
+                                } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
                                 {
@@ -2098,6 +2149,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             {
                                 write.WriteLine("9");
                             }
+
+                            if (inventory[i].GetComponent<TheMostResplendent>())
+                            {
+                                write.WriteLine("!");
+                            } //New
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -2182,6 +2238,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 {
                                     write.Write("8");
                                 }
+
+                                if (inventory[i].GetComponent<TheMostResplendent>())
+                                {
+                                    write.Write("!");
+                                } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
                                 {
@@ -2383,6 +2444,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             {
                                 write.WriteLine("9");
                             }
+
+                            if (inventory[i].GetComponent<TheMostResplendent>())
+                            {
+                                write.WriteLine("!");
+                            } //New
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -2467,6 +2533,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 {
                                     write.Write("8");
                                 }
+
+                                if (inventory[i].GetComponent<TheMostResplendent>())
+                                {
+                                    write.Write("!");
+                                } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
                                 {
@@ -2668,6 +2739,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             {
                                 write.WriteLine("9");
                             }
+
+                            if (inventory[i].GetComponent<TheMostResplendent>())
+                            {
+                                write.WriteLine("!");
+                            } //New
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -2752,6 +2828,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 {
                                     write.Write("8");
                                 }
+
+                                if (inventory[i].GetComponent<TheMostResplendent>())
+                                {
+                                    write.Write("!");
+                                } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
                                 {
@@ -2953,6 +3034,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             {
                                 write.WriteLine("9");
                             }
+
+                            if (inventory[i].GetComponent<TheMostResplendent>())
+                            {
+                                write.WriteLine("!");
+                            } //New
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -3037,6 +3123,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 {
                                     write.Write("8");
                                 }
+
+                                if (inventory[i].GetComponent<TheMostResplendent>())
+                                {
+                                    write.Write("!");
+                                } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
                                 {
