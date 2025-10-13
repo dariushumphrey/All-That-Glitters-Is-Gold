@@ -99,6 +99,7 @@ public class PlayerMoveScript : MonoBehaviour
         {
             forward.y = 0f;
             sideways.y = 0f;
+            airbornePull = airbornePullReset;
         }
 
         else

@@ -119,7 +119,7 @@ public class BerthScript : MonoBehaviour
                         hit.GetComponent<PlayerStatusScript>().InflictDamage(berthDamage);
                         if (hit.GetComponent<PlayerStatusScript>().playerShield <= 0)
                         {
-                            hit.GetComponent<PlayerStatusScript>().playerHealth -= berthDamage;
+                            hit.GetComponent<PlayerStatusScript>().InflictDamage(berthDamage);
                         }
 
                         if (hit.GetComponent<PlayerStatusScript>().playerHealth <= 0)

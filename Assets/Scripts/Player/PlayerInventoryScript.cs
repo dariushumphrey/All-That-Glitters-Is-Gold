@@ -36,6 +36,9 @@ public class PlayerInventoryScript : MonoBehaviour
     internal float wepStateTimer = 0.5f;
     internal float wepStateTimerReset;
     internal bool throwing = false;
+    internal bool fulminatePresent;
+    internal bool fulminateFated;
+    internal int fulminateBuff;
 
     internal List<string> readdedWeps = new List<string>(10);
     
@@ -661,13 +664,20 @@ public class PlayerInventoryScript : MonoBehaviour
             {
                 cheatTraitOne.text = "All Else Fails" + '\n' +
                     "When Shield depletes, all incoming Enemy damage is nullified for three seconds.";
-            } //New
+            }
 
             //The Most Resplendent
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 900) //New
+            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 900 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 950) //New
             {
                 cheatTraitOne.text = "The Most Resplendent" + '\n' +
                     "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
+            }
+
+            //Fulminate
+            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 950) //New
+            {
+                cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Melee kills cast a Destruct Grenade.";
             }
 
             cheatTraitTwo.text = " ";
@@ -739,10 +749,10 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitOne.text = "Good Things Come" + " (Fated)" + '\n' +
                         "Being in combat grants Infinite Ammo, and doubles increased movement, recoil and damage reduction.";
                 }
-            } //New
+            }
 
             //The Most Resplendent
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 450) //The Most Resplendent
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 450 && inventory[selection].GetComponent<FirearmScript>().fcnChtOne <= 460)
             {
                 cheatTraitOne.text = "The Most Resplendent" + '\n' +
                     "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
@@ -755,8 +765,21 @@ public class PlayerInventoryScript : MonoBehaviour
                 }
             } //New
 
+            //Fulminate
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 460)
+            {
+                cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Melee kills cast a Destruct Grenade.";
+
+                if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
+                {
+                    cheatTraitOne.text = "Fulminate" + " (Fated)" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Passively throw two Destruct Grenades.";
+                }
+            } //New
+
             //Wait! Now I'm Ready
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 470)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 480)
             {
                 cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
                     "Kills with this Weapon restore 10% of Shield strength.";
@@ -769,7 +792,7 @@ public class PlayerInventoryScript : MonoBehaviour
             } //New
 
             //Efficacy
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 470 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 480)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 480 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 490)
             {
                 cheatTraitTwo.text = "Efficacy" + '\n' +
                     "Enemy hits increases this Weapon's base damage by 1%.";
@@ -782,7 +805,7 @@ public class PlayerInventoryScript : MonoBehaviour
             } //New
 
             //Inoculated
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 480 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 490)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 490 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 500)
             {
                 cheatTraitTwo.text = "Inoculated" + '\n' +
                     "Kills with this Weapon restore 5% of Health.";
@@ -795,7 +818,7 @@ public class PlayerInventoryScript : MonoBehaviour
             } //New
 
             //Cadence
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 490 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 500)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 500 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 510)
             {
                 cheatTraitTwo.text = "Cadence" + '\n' +
                     "Every third Enemy kill spawns a Lucent cluster.";
@@ -808,7 +831,7 @@ public class PlayerInventoryScript : MonoBehaviour
             } //New
 
             //Rude Awakening
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 500)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 510)
             {
                 cheatTraitTwo.text = "Rude Awakening" + '\n' +
                     "[E] - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
@@ -1031,6 +1054,27 @@ public class PlayerInventoryScript : MonoBehaviour
                     GameObject brand = Instantiate(grenades[grenadeSelection], transform.position + transform.forward, transform.rotation);
                     brand.name = grenades[grenadeSelection].name;
                     brand.GetComponent<Rigidbody>().AddForce(transform.forward * throwStrength, ForceMode.Impulse);
+
+                    if(fulminatePresent)
+                    {
+                        if(fulminateBuff == brand.GetComponent<DestructGrenadeScript>().explosiveDamage)
+                        {
+                            //Debug.Log("No buff was applied; Damage has not changed");
+                        }
+
+                        else
+                        {
+                            brand.GetComponent<DestructGrenadeScript>().explosiveDamage = fulminateBuff;
+                            //Debug.Log(fulminateBuff);
+                        }
+
+                        if(fulminateFated)
+                        {
+                            StartCoroutine(FatedFulminateFreeGrenade(throwStrength, fulminateBuff));
+                        }
+
+                    }
+
                     throwing = false;
 
                     throwStrength = 0;
@@ -1264,6 +1308,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<TheMostResplendent>())
                             {
                                 write.WriteLine("!");
+                            }
+
+                            if (inventory[i].GetComponent<Fulminate>())
+                            {
+                                write.WriteLine("@");
                             } //New
                         }
 
@@ -1353,6 +1402,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<TheMostResplendent>())
                                 {
                                     write.Write("!");
+                                }
+
+                                if (inventory[i].GetComponent<Fulminate>())
+                                {
+                                    write.Write("@");
                                 } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
@@ -1561,6 +1615,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<TheMostResplendent>())
                             {
                                 write.WriteLine("!");
+                            }
+
+                            if (inventory[i].GetComponent<Fulminate>())
+                            {
+                                write.WriteLine("@");
                             } //New
                         }
 
@@ -1650,6 +1709,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<TheMostResplendent>())
                                 {
                                     write.Write("!");
+                                }
+
+                                if (inventory[i].GetComponent<Fulminate>())
+                                {
+                                    write.Write("@");
                                 } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
@@ -1857,6 +1921,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<TheMostResplendent>())
                             {
                                 write.WriteLine("!");
+                            }
+
+                            if (inventory[i].GetComponent<Fulminate>())
+                            {
+                                write.WriteLine("@");
                             } //New
                         }
 
@@ -1946,6 +2015,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<TheMostResplendent>())
                                 {
                                     write.Write("!");
+                                }
+
+                                if (inventory[i].GetComponent<Fulminate>())
+                                {
+                                    write.Write("@");
                                 } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
@@ -2153,6 +2227,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<TheMostResplendent>())
                             {
                                 write.WriteLine("!");
+                            }
+
+                            if (inventory[i].GetComponent<Fulminate>())
+                            {
+                                write.WriteLine("@");
                             } //New
                         }
 
@@ -2242,6 +2321,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<TheMostResplendent>())
                                 {
                                     write.Write("!");
+                                }
+
+                                if (inventory[i].GetComponent<Fulminate>())
+                                {
+                                    write.Write("@");
                                 } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
@@ -2448,6 +2532,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<TheMostResplendent>())
                             {
                                 write.WriteLine("!");
+                            }
+
+                            if (inventory[i].GetComponent<Fulminate>())
+                            {
+                                write.WriteLine("@");
                             } //New
                         }
 
@@ -2537,6 +2626,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<TheMostResplendent>())
                                 {
                                     write.Write("!");
+                                }
+
+                                if (inventory[i].GetComponent<Fulminate>())
+                                {
+                                    write.Write("@");
                                 } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
@@ -2743,6 +2837,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<TheMostResplendent>())
                             {
                                 write.WriteLine("!");
+                            }
+
+                            if (inventory[i].GetComponent<Fulminate>())
+                            {
+                                write.WriteLine("@");
                             } //New
                         }
 
@@ -2832,6 +2931,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<TheMostResplendent>())
                                 {
                                     write.Write("!");
+                                }
+
+                                if (inventory[i].GetComponent<Fulminate>())
+                                {
+                                    write.Write("@");
                                 } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
@@ -3038,6 +3142,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<TheMostResplendent>())
                             {
                                 write.WriteLine("!");
+                            }
+
+                            if (inventory[i].GetComponent<Fulminate>())
+                            {
+                                write.WriteLine("@");
                             } //New
                         }
 
@@ -3127,6 +3236,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<TheMostResplendent>())
                                 {
                                     write.Write("!");
+                                }
+
+                                if (inventory[i].GetComponent<Fulminate>())
+                                {
+                                    write.Write("@");
                                 } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
@@ -3180,5 +3294,16 @@ public class PlayerInventoryScript : MonoBehaviour
         {
             AddInv(other.gameObject);
         }
+    }
+
+    public IEnumerator FatedFulminateFreeGrenade(float strength, int buff)
+    {
+        yield return new WaitForSeconds(0.15f);
+        GameObject another = Instantiate(grenades[grenadeSelection], transform.position + transform.forward, transform.rotation);
+        another.name = grenades[grenadeSelection].name;
+        another.GetComponent<Rigidbody>().AddForce(transform.forward * strength, ForceMode.Impulse);
+
+        another.GetComponent<DestructGrenadeScript>().explosiveDamage = fulminateBuff;
+
     }
 }

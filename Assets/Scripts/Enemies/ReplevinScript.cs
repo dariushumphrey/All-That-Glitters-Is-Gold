@@ -927,23 +927,27 @@ public class ReplevinScript : MonoBehaviour
                                     gameObject.AddComponent<DebuffScript>();
                                 }
                             }
-
-                            if(GetComponent<BerthScript>())
-                            {
-                                GetComponent<BerthScript>().Explode();
-                            }
+                          
 
                             else
                             {
-                                hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
-                                hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+                                if (GetComponent<BerthScript>())
+                                {
+                                    GetComponent<BerthScript>().Explode();
+                                }
 
-                                //This code shoves the Player with particular force in their opposite direction.
-                                //This is a charge attack, knocking the player with more force and keeping them grounded to distinguish it from a melee.
-                                Vector3 knockbackDir = -hit.collider.transform.forward;
-                                knockbackDir.y = 0;
-                                hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * chargeAttackForce);
+                                else
+                                {
+                                    hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+                                    hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
 
+                                    //This code shoves the Player with particular force in their opposite direction.
+                                    //This is a charge attack, knocking the player with more force and keeping them grounded to distinguish it from a melee.
+                                    Vector3 knockbackDir = -hit.collider.transform.forward;
+                                    knockbackDir.y = 0;
+                                    hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * chargeAttackForce);
+                                }
+                               
                                 manager.damageDealt += damage;
 
                                 //if (GetComponent<EnemyFollowerScript>() != null)

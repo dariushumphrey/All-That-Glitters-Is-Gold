@@ -8,19 +8,20 @@ public class PlayerMeleeScript : MonoBehaviour
     public float meleeRange = 4f;
     public float meleeSpeed = 3f;
 
+    private PlayerInventoryScript inv;
+    internal bool confirmKill;
     internal bool meleeLock;
     internal GameObject meleeTarget;
+    internal GameObject fulminateCheat;
     // Start is called before the first frame update
     void Start()
     {
-        
+        inv = gameObject.GetComponent<PlayerInventoryScript>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(meleeTarget);
-
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (meleeTarget == null)
@@ -50,10 +51,21 @@ public class PlayerMeleeScript : MonoBehaviour
             if (hit.collider.tag == "Enemy")
             {
                 hit.collider.gameObject.GetComponent<EnemyHealthScript>().inflictDamage(meleeDamage);
-                if(hit.collider.gameObject.GetComponent<EnemyHealthScript>().healthCurrent <= 0 && hit.collider.gameObject.GetComponent<Rigidbody>() == null)
+                if(hit.collider.gameObject.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                 {
-                    hit.collider.gameObject.AddComponent<Rigidbody>();
-                    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 15f, ForceMode.Impulse);
+                    if(fulminateCheat != null)
+                    {
+                        GameObject free = Instantiate(inv.grenades[2], hit.point, transform.rotation);
+                        free.GetComponent<DestructGrenadeScript>().armingTime = 0.0f;
+                        free.GetComponent<DestructGrenadeScript>().StartCoroutine(free.GetComponent<DestructGrenadeScript>().SetupGrenade());
+                    }
+
+                    if(hit.collider.gameObject.GetComponent<Rigidbody>() == null)
+                    {
+                        hit.collider.gameObject.AddComponent<Rigidbody>();
+                        hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 15f, ForceMode.Impulse);
+                    }
+
                 }
 
                 meleeLock = false;

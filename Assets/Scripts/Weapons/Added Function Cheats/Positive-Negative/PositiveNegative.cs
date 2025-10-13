@@ -60,7 +60,7 @@ public class PositiveNegative : MonoBehaviour
 
         if (chargePercentage > 0)
         {
-            proc.GetComponent<Text>().text = "Positive-Negative: " + chargePercentage.ToString("F0") + "%";
+            proc.GetComponent<Text>().text = "+/-: " + chargePercentage.ToString("F0") + "%";
         }
 
         else

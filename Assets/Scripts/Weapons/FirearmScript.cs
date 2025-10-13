@@ -430,8 +430,8 @@ public class FirearmScript : MonoBehaviour
 
         if(weaponRarity == 2 || weaponRarity == 3)
         {
-            cheatRNG = Random.Range(400, 951);
-            //cheatRNG = 901;
+            cheatRNG = Random.Range(400, 1001);
+            //cheatRNG = 951;
             if (cheatRNG <= 450)
             {
                 gameObject.AddComponent<WaitNowImReady>();
@@ -509,20 +509,27 @@ public class FirearmScript : MonoBehaviour
                 gameObject.GetComponent<AllElseFails>().proc = procOne;
                 procTwo.GetComponent<Text>().text = " ";
 
-            } //New
+            }
 
-            if (cheatRNG > 900)
+            if (cheatRNG > 900 && cheatRNG <= 950)
             {
                 gameObject.AddComponent<TheMostResplendent>();
                 gameObject.GetComponent<TheMostResplendent>().proc = procOne;
                 procTwo.GetComponent<Text>().text = " ";
 
+            }
+
+            if (cheatRNG > 950)
+            {
+                gameObject.AddComponent<Fulminate>();
+                gameObject.GetComponent<Fulminate>().proc = procOne;
+                procTwo.GetComponent<Text>().text = " ";
             } //New
         }
         
         if(weaponRarity >= 4)
         {
-            fcnChtOne = Random.Range(400, 461); //New
+            fcnChtOne = Random.Range(400, 471); //New
             if(fcnChtOne <= 410)
             {
                 gameObject.AddComponent<AllElseFails>();
@@ -557,42 +564,48 @@ public class FirearmScript : MonoBehaviour
 
             }
 
-            if(fcnChtOne > 450)
+            if (fcnChtOne > 450 && fcnChtOne <= 460)
             {
                 gameObject.AddComponent<TheMostResplendent>();
                 gameObject.GetComponent<TheMostResplendent>().proc = procOne;
             }
 
-            fcnChtTwo = Random.Range(460, 511);
-            if (fcnChtTwo <= 470)
+            if (fcnChtOne > 460)
+            {
+                gameObject.AddComponent<Fulminate>();
+                gameObject.GetComponent<Fulminate>().proc = procOne;
+            }
+
+            fcnChtTwo = Random.Range(470, 521);
+            if (fcnChtTwo <= 480)
             {
                 gameObject.AddComponent<WaitNowImReady>();
                 gameObject.GetComponent<WaitNowImReady>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 470 && fcnChtTwo <= 480)
+            if (fcnChtTwo > 480 && fcnChtTwo <= 490)
             {
                 gameObject.AddComponent<Efficacy>();
                 gameObject.GetComponent<Efficacy>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 480 && fcnChtTwo <= 490)
+            if (fcnChtTwo > 490 && fcnChtTwo <= 500)
             {
                 gameObject.AddComponent<Inoculated>();
                 gameObject.GetComponent<Inoculated>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 490 && fcnChtTwo <= 500)
+            if (fcnChtTwo > 500 && fcnChtTwo <= 510)
             {
                 gameObject.AddComponent<Cadence>();
                 gameObject.GetComponent<Cadence>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 500)
+            if (fcnChtTwo > 510)
             {
                 gameObject.AddComponent<RudeAwakening>();
                 gameObject.GetComponent<RudeAwakening>().proc = procTwo;
@@ -745,6 +758,11 @@ public class FirearmScript : MonoBehaviour
                             gameObject.GetComponent<TheMostResplendent>().stackCount--;
                             gameObject.GetComponent<TheMostResplendent>().toggle = false;
                         }
+                    }
+
+                    if(gameObject.GetComponent<Fulminate>())
+                    {
+                        gameObject.GetComponent<Fulminate>().hitConfirmed = true;
                     }
 
                     StartCoroutine(DeconfirmHit());

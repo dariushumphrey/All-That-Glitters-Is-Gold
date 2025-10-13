@@ -124,6 +124,11 @@ public class ShotgunFirearm: FirearmScript
                             }
                         }
 
+                        if (gameObject.GetComponent<Fulminate>())
+                        {
+                            gameObject.GetComponent<Fulminate>().hitConfirmed = true;
+                        }
+
                         StartCoroutine(DeconfirmHit());
                         FatedCadenceRewardPosition(hit.collider.transform.position);
 

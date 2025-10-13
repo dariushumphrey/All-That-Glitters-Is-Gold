@@ -11,6 +11,7 @@ public class DestructGrenadeScript : MonoBehaviour
     public GameObject detonationEffect;
     public LayerMask contactOnly;
     private bool hitOnce = false;
+    internal int explosiveDamageReset;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +24,7 @@ public class DestructGrenadeScript : MonoBehaviour
 
     }
 
-    IEnumerator SetupGrenade()
+    public IEnumerator SetupGrenade()
     {
         yield return new WaitForSeconds(armingTime);
         //destructFlash.GetComponent<ParticleSystem>().Play();
