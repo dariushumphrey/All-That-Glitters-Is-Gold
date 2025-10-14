@@ -2955,6 +2955,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<Fulminate>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
+
+                    if (cFiveStr == "#")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1025;
+                        item.AddComponent<Forager>();
+
+                        item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    } //New
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -3002,7 +3011,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<GoodThingsCome>();
                         item.GetComponent<GoodThingsCome>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
 
                     if (cFiveStr == "!")
                     {
@@ -3010,7 +3019,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<TheMostResplendent>();
                         item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
 
                     if (cFiveStr == "@")
                     {
@@ -3018,12 +3027,20 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Fulminate>();
                         item.GetComponent<Fulminate>().proc = item.GetComponent<FirearmScript>().procOne;
 
+                    }
+
+                    if (cFiveStr == "#")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtOne = 475;
+                        item.AddComponent<Forager>();
+                        item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
+
                     } //New
 
                     //Equivalent Exchange pairing
                     if (cSixStr == "0")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 475;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 485;
                         item.AddComponent<WaitNowImReady>();
                         item.GetComponent<WaitNowImReady>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -3031,7 +3048,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "1")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 485;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 495;
                         item.AddComponent<Efficacy>();
                         item.GetComponent<Efficacy>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -3039,7 +3056,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "2")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 495;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 505;
                         item.AddComponent<Inoculated>();
                         item.GetComponent<Inoculated>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -3047,7 +3064,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "7")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 505;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 515;
                         item.AddComponent<Cadence>();
                         item.GetComponent<Cadence>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -3055,7 +3072,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "3")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 515;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 525;
                         item.AddComponent<RudeAwakening>();
                         item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -3261,7 +3278,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<AllElseFails>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "!")
                     {
@@ -3270,7 +3287,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "@")
                     {
@@ -3278,6 +3295,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Fulminate>();
 
                         item.GetComponent<Fulminate>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
+
+                    if (cFiveStr == "#")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1025;
+                        item.AddComponent<Forager>();
+
+                        item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
                 }
@@ -3327,7 +3353,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<GoodThingsCome>();
                         item.GetComponent<GoodThingsCome>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
 
                     if (cFiveStr == "!")
                     {
@@ -3335,13 +3361,21 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<TheMostResplendent>();
                         item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
 
                     if (cFiveStr == "@")
                     {
                         item.GetComponent<FirearmScript>().fcnChtOne = 465;
                         item.AddComponent<Fulminate>();
                         item.GetComponent<Fulminate>().proc = item.GetComponent<FirearmScript>().procOne;
+
+                    }
+
+                    if (cFiveStr == "#")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtOne = 475;
+                        item.AddComponent<Forager>();
+                        item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
 
                     } //New
 
@@ -3356,7 +3390,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "0")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 475;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 485;
                         item.AddComponent<WaitNowImReady>();
                         item.GetComponent<WaitNowImReady>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -3364,7 +3398,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "1")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 485;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 495;
                         item.AddComponent<Efficacy>();
                         item.GetComponent<Efficacy>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -3372,7 +3406,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "2")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 495;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 505;
                         item.AddComponent<Inoculated>();
                         item.GetComponent<Inoculated>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -3380,7 +3414,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "7")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 505;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 515;
                         item.AddComponent<Cadence>();
                         item.GetComponent<Cadence>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -3388,7 +3422,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "3")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 515;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 525;
                         item.AddComponent<RudeAwakening>();
                         item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -3605,7 +3639,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "@")
                     {
@@ -3613,6 +3647,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Fulminate>();
 
                         item.GetComponent<Fulminate>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
+
+                    if (cFiveStr == "#")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1025;
+                        item.AddComponent<Forager>();
+
+                        item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
                 }
@@ -3670,13 +3713,21 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<TheMostResplendent>();
                         item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
 
                     if (cFiveStr == "@")
                     {
                         item.GetComponent<FirearmScript>().fcnChtOne = 465;
                         item.AddComponent<Fulminate>();
                         item.GetComponent<Fulminate>().proc = item.GetComponent<FirearmScript>().procOne;
+
+                    }
+
+                    if (cFiveStr == "#")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtOne = 475;
+                        item.AddComponent<Forager>();
+                        item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
 
                     } //New
 
@@ -3690,7 +3741,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "0")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 475;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 485;
                         item.AddComponent<WaitNowImReady>();
                         item.GetComponent<WaitNowImReady>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -3698,7 +3749,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "1")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 485;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 495;
                         item.AddComponent<Efficacy>();
                         item.GetComponent<Efficacy>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -3706,7 +3757,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "2")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 495;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 505;
                         item.AddComponent<Inoculated>();
                         item.GetComponent<Inoculated>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -3714,7 +3765,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "7")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 505;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 515;
                         item.AddComponent<Cadence>();
                         item.GetComponent<Cadence>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -3722,7 +3773,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "3")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 515;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 525;
                         item.AddComponent<RudeAwakening>();
                         item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -3937,7 +3988,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "@")
                     {
@@ -3945,6 +3996,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Fulminate>();
 
                         item.GetComponent<Fulminate>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
+
+                    if (cFiveStr == "#")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1025;
+                        item.AddComponent<Forager>();
+
+                        item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
                 }
@@ -4002,7 +4062,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<TheMostResplendent>();
                         item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
 
                     if (cFiveStr == "@")
                     {
@@ -4010,11 +4070,19 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Fulminate>();
                         item.GetComponent<Fulminate>().proc = item.GetComponent<FirearmScript>().procOne;
 
+                    }
+
+                    if (cFiveStr == "#")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtOne = 475;
+                        item.AddComponent<Forager>();
+                        item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
+
                     } //New
 
                     if (cSixStr == "0")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 475;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 485;
                         item.AddComponent<WaitNowImReady>();
                         item.GetComponent<WaitNowImReady>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -4022,7 +4090,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "1")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 485;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 495;
                         item.AddComponent<Efficacy>();
                         item.GetComponent<Efficacy>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -4031,7 +4099,7 @@ public class WeaponManagerScript : MonoBehaviour
                     //Off your own Supply pairing
                     if (cSixStr == "2")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 495;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 505;
                         item.AddComponent<Inoculated>();
                         item.GetComponent<Inoculated>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -4039,7 +4107,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "7")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 505;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 515;
                         item.AddComponent<Cadence>();
                         item.GetComponent<Cadence>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -4047,7 +4115,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "3")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 515;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 525;
                         item.AddComponent<RudeAwakening>();
                         item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -4261,7 +4329,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "@")
                     {
@@ -4269,6 +4337,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Fulminate>();
 
                         item.GetComponent<Fulminate>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
+                
+                    if (cFiveStr == "#")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1025;
+                        item.AddComponent<Forager>();
+
+                        item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
                 }
@@ -4326,13 +4403,21 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<TheMostResplendent>();
                         item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
 
                     if (cFiveStr == "@")
                     {
                         item.GetComponent<FirearmScript>().fcnChtOne = 465;
                         item.AddComponent<Fulminate>();
                         item.GetComponent<Fulminate>().proc = item.GetComponent<FirearmScript>().procOne;
+
+                    }
+
+                    if (cFiveStr == "#")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtOne = 475;
+                        item.AddComponent<Forager>();
+                        item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
 
                     } //New
 
@@ -4346,7 +4431,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "0")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 475;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 485;
                         item.AddComponent<WaitNowImReady>();
                         item.GetComponent<WaitNowImReady>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -4354,7 +4439,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "1")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 485;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 495;
                         item.AddComponent<Efficacy>();
                         item.GetComponent<Efficacy>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -4362,7 +4447,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "2")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 495;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 505;
                         item.AddComponent<Inoculated>();
                         item.GetComponent<Inoculated>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -4370,7 +4455,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "7")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 505;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 515;
                         item.AddComponent<Cadence>();
                         item.GetComponent<Cadence>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -4378,7 +4463,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "3")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 515;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 525;
                         item.AddComponent<RudeAwakening>();
                         item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -4592,7 +4677,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "@")
                     {
@@ -4600,6 +4685,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Fulminate>();
 
                         item.GetComponent<Fulminate>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
+
+                    if (cFiveStr == "#")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1025;
+                        item.AddComponent<Forager>();
+
+                        item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
                 }
@@ -4657,7 +4751,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<TheMostResplendent>();
                         item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
 
                     if (cFiveStr == "@")
                     {
@@ -4665,11 +4759,19 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Fulminate>();
                         item.GetComponent<Fulminate>().proc = item.GetComponent<FirearmScript>().procOne;
 
+                    }
+
+                    if (cFiveStr == "#")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtOne = 475;
+                        item.AddComponent<Forager>();
+                        item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
+
                     } //New
 
                     if (cSixStr == "0")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 475;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 485;
                         item.AddComponent<WaitNowImReady>();
                         item.GetComponent<WaitNowImReady>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -4678,7 +4780,7 @@ public class WeaponManagerScript : MonoBehaviour
                     //Early Berth gets the Hearst pairing
                     if (cSixStr == "1")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 485;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 495;
                         item.AddComponent<Efficacy>();
                         item.GetComponent<Efficacy>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -4686,7 +4788,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "2")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 495;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 505;
                         item.AddComponent<Inoculated>();
                         item.GetComponent<Inoculated>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -4694,7 +4796,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "7")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 505;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 515;
                         item.AddComponent<Cadence>();
                         item.GetComponent<Cadence>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -4702,7 +4804,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "3")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 515;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 525;
                         item.AddComponent<RudeAwakening>();
                         item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -4916,7 +5018,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "@")
                     {
@@ -4924,6 +5026,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Fulminate>();
 
                         item.GetComponent<Fulminate>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
+
+                    if (cFiveStr == "#")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1025;
+                        item.AddComponent<Forager>();
+
+                        item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
                 }
@@ -4980,7 +5091,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<TheMostResplendent>();
                         item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
 
                     if (cFiveStr == "@")
                     {
@@ -4988,7 +5099,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Fulminate>();
                         item.GetComponent<Fulminate>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
+
+                    if (cFiveStr == "#")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtOne = 475;
+                        item.AddComponent<Forager>();
+                        item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
+
+                    }
 
                     //Absolutely no breaks! Pairing
                     if (cSixStr == "8")
@@ -5000,7 +5119,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "0")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 475;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 485;
                         item.AddComponent<WaitNowImReady>();
                         item.GetComponent<WaitNowImReady>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -5008,7 +5127,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "1")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 485;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 495;
                         item.AddComponent<Efficacy>();
                         item.GetComponent<Efficacy>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -5016,7 +5135,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "2")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 495;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 505;
                         item.AddComponent<Inoculated>();
                         item.GetComponent<Inoculated>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -5024,7 +5143,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "7")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 505;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 515;
                         item.AddComponent<Cadence>();
                         item.GetComponent<Cadence>().proc = item.GetComponent<FirearmScript>().procTwo;
 
@@ -5032,7 +5151,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     if (cSixStr == "3")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtTwo = 515;
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 525;
                         item.AddComponent<RudeAwakening>();
                         item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
 

@@ -3,7 +3,27 @@ guid: 212f604107d90b44fa6be8e7bfa91d61
 ModelImporter:
   serializedVersion: 21100
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SM_capsuleCharacter
+    second: {fileID: 2100000, guid: 23a010f7b14a3f746853d123a4900eaf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SM_capsuleCharacter_eyes
+    second: {fileID: 2100000, guid: abd247223e5e1814cb019215bcbd2e19, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SM_capsuleCharacter_graft
+    second: {fileID: 2100000, guid: 60add673c749b5041844f98cd8d5cbaf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SM_capsuleCharacter_mouth
+    second: {fileID: 2100000, guid: 0efcfa6b3b227d4459e8d1666dbe51ac, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

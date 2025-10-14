@@ -19,6 +19,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: SM_capsuleCharacter_graft
     second: {fileID: 2100000, guid: 60add673c749b5041844f98cd8d5cbaf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SM_capsuleCharacter_mouth
+    second: {fileID: 2100000, guid: 0efcfa6b3b227d4459e8d1666dbe51ac, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

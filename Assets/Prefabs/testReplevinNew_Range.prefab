@@ -99,8 +99,8 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 86830a873e7092747abada611fbab726, type: 2}
-  - {fileID: 2100000, guid: 4758de94a6d0c6e479fe06c0a983f070, type: 2}
   - {fileID: 2100000, guid: 7a2288c2219ed044cac0a54337e95e52, type: 2}
+  - {fileID: 2100000, guid: 4758de94a6d0c6e479fe06c0a983f070, type: 2}
   - {fileID: 2100000, guid: 7a2288c2219ed044cac0a54337e95e52, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -330,7 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b4fa109f4ef7141b00f5657e3beeef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficultyValue: 5
+  difficultyValue: 1
   healthCurrent: 2000
   healthMax: 2000
   healthPercent: 30

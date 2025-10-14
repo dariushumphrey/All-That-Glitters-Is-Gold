@@ -674,11 +674,18 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Fulminate
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 950) //New
+            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 950 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 1000)
             {
                 cheatTraitOne.text = "Fulminate" + '\n' +
                     "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Melee kills cast a Destruct Grenade.";
             }
+
+            //Forager
+            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 1000)
+            {
+                cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, Health, Shield, and Ammo pickups.";
+            } //New
 
             cheatTraitTwo.text = " ";
         }
@@ -763,10 +770,10 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitOne.text = "The Most Resplendent" + " (Fated)" + '\n' +
                     "[E] - Create a Hard Lucent crystal. Stacks 2x. Physically shattering the crystal restores 35% of Health.";
                 }
-            } //New
+            }
 
             //Fulminate
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 460)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 460 && inventory[selection].GetComponent<FirearmScript>().fcnChtOne <= 470)
             {
                 cheatTraitOne.text = "Fulminate" + '\n' +
                     "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Melee kills cast a Destruct Grenade.";
@@ -778,8 +785,21 @@ public class PlayerInventoryScript : MonoBehaviour
                 }
             } //New
 
+            //Fulminate
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 470)
+            {
+                cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, Health, Shield, and Ammo pickups.";
+
+                if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
+                {
+                    cheatTraitOne.text = "Forager" + " (Fated)" + '\n' +
+                    "Kills produce stronger bursts of Lucent clusters, Health, Shield, and Ammo pickups. Every tenth hit on Bosses produce a burst.";
+                }
+            } //New
+
             //Wait! Now I'm Ready
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 480)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 490)
             {
                 cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
                     "Kills with this Weapon restore 10% of Shield strength.";
@@ -792,7 +812,7 @@ public class PlayerInventoryScript : MonoBehaviour
             } //New
 
             //Efficacy
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 480 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 490)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 490 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 500)
             {
                 cheatTraitTwo.text = "Efficacy" + '\n' +
                     "Enemy hits increases this Weapon's base damage by 1%.";
@@ -805,7 +825,7 @@ public class PlayerInventoryScript : MonoBehaviour
             } //New
 
             //Inoculated
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 490 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 500)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 500 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 510)
             {
                 cheatTraitTwo.text = "Inoculated" + '\n' +
                     "Kills with this Weapon restore 5% of Health.";
@@ -818,7 +838,7 @@ public class PlayerInventoryScript : MonoBehaviour
             } //New
 
             //Cadence
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 500 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 510)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 510 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 520)
             {
                 cheatTraitTwo.text = "Cadence" + '\n' +
                     "Every third Enemy kill spawns a Lucent cluster.";
@@ -831,7 +851,7 @@ public class PlayerInventoryScript : MonoBehaviour
             } //New
 
             //Rude Awakening
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 510)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 520)
             {
                 cheatTraitTwo.text = "Rude Awakening" + '\n' +
                     "[E] - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
@@ -1313,6 +1333,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Fulminate>())
                             {
                                 write.WriteLine("@");
+                            }
+
+                            if (inventory[i].GetComponent<Forager>())
+                            {
+                                write.WriteLine("#");
                             } //New
                         }
 
@@ -1407,6 +1432,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Fulminate>())
                                 {
                                     write.Write("@");
+                                }
+
+                                if (inventory[i].GetComponent<Forager>())
+                                {
+                                    write.Write("#");
                                 } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
@@ -1620,7 +1650,13 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Fulminate>())
                             {
                                 write.WriteLine("@");
+                            }
+
+                            if (inventory[i].GetComponent<Forager>())
+                            {
+                                write.WriteLine("#");
                             } //New
+
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -1714,6 +1750,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Fulminate>())
                                 {
                                     write.Write("@");
+                                }
+
+                                if (inventory[i].GetComponent<Forager>())
+                                {
+                                    write.Write("#");
                                 } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
@@ -1926,6 +1967,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Fulminate>())
                             {
                                 write.WriteLine("@");
+                            }
+
+                            if (inventory[i].GetComponent<Forager>())
+                            {
+                                write.WriteLine("#");
                             } //New
                         }
 
@@ -2020,6 +2066,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Fulminate>())
                                 {
                                     write.Write("@");
+                                }
+
+                                if (inventory[i].GetComponent<Forager>())
+                                {
+                                    write.Write("#");
                                 } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
@@ -2232,6 +2283,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Fulminate>())
                             {
                                 write.WriteLine("@");
+                            }
+
+                            if (inventory[i].GetComponent<Forager>())
+                            {
+                                write.WriteLine("#");
                             } //New
                         }
 
@@ -2326,6 +2382,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Fulminate>())
                                 {
                                     write.Write("@");
+                                }
+
+                                if (inventory[i].GetComponent<Forager>())
+                                {
+                                    write.Write("#");
                                 } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
@@ -2537,6 +2598,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Fulminate>())
                             {
                                 write.WriteLine("@");
+                            }
+
+                            if (inventory[i].GetComponent<Forager>())
+                            {
+                                write.WriteLine("#");
                             } //New
                         }
 
@@ -2631,6 +2697,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Fulminate>())
                                 {
                                     write.Write("@");
+                                }
+
+                                if (inventory[i].GetComponent<Forager>())
+                                {
+                                    write.Write("#");
                                 } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
@@ -2842,6 +2913,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Fulminate>())
                             {
                                 write.WriteLine("@");
+                            }
+
+                            if (inventory[i].GetComponent<Forager>())
+                            {
+                                write.WriteLine("#");
                             } //New
                         }
 
@@ -2936,6 +3012,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Fulminate>())
                                 {
                                     write.Write("@");
+                                }
+
+                                if (inventory[i].GetComponent<Forager>())
+                                {
+                                    write.Write("#");
                                 } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
@@ -3147,6 +3228,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Fulminate>())
                             {
                                 write.WriteLine("@");
+                            }
+
+                            if (inventory[i].GetComponent<Forager>())
+                            {
+                                write.WriteLine("#");
                             } //New
                         }
 
@@ -3241,6 +3327,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Fulminate>())
                                 {
                                     write.Write("@");
+                                }
+
+                                if (inventory[i].GetComponent<Forager>())
+                                {
+                                    write.Write("#");
                                 } //New
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())

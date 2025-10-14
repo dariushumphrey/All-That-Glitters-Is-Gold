@@ -13,6 +13,7 @@ public class PlayerMeleeScript : MonoBehaviour
     internal bool meleeLock;
     internal GameObject meleeTarget;
     internal GameObject fulminateCheat;
+    internal GameObject foragerCheat;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,6 +65,12 @@ public class PlayerMeleeScript : MonoBehaviour
                     {
                         hit.collider.gameObject.AddComponent<Rigidbody>();
                         hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 15f, ForceMode.Impulse);
+                    }
+
+                    if(foragerCheat != null)
+                    {
+                        foragerCheat.GetComponent<Forager>().burstPosition = hit.collider.transform.position + Vector3.up;
+                        foragerCheat.GetComponent<Forager>().ForagerBurst();
                     }
 
                 }

@@ -430,8 +430,8 @@ public class FirearmScript : MonoBehaviour
 
         if(weaponRarity == 2 || weaponRarity == 3)
         {
-            cheatRNG = Random.Range(400, 1001);
-            //cheatRNG = 951;
+            cheatRNG = Random.Range(400, 1051);
+            //cheatRNG = 1001;
             if (cheatRNG <= 450)
             {
                 gameObject.AddComponent<WaitNowImReady>();
@@ -519,17 +519,24 @@ public class FirearmScript : MonoBehaviour
 
             }
 
-            if (cheatRNG > 950)
+            if (cheatRNG > 950 && cheatRNG <= 1000)
             {
                 gameObject.AddComponent<Fulminate>();
                 gameObject.GetComponent<Fulminate>().proc = procOne;
+                procTwo.GetComponent<Text>().text = " ";
+            } //New
+
+            if (cheatRNG > 1000)
+            {
+                gameObject.AddComponent<Forager>();
+                gameObject.GetComponent<Forager>().proc = procOne;
                 procTwo.GetComponent<Text>().text = " ";
             } //New
         }
         
         if(weaponRarity >= 4)
         {
-            fcnChtOne = Random.Range(400, 471); //New
+            fcnChtOne = Random.Range(400, 481); //New
             if(fcnChtOne <= 410)
             {
                 gameObject.AddComponent<AllElseFails>();
@@ -570,42 +577,48 @@ public class FirearmScript : MonoBehaviour
                 gameObject.GetComponent<TheMostResplendent>().proc = procOne;
             }
 
-            if (fcnChtOne > 460)
+            if (fcnChtOne > 460 && fcnChtOne <= 470)
             {
                 gameObject.AddComponent<Fulminate>();
                 gameObject.GetComponent<Fulminate>().proc = procOne;
             }
 
-            fcnChtTwo = Random.Range(470, 521);
-            if (fcnChtTwo <= 480)
+            if(fcnChtOne > 470)
+            {
+                gameObject.AddComponent<Forager>();
+                gameObject.GetComponent<Forager>().proc = procOne;
+            }
+
+            fcnChtTwo = Random.Range(480, 531);
+            if (fcnChtTwo <= 490)
             {
                 gameObject.AddComponent<WaitNowImReady>();
                 gameObject.GetComponent<WaitNowImReady>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 480 && fcnChtTwo <= 490)
+            if (fcnChtTwo > 490 && fcnChtTwo <= 500)
             {
                 gameObject.AddComponent<Efficacy>();
                 gameObject.GetComponent<Efficacy>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 490 && fcnChtTwo <= 500)
+            if (fcnChtTwo > 500 && fcnChtTwo <= 510)
             {
                 gameObject.AddComponent<Inoculated>();
                 gameObject.GetComponent<Inoculated>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 500 && fcnChtTwo <= 510)
+            if (fcnChtTwo > 510 && fcnChtTwo <= 520)
             {
                 gameObject.AddComponent<Cadence>();
                 gameObject.GetComponent<Cadence>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 510)
+            if (fcnChtTwo > 520)
             {
                 gameObject.AddComponent<RudeAwakening>();
                 gameObject.GetComponent<RudeAwakening>().proc = procTwo;
@@ -765,6 +778,13 @@ public class FirearmScript : MonoBehaviour
                         gameObject.GetComponent<Fulminate>().hitConfirmed = true;
                     }
 
+                    if (gameObject.GetComponent<Forager>() && weaponRarity == 5 && !hit.collider.GetComponent<EnemyHealthScript>().isImmune && hit.collider.GetComponent<ReplevinScript>().amBoss)
+                    {
+                        gameObject.GetComponent<Forager>().hitConfirmed = true;
+                        gameObject.GetComponent<Forager>().burstPosition = hit.collider.transform.position + (Vector3.up * 2);
+
+                    }
+
                     StartCoroutine(DeconfirmHit());
                     FatedCadenceRewardPosition(hit.collider.transform.position);
                     targetHit = hit.transform.gameObject;
@@ -840,6 +860,11 @@ public class FirearmScript : MonoBehaviour
                                 gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
                             }
 
+                            if (gameObject.GetComponent<Forager>())
+                            {
+                                gameObject.GetComponent<Forager>().killConfirmed = true;
+                                gameObject.GetComponent<Forager>().burstPosition = hit.collider.transform.position + Vector3.up;
+                            }
 
                             if (hit.collider.GetComponent<Rigidbody>() == null)
                             {
@@ -923,6 +948,12 @@ public class FirearmScript : MonoBehaviour
                             if (gameObject.GetComponent<RudeAwakening>())
                             {
                                 gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
+                            }
+
+                            if (gameObject.GetComponent<Forager>())
+                            {
+                                gameObject.GetComponent<Forager>().killConfirmed = true;
+                                gameObject.GetComponent<Forager>().burstPosition = hit.collider.transform.position + Vector3.up;
                             }
 
                             if (hit.collider.GetComponent<Rigidbody>() == null)

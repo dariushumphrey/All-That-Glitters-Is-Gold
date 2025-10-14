@@ -129,6 +129,13 @@ public class ShotgunFirearm: FirearmScript
                             gameObject.GetComponent<Fulminate>().hitConfirmed = true;
                         }
 
+                        if (gameObject.GetComponent<Forager>() && weaponRarity == 5 && !hit.collider.GetComponent<EnemyHealthScript>().isImmune && hit.collider.GetComponent<ReplevinScript>().amBoss)
+                        {
+                            gameObject.GetComponent<Forager>().hitConfirmed = true;
+                            gameObject.GetComponent<Forager>().burstPosition = hit.collider.transform.position + (Vector3.up * 2);
+
+                        }
+
                         StartCoroutine(DeconfirmHit());
                         FatedCadenceRewardPosition(hit.collider.transform.position);
 
@@ -203,6 +210,12 @@ public class ShotgunFirearm: FirearmScript
                                 if (gameObject.GetComponent<RudeAwakening>())
                                 {
                                     gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
+                                }
+
+                                if (gameObject.GetComponent<Forager>())
+                                {
+                                    gameObject.GetComponent<Forager>().killConfirmed = true;
+                                    gameObject.GetComponent<Forager>().burstPosition = hit.collider.transform.position + Vector3.up;
                                 }
 
                                 if (hit.collider.GetComponent<Rigidbody>() == null)
@@ -292,6 +305,12 @@ public class ShotgunFirearm: FirearmScript
                                 if (gameObject.GetComponent<RudeAwakening>())
                                 {
                                     gameObject.GetComponent<RudeAwakening>().killConfirmed = true;
+                                }
+
+                                if (gameObject.GetComponent<Forager>())
+                                {
+                                    gameObject.GetComponent<Forager>().killConfirmed = true;
+                                    gameObject.GetComponent<Forager>().burstPosition = hit.collider.transform.position + Vector3.up;
                                 }
 
                                 if (hit.collider.GetComponent<Rigidbody>() == null)

@@ -49,11 +49,6 @@ public class BerthScript : MonoBehaviour
 
     public void BerthDifficultyMatch()
     {
-        if(foe.difficultyValue <= 1)
-        {
-            //additionalDamage *= foe.difficultyValue;
-            //enemyDamageMultiplier *= foe.difficultyValue;
-        }
 
         if (foe.difficultyValue >= 2)
         {
@@ -65,24 +60,6 @@ public class BerthScript : MonoBehaviour
             berthDamageAdd = (int)berthPercent;
             berthDamage += berthDamageAdd;
             
-        }
-
-        if (foe.difficultyValue == 3)
-        {
-            //additionalDamage *= foe.difficultyValue;
-            //enemyDamageMultiplier *= foe.difficultyValue;
-        }
-
-        if (foe.difficultyValue == 4)
-        {
-            //additionalDamage *= foe.difficultyValue;
-            //enemyDamageMultiplier *= foe.difficultyValue;
-        }
-
-        if (foe.difficultyValue >= 5)
-        {
-            //additionalDamage *= foe.difficultyValue;
-            //enemyDamageMultiplier *= foe.difficultyValue;
         }
     }
 
