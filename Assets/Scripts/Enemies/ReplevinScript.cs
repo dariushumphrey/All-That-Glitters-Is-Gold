@@ -196,6 +196,7 @@ public class ReplevinScript : MonoBehaviour
         if(jumpCheck != null)
         {
             AmIGrounded();
+            //Debug.Log(AmIGrounded());
         }        
     }
 
@@ -244,9 +245,9 @@ public class ReplevinScript : MonoBehaviour
 
     public bool AmIGrounded()
     {
-        //Debug.DrawRay(jumpCheck.transform.position, -jumpCheck.transform.up);
+        //Debug.DrawRay(jumpCheck.transform.position + Vector3.up, Vector3.down * 1.3f, Color.red);
         RaycastHit impact;
-        if(Physics.Raycast(jumpCheck.transform.position, -jumpCheck.transform.up, out impact, 1f))
+        if(Physics.Raycast(jumpCheck.transform.position + Vector3.up, Vector3.down, out impact, 1.3f))
         {
             if(impact.point != null)
             {
@@ -651,35 +652,45 @@ public class ReplevinScript : MonoBehaviour
                                             {
                                                 gameObject.AddComponent<DebuffScript>();
                                             }
+
+                                            if (hit.collider.GetComponent<PlayerStatusScript>().counterplayCheat)
+                                            {
+                                                hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;                                               
+                                            }
+
+                                            attackLock = false;
+                                            meleeAttackTimer = meleeReset;
                                         }
 
-                                        hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
-                                        hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+                                        else
+                                        {
+                                            hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+                                            hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
 
-                                        //This code shoves the Player with particular force in their opposite direction.
-                                        //This is a melee attack, shoving the player with less force, subtly offsetting the player upwards to distinguish it from a charge.
-                                        Vector3 knockbackDir = -hit.collider.transform.forward;
-                                        //knockbackDir.y = 0;
-                                        hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
+                                            //This code shoves the Player with particular force in their opposite direction.
+                                            //This is a melee attack, shoving the player with less force, subtly offsetting the player upwards to distinguish it from a charge.
+                                            Vector3 knockbackDir = -hit.collider.transform.forward;
+                                            //knockbackDir.y = 0;
+                                            hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
 
-                                        manager.damageDealt += damage;
+                                            manager.damageDealt += damage;
 
-                                        attackLock = false;
-                                        meleeAttackTimer = meleeReset;
+                                            attackLock = false;
+                                            meleeAttackTimer = meleeReset;
 
-                                        //if (GetComponent<EnemyFollowerScript>() != null)
-                                        //{
-                                        //    if (GetComponent<EnemyFollowerScript>().leader != null && GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
-                                        //    {
-                                        //        GetComponent<EnemyFollowerScript>().leader.Pursuit();
-                                        //    }
+                                            //if (GetComponent<EnemyFollowerScript>() != null)
+                                            //{
+                                            //    if (GetComponent<EnemyFollowerScript>().leader != null && GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
+                                            //    {
+                                            //        GetComponent<EnemyFollowerScript>().leader.Pursuit();
+                                            //    }
 
-                                        //    GetComponent<EnemyFollowerScript>().ChasePlayer();
-                                        //}              
+                                            //    GetComponent<EnemyFollowerScript>().ChasePlayer();
+                                            //}              
+                                        }
                                     }
                                 }
                             }
-
                         }
                     }
 
@@ -926,6 +937,14 @@ public class ReplevinScript : MonoBehaviour
                                 {
                                     gameObject.AddComponent<DebuffScript>();
                                 }
+
+                                if (hit.collider.GetComponent<PlayerStatusScript>().counterplayCheat)
+                                {
+                                    hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
+                                }
+
+                                attackLock = false;
+                                ramTimeout = true;
                             }
                           
 
@@ -1043,6 +1062,11 @@ public class ReplevinScript : MonoBehaviour
                     if (airtimeShort <= 0f)
                     {
                         airtimeShort = airtimeReset;
+                        if(lockOn)
+                        {
+                            lockOn = false;
+                        }
+
                         recorded = false;
                     }
                 }
@@ -1078,37 +1102,61 @@ public class ReplevinScript : MonoBehaviour
                     lockOn = true;
                 }
 
-                if (lockOn)
+                if (lockOn && Time.timeScale == 1)
                 {
                     transform.position = Vector3.Lerp(transform.position, player.transform.position, gapClose);
                     //slamTimeout = true;
-                }
 
-                if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hitTheSequel, 2f))
-                {
-                    if (hitTheSequel.collider.tag == "Player" && canAttackAgain)
+                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hitTheSequel, 2f))
                     {
-                        Vector3 knockbackDir = transform.forward;
-                        knockbackDir.y = 0;
-                        hitTheSequel.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
-
-                        if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
+                        if (hitTheSequel.collider.tag == "Player" && canAttackAgain)
                         {
-                            if (gameObject.GetComponent<DebuffScript>() == null)
+
+                            if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
                             {
-                                gameObject.AddComponent<DebuffScript>();
+                                if (gameObject.GetComponent<DebuffScript>() == null)
+                                {
+                                    gameObject.AddComponent<DebuffScript>();
+                                }
+
+                                if (hit.collider.GetComponent<PlayerStatusScript>().counterplayCheat)
+                                {
+                                    hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
+                                }
+
+                                if (gameObject.GetComponent<Rigidbody>() != null)
+                                {
+                                    gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                                    gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                                }
+
+                                slamTimeout = true;
+                                canAttackAgain = false;
+                            }
+
+                            else
+                            {
+                                hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+                                hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+
+                                Vector3 knockbackDir = transform.forward;
+                                knockbackDir.y = 0;
+                                hitTheSequel.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
+
+                                if (gameObject.GetComponent<Rigidbody>() != null)
+                                {
+                                    gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                                    gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                                }
+
+                                manager.damageDealt += damage;
+
+                                slamTimeout = true;
+                                canAttackAgain = false;
                             }
                         }
-
-                        hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
-                        hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
-
-                        manager.damageDealt += damage;
-
-                        slamTimeout = true;
-                        canAttackAgain = false;
                     }
-                }
+                }             
             }
 
             else
@@ -1119,15 +1167,16 @@ public class ReplevinScript : MonoBehaviour
 
                     if (gameObject.GetComponent<Rigidbody>() != null)
                     {
+                        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                        gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
                         Destroy(gameObject.GetComponent<Rigidbody>());
                     }
-
-                    //gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                    //gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
                 }
 
                 recorded = false;
+                airtimeShort = airtimeReset;
                 self.SetDestination(player.transform.position);
             }
 
@@ -1191,19 +1240,30 @@ public class ReplevinScript : MonoBehaviour
                             {
                                 gameObject.AddComponent<DebuffScript>();
                             }
+
+                            if (hit.collider.GetComponent<PlayerStatusScript>().counterplayCheat)
+                            {
+                                hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
+                            }
+
+                            slamTimeout = true;
+                            canAttackAgain = false;
                         }
 
-                        hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
-                        hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+                        else
+                        {
+                            hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+                            hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
 
-                        Vector3 knockbackDir = transform.forward;
-                        knockbackDir.y = 0;
-                        hitTheSequel.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
+                            Vector3 knockbackDir = transform.forward;
+                            knockbackDir.y = 0;
+                            hitTheSequel.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
 
-                        manager.damageDealt += damage;
+                            manager.damageDealt += damage;
 
-                        slamTimeout = true;
-                        canAttackAgain = false;
+                            slamTimeout = true;
+                            canAttackAgain = false;
+                        }
                     }
                 }
             }

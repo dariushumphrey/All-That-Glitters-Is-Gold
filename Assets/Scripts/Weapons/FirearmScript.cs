@@ -430,8 +430,8 @@ public class FirearmScript : MonoBehaviour
 
         if(weaponRarity == 2 || weaponRarity == 3)
         {
-            cheatRNG = Random.Range(400, 1051);
-            //cheatRNG = 1001;
+            cheatRNG = Random.Range(400, 1101);
+            //cheatRNG = 1051;
             if (cheatRNG <= 450)
             {
                 gameObject.AddComponent<WaitNowImReady>();
@@ -524,19 +524,26 @@ public class FirearmScript : MonoBehaviour
                 gameObject.AddComponent<Fulminate>();
                 gameObject.GetComponent<Fulminate>().proc = procOne;
                 procTwo.GetComponent<Text>().text = " ";
-            } //New
+            }
 
-            if (cheatRNG > 1000)
+            if (cheatRNG > 1000 && cheatRNG <= 1050)
             {
                 gameObject.AddComponent<Forager>();
                 gameObject.GetComponent<Forager>().proc = procOne;
+                procTwo.GetComponent<Text>().text = " ";
+            }
+
+            if (cheatRNG > 1050)
+            {
+                gameObject.AddComponent<Counterplay>();
+                gameObject.GetComponent<Counterplay>().proc = procOne;
                 procTwo.GetComponent<Text>().text = " ";
             } //New
         }
         
         if(weaponRarity >= 4)
         {
-            fcnChtOne = Random.Range(400, 481); //New
+            fcnChtOne = Random.Range(400, 481);
             if(fcnChtOne <= 410)
             {
                 gameObject.AddComponent<AllElseFails>();
@@ -589,7 +596,7 @@ public class FirearmScript : MonoBehaviour
                 gameObject.GetComponent<Forager>().proc = procOne;
             }
 
-            fcnChtTwo = Random.Range(480, 531);
+            fcnChtTwo = Random.Range(480, 541);
             if (fcnChtTwo <= 490)
             {
                 gameObject.AddComponent<WaitNowImReady>();
@@ -618,10 +625,17 @@ public class FirearmScript : MonoBehaviour
 
             }
 
-            if (fcnChtTwo > 520)
+            if (fcnChtTwo > 520 && fcnChtTwo <= 530)
             {
                 gameObject.AddComponent<RudeAwakening>();
                 gameObject.GetComponent<RudeAwakening>().proc = procTwo;
+
+            }
+
+            if (fcnChtTwo > 530)
+            {
+                gameObject.AddComponent<Counterplay>();
+                gameObject.GetComponent<Counterplay>().proc = procTwo;
 
             }
         }

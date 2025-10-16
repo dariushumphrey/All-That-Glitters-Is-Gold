@@ -19,7 +19,7 @@ public class SolutionGrenadeScript : MonoBehaviour
 
     }
 
-    IEnumerator SetupGrenade()
+    public IEnumerator SetupGrenade()
     {
         yield return new WaitForSeconds(armingTime);
         //acidPool.GetComponent<ParticleSystem>().Play();

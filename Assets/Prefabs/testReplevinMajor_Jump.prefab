@@ -296,7 +296,7 @@ MonoBehaviour:
   punchTimeout: 2
   jumpTimeout: 2
   jumpTakeoff: {fileID: 2056866271575102109, guid: e436b8ce7e2020e47a954d998deb3c8d, type: 3}
-  airtimeShort: 1
+  airtimeShort: 1.5
   rangeATKMin: 7
   attackRate: 1
   rangeAttackRate: 1

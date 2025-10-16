@@ -11,7 +11,7 @@ public class Forager : MonoBehaviour
     private float shieldPercent = 2f;
     private int shieldAssign;
 
-    private float ammoPercent = 7.5f;
+    private float ammoPercent = 15f;
     private float magOverflowPercent = 150f;
     private int ammoAssign;
     private int overflowAssign;

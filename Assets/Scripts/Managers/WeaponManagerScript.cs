@@ -2945,7 +2945,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "@")
                     {
@@ -2954,7 +2954,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Fulminate>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "#")
                     {
@@ -2962,6 +2962,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Forager>();
 
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    } //New
+
+                    if (cFiveStr == "$")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1075;
+                        item.AddComponent<Counterplay>();
+
+                        item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
                 }
@@ -3035,7 +3044,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Forager>();
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
 
                     //Equivalent Exchange pairing
                     if (cSixStr == "0")
@@ -3044,7 +3053,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<WaitNowImReady>();
                         item.GetComponent<WaitNowImReady>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
 
                     if (cSixStr == "1")
                     {
@@ -3052,7 +3061,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Efficacy>();
                         item.GetComponent<Efficacy>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
 
                     if (cSixStr == "2")
                     {
@@ -3060,7 +3069,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Inoculated>();
                         item.GetComponent<Inoculated>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
 
                     if (cSixStr == "7")
                     {
@@ -3068,13 +3077,21 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Cadence>();
                         item.GetComponent<Cadence>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
 
                     if (cSixStr == "3")
                     {
                         item.GetComponent<FirearmScript>().fcnChtTwo = 525;
                         item.AddComponent<RudeAwakening>();
                         item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    } //New
+
+                    if (cSixStr == "$")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 535;
+                        item.AddComponent<Counterplay>();
+                        item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
 
                     } //New
                 }
@@ -3305,6 +3322,15 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
+
+                    if (cFiveStr == "$")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1075;
+                        item.AddComponent<Counterplay>();
+
+                        item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
                 }
 
@@ -3377,7 +3403,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Forager>();
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
 
                     //Pay to Win pairing
                     if (cSixStr == "5")
@@ -3425,6 +3451,14 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().fcnChtTwo = 525;
                         item.AddComponent<RudeAwakening>();
                         item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    }
+
+                    if (cSixStr == "$")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 535;
+                        item.AddComponent<Counterplay>();
+                        item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
 
                     }
                 }
@@ -3658,6 +3692,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
+
+                    if (cFiveStr == "$")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1075;
+                        item.AddComponent<Counterplay>();
+
+                        item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    } //New
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -3778,6 +3821,14 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
 
                     }
+
+                    if (cSixStr == "$")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 535;
+                        item.AddComponent<Counterplay>();
+                        item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    } //New
                 }
 
                 yield return new WaitForSeconds(spawnDelayTimer);
@@ -4007,6 +4058,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
+
+                    if (cFiveStr == "$")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1075;
+                        item.AddComponent<Counterplay>();
+
+                        item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    } //New
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -4120,6 +4180,14 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
 
                     }
+
+                    if (cSixStr == "$")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 535;
+                        item.AddComponent<Counterplay>();
+                        item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    } //New
                 }
 
                 yield return new WaitForSeconds(spawnDelayTimer);
@@ -4348,6 +4416,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
+
+                    if (cFiveStr == "$")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1075;
+                        item.AddComponent<Counterplay>();
+
+                        item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    } //New
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -4468,6 +4545,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
 
                     }
+
+                    if (cSixStr == "$")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 535;
+                        item.AddComponent<Counterplay>();
+                        item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    } //New
+
                 }
 
                 yield return new WaitForSeconds(spawnDelayTimer);
@@ -4696,6 +4782,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
+
+                    if (cFiveStr == "$")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1075;
+                        item.AddComponent<Counterplay>();
+
+                        item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    } //New
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -4807,8 +4902,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().fcnChtTwo = 525;
                         item.AddComponent<RudeAwakening>();
                         item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
-
                     }
+
+                    if (cSixStr == "$")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 535;
+                        item.AddComponent<Counterplay>();
+                        item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    } //New
                 }
 
                 yield return new WaitForSeconds(spawnDelayTimer);
@@ -5037,6 +5139,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
+
+                    if (cFiveStr == "$")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1075;
+                        item.AddComponent<Counterplay>();
+
+                        item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    } //New
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -5156,6 +5267,14 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
 
                     }
+
+                    if (cSixStr == "$")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 535;
+                        item.AddComponent<Counterplay>();
+                        item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    } //New
                 }
 
                 yield return new WaitForSeconds(spawnDelayTimer);

@@ -42,6 +42,8 @@ public class PlayerStatusScript : MonoBehaviour
     internal PlayerInventoryScript inv;
     internal int dmgReceived;
     internal bool playerHit;
+    public GameObject counterplayCheat;
+    internal bool counterplayFlag = false;
 
     // Start is called before the first frame update
     void Start()
@@ -201,7 +203,7 @@ public class PlayerStatusScript : MonoBehaviour
         playerHit = true;
 
         if(isInvincible)
-        {
+        {        
             return;
         }
 

@@ -681,10 +681,17 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Forager
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 1000)
+            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 1000 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 1050)
             {
                 cheatTraitOne.text = "Forager" + '\n' +
                     "Weapon or Melee kills produce a burst of Lucent clusters, Health, Shield, and Ammo pickups.";
+            }
+
+            //Counterplay
+            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 1050)
+            {
+                cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken during Evasions casts two Lucent clusters and increases Weapon damage by 10%. Stacks 3x.";
             } //New
 
             cheatTraitTwo.text = " ";
@@ -783,9 +790,9 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitOne.text = "Fulminate" + " (Fated)" + '\n' +
                     "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Passively throw two Destruct Grenades.";
                 }
-            } //New
+            }
 
-            //Fulminate
+            //Forager
             if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 470)
             {
                 cheatTraitOne.text = "Forager" + '\n' +
@@ -796,7 +803,7 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitOne.text = "Forager" + " (Fated)" + '\n' +
                     "Kills produce stronger bursts of Lucent clusters, Health, Shield, and Ammo pickups. Every tenth hit on Bosses produce a burst.";
                 }
-            } //New
+            }
 
             //Wait! Now I'm Ready
             if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 490)
@@ -809,7 +816,7 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitTwo.text = "Wait! Now I'm Ready!" + " (Fated)" + '\n' +
                     "Kills with this Weapon restore 20% of Shield strength.";
                 }
-            } //New
+            }
 
             //Efficacy
             if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 490 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 500)
@@ -822,7 +829,7 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitTwo.text = "Efficacy" + " (Fated)" + '\n' +
                     "Enemy hits increases this Weapon's base damage by 2%, up to 125%, and cannot reset.";
                 }
-            } //New
+            }
 
             //Inoculated
             if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 500 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 510)
@@ -835,7 +842,7 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitTwo.text = "Inoculated" + " (Fated)" + '\n' +
                     "Kills with this Weapon restore 10% of Health.";
                 }
-            } //New
+            }
 
             //Cadence
             if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 510 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 520)
@@ -848,10 +855,10 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitTwo.text = "Cadence" + " (Fated)" + '\n' +
                     "Every third shot spawns a Lucent cluster.";
                 }
-            } //New
+            }
 
             //Rude Awakening
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 520)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 520 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 530)
             {
                 cheatTraitTwo.text = "Rude Awakening" + '\n' +
                     "[E] - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
@@ -860,6 +867,19 @@ public class PlayerInventoryScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + " (Fated)" + '\n' +
                     "[E] - Cast a lethal AOE blast. Stacks 6x. Having stacks increases base damage by 20%.";
+                }
+            } 
+
+            //Counterplay
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 530)
+            {
+                cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken during Evasions casts two Lucent clusters and increases Weapon damage by 10%. Stacks 3x.";
+
+                if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
+                {
+                    cheatTraitTwo.text = "Counterplay" + " (Fated)" + '\n' +
+                    "Hits taken during Evasions casts Lucent clusters, a Solution Grenade, and increases Weapon damage by 10%. Stacks 10x.";
                 }
             } //New
         }
@@ -1338,6 +1358,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Forager>())
                             {
                                 write.WriteLine("#");
+                            }
+
+                            if (inventory[i].GetComponent<Counterplay>())
+                            {
+                                write.WriteLine("$");
                             } //New
                         }
 
@@ -1462,6 +1487,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<RudeAwakening>())
                                 {
                                     write.WriteLine("3");
+                                }
+
+                                if (inventory[i].GetComponent<Counterplay>())
+                                {
+                                    write.WriteLine("$");
                                 }
                             }        
                             
@@ -1655,6 +1685,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Forager>())
                             {
                                 write.WriteLine("#");
+                            }
+
+                            if (inventory[i].GetComponent<Counterplay>())
+                            {
+                                write.WriteLine("$");
                             } //New
 
                         }
@@ -1755,7 +1790,7 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Forager>())
                                 {
                                     write.Write("#");
-                                } //New
+                                }
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
                                 {
@@ -1781,6 +1816,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 {
                                     write.WriteLine("3");
                                 }
+
+                                if (inventory[i].GetComponent<Counterplay>())
+                                {
+                                    write.WriteLine("$");
+                                } //New
                             }
 
                         }
@@ -1972,6 +2012,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Forager>())
                             {
                                 write.WriteLine("#");
+                            }
+
+                            if (inventory[i].GetComponent<Counterplay>())
+                            {
+                                write.WriteLine("$");
                             } //New
                         }
 
@@ -2071,7 +2116,7 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Forager>())
                                 {
                                     write.Write("#");
-                                } //New
+                                }
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
                                 {
@@ -2097,6 +2142,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 {
                                     write.WriteLine("3");
                                 }
+
+                                if (inventory[i].GetComponent<Counterplay>())
+                                {
+                                    write.WriteLine("$");
+                                } //New
                             }
 
                         }
@@ -2288,6 +2338,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Forager>())
                             {
                                 write.WriteLine("#");
+                            }
+
+                            if (inventory[i].GetComponent<Counterplay>())
+                            {
+                                write.WriteLine("$");
                             } //New
                         }
 
@@ -2387,7 +2442,7 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Forager>())
                                 {
                                     write.Write("#");
-                                } //New
+                                }
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
                                 {
@@ -2413,6 +2468,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 {
                                     write.WriteLine("3");
                                 }
+
+                                if (inventory[i].GetComponent<Counterplay>())
+                                {
+                                    write.WriteLine("$");
+                                } //New
                             }
                         }
                     }
@@ -2603,6 +2663,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Forager>())
                             {
                                 write.WriteLine("#");
+                            }
+
+                            if (inventory[i].GetComponent<Counterplay>())
+                            {
+                                write.WriteLine("$");
                             } //New
                         }
 
@@ -2702,7 +2767,7 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Forager>())
                                 {
                                     write.Write("#");
-                                } //New
+                                }
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
                                 {
@@ -2728,6 +2793,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 {
                                     write.WriteLine("3");
                                 }
+
+                                if (inventory[i].GetComponent<Counterplay>())
+                                {
+                                    write.WriteLine("$");
+                                } //New
                             }
                         }
                     }
@@ -2918,6 +2988,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Forager>())
                             {
                                 write.WriteLine("#");
+                            }
+
+                            if (inventory[i].GetComponent<Counterplay>())
+                            {
+                                write.WriteLine("$");
                             } //New
                         }
 
@@ -3017,7 +3092,7 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Forager>())
                                 {
                                     write.Write("#");
-                                } //New
+                                }
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
                                 {
@@ -3043,6 +3118,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 {
                                     write.WriteLine("3");
                                 }
+
+                                if (inventory[i].GetComponent<Counterplay>())
+                                {
+                                    write.WriteLine("$");
+                                } //New
                             }
                         }
                     }
@@ -3233,6 +3313,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Forager>())
                             {
                                 write.WriteLine("#");
+                            }
+
+                            if (inventory[i].GetComponent<Counterplay>())
+                            {
+                                write.WriteLine("$");
                             } //New
                         }
 
@@ -3332,7 +3417,7 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Forager>())
                                 {
                                     write.Write("#");
-                                } //New
+                                }
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
                                 {
@@ -3358,6 +3443,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 {
                                     write.WriteLine("3");
                                 }
+
+                                if (inventory[i].GetComponent<Counterplay>())
+                                {
+                                    write.WriteLine("$");
+                                } //New
                             }
                         }
                     }
