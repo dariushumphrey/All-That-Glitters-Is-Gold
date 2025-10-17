@@ -97,7 +97,11 @@ public class PlayerCameraScript : MonoBehaviour
             Zoom();
             CameraClipCountermeasure();
             AimAssistance();
-            MeleeAssistance();
+
+            if(!melee.meleeLock)
+            {
+                MeleeAssistance();
+            }
         }      
     }
 
@@ -244,7 +248,6 @@ public class PlayerCameraScript : MonoBehaviour
         rayOrigin = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
         if (Physics.Raycast(rayOrigin, playerCamera.transform.forward, out hit, melee.meleeRange, contactOnly))
         {
-
             if (hit.collider.tag == "Enemy")
             {
                 melee.meleeTarget = hit.collider.gameObject;

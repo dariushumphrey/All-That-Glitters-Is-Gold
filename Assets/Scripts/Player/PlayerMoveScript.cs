@@ -26,7 +26,8 @@ public class PlayerMoveScript : MonoBehaviour
     public List<ParticleSystem> leftThrust = new List<ParticleSystem>();
     private PlayerInventoryScript inventory;
     private PlayerStatusScript status;
-    private Rigidbody playerRigid;
+    private PlayerMeleeScript melee;
+    internal Rigidbody playerRigid;
     private Camera playerCamera;
     private Vector3 a, b, c;
     private Vector3 input;
@@ -43,8 +44,10 @@ public class PlayerMoveScript : MonoBehaviour
         playerRigid = GetComponent<Rigidbody>();
         playerCamera = Camera.main;
 
-        inventory = FindObjectOfType<PlayerInventoryScript>();
-        status = FindObjectOfType<PlayerStatusScript>();
+        inventory = gameObject.GetComponent<PlayerInventoryScript>();
+        status = gameObject.GetComponent<PlayerStatusScript>();
+        melee = gameObject.GetComponent<PlayerMeleeScript>();
+
 
         airbornePullReset = airbornePull;
     }
@@ -95,20 +98,21 @@ public class PlayerMoveScript : MonoBehaviour
         Vector3 forward = transform.forward * vertInput;
         Vector3 sideways = transform.right * horizInput;
 
-        if(!zeroGravity)
-        {
-            forward.y = 0f;
-            sideways.y = 0f;
-            airbornePull = airbornePullReset;
-        }
-
-        else
+        if(melee.meleeLock || zeroGravity)
         {
             playerRigid.useGravity = false;
             airbornePull = 0f;
         }
 
-        if(Input.GetButton("Horizontal"))
+        else
+        {
+            forward.y = 0f;
+            sideways.y = 0f;
+            playerRigid.useGravity = true;
+            airbornePull = airbornePullReset;
+        }     
+
+        if (Input.GetButton("Horizontal"))
         {
             playerRigid.AddForce(sideways * speed * speedAccelerant);
         }
@@ -148,8 +152,6 @@ public class PlayerMoveScript : MonoBehaviour
 
         if(Airborne())
         {
-            playerRigid.AddForce(-Vector3.up * airbornePull);
-
             if(zeroGravity)
             {
                 if(Input.GetKey(KeyCode.Z))
@@ -161,6 +163,11 @@ public class PlayerMoveScript : MonoBehaviour
                 {
                     playerRigid.AddForce(-transform.up * speed * speedAccelerant);
                 }
+            }
+
+            else
+            {
+                playerRigid.AddForce(-Vector3.up * airbornePull);
             }
 
             //float radius = collider.radius;

@@ -64,7 +64,7 @@ public class SpawnerScript : MonoBehaviour
 
         GameObject fresh = Instantiate(spawned[picker], spawnSite, transform.rotation);
         int berthCondition = Random.Range(0, 101);
-        if (berthCondition > 70 && !spawned[picker].GetComponent<ReplevinScript>().amBoss)
+        if (berthCondition > 80 && !spawned[picker].GetComponent<ReplevinScript>().amBoss)
         {
             fresh.AddComponent<BerthScript>();
             fresh.AddComponent<ColorLerpScript>();

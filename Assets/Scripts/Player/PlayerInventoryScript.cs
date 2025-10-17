@@ -39,6 +39,7 @@ public class PlayerInventoryScript : MonoBehaviour
     internal bool fulminatePresent;
     internal bool fulminateFated;
     internal int fulminateBuff;
+    internal bool enshroudPresent;
 
     internal List<string> readdedWeps = new List<string>(10);
     
@@ -688,10 +689,17 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Counterplay
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 1050)
+            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 1050 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 1100)
             {
                 cheatTraitOne.text = "Counterplay" + '\n' +
                     "Hits taken during Evasions casts two Lucent clusters and increases Weapon damage by 10%. Stacks 3x.";
+            }
+
+            //Enshroud
+            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 1100)
+            {
+                cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%. Melee kills cast a Fogger Grenade.";
             } //New
 
             cheatTraitTwo.text = " ";
@@ -871,7 +879,7 @@ public class PlayerInventoryScript : MonoBehaviour
             } 
 
             //Counterplay
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 530)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 530 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 540)
             {
                 cheatTraitTwo.text = "Counterplay" + '\n' +
                     "Hits taken during Evasions casts two Lucent clusters and increases Weapon damage by 10%. Stacks 3x.";
@@ -880,6 +888,19 @@ public class PlayerInventoryScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Counterplay" + " (Fated)" + '\n' +
                     "Hits taken during Evasions casts Lucent clusters, a Solution Grenade, and increases Weapon damage by 10%. Stacks 10x.";
+                }
+            }
+
+            //Enshroud
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 540)
+            {
+                cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%. Melee kills cast a Fogger Grenade.";
+
+                if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
+                {
+                    cheatTraitTwo.text = "Enshroud" + " (Fated)" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%. All Fogger Grenades apply low damage-over-time.";
                 }
             } //New
         }
@@ -1048,6 +1069,12 @@ public class PlayerInventoryScript : MonoBehaviour
                     GameObject brand = Instantiate(grenades[grenadeSelection], transform.position + transform.forward, transform.rotation);
                     brand.name = grenades[grenadeSelection].name;
                     brand.GetComponent<Rigidbody>().AddForce(transform.forward * throwStrength, ForceMode.Impulse);
+
+                    if(enshroudPresent)
+                    {
+                        brand.GetComponent<FoggerGrenadeScript>().enshroudFlag = true;
+                    }
+
                     throwing = false;
 
                     throwStrength = 0;
@@ -1363,6 +1390,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Counterplay>())
                             {
                                 write.WriteLine("$");
+                            }
+
+                            if (inventory[i].GetComponent<Enshroud>())
+                            {
+                                write.WriteLine("%");
                             } //New
                         }
 
@@ -1462,7 +1494,7 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Forager>())
                                 {
                                     write.Write("#");
-                                } //New
+                                }
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
                                 {
@@ -1493,6 +1525,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 {
                                     write.WriteLine("$");
                                 }
+
+                                if (inventory[i].GetComponent<Enshroud>())
+                                {
+                                    write.WriteLine("%");
+                                } //New
                             }        
                             
                         }
@@ -1690,6 +1727,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Counterplay>())
                             {
                                 write.WriteLine("$");
+                            }
+
+                            if (inventory[i].GetComponent<Enshroud>())
+                            {
+                                write.WriteLine("%");
                             } //New
 
                         }
@@ -1820,6 +1862,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Counterplay>())
                                 {
                                     write.WriteLine("$");
+                                }
+
+                                if (inventory[i].GetComponent<Enshroud>())
+                                {
+                                    write.WriteLine("%");
                                 } //New
                             }
 
@@ -2017,6 +2064,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Counterplay>())
                             {
                                 write.WriteLine("$");
+                            }
+
+                            if (inventory[i].GetComponent<Enshroud>())
+                            {
+                                write.WriteLine("%");
                             } //New
                         }
 
@@ -2146,6 +2198,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Counterplay>())
                                 {
                                     write.WriteLine("$");
+                                }
+
+                                if (inventory[i].GetComponent<Enshroud>())
+                                {
+                                    write.WriteLine("%");
                                 } //New
                             }
 
@@ -2343,6 +2400,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Counterplay>())
                             {
                                 write.WriteLine("$");
+                            }
+
+                            if (inventory[i].GetComponent<Enshroud>())
+                            {
+                                write.WriteLine("%");
                             } //New
                         }
 
@@ -2472,6 +2534,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Counterplay>())
                                 {
                                     write.WriteLine("$");
+                                }
+
+                                if (inventory[i].GetComponent<Enshroud>())
+                                {
+                                    write.WriteLine("%");
                                 } //New
                             }
                         }
@@ -2668,6 +2735,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Counterplay>())
                             {
                                 write.WriteLine("$");
+                            }
+
+                            if (inventory[i].GetComponent<Enshroud>())
+                            {
+                                write.WriteLine("%");
                             } //New
                         }
 
@@ -2797,6 +2869,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Counterplay>())
                                 {
                                     write.WriteLine("$");
+                                }
+
+                                if (inventory[i].GetComponent<Enshroud>())
+                                {
+                                    write.WriteLine("%");
                                 } //New
                             }
                         }
@@ -2993,6 +3070,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Counterplay>())
                             {
                                 write.WriteLine("$");
+                            }
+
+                            if (inventory[i].GetComponent<Enshroud>())
+                            {
+                                write.WriteLine("%");
                             } //New
                         }
 
@@ -3122,6 +3204,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Counterplay>())
                                 {
                                     write.WriteLine("$");
+                                }
+
+                                if (inventory[i].GetComponent<Enshroud>())
+                                {
+                                    write.WriteLine("%");
                                 } //New
                             }
                         }
@@ -3318,6 +3405,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Counterplay>())
                             {
                                 write.WriteLine("$");
+                            }
+
+                            if (inventory[i].GetComponent<Enshroud>())
+                            {
+                                write.WriteLine("%");
                             } //New
                         }
 
@@ -3447,6 +3539,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Counterplay>())
                                 {
                                     write.WriteLine("$");
+                                }
+
+                                if (inventory[i].GetComponent<Enshroud>())
+                                {
+                                    write.WriteLine("%");
                                 } //New
                             }
                         }

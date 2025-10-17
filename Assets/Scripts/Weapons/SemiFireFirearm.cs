@@ -220,6 +220,11 @@ public class SemiFireFirearm : FirearmScript
 
                 }
 
+                if (gameObject.GetComponent<Enshroud>())
+                {
+                    gameObject.GetComponent<Enshroud>().hitConfirmed = true;
+                }
+
                 StartCoroutine(DeconfirmHit());
                 FatedCadenceRewardPosition(hit.collider.transform.position);
                 targetHit = hit.transform.gameObject;

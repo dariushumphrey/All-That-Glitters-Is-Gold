@@ -430,8 +430,8 @@ public class FirearmScript : MonoBehaviour
 
         if(weaponRarity == 2 || weaponRarity == 3)
         {
-            cheatRNG = Random.Range(400, 1101);
-            //cheatRNG = 1051;
+            cheatRNG = Random.Range(400, 1151);
+            //cheatRNG = 1101;
             if (cheatRNG <= 450)
             {
                 gameObject.AddComponent<WaitNowImReady>();
@@ -533,10 +533,17 @@ public class FirearmScript : MonoBehaviour
                 procTwo.GetComponent<Text>().text = " ";
             }
 
-            if (cheatRNG > 1050)
+            if (cheatRNG > 1050 && cheatRNG <= 1100)
             {
                 gameObject.AddComponent<Counterplay>();
                 gameObject.GetComponent<Counterplay>().proc = procOne;
+                procTwo.GetComponent<Text>().text = " ";
+            } //New
+
+            if (cheatRNG > 1100)
+            {
+                gameObject.AddComponent<Enshroud>();
+                gameObject.GetComponent<Enshroud>().proc = procOne;
                 procTwo.GetComponent<Text>().text = " ";
             } //New
         }
@@ -596,7 +603,7 @@ public class FirearmScript : MonoBehaviour
                 gameObject.GetComponent<Forager>().proc = procOne;
             }
 
-            fcnChtTwo = Random.Range(480, 541);
+            fcnChtTwo = Random.Range(480, 551);
             if (fcnChtTwo <= 490)
             {
                 gameObject.AddComponent<WaitNowImReady>();
@@ -632,10 +639,17 @@ public class FirearmScript : MonoBehaviour
 
             }
 
-            if (fcnChtTwo > 530)
+            if (fcnChtTwo > 530 && fcnChtTwo <= 540)
             {
                 gameObject.AddComponent<Counterplay>();
                 gameObject.GetComponent<Counterplay>().proc = procTwo;
+
+            }
+
+            if (fcnChtTwo > 540)
+            {
+                gameObject.AddComponent<Enshroud>();
+                gameObject.GetComponent<Enshroud>().proc = procTwo;
 
             }
         }
@@ -797,6 +811,11 @@ public class FirearmScript : MonoBehaviour
                         gameObject.GetComponent<Forager>().hitConfirmed = true;
                         gameObject.GetComponent<Forager>().burstPosition = hit.collider.transform.position + (Vector3.up * 2);
 
+                    }
+
+                    if (gameObject.GetComponent<Enshroud>())
+                    {
+                        gameObject.GetComponent<Enshroud>().hitConfirmed = true;
                     }
 
                     StartCoroutine(DeconfirmHit());

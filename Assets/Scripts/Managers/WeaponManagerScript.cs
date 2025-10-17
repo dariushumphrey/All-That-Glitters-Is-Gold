@@ -2963,7 +2963,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "$")
                     {
@@ -2971,6 +2971,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Counterplay>();
 
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
+
+                    if (cFiveStr == "%")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1125;
+                        item.AddComponent<Enshroud>();
+
+                        item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
                 }
@@ -3085,13 +3094,21 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<RudeAwakening>();
                         item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
 
                     if (cSixStr == "$")
                     {
                         item.GetComponent<FirearmScript>().fcnChtTwo = 535;
                         item.AddComponent<Counterplay>();
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    }
+
+                    if (cSixStr == "%")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 545;
+                        item.AddComponent<Enshroud>();
+                        item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procTwo;
 
                     } //New
                 }
@@ -3331,6 +3348,15 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
+
+                    if (cFiveStr == "%")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1125;
+                        item.AddComponent<Enshroud>();
+
+                        item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
                 }
 
@@ -3459,8 +3485,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().fcnChtTwo = 535;
                         item.AddComponent<Counterplay>();
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
-
                     }
+
+                    if (cSixStr == "%")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 545;
+                        item.AddComponent<Enshroud>();
+                        item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    } //New
                 }
 
                 yield return new WaitForSeconds(spawnDelayTimer);
@@ -3701,6 +3734,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
+
+                    if (cFiveStr == "%")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1125;
+                        item.AddComponent<Enshroud>();
+
+                        item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    } //New
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -3827,6 +3869,14 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().fcnChtTwo = 535;
                         item.AddComponent<Counterplay>();
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    } //New
+
+                    if (cSixStr == "%")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 545;
+                        item.AddComponent<Enshroud>();
+                        item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procTwo;
 
                     } //New
                 }
@@ -4067,6 +4117,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
+
+                    if (cFiveStr == "%")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1125;
+                        item.AddComponent<Enshroud>();
+
+                        item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    } //New
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -4186,6 +4245,14 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().fcnChtTwo = 535;
                         item.AddComponent<Counterplay>();
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    } //New
+
+                    if (cSixStr == "%")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 545;
+                        item.AddComponent<Enshroud>();
+                        item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procTwo;
 
                     } //New
                 }
@@ -4425,6 +4492,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
+
+                    if (cFiveStr == "%")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1125;
+                        item.AddComponent<Enshroud>();
+
+                        item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    } //New
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -4551,6 +4627,14 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().fcnChtTwo = 535;
                         item.AddComponent<Counterplay>();
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    } //New
+
+                    if (cSixStr == "%")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 545;
+                        item.AddComponent<Enshroud>();
+                        item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procTwo;
 
                     } //New
 
@@ -4791,6 +4875,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
+
+                    if (cFiveStr == "%")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1125;
+                        item.AddComponent<Enshroud>();
+
+                        item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    } //New
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -4909,6 +5002,14 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().fcnChtTwo = 535;
                         item.AddComponent<Counterplay>();
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    } //New
+
+                    if (cSixStr == "%")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 545;
+                        item.AddComponent<Enshroud>();
+                        item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procTwo;
 
                     } //New
                 }
@@ -5148,6 +5249,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                     } //New
+
+                    if (cFiveStr == "%")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1125;
+                        item.AddComponent<Enshroud>();
+
+                        item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    } //New
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -5273,6 +5383,14 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().fcnChtTwo = 535;
                         item.AddComponent<Counterplay>();
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    } //New
+
+                    if (cSixStr == "%")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 545;
+                        item.AddComponent<Enshroud>();
+                        item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procTwo;
 
                     } //New
                 }

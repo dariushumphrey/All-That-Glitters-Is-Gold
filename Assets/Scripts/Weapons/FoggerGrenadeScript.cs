@@ -7,6 +7,7 @@ public class FoggerGrenadeScript : MonoBehaviour
     public float armingTime;
     public GameObject smokePlume, smokeRadius;
     private bool hitOnce = false;
+    internal bool enshroudFlag = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +20,7 @@ public class FoggerGrenadeScript : MonoBehaviour
 
     }
 
-    IEnumerator SetupGrenade()
+    public IEnumerator SetupGrenade()
     {
         yield return new WaitForSeconds(armingTime);
         smokePlume.GetComponent<ParticleSystem>().Play();
@@ -55,7 +56,16 @@ public class FoggerGrenadeScript : MonoBehaviour
     {
         if(other.gameObject.tag == "Enemy")
         {
-            other.gameObject.AddComponent<SlowedScript>();           
+            other.gameObject.AddComponent<SlowedScript>();       
+            if(enshroudFlag)
+            {
+                if(!other.gameObject.GetComponent<DamageOverTimeScript>())
+                {
+                    other.gameObject.AddComponent<DamageOverTimeScript>();
+                    other.gameObject.GetComponent<DamageOverTimeScript>().dotDamage = 150;
+                    other.gameObject.GetComponent<DamageOverTimeScript>().damageOverTimeProc = 1f;
+                }
+            }
         }
     }
 }

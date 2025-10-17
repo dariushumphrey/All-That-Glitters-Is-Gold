@@ -10,7 +10,7 @@ public class DamageOverTimeScript : MonoBehaviour
     internal bool playerHarm = false;
     internal float damageOverTimeLength = 20f;
     private float dotTimer = 0f;
-    private float damageOverTimeProc = 0.25f;
+    internal float damageOverTimeProc = 0.25f;
 
     private void Awake()
     {
