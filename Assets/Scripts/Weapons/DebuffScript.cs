@@ -5,7 +5,7 @@ using UnityEngine;
 public class DebuffScript : MonoBehaviour
 {
     internal float damageAmp = 1.5f;
-    private float debuffLength = 5f;
+    internal float debuffLength = 5f;
     // Start is called before the first frame update
     void Start()
     {

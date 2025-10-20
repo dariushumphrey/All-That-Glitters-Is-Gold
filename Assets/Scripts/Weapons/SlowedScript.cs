@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SlowedScript : MonoBehaviour
 {
-    private float slowedLength = 10f;
+    internal float slowedLength = 10f;
     // Start is called before the first frame update
     void Start()
     {

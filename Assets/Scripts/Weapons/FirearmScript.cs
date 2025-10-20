@@ -430,8 +430,8 @@ public class FirearmScript : MonoBehaviour
 
         if(weaponRarity == 2 || weaponRarity == 3)
         {
-            cheatRNG = Random.Range(400, 1151);
-            //cheatRNG = 1101;
+            cheatRNG = Random.Range(400, 1201);
+            //cheatRNG = 1151;
             if (cheatRNG <= 450)
             {
                 gameObject.AddComponent<WaitNowImReady>();
@@ -538,12 +538,19 @@ public class FirearmScript : MonoBehaviour
                 gameObject.AddComponent<Counterplay>();
                 gameObject.GetComponent<Counterplay>().proc = procOne;
                 procTwo.GetComponent<Text>().text = " ";
-            } //New
+            }
 
-            if (cheatRNG > 1100)
+            if (cheatRNG > 1100 && cheatRNG <= 1150)
             {
                 gameObject.AddComponent<Enshroud>();
                 gameObject.GetComponent<Enshroud>().proc = procOne;
+                procTwo.GetComponent<Text>().text = " ";
+            }
+
+            if (cheatRNG > 1150)
+            {
+                gameObject.AddComponent<GaleForceWinds>();
+                gameObject.GetComponent<GaleForceWinds>().proc = procOne;
                 procTwo.GetComponent<Text>().text = " ";
             } //New
         }
@@ -603,7 +610,7 @@ public class FirearmScript : MonoBehaviour
                 gameObject.GetComponent<Forager>().proc = procOne;
             }
 
-            fcnChtTwo = Random.Range(480, 551);
+            fcnChtTwo = Random.Range(480, 561);
             if (fcnChtTwo <= 490)
             {
                 gameObject.AddComponent<WaitNowImReady>();
@@ -646,10 +653,17 @@ public class FirearmScript : MonoBehaviour
 
             }
 
-            if (fcnChtTwo > 540)
+            if (fcnChtTwo > 540 && fcnChtTwo <= 550)
             {
                 gameObject.AddComponent<Enshroud>();
                 gameObject.GetComponent<Enshroud>().proc = procTwo;
+
+            }
+
+            if (fcnChtTwo > 550)
+            {
+                gameObject.AddComponent<GaleForceWinds>();
+                gameObject.GetComponent<GaleForceWinds>().proc = procTwo;
 
             }
         }
@@ -816,6 +830,29 @@ public class FirearmScript : MonoBehaviour
                     if (gameObject.GetComponent<Enshroud>())
                     {
                         gameObject.GetComponent<Enshroud>().hitConfirmed = true;
+                    }
+
+                    if (gameObject.GetComponent<GaleForceWinds>())
+                    {
+                        if (gameObject.GetComponent<GaleForceWinds>().chargeCount >= 1 && gameObject.GetComponent<GaleForceWinds>().toggle)
+                        {
+                            GameObject torrent = Instantiate(gameObject.GetComponent<GaleForceWinds>().applicator, hit.point + (hit.normal * 0.01f), Quaternion.identity);
+                            torrent.name = gameObject.GetComponent<GaleForceWinds>().applicator.name;
+
+                            if (weaponRarity == 5)
+                            {
+                                torrent.GetComponent<GFWStatusApplicator>().fatedFlag = true;
+                                torrent.GetComponent<GFWStatusApplicator>().debuffMultiplier *= 1.43f;
+                                torrent.GetComponent<GFWStatusApplicator>().travelRadius *= 1.5f;
+                                torrent.GetComponent<GFWStatusApplicator>().travelLerpSpeed *= 2f;
+                            }
+
+                            gameObject.GetComponent<GaleForceWinds>().chargeCount--;
+                            gameObject.GetComponent<GaleForceWinds>().chargePercentage = 0f;
+                            gameObject.GetComponent<GaleForceWinds>().done = false;
+                            gameObject.GetComponent<GaleForceWinds>().toggle = false;
+
+                        }
                     }
 
                     StartCoroutine(DeconfirmHit());
@@ -1070,6 +1107,29 @@ public class FirearmScript : MonoBehaviour
                         miniCluster.GetComponent<LucentScript>().ShatterCalculation();
 
                         hit.collider.gameObject.GetComponent<TMRHardLucentScript>().crystalHealth -= damage;
+                    }
+
+                    if(gameObject.GetComponent<GaleForceWinds>())
+                    {
+                        if(gameObject.GetComponent<GaleForceWinds>().chargeCount >= 1 && gameObject.GetComponent<GaleForceWinds>().toggle)
+                        {
+                            GameObject torrent = Instantiate(gameObject.GetComponent<GaleForceWinds>().applicator, hit.point + (hit.normal * 0.01f), Quaternion.identity);
+                            torrent.name = gameObject.GetComponent<GaleForceWinds>().applicator.name;
+
+                            if(weaponRarity == 5)
+                            {
+                                torrent.GetComponent<GFWStatusApplicator>().fatedFlag = true;
+                                torrent.GetComponent<GFWStatusApplicator>().debuffMultiplier *= 1.43f;
+                                torrent.GetComponent<GFWStatusApplicator>().travelRadius *= 1.5f;
+                                torrent.GetComponent<GFWStatusApplicator>().travelLerpSpeed *= 2f;
+                            }
+
+                            gameObject.GetComponent<GaleForceWinds>().chargeCount--;
+                            gameObject.GetComponent<GaleForceWinds>().chargePercentage = 0f;
+                            gameObject.GetComponent<GaleForceWinds>().done = false;
+                            gameObject.GetComponent<GaleForceWinds>().toggle = false;
+
+                        }
                     }
 
                     Instantiate(sparks, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));

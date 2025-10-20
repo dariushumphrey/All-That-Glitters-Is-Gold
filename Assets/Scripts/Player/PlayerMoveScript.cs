@@ -67,14 +67,20 @@ public class PlayerMoveScript : MonoBehaviour
         {
             sprinting = false;
 
-            if(inventory.gunPlace.gameObject.activeInHierarchy == false)
-            {
-                inventory.gunPlace.gameObject.SetActive(true);
-                inventory.reticleSprite.sprite = inventory.inventory[inventory.selection].GetComponent<FirearmScript>().reticle;
+            //if(inventory.gunPlace.gameObject.activeInHierarchy == false)
+            //{
+            //    inventory.gunPlace.gameObject.SetActive(true);
+            //    inventory.reticleSprite.sprite = inventory.inventory[inventory.selection].GetComponent<FirearmScript>().reticle;
+            //}
 
+            if(!inventory.inventory[inventory.selection].GetComponent<FirearmScript>().enabled)
+            {
+                inventory.inventory[inventory.selection].GetComponent<FirearmScript>().enabled = true;
             }
 
-            if(done)
+            inventory.reticleSprite.sprite = inventory.inventory[inventory.selection].GetComponent<FirearmScript>().reticle;
+
+            if (done)
             {
                 for (int p = 0; p < backThrust.Count; p++)
                 {
@@ -126,7 +132,7 @@ public class PlayerMoveScript : MonoBehaviour
 
                 if(!inventory.inventory[inventory.selection].GetComponent<FirearmScript>().isReloading)
                 {
-                    inventory.gunPlace.gameObject.SetActive(false);
+                    inventory.inventory[inventory.selection].GetComponent<FirearmScript>().enabled = false;
                 }
 
                 inventory.reticleSprite.sprite = blankReticle;

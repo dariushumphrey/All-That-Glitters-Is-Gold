@@ -696,10 +696,17 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Enshroud
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 1100)
+            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 1100 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 1150)
             {
                 cheatTraitOne.text = "Enshroud" + '\n' +
                     "Enemy hits increase Melee range by 15%, up to 200%. Melee kills cast a Fogger Grenade.";
+            } //New
+
+            //Gale Force Winds
+            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 1150)
+            {
+                cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "[E] - Cast traveling winds that applies Health and Slowed debuffs to in-range Enemies. Lasts 45s.";
             } //New
 
             cheatTraitTwo.text = " ";
@@ -892,7 +899,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Enshroud
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 540)
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 540 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 550)
             {
                 cheatTraitTwo.text = "Enshroud" + '\n' +
                     "Enemy hits increase Melee range by 15%, up to 200%. Melee kills cast a Fogger Grenade.";
@@ -901,6 +908,19 @@ public class PlayerInventoryScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Enshroud" + " (Fated)" + '\n' +
                     "Enemy hits increase Melee range by 15%, up to 200%. All Fogger Grenades apply low damage-over-time.";
+                }
+            } //New
+
+            //Gale Force Winds
+            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 550)
+            {
+                cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "[E] - Cast traveling winds that applies Health and Slowed debuffs to in-range Enemies. Lasts 45s.";
+
+                if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + " (Fated)" + '\n' +
+                    "[E] - Cast faster traveling winds that applies stronger Health debuffs. Applies low damage-over-time to tracked Enemies.";
                 }
             } //New
         }
@@ -1395,7 +1415,12 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Enshroud>())
                             {
                                 write.WriteLine("%");
-                            } //New
+                            }
+
+                            if (inventory[i].GetComponent<GaleForceWinds>())
+                            {
+                                write.WriteLine("^");
+                            }
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -1529,7 +1554,12 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Enshroud>())
                                 {
                                     write.WriteLine("%");
-                                } //New
+                                }
+
+                                if (inventory[i].GetComponent<GaleForceWinds>())
+                                {
+                                    write.WriteLine("^");
+                                }
                             }        
                             
                         }
@@ -1732,7 +1762,12 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Enshroud>())
                             {
                                 write.WriteLine("%");
-                            } //New
+                            }
+
+                            if (inventory[i].GetComponent<GaleForceWinds>())
+                            {
+                                write.WriteLine("^");
+                            }
 
                         }
 
@@ -1867,7 +1902,12 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Enshroud>())
                                 {
                                     write.WriteLine("%");
-                                } //New
+                                }
+
+                                if (inventory[i].GetComponent<GaleForceWinds>())
+                                {
+                                    write.WriteLine("^");
+                                }
                             }
 
                         }
@@ -2069,7 +2109,12 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Enshroud>())
                             {
                                 write.WriteLine("%");
-                            } //New
+                            }
+
+                            if (inventory[i].GetComponent<GaleForceWinds>())
+                            {
+                                write.WriteLine("^");
+                            }
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -2203,7 +2248,12 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Enshroud>())
                                 {
                                     write.WriteLine("%");
-                                } //New
+                                }
+
+                                if (inventory[i].GetComponent<GaleForceWinds>())
+                                {
+                                    write.WriteLine("^");
+                                }
                             }
 
                         }
@@ -2405,7 +2455,12 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Enshroud>())
                             {
                                 write.WriteLine("%");
-                            } //New
+                            }
+
+                            if (inventory[i].GetComponent<GaleForceWinds>())
+                            {
+                                write.WriteLine("^");
+                            }
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -2539,7 +2594,12 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Enshroud>())
                                 {
                                     write.WriteLine("%");
-                                } //New
+                                }
+
+                                if (inventory[i].GetComponent<GaleForceWinds>())
+                                {
+                                    write.WriteLine("^");
+                                }
                             }
                         }
                     }
@@ -2740,7 +2800,12 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Enshroud>())
                             {
                                 write.WriteLine("%");
-                            } //New
+                            }
+
+                            if (inventory[i].GetComponent<GaleForceWinds>())
+                            {
+                                write.WriteLine("^");
+                            }
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -2874,7 +2939,12 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Enshroud>())
                                 {
                                     write.WriteLine("%");
-                                } //New
+                                }
+
+                                if (inventory[i].GetComponent<GaleForceWinds>())
+                                {
+                                    write.WriteLine("^");
+                                }
                             }
                         }
                     }
@@ -3075,7 +3145,12 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Enshroud>())
                             {
                                 write.WriteLine("%");
-                            } //New
+                            }
+
+                            if (inventory[i].GetComponent<GaleForceWinds>())
+                            {
+                                write.WriteLine("^");
+                            }
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -3209,7 +3284,12 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Enshroud>())
                                 {
                                     write.WriteLine("%");
-                                } //New
+                                }
+
+                                if (inventory[i].GetComponent<GaleForceWinds>())
+                                {
+                                    write.WriteLine("^");
+                                }
                             }
                         }
                     }
@@ -3410,7 +3490,12 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<Enshroud>())
                             {
                                 write.WriteLine("%");
-                            } //New
+                            }
+
+                            if (inventory[i].GetComponent<GaleForceWinds>())
+                            {
+                                write.WriteLine("^");
+                            }
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -3544,7 +3629,12 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Enshroud>())
                                 {
                                     write.WriteLine("%");
-                                } //New
+                                }
+
+                                if (inventory[i].GetComponent<GaleForceWinds>())
+                                {
+                                    write.WriteLine("^");
+                                }
                             }
                         }
                     }

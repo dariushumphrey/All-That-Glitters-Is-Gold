@@ -116,6 +116,29 @@ public class SingleFireFirearm : FirearmScript
                         gameObject.GetComponent<Enshroud>().hitConfirmed = true;
                     }
 
+                    if (gameObject.GetComponent<GaleForceWinds>())
+                    {
+                        if (gameObject.GetComponent<GaleForceWinds>().chargeCount >= 1 && gameObject.GetComponent<GaleForceWinds>().toggle)
+                        {
+                            GameObject torrent = Instantiate(gameObject.GetComponent<GaleForceWinds>().applicator, hit.point + (hit.normal * 0.01f), Quaternion.identity);
+                            torrent.name = gameObject.GetComponent<GaleForceWinds>().applicator.name;
+
+                            if (weaponRarity == 5)
+                            {
+                                torrent.GetComponent<GFWStatusApplicator>().fatedFlag = true;
+                                torrent.GetComponent<GFWStatusApplicator>().debuffMultiplier *= 1.43f;
+                                torrent.GetComponent<GFWStatusApplicator>().travelRadius *= 1.5f;
+                                torrent.GetComponent<GFWStatusApplicator>().travelLerpSpeed *= 2f;
+                            }
+
+                            gameObject.GetComponent<GaleForceWinds>().chargeCount--;
+                            gameObject.GetComponent<GaleForceWinds>().chargePercentage = 0f;
+                            gameObject.GetComponent<GaleForceWinds>().done = false;
+                            gameObject.GetComponent<GaleForceWinds>().toggle = false;
+
+                        }
+                    }
+
                     StartCoroutine(DeconfirmHit());
                     FatedCadenceRewardPosition(hit.collider.transform.position);
 
@@ -366,6 +389,29 @@ public class SingleFireFirearm : FirearmScript
                         miniCluster.GetComponent<LucentScript>().ShatterCalculation();
 
                         hit.collider.gameObject.GetComponent<TMRHardLucentScript>().crystalHealth -= damage;
+                    }
+
+                    if (gameObject.GetComponent<GaleForceWinds>())
+                    {
+                        if (gameObject.GetComponent<GaleForceWinds>().chargeCount >= 1 && gameObject.GetComponent<GaleForceWinds>().toggle)
+                        {
+                            GameObject torrent = Instantiate(gameObject.GetComponent<GaleForceWinds>().applicator, hit.point + (hit.normal * 0.01f), Quaternion.identity);
+                            torrent.name = gameObject.GetComponent<GaleForceWinds>().applicator.name;
+
+                            if (weaponRarity == 5)
+                            {
+                                torrent.GetComponent<GFWStatusApplicator>().fatedFlag = true;
+                                torrent.GetComponent<GFWStatusApplicator>().debuffMultiplier *= 1.43f;
+                                torrent.GetComponent<GFWStatusApplicator>().travelRadius *= 1.5f;
+                                torrent.GetComponent<GFWStatusApplicator>().travelLerpSpeed *= 2f;
+                            }
+
+                            gameObject.GetComponent<GaleForceWinds>().chargeCount--;
+                            gameObject.GetComponent<GaleForceWinds>().chargePercentage = 0f;
+                            gameObject.GetComponent<GaleForceWinds>().done = false;
+                            gameObject.GetComponent<GaleForceWinds>().toggle = false;
+
+                        }
                     }
 
                     Instantiate(sparks, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));

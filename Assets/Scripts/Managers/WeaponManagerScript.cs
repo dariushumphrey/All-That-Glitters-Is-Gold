@@ -2981,7 +2981,16 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
+
+                    if (cFiveStr == "^")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1175;
+                        item.AddComponent<GaleForceWinds>();
+
+                        item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -3110,7 +3119,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Enshroud>();
                         item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
+
+                    if (cSixStr == "^")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 555;
+                        item.AddComponent<GaleForceWinds>();
+                        item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    }
                 }
 
                 yield return new WaitForSeconds(spawnDelayTimer);
@@ -3357,7 +3374,16 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
+
+                    if (cFiveStr == "^")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1175;
+                        item.AddComponent<GaleForceWinds>();
+
+                        item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -3493,7 +3519,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Enshroud>();
                         item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
+
+                    if (cSixStr == "^")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 555;
+                        item.AddComponent<GaleForceWinds>();
+                        item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    }
                 }
 
                 yield return new WaitForSeconds(spawnDelayTimer);
@@ -3724,7 +3758,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "$")
                     {
@@ -3733,7 +3767,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "%")
                     {
@@ -3742,7 +3776,16 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
+
+                    if (cFiveStr == "^")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1175;
+                        item.AddComponent<GaleForceWinds>();
+
+                        item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -3814,7 +3857,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Forager>();
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
 
                     //Shelter in Place pairing
                     if (cSixStr == "6")
@@ -3870,7 +3913,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Counterplay>();
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
 
                     if (cSixStr == "%")
                     {
@@ -3878,7 +3921,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Enshroud>();
                         item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
+
+                    if (cSixStr == "^")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 555;
+                        item.AddComponent<GaleForceWinds>();
+                        item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    }
                 }
 
                 yield return new WaitForSeconds(spawnDelayTimer);
@@ -4107,7 +4158,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "$")
                     {
@@ -4116,7 +4167,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "%")
                     {
@@ -4125,7 +4176,16 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
+
+                    if (cFiveStr == "^")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1175;
+                        item.AddComponent<GaleForceWinds>();
+
+                        item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -4197,7 +4257,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Forager>();
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
 
                     if (cSixStr == "0")
                     {
@@ -4246,7 +4306,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Counterplay>();
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
 
                     if (cSixStr == "%")
                     {
@@ -4254,7 +4314,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Enshroud>();
                         item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
+
+                    if (cSixStr == "^")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 555;
+                        item.AddComponent<GaleForceWinds>();
+                        item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    }
                 }
 
                 yield return new WaitForSeconds(spawnDelayTimer);
@@ -4482,7 +4550,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "$")
                     {
@@ -4491,7 +4559,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "%")
                     {
@@ -4500,7 +4568,16 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
+
+                    if (cFiveStr == "^")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1175;
+                        item.AddComponent<GaleForceWinds>();
+
+                        item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -4572,7 +4649,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Forager>();
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
 
                     //Social Distance, Please! pairing
                     if (cSixStr == "4")
@@ -4628,7 +4705,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Counterplay>();
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
 
                     if (cSixStr == "%")
                     {
@@ -4636,7 +4713,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Enshroud>();
                         item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
+
+                    if (cSixStr == "^")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 555;
+                        item.AddComponent<GaleForceWinds>();
+                        item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    }
 
                 }
 
@@ -4865,7 +4950,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "$")
                     {
@@ -4874,7 +4959,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "%")
                     {
@@ -4883,7 +4968,16 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
+
+                    if (cFiveStr == "^")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1175;
+                        item.AddComponent<GaleForceWinds>();
+
+                        item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -4955,7 +5049,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Forager>();
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
 
-                    } //New
+                    }
 
                     if (cSixStr == "0")
                     {
@@ -5003,7 +5097,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Counterplay>();
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
 
                     if (cSixStr == "%")
                     {
@@ -5011,7 +5105,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Enshroud>();
                         item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
+
+                    if (cSixStr == "^")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 555;
+                        item.AddComponent<GaleForceWinds>();
+                        item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    }
                 }
 
                 yield return new WaitForSeconds(spawnDelayTimer);
@@ -5239,7 +5341,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "$")
                     {
@@ -5248,7 +5350,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
 
                     if (cFiveStr == "%")
                     {
@@ -5257,7 +5359,16 @@ public class WeaponManagerScript : MonoBehaviour
 
                         item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procOne;
                         item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
-                    } //New
+                    }
+
+                    if (cFiveStr == "^")
+                    {
+                        item.GetComponent<FirearmScript>().cheatRNG = 1175;
+                        item.AddComponent<GaleForceWinds>();
+
+                        item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procOne;
+                        item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                    }
                 }
 
                 if (player.readdedWeps[s].Length == 9)
@@ -5384,7 +5495,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Counterplay>();
                         item.GetComponent<Counterplay>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
 
                     if (cSixStr == "%")
                     {
@@ -5392,7 +5503,15 @@ public class WeaponManagerScript : MonoBehaviour
                         item.AddComponent<Enshroud>();
                         item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procTwo;
 
-                    } //New
+                    }
+
+                    if (cSixStr == "^")
+                    {
+                        item.GetComponent<FirearmScript>().fcnChtTwo = 555;
+                        item.AddComponent<GaleForceWinds>();
+                        item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procTwo;
+
+                    }
                 }
 
                 yield return new WaitForSeconds(spawnDelayTimer);
