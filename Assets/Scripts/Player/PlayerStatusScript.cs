@@ -287,6 +287,6 @@ public class PlayerStatusScript : MonoBehaviour
 
     //private void OnDrawGizmos()
     //{
-    //    Gizmos.DrawWireSphere(transform.position, 7.5f);
+    //    Gizmos.DrawWireSphere(transform.position, 7f);
     //}
 }

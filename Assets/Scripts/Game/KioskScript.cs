@@ -40,6 +40,9 @@ public class KioskScript : MonoBehaviour
     private float devaluePctReset;
 
     private int determinate;
+    private char decision;
+    private int poolSelection;
+    private int newPoolDeterminate;
     private string wepTypeStr, wepRarStr, wepExoStr, stOneStr, stTwoStr, stThreeStr, stFourStr, fcOneStr, fcTwoStr;
     private char wepType, wepRar, wepExo, stOne, stTwo, stThree, stFour, fcOne, fcTwo;
     // Start is called before the first frame update
@@ -61,6 +64,7 @@ public class KioskScript : MonoBehaviour
         {
             //Determines Weapon Type
             determinate = Random.Range(1, 8);
+            //determinate = 1;
             wepTypeStr = determinate.ToString();
 
             //Determines Weapon Rarity -- capped to Rarity 3 if Viricide has not been cleared at least once
@@ -75,7 +79,7 @@ public class KioskScript : MonoBehaviour
                 determinate = Random.Range(4, 6);
             }
 
-            //determinate = Random.Range(1, 6);
+            //determinate = Random.Range(2, 5);
 
             wepRarStr = determinate.ToString();
 
@@ -124,8 +128,29 @@ public class KioskScript : MonoBehaviour
             //If Rarity is 2 or 3, complete string assembly
             else if (wepRarStr == "2" || wepRarStr == "3")
             {
-                determinate = Random.Range(0, 10);
-                fcOneStr = determinate.ToString();
+                //poolSelection = Random.Range(1, 2);
+                //if(poolSelection == 0)
+                //{
+                //    determinate = Random.Range(0, 10);
+                //    fcOneStr = determinate.ToString();
+                //}
+
+                //else
+                //{
+                //    int act = 0;
+
+                //    char[] newPool = { '0', '1', '2', '3', '4', '5' };
+                //    act = Random.Range(0, newPool.Length);
+                //    decision = newPool[act];
+                //    fcOneStr = decision.ToString();
+                //}
+
+                int act = 0;
+
+                char[] newPool = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '@', '#', '$', '%', '^' };
+                act = Random.Range(0, newPool.Length);
+                decision = newPool[act];
+                fcOneStr = decision.ToString();
 
                 weaponIdentity = wepTypeStr + wepRarStr + wepExoStr +
                     stOneStr + stTwoStr + stThreeStr + stFourStr +
@@ -137,15 +162,15 @@ public class KioskScript : MonoBehaviour
             {
                 int choice = 0;
 
-                int[] poolOne = {9, 4, 5, 6, 8};
+                char[] poolOne = {'9', '4', '5', '6', '8', '!', '@', '#'};
                 choice = Random.Range(0, poolOne.Length);
-                determinate = poolOne[choice];                
-                fcOneStr = determinate.ToString();
+                decision = poolOne[choice];                
+                fcOneStr = decision.ToString();
 
-                int[] poolTwo = {0, 1, 2, 7, 3};
+                char[] poolTwo = {'0', '1', '2', '7', '3', '$', '%', '^'};
                 choice = Random.Range(0, poolOne.Length);
-                determinate = poolTwo[choice];
-                fcTwoStr = determinate.ToString();
+                decision = poolTwo[choice];
+                fcTwoStr = decision.ToString();
 
                 weaponIdentity = wepTypeStr + wepRarStr + wepExoStr +
                     stOneStr + stTwoStr + stThreeStr + stFourStr +
@@ -430,6 +455,42 @@ public class KioskScript : MonoBehaviour
 
                     }
 
+                    if (fcOneStr == "!")
+                    {
+                        functionOnes[p].text = "The Most Resplendent";
+
+                    }
+
+                    if (fcOneStr == "@")
+                    {
+                        functionOnes[p].text = "Fulminate";
+
+                    }
+
+                    if (fcOneStr == "#")
+                    {
+                        functionOnes[p].text = "Forager";
+
+                    }
+
+                    if (fcOneStr == "$")
+                    {
+                        functionOnes[p].text = "Couterplay";
+
+                    }
+
+                    if (fcOneStr == "%")
+                    {
+                        functionOnes[p].text = "Enshroud";
+
+                    }
+
+                    if (fcOneStr == "^")
+                    {
+                        functionOnes[p].text = "Gale Force Winds";
+
+                    }
+
                     functionTwos[p].text = " ";
                 }
 
@@ -473,6 +534,24 @@ public class KioskScript : MonoBehaviour
 
                     }
 
+                    if (fcOneStr == "!")
+                    {
+                        functionOnes[p].text = "The Most Resplendent";
+
+                    }
+
+                    if (fcOneStr == "@")
+                    {
+                        functionOnes[p].text = "Fulminate";
+
+                    }
+
+                    if (fcOneStr == "#")
+                    {
+                        functionOnes[p].text = "Forager";
+
+                    }
+
                     if (fcTwoStr == "0")
                     {
                         functionTwos[p].text = "Wait! Now I'm Ready!";
@@ -499,6 +578,24 @@ public class KioskScript : MonoBehaviour
                     if (fcTwoStr == "3")
                     {
                         functionTwos[p].text = "Rude Awakening";
+
+                    }
+
+                    if (fcTwoStr == "$")
+                    {
+                        functionTwos[p].text = "Couterplay";
+
+                    }
+
+                    if (fcTwoStr == "%")
+                    {
+                        functionTwos[p].text = "Enshroud";
+
+                    }
+
+                    if (fcTwoStr == "^")
+                    {
+                        functionTwos[p].text = "Gale Force Winds";
 
                     }
                 }
@@ -678,6 +775,42 @@ public class KioskScript : MonoBehaviour
 
                     }
 
+                    if (fcOneStr == "!")
+                    {
+                        functionOnes[p].text = "The Most Resplendent";
+
+                    }
+
+                    if (fcOneStr == "@")
+                    {
+                        functionOnes[p].text = "Fulminate";
+
+                    }
+
+                    if (fcOneStr == "#")
+                    {
+                        functionOnes[p].text = "Forager";
+
+                    }
+
+                    if (fcOneStr == "$")
+                    {
+                        functionOnes[p].text = "Couterplay";
+
+                    }
+
+                    if (fcOneStr == "%")
+                    {
+                        functionOnes[p].text = "Enshroud";
+
+                    }
+
+                    if (fcOneStr == "^")
+                    {
+                        functionOnes[p].text = "Gale Force Winds";
+
+                    }
+
                     functionTwos[p].text = " ";
                 }
 
@@ -721,6 +854,24 @@ public class KioskScript : MonoBehaviour
 
                     }
 
+                    if (fcOneStr == "!")
+                    {
+                        functionOnes[p].text = "The Most Resplendent";
+
+                    }
+
+                    if (fcOneStr == "@")
+                    {
+                        functionOnes[p].text = "Fulminate";
+
+                    }
+
+                    if (fcOneStr == "#")
+                    {
+                        functionOnes[p].text = "Forager";
+
+                    }
+
                     if (fcTwoStr == "5") //Pay to Win pairing
                     {
                         functionTwos[p].text = "Malicious Wind-up";
@@ -753,6 +904,24 @@ public class KioskScript : MonoBehaviour
                     if (fcTwoStr == "3")
                     {
                         functionTwos[p].text = "Rude Awakening";
+
+                    }
+
+                    if (fcTwoStr == "$")
+                    {
+                        functionTwos[p].text = "Couterplay";
+
+                    }
+
+                    if (fcTwoStr == "%")
+                    {
+                        functionTwos[p].text = "Enshroud";
+
+                    }
+
+                    if (fcTwoStr == "^")
+                    {
+                        functionTwos[p].text = "Gale Force Winds";
 
                     }
                 }
@@ -932,6 +1101,42 @@ public class KioskScript : MonoBehaviour
 
                     }
 
+                    if (fcOneStr == "!")
+                    {
+                        functionOnes[p].text = "The Most Resplendent";
+
+                    }
+
+                    if (fcOneStr == "@")
+                    {
+                        functionOnes[p].text = "Fulminate";
+
+                    }
+
+                    if (fcOneStr == "#")
+                    {
+                        functionOnes[p].text = "Forager";
+
+                    }
+
+                    if (fcOneStr == "$")
+                    {
+                        functionOnes[p].text = "Couterplay";
+
+                    }
+
+                    if (fcOneStr == "%")
+                    {
+                        functionOnes[p].text = "Enshroud";
+
+                    }
+
+                    if (fcOneStr == "^")
+                    {
+                        functionOnes[p].text = "Gale Force Winds";
+
+                    }
+
                     functionTwos[p].text = " ";
                 }
 
@@ -975,6 +1180,24 @@ public class KioskScript : MonoBehaviour
 
                     }
 
+                    if (fcOneStr == "!")
+                    {
+                        functionOnes[p].text = "The Most Resplendent";
+
+                    }
+
+                    if (fcOneStr == "@")
+                    {
+                        functionOnes[p].text = "Fulminate";
+
+                    }
+
+                    if (fcOneStr == "#")
+                    {
+                        functionOnes[p].text = "Forager";
+
+                    }
+
                     if (fcTwoStr == "6") //Shelter in Place pairing
                     {
                         functionTwos[p].text = "Positive-Negative";
@@ -1007,6 +1230,24 @@ public class KioskScript : MonoBehaviour
                     if (fcTwoStr == "3")
                     {
                         functionTwos[p].text = "Rude Awakening";
+
+                    }
+
+                    if (fcTwoStr == "$")
+                    {
+                        functionTwos[p].text = "Couterplay";
+
+                    }
+
+                    if (fcTwoStr == "%")
+                    {
+                        functionTwos[p].text = "Enshroud";
+
+                    }
+
+                    if (fcTwoStr == "^")
+                    {
+                        functionTwos[p].text = "Gale Force Winds";
 
                     }
                 }
@@ -1186,6 +1427,42 @@ public class KioskScript : MonoBehaviour
 
                     }
 
+                    if (fcOneStr == "!")
+                    {
+                        functionOnes[p].text = "The Most Resplendent";
+
+                    }
+
+                    if (fcOneStr == "@")
+                    {
+                        functionOnes[p].text = "Fulminate";
+
+                    }
+
+                    if (fcOneStr == "#")
+                    {
+                        functionOnes[p].text = "Forager";
+
+                    }
+
+                    if (fcOneStr == "$")
+                    {
+                        functionOnes[p].text = "Couterplay";
+
+                    }
+
+                    if (fcOneStr == "%")
+                    {
+                        functionOnes[p].text = "Enshroud";
+
+                    }
+
+                    if (fcOneStr == "^")
+                    {
+                        functionOnes[p].text = "Gale Force Winds";
+
+                    }
+
                     functionTwos[p].text = " ";
                 }
 
@@ -1227,7 +1504,25 @@ public class KioskScript : MonoBehaviour
                     {
                         functionOnes[p].text = "Good Things Come";
 
-                    }                  
+                    }
+
+                    if (fcOneStr == "!")
+                    {
+                        functionOnes[p].text = "The Most Resplendent";
+
+                    }
+
+                    if (fcOneStr == "@")
+                    {
+                        functionOnes[p].text = "Fulminate";
+
+                    }
+
+                    if (fcOneStr == "#")
+                    {
+                        functionOnes[p].text = "Forager";
+
+                    }
 
                     if (fcTwoStr == "0")
                     {
@@ -1255,6 +1550,24 @@ public class KioskScript : MonoBehaviour
                     if (fcTwoStr == "3")
                     {
                         functionTwos[p].text = "Rude Awakening";
+
+                    }
+
+                    if (fcTwoStr == "$")
+                    {
+                        functionTwos[p].text = "Couterplay";
+
+                    }
+
+                    if (fcTwoStr == "%")
+                    {
+                        functionTwos[p].text = "Enshroud";
+
+                    }
+
+                    if (fcTwoStr == "^")
+                    {
+                        functionTwos[p].text = "Gale Force Winds";
 
                     }
                 }
@@ -1434,6 +1747,42 @@ public class KioskScript : MonoBehaviour
 
                     }
 
+                    if (fcOneStr == "!")
+                    {
+                        functionOnes[p].text = "The Most Resplendent";
+
+                    }
+
+                    if (fcOneStr == "@")
+                    {
+                        functionOnes[p].text = "Fulminate";
+
+                    }
+
+                    if (fcOneStr == "#")
+                    {
+                        functionOnes[p].text = "Forager";
+
+                    }
+
+                    if (fcOneStr == "$")
+                    {
+                        functionOnes[p].text = "Couterplay";
+
+                    }
+
+                    if (fcOneStr == "%")
+                    {
+                        functionOnes[p].text = "Enshroud";
+
+                    }
+
+                    if (fcOneStr == "^")
+                    {
+                        functionOnes[p].text = "Gale Force Winds";
+
+                    }
+
                     functionTwos[p].text = " ";
                 }
 
@@ -1477,6 +1826,24 @@ public class KioskScript : MonoBehaviour
 
                     }
 
+                    if (fcOneStr == "!")
+                    {
+                        functionOnes[p].text = "The Most Resplendent";
+
+                    }
+
+                    if (fcOneStr == "@")
+                    {
+                        functionOnes[p].text = "Fulminate";
+
+                    }
+
+                    if (fcOneStr == "#")
+                    {
+                        functionOnes[p].text = "Forager";
+
+                    }
+
                     if (fcTwoStr == "4") //Social Distance, Please! pairing
                     {
                         functionTwos[p].text = "Not with a Stick";
@@ -1509,6 +1876,24 @@ public class KioskScript : MonoBehaviour
                     if (fcTwoStr == "3")
                     {
                         functionTwos[p].text = "Rude Awakening";
+
+                    }
+
+                    if (fcTwoStr == "$")
+                    {
+                        functionTwos[p].text = "Couterplay";
+
+                    }
+
+                    if (fcTwoStr == "%")
+                    {
+                        functionTwos[p].text = "Enshroud";
+
+                    }
+
+                    if (fcTwoStr == "^")
+                    {
+                        functionTwos[p].text = "Gale Force Winds";
 
                     }
                 }
@@ -1688,6 +2073,42 @@ public class KioskScript : MonoBehaviour
 
                     }
 
+                    if (fcOneStr == "!")
+                    {
+                        functionOnes[p].text = "The Most Resplendent";
+
+                    }
+
+                    if (fcOneStr == "@")
+                    {
+                        functionOnes[p].text = "Fulminate";
+
+                    }
+
+                    if (fcOneStr == "#")
+                    {
+                        functionOnes[p].text = "Forager";
+
+                    }
+
+                    if (fcOneStr == "$")
+                    {
+                        functionOnes[p].text = "Couterplay";
+
+                    }
+
+                    if (fcOneStr == "%")
+                    {
+                        functionOnes[p].text = "Enshroud";
+
+                    }
+
+                    if (fcOneStr == "^")
+                    {
+                        functionOnes[p].text = "Gale Force Winds";
+
+                    }
+
                     functionTwos[p].text = " ";
                 }
 
@@ -1729,7 +2150,25 @@ public class KioskScript : MonoBehaviour
                     {
                         functionOnes[p].text = "Good Things Come";
 
-                    }                 
+                    }
+
+                    if (fcOneStr == "!")
+                    {
+                        functionOnes[p].text = "The Most Resplendent";
+
+                    }
+
+                    if (fcOneStr == "@")
+                    {
+                        functionOnes[p].text = "Fulminate";
+
+                    }
+
+                    if (fcOneStr == "#")
+                    {
+                        functionOnes[p].text = "Forager";
+
+                    }
 
                     if (fcTwoStr == "0")
                     {
@@ -1757,6 +2196,24 @@ public class KioskScript : MonoBehaviour
                     if (fcTwoStr == "3")
                     {
                         functionTwos[p].text = "Rude Awakening";
+
+                    }
+
+                    if (fcTwoStr == "$")
+                    {
+                        functionTwos[p].text = "Couterplay";
+
+                    }
+
+                    if (fcTwoStr == "%")
+                    {
+                        functionTwos[p].text = "Enshroud";
+
+                    }
+
+                    if (fcTwoStr == "^")
+                    {
+                        functionTwos[p].text = "Gale Force Winds";
 
                     }
                 }
@@ -1937,6 +2394,42 @@ public class KioskScript : MonoBehaviour
 
                     }
 
+                    if (fcOneStr == "!")
+                    {
+                        functionOnes[p].text = "The Most Resplendent";
+
+                    }
+
+                    if (fcOneStr == "@")
+                    {
+                        functionOnes[p].text = "Fulminate";
+
+                    }
+
+                    if (fcOneStr == "#")
+                    {
+                        functionOnes[p].text = "Forager";
+
+                    }
+
+                    if (fcOneStr == "$")
+                    {
+                        functionOnes[p].text = "Couterplay";
+
+                    }
+
+                    if (fcOneStr == "%")
+                    {
+                        functionOnes[p].text = "Enshroud";
+
+                    }
+
+                    if (fcOneStr == "^")
+                    {
+                        functionOnes[p].text = "Gale Force Winds";
+
+                    }
+
                     functionTwos[p].text = " ";
                 }
 
@@ -1980,6 +2473,24 @@ public class KioskScript : MonoBehaviour
 
                     }
 
+                    if (fcOneStr == "!")
+                    {
+                        functionOnes[p].text = "The Most Resplendent";
+
+                    }
+
+                    if (fcOneStr == "@")
+                    {
+                        functionOnes[p].text = "Fulminate";
+
+                    }
+
+                    if (fcOneStr == "#")
+                    {
+                        functionOnes[p].text = "Forager";
+
+                    }
+
                     if (fcTwoStr == "8") //Absolutely no Breaks! pairing
                     {
                         functionTwos[p].text = "Good Things Come";
@@ -2012,6 +2523,24 @@ public class KioskScript : MonoBehaviour
                     if (fcTwoStr == "3")
                     {
                         functionTwos[p].text = "Rude Awakening";
+
+                    }
+
+                    if (fcTwoStr == "$")
+                    {
+                        functionTwos[p].text = "Couterplay";
+
+                    }
+
+                    if (fcTwoStr == "%")
+                    {
+                        functionTwos[p].text = "Enshroud";
+
+                    }
+
+                    if (fcTwoStr == "^")
+                    {
+                        functionTwos[p].text = "Gale Force Winds";
 
                     }
                 }
@@ -3053,6 +3582,44 @@ public class KioskScript : MonoBehaviour
 
                 }
 
+                if (fcOneStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (fcOneStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (fcOneStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
+                if (fcOneStr == "$")
+                {
+                    cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (fcOneStr == "%")
+                {
+                    cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (fcOneStr == "^")
+                {
+                    cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -3101,6 +3668,25 @@ public class KioskScript : MonoBehaviour
 
                 }
 
+                if (fcOneStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (fcOneStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (fcOneStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
                 if (fcTwoStr == "0")
                 {
                     cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
@@ -3134,6 +3720,25 @@ public class KioskScript : MonoBehaviour
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
                         "'E - Cast Blast";
 
+                }
+
+                if (fcTwoStr == "$")
+                {
+                    cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (fcTwoStr == "%")
+                {
+                    cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (fcTwoStr == "^")
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
                 }
             }
         }
@@ -3343,6 +3948,44 @@ public class KioskScript : MonoBehaviour
 
                 }
 
+                if (fcOneStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (fcOneStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (fcOneStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
+                if (fcOneStr == "$")
+                {
+                    cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (fcOneStr == "%")
+                {
+                    cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (fcOneStr == "^")
+                {
+                    cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -3392,6 +4035,25 @@ public class KioskScript : MonoBehaviour
 
                 }
 
+                if (fcOneStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (fcOneStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (fcOneStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
                 if (fcTwoStr == "5")
                 {
                     cheatTraitTwo.text = "Malicious Wind-Up" + '\n' +
@@ -3432,6 +4094,25 @@ public class KioskScript : MonoBehaviour
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
                         "'E' - Cast Blast";
 
+                }
+
+                if (fcTwoStr == "$")
+                {
+                    cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (fcTwoStr == "%")
+                {
+                    cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (fcTwoStr == "^")
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
                 }
             }
         }
@@ -3641,6 +4322,44 @@ public class KioskScript : MonoBehaviour
 
                 }
 
+                if (fcOneStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (fcOneStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (fcOneStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
+                if (fcOneStr == "$")
+                {
+                    cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (fcOneStr == "%")
+                {
+                    cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (fcOneStr == "^")
+                {
+                    cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -3689,6 +4408,25 @@ public class KioskScript : MonoBehaviour
 
                 }
 
+                if (fcOneStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (fcOneStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (fcOneStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
                 if (fcTwoStr == "6")
                 {
                     cheatTraitTwo.text = "Positive-Negative" + '\n' +
@@ -3729,6 +4467,25 @@ public class KioskScript : MonoBehaviour
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
                         "'E' - Cast Blast";
 
+                }
+
+                if (fcTwoStr == "$")
+                {
+                    cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (fcTwoStr == "%")
+                {
+                    cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (fcTwoStr == "^")
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
                 }
             }
         }
@@ -3938,6 +4695,44 @@ public class KioskScript : MonoBehaviour
 
                 }
 
+                if (fcOneStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (fcOneStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (fcOneStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
+                if (fcOneStr == "$")
+                {
+                    cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (fcOneStr == "%")
+                {
+                    cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (fcOneStr == "^")
+                {
+                    cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -3984,7 +4779,26 @@ public class KioskScript : MonoBehaviour
                     cheatTraitOne.text = "Good Things Come" + '\n' +
                         "Being in combat for three seconds grants 25% Movement Speed, 20% damage reduction, and 45% Recoil reduction until you leave combat.";
 
-                }                
+                }
+
+                if (fcOneStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (fcOneStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (fcOneStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
 
                 if (fcTwoStr == "0")
                 {
@@ -4019,6 +4833,25 @@ public class KioskScript : MonoBehaviour
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
                         "'E' - Cast Blast";
 
+                }
+
+                if (fcTwoStr == "$")
+                {
+                    cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (fcTwoStr == "%")
+                {
+                    cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (fcTwoStr == "^")
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
                 }
             }
         }
@@ -4228,6 +5061,44 @@ public class KioskScript : MonoBehaviour
 
                 }
 
+                if (fcOneStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (fcOneStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (fcOneStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
+                if (fcOneStr == "$")
+                {
+                    cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (fcOneStr == "%")
+                {
+                    cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (fcOneStr == "^")
+                {
+                    cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -4276,6 +5147,25 @@ public class KioskScript : MonoBehaviour
 
                 }
 
+                if (fcOneStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (fcOneStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (fcOneStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
                 if (fcTwoStr == "4")
                 {
                     cheatTraitTwo.text = "Not with a Stick" + '\n' +
@@ -4316,6 +5206,25 @@ public class KioskScript : MonoBehaviour
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
                         "'E' - Cast Blast";
 
+                }
+
+                if (fcTwoStr == "$")
+                {
+                    cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (fcTwoStr == "%")
+                {
+                    cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (fcTwoStr == "^")
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
                 }
             }
         }
@@ -4525,6 +5434,44 @@ public class KioskScript : MonoBehaviour
 
                 }
 
+                if (fcOneStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (fcOneStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (fcOneStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
+                if (fcOneStr == "$")
+                {
+                    cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (fcOneStr == "%")
+                {
+                    cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (fcOneStr == "^")
+                {
+                    cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -4572,7 +5519,26 @@ public class KioskScript : MonoBehaviour
                         "Being in combat for three seconds grants 25% Movement Speed, 20% damage reduction, and 45% Recoil reduction until you leave combat.";
 
                 }
-             
+
+                if (fcOneStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (fcOneStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (fcOneStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
                 if (fcTwoStr == "0")
                 {
                     cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
@@ -4606,6 +5572,25 @@ public class KioskScript : MonoBehaviour
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
                         "'E' - Cast Blast";
 
+                }
+
+                if (fcTwoStr == "$")
+                {
+                    cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (fcTwoStr == "%")
+                {
+                    cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (fcTwoStr == "^")
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
                 }
             }
         }
@@ -4815,6 +5800,44 @@ public class KioskScript : MonoBehaviour
 
                 }
 
+                if (fcOneStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (fcOneStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (fcOneStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
+                if (fcOneStr == "$")
+                {
+                    cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (fcOneStr == "%")
+                {
+                    cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (fcOneStr == "^")
+                {
+                    cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -4863,6 +5886,25 @@ public class KioskScript : MonoBehaviour
 
                 }
 
+                if (fcOneStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (fcOneStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (fcOneStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
                 if (fcTwoStr == "8")
                 {
                     cheatTraitTwo.text = "Good Things Come" + '\n' +
@@ -4903,6 +5945,25 @@ public class KioskScript : MonoBehaviour
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
                         "'E' - Cast Blast";
 
+                }
+
+                if (fcTwoStr == "$")
+                {
+                    cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (fcTwoStr == "%")
+                {
+                    cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (fcTwoStr == "^")
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
                 }
             }
         }

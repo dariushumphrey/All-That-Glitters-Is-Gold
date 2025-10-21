@@ -88,15 +88,15 @@ public class DoorScript : MonoBehaviour
             }
         }
 
-        if(other.gameObject.tag == "Enemy")
-        {
-            if(!other.gameObject.GetComponent<Rigidbody>())
-            {
-                other.gameObject.AddComponent<Rigidbody>();
-                other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                other.gameObject.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Continuous;
-            }
-        }
+        //if(other.gameObject.tag == "Enemy")
+        //{
+        //    if(!other.gameObject.GetComponent<Rigidbody>())
+        //    {
+        //        other.gameObject.AddComponent<Rigidbody>();
+        //        other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        //        other.gameObject.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Continuous;
+        //    }
+        //}
     }
 
     private void OnTriggerStay(Collider other)
@@ -163,14 +163,14 @@ public class DoorScript : MonoBehaviour
             proximity = false;
         }
 
-        if (other.gameObject.tag == "Enemy")
-        {
-            if (other.gameObject.GetComponent<Rigidbody>())
-            {
-                Destroy(other.gameObject.GetComponent<Rigidbody>());
-            }
+        //if (other.gameObject.tag == "Enemy")
+        //{
+        //    if (other.gameObject.GetComponent<Rigidbody>())
+        //    {
+        //        Destroy(other.gameObject.GetComponent<Rigidbody>());
+        //    }
 
-        }
+        //}
     }
 
     private void ForceOpen()

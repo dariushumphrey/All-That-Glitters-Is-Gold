@@ -441,6 +441,44 @@ public class WeaponManagerScript : MonoBehaviour
                         "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
                 }
 
+                if (cFiveStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' + 
+                    "'[E]' - Toggle cast";
+                }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
+                if (cFiveStr == "$")
+                {
+                    cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (cFiveStr == "%")
+                {
+                    cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (cFiveStr == "^")
+                {
+                    cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -514,6 +552,46 @@ public class WeaponManagerScript : MonoBehaviour
 
                 }
 
+                if (cFiveStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "The Most Resplendent" + " (Fated)" + '\n' +
+                            "Create a Hard Lucent crystal that produces Lucent clusters. " +
+                            "Stacks 2x. Physically colliding with the crystal shatters it, restoring 35% of Health.";                      
+                    }
+                }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Fulminate" + " (Fated)" + '\n' +
+                            "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Melee kills cast a Destruct Grenade. " +
+                            "Passively throw two Destruct Grenades.";
+                    }
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Forager" + " (Fated)" + '\n' +
+                            "Weapon or Melee kills produce bursts of Lucent clusters, 2% Health, 4% Shield, and 30% Ammo pickups. " +
+                            "Every 10th Boss hit produces one burst.";
+                    }
+                }
+
                 //Equivalent Exchange pairing
                 if (cSixStr == "0")
                 {
@@ -579,6 +657,45 @@ public class WeaponManagerScript : MonoBehaviour
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 6x. Having any stack increases Weapon damage by 20%.";
                     }
 
+                }
+
+                if (cSixStr == "$")
+                {
+                    cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Counterplay" + " (Fated)" + '\n' +
+                        "Hits taken during Evasions casts two Lucent clusters, a Solution Grenade, and permanently increases Weapon damage by 10%. Stacks 10x.";
+                    }
+                }
+
+                if (cSixStr == "%")
+                {
+                    cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Enshroud" + " (Fated)" + '\n' +
+                        "Enemy hits increase Melee range by 15%, up to 200%. Melee kills cast a Fogger Grenade. " + 
+                        "All Fogger Grenades apply low damage-over-time.";
+                    }
+                }
+
+                if (cSixStr == "^")
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Gale Force Winds" + " (Fated)" + '\n' +
+                        "Cast faster traveling winds that applies Slowed and stronger Health debuffs to Enemies. " + 
+                        "Applies damage-over-time to tracked Enemies.";
+                    }
                 }
             }
         }
@@ -786,6 +903,44 @@ public class WeaponManagerScript : MonoBehaviour
                         "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
                 }
 
+                if (cFiveStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
+                if (cFiveStr == "$")
+                {
+                    cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (cFiveStr == "%")
+                {
+                    cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (cFiveStr == "^")
+                {
+                    cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -858,6 +1013,46 @@ public class WeaponManagerScript : MonoBehaviour
 
                     }
 
+                }
+
+                if (cFiveStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "The Most Resplendent" + " (Fated)" + '\n' +
+                            "Create a Hard Lucent crystal that produces Lucent clusters. " +
+                            "Stacks 2x. Physically colliding with the crystal shatters it, restoring 35% of Health.";
+                    }
+                }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Fulminate" + " (Fated)" + '\n' +
+                            "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Melee kills cast a Destruct Grenade. " +
+                            "Passively throw two Destruct Grenades.";
+                    }
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Forager" + " (Fated)" + '\n' +
+                            "Weapon or Melee kills produce bursts of Lucent clusters, 2% Health, 4% Shield, and 30% Ammo pickups. " +
+                            "Every 10th Boss hit produces one burst.";
+                    }
                 }
 
                 if (cSixStr == "5")
@@ -936,6 +1131,45 @@ public class WeaponManagerScript : MonoBehaviour
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 6x. Having any stack increases Weapon damage by 20%.";
                     }
 
+                }
+
+                if (cSixStr == "$")
+                {
+                    cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Counterplay" + " (Fated)" + '\n' +
+                        "Hits taken during Evasions casts two Lucent clusters, a Solution Grenade, and permanently increases Weapon damage by 10%. Stacks 10x.";
+                    }
+                }
+
+                if (cSixStr == "%")
+                {
+                    cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Enshroud" + " (Fated)" + '\n' +
+                        "Enemy hits increase Melee range by 15%, up to 200%. Melee kills cast a Fogger Grenade. " +
+                        "All Fogger Grenades apply low damage-over-time.";
+                    }
+                }
+
+                if (cSixStr == "^")
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Gale Force Winds" + " (Fated)" + '\n' +
+                        "Cast faster traveling winds that applies Slowed and stronger Health debuffs to Enemies. " +
+                        "Applies damage-over-time to tracked Enemies.";
+                    }
                 }
             }
         }
@@ -1143,6 +1377,44 @@ public class WeaponManagerScript : MonoBehaviour
                         "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
                 }
 
+                if (cFiveStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
+                if (cFiveStr == "$")
+                {
+                    cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (cFiveStr == "%")
+                {
+                    cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (cFiveStr == "^")
+                {
+                    cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -1214,6 +1486,46 @@ public class WeaponManagerScript : MonoBehaviour
 
                     }
 
+                }
+
+                if (cFiveStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "The Most Resplendent" + " (Fated)" + '\n' +
+                            "Create a Hard Lucent crystal that produces Lucent clusters. " +
+                            "Stacks 2x. Physically colliding with the crystal shatters it, restoring 35% of Health.";
+                    }
+                }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Fulminate" + " (Fated)" + '\n' +
+                            "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Melee kills cast a Destruct Grenade. " +
+                            "Passively throw two Destruct Grenades.";
+                    }
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Forager" + " (Fated)" + '\n' +
+                            "Weapon or Melee kills produce bursts of Lucent clusters, 2% Health, 4% Shield, and 30% Ammo pickups. " +
+                            "Every 10th Boss hit produces one burst.";
+                    }
                 }
 
                 if (cSixStr == "6")
@@ -1292,6 +1604,45 @@ public class WeaponManagerScript : MonoBehaviour
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 6x. Having any stack increases Weapon damage by 20%.";
                     }
 
+                }
+
+                if (cSixStr == "$")
+                {
+                    cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Counterplay" + " (Fated)" + '\n' +
+                        "Hits taken during Evasions casts two Lucent clusters, a Solution Grenade, and permanently increases Weapon damage by 10%. Stacks 10x.";
+                    }
+                }
+
+                if (cSixStr == "%")
+                {
+                    cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Enshroud" + " (Fated)" + '\n' +
+                        "Enemy hits increase Melee range by 15%, up to 200%. Melee kills cast a Fogger Grenade. " +
+                        "All Fogger Grenades apply low damage-over-time.";
+                    }
+                }
+
+                if (cSixStr == "^")
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Gale Force Winds" + " (Fated)" + '\n' +
+                        "Cast faster traveling winds that applies Slowed and stronger Health debuffs to Enemies. " +
+                        "Applies damage-over-time to tracked Enemies.";
+                    }
                 }
             }
         }
@@ -1499,6 +1850,44 @@ public class WeaponManagerScript : MonoBehaviour
                         "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
                 }
 
+                if (cFiveStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
+                if (cFiveStr == "$")
+                {
+                    cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (cFiveStr == "%")
+                {
+                    cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (cFiveStr == "^")
+                {
+                    cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -1572,6 +1961,46 @@ public class WeaponManagerScript : MonoBehaviour
 
                 }
 
+                if (cFiveStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "The Most Resplendent" + " (Fated)" + '\n' +
+                            "Create a Hard Lucent crystal that produces Lucent clusters. " +
+                            "Stacks 2x. Physically colliding with the crystal shatters it, restoring 35% of Health.";
+                    }
+                }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Fulminate" + " (Fated)" + '\n' +
+                            "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Melee kills cast a Destruct Grenade. " +
+                            "Passively throw two Destruct Grenades.";
+                    }
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Forager" + " (Fated)" + '\n' +
+                            "Weapon or Melee kills produce bursts of Lucent clusters, 2% Health, 4% Shield, and 30% Ammo pickups. " +
+                            "Every 10th Boss hit produces one burst.";
+                    }
+                }
+
                 if (cSixStr == "0")
                 {
                     cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
@@ -1636,6 +2065,45 @@ public class WeaponManagerScript : MonoBehaviour
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 6x. Having any stack increases Weapon damage by 20%.";
                     }
 
+                }
+
+                if (cSixStr == "$")
+                {
+                    cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Counterplay" + " (Fated)" + '\n' +
+                        "Hits taken during Evasions casts two Lucent clusters, a Solution Grenade, and permanently increases Weapon damage by 10%. Stacks 10x.";
+                    }
+                }
+
+                if (cSixStr == "%")
+                {
+                    cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Enshroud" + " (Fated)" + '\n' +
+                        "Enemy hits increase Melee range by 15%, up to 200%. Melee kills cast a Fogger Grenade. " +
+                        "All Fogger Grenades apply low damage-over-time.";
+                    }
+                }
+
+                if (cSixStr == "^")
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Gale Force Winds" + " (Fated)" + '\n' +
+                        "Cast faster traveling winds that applies Slowed and stronger Health debuffs to Enemies. " +
+                        "Applies damage-over-time to tracked Enemies.";
+                    }
                 }
             }
         }
@@ -1843,6 +2311,44 @@ public class WeaponManagerScript : MonoBehaviour
                         "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
                 }
 
+                if (cFiveStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
+                if (cFiveStr == "$")
+                {
+                    cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (cFiveStr == "%")
+                {
+                    cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (cFiveStr == "^")
+                {
+                    cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -1914,6 +2420,46 @@ public class WeaponManagerScript : MonoBehaviour
 
                     }
 
+                }
+
+                if (cFiveStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "The Most Resplendent" + " (Fated)" + '\n' +
+                            "Create a Hard Lucent crystal that produces Lucent clusters. " +
+                            "Stacks 2x. Physically colliding with the crystal shatters it, restoring 35% of Health.";
+                    }
+                }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Fulminate" + " (Fated)" + '\n' +
+                            "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Melee kills cast a Destruct Grenade. " +
+                            "Passively throw two Destruct Grenades.";
+                    }
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Forager" + " (Fated)" + '\n' +
+                            "Weapon or Melee kills produce bursts of Lucent clusters, 2% Health, 4% Shield, and 30% Ammo pickups. " +
+                            "Every 10th Boss hit produces one burst.";
+                    }
                 }
 
                 if (cSixStr == "4")
@@ -1992,6 +2538,45 @@ public class WeaponManagerScript : MonoBehaviour
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 6x. Having any stack increases Weapon damage by 20%.";
                     }
 
+                }
+
+                if (cSixStr == "$")
+                {
+                    cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Counterplay" + " (Fated)" + '\n' +
+                        "Hits taken during Evasions casts two Lucent clusters, a Solution Grenade, and permanently increases Weapon damage by 10%. Stacks 10x.";
+                    }
+                }
+
+                if (cSixStr == "%")
+                {
+                    cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Enshroud" + " (Fated)" + '\n' +
+                        "Enemy hits increase Melee range by 15%, up to 200%. Melee kills cast a Fogger Grenade. " +
+                        "All Fogger Grenades apply low damage-over-time.";
+                    }
+                }
+
+                if (cSixStr == "^")
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Gale Force Winds" + " (Fated)" + '\n' +
+                        "Cast faster traveling winds that applies Slowed and stronger Health debuffs to Enemies. " +
+                        "Applies damage-over-time to tracked Enemies.";
+                    }
                 }
             }
         }
@@ -2199,6 +2784,44 @@ public class WeaponManagerScript : MonoBehaviour
                         "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
                 }
 
+                if (cFiveStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
+                if (cFiveStr == "$")
+                {
+                    cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (cFiveStr == "%")
+                {
+                    cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (cFiveStr == "^")
+                {
+                    cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -2272,6 +2895,46 @@ public class WeaponManagerScript : MonoBehaviour
 
                 }
 
+                if (cFiveStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "The Most Resplendent" + " (Fated)" + '\n' +
+                            "Create a Hard Lucent crystal that produces Lucent clusters. " +
+                            "Stacks 2x. Physically colliding with the crystal shatters it, restoring 35% of Health.";
+                    }
+                }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Fulminate" + " (Fated)" + '\n' +
+                            "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Melee kills cast a Destruct Grenade. " +
+                            "Passively throw two Destruct Grenades.";
+                    }
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Forager" + " (Fated)" + '\n' +
+                            "Weapon or Melee kills produce bursts of Lucent clusters, 2% Health, 4% Shield, and 30% Ammo pickups. " +
+                            "Every 10th Boss hit produces one burst.";
+                    }
+                }
+
                 if (cSixStr == "0")
                 {
                     cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
@@ -2336,6 +2999,45 @@ public class WeaponManagerScript : MonoBehaviour
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 6x. Having any stack increases Weapon damage by 20%.";
                     }
 
+                }
+
+                if (cSixStr == "$")
+                {
+                    cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Counterplay" + " (Fated)" + '\n' +
+                        "Hits taken during Evasions casts two Lucent clusters, a Solution Grenade, and permanently increases Weapon damage by 10%. Stacks 10x.";
+                    }
+                }
+
+                if (cSixStr == "%")
+                {
+                    cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Enshroud" + " (Fated)" + '\n' +
+                        "Enemy hits increase Melee range by 15%, up to 200%. Melee kills cast a Fogger Grenade. " +
+                        "All Fogger Grenades apply low damage-over-time.";
+                    }
+                }
+
+                if (cSixStr == "^")
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Gale Force Winds" + " (Fated)" + '\n' +
+                        "Cast faster traveling winds that applies Slowed and stronger Health debuffs to Enemies. " +
+                        "Applies damage-over-time to tracked Enemies.";
+                    }
                 }
             }
         }
@@ -2543,6 +3245,44 @@ public class WeaponManagerScript : MonoBehaviour
                         "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
                 }
 
+                if (cFiveStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
+                if (cFiveStr == "$")
+                {
+                    cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (cFiveStr == "%")
+                {
+                    cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (cFiveStr == "^")
+                {
+                    cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -2614,6 +3354,46 @@ public class WeaponManagerScript : MonoBehaviour
 
                     }
 
+                }
+
+                if (cFiveStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "The Most Resplendent" + " (Fated)" + '\n' +
+                            "Create a Hard Lucent crystal that produces Lucent clusters. " +
+                            "Stacks 2x. Physically colliding with the crystal shatters it, restoring 35% of Health.";
+                    }
+                }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Fulminate" + " (Fated)" + '\n' +
+                            "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Melee kills cast a Destruct Grenade. " +
+                            "Passively throw two Destruct Grenades.";
+                    }
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Forager" + " (Fated)" + '\n' +
+                            "Weapon or Melee kills produce bursts of Lucent clusters, 2% Health, 4% Shield, and 30% Ammo pickups. " +
+                            "Every 10th Boss hit produces one burst.";
+                    }
                 }
 
                 if (cSixStr == "8")
@@ -2694,6 +3474,45 @@ public class WeaponManagerScript : MonoBehaviour
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 6x. Having any stack increases Weapon damage by 20%.";
                     }
 
+                }
+
+                if (cSixStr == "$")
+                {
+                    cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Counterplay" + " (Fated)" + '\n' +
+                        "Hits taken during Evasions casts two Lucent clusters, a Solution Grenade, and permanently increases Weapon damage by 10%. Stacks 10x.";
+                    }
+                }
+
+                if (cSixStr == "%")
+                {
+                    cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Enshroud" + " (Fated)" + '\n' +
+                        "Enemy hits increase Melee range by 15%, up to 200%. Melee kills cast a Fogger Grenade. " +
+                        "All Fogger Grenades apply low damage-over-time.";
+                    }
+                }
+
+                if (cSixStr == "^")
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Gale Force Winds" + " (Fated)" + '\n' +
+                        "Cast faster traveling winds that applies Slowed and stronger Health debuffs to Enemies. " +
+                        "Applies damage-over-time to tracked Enemies.";
+                    }
                 }
             }
         }

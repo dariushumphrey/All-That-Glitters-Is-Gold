@@ -28,8 +28,6 @@ public class FoggerGrenadeScript : MonoBehaviour
         GameObject radius = Instantiate(smokeRadius, transform.position, Quaternion.identity);
         radius.name = smokeRadius.name;
         radius.GetComponent<ParticleSystem>().Play();
-        radius.AddComponent<DestroyScript>();
-        radius.GetComponent<DestroyScript>().destroyTimer = 22f;
 
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
         Destroy(gameObject.GetComponent<CapsuleCollider>());
@@ -39,7 +37,6 @@ public class FoggerGrenadeScript : MonoBehaviour
         gameObject.GetComponent<SphereCollider>().isTrigger = true;
 
         Destroy(gameObject, 21f);
-
 
     }
 
