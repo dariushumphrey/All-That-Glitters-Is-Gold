@@ -55,12 +55,13 @@ public class PlayerMoveScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && !evading && !evaded && !Airborne())
+        if (Input.GetKeyDown(KeyCode.Space) && !evading && !evaded && !Airborne())
         {
             evading = true;
             status.isInvincible = true;
             status.immunity.SetActive(true);
             status.StartCoroutine(status.CancelInvulnerable());
+
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift) && sprinting || vertInput == 0)
@@ -256,10 +257,11 @@ public class PlayerMoveScript : MonoBehaviour
                 }
             }
 
-            evading = false;
             evaded = true;
             StartCoroutine(ResetEvade());
-        }      
+
+            evading = false;
+        }
 
         //if((horizInput != 0 || vertInput != 0) && OnSlope())
         //{

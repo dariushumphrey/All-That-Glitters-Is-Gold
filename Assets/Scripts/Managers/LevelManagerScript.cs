@@ -144,13 +144,16 @@ public class LevelManagerScript : MonoBehaviour
 
         else
         {
-            if (player.isDead == true)
+            if (player != null)
             {
-                if (Input.GetKeyDown(KeyCode.F))
+                if(player.isDead)
                 {
-                    player.GetComponent<PlayerInventoryScript>().WriteOnReset();
-                    LoadScene();
-                }
+                    if (Input.GetKeyDown(KeyCode.F))
+                    {
+                        player.GetComponent<PlayerInventoryScript>().WriteOnReset();
+                        LoadScene();
+                    }
+                }               
             }
 
             gameTime += Time.deltaTime;

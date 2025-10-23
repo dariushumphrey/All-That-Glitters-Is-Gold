@@ -10,7 +10,7 @@ public class BerthScript : MonoBehaviour
     //-Increasing this number adds a percentage of Berth damage onto itself
     //-Increasing Berth damage allows this number to increase damage in return
     public float berthPercent = 120f;
-    public float explodeRadius = 3.0f;
+    public float explodeRadius = 4.0f;
     public float explodeForce = 50.0f;
 
     private EnemyHealthScript foe;
@@ -94,10 +94,10 @@ public class BerthScript : MonoBehaviour
                     else
                     {
                         hit.GetComponent<PlayerStatusScript>().InflictDamage(berthDamage);
-                        if (hit.GetComponent<PlayerStatusScript>().playerShield <= 0)
-                        {
-                            hit.GetComponent<PlayerStatusScript>().InflictDamage(berthDamage);
-                        }
+                        //if (hit.GetComponent<PlayerStatusScript>().playerShield <= 0)
+                        //{
+                        //    hit.GetComponent<PlayerStatusScript>().InflictDamage(berthDamage);
+                        //}
 
                         if (hit.GetComponent<PlayerStatusScript>().playerHealth <= 0)
                         {

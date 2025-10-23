@@ -952,6 +952,7 @@ public class ReplevinScript : MonoBehaviour
                             {
                                 if (GetComponent<BerthScript>())
                                 {
+                                    hit.collider.GetComponent<PlayerStatusScript>().playerHealth -= damage * GetComponent<BerthScript>().berthDamage;
                                     GetComponent<BerthScript>().Explode();
                                 }
 

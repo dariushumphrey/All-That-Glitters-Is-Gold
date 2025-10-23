@@ -12,6 +12,7 @@ public class Counterplay : MonoBehaviour
     private FirearmScript firearm;
     private PlayerStatusScript status;
     private PlayerInventoryScript inventory;
+    private PlayerMoveScript move;
     private GameObject lucentCluster;
     internal GameObject proc;
     internal bool counterplayFlag = false;
@@ -21,6 +22,7 @@ public class Counterplay : MonoBehaviour
     {
         firearm = GetComponent<FirearmScript>();
         status = FindObjectOfType<PlayerStatusScript>();
+        move = FindObjectOfType<PlayerMoveScript>();
         inventory = FindObjectOfType<PlayerInventoryScript>();
         lucentCluster = Resources.Load<GameObject>("Game Items/testLucent");
         proc.GetComponent<Text>().text = " ";
@@ -67,14 +69,14 @@ public class Counterplay : MonoBehaviour
             payoffTheSequel.GetComponent<LucentScript>().ShatterCalculation();
             payoffTheSequel.GetComponent<LucentScript>().StartCoroutine(payoffTheSequel.GetComponent<LucentScript>().Shatter());
 
-            if(firearm.weaponRarity == 5)
+            if (firearm.weaponRarity == 5)
             {
                 GameObject solution = Instantiate(inventory.grenades[1], transform.position + Vector3.down, Quaternion.Euler(new Vector3(90f, 0f, 0f)));
                 solution.GetComponent<SolutionGrenadeScript>().armingTime = 0.0f;
                 solution.GetComponent<SolutionGrenadeScript>().StartCoroutine(solution.GetComponent<SolutionGrenadeScript>().SetupGrenade());
             }
 
-            if(stackCountActive >= stackCountCap)
+            if (stackCountActive >= stackCountCap)
             {
                 //Do nothing
             }

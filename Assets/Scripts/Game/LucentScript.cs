@@ -122,6 +122,12 @@ public class LucentScript : MonoBehaviour
                     gameObject.transform.parent.GetComponent<ReplevinScript>().stunMechanic = null;
                     //gameObject.transform.parent.GetComponent<ReplevinScript>().stunMechanic.transform.parent = null;
                     gameObject.transform.parent.GetComponent<ReplevinScript>().enemy.isImmune = false;
+
+                    if (gameObject.transform.parent.GetComponent<ReplevinScript>().interrupted == false)
+                    {
+                        gameObject.transform.parent.GetComponent<ReplevinScript>().interrupted = true;
+
+                    }
                 }
 
                 if (hit.GetComponent<EnemyHealthScript>() != null)
@@ -137,7 +143,12 @@ public class LucentScript : MonoBehaviour
 
             if (hit.gameObject.CompareTag("Lucent"))
             {
-                hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(100f, transform.position, 10f, 100f);
+                if (hit.gameObject.GetComponent<Rigidbody>() != null)
+                {
+                    hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(100f, transform.position, 10f, 100f);
+                }
+
+                //hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(100f, transform.position, 10f, 100f);
                 hit.gameObject.GetComponent<LucentScript>().StartCoroutine(hit.gameObject.GetComponent<LucentScript>().Shatter());
 
             }

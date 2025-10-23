@@ -1103,10 +1103,11 @@ public class FirearmScript : MonoBehaviour
                         miniCluster.name = hit.collider.gameObject.GetComponent<TMRHardLucentScript>().lucentCluster.name;
                         miniCluster.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
+                        miniCluster.GetComponent<LucentScript>().lucentGift /= 2;
                         miniCluster.GetComponent<LucentScript>().lucentGift *= weaponRarity;
                         miniCluster.GetComponent<LucentScript>().ShatterCalculation();
 
-                        hit.collider.gameObject.GetComponent<TMRHardLucentScript>().crystalHealth -= damage;
+                        hit.collider.gameObject.GetComponent<TMRHardLucentScript>().shockwaveBuildup += damage;
                     }
 
                     if(gameObject.GetComponent<GaleForceWinds>())

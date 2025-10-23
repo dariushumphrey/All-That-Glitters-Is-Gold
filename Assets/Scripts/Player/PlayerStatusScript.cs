@@ -108,13 +108,6 @@ public class PlayerStatusScript : MonoBehaviour
             }
         }
 
-        //if(move.evading)
-        //{
-        //    isInvincible = true;
-        //    immunity.SetActive(true);
-        //    StartCoroutine(CancelInvulnerable());
-        //}
-
         ShieldDamageCheck();
         PlayerDeath();
     }

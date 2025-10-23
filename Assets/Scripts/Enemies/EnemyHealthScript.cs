@@ -501,7 +501,7 @@ public class EnemyHealthScript : MonoBehaviour
             done = true;
         }
 
-        Destroy(gameObject, 4f);
+        Destroy(gameObject, 5f);
     }
 
     IEnumerator RestoreMovement()
