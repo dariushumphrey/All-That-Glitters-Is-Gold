@@ -941,9 +941,9 @@ public class PlayerInventoryScript : MonoBehaviour
             cheatTraitOne.text = "Absolutely No Stops" + '\n' +
                 "Expending your magazine instantly reloads, and increases damage and Rate of Fire.";
 
-            cheatTraitTwo.text = "Good Things Come" + '\n' +
-                "Being in combat grants increased movement and reduces recoil and damage taken.";
-        } //Absolutely No Stops + Good Things Come
+            cheatTraitTwo.text = "Forager" + '\n' +
+                "Weapon or Melee kills produce a burst of Lucent clusters, Health, Shield, and Ammo pickups.";
+        } //Absolutely No Stops + Forager
 
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -3)
         {
@@ -984,11 +984,11 @@ public class PlayerInventoryScript : MonoBehaviour
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -7)
         {
             cheatTraitOne.text = "Pay to Win" + '\n' +
-                "[Space] - Consume 5,280 Lucent for a 50% Weapon damage increase. Stacks 150x.";
+                "[E] - Consume 5,280 Lucent for a 50% Weapon damage increase. Stacks 150x.";
 
-            cheatTraitTwo.text = "Malicious Wind-Up" + '\n' +
-                    "Inflicting Damage increases Reload Speed by 0.75%.";
-        } //Pay to Win + Malicious Wind-Up
+            cheatTraitTwo.text = "The Most Resplendent" + '\n' +
+                    "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
+        } //Pay to Win + The Most Resplendent
     }
 
     private void SwitchGrenades()
@@ -1821,9 +1821,9 @@ public class PlayerInventoryScript : MonoBehaviour
                                     write.Write("G");
                                 }
 
-                                if (inventory[i].GetComponent<MaliciousWindUp>())
+                                if (inventory[i].GetComponent<TheMostResplendent>())
                                 {
-                                    write.WriteLine("5");
+                                    write.WriteLine("!");
                                 }
                             }
 
@@ -3548,9 +3548,9 @@ public class PlayerInventoryScript : MonoBehaviour
                                     write.Write("B");
                                 }
 
-                                if (inventory[i].GetComponent<GoodThingsCome>())
+                                if (inventory[i].GetComponent<Forager>())
                                 {
-                                    write.WriteLine("8");
+                                    write.WriteLine("#");
                                 }
                             }
 

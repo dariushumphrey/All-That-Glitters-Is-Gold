@@ -9,7 +9,7 @@ public class PayToWin : MonoBehaviour
     internal GameObject proc;
     private PlayerInventoryScript player;
     private GameObject activation;
-    private Color color = Color.blue;
+    private Color color = Color.cyan;
 
     private float damageBuff = 50f;
     private float reloadReset;
@@ -17,6 +17,7 @@ public class PayToWin : MonoBehaviour
     private int stackNum;
     private int dmgIncrease;
     private int dmgReset;
+    internal bool hitConfirmed = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,14 +65,13 @@ public class PayToWin : MonoBehaviour
 
         StackGranter();
 
-        if (firearm.confirmHit == true)
+        if(hitConfirmed == true)
         {
            
             if (stackNum >= 1)
             {
                 stackNum -= 3;
-                firearm.confirmHit = false;
-                
+                hitConfirmed = false;            
             }
         }
     }

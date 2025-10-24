@@ -48,7 +48,7 @@ public class ShelterInPlace : MonoBehaviour
         refrainTimer += Time.deltaTime;
         //Debug.Log(refrainTimer.ToString("F0") + "s");
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical")) 
         {
             refrainTimer = 0.0f;
             proc.GetComponent<Text>().text = " ";

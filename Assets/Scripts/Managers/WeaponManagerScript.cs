@@ -1055,10 +1055,10 @@ public class WeaponManagerScript : MonoBehaviour
                     }
                 }
 
-                if (cSixStr == "5")
+                if (cSixStr == "!")
                 {
-                    cheatTraitTwo.text = "Malicious Wind-Up" + '\n' +
-                        "Inflicting Damage increases Reload Speed by 0.75%. This bonus activates on your next reload.";
+                    cheatTraitTwo.text = "The Most Resplendent" + '\n' +
+                        "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
 
                     //if (rarStr == "5")
                     //{
@@ -3396,10 +3396,10 @@ public class WeaponManagerScript : MonoBehaviour
                     }
                 }
 
-                if (cSixStr == "8")
+                if (cSixStr == "#")
                 {
-                    cheatTraitTwo.text = "Good Things Come" + '\n' +
-                        "Being in combat for three seconds grants 25% Movement Speed, 20% damage reduction, and 45% Recoil reduction until you leave combat.";
+                    cheatTraitTwo.text = "Forager" + '\n' +
+                        "Weapon or Melee kills produce a burst of Lucent clusters, Health, Shield, and Ammo pickups.";
 
                     //if (rarStr == "5")
                     //{
@@ -3408,7 +3408,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                     //}
 
-                }
+                }//Absolutely No Stops! Pairing
 
                 if (cSixStr == "0")
                 {
@@ -4277,11 +4277,11 @@ public class WeaponManagerScript : MonoBehaviour
                     }
 
                     //Pay to Win pairing
-                    if (cSixStr == "5")
+                    if (cSixStr == "!")
                     {
-                        //item.GetComponent<FirearmScript>().fcnChtOne = 425;
-                        item.AddComponent<MaliciousWindUp>();
-                        item.GetComponent<MaliciousWindUp>().proc = item.GetComponent<FirearmScript>().procTwo;
+                        //item.GetComponent<FirearmScript>().fcnChtOne = 455;
+                        item.AddComponent<TheMostResplendent>();
+                        item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procTwo;
 
                     }
 
@@ -6261,11 +6261,11 @@ public class WeaponManagerScript : MonoBehaviour
                     }
 
                     //Absolutely no breaks! Pairing
-                    if (cSixStr == "8")
+                    if (cSixStr == "#")
                     {
-                        item.GetComponent<FirearmScript>().fcnChtOne = 445;
-                        item.AddComponent<GoodThingsCome>();
-                        item.GetComponent<GoodThingsCome>().proc = item.GetComponent<FirearmScript>().procTwo;
+                        item.GetComponent<FirearmScript>().fcnChtOne = 475;
+                        item.AddComponent<Forager>();
+                        item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procTwo;
                     }
 
                     if (cSixStr == "0")

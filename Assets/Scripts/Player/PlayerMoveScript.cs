@@ -122,6 +122,7 @@ public class PlayerMoveScript : MonoBehaviour
         if (Input.GetButton("Horizontal"))
         {
             playerRigid.AddForce(sideways * speed * speedAccelerant);
+                           
         }
 
         if (Input.GetButton("Vertical"))
@@ -169,6 +170,58 @@ public class PlayerMoveScript : MonoBehaviour
                 if (Input.GetKey(KeyCode.C))
                 {
                     playerRigid.AddForce(-transform.up * speed * speedAccelerant);
+                }
+
+                if(vertInput == 1)
+                {
+                    for (int p = 0; p < backThrust.Count; p++)
+                    {
+                        backThrust[p].Play();
+                    }
+                }
+
+                else
+                {
+                    for (int p = 0; p < backThrust.Count; p++)
+                    {
+                        backThrust[p].Stop();
+                    }
+                }
+
+                if (vertInput == -1)
+                {
+                    for (int p = 0; p < frontThrust.Count; p++)
+                    {
+                        frontThrust[p].Play();
+                    }
+                }
+
+                else
+                {
+                    for (int p = 0; p < frontThrust.Count; p++)
+                    {
+                        frontThrust[p].Stop();
+                    }
+                }
+
+                if (horizInput == 1)
+                {
+                    leftThrust[0].Play();
+                }
+
+                else
+                {
+                    leftThrust[0].Stop();
+                }
+
+                if (horizInput == -1)
+                {
+                    rightThrust[0].Play();
+                }
+
+                else
+                {
+                    rightThrust[0].Stop();
                 }
             }
 

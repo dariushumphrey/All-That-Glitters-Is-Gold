@@ -129,11 +129,15 @@ MonoBehaviour:
   raritySpawn: 1
   kioskPrice: 0
   gamblePrice: 0
+  lootSpamMax: 3
   pricePercent: 10
   gamblePercent: 60
+  focusTarget: -1
   isDrop: 1
   isChest: 0
   isKiosk: 0
+  drop: {fileID: 0}
+  exoticDrop: {fileID: 0}
   loot:
   - {fileID: 4036329082999486630, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
   - {fileID: 1358942852155973169, guid: 377cbf7d40de48b429110cefefee5025, type: 3}
@@ -145,3 +149,4 @@ MonoBehaviour:
   lootSpawn: {fileID: 8142452723782106151}
   deactivated: {fileID: 0}
   debug: 0
+  spamLoot: 0

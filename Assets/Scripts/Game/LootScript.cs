@@ -11,6 +11,7 @@ public class LootScript : MonoBehaviour
     public int lootSpamMax = 3;
     public float pricePercent = 10f;
     public float gamblePercent = 60f;
+    public int focusTarget = -1;
     private int priceAdd;
     private float percentReset;
     private float gambleReset;
@@ -50,13 +51,13 @@ public class LootScript : MonoBehaviour
         }
 
         player = FindObjectOfType<PlayerMoveScript>();
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(isChest == true)
+        if (isChest == true)
         {
             if (debug == true)
             {
@@ -185,6 +186,7 @@ public class LootScript : MonoBehaviour
     {
         drop.GetComponent<LootScript>().raritySpawn = raritySpawn;
         GameObject reward = Instantiate(drop, lootSpawn.transform.position, lootSpawn.transform.rotation);
+        reward.GetComponent<LootScript>().focusTarget = focusTarget;
         reward.name = drop.name;
 
         if (raritySpawn == 1)
@@ -234,6 +236,7 @@ public class LootScript : MonoBehaviour
     {
         exoticDrop.GetComponent<LootScript>().raritySpawn = raritySpawn;
         GameObject reward = Instantiate(exoticDrop, lootSpawn.transform.position, lootSpawn.transform.rotation);
+        reward.GetComponent<LootScript>().focusTarget = focusTarget;
         reward.name = drop.name;
 
         if (reward.GetComponent<ColorLerpScript>() != null)
@@ -252,12 +255,23 @@ public class LootScript : MonoBehaviour
 
     public void SpawnLoot()
     {
+
         for (int l = 0; l < loot.Count; l++)
         {
             loot[l].GetComponent<FirearmScript>().weaponRarity = raritySpawn;
         }
 
-        lootGrant = Random.Range(0, loot.Count);
+        if(focusTarget <= -1)
+        {
+            lootGrant = Random.Range(0, loot.Count);
+        }
+        
+
+        else
+        {
+            lootGrant = focusTarget;
+        }
+
         //if(loot[lootGrant].GetComponent<FirearmScript>() != null /*&& loot[lootGrant].GetComponent<FirearmScript>().weaponRarity != raritySpawn*/)
         //{
         //    if (loot[lootGrant].GetComponent<FirearmScript>().isExotic == true)

@@ -364,14 +364,14 @@ public class FirearmScript : MonoBehaviour
                 gameObject.GetComponent<WaitNowImReady>().proc = procTwo;
             } //Equivalent Exchange + Wait! Now I'm Ready
 
-            if (cheatRNG == -2)
+            if(cheatRNG == -2)
             {
                 gameObject.AddComponent<AbsolutelyNoStops>();
-                gameObject.AddComponent<GoodThingsCome>();
+                gameObject.AddComponent<Forager>();
 
                 gameObject.GetComponent<AbsolutelyNoStops>().proc = procOne;
-                gameObject.GetComponent<GoodThingsCome>().proc = procTwo;
-            } //Absolutely No Stops + Good Things Come
+                gameObject.GetComponent<Forager>().proc = procTwo;
+            } //Absolutely No Stops + Forager
 
             if(cheatRNG == -3)
             {
@@ -414,11 +414,11 @@ public class FirearmScript : MonoBehaviour
             if(cheatRNG == -7)
             {
                 gameObject.AddComponent<PayToWin>();
-                gameObject.AddComponent<MaliciousWindUp>();
+                gameObject.AddComponent<TheMostResplendent>();
 
                 gameObject.GetComponent<PayToWin>().proc = procOne;
-                gameObject.GetComponent<MaliciousWindUp>().proc = procTwo;
-            } //Pay to Win + Malicious Wind-Up
+                gameObject.GetComponent<TheMostResplendent>().proc = procTwo;
+            } //Pay to Win + The Most Resplendent
 
             return;
         }
@@ -774,27 +774,32 @@ public class FirearmScript : MonoBehaviour
                 if(hit.collider.tag == "Enemy")
                 {
                     confirmHit = true;
-                    if (gameObject.GetComponent<MaliciousWindUp>())
+                    if (gameObject.GetComponent<MaliciousWindUp>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                     {
                         gameObject.GetComponent<MaliciousWindUp>().hitConfirmed = true;
                     }
 
-                    if (gameObject.GetComponent<Efficacy>())
+                    if (gameObject.GetComponent<Efficacy>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                     {
                         gameObject.GetComponent<Efficacy>().hitConfirmed = true;
                     }
 
-                    if (gameObject.GetComponent<Cadence>())
+                    if (gameObject.GetComponent<Cadence>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                     {
                         gameObject.GetComponent<Cadence>().hitConfirmed = true;
                     }
 
-                    if (gameObject.GetComponent<GoodThingsCome>())
+                    if (gameObject.GetComponent<GoodThingsCome>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                     {
                         gameObject.GetComponent<GoodThingsCome>().hitConfirmed = true;
                     }
 
-                    if (gameObject.GetComponent<TheMostResplendent>())
+                    if (gameObject.GetComponent<PayToWin>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
+                    {
+                        gameObject.GetComponent<PayToWin>().hitConfirmed = true;
+                    }
+
+                    if (gameObject.GetComponent<TheMostResplendent>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                     {
                         gameObject.GetComponent<TheMostResplendent>().hitConfirmed = true;
 
@@ -803,7 +808,7 @@ public class FirearmScript : MonoBehaviour
                             GameObject lucentHard = Instantiate(gameObject.GetComponent<TheMostResplendent>().hardLucent, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal), hit.collider.gameObject.transform);
                             lucentHard.name = gameObject.GetComponent<TheMostResplendent>().hardLucent.name;
 
-                            if (weaponRarity == 5)
+                            if (weaponRarity == 5 && !isExotic)
                             {
                                 lucentHard.GetComponent<TMRHardLucentScript>().fatedCrystal = true;
                             }
@@ -815,7 +820,7 @@ public class FirearmScript : MonoBehaviour
                         }
                     }
 
-                    if(gameObject.GetComponent<Fulminate>())
+                    if(gameObject.GetComponent<Fulminate>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                     {
                         gameObject.GetComponent<Fulminate>().hitConfirmed = true;
                     }
@@ -827,12 +832,12 @@ public class FirearmScript : MonoBehaviour
 
                     }
 
-                    if (gameObject.GetComponent<Enshroud>())
+                    if (gameObject.GetComponent<Enshroud>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                     {
                         gameObject.GetComponent<Enshroud>().hitConfirmed = true;
                     }
 
-                    if (gameObject.GetComponent<GaleForceWinds>())
+                    if (gameObject.GetComponent<GaleForceWinds>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                     {
                         if (gameObject.GetComponent<GaleForceWinds>().chargeCount >= 1 && gameObject.GetComponent<GaleForceWinds>().toggle)
                         {
@@ -1087,7 +1092,7 @@ public class FirearmScript : MonoBehaviour
                             GameObject lucentHard = Instantiate(gameObject.GetComponent<TheMostResplendent>().hardLucent, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
                             lucentHard.name = gameObject.GetComponent<TheMostResplendent>().hardLucent.name;
 
-                            if(weaponRarity == 5)
+                            if(weaponRarity == 5 && !isExotic)
                             {
                                 lucentHard.GetComponent<TMRHardLucentScript>().fatedCrystal = true;
                             }

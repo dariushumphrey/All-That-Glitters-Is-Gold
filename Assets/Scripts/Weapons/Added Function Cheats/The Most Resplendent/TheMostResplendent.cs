@@ -27,7 +27,7 @@ public class TheMostResplendent : MonoBehaviour
         hardLucent = Resources.Load<GameObject>("Game Items/testHardLucent");
         proc.GetComponent<Text>().text = " ";
 
-        if(firearm.weaponRarity == 5)
+        if(firearm.weaponRarity == 5 && !firearm.isExotic)
         {
             stackMax = 2;
         }

@@ -189,7 +189,7 @@ public class KioskScript : MonoBehaviour
                 if (wepTypeStr == "2")
                 {
                     fcOneStr = "G";
-                    fcTwoStr = "5";
+                    fcTwoStr = "!";
                 }
 
                 if (wepTypeStr == "3")
@@ -219,7 +219,7 @@ public class KioskScript : MonoBehaviour
                 if (wepTypeStr == "7")
                 {
                     fcOneStr = "B";
-                    fcTwoStr = "8";
+                    fcTwoStr = "#";
                 }
 
                 weaponIdentity = wepTypeStr + wepRarStr + wepExoStr +
@@ -872,10 +872,9 @@ public class KioskScript : MonoBehaviour
 
                     }
 
-                    if (fcTwoStr == "5") //Pay to Win pairing
+                    if (fcTwoStr == "!") //Pay to Win pairing
                     {
-                        functionTwos[p].text = "Malicious Wind-up";
-
+                        functionTwos[p].text = "The Most Resplendent";
                     }
 
                     if (fcTwoStr == "0")
@@ -2491,9 +2490,9 @@ public class KioskScript : MonoBehaviour
 
                     }
 
-                    if (fcTwoStr == "8") //Absolutely no Breaks! pairing
+                    if (fcTwoStr == "#") //Absolutely no Stops! pairing
                     {
-                        functionTwos[p].text = "Good Things Come";
+                        functionTwos[p].text = "Forager";
 
                     }
 
@@ -4054,10 +4053,10 @@ public class KioskScript : MonoBehaviour
                     "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
                 }
 
-                if (fcTwoStr == "5")
+                if (fcTwoStr == "!")
                 {
-                    cheatTraitTwo.text = "Malicious Wind-Up" + '\n' +
-                        "Inflicting Damage increases Reload Speed by 0.75%. This bonus activates on your next reload.";
+                    cheatTraitTwo.text = "The Most Resplendent" + '\n' +
+                        "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
 
                 } //Pay to Win pairing
 
@@ -5905,10 +5904,10 @@ public class KioskScript : MonoBehaviour
                     "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
                 }
 
-                if (fcTwoStr == "8")
+                if (fcTwoStr == "#")
                 {
-                    cheatTraitTwo.text = "Good Things Come" + '\n' +
-                        "Being in combat for three seconds grants 25% Movement Speed, 20% damage reduction, and 45% Recoil reduction until you leave combat.";
+                    cheatTraitTwo.text = "Forager" + '\n' +
+                        "Weapon or Melee kills produce a burst of Lucent clusters, Health, Shield, and Ammo pickups.";
 
                 } //Absolutely no Stops! pairing
 

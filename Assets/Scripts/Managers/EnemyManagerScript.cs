@@ -18,6 +18,7 @@ public class EnemyManagerScript : MonoBehaviour
     public float lucentPercent = -4.25f;
 
     public GameObject loot, exoticLoot, lucent;
+    public int lootFocus = -1;
     public List<GameObject> combatants = new List<GameObject>();
     private GameObject[] enemies;
     public bool enemyDied = false;
@@ -124,6 +125,8 @@ public class EnemyManagerScript : MonoBehaviour
         if (deathRewardChance <= dropThreshold)
         {
             GameObject reward = Instantiate(loot, deathPos + Vector3.up, loot.transform.rotation);
+            reward.GetComponent<LootScript>().focusTarget = lootFocus;
+
             if (dropRarity == 1)
             {
                 reward.GetComponent<Renderer>().material.color = Color.gray;

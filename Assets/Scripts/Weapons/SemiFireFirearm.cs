@@ -168,27 +168,27 @@ public class SemiFireFirearm : FirearmScript
             if (hit.collider.tag == "Enemy")
             {
                 confirmHit = true;
-                if (gameObject.GetComponent<MaliciousWindUp>())
+                if (gameObject.GetComponent<MaliciousWindUp>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                 {
                     gameObject.GetComponent<MaliciousWindUp>().hitConfirmed = true;
                 }
 
-                if (gameObject.GetComponent<Efficacy>())
+                if (gameObject.GetComponent<Efficacy>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                 {
                     gameObject.GetComponent<Efficacy>().hitConfirmed = true;
                 }
 
-                if (gameObject.GetComponent<Cadence>())
+                if (gameObject.GetComponent<Cadence>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                 {
                     gameObject.GetComponent<Cadence>().hitConfirmed = true;
                 }
 
-                if (gameObject.GetComponent<GoodThingsCome>())
+                if (gameObject.GetComponent<GoodThingsCome>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                 {
                     gameObject.GetComponent<GoodThingsCome>().hitConfirmed = true;
                 }
 
-                if (gameObject.GetComponent<TheMostResplendent>())
+                if (gameObject.GetComponent<TheMostResplendent>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                 {
                     gameObject.GetComponent<TheMostResplendent>().hitConfirmed = true;
 
@@ -208,7 +208,7 @@ public class SemiFireFirearm : FirearmScript
                     }
                 }
 
-                if (gameObject.GetComponent<Fulminate>())
+                if (gameObject.GetComponent<Fulminate>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                 {
                     gameObject.GetComponent<Fulminate>().hitConfirmed = true;
                 }
@@ -220,12 +220,12 @@ public class SemiFireFirearm : FirearmScript
 
                 }
 
-                if (gameObject.GetComponent<Enshroud>())
+                if (gameObject.GetComponent<Enshroud>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                 {
                     gameObject.GetComponent<Enshroud>().hitConfirmed = true;
                 }
 
-                if (gameObject.GetComponent<GaleForceWinds>())
+                if (gameObject.GetComponent<GaleForceWinds>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                 {
                     if (gameObject.GetComponent<GaleForceWinds>().chargeCount >= 1 && gameObject.GetComponent<GaleForceWinds>().toggle)
                     {

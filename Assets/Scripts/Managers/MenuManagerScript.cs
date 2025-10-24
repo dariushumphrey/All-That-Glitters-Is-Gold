@@ -14,9 +14,9 @@ public class MenuManagerScript : MonoBehaviour
 
     public Image caThumbnail, vcThumbnail;
     public Sprite caLevelOne, caLevelTwo, caLevelThree, vcLevelOne, vcLevelTwo;
-    public Text caDiffText, vcDiffText, caLevelText, vcLevelText;
+    public Text caDiffText, vcDiffText, caLevelText, vcLevelText, vcWepFocusText;
     public Button vcButton;
-    public Slider vcDifficulty, vcLevel, caDifficulty, caLevel;
+    public Slider vcDifficulty, vcLevel, vcWepFocus, caDifficulty, caLevel;
     private LevelManagerScript levelManager;
     private WeaponManagerScript weaponManager;
 
@@ -75,8 +75,47 @@ public class MenuManagerScript : MonoBehaviour
 
             caLevelText.text = "Level " + caLevel.value;
             vcLevelText.text = "Viricide: " + (vcLevel.value - 3);
-        }
-        
+
+            if(vcWepFocus.value == -1)
+            {
+                vcWepFocusText.text = "Targeted Weapons: " + "\n" + "Random";
+            }
+
+            else if (vcWepFocus.value == 0)
+            {
+                vcWepFocusText.text = "Targeted Weapons: " + "\n" + "Full Fire Rifles";
+            }
+
+            else if (vcWepFocus.value == 1)
+            {
+                vcWepFocusText.text = "Targeted Weapons: " + "\n" + "Machine Guns";
+            }
+
+            else if (vcWepFocus.value == 2)
+            {
+                vcWepFocusText.text = "Targeted Weapons: " + "\n" + "Pistols";
+            }
+
+            else if (vcWepFocus.value == 3)
+            {
+                vcWepFocusText.text = "Targeted Weapons: " + "\n" + "Semi Fire Rifles";
+            }
+
+            else if (vcWepFocus.value == 4)
+            {
+                vcWepFocusText.text = "Targeted Weapons: " + "\n" + "Shotguns";
+            }
+
+            else if (vcWepFocus.value == 5)
+            {
+                vcWepFocusText.text = "Targeted Weapons: " + "\n" + "Single Fire Rifles";
+            }
+
+            else if (vcWepFocus.value == 6)
+            {
+                vcWepFocusText.text = "Targeted Weapons: " + "\n" + "Submachine Guns";
+            }
+        }    
     }
 
     public void InitializeViricideGame()
@@ -84,6 +123,7 @@ public class MenuManagerScript : MonoBehaviour
         levelManager.setting = LevelManagerScript.Setting.Viricide;
         levelManager.gameSettingState = (int)vcDifficulty.value;
         levelManager.level = (int)vcLevel.value;
+        levelManager.weaponFocus = (int)vcWepFocus.value;
 
         levelManager.LoadScene();
     }

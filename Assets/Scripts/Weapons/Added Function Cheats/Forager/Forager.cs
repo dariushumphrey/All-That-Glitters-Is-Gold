@@ -41,7 +41,7 @@ public class Forager : MonoBehaviour
         status = FindObjectOfType<PlayerStatusScript>();
         melee = FindObjectOfType<PlayerMeleeScript>();
 
-        if (firearm.weaponRarity == 5)
+        if (firearm.weaponRarity == 5 && !firearm.isExotic)
         {
             healthPercent *= 2;
             shieldPercent *= 2;

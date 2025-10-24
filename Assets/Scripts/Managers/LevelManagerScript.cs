@@ -24,6 +24,7 @@ public class LevelManagerScript : MonoBehaviour
     public GameObject[] chests;
     public GameObject[] spawners;
     public GameObject kioskAdjust;
+    public int weaponFocus = -1;
 
     public int level = 0;
     public float gameTime = 0f;
@@ -81,11 +82,13 @@ public class LevelManagerScript : MonoBehaviour
 
         manager = FindObjectOfType<EnemyManagerScript>();
         manager.dropRarity = gameSettingState;
+        manager.lootFocus = weaponFocus;
 
         chests = GameObject.FindGameObjectsWithTag("Chest");
         for(int c = 0; c < chests.Length; c++)
         {
             chests[c].GetComponent<LootScript>().raritySpawn = gameSettingState;
+            chests[c].GetComponent<LootScript>().focusTarget = weaponFocus;
             //chests[c].GetComponent<LootScript>().SpawnDrop();
         }
 
@@ -157,6 +160,7 @@ public class LevelManagerScript : MonoBehaviour
             }
 
             gameTime += Time.deltaTime;
+            weaponFocus = Mathf.Clamp(weaponFocus, -1, 6);
             //missionTimerText.gameObject.SetActive(false);
             //DisplayTimer(gametype.gameTimer);
             //missionTimerText.gameObject.SetActive(false);
