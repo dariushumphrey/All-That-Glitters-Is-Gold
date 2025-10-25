@@ -952,7 +952,7 @@ MonoBehaviour:
   blueConsole: 1
   redConsole: 0
   accepted: 0
-  activeColor: {fileID: 2100000, guid: aa464ac6daaf7fd4fb018725e761b99e, type: 2}
+  activeColor: {fileID: 2100000, guid: ba552f6beb6994d4b9a39e292026cdf8, type: 2}
   door: {fileID: 0}
   console: {fileID: 986997232}
 --- !u!65 &20047092
@@ -26679,7 +26679,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 5159e3d59cb44554cb1a6ff5e560e76d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 67dcb5284857a6f4fb1a52f7d3266b98, type: 2}
+      objectReference: {fileID: 2100000, guid: 79dc7ad5e1577524ab6d93b8f98f06b6, type: 2}
     - target: {fileID: 919132149155446097, guid: 5159e3d59cb44554cb1a6ff5e560e76d, type: 3}
       propertyPath: m_Name
       value: ph_doorFrame_console (2)
@@ -34658,6 +34658,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 1650218113}
   kioskAdjust: {fileID: 0}
+  weaponFocus: -1
   level: 3
   gameTime: 0
   eogStatsText: {fileID: 0}
@@ -46438,7 +46439,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 5159e3d59cb44554cb1a6ff5e560e76d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d7313a7d14c5c7a4b8eee62276c9d455, type: 2}
+      objectReference: {fileID: 2100000, guid: aa464ac6daaf7fd4fb018725e761b99e, type: 2}
     - target: {fileID: 919132149155446097, guid: 5159e3d59cb44554cb1a6ff5e560e76d, type: 3}
       propertyPath: m_Name
       value: ph_doorFrame_console (1)
@@ -58320,9 +58321,11 @@ MonoBehaviour:
   vcDiffText: {fileID: 0}
   caLevelText: {fileID: 0}
   vcLevelText: {fileID: 0}
+  vcWepFocusText: {fileID: 0}
   vcButton: {fileID: 0}
   vcDifficulty: {fileID: 0}
   vcLevel: {fileID: 0}
+  vcWepFocus: {fileID: 0}
   caDifficulty: {fileID: 0}
   caLevel: {fileID: 0}
 --- !u!4 &1360603280
@@ -60421,6 +60424,7 @@ MonoBehaviour:
   loot: {fileID: 8142452723782106145, guid: 18936b7a51b7a64459dd409e2262c2fb, type: 3}
   exoticLoot: {fileID: 8142452723782106145, guid: ec80dd49abe7a68478a9711d5ceac05b, type: 3}
   lucent: {fileID: 130336942800207938, guid: 7320e224a8085bb48baf1c3368d58ca0, type: 3}
+  lootFocus: -1
   combatants: []
   enemyDied: 0
 --- !u!4 &1451678280
@@ -85761,7 +85765,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: 79dc7ad5e1577524ab6d93b8f98f06b6, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 0}
   console: {fileID: 464587481}
 --- !u!65 &2088397143

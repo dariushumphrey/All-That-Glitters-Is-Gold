@@ -453,7 +453,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateH: 3
   rotateV: 2
-  vClamp: 20
+  vClamp: 30
   characterTurnSpeed: 25
   zoomDefault: 60
   zoomMax: 40

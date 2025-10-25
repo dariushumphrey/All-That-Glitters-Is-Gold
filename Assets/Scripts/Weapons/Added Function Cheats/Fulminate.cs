@@ -8,6 +8,7 @@ public class Fulminate : MonoBehaviour
     private FirearmScript firearm;
     private PlayerInventoryScript player;
     private PlayerMeleeScript melee;
+    private GameObject activation;
     internal GameObject proc;
 
     private int destructDamage;
@@ -32,6 +33,7 @@ public class Fulminate : MonoBehaviour
         firearm = GetComponent<FirearmScript>();
         player = FindObjectOfType<PlayerInventoryScript>();
         melee = FindObjectOfType<PlayerMeleeScript>();
+        activation = Resources.Load<GameObject>("Particles/FulminateActive");
 
         destructDamage = player.grenades[2].GetComponent<DestructGrenadeScript>().explosiveDamage;
         destructReset = destructDamage;
@@ -101,6 +103,12 @@ public class Fulminate : MonoBehaviour
             destructDamage = destructReset;
             player.fulminatePresent = false;
 
+        }
+
+        if(destructDamage == dmgCap && Time.timeScale == 1)
+        {
+            GameObject effect = Instantiate(activation, gameObject.transform.root.gameObject.transform.position + Vector3.down, transform.rotation);
+            effect.name = activation.name;
         }
     }
 

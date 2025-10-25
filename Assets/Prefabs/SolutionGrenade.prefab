@@ -225,10 +225,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3519e8fac9ad72142ad46535641a4929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armingTime: 3
+  armingTime: 1
   acidPool: {fileID: 5926252154728253069, guid: 3b05bf0d285850c4a9c91871876232bb, type: 3}
   acidSteam: {fileID: 4462285573933136938, guid: d7aaae95832cd954c92b00317fdd67a0, type: 3}
   acidReaction: {fileID: 2257329256869927221, guid: fb1073590ffb74a4a8d11422f358daa9, type: 3}
+  cloudDetonation: {fileID: 8787694526236539577, guid: 2302c113b33eef24c9437ad98d102e9b, type: 3}
 --- !u!1 &5276520890866688023
 GameObject:
   m_ObjectHideFlags: 0

@@ -191,6 +191,11 @@ public class TMRHardLucentScript : MonoBehaviour
                 restoreAdd = (int)restorePercent;
 
                 collision.gameObject.GetComponent<PlayerStatusScript>().playerHealth += restoreAdd;
+                if(collision.gameObject.GetComponent<PlayerStatusScript>().playerHealth == collision.gameObject.GetComponent<PlayerStatusScript>().playerHealthMax)
+                {
+                    collision.gameObject.GetComponent<PlayerStatusScript>().playerHealth = collision.gameObject.GetComponent<PlayerStatusScript>().playerHealthMax;
+                }
+
                 HardLucentShatter();
             }
         }

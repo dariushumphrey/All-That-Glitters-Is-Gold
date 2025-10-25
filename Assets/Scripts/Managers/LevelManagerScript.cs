@@ -31,7 +31,7 @@ public class LevelManagerScript : MonoBehaviour
     public GameObject eogStatsText;
     public GameObject pauseMenu, resultsMenu, controlsMenu;
 
-    private float gameEndDelay = 10f;
+    private float gameEndDelay = 15f;
     private bool paused = false;
     private GameObject continueButton, restartButton, quitButton, mainMenuButton;
     private GameObject menuReturnButton;

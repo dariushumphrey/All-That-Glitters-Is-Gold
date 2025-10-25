@@ -8,6 +8,7 @@ public class Enshroud : MonoBehaviour
     private FirearmScript firearm;
     private PlayerInventoryScript player;
     private PlayerMeleeScript melee;
+    private GameObject activation;
     internal GameObject proc;
 
     private float meleePct = 15f;
@@ -31,6 +32,7 @@ public class Enshroud : MonoBehaviour
         firearm = GetComponent<FirearmScript>();
         player = FindObjectOfType<PlayerInventoryScript>();
         melee = FindObjectOfType<PlayerMeleeScript>();
+        activation = Resources.Load<GameObject>("Particles/EnshroudActive");
 
         buffTimerReset = buffTimer;
         cooldownReset = cooldownTimer;
@@ -104,6 +106,12 @@ public class Enshroud : MonoBehaviour
                 cooldownTimer = cooldownReset;
                 cooldown = false;
             }
+        }
+
+        if (melee.meleeRange >= meleeCap && Time.timeScale == 1)
+        {
+            GameObject effect = Instantiate(activation, gameObject.transform.root.gameObject.transform.position + Vector3.down, transform.rotation);
+            effect.name = activation.name;
         }
     }
 

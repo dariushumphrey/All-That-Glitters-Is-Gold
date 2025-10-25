@@ -1299,14 +1299,15 @@ public class ReplevinScript : MonoBehaviour
     {
         if (ramTimeout == true)
         {
-            self.speed = moveSpeed;
-            self.acceleration = nmaAccel;
+            self.speed = 0f;
+            self.acceleration = 0f;
 
             chargeTimeout -= Time.deltaTime;
             if (chargeTimeout < 0f)
             {         
                 chargeTimeout = chargeReset;
-                //self.speed = moveSpeed;
+                self.speed = moveSpeed;
+                self.acceleration = nmaAccel;
 
                 if (amBoss)
                 {

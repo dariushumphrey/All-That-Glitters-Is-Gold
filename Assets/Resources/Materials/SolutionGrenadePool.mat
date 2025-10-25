@@ -62,7 +62,7 @@ Material:
     - _BlendOp: 2
     - _BumpScale: 1
     - _CameraFadingEnabled: 1
-    - _CameraFarFadeDistance: 4
+    - _CameraFarFadeDistance: 3
     - _CameraNearFadeDistance: 1
     - _ColorMode: 0
     - _Cull: 2
@@ -70,8 +70,8 @@ Material:
     - _DetailNormalMapScale: 1
     - _DistortionBlend: 0
     - _DistortionEnabled: 0
-    - _DistortionStrength: 3
-    - _DistortionStrengthScaled: 0.3
+    - _DistortionStrength: 1
+    - _DistortionStrengthScaled: 0.1
     - _DstBlend: 1
     - _EmissionEnabled: 1
     - _FlipbookMode: 0
@@ -84,17 +84,17 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
-    - _SoftParticlesEnabled: 0
-    - _SoftParticlesFarFadeDistance: 0
+    - _SoftParticlesEnabled: 1
+    - _SoftParticlesFarFadeDistance: 3
     - _SoftParticlesNearFadeDistance: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 5
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _CameraFadeParams: {r: 1, g: 0.33333334, b: 0, a: 0}
-    - _Color: {r: 0.15686275, g: 0.007843138, b: 0, a: 1}
+    - _CameraFadeParams: {r: 1, g: 0.5, b: 0, a: 0}
+    - _Color: {r: 0.41396326, g: 0.020698164, b: 0, a: 0.5529412}
     - _ColorAddSubDiff: {r: -1, g: 1, b: 0, a: 0}
-    - _EmissionColor: {r: 0, g: 0, b: 0.013514099, a: 1}
-    - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
+    - _EmissionColor: {r: 0, g: 0, b: 0.101960786, a: 1}
+    - _SoftParticleFadeParams: {r: 0, g: 0.33333334, b: 0, a: 0}
   m_BuildTextureStacks: []

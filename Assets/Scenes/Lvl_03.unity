@@ -291,6 +291,7 @@ MonoBehaviour:
   - {fileID: 1910684433}
   - {fileID: 1007316694}
   kioskAdjust: {fileID: 0}
+  weaponFocus: -1
   level: 2
   gameTime: 0
   eogStatsText: {fileID: 0}
@@ -3663,6 +3664,10 @@ PrefabInstance:
       propertyPath: blueConsole
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6342009812180674164, guid: 964a10ff5c7ca51418a2eaf6c53cc139, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79dc7ad5e1577524ab6d93b8f98f06b6, type: 2}
     m_RemovedComponents:
     - {fileID: 6176452824257119285, guid: 964a10ff5c7ca51418a2eaf6c53cc139, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 964a10ff5c7ca51418a2eaf6c53cc139, type: 3}
@@ -10927,11 +10932,15 @@ PrefabInstance:
     - target: {fileID: 6176452824257119285, guid: 964a10ff5c7ca51418a2eaf6c53cc139, type: 3}
       propertyPath: activeColor
       value: 
-      objectReference: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+      objectReference: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
     - target: {fileID: 6176452824257119285, guid: 964a10ff5c7ca51418a2eaf6c53cc139, type: 3}
       propertyPath: blueConsole
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6342009812180674164, guid: 964a10ff5c7ca51418a2eaf6c53cc139, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79dc7ad5e1577524ab6d93b8f98f06b6, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 964a10ff5c7ca51418a2eaf6c53cc139, type: 3}
 --- !u!4 &389023241 stripped
@@ -17198,6 +17207,7 @@ MonoBehaviour:
   loot: {fileID: 8142452723782106145, guid: 18936b7a51b7a64459dd409e2262c2fb, type: 3}
   exoticLoot: {fileID: 8142452723782106145, guid: ec80dd49abe7a68478a9711d5ceac05b, type: 3}
   lucent: {fileID: 130336942800207938, guid: 7320e224a8085bb48baf1c3368d58ca0, type: 3}
+  lootFocus: -1
   combatants: []
   enemyDied: 0
 --- !u!4 &655199386
@@ -55850,7 +55860,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 700714861}
   console: {fileID: 1470714142}
 --- !u!114 &2014725765
@@ -55868,7 +55878,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 168629469}
   console: {fileID: 1470714142}
 --- !u!114 &2014725766
@@ -55886,7 +55896,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 498227978}
   console: {fileID: 1470714142}
 --- !u!114 &2014725767
@@ -55904,7 +55914,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 1124569203}
   console: {fileID: 1470714142}
 --- !u!114 &2014725768
@@ -55922,7 +55932,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 1248790949}
   console: {fileID: 1470714142}
 --- !u!114 &2014725769
@@ -55940,7 +55950,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 1356724698}
   console: {fileID: 1470714142}
 --- !u!114 &2014725770
@@ -55958,7 +55968,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 1116469196}
   console: {fileID: 1470714142}
 --- !u!114 &2014725771
@@ -55976,7 +55986,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 1036923671}
   console: {fileID: 1470714142}
 --- !u!114 &2014725772
@@ -55994,7 +56004,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 1268775866}
   console: {fileID: 1470714142}
 --- !u!114 &2014725773
@@ -56012,7 +56022,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 847016557}
   console: {fileID: 1470714142}
 --- !u!114 &2014725774
@@ -56030,7 +56040,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 431908040}
   console: {fileID: 1470714142}
 --- !u!114 &2014725775
@@ -56048,7 +56058,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 1781965113}
   console: {fileID: 1470714142}
 --- !u!114 &2014725776
@@ -56066,7 +56076,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 288978014}
   console: {fileID: 1470714142}
 --- !u!114 &2014725777
@@ -56084,7 +56094,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 1157350294}
   console: {fileID: 1470714142}
 --- !u!114 &2014725778
@@ -56102,7 +56112,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 673078288}
   console: {fileID: 1470714142}
 --- !u!114 &2014725779
@@ -56120,7 +56130,7 @@ MonoBehaviour:
   blueConsole: 0
   redConsole: 1
   accepted: 0
-  activeColor: {fileID: 2100000, guid: fb4cc1ad725b6f34db9b01f563bffb2c, type: 2}
+  activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 847016558}
   console: {fileID: 1470714142}
 --- !u!4 &2016198129 stripped
@@ -58807,14 +58817,18 @@ MonoBehaviour:
   vcThumbnail: {fileID: 0}
   caLevelOne: {fileID: 21300000, guid: 9fd246b6272cbd949853392938b6a7e1, type: 3}
   caLevelTwo: {fileID: 21300000, guid: 58d36a8d50618d84293aaa0238479fc2, type: 3}
+  caLevelThree: {fileID: 0}
   vcLevelOne: {fileID: 21300000, guid: 580435a41c7471a4c8fe39d71fbdaf18, type: 3}
+  vcLevelTwo: {fileID: 0}
   caDiffText: {fileID: 0}
   vcDiffText: {fileID: 0}
   caLevelText: {fileID: 0}
   vcLevelText: {fileID: 0}
+  vcWepFocusText: {fileID: 0}
   vcButton: {fileID: 0}
   vcDifficulty: {fileID: 0}
   vcLevel: {fileID: 0}
+  vcWepFocus: {fileID: 0}
   caDifficulty: {fileID: 0}
   caLevel: {fileID: 0}
 --- !u!4 &2113369642

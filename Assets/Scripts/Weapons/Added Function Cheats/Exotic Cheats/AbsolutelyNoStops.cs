@@ -44,7 +44,7 @@ public class AbsolutelyNoStops : MonoBehaviour
         //___.text = Expending your magazine automatically fills it from reserves, amplifies damage by 200%, and reduces Recoil and increases Rate of Fire by 50%. 
         //This bonus ends when ammo reserves are depleted or if you stop firing.
 
-        if(tick)
+        if(tick && Time.timeScale == 1)
         {
             GameObject secondTry = Instantiate(activation, gameObject.transform.position, transform.rotation, gameObject.transform);
         }

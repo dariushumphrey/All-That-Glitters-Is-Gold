@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System;
 
 public class KioskScript : MonoBehaviour
 {
     public int lucentFunds = 0;
     public float devaluePercent = 20f;
+    public float timedResetSeconds = 60f;
     public Text lucentText;
+    public Text timedResetText;
     public Text purchaseConfirmText;
     public WeaponManagerScript playerInventory;
     public string filepath = "inventory.txt";
@@ -38,6 +41,10 @@ public class KioskScript : MonoBehaviour
     private ColorBlock quality;
     private int devalue;
     private float devaluePctReset;
+    private float kioskReset;
+    private TimeSpan time;
+    private string timeFormat;
+    private bool paused = false;
 
     private int determinate;
     private char decision;
@@ -45,10 +52,17 @@ public class KioskScript : MonoBehaviour
     private int newPoolDeterminate;
     private string wepTypeStr, wepRarStr, wepExoStr, stOneStr, stTwoStr, stThreeStr, stFourStr, fcOneStr, fcTwoStr;
     private char wepType, wepRar, wepExo, stOne, stTwo, stThree, stFour, fcOne, fcTwo;
+
+    private void Awake()
+    {
+        kioskReset = timedResetSeconds;
+        devaluePctReset = devaluePercent;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        devaluePctReset = devaluePercent;
+        //devaluePctReset = devaluePercent;
         GenerateWeapons();
     }
 
@@ -56,6 +70,21 @@ public class KioskScript : MonoBehaviour
     void Update()
     {
         lucentText.text = "Lucent: " + lucentFunds.ToString("N0");
+
+        time = TimeSpan.FromSeconds(timedResetSeconds);
+        timeFormat = string.Format("{0:D2}:{1:D2}:{2:D2}", time.Hours, time.Minutes, time.Seconds);
+        timedResetText.text = "Refreshes in: " + timeFormat;
+
+        if(!paused)
+        {
+            timedResetSeconds -= Time.deltaTime;
+        }
+
+        if(timedResetSeconds <= 0f)
+        {
+            timedResetSeconds = kioskReset;
+            Start();
+        }
     }
 
     void GenerateWeapons()
@@ -63,7 +92,7 @@ public class KioskScript : MonoBehaviour
         for (int w = 0; w < kioskWares.Count; w++)
         {
             //Determines Weapon Type
-            determinate = Random.Range(1, 8);
+            determinate = UnityEngine.Random.Range(1, 8);
             //determinate = 1;
             wepTypeStr = determinate.ToString();
 
@@ -71,12 +100,12 @@ public class KioskScript : MonoBehaviour
             //If Viricide has been completed at least once, Weapons starting from Rarity 4 will be sellable
             if (PlayerPrefs.GetInt("firstViricideClear") != 1)
             {
-                determinate = Random.Range(1, 4);
+                determinate = UnityEngine.Random.Range(1, 4);
             }
 
             else
             {
-                determinate = Random.Range(4, 6);
+                determinate = UnityEngine.Random.Range(4, 6);
             }
 
             //determinate = Random.Range(2, 5);
@@ -105,16 +134,16 @@ public class KioskScript : MonoBehaviour
 
             else
             {
-                determinate = Random.Range(1, 3);
+                determinate = UnityEngine.Random.Range(1, 3);
                 stOneStr = determinate.ToString();
 
-                determinate = Random.Range(3, 5);
+                determinate = UnityEngine.Random.Range(3, 5);
                 stTwoStr = determinate.ToString();
 
-                determinate = Random.Range(5, 7);
+                determinate = UnityEngine.Random.Range(5, 7);
                 stThreeStr = determinate.ToString();
 
-                determinate = Random.Range(7, 9);
+                determinate = UnityEngine.Random.Range(7, 9);
                 stFourStr = determinate.ToString();
             }
             
@@ -148,7 +177,7 @@ public class KioskScript : MonoBehaviour
                 int act = 0;
 
                 char[] newPool = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '@', '#', '$', '%', '^' };
-                act = Random.Range(0, newPool.Length);
+                act = UnityEngine.Random.Range(0, newPool.Length);
                 decision = newPool[act];
                 fcOneStr = decision.ToString();
 
@@ -163,12 +192,12 @@ public class KioskScript : MonoBehaviour
                 int choice = 0;
 
                 char[] poolOne = {'9', '4', '5', '6', '8', '!', '@', '#'};
-                choice = Random.Range(0, poolOne.Length);
+                choice = UnityEngine.Random.Range(0, poolOne.Length);
                 decision = poolOne[choice];                
                 fcOneStr = decision.ToString();
 
                 char[] poolTwo = {'0', '1', '2', '7', '3', '$', '%', '^'};
-                choice = Random.Range(0, poolOne.Length);
+                choice = UnityEngine.Random.Range(0, poolOne.Length);
                 decision = poolTwo[choice];
                 fcTwoStr = decision.ToString();
 
@@ -475,7 +504,7 @@ public class KioskScript : MonoBehaviour
 
                     if (fcOneStr == "$")
                     {
-                        functionOnes[p].text = "Couterplay";
+                        functionOnes[p].text = "Counterplay";
 
                     }
 
@@ -583,7 +612,7 @@ public class KioskScript : MonoBehaviour
 
                     if (fcTwoStr == "$")
                     {
-                        functionTwos[p].text = "Couterplay";
+                        functionTwos[p].text = "Counterplay";
 
                     }
 
@@ -795,7 +824,7 @@ public class KioskScript : MonoBehaviour
 
                     if (fcOneStr == "$")
                     {
-                        functionOnes[p].text = "Couterplay";
+                        functionOnes[p].text = "Counterplay";
 
                     }
 
@@ -908,7 +937,7 @@ public class KioskScript : MonoBehaviour
 
                     if (fcTwoStr == "$")
                     {
-                        functionTwos[p].text = "Couterplay";
+                        functionTwos[p].text = "Counterplay";
 
                     }
 
@@ -1120,7 +1149,7 @@ public class KioskScript : MonoBehaviour
 
                     if (fcOneStr == "$")
                     {
-                        functionOnes[p].text = "Couterplay";
+                        functionOnes[p].text = "Counterplay";
 
                     }
 
@@ -1234,7 +1263,7 @@ public class KioskScript : MonoBehaviour
 
                     if (fcTwoStr == "$")
                     {
-                        functionTwos[p].text = "Couterplay";
+                        functionTwos[p].text = "Counterplay";
 
                     }
 
@@ -1446,7 +1475,7 @@ public class KioskScript : MonoBehaviour
 
                     if (fcOneStr == "$")
                     {
-                        functionOnes[p].text = "Couterplay";
+                        functionOnes[p].text = "Counterplay";
 
                     }
 
@@ -1554,7 +1583,7 @@ public class KioskScript : MonoBehaviour
 
                     if (fcTwoStr == "$")
                     {
-                        functionTwos[p].text = "Couterplay";
+                        functionTwos[p].text = "Counterplay";
 
                     }
 
@@ -1766,7 +1795,7 @@ public class KioskScript : MonoBehaviour
 
                     if (fcOneStr == "$")
                     {
-                        functionOnes[p].text = "Couterplay";
+                        functionOnes[p].text = "Counterplay";
 
                     }
 
@@ -1880,7 +1909,7 @@ public class KioskScript : MonoBehaviour
 
                     if (fcTwoStr == "$")
                     {
-                        functionTwos[p].text = "Couterplay";
+                        functionTwos[p].text = "Counterplay";
 
                     }
 
@@ -2092,7 +2121,7 @@ public class KioskScript : MonoBehaviour
 
                     if (fcOneStr == "$")
                     {
-                        functionOnes[p].text = "Couterplay";
+                        functionOnes[p].text = "Counterplay";
 
                     }
 
@@ -2200,7 +2229,7 @@ public class KioskScript : MonoBehaviour
 
                     if (fcTwoStr == "$")
                     {
-                        functionTwos[p].text = "Couterplay";
+                        functionTwos[p].text = "Counterplay";
 
                     }
 
@@ -2413,7 +2442,7 @@ public class KioskScript : MonoBehaviour
 
                     if (fcOneStr == "$")
                     {
-                        functionOnes[p].text = "Couterplay";
+                        functionOnes[p].text = "Counterplay";
 
                     }
 
@@ -2527,7 +2556,7 @@ public class KioskScript : MonoBehaviour
 
                     if (fcTwoStr == "$")
                     {
-                        functionTwos[p].text = "Couterplay";
+                        functionTwos[p].text = "Counterplay";
 
                     }
 
@@ -6049,5 +6078,15 @@ public class KioskScript : MonoBehaviour
         {
             lucentFunds = 100000;
         }
+    }
+
+    public void PauseRefreshTimer()
+    {
+        paused = true;
+    }
+
+    public void ResumeRefreshTimer()
+    {
+        paused = false;
     }
 }
