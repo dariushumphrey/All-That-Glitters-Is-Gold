@@ -15143,8 +15143,8 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: '
 
-    Resetting progress revokes Viricide, Difficulty 5 and Level 02 access,
-    and forfeits ALL Lucent. Are you sure?'
+    Resetting revokes Viricide, Difficulty 5, Campaign progress, and
+    forfeits ALL Lucent. Are you sure?'
 --- !u!222 &1634551260
 CanvasRenderer:
   m_ObjectHideFlags: 0
