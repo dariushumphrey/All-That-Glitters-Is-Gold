@@ -64,7 +64,7 @@ public class TMRHardLucentScript : MonoBehaviour
                                                                 Random.Range(-spawnField.extents.z, spawnField.extents.z));
 
             miniLucent = Instantiate(lucentCluster, spawnSite, transform.rotation);
-            miniLucent.GetComponent<LucentScript>().lucentGift *= shatterDamageAdd;
+            miniLucent.GetComponent<LucentScript>().lucentGift += shatterDamageAdd;
             miniLucent.GetComponent<LucentScript>().ShatterCalculation();
             miniLucent.name = lucentCluster.name;
 

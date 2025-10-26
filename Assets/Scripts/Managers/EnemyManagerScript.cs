@@ -167,7 +167,9 @@ public class EnemyManagerScript : MonoBehaviour
             if (deathRewardChance >= 100)
             {
                 GameObject reward = Instantiate(exoticLoot, deathPos + Vector3.up, loot.transform.rotation);
-                if(reward.GetComponent<ColorLerpScript>() != null)
+                reward.GetComponent<LootScript>().focusTarget = lootFocus;
+
+                if (reward.GetComponent<ColorLerpScript>() != null)
                 {
                     reward.GetComponent<ColorLerpScript>().colorOne = Color.cyan;
                     reward.GetComponent<ColorLerpScript>().colorTwo = Color.white;

@@ -31,7 +31,8 @@ public class BossManagerScript : MonoBehaviour
         for (int c = 0; c < chestRewards.Count; c++)
         {
             chestRewards[c].GetComponent<LootScript>().raritySpawn = bossDifficulty;
-            chestRewards[c].GetComponent<LootScript>().lootSpamMax = bossDifficulty;          
+            chestRewards[c].GetComponent<LootScript>().lootSpamMax = bossDifficulty;
+            chestRewards[c].GetComponent<LootScript>().focusTarget = levelManager.weaponFocus;
         }
     }
 
@@ -64,6 +65,7 @@ public class BossManagerScript : MonoBehaviour
         {
             chestRewards[c].gameObject.SetActive(true);
             chestRewards[c].GetComponent<LootScript>().raritySpawn = bossDifficulty;
+            chestRewards[c].GetComponent<LootScript>().focusTarget = levelManager.weaponFocus;
             if (chestRewards[c].GetComponent<LootScript>().spamLoot != true)
             {
                 chestRewards[c].GetComponent<LootScript>().lootSpamMax = bossDifficulty;

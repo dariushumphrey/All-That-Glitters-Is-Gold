@@ -483,7 +483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -1826,6 +1826,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short1long (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5404609337922864082, guid: e57acb40cf8079f41a4b60646f8ddbe9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e57acb40cf8079f41a4b60646f8ddbe9, type: 3}
 --- !u!4 &43335228 stripped
@@ -2792,7 +2796,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 13ca82812463f7f488c3be897f1c20b3, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13ca82812463f7f488c3be897f1c20b3, type: 3}
@@ -3096,6 +3100,10 @@ PrefabInstance:
     - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
@@ -3665,7 +3673,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -7313,7 +7321,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -8653,6 +8661,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_smallLight_3short (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5729627481787497789, guid: 7db336f56f807494eb70e456727749ad, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7db336f56f807494eb70e456727749ad, type: 3}
 --- !u!4 &204655469 stripped
@@ -9161,6 +9173,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_light_cap (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3068159310186857026, guid: 13309303df8ddea4eb236c9fbd7ff10a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3572681422626972567, guid: 13309303df8ddea4eb236c9fbd7ff10a, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
@@ -9545,7 +9561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -9775,6 +9791,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1279681760069547520, guid: 9c4162737de075b4bbe7cce1459b8fba, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1912208411581066426, guid: 9c4162737de075b4bbe7cce1459b8fba, type: 3}
       propertyPath: m_RootOrder
       value: 31
@@ -9887,7 +9907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -13052,7 +13072,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -15427,6 +15447,10 @@ PrefabInstance:
     - target: {fileID: 3988653154519887911, guid: 4a221c8446eb1d14c97f377e0554596c, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_4short (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3988653154519887911, guid: 4a221c8446eb1d14c97f377e0554596c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4328339973000817309, guid: 4a221c8446eb1d14c97f377e0554596c, type: 3}
       propertyPath: m_RootOrder
@@ -18127,7 +18151,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -19243,6 +19267,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long
       objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
       value: 16
@@ -19586,6 +19614,10 @@ PrefabInstance:
     - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
@@ -20455,6 +20487,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
 --- !u!4 &493537126 stripped
@@ -21311,6 +21347,10 @@ PrefabInstance:
     - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
@@ -24212,7 +24252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -24404,6 +24444,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5404609337922864082, guid: e57acb40cf8079f41a4b60646f8ddbe9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e57acb40cf8079f41a4b60646f8ddbe9, type: 3}
 --- !u!4 &566437144 stripped
@@ -24514,6 +24558,10 @@ PrefabInstance:
     - target: {fileID: 1279681760069547520, guid: 9c4162737de075b4bbe7cce1459b8fba, type: 3}
       propertyPath: m_Name
       value: ph_ceiling (28)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1279681760069547520, guid: 9c4162737de075b4bbe7cce1459b8fba, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1912208411581066426, guid: 9c4162737de075b4bbe7cce1459b8fba, type: 3}
       propertyPath: m_RootOrder
@@ -24790,6 +24838,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_smallLight_4short (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3988653154519887911, guid: 4a221c8446eb1d14c97f377e0554596c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4328339973000817309, guid: 4a221c8446eb1d14c97f377e0554596c, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -24980,6 +25032,10 @@ PrefabInstance:
     - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1434285618048209900, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
       propertyPath: m_Materials.Array.data[1]
@@ -25827,6 +25883,10 @@ PrefabInstance:
     - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
@@ -27511,6 +27571,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short
       objectReference: {fileID: 0}
+    - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
 --- !u!4 &624908027 stripped
@@ -28481,6 +28545,10 @@ PrefabInstance:
     - target: {fileID: 5404609337922864082, guid: e57acb40cf8079f41a4b60646f8ddbe9, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short1long
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404609337922864082, guid: e57acb40cf8079f41a4b60646f8ddbe9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e57acb40cf8079f41a4b60646f8ddbe9, type: 3}
@@ -29466,6 +29534,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
       value: 18
@@ -29806,6 +29878,10 @@ PrefabInstance:
     - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
@@ -31362,7 +31438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -32019,6 +32095,10 @@ PrefabInstance:
     - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
@@ -33011,6 +33091,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1434285618048209900, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
@@ -33129,6 +33213,10 @@ PrefabInstance:
     - target: {fileID: 3854456521343729001, guid: d07b803d4e59e1c4aaec894157702ae5, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_light_circle
+      objectReference: {fileID: 0}
+    - target: {fileID: 3854456521343729001, guid: d07b803d4e59e1c4aaec894157702ae5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4482796198806235091, guid: d07b803d4e59e1c4aaec894157702ae5, type: 3}
       propertyPath: m_RootOrder
@@ -33786,6 +33874,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
       value: 27
@@ -34302,6 +34394,10 @@ PrefabInstance:
     - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
@@ -34902,6 +34998,10 @@ PrefabInstance:
     - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
@@ -40712,7 +40812,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -41771,7 +41871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -43137,7 +43237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -45136,6 +45236,10 @@ PrefabInstance:
     - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
@@ -47232,6 +47336,10 @@ PrefabInstance:
     - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
@@ -50184,6 +50292,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
       value: 31
@@ -52370,6 +52482,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_smallLight_3short (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5729627481787497789, guid: 7db336f56f807494eb70e456727749ad, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7db336f56f807494eb70e456727749ad, type: 3}
 --- !u!4 &1227150674 stripped
@@ -53109,6 +53225,10 @@ PrefabInstance:
     - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
@@ -54323,6 +54443,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_light_cap
       objectReference: {fileID: 0}
+    - target: {fileID: 3068159310186857026, guid: 13309303df8ddea4eb236c9fbd7ff10a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3572681422626972567, guid: 13309303df8ddea4eb236c9fbd7ff10a, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
@@ -54417,6 +54541,10 @@ PrefabInstance:
     - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
@@ -54523,6 +54651,10 @@ PrefabInstance:
     - target: {fileID: 5729627481787497789, guid: 7db336f56f807494eb70e456727749ad, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_3short
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729627481787497789, guid: 7db336f56f807494eb70e456727749ad, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7db336f56f807494eb70e456727749ad, type: 3}
@@ -55714,6 +55846,10 @@ PrefabInstance:
     - target: {fileID: 5404609337922864082, guid: e57acb40cf8079f41a4b60646f8ddbe9, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short1long (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404609337922864082, guid: e57acb40cf8079f41a4b60646f8ddbe9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e57acb40cf8079f41a4b60646f8ddbe9, type: 3}
@@ -58632,7 +58768,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -59064,6 +59200,10 @@ PrefabInstance:
     - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
@@ -59503,7 +59643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3a96b05255e7dc34185ab0783f778d3f, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a96b05255e7dc34185ab0783f778d3f, type: 3}
@@ -60069,6 +60209,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
       value: 26
@@ -60360,6 +60504,10 @@ PrefabInstance:
     - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
@@ -64412,7 +64560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -64960,6 +65108,10 @@ PrefabInstance:
     - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
@@ -65718,7 +65870,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -68593,7 +68745,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3a96b05255e7dc34185ab0783f778d3f, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a96b05255e7dc34185ab0783f778d3f, type: 3}
@@ -69835,6 +69987,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long
       objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -70161,7 +70317,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -72647,6 +72803,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
 --- !u!4 &1771162131 stripped
@@ -73330,6 +73490,10 @@ PrefabInstance:
     - target: {fileID: 1279681760069547520, guid: 9c4162737de075b4bbe7cce1459b8fba, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1279681760069547520, guid: 9c4162737de075b4bbe7cce1459b8fba, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1912208411581066426, guid: 9c4162737de075b4bbe7cce1459b8fba, type: 3}
       propertyPath: m_RootOrder
@@ -74292,6 +74456,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5404609337922864082, guid: e57acb40cf8079f41a4b60646f8ddbe9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e57acb40cf8079f41a4b60646f8ddbe9, type: 3}
 --- !u!4 &1810212127 stripped
@@ -75126,7 +75294,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 13ca82812463f7f488c3be897f1c20b3, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13ca82812463f7f488c3be897f1c20b3, type: 3}
@@ -76775,6 +76943,10 @@ PrefabInstance:
     - target: {fileID: 3988653154519887911, guid: 4a221c8446eb1d14c97f377e0554596c, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3988653154519887911, guid: 4a221c8446eb1d14c97f377e0554596c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4328339973000817309, guid: 4a221c8446eb1d14c97f377e0554596c, type: 3}
       propertyPath: m_RootOrder
@@ -78534,7 +78706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -81203,7 +81375,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -81978,6 +82150,10 @@ PrefabInstance:
     - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2short (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 641595114956304953, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d84fe729532b8f0419c1c25b986948fc, type: 3}
@@ -83558,7 +83734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -85379,7 +85555,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 13ca82812463f7f488c3be897f1c20b3, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13ca82812463f7f488c3be897f1c20b3, type: 3}
@@ -85468,7 +85644,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff806bbce736f84185840fd454f1844, type: 3}
@@ -86621,6 +86797,10 @@ PrefabInstance:
     - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
@@ -88128,6 +88308,10 @@ PrefabInstance:
     - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_Name
       value: ph_ceiling_smallLight_2long (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493969107258830658, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7832953402217313784, guid: 29c0e4bea31e7024b83d788008bd58a6, type: 3}
       propertyPath: m_RootOrder
