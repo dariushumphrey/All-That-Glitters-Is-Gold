@@ -37,15 +37,15 @@ public class SpawnerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            SpawnObject();
-        }
+        //if(Input.GetKeyDown(KeyCode.Alpha8))
+        //{
+        //    SpawnObject();
+        //}
 
-        if(Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            SpawnCluster();
-        }
+        //if(Input.GetKeyDown(KeyCode.Alpha7))
+        //{
+        //    SpawnCluster();
+        //}
     }
 
     public void SpawnObject()

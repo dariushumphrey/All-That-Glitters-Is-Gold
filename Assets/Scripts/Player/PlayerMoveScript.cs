@@ -74,10 +74,15 @@ public class PlayerMoveScript : MonoBehaviour
             //    inventory.reticleSprite.sprite = inventory.inventory[inventory.selection].GetComponent<FirearmScript>().reticle;
             //}
 
-            if(!inventory.inventory[inventory.selection].GetComponent<FirearmScript>().enabled)
+
+            if(inventory.inventory.Count >= 1)
             {
-                inventory.inventory[inventory.selection].GetComponent<FirearmScript>().enabled = true;
+                if (!inventory.inventory[inventory.selection].GetComponent<FirearmScript>().enabled)
+                {
+                    inventory.inventory[inventory.selection].GetComponent<FirearmScript>().enabled = true;
+                }
             }
+            
 
             inventory.reticleSprite.sprite = inventory.inventory[inventory.selection].GetComponent<FirearmScript>().reticle;
 
