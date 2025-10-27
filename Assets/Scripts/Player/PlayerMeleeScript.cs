@@ -88,7 +88,8 @@ public class PlayerMeleeScript : MonoBehaviour
                     if (hit.collider.gameObject.GetComponent<Rigidbody>() == null)
                     {
                         hit.collider.gameObject.AddComponent<Rigidbody>();
-                        hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 15f, ForceMode.Impulse);
+                        Vector3 meleeForceDistance = transform.position - hit.collider.transform.position;
+                        hit.collider.GetComponent<Rigidbody>().AddForce(-meleeForceDistance.normalized * 20f, ForceMode.Impulse);
                     }
 
                 }

@@ -28,6 +28,7 @@ public class ReplevinScript : MonoBehaviour
     public float chargeLimit = 1f; //Governs how far Enemy will charge on position before timing out
     public float chargeOvershoot = 2f; //Governs how far Enemy will travel beyond the Player's last position while charging
     public float chargeTimeout; //Time to wait before charging again
+    public float chargeBuildup = 1f;
     public float chargeAttackForce;
 
     public float rotationStrength = 2f; //Governs turning speed of Enemy while Player is in range
@@ -75,6 +76,7 @@ public class ReplevinScript : MonoBehaviour
     private Vector3 focus;
     private Vector3 distance, lastKnownDistance;
     private Vector3 lastPlayerPosition;
+    private Vector3 recoilPosition;
     private LayerMask layer, layerTwo, layerTotal;
 
     private GameObject[] waypoint;
@@ -96,6 +98,7 @@ public class ReplevinScript : MonoBehaviour
     private int accelReset;
     private float meleeReset;
     private float chargeReset;
+    private float buildupReset;
     private float punchReset;
     private float jumpReset;
     private float airtimeReset;
@@ -164,6 +167,7 @@ public class ReplevinScript : MonoBehaviour
         punchReset = punchTimeout;
         jumpReset = jumpTimeout;
         airtimeReset = airtimeShort;
+        buildupReset = chargeBuildup;
         berthJumpTimerReset = berthJumpCarpetBombTimer;
         agitationTimer = 0.0f;
         agitated = false;
@@ -406,7 +410,7 @@ public class ReplevinScript : MonoBehaviour
             //This behavior dictates Melee combat for Bosses
             if(amBoss)
             {
-                self.speed = moveSpeed;
+                self.speed = boostSpeed;
                 //self.SetDestination(player.transform.position);
                 distance = transform.position - player.transform.position;
                 attackAgain += Time.deltaTime;
@@ -524,15 +528,16 @@ public class ReplevinScript : MonoBehaviour
                             }
 
                             self.speed = moveSpeed / 2;
-                            //self.acceleration = nmaAccel / 2;
+                            self.acceleration = nmaAccel / 2;
 
                             meleeAttackTimer -= Time.deltaTime;
                             if (meleeAttackTimer <= 0f)
                             {
                                 attackLock = true;
-                                self.speed = moveSpeed * 2;
+                                self.speed = boostSpeed;
+                                self.acceleration = nmaAccel;
 
-                                if(attackLock)
+                                if (attackLock)
                                 {
                                     meleeAttackTimer = 0f;
                                     if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin))
@@ -850,12 +855,282 @@ public class ReplevinScript : MonoBehaviour
     {
         if(!HaveIDied())
         {
-            self.speed = moveSpeed;
             //self.SetDestination(player.transform.position);
             Vector3 rayOrigin = attackStartPoint.transform.position;
             RaycastHit hit;
-            distance = player.transform.position - transform.position;
 
+            //This behavior dictates Charge combat for Bosses
+            if(amBoss)
+            {
+                //self.speed = moveSpeed;
+                distance = player.transform.position - transform.position;
+
+                if(distance.magnitude <= chargeRangeCheck && CanSeePlayer())
+                {
+                    self.ResetPath();
+                    self.speed = boostSpeed;
+                    self.acceleration = nmaAccel;
+
+                    //Debug.Log(attackLock + " | " + ramTimeout);
+                    if(!attackLock && !ramTimeout)
+                    {
+                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
+
+                    }
+           
+                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, chargeRangeCheck) && !recorded)
+                    {
+                        if (hit.collider.tag == "Player")
+                        {
+                            chargeBuildup -= Time.deltaTime;
+                            if (chargeBuildup <= 0f)
+                            {
+                                chargeBuildup = buildupReset;
+                                lastPlayerPosition = hit.point + distance * chargeOvershoot;
+                                attackLock = true;
+
+                                //self.SetDestination(lastPlayerPosition);
+                                GameObject takeoff = Instantiate(jumpTakeoff, transform.position + Vector3.down, transform.rotation);
+                                recorded = true;
+                            }
+                            //Debug.Log(lastPlayerPosition);
+                            //Debug.Log(lastKnownDistance.magnitude);
+                        }
+                    }
+
+                    Debug.DrawRay(transform.position, distance, Color.red);
+                    Debug.DrawRay(transform.position, lastPlayerPosition, Color.green);
+                    //self.SetDestination(lastPlayerPosition);
+                    lastKnownDistance = lastPlayerPosition - transform.position;
+                    //Debug.Log(lastKnownDistance.magnitude + " | " + self.stoppingDistance);
+
+                    if(lastKnownDistance.magnitude <= chargeLimit)
+                    {
+                        self.ResetPath();
+                        chargeBuildup = buildupReset;
+                        attackLock = false;
+                        ramTimeout = true;
+                    }
+
+
+                    if(interrupted)
+                    {
+                        Debug.DrawLine(transform.position, recoilPosition, Color.blue);
+                        transform.position = Vector3.Lerp(transform.position, recoilPosition, gapClose * Time.deltaTime);
+                    }
+
+                    if (attackLock)
+                    {
+                        self.SetDestination(lastPlayerPosition);
+                        if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, chargeRangeMin))
+                        {
+                            //if(hit.point != null)
+                            //{
+                            //    attackLock = false;
+                            //    ramTimeout = true;
+                            //}
+
+                            if (hit.collider.tag == "Hard Lucent")
+                            {
+                                recoilPosition = hit.point + (hit.normal * 5f);
+                                self.ResetPath();
+                                self.velocity = Vector3.zero;
+
+                                interrupted = true;
+                                chargeBuildup = buildupReset;
+
+                                //StartCoroutine(BossChargeStopLerp());
+
+                                enemy.isImmune = false;
+                                chargeTimeout *= 3;
+                                addWave = true;
+                                attackLock = false;
+                                ramTimeout = true;
+                            }
+
+                            if (hit.collider.tag == "Player")
+                            {
+                                if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
+                                {
+                                    if (gameObject.GetComponent<DebuffScript>() == null)
+                                    {
+                                        gameObject.AddComponent<DebuffScript>();
+                                    }
+
+                                    if (hit.collider.GetComponent<PlayerStatusScript>().counterplayCheat)
+                                    {
+                                        hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
+                                    }
+
+                                    chargeBuildup = buildupReset;
+                                    attackLock = false;
+                                    ramTimeout = true;
+                                }
+
+
+                                else
+                                {
+                                    hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+                                    hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+
+                                    //This code shoves the Player with particular force in their opposite direction.
+                                    //This is a charge attack, knocking the player with more force and keeping them grounded to distinguish it from a melee.
+                                    Vector3 knockbackDir = -hit.collider.transform.forward;
+                                    knockbackDir.y = 0;
+                                    hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * chargeAttackForce);
+
+                                    manager.damageDealt += damage;
+
+                                    //if (GetComponent<EnemyFollowerScript>() != null)
+                                    //{
+                                    //    if (GetComponent<EnemyFollowerScript>().leader != null && GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
+                                    //    {
+                                    //        GetComponent<EnemyFollowerScript>().leader.Pursuit();
+                                    //    }
+
+                                    //    GetComponent<EnemyFollowerScript>().ChasePlayer();
+                                    //}
+
+                                    chargeBuildup = buildupReset;
+                                    attackLock = false;
+                                    ramTimeout = true;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                else
+                {
+                    recorded = false;
+                    self.SetDestination(player.transform.position);
+                    self.speed = moveSpeed;
+
+                }
+            }
+
+            //This behavior dictates Charge combat for standard Enemies
+            else
+            {
+                self.speed = moveSpeed;
+                distance = player.transform.position - transform.position;
+
+                if (distance.magnitude <= chargeRangeCheck && CanSeePlayer())
+                {
+                    self.ResetPath();
+                    self.speed = boostSpeed;
+                    self.acceleration = nmaAccel * 2;
+
+                    if (!recorded)
+                    {
+                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
+                    }
+
+                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, chargeRangeCheck) && !recorded)
+                    {
+                        if (hit.collider.tag == "Player")
+                        {
+                            lastPlayerPosition = hit.point + distance * chargeOvershoot;
+                            recorded = true;
+                            attackLock = true;
+                            //Debug.Log(lastPlayerPosition);
+                            //Debug.Log(lastKnownDistance.magnitude);
+                        }
+                    }
+
+                    Debug.DrawLine(transform.position, player.transform.position, Color.red);
+                    Debug.DrawLine(transform.position, lastPlayerPosition, Color.green);
+
+                    //Debug.DrawRay(transform.position, distance, Color.red);
+                    //Debug.DrawRay(transform.position, distance * chargeOvershoot, Color.green);
+
+                    self.SetDestination(lastPlayerPosition);
+                    lastKnownDistance = lastPlayerPosition - transform.position;
+                    //Debug.Log(lastKnownDistance.magnitude + " | " + self.stoppingDistance);
+
+                    if (lastKnownDistance.magnitude <= chargeLimit)
+                    {
+                        attackLock = false;
+                        ramTimeout = true;
+                    }
+
+                    if (attackLock)
+                    {
+                        if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, chargeRangeMin))
+                        {
+                            //if(hit.point != null)
+                            //{
+                            //    attackLock = false;
+                            //    ramTimeout = true;
+                            //}                         
+
+                            if (hit.collider.tag == "Player")
+                            {
+                                if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
+                                {
+                                    if (gameObject.GetComponent<DebuffScript>() == null)
+                                    {
+                                        gameObject.AddComponent<DebuffScript>();
+                                    }
+
+                                    if (hit.collider.GetComponent<PlayerStatusScript>().counterplayCheat)
+                                    {
+                                        hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
+                                    }
+
+                                    attackLock = false;
+                                    ramTimeout = true;
+                                }
+
+
+                                else
+                                {
+                                    if (GetComponent<BerthScript>())
+                                    {
+                                        hit.collider.GetComponent<PlayerStatusScript>().playerHealth -= damage * GetComponent<BerthScript>().berthDamage;
+                                        GetComponent<BerthScript>().Explode();
+                                    }
+
+                                    else
+                                    {
+                                        hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+                                        hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+
+                                        //This code shoves the Player with particular force in their opposite direction.
+                                        //This is a charge attack, knocking the player with more force and keeping them grounded to distinguish it from a melee.
+                                        Vector3 knockbackDir = -hit.collider.transform.forward;
+                                        knockbackDir.y = 0;
+                                        hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * chargeAttackForce);
+                                    }
+
+                                    manager.damageDealt += damage;
+
+                                    //if (GetComponent<EnemyFollowerScript>() != null)
+                                    //{
+                                    //    if (GetComponent<EnemyFollowerScript>().leader != null && GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
+                                    //    {
+                                    //        GetComponent<EnemyFollowerScript>().leader.Pursuit();
+                                    //    }
+
+                                    //    GetComponent<EnemyFollowerScript>().ChasePlayer();
+                                    //}
+
+                                    attackLock = false;
+                                    ramTimeout = true;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                else
+                {
+                    recorded = false;
+                    self.SetDestination(player.transform.position);
+                    self.speed = boostSpeed;
+
+                }
+            }
             //Vector3 chargeVector = transform.position - player.transform.position;
 
             //GameObject help = new GameObject();
@@ -868,133 +1143,7 @@ public class ReplevinScript : MonoBehaviour
             //attackLine.SetPosition(1, rayOrigin + (attackStartPoint.transform.forward * chargeRangeMin));
             //attackLine.material = inRangeColor;
 
-            if (distance.magnitude <= chargeRangeCheck && CanSeePlayer())
-            {
-                self.ResetPath();
-                self.speed = boostSpeed;
-                self.acceleration = nmaAccel * 2;
-
-                if (!recorded)
-                {
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
-                }
-
-                if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, chargeRangeCheck) && !recorded)
-                {
-                    if (hit.collider.tag == "Player")
-                    {
-                        lastPlayerPosition = hit.point + distance * chargeOvershoot;
-                        recorded = true;
-                        attackLock = true;
-                        //Debug.Log(lastPlayerPosition);
-                        //Debug.Log(lastKnownDistance.magnitude);
-                    }
-                }
-                          
-                Debug.DrawLine(transform.position, player.transform.position, Color.red);
-                Debug.DrawLine(transform.position, lastPlayerPosition, Color.green);
-
-                //Debug.DrawRay(transform.position, distance, Color.red);
-                //Debug.DrawRay(transform.position, distance * chargeOvershoot, Color.green);
-
-                self.SetDestination(lastPlayerPosition);
-                lastKnownDistance = lastPlayerPosition - transform.position;
-                //Debug.Log(lastKnownDistance.magnitude + " | " + self.stoppingDistance);
-
-                if(lastKnownDistance.magnitude <= chargeLimit)
-                {
-                    attackLock = false;
-                    ramTimeout = true;
-                }
-
-                if(attackLock)
-                {
-                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, chargeRangeMin))
-                    {
-                        //if(hit.point != null)
-                        //{
-                        //    attackLock = false;
-                        //    ramTimeout = true;
-                        //}
-
-                        if(amBoss)
-                        {
-                            if (hit.collider.tag == "Hard Lucent")
-                            {
-                                enemy.isImmune = false;
-                                attackLock = false;
-                                chargeTimeout *= 2;
-                                addWave = true;
-                                ramTimeout = true;
-                            }
-                        }                       
-
-                        if (hit.collider.tag == "Player")
-                        {
-                            if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
-                            {
-                                if (gameObject.GetComponent<DebuffScript>() == null)
-                                {
-                                    gameObject.AddComponent<DebuffScript>();
-                                }
-
-                                if (hit.collider.GetComponent<PlayerStatusScript>().counterplayCheat)
-                                {
-                                    hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
-                                }
-
-                                attackLock = false;
-                                ramTimeout = true;
-                            }
-                          
-
-                            else
-                            {
-                                if (GetComponent<BerthScript>())
-                                {
-                                    hit.collider.GetComponent<PlayerStatusScript>().playerHealth -= damage * GetComponent<BerthScript>().berthDamage;
-                                    GetComponent<BerthScript>().Explode();
-                                }
-
-                                else
-                                {
-                                    hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
-                                    hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
-
-                                    //This code shoves the Player with particular force in their opposite direction.
-                                    //This is a charge attack, knocking the player with more force and keeping them grounded to distinguish it from a melee.
-                                    Vector3 knockbackDir = -hit.collider.transform.forward;
-                                    knockbackDir.y = 0;
-                                    hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * chargeAttackForce);
-                                }
-                               
-                                manager.damageDealt += damage;
-
-                                //if (GetComponent<EnemyFollowerScript>() != null)
-                                //{
-                                //    if (GetComponent<EnemyFollowerScript>().leader != null && GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
-                                //    {
-                                //        GetComponent<EnemyFollowerScript>().leader.Pursuit();
-                                //    }
-
-                                //    GetComponent<EnemyFollowerScript>().ChasePlayer();
-                                //}
-
-                                attackLock = false;
-                                ramTimeout = true;
-                            }                         
-                        }
-                    }
-                }               
-            }
-
-            else
-            {
-                recorded = false;
-                self.SetDestination(player.transform.position);
-                self.speed = boostSpeed;
-
-            }
+            
 
             //Debug.DrawRay(transform.position, -distance, Color.red);
             //Debug.DrawRay(transform.position, -distance * chargeOvershoot, Color.green);
@@ -1312,6 +1461,7 @@ public class ReplevinScript : MonoBehaviour
                 if (amBoss)
                 {
                     enemy.isImmune = true;
+                    interrupted = false;
 
                     if(boss != null && addWave == true)
                     {
@@ -1508,6 +1658,12 @@ public class ReplevinScript : MonoBehaviour
         stunMechanic.GetComponent<LucentScript>().shatterDelayTime = 2f;
         stunMechanic.GetComponent<LucentScript>().StartCoroutine(stunMechanic.GetComponent<LucentScript>().Shatter());
         stunMechanic.name = stunningLucent.name;
+    }
+
+    public IEnumerator BossChargeStopLerp()
+    {
+        yield return new WaitForSeconds(0.5f);
+        interrupted = false;
     }
 
 }

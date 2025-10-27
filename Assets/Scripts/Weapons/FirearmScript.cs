@@ -944,12 +944,15 @@ public class FirearmScript : MonoBehaviour
                             if (hit.collider.GetComponent<Rigidbody>() == null)
                             {
                                 hit.collider.gameObject.AddComponent<Rigidbody>();
-                                hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 10f, ForceMode.Impulse);
+
+                                Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 20f, ForceMode.Impulse);
                             }
 
                             else
                             {
-                                hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 10f, ForceMode.Impulse);
+                                Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 20f, ForceMode.Impulse);
                             }
                         }
                     }
@@ -1034,12 +1037,14 @@ public class FirearmScript : MonoBehaviour
                             if (hit.collider.GetComponent<Rigidbody>() == null)
                             {
                                 hit.collider.gameObject.AddComponent<Rigidbody>();
-                                hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 5f, ForceMode.Impulse);
+                                Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 10f, ForceMode.Impulse);
                             }
 
                             else
                             {
-                                hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 10f, ForceMode.Impulse);
+                                Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 10f, ForceMode.Impulse);
                             }
 
                             //if (hit.collider.GetComponent<Rigidbody>() != null)

@@ -248,7 +248,7 @@ NavMeshAgent:
   m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 240
   m_StoppingDistance: 1.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -272,22 +272,23 @@ MonoBehaviour:
   damage: 220
   damagePercent: 25
   moveSpeed: 8
-  boostSpeed: 20
-  nmaAccel: 8
+  boostSpeed: 30
+  nmaAccel: 100
   meleeRangeCheck: 0
   meleeRangeMin: 20
   meleeAttackTimer: 0.8
   meleeLimit: 1
   meleeTimeout: 0
   meleeAttackForce: 5000
-  chargeRangeCheck: 15
-  chargeRangeMin: 3
+  chargeRangeCheck: 25
+  chargeRangeMin: 2
   chargeLimit: 1.5
   chargeOvershoot: 0.1
-  chargeTimeout: 2
+  chargeTimeout: 1.5
+  chargeBuildup: 1
   chargeAttackForce: 5000
   rotationStrength: 2
-  gapClose: 0.02
+  gapClose: 3
   pounceLimit: 1.5
   jumpLimit: 6
   jumpForce: 8
@@ -295,7 +296,7 @@ MonoBehaviour:
   rangedAttackForce: 0
   punchTimeout: 2
   jumpTimeout: 2
-  jumpTakeoff: {fileID: 0}
+  jumpTakeoff: {fileID: 2056866271575102109, guid: e436b8ce7e2020e47a954d998deb3c8d, type: 3}
   airtimeShort: 1
   rangeATKMin: 7
   attackRate: 1

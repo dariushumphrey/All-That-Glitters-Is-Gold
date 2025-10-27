@@ -273,8 +273,8 @@ MonoBehaviour:
   damage: 220
   damagePercent: 25
   moveSpeed: 8
-  boostSpeed: 20
-  nmaAccel: 8
+  boostSpeed: 10
+  nmaAccel: 10
   meleeRangeCheck: 15
   meleeRangeMin: 2
   meleeAttackTimer: 1.5
@@ -286,6 +286,7 @@ MonoBehaviour:
   chargeLimit: 1.5
   chargeOvershoot: 0.1
   chargeTimeout: 2
+  chargeBuildup: 1
   chargeAttackForce: 5000
   rotationStrength: 2
   gapClose: 0.02
