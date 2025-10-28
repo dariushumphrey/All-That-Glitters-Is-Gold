@@ -17719,7 +17719,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 718bd689d741d824bb7463ba3a719e98, type: 3}
-    m_FontSize: 32
+    m_FontSize: 31
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -17730,12 +17730,13 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.05
-  m_Text: "\nW - Forward\r\nA - Left\r\nS - Backward\r\nD - Right\r\nX - Dismantle
+  m_Text: "W - Forward\r\nA - Left\r\nS - Backward\r\nD - Right\r\nX - Dismantle
     Active Item\r\nE - Activate Cheat (When applicable)\r\nF - Melee\nG - Throw Grenade\nQ
-    - Switch Grenade\nSpace - Evade\nMouse Button 0 - Fire\r\nMouse Button 1  - Aim\r\nUp
-    Arrow - Show Inventory\r\nDown Arrow - Hide Inventory\r\nLeft Arrow - Switch
-    Weapon (left)\r\nRight Arrow - Switch Weapon (right)\r\n\u20181\u2019 - Lock
-    Cursor\r\n\u20182\u2019 - Unlock Cursor\r\nEsc - Pause\r"
+    - Switch Grenade\nZ - Ascend (Zero Gravity)\nC - Descend (Zero Gravity)\nSpace
+    - Evade\nMouse Button 0 - Fire\r\nMouse Button 1  - Aim\r\nUp Arrow - Show Inventory\r\nDown
+    Arrow - Hide Inventory\r\nLeft Arrow - Switch Weapon (left)\r\nRight Arrow -
+    Switch Weapon (right)\r\n\u20181\u2019 - Lock Cursor\r\n\u20182\u2019 - Unlock
+    Cursor\r\nEsc - Pause\r"
 --- !u!222 &467364324
 CanvasRenderer:
   m_ObjectHideFlags: 0
