@@ -11,7 +11,7 @@ Current Version: MVP 0.1.6 (10/27/2025)
 ## Pursuits
 * Player
 	* [Camera Clipping Countermeasure](#camera-clipping-countermeasure)
-	* Slope Traversal
+	* [Slope Traversal](#slope-traversal)
  	* Melee Attacks
   	* Evasion & Sprinting
 * Weapons
@@ -113,3 +113,87 @@ To prevent instances of the Player's Camera clipping through walls, a Ray is cas
         }
 ```
 ![ezgif-6fdf065644ca79](https://github.com/user-attachments/assets/d182ec60-ce5a-430e-99cd-1730825e1ea6)
+
+#### Slope Traversal
+Slope traversal is handled through retrieval and interpretation of the Dot Product between two vectors:
+* The value is retrieved from the slope's surface Normal and the Player's forward direction if handling Vertical movement. 
+* The Cross Product between a Player's position and the slope's surface Normal is retrieved first, followed by the Dot Product between that value and the Player's forward direction if handling Horizontal movement.
+
+If the Dot Product is less than zero:
+* (Vertical) Going upwards while facing upwards will apply force upwards. Going downwards while facing upwards will apply force downwards.
+* (Horizontal) Going left while the slope is to the right will apply force downwards. Going right while the slope is to the right will apply force upwards.
+
+If the Dot Product is greater than zero:
+* (Vertical) Going downwards while facing downwards will apply force downwards. Going upwards while facing downwards will apply force upwards.
+* (Horizontal) Going right while the slope is to the left will apply force downwards. Going left while the slope is to the left will apply force upwards.
+
+Through this approach, the Player can traverse slopes up to 40 degrees, dependent on amount of force application. Traversals beyond 40 degrees require more force to be applied.
+```csharp
+		Vector3 sideVector;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, out hit, slopeCheckLength))
+        {
+
+            Debug.DrawRay(transform.position, Vector3.Cross(transform.forward, hit.normal), Color.red);
+            Debug.DrawRay(transform.position, hit.normal + new Vector3(0, 0, hit.normal.z), Color.blue);
+            Debug.DrawRay(transform.position, transform.forward, Color.yellow);
+
+            sideVector = Vector3.Cross(transform.position, hit.normal).normalized;
+
+            //Handles vertical slope traversal
+            if (Vector3.Dot(hit.normal, transform.forward) < 0)
+            {
+                if (vertInput < 0)
+                {
+                    playerRigid.AddForce(-Vector3.up * slopeForce);
+                }
+
+                else
+                {
+                    playerRigid.AddForce(Vector3.up * slopeForce);
+                }
+            }
+
+            else if (Vector3.Dot(hit.normal, transform.forward) > 0)
+            {
+                if (vertInput < 0)
+                {
+                    playerRigid.AddForce(Vector3.up * slopeForce);
+                }
+
+                else
+                {
+                    playerRigid.AddForce(-Vector3.up * slopeForce);
+                }
+            }
+        
+            //Handles Horizontal slope traversal
+            if (Vector3.Dot(sideVector, transform.forward) > 0)
+            {
+                if (horizInput > 0)
+                {
+                    playerRigid.AddForce(-Vector3.up * slopeForce);
+                }
+
+                else
+                {
+                    playerRigid.AddForce(Vector3.up * slopeForce);
+                }
+            }
+
+            else if (Vector3.Dot(sideVector, transform.forward) < 0)
+            {
+                if (horizInput < 0)
+                {
+                    playerRigid.AddForce(-Vector3.up * slopeForce);
+                }
+
+                else
+                {
+                    Debug.Log("To the Right");
+                    playerRigid.AddForce(Vector3.up * slopeForce);
+                }
+            }
+        }     
+```
+![ezgif-3227e372bb6e1c](https://github.com/user-attachments/assets/79f54600-81d4-472c-a9a2-5896ed81e2aa)
