@@ -12,11 +12,8 @@ Current Version: MVP 0.1.6 (10/27/2025)
 * Player
 	* [Camera Clipping Countermeasure](#camera-clipping-countermeasure)
 	* [Slope Traversal](#slope-traversal)
- 	* Melee Attacks
-  	* Evasion & Sprinting
 * Weapons
-	* Weapon Saving
- 		* Orderly Weapon Spawning
+	* [Weapon Saving](#weapon-saving) 
    	* Statistical Cheats
 	* Functional Cheats
  		* "Wait! Now I'm Ready!"
@@ -149,9 +146,7 @@ Through this approach, the Player can traverse slopes up to 40 degrees, dependen
                 }
 
                 else
-                {
-                    playerRigid.AddForce(Vector3.up * slopeForce);
-                }
+				//Force is applied upwards
             }
 
             else if (Vector3.Dot(hit.normal, transform.forward) > 0)
@@ -162,9 +157,7 @@ Through this approach, the Player can traverse slopes up to 40 degrees, dependen
                 }
 
                 else
-                {
-                    playerRigid.AddForce(-Vector3.up * slopeForce);
-                }
+				//Force is applied downwards
             }
         
             //Handles Horizontal slope traversal
@@ -176,9 +169,7 @@ Through this approach, the Player can traverse slopes up to 40 degrees, dependen
                 }
 
                 else
-                {
-                    playerRigid.AddForce(Vector3.up * slopeForce);
-                }
+				//Force is applied upwards
             }
 
             else if (Vector3.Dot(sideVector, transform.forward) < 0)
@@ -189,11 +180,12 @@ Through this approach, the Player can traverse slopes up to 40 degrees, dependen
                 }
 
                 else
-                {
-                    Debug.Log("To the Right");
-                    playerRigid.AddForce(Vector3.up * slopeForce);
-                }
+				//Force is applied upwards
             }
         }     
 ```
 ![ezgif-3227e372bb6e1c](https://github.com/user-attachments/assets/79f54600-81d4-472c-a9a2-5896ed81e2aa)
+
+### Weapons
+#### Weapon Saving
+ATGIG's Weapon Saving system uses Stream reading and Stream writing to both respawn and catalog Weapons held in a Player's inventory.
