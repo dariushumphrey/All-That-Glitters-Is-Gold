@@ -1,10 +1,21 @@
-ATGIG MVP 0.1.5
+ATGIG MVP 0.1.6
 
-Welcome! 
+Welcome!
 
-1.) Experience: 
+[Experience](#experience)
 
-There are two modes available for play and two new features available for use: 
+[Your Player-character](#your-player-character)
+
+[Enemy Combatants](#enemy-combatants)
+
+[Game Difficulty](#game-difficulty)
+
+[Weapons and RNG](#weapons-and-rng)
+
+
+## Experience 
+
+There are two modes available for play and two features available for use: 
 
 	Campaign - A linear 2-mission string involving travel to a level's end. Between your start and end goal are 
 	enemy encounters of varying densities. Clearing the encounters are not required, but engagement is encouraged. 
@@ -18,7 +29,7 @@ There are two modes available for play and two new features available for use:
 	Requisitions - A space that offers six Weapons at random to be purchased for Lucent. This Kiosk changes its selection on every return visit to
 	the Main Menu, and Weapons' rarities begin between Rarity 1 and 3, upgrading to Rarity 4 and 5 when Viricide is completed for the first time.  
 
-2.) Your Player-character
+## Your Player-character
 
 You assume the avatar of a capsule-character. This character can move and look in any direction you wish. 
 This character starts with 500 Health and 550 Shield. Your shield will take damage before your Health does, though if it ever depletes, there is 
@@ -31,7 +42,7 @@ a seven-second delay before it begins to regenerate.
 	To sprint, hold the 'Shift' key to increase your speed, but know that Weapons are unusable during sprint. 
  	To evade danger, press the 'Space' key with directional input. 
 
-3.) Enemy Combatants
+## Enemy combatants
 
 Enemies in this game are also capsule-characters, denoted by both size and color. Combatants are all black with colored grafts that denote 
 attack style: 
@@ -43,7 +54,7 @@ attack style:
 	Jump - Enemies that commit a large leap with high forward force in your direction. Being too close to this enemy as they are airborne
 	coverts the jump into a guided attack, scoring a guaranteed hit on you. Their grafts are a metallic red color.
 
-4.) Game Difficulty
+## Game difficulty
 
 There are five total difficulties, and the first four are immediately available for play. Be advised: 
 
@@ -54,7 +65,7 @@ There are five total difficulties, and the first four are immediately available 
  
 Completing the Campaign for the first time will unlock Difficulty 5 for play. 
 
-5.) Weapons & RNG
+## Weapons and RNG
 
 There are seven firearm types available to you:
 
