@@ -291,6 +291,7 @@ using (StreamWriter write = new StreamWriter(filepath))
 						{
                                     write.Write("A");
 						}
+						//If Weapon is Exotic, letters A-G are used.
 
 						if (inventory[i].GetComponent<WaitNowImReady>())
 						{
@@ -317,5 +318,111 @@ using (StreamWriter write = new StreamWriter(filepath))
 			//This is repeated for all other Weapon types
 		}
 	}
+}
+```
+```csharp
+//From WeaponManagerScript.cs
+string c = "Comic Sans"; //Initializing a string.
+
+for (int s = 0; s < player.readdedWeps.Count; s++)
+{
+	c = player.readdedWeps[s];
+	wep = c[0];
+	wepStr = wep.ToString();
+
+	rar = c[1];
+	rarStr = rar.ToString();
+
+	exo = c[2];
+	exoStr = exo.ToString();
+
+	cOne = c[3];
+	cOneStr = cOne.ToString();
+
+	cTwo = c[4];
+	cTwoStr = cTwo.ToString();
+
+	cThree = c[5];
+	cThreeStr = cThree.ToString();
+
+	cFour = c[6];
+	cFourStr = cFour.ToString();
+
+	if(player.readdedWeps[s].Length == 8)
+	{
+		cFive = c[7];
+		cFiveStr = cFive.ToString();
+	}
+
+	if(player.readdedWeps[s].Length == 9)
+	{
+		cFive = c[7];
+		cFiveStr = cFive.ToString();
+
+		cSix = c[8];
+		cSixStr = cSix.ToString();
+	}
+
+	if (wepStr == "1")
+	{
+		GameObject item = Instantiate(weapons[0], transform.position, transform.rotation);
+		item.name = weapons[0].name;
+
+		if (rarStr == "1")
+		{
+			item.GetComponent<FirearmScript>().weaponRarity = 1;
+		}
+		//And so on, assigning rarities up to 5 for weapons.
+
+		if (cOneStr == "1")
+		//Adds the component, "Deep Yield". Adds "Deeper Yield" if cOneStr is "2".
+
+		if (cTwoStr == "3")
+		//Adds the component, "Deep Stores". Adds "Deeper Stores" if cTwoStr is "4".
+
+		if (cThreeStr == "5")
+		//Adds the component, "Far Sight". Adds "Farther Sight" if cThreeStr is "6".
+
+		if (cFourStr == "7")
+		//Adds the component, "Hasty Hands". Adds "Hastier Hands" if cFourStr is "8".
+
+		if (player.readdedWeps[s].Length == 8)
+		{
+			if (cFiveStr == "0")
+			{
+				item.GetComponent<FirearmScript>().cheatRNG = 450;
+				item.AddComponent<WaitNowImReady>();
+
+				item.GetComponent<WaitNowImReady>().proc = item.GetComponent<FirearmScript>().procOne;
+				item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+			}
+			//And so on, up to 9, or special characters: (!, @, #, $, %, or ^)
+		}
+
+		if (player.readdedWeps[s].Length == 9)
+		{
+			if (cFiveStr == "A")
+			//Exotic Cheats are recorded between A-G. In this case, "A" adds Exotic Functional Cheat "Equivalent Exchange". 
+
+			//Otherwise, the next component comes from a pool between (9, 4, 5, 6, 8, !, @, or #)
+			if (cFiveStr == "5")
+			{
+				item.GetComponent<FirearmScript>().fcnChtOne = 425;
+				item.AddComponent<MaliciousWindUp>();
+				item.GetComponent<MaliciousWindUp>().proc = item.GetComponent<FirearmScript>().procOne;
+			}
+
+			//The last component comes from a pool between (0, 1, 2, 7, 3, $, %, or ^)
+			if (cSixStr == "2")
+			{
+				item.GetComponent<FirearmScript>().fcnChtTwo = 505;
+				item.AddComponent<Inoculated>();
+				item.GetComponent<Inoculated>().proc = item.GetComponent<FirearmScript>().procTwo;
+			}
+		}
+
+		yield return new WaitForSeconds(spawnDelayTimer);
+	}
+	//This is repeated for all other Weapon types
 }
 ```
