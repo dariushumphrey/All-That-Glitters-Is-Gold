@@ -188,4 +188,54 @@ Through this approach, the Player can traverse slopes up to 40 degrees, dependen
 
 ### Weapons
 #### Weapon Saving
-ATGIG's Weapon Saving system uses Stream reading and Stream writing to both respawn and catalog Weapons held in a Player's inventory.
+ATGIG's Weapon Saving system uses Stream reading and Stream writing to both respawn and catalog Weapons held in a Player's inventory. Upon level reset by defeat, pause menu restart, or main menu visit, the Player's Inventory records attributes of its Weapons and saves them to a file as a string that is between seven to nine characters in length. Each value within this string represents a Weapon's constituent parts. For example:
+
+12014581
+
+* <ins>1</ins>2014581 - Denotes Weapon type.
+* 1<ins>2</ins>014581 - Denotes Weapon rarity.
+* 12<ins>0</ins>14581 - Denotes Weapon Exotic property; It is either Exotic (1) or not (0).
+* 120<ins>1</ins>4581 - Denotes Statistical Cheat #1.
+* 1201<ins>4</ins>581 - Denotes Statistical Cheat #2.
+* 12014<ins>5</ins>81 - Denotes Statistical Cheat #3.
+* 120145<ins>8</ins>1 - Denotes Statistical Cheat #4.
+* 1201458<ins>1</ins> - Denotes Functional Cheat
+
+The above string describes a Weapon with these properties: 
+* Full Fire Rifle (1)
+* Rarity 2 (2)
+* Non-exotic (0)
+* Statistical Cheats:
+	*  Deep Yield (1)
+ 	*  Deeper Stores (4)
+  	*  Far Sight (5)
+  	*  Hastier Hands (8)
+* Functional Cheat:
+	* Efficacy (1)
+
+String length for Weapons depends on that weapon's rarity. Rarity 1 weapons do not receive Functional Cheats. For example, "3102367" represents the following traits: 
+* Pistol (3)
+* Rarity 1 (1)
+* Non-exotic (0)
+* Statistical Cheats:
+	* Deeper Yield (2)
+ 	* Deep Stores (3)
+  	* Farther Sight (6)
+  	* Hasty Hands (7)
+ 
+Another example, "440246863", details this Weapon's features: 
+* Semi Fire Rifle (4)
+* Rarity 4 (4)
+* Non-exotic (0)
+* Statistical Cheats: 
+	* Deeper Yield (2)
+	* Deeper Stores (4)
+ 	* Farther Sight (6)
+  	* Hastier Hands (8)
+* Functional Cheats:
+	* Positive-Negative (6)
+ 	* Rude Awakening (3)
+
+When a game starts, the "WeaponManager" finds the inventory file, titled "inventory.txt", and reads its contents, creating new Weapons with the recorded characteristics attached.
+
+In its earliest form, it only recorded Weapons as strings that were eight characters long, as each Weapon was designed to have the same structure. Moreover, the system often delivered the Weapons back to the inventory out of the order in which they were added. Playtests revealed that, primarily due to the lacking strength of Functional Cheats at the time, that Weapons required a fundamental change in power. For MVP 0.1.3, Weapons could now possess double Functional Cheats, and the Weapon Saving system was upgraded to handle this new case, along with handling cases where Rarity 1 weapons lacked Functional Cheats at all. For MVP 0.1.5, the "WeaponManager" was upgraded to use a Coroutine for Weapon respawns, delaying the spawn of a new Weapon for a short time. This naturally fixed the issue of disorderly Weapon returns to the inventory. Currently, this system can handle small and large inventory sizes, some sizes beyond 100, and can return Weapons to the Player with no issue.
