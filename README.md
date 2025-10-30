@@ -239,3 +239,83 @@ Another example, "440246863", details this Weapon's features:
 When a game starts, the "WeaponManager" finds the inventory file, titled "inventory.txt", and reads its contents, creating new Weapons with the recorded characteristics attached.
 
 In its earliest form, it only recorded Weapons as strings that were eight characters long, as each Weapon was designed to have the same structure. Moreover, the system often delivered the Weapons back to the inventory out of the order in which they were added. Playtests revealed that, primarily due to the lacking strength of Functional Cheats at the time, that Weapons required a fundamental change in power. For MVP 0.1.3, Weapons could now possess double Functional Cheats, and the Weapon Saving system was upgraded to handle this new case, along with handling cases where Rarity 1 weapons lacked Functional Cheats at all. For MVP 0.1.5, the "WeaponManager" was upgraded to use a Coroutine for Weapon respawns, delaying the spawn of a new Weapon for a short time. This naturally fixed the issue of disorderly Weapon returns to the inventory. Currently, this system can handle small and large inventory sizes, some sizes beyond 100, and can return Weapons to the Player with no issue.
+```csharp
+//From PlayerInventoryScript.cs
+CreateInventoryFile(); //If "inventory.txt" doesn't exist, it makes a new file. Otherwise, it overwrites the existing file. 
+
+using (StreamWriter write = new StreamWriter(filepath))
+{
+	if (inventory.Count > 0)
+	{
+		for (int i = 0; i < inventory.Count; i++)
+		{
+			if (inventory[i].name == "testFullFireRifle" || inventory[i].name == "testFullFireRifle_Exotic")
+			{
+				write.Write("1");
+				if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
+				//Writes "1" and so on, up to 5. 
+
+				if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
+				//Writes "1". Otherwise, writes "0". 
+
+				if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
+				{
+					//Statistical Cheat process
+					if (inventory[i].GetComponent<DeepYield>())
+					{
+						write.Write("1");
+					}
+
+					if (inventory[i].GetComponent<DeeperYield>())					
+					//Writes "2" and so on, up to 8. 7-8 use WriteLine statements as they conclude recording.
+				}
+
+				if(inventory[i].GetComponent<FirearmScript>().weaponRarity == 2 || inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
+				{
+					//Statistical Cheat process, followed by:
+					if (inventory[i].GetComponent<WaitNowImReady>())
+					{
+						write.WriteLine("0");
+					}
+
+					if (inventory[i].GetComponent<Efficacy>())
+					//Writes "1" and so on, up to 9. Newer Cheats use special characters: (!, @, #, $, %, and ^)
+				}
+
+				if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
+				{
+					//Statistical Cheat process, followed by:
+					if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
+					{
+						if (inventory[i].GetComponent<EquivalentExchange>())
+						{
+                                    write.Write("A");
+						}
+
+						if (inventory[i].GetComponent<WaitNowImReady>())
+						{
+                                    write.WriteLine("0");
+						}
+					}
+
+					else
+					{
+						//The next character comes from a pool between (9, 4, 5, 6, 8, !, @, or #)
+						if (inventory[i].GetComponent<AllElseFails>())
+						{
+							write.Write("9");
+						}
+
+						//the last character comes from a pool between (0, 1, 2, 7, 3, $, %, or ^)
+						if (inventory[i].GetComponent<Cadence>())
+						{
+							write.WriteLine("7");
+						}
+					}
+				}
+			}
+			//This is repeated for all other Weapon types
+		}
+	}
+}
+```
