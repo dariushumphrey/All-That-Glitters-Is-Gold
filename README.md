@@ -2,7 +2,7 @@ Welcome!
 
 Current Version: MVP 0.1.6 (10/27/2025)
 
-## Contents:
+# Contents:
 
 ## Details
 * [Game Description](#game-description)
@@ -14,56 +14,16 @@ Current Version: MVP 0.1.6 (10/27/2025)
 	* [Slope Traversal](#slope-traversal)
 * Weapons
 	* [Weapon Saving](#weapon-saving) 
-   	* Statistical Cheats
-	* Functional Cheats
- 		* "Wait! Now I'm Ready!"
-   		* Efficacy
-     	* Inoculated
-      	* Rude Awakening
-      	* Not With a Stick
-      	* Malicious Wind-Up
-      	* Positive-Negative
-      	* Cadence
-      	* Good Things Come
-      	* All Else Fails
-      	* The Most Resplendent
-      	* Fulminate
-      	* Forager
-      	* Counterplay
-      	* Enshroud
-      	* Gale Force Winds
-      	## Exotic
-   		* Equivalent Exchange
-     	* Pay to Win
-      	* Shelter in Place
-      	* Off your own Supply
-      	* "Social Distance, Please!"
-      	* Early Berth gets the Hearst
-      	* "Absolutely no Stops!"
- 	* Aim Assist
-  	* Performance
-  		* Rarity
-  	* Double Functional Cheats
+   	* [Cheats](#cheats)
 * Enemies
-	* Behavior
+	* [Behavior](#behavior)
 	* Attacks
  		* Melee
-   			* Standard
       		* Bosses
-        * Range
         * Charge
-        	* Standard
          	* Bosses  
 		* Pounce
 		* Jump
-* Game
-	* Viricide
-    * Inventory Page
-    * Requisitions Page
-
-
-
-
 
 ## Details
 ### Game Description
@@ -79,7 +39,7 @@ I am solo-developing All That Glitters is Gold. As such, I am responsible for:
 * Gametypes (Viricide)
 * Out-of-gameplay systems (Inventory Management, Weapon Kiosk)
 
-Bulleted below are detailed accounts of ATGIG's notable pursuits, accompanied by visuals and organized by category. 
+Bulleted below are detailed accounts of ATGIG's most notable pursuits, accompanied by visuals and organized by category. 
 
 ## Pursuits
 ### Player
@@ -426,3 +386,10 @@ for (int s = 0; s < player.readdedWeps.Count; s++)
 	//This is repeated for all other Weapon types
 }
 ```
+https://github.com/user-attachments/assets/870869e0-f4c6-422f-ba14-e0012f1fc8d5
+
+#### Cheats
+Cheats are ATGIG's core system, everpresent in and out of gameplay, and primary contributor to this game's "Power-Fantasy" goal. Deeper explanations of what Cheats are, how they are generated, and how they behave can be found on the [Cheats](#Core_cheats.md) file.
+
+### Enemies
+#### Behavior
