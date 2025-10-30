@@ -389,7 +389,7 @@ for (int s = 0; s < player.readdedWeps.Count; s++)
 https://github.com/user-attachments/assets/870869e0-f4c6-422f-ba14-e0012f1fc8d5
 
 #### Cheats
-Cheats are ATGIG's core system, everpresent in and out of gameplay, and primary contributor to this game's "Power-Fantasy" goal. Deeper explanations of what Cheats are, how they are generated, and how they behave can be found on the [Cheats](#Core_cheats.md) file.
+Cheats are ATGIG's core system, everpresent in and out of gameplay, and primary contributor to this game's "Power-Fantasy" goal. Deeper explanations of what Cheats are, how they are generated, and how they behave can be found on the [Cheats](#core_cheats.md) file.
 
 ### Enemies
 #### Behavior
