@@ -15,15 +15,9 @@ Current Version: MVP 0.1.6 (10/27/2025)
 * Weapons
 	* [Weapon Saving](#weapon-saving) 
    	* [Cheats](#cheats)
-* Enemies
-	* [Behavior](#behavior)
-	* Attacks
- 		* Melee
-      		* Bosses
-        * Charge
-         	* Bosses  
-		* Pounce
-		* Jump
+* Enemy Attacks
+	* [Pounce](#pounce)
+	* Jump
 
 ## Details
 ### Game Description
@@ -391,5 +385,5 @@ https://github.com/user-attachments/assets/870869e0-f4c6-422f-ba14-e0012f1fc8d5
 #### Cheats
 Cheats are ATGIG's core system, everpresent in and out of gameplay, and primary contributor to this game's "Power-Fantasy" goal. Deeper explanations of what Cheats are, how they are generated, and how they behave can be found on the [Cheats](Core_cheats.md) file.
 
-### Enemies
-#### Behavior
+### Enemy Attacks
+#### Pounce
