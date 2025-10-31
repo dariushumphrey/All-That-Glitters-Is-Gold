@@ -383,7 +383,115 @@ for (int s = 0; s < player.readdedWeps.Count; s++)
 https://github.com/user-attachments/assets/870869e0-f4c6-422f-ba14-e0012f1fc8d5
 
 #### Cheats
-Cheats are ATGIG's core system, everpresent in and out of gameplay, and primary contributor to this game's "Power-Fantasy" goal. Deeper explanations of what Cheats are, how they are generated, and how they behave can be found on the [Cheats](Core_cheats.md) file.
+Cheats are ATGIG's core system, everpresent in and out of gameplay, and primary contributor to this game's "Power-Fantasy" goal. Deeper explanations on what they specifically do can be found on the [Cheats](Core_cheats.md) file.
+
+Cheats are applied to Weapons through Random Number Generation (RNG). The moment a Weapon is created, several methods are called to choose and apply what are known as Statistical Cheats and Functional Cheats: 
+* Statistical Cheats permanently upgrade a Weapon's base performance metrics, excluding base damage.
+* Functional Cheats extend a Weapon's offensive, neutral, or defensive potential through conditional triggers.
+
+A number is randomized between a set range. The chosen Cheat is determined by what range this value sits within. All cheats are divided into distinct pools: 
+* Yields (Stat Cheats that increase active magazine sizes)
+* Stores (Stat Cheats that increase max ammunition reserves)
+* Sights (Stat Cheats that increase effective ranges)
+* Hands (Stat Cheats that increase reload speeds)
+* Functional Cheats
+	* Rarity 1 Weapons cannot roll Cheats of this kind.
+ 	* Rarity 2-3 Weapons have access to one pool of all 16 Functional Cheats
+  	* Rarity 4-5 Weapons have access to two pools of eight Functional Cheats
+
+For both Cheat types, the defined ranges are usually within units of 50 (ex. 50-100), up until Rarity 4-5, when the defined ranges are limited to units of 10 (ex. 410-420) for Functional Cheats only. This system is performative, and has yet to produce instances of two of the same Cheat being generated for a Weapon. Cheats are also not weighted to generate more often than others; Every Cheat has a fair chance to be generated. Exotics are curated Weapons, and do not require random Cheat generation. Weapons being reproduced by the WeaponManager have Cheats directly added based on characters identifying its components, and also do not require Cheat generation.  
+```csharp
+public virtual void AmmoCheats()
+{
+        if (isExotic == true)
+		//Exotics generate the best Cheat variant and leave the method.
+		return;
+
+        if (saved == true)
+        //Weapons made by the WeaponManager add Cheats directly, so there is no need to generate.
+		return;
+
+        ammoCheatOne = Random.Range(0, 101);
+        ammoCheatTwo = Random.Range(100, 201);
+
+        if(ammoCheatOne <= 50)
+        //Adds the component, "Deep Yield". 
+
+        if (ammoCheatOne > 50)
+        //Adds the component, "Deeper Yield". 
+
+        if (ammoCheatTwo <= 150)
+        //Adds the component, "Deep Stores". 
+
+        if (ammoCheatTwo > 150)
+        //Adds the component, "Deeper Stores".      
+
+}
+//Other Statistical Cheat methods operate identically.
+//...
+public virtual void CheatGenerator()
+{
+	if(isExotic == true)
+	{
+		//Exotic weapons use negative numbers to denote what Functional Cheats to receive.
+ 		cheatRNG = cheatOverride;
+		if(cheatRNG == -1)
+		//Adds Cheats, "Equivalent Exchange" + "Wait! Now I'm Ready!"
+
+		if(cheatRNG == -2)
+		//And so on, up to -7.
+
+		return;
+	}
+
+	if (saved == true)
+	{
+		//Weapons made by the WeaponManager add Cheats directly, so there is no need to generate.
+		return;
+	}
+
+	if(weaponRarity == 2 || weaponRarity == 3)
+	{
+		cheatRNG = Random.Range(400, 1201);
+		if (cheatRNG <= 450)
+		{
+			gameObject.AddComponent<WaitNowImReady>();
+			gameObject.GetComponent<WaitNowImReady>().proc = procOne;
+			procTwo.GetComponent<Text>().text = " ";
+		} //Adds Cheat, "Wait! Now I'm Ready!"
+
+		if (cheatRNG > 450 && cheatRNG <= 500)
+		//Adds Efficacy, and so on, with last range between (1151 and 1200).
+
+	}
+
+	if(weaponRarity >= 4)
+	{
+		//Pool #1 
+		fcnChtOne = Random.Range(400, 481);
+		if(fcnChtOne <= 410)
+		{
+			gameObject.AddComponent<AllElseFails>();
+			gameObject.GetComponent<AllElseFails>().proc = procOne;
+		}
+
+		if (fcnChtOne > 410 && fcnChtOne <= 420)
+		//Adds Cheat "Not With a Stick", and so on, with last range between (471 and 480)
+
+		//Pool #2
+		fcnChtTwo = Random.Range(480, 561);
+		if (fcnChtTwo <= 490)
+		{
+			gameObject.AddComponent<WaitNowImReady>();
+			gameObject.GetComponent<WaitNowImReady>().proc = procTwo;
+	
+		}
+
+		if (fcnChtTwo > 490 && fcnChtTwo <= 500)
+		//Adds Cheat "Efficacy" and so on, with last range between (551 and 560)
+	}
+}
+```
 
 ### Enemy Attacks
 #### Pounce
