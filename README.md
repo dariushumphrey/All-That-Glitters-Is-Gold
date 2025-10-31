@@ -17,7 +17,7 @@ Current Version: MVP 0.1.6 (10/27/2025)
    	* [Cheats](#cheats)
 * Enemy Attacks
 	* [Pounce](#pounce)
-	* Jump
+	* [Jump](#jump)
 
 ## Details
 ### Game Description
@@ -387,3 +387,245 @@ Cheats are ATGIG's core system, everpresent in and out of gameplay, and primary 
 
 ### Enemy Attacks
 #### Pounce
+Enemies that are assigned the Pounce attack style commit to combat in the following steps: 
+* Once the Player is both seen and the distance (the range between a Player and this enemy) is less or equal to this enemy's attack range, their NavMesh destination is cleared.
+* The enemy casts a Ray at the Player and records their last known position. 
+* After recording, the enemy employs Vector3.Lerp and dashes towards that position at high speed. A Ray is cast for the duration of this movement to check for Player detection.
+	* Another distance value between the recorded position and the enemy is being tracked and compared to their attack stopping distance. If that distance falls underneath their stopping point, their attack finishes.
+ 	* Contact with a Player inflicts damage to them, applied Rigidbody force, and their attack finishes.
+
+ After attacking, they enter a one-second cooldown in which they cannot move. Upon conclusion, they can commit this attack again.
+```csharp
+if(!HaveIDied())
+{
+	self.speed = moveSpeed;
+	distance = player.transform.position - transform.position;
+	Vector3 rayOrigin = attackStartPoint.transform.position;
+	RaycastHit hit, hitTheSequel;
+
+	if (distance.magnitude <= meleeRangeMin && CanSeePlayer())
+	{
+		self.ResetPath();
+		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
+
+		if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin) && !recorded)
+		{
+			if (hit.collider.tag == "Player")
+			{
+				lastPlayerPosition = hit.point;
+				recorded = true;
+
+			}
+		}
+
+		transform.position = Vector3.Lerp(transform.position, lastPlayerPosition, gapClose * Time.deltaTime);
+		lastKnownDistance = lastPlayerPosition - transform.position;
+
+		if (lastKnownDistance.magnitude <= pounceLimit)
+		{
+			slamTimeout = true;
+		}
+
+		if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hitTheSequel, 2f))
+		{
+			if (hitTheSequel.collider.tag == "Player" && canAttackAgain)
+			{
+				if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
+				{
+					if (gameObject.GetComponent<DebuffScript>() == null)
+					{
+						gameObject.AddComponent<DebuffScript>();
+					}
+
+					slamTimeout = true;
+					canAttackAgain = false;
+				}
+
+				else
+				{
+					hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+					hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+
+					Vector3 knockbackDir = transform.forward;
+					knockbackDir.y = 0;
+					hitTheSequel.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
+					manager.damageDealt += damage;
+
+					slamTimeout = true;
+					canAttackAgain = false;
+				}
+			}
+		}
+	}
+
+	else
+	{
+		if (self.enabled == false)
+		{
+			self.enabled = true;
+		}
+
+		recorded = false;
+		self.SetDestination(player.transform.position);
+	}
+
+}
+
+else
+{
+	self.enabled = false;
+}
+```
+https://github.com/user-attachments/assets/346d3b90-27a8-454b-993a-9a2c9669f5f8
+
+#### Jump
+Enemies that are assigned the Jump attack style commit to combat in the following steps: 
+* Once the Player is both seen and the distance from one another is less or equal to this enemy's attack range, their NavMesh destination is cleared, and their Agent component is disabled.
+* The enemy casts a Ray at the Player and records their last known position. A Rigidbody with frozen rotations is added if the component is not detected.
+* Rigidbody force is then both applied upwards, in the direction of their last recorded Player position, and forwards, resulting in a high, fast-moving jump.
+	* If they return to ground during this attack, a timer decrements, down to zero, which at that point they re-record the Player's position and initiate another jump.
+ 	* If the distance between the Player and the enemy falls under its attack "limit", the action converts to a guided attack using Vector3.Lerp. They cast a Ray to check for Player detection at this stage.
+  		* Contact with a Player inflicts damage to them, applied Rigidbody force, and their attack finishes.
+    	* If they are grounded during this "lock-on" stage, the logic responsible for resetting Player position recordings after a short time will occur, permitting another jump.
+```csharp
+if (!HaveIDied())
+{
+	self.speed = moveSpeed;
+	distance = player.transform.position - transform.position;
+	Vector3 rayOrigin = attackStartPoint.transform.position;
+	RaycastHit hit, hitTheSequel;
+
+	if (distance.magnitude <= meleeRangeMin && CanSeePlayer())
+	{
+		if (self.enabled == true)
+		{
+			self.ResetPath();
+			self.enabled = false;
+		}
+
+		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
+
+		if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin) && !recorded)
+		{
+			if (hit.collider.tag == "Player")
+			{
+				lastPlayerPosition = (hit.point - transform.position).normalized;
+				recorded = true;
+
+				if (gameObject.GetComponent<Rigidbody>() == null)
+				{
+					gameObject.AddComponent<Rigidbody>();
+					gameObject.GetComponent<Rigidbody>().freezeRotation = true;
+				}                      
+
+				gameObject.GetComponent<Rigidbody>().AddForce((lastPlayerPosition + Vector3.up) * jumpForce, ForceMode.Impulse);
+				gameObject.GetComponent<Rigidbody>().AddForce((transform.forward * forwardForce), ForceMode.Impulse);
+
+			}
+
+		}
+
+		if(AmIGrounded())
+		{
+			airtimeShort -= Time.deltaTime;
+			if (airtimeShort <= 0f)
+			{
+				airtimeShort = airtimeReset;
+				if(lockOn)
+				{
+					lockOn = false;
+				}
+
+				recorded = false;
+			}
+		}
+
+		else
+		{
+			airtimeShort = airtimeReset;                  
+		}
+
+		if (distance.magnitude <= jumpLimit)
+		{
+			lockOn = true;
+		}
+
+		if (lockOn && Time.timeScale == 1)
+		{
+			transform.position = Vector3.Lerp(transform.position, player.transform.position, gapClose);
+
+			if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hitTheSequel, 2f))
+			{
+				if (hitTheSequel.collider.tag == "Player" && canAttackAgain)
+				{
+
+					if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
+					{
+						if (gameObject.GetComponent<DebuffScript>() == null)
+						{
+							gameObject.AddComponent<DebuffScript>();
+						}
+
+						if (gameObject.GetComponent<Rigidbody>() != null)
+						{
+							gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+							gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+						}
+
+						slamTimeout = true;
+						canAttackAgain = false;
+					}
+
+					else
+					{
+						hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+						hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+
+						Vector3 knockbackDir = transform.forward;
+						knockbackDir.y = 0;
+						hitTheSequel.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
+
+						if (gameObject.GetComponent<Rigidbody>() != null)
+						{
+							gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+							gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+						}
+
+						manager.damageDealt += damage;
+
+						slamTimeout = true;
+						canAttackAgain = false;
+					}
+				}
+			}
+		}             
+	}
+
+	else
+	{
+		if (self.enabled == false)
+		{
+			self.enabled = true;
+
+			if (gameObject.GetComponent<Rigidbody>() != null)
+			{
+				gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+				gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+				Destroy(gameObject.GetComponent<Rigidbody>());
+			}
+
+		}
+
+		recorded = false;
+		airtimeShort = airtimeReset;
+		self.SetDestination(player.transform.position);
+	}
+}
+
+else
+{
+	self.enabled = false;
+}
+```
+https://github.com/user-attachments/assets/415b9358-cd5a-4b24-a67d-689109c7b7ad
