@@ -47,4 +47,4 @@ Welcome!
 #### Deep Yield
 Deep Yield extends the maximum capacity of a Weapon's active magazine by 12%. This percentage is converted to decimal form and then multiplied by a Weapon's maximum magazine size. An integer variable is assigned the operation's result. The Weapon's magazine size maximum is increased by this variable. 
 
-[Deep Yield.cs](/Assets/Scripts/Weapons/Magazine_Cheats/DeepYield.cs)
+[Deep Yield.cs](/Assets/Scripts/Weapons/Magazine%Cheats/DeepYield.cs)
