@@ -11,9 +11,9 @@ Welcome!
   * [Hands](#hands)
 * Functional Cheats
   * ["Wait! Now I'm Ready!"](#wait-now-im-ready)
-  * Efficacy
-  * Inoculated
-  * Rude Awakening
+  * [Efficacy](#efficacy)
+  * [Inoculated](#inoculated)
+  * [Rude Awakening](#rude-awakening)
   * Not With a Stick
   * Malicious Wind-Up
   * Positive-Negative
@@ -82,11 +82,39 @@ This percentage is converted to decimal form and then multiplied by that Weapon'
 
 # Functional Cheats
 ## "Wait! Now I'm Ready!" 
-"Wait! Now I'm Ready!" adds 5% of a Player's maximum Shield capacity onto their current Shield strength when a Weapon with this cheat has defeated an Enemy.
-* (Fated) "Wait! Now I'm Ready!" increases the percentage of this effect to 10%.
+"Wait! Now I'm Ready!" adds 10% of a Player's maximum Shield strength onto their current Shield strength when a Weapon has defeated an Enemy.
+* (Fated) "Wait! Now I'm Ready!" increases the percentage of this effect to 20%.
 
-This percentage is converted to decimal form and then multiplied by the Player's maximum Shield amount. An integer variable, "shieldGain", is assigned the operation's result. When a Weapon confirms a kill on a defeated Enemy, the Player's current Shield strength is added onto by "shieldGain". If it detects that it has overhealed a Player's Shield, their current Shield value is assigned to their maximum Shield value. This Cheat does not add onto their Shield if their strength is already at maximum.
+If it detects that it has overhealed a Player's Shield, their current Shield value is assigned to their maximum Shield value. This Cheat does not add onto their Shield if their strength is already at maximum.
 
 * [WaitNowImReady.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/WaitNowImReady.cs) can be viewed here.
 
 ![WaitNowImReady](https://github.com/user-attachments/assets/4b694e05-a5be-4b68-a7f6-38d17b3c4e08)
+
+## Efficacy
+Efficacy adds 1% of a Weapon's base damage onto its current damage when it confirms a hit on an Enemy. Efficacy restores the weapon's original damage when it reloads. 
+* (Fated) Efficacy' damage percent increases to 2%. Reloads no longer restores damage to its starting value, but will allow a Weapon to increase damage up to 125% from its base value. If Efficacy has increased damage beyond the imposed damage cap, the Weapon's damage is assigned to the damage cap.
+
+* [Efficacy.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Efficacy.cs) can be viewed here.
+
+![Efficacy](https://github.com/user-attachments/assets/f2f17867-c787-4c38-9ccf-f88b8c3744cc)
+
+## Inoculated
+Inoculated adds 5% of a Player's maximum Health onto their current Health when a Weapon has defeated an Enemy.
+* (Fated) Inoculated increases the percentage of this effect to 10%.
+
+If it detects that it has overhealed a Player's Health, their current Health value is assigned to their maximum Health. This Cheat does not add onto their Health if it is full.
+
+* [Inoculated.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Inoculated.cs) can be viewed here.
+
+![Inoculated](https://github.com/user-attachments/assets/72062244-f617-45dd-9c7b-67eb3b06253d)
+
+## Rude Awakening
+Rude Awakening grants one use of an area-of-effect (AOE) projection that inflicts 1,000% of a Weapon's damage. Uses are gained when a Weapon defeats an Enemy, and can grow to a stack of three uses.
+* (Fated) Rude Awakening increases maximum stacks to six. Enemy defeats grants two uses instead of one, and Weapon damage is increased by 20% while at least one use is held.
+
+If it detects that it has granted a use beyond the maximum allowed, their current use value is assigned to their maximum use limit. 
+
+* [Rude Awakening.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/RudeAwakening.cs) can be viewed here.
+
+![RudeAwakening](https://github.com/user-attachments/assets/e2451f42-3511-4832-a9e8-198c659b2251)
