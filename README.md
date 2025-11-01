@@ -411,7 +411,7 @@ https://github.com/user-attachments/assets/c3b1653f-7c1c-4bc8-8f8e-6d6ed61741bd
 
 
 #### Cheats
-Cheats are ATGIG's core system, everpresent in and out of gameplay, and primary contributor to this game's "Power-Fantasy" goal. Deeper explanations on what they specifically do can be found on the [Cheats](Core_cheats.md) file.
+Cheats are ATGIG's core system, everpresent in and out of gameplay, and primary contributor to this game's "Power-Fantasy" goal. Explanations and visuals for what each Cheat specifically does can be found on the [Cheats](Core_cheats.md) file.
 
 Cheats are applied to Weapons through Random Number Generation (RNG). The moment a Weapon is created, several methods are called to choose and apply what are known as Statistical Cheats and Functional Cheats: 
 * Statistical Cheats permanently upgrade a Weapon's base performance metrics, excluding base damage.
