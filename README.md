@@ -19,10 +19,10 @@ Current Version: MVP 0.1.6 (10/27/2025)
 	* [Pounce](#pounce)
 	* [Jump](#jump)
 
-## Details
-### Game Description
+# Details
+## Game Description
 All That Glitters is Gold (ATGIG) is a third-person Action game which combines high-density Horde combat, Looter-shooter attributes, and gunplay to craft a lite experience that aspires to whet the "Power-Fantasy" appetite.
-### Responsibilities
+## Responsibilities
 I am solo-developing All That Glitters is Gold. As such, I am responsible for:
 * Player abilities (movement, evasion, melee & sprinting)
 * Player systems (Slope Traversal and Anti-camera clipping)
@@ -35,9 +35,9 @@ I am solo-developing All That Glitters is Gold. As such, I am responsible for:
 
 Bulleted below are detailed accounts of ATGIG's most notable pursuits, accompanied by visuals and organized by category. 
 
-## Pursuits
-### Player
-#### Camera Clipping Countermeasure
+# Pursuits
+## Player
+### Camera Clipping Countermeasure
 To prevent instances of the Player's Camera clipping through walls, a Ray is cast starting from the Player-Character's rear and ending at the Camera position. When a surface intersects with the end point, the Camera is assigned an offset position, comprised of the Raycast hit point, oriented to the surface's Normal direction. Settings are in place to tune the offset further Horizontally or Vertically, and/or to increase the strength of this effect through multiplication. This approach has shown to be effective in reducing occurences of wall clipping (barring extreme cases), and is also performative when handling corners. 
 ```csharp
 //From PlayerCameraScript.cs
@@ -66,7 +66,7 @@ if (Physics.Raycast(offsetCheckPos.transform.position, (playerCamera.transform.p
 ```
 ![ezgif-6fdf065644ca79](https://github.com/user-attachments/assets/d182ec60-ce5a-430e-99cd-1730825e1ea6)
 
-#### Slope Traversal
+### Slope Traversal
 Slope traversal is handled through retrieval and interpretation of the Dot Product between two vectors:
 * The value is retrieved from the slope's surface Normal and the Player's forward direction if handling Vertical movement. 
 * The Cross Product between a Player's position and the slope's surface Normal is retrieved first, followed by the Dot Product between that value and the Player's forward direction if handling Horizontal movement.
@@ -148,8 +148,8 @@ if (Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, out hi
 
 ![ezgif-3227e372bb6e1c](https://github.com/user-attachments/assets/79f54600-81d4-472c-a9a2-5896ed81e2aa)
 
-### Weapons
-#### Weapon Saving
+## Weapons
+### Weapon Saving
 ATGIG's Weapon Saving system uses Stream reading and Stream writing to both respawn and catalog Weapons held in a Player's inventory. Upon level reset by defeat, pause menu restart, or main menu visit, the Player's Inventory records attributes of its Weapons and saves them to a file as a string that is between seven to nine characters in length. Each value within this string represents a Weapon's constituent parts. For example:
 
 12014581
@@ -410,7 +410,7 @@ for (int s = 0; s < player.readdedWeps.Count; s++)
 https://github.com/user-attachments/assets/c3b1653f-7c1c-4bc8-8f8e-6d6ed61741bd
 
 
-#### Cheats
+### Cheats
 Cheats are ATGIG's core system, everpresent in and out of gameplay, and primary contributor to this game's "Power-Fantasy" goal. Explanations and visuals for what each Cheat specifically does can be found on the [Cheats](Core_cheats.md) file.
 
 Cheats are applied to Weapons through Random Number Generation (RNG). The moment a Weapon is created, several methods are called to choose and apply what are known as Statistical Cheats and Functional Cheats: 
@@ -537,8 +537,8 @@ public virtual void CheatGenerator()
 
 https://github.com/user-attachments/assets/255d3d39-c299-49a2-bcec-0ed34364f432
 
-### Enemy Attacks
-#### Pounce
+## Enemy Attacks
+### Pounce
 Enemies that are assigned the Pounce attack style commit to combat in the following steps: 
 * Once the Player is both seen and the distance (the range between a Player and this enemy) is less or equal to this enemy's attack range, their NavMesh destination is cleared.
 * The enemy casts a Ray at the Player and records their last known position. 
@@ -640,7 +640,7 @@ else
 https://github.com/user-attachments/assets/937d83f6-1545-4bb2-97c2-648f92b341d2
 
 
-#### Jump
+### Jump
 Enemies that are assigned the Jump attack style commit to combat in the following steps: 
 * Once the Player is both seen and the distance from one another is less or equal to this enemy's attack range, their NavMesh destination is cleared, and their Agent component is disabled.
 * The enemy casts a Ray at the Player and records their last known position. A Rigidbody with frozen rotations is added if the component is not detected.
