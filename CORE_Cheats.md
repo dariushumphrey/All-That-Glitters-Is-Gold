@@ -20,10 +20,10 @@ Welcome!
   * [Cadence](#cadence)
   * [Good Things Come](#good-things-come)
   * [All Else Fails](#all-else-fails)
-  * The Most Resplendent
-  * Fulminate
-  * Forager
-  * Counterplay
+  * [The Most Resplendent](#the-most-resplendent)
+  * [Fulminate](#fulminate)
+  * [Forager](#forager)
+  * [Counterplay](#counterplay)
   * Enshroud
   * Gale Force Winds
   ## Exotic
@@ -185,3 +185,57 @@ All Else Fails produces immunity by taking the full damage meant for a Player an
 * [AllElseFails.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/AllElseFails.cs) can be viewed here.
 
 ![AllElseFails](https://github.com/user-attachments/assets/0a8f66d2-3fda-4835-a646-97a1fb7dcb0e)
+
+## The Most Resplendent
+The Most Resplendent grants a use for a "Hard Lucent" crystal that can be attached to surfaces or Enemies. The crystal produces Lucent Clusters passively or when shot by a Weapon for five seconds.
+* (Fated) The Most Resplendent' use cap increases to two. Physically colliding with the crystal destroys it, adding 35% of a Player's maximum Health onto their current Health.
+
+Uses are gained through achieving ten confirmed hits on Enemies. Crystals attached to combatants are smaller when compared to their full size when attached to surfaces. Applying 2,000 damage to the crystal or allowing the crystal to expire casts a shockwave that damages Enemies and detonates Lucent Clusters. Shooting the crystal creates a miniature Lucent Cluster at the hit spot, often detonating almost immediately. 
+
+* [TheMostResplendent.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/The%20Most%20Resplendent/TheMostResplendent.cs) can be viewed here. Its companion script, [TMRHardLucentScript.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/The%20Most%20Resplendent/TMRHardLucentScript.cs) can be viewed here.
+
+![TheMostResplendent](https://github.com/user-attachments/assets/7b49b4ab-4651-4641-8f8d-b97e622b1487)
+
+## Fulminate
+Fulminate increases damage of the Player's "Destruct Grenade" by 7%, up to a 70% cap, for seven seconds. Achieving a Melee kill casts a free Destruct Grenade.
+* (Fated) Fulminate now allows for another Destruct Grenade to be thrown when the first Destruct Grenade is thrown, in addition to its previous effects.
+
+Destruct Grenades are explosive munitions that inflicts 9,000 damage in an 8m radius. After collision with any surface, they detonate after one second. 
+
+It requires 35 confirmed Enemy hits to reach the 70% damage cap. Any Enemy hit during the duration will refresh the timer. Destruct Grenades cast on Melee kills is not limited by cooldowns and does not require an active timer to activate, but Fulminate is required to be active in order to throw double Destruct Grenades. 
+
+* [Fulminate.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Fulminate.cs) can be viewed here. [PlayerMeleeScript.cs](/Assets/Scripts/Player/PlayerMeleeScript.cs#L61-L66) and [PlayerInventoryScript.cs](/Assets/Scripts/Player/PlayerInventoryScript.cs#L1145-L1163) hold the remainder of Fulminate's actions (Grenade casts on Melee kills and damage application, respectively).
+
+![Fulminate](https://github.com/user-attachments/assets/c13632e7-9c54-4a26-8bc8-dde19929ca42)
+
+## Forager
+Forager produces a burst of items, called "pickups", on Enemy defeats. This burst possesses ten of the following at random: 
+* Health pickups that add 1% of a Player's max Health onto their current Health.
+* Shield pickups that add 2% of a Player's max Shield onto their current Shield.
+* Ammo pickups that add 15% of a Weapon's max magazine size onto their current magazine.
+* Miniature Lucent Clusters that detonate after 0.25 seconds.
+
+Ammo pickups can overflow a Weapon's current magazine up to 150% of its maximum size.
+
+* (Fated) Forager' item burst count increases to 20. Pickup strength becomes stronger, with one additional feature:
+  * Health pickup strength increases to 2%.
+  * Shield pickup strength increases to 4%.
+  * Ammo pickup strength increases to 30%.
+  * Every tenth confirmed hit on a non-immune Boss enemy produces a burst.
+
+* [Forager.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Forager/Forager.cs) can be viewed here.
+
+![Forager](https://github.com/user-attachments/assets/e8507ac7-1645-4063-826e-cc95212b6443)
+
+## Counterplay
+Counterplay casts two Lucent Clusters that detonate after 0.25 seconds and permanently increase a Weapon's damage by 10% when a Player is hit during their immunity. This damage effect can stack up to three times.
+* (Fated) Counterplay now casts the Player's "Solution Grenade" if they've been hit during their immunity. The damage effect can now stack up to ten times.
+
+Solution Grenades are gaseous munitions that applies significant damage-over-time in a 7m radius, applying 875 damage every 0.25 seconds, for an effect duration of two seconds.
+
+* [Counterplay.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Counterplay.cs) can be viewed here. [ReplevinScript.cs](/Assets/Scripts/Enemies/ReplevinScript.cs#L661-L664) handles the condition that Counterplay requires to activate.
+
+![Counterplay](https://github.com/user-attachments/assets/34471ad6-ac59-4c9c-8323-30936be99dab)
+
+## Enshroud
+
