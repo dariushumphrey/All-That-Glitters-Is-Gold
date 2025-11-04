@@ -24,20 +24,21 @@ Welcome!
   * [Fulminate](#fulminate)
   * [Forager](#forager)
   * [Counterplay](#counterplay)
-  * Enshroud
-  * Gale Force Winds
-  ## Exotic
-  * Equivalent Exchange
-  * Pay to Win
-  * Shelter in Place
-  * Off your own Supply
-  * "Social Distance, Please!"
+  * [Enshroud](#enshroud)
+  * [Gale Force Winds](#gale-force-winds)
+* Exotic Functional Cheats
+  * [Equivalent Exchange](#equivalent-exchange)
+  * [Pay to Win](#pay-to-win)
+  * [Shelter in Place](#shelter-in-place)
+  * [Off your own Supply](#off-your-own-supply)
+  * ["Social Distance, Please!"](#social-distance-please)
   * Early Berth gets the Hearst
   * "Absolutely no Stops!"
 
 # Overview
 This document explains ATGIG's Core system, Cheats, by illustrating what each specific Cheat does passively or through conditionals. There are over 30 available Cheats. Due to the amount of Cheats and with respect to readability, direct links to each Cheat's code are provided following their descriptions and function breakdowns. Visuals will accompany explanations, but only for Functional Cheats.
-* It is worth noting that Functional Cheats receive upgraded behaviors on Weapons at the fifth (Fated) rarity. Points preceded with "(Fated)" discuss a Cheat's increased strength at that level. 
+* It is worth noting that Functional Cheats receive upgraded behaviors on Weapons at the fifth (Fated) rarity. Points preceded with "(Fated)" discuss a Cheat's increased strength at that level.
+* Exotic Functional Cheats are powerful Cheats that are specific to one Weapon type. The Weapon type will be specified after a Cheat's description. 
 
 # Statistical Cheats
 ## Yields
@@ -238,4 +239,71 @@ Solution Grenades are gaseous munitions that applies significant damage-over-tim
 ![Counterplay](https://github.com/user-attachments/assets/34471ad6-ac59-4c9c-8323-30936be99dab)
 
 ## Enshroud
+Enshroud increases Melee attack range by 15%, up to a 200% cap, for seven seconds. Achieving a Melee kill casts a free Fogger Grenade.
+* (Fated) Enshroud now passively allows Fogger Grenades from any source to apply damage-over-time. 
 
+Fogger Grenades are smoke munitions that apply a Movement Speed debuff to Enemies in a 10m radius. After collision with any surface, they detonate after two seconds. 
+
+Melee attack range is described as the distance required to initiate a Melee attack. Enshroud caps Melee attack range to 21m. Any Enemy hit during the duration will refresh the timer. Fogger Grenades cast on Melee kills are limited by a 12 second cooldown.
+  * (Fated) Fogger Grenade cast on Melee kills' cooldown is reduced to six seconds. Fogger Grenade casts either through Melee kills with Enshroud or throws will allow them to apply damage-over-time, applying 150 damage once every second, for an effect duration of 20 seconds.
+
+* [Enshroud.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Enshroud.cs) can be viewed here. [PlayerMeleeScript.cs](/Assets/Scripts/Player/PlayerMeleeScript.cs#L74-L86) holds the remainder of Enshroud's actions (Fogger Grenade casts on Melee kills).
+
+![Enshroud](https://github.com/user-attachments/assets/f42258a3-93d5-4db5-a91c-ed3d1121aa84)
+
+## Gale Force Winds
+Gale Force Winds generates a charge through movement, with improved generation from Sprinting. Having 100% charge grants a use to cast torrential winds that applies Health and Movement Speed debuffs to Enemies.
+* (Fated) Gale Force Winds' charge generation rate is doubled. Winds' travel range and speed increases by 50%. Winds can now apply damage-over-time.
+
+Winds are cast by shooting surfaces or Enemies with a full charge. They can follow Enemies that walk through its volume, seeking another target to follow once their tracked enemy has been defeated. If they have no targets, the winds become stationary.
+* (Fated) Winds can apply damage-over-time, applying 125 damage once every second, for an effect duration of 20 seconds.
+
+* [GaleForceWinds.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/GaleForceWinds.cs) can be viewed here. Its companion script, [GFWStatusApplicator.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/GFWStatusApplicator.cs), can be viewed here.
+
+![GaleForceWinds](https://github.com/user-attachments/assets/c1a57ef4-09bd-4b97-a8dc-da656a3b8cf4)
+
+# Exotic Functional Cheats
+## Equivalent Exchange
+Equivalent Exchange adds 35% of Enemy damage received directly to the Weapon's damage and the Player's current Health. Weapon damage can permanently increase up to 150% of its original damage.
+
+Equivalent Exchange is assigned to the Full Fire Rifle Weapon type. Its companion Cheat is ["Wait! Now I'm Ready!".](#wait-now-im-ready)
+* [EquivalentExchange.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/EquivalentExchange.cs) can be viewed here.
+
+![EquivalentExchange](https://github.com/user-attachments/assets/1023fa5b-6465-41a8-b7a1-7905211a3f7a)
+
+## Pay to Win
+Pay to Win converts 5,280 of the Player's "Lucent" currency into 150 stacks of a 50% Weapon damage increase. 
+
+Stacks are removed three at a time when a Weapon hits an Enemy, and Lucent cannot be converted until all stacks have been removed.
+
+Pay to Win is assigned to the Machine Gun Weapon type. Its companion Cheat is [The Most Resplendent.](#the-most-resplendent)
+* [PayToWin.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/PayToWin.cs) can be viewed here.
+
+![PayToWin](https://github.com/user-attachments/assets/59d4a25c-aadd-48dc-bd56-bc71f4f9547d)
+
+## Shelter in Place
+Shelter in Place increases Weapon damage by 100% and provides 80% damage resistance so long as a Player refrains from movement. Movement of any kind, excluding Enemy attack knockbacks, ends the effect.
+
+Shelter in Place is assigned to the Pistol Weapon type. Its companion Cheat is [Positive-Negative.](#positive-negative)
+
+* [ShelterInPlace.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/ShelterInPlace.cs) can be viewed here.
+
+![ShelterInPlace](https://github.com/user-attachments/assets/5afb239e-5b3f-4ab4-9650-f0c184067e64)
+
+## Off your own Supply
+Off your own Supply provides increases to the following attributes at the expense of a sacrificed Shield for 15 seconds: 
+* Movement Speed increases by 10%.
+* Reload Speed increases by 80%.
+* Weapon damage increases by 140%.
+* Weapon recoil is zeroed.
+
+The Player's Shield is unable to regenerate while the effects are active. 
+
+Off your own Supply is assigned to the Semi Fire Rifle Weapon type. Its companion Cheat is [Inoculated.](#inoculated)
+
+* [OffYourOwnSupply.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/OffYourOwnSupply.cs)
+
+![OffYourOwnSupply](https://github.com/user-attachments/assets/f8a20342-5ebd-4f9b-8e70-93d8c752230a)
+
+## "Social Distance, Please!"
+"Social Distance, Please!" applies a 30% damage increase to the Weapon for ten seconds and a Health debuff to Enemies
