@@ -427,7 +427,7 @@ A number is randomized between a set range. The chosen Cheat is determined by wh
  	* Rarity 2-3 Weapons have access to one pool of all 16 Functional Cheats
   	* Rarity 4-5 Weapons have access to two pools of eight Functional Cheats
 
-For both Cheat types, the defined ranges are usually within units of 50 (ex. 50-100), up until Rarity 4-5, when the defined ranges are limited to units of 10 (ex. 410-420) for Functional Cheats only. This system is performative, and has yet to produce instances of two of the same Cheat being generated for a Weapon. Cheats are also not weighted to generate more often than others; Every Cheat has a fair chance to be generated. Exotics are curated Weapons, and do not require random Cheat generation. Weapons being reproduced by the WeaponManager have Cheats directly added based on characters identifying its components, and also do not require Cheat generation.
+This system is performative, and has yet to produce instances of two of the same Cheat being generated for a Weapon. Cheats are also not weighted to generate more often than others; Every Cheat has a fair chance to be generated. Exotics are curated Weapons, and do not require random Cheat generation. Weapons being reproduced by the WeaponManager have Cheats directly added based on characters identifying its components, and also do not require Cheat generation.
 
 <details> 
 
