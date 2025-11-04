@@ -32,13 +32,13 @@ Welcome!
   * [Shelter in Place](#shelter-in-place)
   * [Off your own Supply](#off-your-own-supply)
   * ["Social Distance, Please!"](#social-distance-please)
-  * Early Berth gets the Hearst
-  * "Absolutely no Stops!"
+  * [Early Berth gets the Hearst](#early-berth-gets-the-hearst)
+  * ["Absolutely no Stops!"](#absolutely-no-stops)
 
 # Overview
 This document explains ATGIG's Core system, Cheats, by illustrating what each specific Cheat does passively or through conditionals. There are over 30 available Cheats. Due to the amount of Cheats and with respect to readability, direct links to each Cheat's code are provided following their descriptions and function breakdowns. Visuals will accompany explanations, but only for Functional Cheats.
 * It is worth noting that Functional Cheats receive upgraded behaviors on Weapons at the fifth (Fated) rarity. Points preceded with "(Fated)" discuss a Cheat's increased strength at that level.
-* Exotic Functional Cheats are powerful Cheats that are specific to one Weapon type. The Weapon type will be specified after a Cheat's description. 
+* Exotic Functional Cheats are powerful Cheats that are specific to one Weapon type and that come with a companion Cheat from the standard pool. The Weapon type will be specified after a Cheat's description. 
 
 # Statistical Cheats
 ## Yields
@@ -301,9 +301,39 @@ The Player's Shield is unable to regenerate while the effects are active.
 
 Off your own Supply is assigned to the Semi Fire Rifle Weapon type. Its companion Cheat is [Inoculated.](#inoculated)
 
-* [OffYourOwnSupply.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/OffYourOwnSupply.cs)
+* [OffYourOwnSupply.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/OffYourOwnSupply.cs) can be viewed here.
 
 ![OffYourOwnSupply](https://github.com/user-attachments/assets/f8a20342-5ebd-4f9b-8e70-93d8c752230a)
 
 ## "Social Distance, Please!"
-"Social Distance, Please!" applies a 30% damage increase to the Weapon for ten seconds and a Health debuff to Enemies
+"Social Distance, Please!" applies a 30% damage increase on Enemy hits. Damaged enemies receive a Health debuff that doubles damage taken. Defeated, debuffed Enemies spread 400% of the Weapon's damage in a 10m radius.
+
+The damage increase lasts for ten seconds. Upon expiration, the Weapon's damage is restored to its default value. The timer is extended when a non-debuffed Enemy has a Health debuff applied.
+
+"Social Distance, Please!" is assigned to the Shotgun Weapon type. Its companion Cheat is [Not with a Stick.](#not-with-a-stick)
+
+* [SocialDistancePlease.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Social%20Distance%2C%20Please!/SocialDistancePlease.cs) can be viewed here. [EnemyHealthScript.cs](/Assets/Scripts/Enemies/EnemyHealthScript.cs#L437-L465) holds the damage spread behavior when an Enemy is defeated.
+
+![SocialDistancePlease](https://github.com/user-attachments/assets/8f908001-ccda-4da4-bf98-e429250e1131)
+
+## Early Berth gets the Hearst
+Early Berth gets the Hearst applies and triggers a Berth explosion on every other confirmed Enemy hit.
+
+A "Berth" is described as a status effect unique to Enemies that provides dangerous attack augmentations and induces explosions on defeats. Early Berth gets the Hearst, when the condition is met, applies the Berth condition and immediately triggers the detonation behavior.
+
+Early Berth gets the Hearst is assigned to the Single Fire Rifle Weapon type. Its companion Cheat is [Efficacy.](#efficacy)
+
+* [EarlyBerthGetsTheHearst.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/EarlyBerthGetsTheHearst.cs) can be viewed here.
+
+![EarlyBerthGetsTheHearst](https://github.com/user-attachments/assets/1514e231-ec94-4fa6-b284-bddf9de358d9)
+
+## "Absolutely no Stops!"
+"Absolutely no Stops!" increases a Weapon's damage by 200%, Rate of Fire by 50%, and triggers an automatic reload upon expending the magazine. 
+
+This effect remains active until the Weapon has expended all reserve ammunition or if the Player stops firing.
+
+"Absolutely no Stops!" is assigned to the Submachine Gun Weapon type. Its companion Cheat is [Forager.](#forager)
+
+* [AbsolutelyNoStops.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/AbsolutelyNoStops.cs) can be viewed here.
+
+![AbsolutelyNoStops](https://github.com/user-attachments/assets/02fe64d2-ee0d-4f84-9fad-da95ab4e928f)
