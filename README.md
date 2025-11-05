@@ -6,6 +6,9 @@ Current Version: MVP 0.1.6 (10/27/2025)
 
 ## Details
 * [Game Description](#game-description)
+* [Installation Instructions](#installation-instructions)
+* [Project Objective](#project-objective)
+* [Technologies](#technologies)
 * [Responsibilities](#responsibilities)
 
 ## Pursuits
@@ -22,6 +25,29 @@ Current Version: MVP 0.1.6 (10/27/2025)
 # Details
 ## Game Description
 All That Glitters is Gold (ATGIG) is a third-person Action game which combines high-density Horde combat, Looter-shooter attributes, and gunplay to craft a lite experience that aspires to whet the "Power-Fantasy" appetite.
+## Installation Instructions
+* Install Unity 2021, as this is the version of the Engine that I develop with: [Link](https://unity.com/releases/editor/whats-new/2021.1.29f1#installs)
+	* The link takes you to the patched version of the engine. I specifically use Unity 2021.1.16f1, but Unity has disclosed that this version is susceptible to the security flaw they detected at the start of October. As of 11/5/2025, Unity Hub refuses to finish 		installation of this patched version for me. I have no reason to believe, however, that the provided version will not load the project.
+* Clone this repository.
+	* Open Github Desktop, Go to File > Clone Repository.
+ 	* Paste the URL link in the repository box.
+  	* Specify a location that you'd like the project to install.
+  		* I personally made a folder after its namesake and placed the project there.
+* Open the project through Unity Hub
+	* Add the provided Unity version to Unity Hub's "Installs" category (Installs > Locate > Find version)
+ 	* Specify the project's editor version, then open the project.
+## Project Objective
+ATGIG's primary objective is to represent my understanding of the experiences that "looter-shooters" and similar action games provide and to translate these understandings into brief, favorable play sessions, such as:
+* The acquisition and surprise of RNG-based Weapons
+* The management and toppling of high-volume Enemies with distinct attacks
+* The employement of survival tools like evasions and immunity for Players
+
+Observations drawn from playing games like Destiny 2, The Division 2, Remnant II, and Warhammer 40K: Space Marine 2 have contributed to this attempted understanding, and serve as inspirations for how ATGIG's Player, Weapon, and Enemy experiences behave.
+## Technologies
+* Unity 3D (Version 2021.1.16f)
+* C#
+* Blender
+* Substance Painter
 ## Responsibilities
 I am solo-developing All That Glitters is Gold. As such, I am responsible for:
 * Player abilities (movement, evasion, melee & sprinting)
