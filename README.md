@@ -1,6 +1,6 @@
 # Welcome!
 
-![ATGIG_readmeSplash](https://github.com/user-attachments/assets/2572710c-4117-4a3e-8b77-fcb59be47c6e)
+![ATGIG_again](https://github.com/user-attachments/assets/712197db-c4d8-4179-aa3e-41242f8013d4)
 
 Current Version: MVP 0.1.6 (10/27/2025)
 
