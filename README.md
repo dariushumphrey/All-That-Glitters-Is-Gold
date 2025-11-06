@@ -27,6 +27,7 @@ Current Version: MVP 0.1.6 (10/27/2025)
 # Details
 ## Game Description
 All That Glitters is Gold (ATGIG) is a third-person Action game which combines high-density Horde combat, Looter-shooter attributes, and gunplay to craft a lite experience that aspires to whet the "Power-Fantasy" appetite.
+* ATGIG has an itch.io page where the game can be downloaded and played: [Link](https://dilladev.itch.io/atgig)
 ## Installation Instructions
 * Install Unity 2021, as this is the version of the Engine that I develop with: [Link](https://unity.com/releases/editor/whats-new/2021.1.29f1#installs)
 	* The link takes you to the patched version of the engine. I specifically use Unity 2021.1.16f1, but Unity has disclosed that this version is susceptible to the security flaw they detected at the start of October. As of 11/5/2025, Unity Hub refuses to finish 		installation of this patched version for me. I have no reason to believe, however, that the provided version will not load the project.
