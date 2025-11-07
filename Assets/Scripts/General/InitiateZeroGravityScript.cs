@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InitiateZeroGravityScript : MonoBehaviour
 {
+    //activate - turns on Player's Zero Gravity behavior if true
+    //deactivate - turns off Player's Zero Gravity behavior if true
     public bool activate, deactivate;
     // Start is called before the first frame update
     void Start()

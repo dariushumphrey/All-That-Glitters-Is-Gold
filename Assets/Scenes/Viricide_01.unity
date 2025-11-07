@@ -611,14 +611,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5be6adeea1b0444d998556cc64b13e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unhideWorld:
+  unhide:
   - {fileID: 50710503}
   - {fileID: 123511344}
-  unhideGame: []
-  hideWorld:
-  - {fileID: 1514782488}
+  hide:
   - {fileID: 518632934}
-  hideGame: []
+  - {fileID: 1514782488}
   startConcealOn: 2
   hideOnTrigger: 1
 --- !u!65 &12598834
@@ -958,7 +956,6 @@ MonoBehaviour:
   accepted: 0
   activeColor: {fileID: 2100000, guid: ba552f6beb6994d4b9a39e292026cdf8, type: 2}
   door: {fileID: 0}
-  console: {fileID: 986997232}
 --- !u!65 &20047092
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -86180,7 +86177,6 @@ MonoBehaviour:
   accepted: 0
   activeColor: {fileID: 2100000, guid: f52ece130bffe1f4bb93452ae75c42d0, type: 2}
   door: {fileID: 0}
-  console: {fileID: 464587481}
 --- !u!65 &2088397143
 BoxCollider:
   m_ObjectHideFlags: 0

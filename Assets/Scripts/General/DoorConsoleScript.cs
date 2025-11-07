@@ -5,14 +5,15 @@ using UnityEngine;
 public class DoorConsoleScript : MonoBehaviour
 {
     public bool blueConsole, redConsole = false;
-    public bool accepted;
+    public bool accepted; //Console has received a key and unlocked a door if true
     public Material activeColor;
-    public GameObject door;
-    public GameObject console;
+    public GameObject door; //Door to open
+
+    private GameObject console; //Physical console to change the color of
     // Start is called before the first frame update
     void Start()
     {
-        
+        console = gameObject.transform.parent.gameObject;
     }
 
     // Update is called once per frame

@@ -87,7 +87,16 @@ public class LevelManagerScript : MonoBehaviour
         chests = GameObject.FindGameObjectsWithTag("Chest");
         for(int c = 0; c < chests.Length; c++)
         {
-            chests[c].GetComponent<LootScript>().raritySpawn = gameSettingState;
+            if(gameSettingState >= 4)
+            {
+                chests[c].GetComponent<LootScript>().raritySpawn = 4;
+            }
+
+            else
+            {
+                chests[c].GetComponent<LootScript>().raritySpawn = gameSettingState;
+            }
+
             chests[c].GetComponent<LootScript>().focusTarget = weaponFocus;
             //chests[c].GetComponent<LootScript>().SpawnDrop();
         }

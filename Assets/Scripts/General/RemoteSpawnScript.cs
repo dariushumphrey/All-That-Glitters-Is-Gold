@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RemoteSpawnScript : MonoBehaviour
 {
-    public List<SpawnerScript> spawners = new List<SpawnerScript>();
+    public List<SpawnerScript> spawners = new List<SpawnerScript>(); //List of spawners with intention to spawn Enemies
     public float spawnDelay;
     // Start is called before the first frame update
     void Start()
@@ -26,6 +26,9 @@ public class RemoteSpawnScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// triggers Spawners to spawn enemies after a delay.
+    /// </summary>
     private IEnumerator DelayedSpawn()
     {
         yield return new WaitForSeconds(spawnDelay);

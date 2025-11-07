@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class InitiateGravityScript : MonoBehaviour
 {
+    //activate - turns on Rigidbody gravity if true
+    //deactivate - turns off Rigidbody gravity if true
+    //affectsPlayer - interacts with Players if true
+    //affectsEnemies - interacts with Enemies, Corpses if true
     public bool activate, deactivate, affectsPlayer, affectsEnemies;
 
     // Start is called before the first frame update
@@ -20,6 +24,7 @@ public class InitiateGravityScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //turns on Rigidbody gravity for Players, Enemies, Corpses
         if (activate)
         {
             if(other.gameObject.CompareTag("Enemy") && affectsEnemies)
@@ -38,6 +43,7 @@ public class InitiateGravityScript : MonoBehaviour
             }
         }
 
+        //turns off Rigidbody gravity for Players, Enemies, Corpses
         if (deactivate)
         {
             if (other.gameObject.CompareTag("Enemy") && affectsEnemies)

@@ -6,8 +6,8 @@ public class ColorLerpScript : MonoBehaviour
 {
     public Color colorOne = Color.gray;
     public Color colorTwo = Color.gray;
-    public bool enemyUse = false;
-    public int materialIndex = 0;
+    public bool enemyUse = false; //Lerps Material color used for Enemies' eyes if true
+    public int materialIndex = 0; //Index used to find Material
     private Renderer subject;
     private Material[] materials;
 

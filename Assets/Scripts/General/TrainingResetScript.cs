@@ -19,6 +19,7 @@ public class TrainingResetScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Respawns Player if they've died 
         if(player.isDead == true)
         {
             if(Input.GetKeyDown(KeyCode.F))
@@ -28,6 +29,9 @@ public class TrainingResetScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Restores Player to living status
+    /// </summary>
     void Spawn()
     {
         player.transform.position = resetPoint.transform.position;

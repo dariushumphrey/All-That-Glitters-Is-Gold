@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class AdvanceScript : MonoBehaviour
 {
-    public int levelIndex = 0;
-    public bool incomingMenu;
+    public int levelIndex = 0; //Represents Scene to load
+    public bool incomingMenu; //Returns the Player to Main Menu if true
+
     private LevelManagerScript level;
     private PlayerInventoryScript player;
     // Start is called before the first frame update
@@ -22,7 +23,7 @@ public class AdvanceScript : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
+    {      
         if(other.gameObject.tag == "Player")
         {
             if(incomingMenu)
@@ -54,6 +55,9 @@ public class AdvanceScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Unlocks access to Level 02, Level 03 from the Main Menu upon first completion of respective levels.
+    /// </summary>
     void CheckForLevelEntitlement()
     {
         if(levelIndex == 2)
@@ -83,6 +87,9 @@ public class AdvanceScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Unlocks Difficulty 5 if not previously unlocked
+    /// </summary>
     void CheckForDifficultyEntitlement()
     {
         if (PlayerPrefs.GetInt("unlockDifficulty5") == 1)
@@ -96,6 +103,9 @@ public class AdvanceScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Unlocks Viricide if not previously unlocked
+    /// </summary>
     void CheckForViricideEntitlement()
     {
         if (PlayerPrefs.GetInt("unlockViricide") == 1)

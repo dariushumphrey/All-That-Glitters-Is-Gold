@@ -6,19 +6,19 @@ public class DoorScript : MonoBehaviour
 {
     public GameObject door;
     public List<GameObject> console = new List<GameObject>();
-    public float openConstraint = 4f;
-    public float closedConstraint = 0f;
+    public float openConstraint = 4f; //Value to stop door when opening
+    public float closedConstraint = 0f; //Value to stop door when closing
     public int openSpeed = 5;
-    public bool proximity = false;
-    public bool locked = false;
-    public bool elevator = false;
-    public bool invert = false;
-    public bool vertical = false;
-    public bool horizontal = false;
-    public bool diagonal = false;
-    public bool overrideOpen = false;
+    public bool proximity = false; //Opens door if true/closes door if false
+    public bool locked = false; //Prevents door from opening if true
+    public bool elevator = false; //Makes Player a child of Elevator when moving if true
+    public bool invert = false; //Reverses effects of constraints if true
+    public bool vertical = false; //Opens door on Y-axix if true
+    public bool horizontal = false; //Opens door on X-axis if true
+    public bool diagonal = false; //Opens door on Z-axis if true
+    public bool overrideOpen = false; //Forces Door to open if true
 
-    private float state = 0f;
+    private float state = 0f; //Float to manipulate X,Y, or Z position of door
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +29,8 @@ public class DoorScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!proximity)
+        //Closes door when Player/Enemy is not nearby
+        if (!proximity)
         {
             if(invert)
             {
@@ -68,11 +69,13 @@ public class DoorScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player" && elevator)
+        //Makes gameObject Parent of Player if set as Elevator
+        if (other.gameObject.tag == "Player" && elevator)
         {
             other.gameObject.transform.parent = door.gameObject.transform;
         }
 
+        //Checks for consoles with accepted keys and unlocks doors when Player enters trigger
         if (other.gameObject.tag == "Player" && locked)
         {
             for (int i = 0; i < console.Count; i++)
@@ -87,20 +90,11 @@ public class DoorScript : MonoBehaviour
                 }
             }
         }
-
-        //if(other.gameObject.tag == "Enemy")
-        //{
-        //    if(!other.gameObject.GetComponent<Rigidbody>())
-        //    {
-        //        other.gameObject.AddComponent<Rigidbody>();
-        //        other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        //        other.gameObject.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Continuous;
-        //    }
-        //}
     }
 
     private void OnTriggerStay(Collider other)
     {
+        //Checks for consoles with accepted keys and unlocks doors when Player remains in trigger
         if (other.gameObject.tag == "Player" && locked && console.Count >= 1)
         {
             for (int i = 0; i < console.Count; i++)
@@ -117,6 +111,7 @@ public class DoorScript : MonoBehaviour
             }
         }
 
+        //Opens door for Players/Enemies when present within trigger
         if (other.gameObject.tag == "Player" && !locked && !overrideOpen || other.gameObject.tag == "Enemy" && !locked && !overrideOpen)
         {
             proximity = true;
@@ -153,26 +148,22 @@ public class DoorScript : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        //Removes gameObject as Parent of Player if set as Elevator
         if (other.gameObject.tag == "Player" && elevator)
         {
             other.gameObject.transform.parent = null;
         }
 
+        //Turns proximity flag to false when Player/Enemy leaves trigger
         if (other.gameObject.tag == "Player" && !locked || other.gameObject.tag == "Enemy" && !locked)
         {
             proximity = false;
         }
-
-        //if (other.gameObject.tag == "Enemy")
-        //{
-        //    if (other.gameObject.GetComponent<Rigidbody>())
-        //    {
-        //        Destroy(other.gameObject.GetComponent<Rigidbody>());
-        //    }
-
-        //}
     }
 
+    /// <summary>
+    /// Forces Door to permanently open
+    /// </summary>
     private void ForceOpen()
     {
         if (invert)

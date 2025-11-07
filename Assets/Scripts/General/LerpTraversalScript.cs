@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class LerpTraversalScript : MonoBehaviour
 {
-    public List<GameObject> lerps = new List<GameObject>();
+    public List<GameObject> lerps = new List<GameObject>(); //List of gameObjects intended to Lerp
+
+    //speedUp - causes lerping object to speed up if true
+    //slowDown - causes lerping object to slow down if true
     public bool speedUp, slowDown = false;
     public float newSpeed = 0f;
     // Start is called before the first frame update
@@ -23,6 +26,7 @@ public class LerpTraversalScript : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
+            //Makes objects from lerps list speed up
             if(speedUp)
             {
                 for (int l = 0; l < lerps.Count; l++)
@@ -32,7 +36,8 @@ public class LerpTraversalScript : MonoBehaviour
                 }
             }
 
-            if(slowDown)
+            //Makes objects from lerps list slow down
+            if (slowDown)
             {
                 for (int l = 0; l < lerps.Count; l++)
                 {

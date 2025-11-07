@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class RemoteDoorScript : MonoBehaviour
 {
-    public List<DoorScript> doors = new List<DoorScript>();
+    public List<DoorScript> doors = new List<DoorScript>(); //List of doors with intention to be opened
     public float openDelay = 0f;
-    private bool tripped = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,11 +23,13 @@ public class RemoteDoorScript : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            tripped = true;
             StartCoroutine(OpenDoor());
         }     
     }
 
+    /// <summary>
+    /// Turns overrideOpen variable for doors to true after a delay.
+    /// </summary>
     private IEnumerator OpenDoor()
     {
         yield return new WaitForSeconds(openDelay);
