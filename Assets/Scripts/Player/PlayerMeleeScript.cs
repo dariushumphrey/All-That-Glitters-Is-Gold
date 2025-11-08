@@ -10,12 +10,13 @@ public class PlayerMeleeScript : MonoBehaviour
 
     private PlayerInventoryScript inv;
     private PlayerMoveScript move;
-    internal bool confirmKill;
-    internal bool meleeLock;
+    internal bool confirmKill; //verifies that a Kill has been achieved if true
+    internal bool meleeLock; //locks Player into Melee attack if true
     internal GameObject meleeTarget;
-    internal GameObject fulminateCheat;
-    internal GameObject foragerCheat;
-    internal GameObject enshroudCheat;
+    internal GameObject fulminateCheat; //Confirms presence of Weapon with Fulminate if not null
+    internal GameObject foragerCheat; //Confirms presence of Weapon with Forager if not null
+    internal GameObject enshroudCheat; //Confirms presence of Weapon with Enshroud if not null
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +29,8 @@ public class PlayerMeleeScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
+            //Melee attacks cannot occur if a target is not found
+            //Otherwise, Player is locked into attack
             if (meleeTarget == null)
             {
                 //Do nothing
@@ -39,6 +42,7 @@ public class PlayerMeleeScript : MonoBehaviour
             }
         }
 
+        //Player-character travels and rotates towards Melee target
         if (meleeLock && meleeTarget != null)
         {
             transform.position = Vector3.Lerp(transform.position, meleeTarget.transform.position, meleeSpeed * Time.deltaTime);
@@ -48,6 +52,10 @@ public class PlayerMeleeScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Casts a ray that applies Melee damage
+    /// Produces effects dependent on Functional Cheat presence on Melee kills
+    /// </summary>
     void MeleeStrike()
     {
         RaycastHit hit;        
@@ -58,6 +66,7 @@ public class PlayerMeleeScript : MonoBehaviour
                 hit.collider.gameObject.GetComponent<EnemyHealthScript>().inflictDamage(meleeDamage);
                 if(hit.collider.gameObject.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                 {
+                    //Produces a Destruct Grenade that detonates instantly
                     if(fulminateCheat != null)
                     {
                         GameObject free = Instantiate(inv.grenades[2], hit.point, transform.rotation);
@@ -65,12 +74,15 @@ public class PlayerMeleeScript : MonoBehaviour
                         free.GetComponent<DestructGrenadeScript>().StartCoroutine(free.GetComponent<DestructGrenadeScript>().SetupGrenade());
                     }
 
+                    //Triggers Forager's pickup burst
                     if(foragerCheat != null)
                     {
                         foragerCheat.GetComponent<Forager>().burstPosition = hit.collider.transform.position + Vector3.up;
                         foragerCheat.GetComponent<Forager>().ForagerBurst();
                     }
 
+                    //Produces a Fogger Grenade that triggers instantly and begins cooldown
+                    //Activates Fogger Grenade' damage-over-time ability if Weapon is Rarity 5
                     if (enshroudCheat != null && !enshroudCheat.GetComponent<Enshroud>().cooldown)
                     {
                         GameObject free = Instantiate(inv.grenades[0], transform.position + Vector3.down, Quaternion.Euler(new Vector3(90f, 0f, 0f)));
@@ -85,13 +97,13 @@ public class PlayerMeleeScript : MonoBehaviour
                         enshroudCheat.GetComponent<Enshroud>().cooldown = true;
                     }
 
+                    //Applies Rigidbody force on Enemy defeats
                     if (hit.collider.gameObject.GetComponent<Rigidbody>() == null)
                     {
                         hit.collider.gameObject.AddComponent<Rigidbody>();
                         Vector3 meleeForceDistance = transform.position - hit.collider.transform.position;
                         hit.collider.GetComponent<Rigidbody>().AddForce(-meleeForceDistance.normalized * 20f, ForceMode.Impulse);
                     }
-
                 }
 
                 meleeLock = false;

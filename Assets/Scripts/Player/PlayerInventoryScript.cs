@@ -10,36 +10,44 @@ public class PlayerInventoryScript : MonoBehaviour
     public string filepath = "inventory.txt";
 
     public int lucentFunds;
-    public int fogGrenadeCharges = 0;
-    public int solGrenadeCharges = 0;
-    public int desGrenadeCharges = 0;
-    public List<GameObject> inventory = new List<GameObject>(10);
-    public List<GameObject> grenades = new List<GameObject>(2);
-    public Transform gunPlace;
+    public int fogGrenadeCharges = 0; //number of Fogger Grenades
+    public int solGrenadeCharges = 0; //number of Solution Grenades
+    public int desGrenadeCharges = 0; //number of Destruct Grenades
+    public List<GameObject> inventory = new List<GameObject>(10); //list of Weapons
+    public List<GameObject> grenades = new List<GameObject>(2); //list of Grenades
+    public Transform gunPlace; //Anchor position that Weapons are assigned to
     public float throwStrength;
     public float throwMin, throwMax;
-    public GameObject foggerGrenade;
-    public bool blueKey, redKey = false;
-    public GameObject bKey, rKey;
+    public bool blueKey, redKey = false; //confirms ownership of colored key if true
+    public GameObject bKey, rKey; //objects that visually convey key ownership
+
+    //weaponCurAmmo - text that displays Weapon's current ammo
+    //weaponResAmmo - text that displays Weapons' reserve ammo
     public Text weaponCurAmmo, weaponResAmmo, lucentText, grenadeText;
+
+    //weaponLoad - slider that represents Weapon reload progress
+    //grenadeThrow - slider that represent Grenade throw strength
     public Slider weaponLoad, grenadeThrow;
     public Image weaponAmmoPage;
 
-    private Image weaponPage;
+    private Image weaponPage; //In-game Inventory page
     internal Image reticleSprite;
     private Text wepName, wepStats, flavor;
     private Text cheatOne, cheatTwo, cheatThree, cheatFour, cheatTraitOne, cheatTraitTwo;
+
+    //invMonitor - text that displays inventory position/total inventory size
+    //rarityCheck - text that displays Weapon rarity
     private Text invMonitor, rarityCheck, dismantleText;
-    internal int selection, grenadeSelection;
+    internal int selection, grenadeSelection; //index values used to select Weapons/Grenades
     private float dismantleTimer = 1f;
     private float dismantleTimerReset;
-    internal float wepStateTimer = 0.5f;
+    internal float wepStateTimer = 0.5f; //Time before hiding Weapon state canvas
     internal float wepStateTimerReset;
-    internal bool throwing = false;
-    internal bool fulminatePresent;
-    internal bool fulminateFated;
-    internal int fulminateBuff;
-    internal bool enshroudPresent;
+    internal bool throwing = false; //Player is in active throwing state if true
+    internal bool fulminatePresent; //Weapon with Fulminate is present if true
+    internal bool fulminateFated; //Rarity 5 Weapon with Fulminate is present if true
+    internal int fulminateBuff; //damage value used to increase Destruct Grenade damage by Fulminate
+    internal bool enshroudPresent; //Weapon with Enshroud is present if true
 
     internal List<string> readdedWeps = new List<string>(10);
     
@@ -92,6 +100,7 @@ public class PlayerInventoryScript : MonoBehaviour
         //Debug.Log(selection + " || " + inventory.Count);
         //Debug.Log(grenadeSelection + " || " + grenades.Count);
 
+        //Enables use of Weapon switching, destruction, Grenade switching and throwing while game is active
         if(Time.timeScale == 1)
         {
             SwitchInv();
@@ -100,6 +109,7 @@ public class PlayerInventoryScript : MonoBehaviour
             ThrowGrenade();
         }
 
+        //Hides Weapon ammo page after timer reaches zero
         wepStateTimer -= Time.deltaTime;
         if (wepStateTimer <= 0f)
         {
@@ -112,6 +122,7 @@ public class PlayerInventoryScript : MonoBehaviour
         //WriteOnReset();
         //WriteInventory();
 
+        //Reveals Inventory page if game is running and at least one Weapon is in inventory
         if (Input.GetKeyDown(KeyCode.UpArrow) && Time.timeScale != 0)
         {
             if(inventory.Count <= 0)
@@ -125,11 +136,13 @@ public class PlayerInventoryScript : MonoBehaviour
             }         
         }
 
+        //Hides Inventory page if game is running
         if(Input.GetKeyDown(KeyCode.DownArrow) && Time.timeScale != 0)
         {
             weaponPage.gameObject.SetActive(false);
         }
 
+        //Displays Weapon ammo count, statistics, reload progress, Lucent balance, and selected Grenade
         if(inventory.Count > 0)
         {
             weaponCurAmmo.text = inventory[selection].GetComponent<FirearmScript>().currentAmmo.ToString();
@@ -262,6 +275,11 @@ public class PlayerInventoryScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Adds and enables Weapon to Inventory if previously empty. 
+    /// Adds and disables newly added Weapons if Inventory has at least one Weapon
+    /// </summary>
+    /// <param name="g">Weapon being added to Inventory</param>
     public void AddInv(GameObject g)
     {
         if(inventory.Count <= 0)
@@ -274,10 +292,6 @@ public class PlayerInventoryScript : MonoBehaviour
             g.GetComponent<FirearmScript>().enabled = true;
             reticleSprite.gameObject.SetActive(true);
             reticleSprite.sprite = g.GetComponent<FirearmScript>().reticle;
-            //g.GetComponent<LineRenderer>().enabled = true;
-            //g.GetComponent<ReloadSpeedScript>().enabled = true;
-            //g.GetComponent<RangeScript>().enabled = true;
-            //g.GetComponent<MagazineScript>().enabled = true;
             g.GetComponent<BoxCollider>().isTrigger = false;
             g.GetComponent<BoxCollider>().enabled = false;
             selection++;          
@@ -293,10 +307,6 @@ public class PlayerInventoryScript : MonoBehaviour
             g.transform.position = gunPlace.transform.position;
             g.transform.rotation = gunPlace.transform.rotation;
             g.GetComponent<FirearmScript>().enabled = false;
-            //g.GetComponent<LineRenderer>().enabled = false;
-            //g.GetComponent<ReloadSpeedScript>().enabled = false;
-            //g.GetComponent<RangeScript>().enabled = false;
-            //g.GetComponent<MagazineScript>().enabled = false;
             g.GetComponent<BoxCollider>().isTrigger = false;
             g.GetComponent<BoxCollider>().enabled = false;
             g.gameObject.SetActive(false);
@@ -305,6 +315,9 @@ public class PlayerInventoryScript : MonoBehaviour
         }          
     }
 
+    /// <summary>
+    /// Switches Weapons dependent on Left, Right arrow inputs
+    /// </summary>
     private void SwitchInv()
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -332,21 +345,15 @@ public class PlayerInventoryScript : MonoBehaviour
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
                 reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                //inventory[selection].GetComponent<LineRenderer>().enabled = true;
                 inventory[selection].GetComponent<ReloadSpeedScript>().enabled = true;
                 inventory[selection].GetComponent<RangeScript>().enabled = true;
                 inventory[selection].GetComponent<MagazineScript>().enabled = true;
                 inventory[selection].gameObject.SetActive(true);
 
                 inventory[0].GetComponent<FirearmScript>().enabled = false;
-                //inventory[0].GetComponent<LineRenderer>().enabled = false;
-                //inventory[selection + 1].GetComponent<ReloadSpeedScript>().enabled = false;
-                //inventory[selection + 1].GetComponent<RangeScript>().enabled = false;
-                //inventory[selection + 1].GetComponent<MagazineScript>().enabled = false;
                 inventory[0].gameObject.SetActive(false);
 
                 weaponAmmoPage.gameObject.SetActive(true);
-                //weaponLoad.gameObject.SetActive(true);
                 lucentText.gameObject.SetActive(true);
                 wepStateTimer = wepStateTimerReset;
                 return;
@@ -365,21 +372,15 @@ public class PlayerInventoryScript : MonoBehaviour
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
                 reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                //inventory[selection].GetComponent<LineRenderer>().enabled = true;
                 inventory[selection].GetComponent<ReloadSpeedScript>().enabled = true;
                 inventory[selection].GetComponent<RangeScript>().enabled = true;
                 inventory[selection].GetComponent<MagazineScript>().enabled = true;
                 inventory[selection].gameObject.SetActive(true);
 
                 inventory[selection + 1].GetComponent<FirearmScript>().enabled = false;
-                //inventory[selection + 1].GetComponent<LineRenderer>().enabled = false;
-                //inventory[selection + 1].GetComponent<ReloadSpeedScript>().enabled = false;
-                //inventory[selection + 1].GetComponent<RangeScript>().enabled = false;
-                //inventory[selection + 1].GetComponent<MagazineScript>().enabled = false;
                 inventory[selection + 1].gameObject.SetActive(false);
 
                 weaponAmmoPage.gameObject.SetActive(true);
-                //weaponLoad.gameObject.SetActive(true);
                 lucentText.gameObject.SetActive(true);
                 wepStateTimer = wepStateTimerReset;
                 return;
@@ -410,21 +411,15 @@ public class PlayerInventoryScript : MonoBehaviour
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
                 reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                //inventory[selection].GetComponent<LineRenderer>().enabled = true;
                 inventory[selection].GetComponent<ReloadSpeedScript>().enabled = true;
                 inventory[selection].GetComponent<RangeScript>().enabled = true;
                 inventory[selection].GetComponent<MagazineScript>().enabled = true;
                 inventory[selection].gameObject.SetActive(true);
 
                 inventory[inventory.Count - 1].GetComponent<FirearmScript>().enabled = false;
-                //inventory[inventory.Count - 1].GetComponent<LineRenderer>().enabled = false;
-                //inventory[selection - 1].GetComponent<ReloadSpeedScript>().enabled = false;
-                //inventory[selection - 1].GetComponent<RangeScript>().enabled = false;
-                //inventory[selection - 1].GetComponent<MagazineScript>().enabled = false;
                 inventory[inventory.Count - 1].gameObject.SetActive(false);
 
                 weaponAmmoPage.gameObject.SetActive(true);
-                //weaponLoad.gameObject.SetActive(true);
                 lucentText.gameObject.SetActive(true);
                 wepStateTimer = wepStateTimerReset;
 
@@ -443,21 +438,15 @@ public class PlayerInventoryScript : MonoBehaviour
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
                 reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                //inventory[selection].GetComponent<LineRenderer>().enabled = true;
                 inventory[selection].GetComponent<ReloadSpeedScript>().enabled = true;
                 inventory[selection].GetComponent<RangeScript>().enabled = true;
                 inventory[selection].GetComponent<MagazineScript>().enabled = true;
                 inventory[selection].gameObject.SetActive(true);
 
                 inventory[selection - 1].GetComponent<FirearmScript>().enabled = false;
-                //inventory[selection - 1].GetComponent<LineRenderer>().enabled = false;
-                //inventory[selection - 1].GetComponent<ReloadSpeedScript>().enabled = false;
-                //inventory[selection - 1].GetComponent<RangeScript>().enabled = false;
-                //inventory[selection - 1].GetComponent<MagazineScript>().enabled = false;
                 inventory[selection - 1].gameObject.SetActive(false);
 
                 weaponAmmoPage.gameObject.SetActive(true);
-                //weaponLoad.gameObject.SetActive(true);
                 lucentText.gameObject.SetActive(true);
                 wepStateTimer = wepStateTimerReset;
 
@@ -466,6 +455,9 @@ public class PlayerInventoryScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Removes Weapon at index position after short period
+    /// </summary>
     private void DismantleInv()
     {
         if (Input.GetKey(KeyCode.X))
@@ -478,18 +470,23 @@ public class PlayerInventoryScript : MonoBehaviour
             {
                 if (selection <= -1 && inventory.Count <= 0)
                 {
-                    Debug.Log("Cannot dismantle; no items in inventory");
+                    //Debug.Log("Cannot dismantle; no items in inventory");
                     return;
                 }
 
+                //Creats, assigns gameObject "rid" to disposed Weapon
+                //Inventory removes selected Weapon, "rid" is destroyed
                 GameObject rid = inventory[selection];
                 inventory.RemoveAt(selection);
                 Destroy(rid);
 
+                //selection decrements if equal to or higher than Inventory size
                 if (selection >= inventory.Count)
                 {
                     selection--;
 
+                    //selection returns to -1 if Inventory size is zero
+                    //Otherwise, activates next Weapon
                     if (selection <= -1 && inventory.Count <= 0)
                     {
                         selection = -1;
@@ -499,26 +496,25 @@ public class PlayerInventoryScript : MonoBehaviour
                     else
                     {
                         inventory[selection].GetComponent<FirearmScript>().enabled = true;
-                        //inventory[selection].GetComponent<LineRenderer>().enabled = true;
                         inventory[selection].gameObject.SetActive(true);
                         reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
 
                     }
                 }
 
+                //selection activates first Weapon in inventory
                 if (selection <= -1 && inventory.Count >= 1)
                 {
                     selection = 0;
                     inventory[selection].GetComponent<FirearmScript>().enabled = true;
-                    //inventory[selection].GetComponent<LineRenderer>().enabled = true;
                     inventory[selection].gameObject.SetActive(true);
                     reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
                 }
 
+                //selection activates current Weapon in inventory
                 else
                 {
                     inventory[selection].GetComponent<FirearmScript>().enabled = true;
-                    //inventory[selection].GetComponent<LineRenderer>().enabled = true;
                     inventory[selection].gameObject.SetActive(true);
                     reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
                 }
@@ -526,7 +522,6 @@ public class PlayerInventoryScript : MonoBehaviour
                 dismantleTimer = dismantleTimerReset;
 
                 weaponAmmoPage.gameObject.SetActive(true);
-                //weaponLoad.gameObject.SetActive(true);
                 lucentText.gameObject.SetActive(true);
                 wepStateTimer = wepStateTimerReset;
 
@@ -542,6 +537,9 @@ public class PlayerInventoryScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Displays Stat, Functional Cheats dependent on RNG numbers rolled
+    /// </summary>
     void DisplayCheats()
     {
         //Yields -- Cheat 1
@@ -991,6 +989,9 @@ public class PlayerInventoryScript : MonoBehaviour
         } //Pay to Win + The Most Resplendent
     }
 
+    /// <summary>
+    /// Switches grenades upon input
+    /// </summary>
     private void SwitchGrenades()
     {
         if(Input.GetKeyDown(KeyCode.Q))
@@ -1012,6 +1013,9 @@ public class PlayerInventoryScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Charges, throws selected grenade
+    /// </summary>
     private void ThrowGrenade()
     {
         if(Input.GetKey(KeyCode.G))
@@ -1174,6 +1178,10 @@ public class PlayerInventoryScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Creates Inventory file if filename was not found
+    /// Overwrites existing Inventory file if it was found
+    /// </summary>
     private void CreateInventoryFile()
     {
         //inv.txt - relative (adds file where game is running from)
@@ -1190,6 +1198,9 @@ public class PlayerInventoryScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Reads Inventory file and outputs it to Console
+    /// </summary>
     private void ReadInventoryFile()
     {
         if(inventory.Count <= 0)
@@ -1209,6 +1220,9 @@ public class PlayerInventoryScript : MonoBehaviour
         }      
     }   
 
+    /// <summary>
+    /// Records information of Weapon type, rarity, exotic property, cheats 
+    /// </summary>
     public void WriteOnReset()
     {
         CreateInventoryFile();
@@ -1221,2200 +1235,344 @@ public class PlayerInventoryScript : MonoBehaviour
                 {
                     if (inventory[i].name == "testFullFireRifle" || inventory[i].name == "testFullFireRifle_Exotic")
                     {
-                        write.Write("1");
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
-                        {
-                            write.Write("1");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2)
-                        {
-                            write.Write("2");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
-                        {
-                            write.Write("3");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 4)
-                        {
-                            write.Write("4");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 5)
-                        {
-                            write.Write("5");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
-                        {
-                            write.Write("1");
-                        }
-
-                        else
-                        {
-                            write.Write("0");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
-                        {
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.WriteLine("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.WriteLine("8");
-                            }
-                        }                        
-
-                        if(inventory[i].GetComponent<FirearmScript>().weaponRarity == 2 || inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
-                        {
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.Write("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.Write("8");
-                            }
-
-                            if (inventory[i].GetComponent<WaitNowImReady>())
-                            {
-                                write.WriteLine("0");
-                            }
-
-                            if (inventory[i].GetComponent<Efficacy>())
-                            {
-                                write.WriteLine("1");
-                            }
-
-                            if (inventory[i].GetComponent<Inoculated>())
-                            {
-                                write.WriteLine("2");
-                            }
-
-                            if (inventory[i].GetComponent<RudeAwakening>())
-                            {
-                                write.WriteLine("3");
-                            }
-
-                            if (inventory[i].GetComponent<NotWithAStick>())
-                            {
-                                write.WriteLine("4");
-                            }
-
-                            if (inventory[i].GetComponent<MaliciousWindUp>())
-                            {
-                                write.WriteLine("5");
-                            }
-
-                            if (inventory[i].GetComponent<PositiveNegative>())
-                            {
-                                write.WriteLine("6");
-                            }
-
-                            if (inventory[i].GetComponent<Cadence>())
-                            {
-                                write.WriteLine("7");
-                            }
-
-                            if (inventory[i].GetComponent<GoodThingsCome>())
-                            {
-                                write.WriteLine("8");
-                            }
-
-                            if (inventory[i].GetComponent<AllElseFails>())
-                            {
-                                write.WriteLine("9");
-                            }
-
-                            if (inventory[i].GetComponent<TheMostResplendent>())
-                            {
-                                write.WriteLine("!");
-                            }
-
-                            if (inventory[i].GetComponent<Fulminate>())
-                            {
-                                write.WriteLine("@");
-                            }
-
-                            if (inventory[i].GetComponent<Forager>())
-                            {
-                                write.WriteLine("#");
-                            }
-
-                            if (inventory[i].GetComponent<Counterplay>())
-                            {
-                                write.WriteLine("$");
-                            }
-
-                            if (inventory[i].GetComponent<Enshroud>())
-                            {
-                                write.WriteLine("%");
-                            }
-
-                            if (inventory[i].GetComponent<GaleForceWinds>())
-                            {
-                                write.WriteLine("^");
-                            }
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
-                        {
-                           
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.Write("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.Write("8");
-                            }
-
-                            if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
-                            {
-                                if (inventory[i].GetComponent<EquivalentExchange>())
-                                {
-                                    write.Write("A");
-                                }
-
-                                if (inventory[i].GetComponent<WaitNowImReady>())
-                                {
-                                    write.WriteLine("0");
-                                }
-                            }
-
-                            else
-                            {
-                                if (inventory[i].GetComponent<AllElseFails>())
-                                {
-                                    write.Write("9");
-                                }
-
-                                if (inventory[i].GetComponent<NotWithAStick>())
-                                {
-                                    write.Write("4");
-                                }
-
-                                if (inventory[i].GetComponent<MaliciousWindUp>())
-                                {
-                                    write.Write("5");
-                                }
-
-                                if (inventory[i].GetComponent<PositiveNegative>())
-                                {
-                                    write.Write("6");
-                                }
-
-                                if (inventory[i].GetComponent<GoodThingsCome>())
-                                {
-                                    write.Write("8");
-                                }
-
-                                if (inventory[i].GetComponent<TheMostResplendent>())
-                                {
-                                    write.Write("!");
-                                }
-
-                                if (inventory[i].GetComponent<Fulminate>())
-                                {
-                                    write.Write("@");
-                                }
-
-                                if (inventory[i].GetComponent<Forager>())
-                                {
-                                    write.Write("#");
-                                }
-
-                                if (inventory[i].GetComponent<WaitNowImReady>())
-                                {
-                                    write.WriteLine("0");
-                                }
-
-                                if (inventory[i].GetComponent<Efficacy>())
-                                {
-                                    write.WriteLine("1");
-                                }
-
-                                if (inventory[i].GetComponent<Inoculated>())
-                                {
-                                    write.WriteLine("2");
-                                }
-
-                                if (inventory[i].GetComponent<Cadence>())
-                                {
-                                    write.WriteLine("7");
-                                }
-
-                                if (inventory[i].GetComponent<RudeAwakening>())
-                                {
-                                    write.WriteLine("3");
-                                }
-
-                                if (inventory[i].GetComponent<Counterplay>())
-                                {
-                                    write.WriteLine("$");
-                                }
-
-                                if (inventory[i].GetComponent<Enshroud>())
-                                {
-                                    write.WriteLine("%");
-                                }
-
-                                if (inventory[i].GetComponent<GaleForceWinds>())
-                                {
-                                    write.WriteLine("^");
-                                }
-                            }        
-                            
-                        }
-                        
+                        write.Write("1");                    
                     }
 
                     if (inventory[i].name == "testMachineGun" || inventory[i].name == "testMachineGun_Exotic")
                     {
-                        write.Write("2");
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
-                        {
-                            write.Write("1");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2)
-                        {
-                            write.Write("2");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
-                        {
-                            write.Write("3");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 4)
-                        {
-                            write.Write("4");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 5)
-                        {
-                            write.Write("5");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
-                        {
-                            write.Write("1");
-                        }
-
-                        else
-                        {
-                            write.Write("0");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
-                        {
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.WriteLine("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.WriteLine("8");
-                            }
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2 || inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
-                        {
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.Write("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.Write("8");
-                            }
-
-                            if (inventory[i].GetComponent<WaitNowImReady>())
-                            {
-                                write.WriteLine("0");
-                            }
-
-                            if (inventory[i].GetComponent<Efficacy>())
-                            {
-                                write.WriteLine("1");
-                            }
-
-                            if (inventory[i].GetComponent<Inoculated>())
-                            {
-                                write.WriteLine("2");
-                            }
-
-                            if (inventory[i].GetComponent<RudeAwakening>())
-                            {
-                                write.WriteLine("3");
-                            }
-
-                            if (inventory[i].GetComponent<NotWithAStick>())
-                            {
-                                write.WriteLine("4");
-                            }
-
-                            if (inventory[i].GetComponent<MaliciousWindUp>())
-                            {
-                                write.WriteLine("5");
-                            }
-
-                            if (inventory[i].GetComponent<PositiveNegative>())
-                            {
-                                write.WriteLine("6");
-                            }
-
-                            if (inventory[i].GetComponent<Cadence>())
-                            {
-                                write.WriteLine("7");
-                            }
-
-                            if (inventory[i].GetComponent<GoodThingsCome>())
-                            {
-                                write.WriteLine("8");
-                            }
-
-                            if (inventory[i].GetComponent<AllElseFails>())
-                            {
-                                write.WriteLine("9");
-                            }
-
-                            if (inventory[i].GetComponent<TheMostResplendent>())
-                            {
-                                write.WriteLine("!");
-                            }
-
-                            if (inventory[i].GetComponent<Fulminate>())
-                            {
-                                write.WriteLine("@");
-                            }
-
-                            if (inventory[i].GetComponent<Forager>())
-                            {
-                                write.WriteLine("#");
-                            }
-
-                            if (inventory[i].GetComponent<Counterplay>())
-                            {
-                                write.WriteLine("$");
-                            }
-
-                            if (inventory[i].GetComponent<Enshroud>())
-                            {
-                                write.WriteLine("%");
-                            }
-
-                            if (inventory[i].GetComponent<GaleForceWinds>())
-                            {
-                                write.WriteLine("^");
-                            }
-
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
-                        {
-
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.Write("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.Write("8");
-                            }
-
-                            if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
-                            {
-                                if (inventory[i].GetComponent<PayToWin>())
-                                {
-                                    write.Write("G");
-                                }
-
-                                if (inventory[i].GetComponent<TheMostResplendent>())
-                                {
-                                    write.WriteLine("!");
-                                }
-                            }
-
-                            else
-                            {
-                                if (inventory[i].GetComponent<AllElseFails>())
-                                {
-                                    write.Write("9");
-                                }
-
-                                if (inventory[i].GetComponent<NotWithAStick>())
-                                {
-                                    write.Write("4");
-                                }
-
-                                if (inventory[i].GetComponent<MaliciousWindUp>())
-                                {
-                                    write.Write("5");
-                                }
-
-                                if (inventory[i].GetComponent<PositiveNegative>())
-                                {
-                                    write.Write("6");
-                                }
-
-                                if (inventory[i].GetComponent<GoodThingsCome>())
-                                {
-                                    write.Write("8");
-                                }
-
-                                if (inventory[i].GetComponent<TheMostResplendent>())
-                                {
-                                    write.Write("!");
-                                }
-
-                                if (inventory[i].GetComponent<Fulminate>())
-                                {
-                                    write.Write("@");
-                                }
-
-                                if (inventory[i].GetComponent<Forager>())
-                                {
-                                    write.Write("#");
-                                }
-
-                                if (inventory[i].GetComponent<WaitNowImReady>())
-                                {
-                                    write.WriteLine("0");
-                                }
-
-                                if (inventory[i].GetComponent<Efficacy>())
-                                {
-                                    write.WriteLine("1");
-                                }
-
-                                if (inventory[i].GetComponent<Inoculated>())
-                                {
-                                    write.WriteLine("2");
-                                }
-
-                                if (inventory[i].GetComponent<Cadence>())
-                                {
-                                    write.WriteLine("7");
-                                }
-
-                                if (inventory[i].GetComponent<RudeAwakening>())
-                                {
-                                    write.WriteLine("3");
-                                }
-
-                                if (inventory[i].GetComponent<Counterplay>())
-                                {
-                                    write.WriteLine("$");
-                                }
-
-                                if (inventory[i].GetComponent<Enshroud>())
-                                {
-                                    write.WriteLine("%");
-                                }
-
-                                if (inventory[i].GetComponent<GaleForceWinds>())
-                                {
-                                    write.WriteLine("^");
-                                }
-                            }
-
-                        }
+                        write.Write("2");                      
                     }
 
                     if (inventory[i].name == "testPistol" || inventory[i].name == "testPistol_Exotic")
                     {
-                        write.Write("3");
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
-                        {
-                            write.Write("1");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2)
-                        {
-                            write.Write("2");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
-                        {
-                            write.Write("3");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 4)
-                        {
-                            write.Write("4");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 5)
-                        {
-                            write.Write("5");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
-                        {
-                            write.Write("1");
-                        }
-
-                        else
-                        {
-                            write.Write("0");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
-                        {
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.WriteLine("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.WriteLine("8");
-                            }
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2 || inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
-                        {
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.Write("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.Write("8");
-                            }
-
-                            if (inventory[i].GetComponent<WaitNowImReady>())
-                            {
-                                write.WriteLine("0");
-                            }
-
-                            if (inventory[i].GetComponent<Efficacy>())
-                            {
-                                write.WriteLine("1");
-                            }
-
-                            if (inventory[i].GetComponent<Inoculated>())
-                            {
-                                write.WriteLine("2");
-                            }
-
-                            if (inventory[i].GetComponent<RudeAwakening>())
-                            {
-                                write.WriteLine("3");
-                            }
-
-                            if (inventory[i].GetComponent<NotWithAStick>())
-                            {
-                                write.WriteLine("4");
-                            }
-
-                            if (inventory[i].GetComponent<MaliciousWindUp>())
-                            {
-                                write.WriteLine("5");
-                            }
-
-                            if (inventory[i].GetComponent<PositiveNegative>())
-                            {
-                                write.WriteLine("6");
-                            }
-
-                            if (inventory[i].GetComponent<Cadence>())
-                            {
-                                write.WriteLine("7");
-                            }
-
-                            if (inventory[i].GetComponent<GoodThingsCome>())
-                            {
-                                write.WriteLine("8");
-                            }
-
-                            if (inventory[i].GetComponent<AllElseFails>())
-                            {
-                                write.WriteLine("9");
-                            }
-
-                            if (inventory[i].GetComponent<TheMostResplendent>())
-                            {
-                                write.WriteLine("!");
-                            }
-
-                            if (inventory[i].GetComponent<Fulminate>())
-                            {
-                                write.WriteLine("@");
-                            }
-
-                            if (inventory[i].GetComponent<Forager>())
-                            {
-                                write.WriteLine("#");
-                            }
-
-                            if (inventory[i].GetComponent<Counterplay>())
-                            {
-                                write.WriteLine("$");
-                            }
-
-                            if (inventory[i].GetComponent<Enshroud>())
-                            {
-                                write.WriteLine("%");
-                            }
-
-                            if (inventory[i].GetComponent<GaleForceWinds>())
-                            {
-                                write.WriteLine("^");
-                            }
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
-                        {
-
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.Write("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.Write("8");
-                            }
-
-                            if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
-                            {
-                                if (inventory[i].GetComponent<ShelterInPlace>())
-                                {
-                                    write.Write("C");
-                                }
-
-                                if (inventory[i].GetComponent<PositiveNegative>())
-                                {
-                                    write.WriteLine("6");
-                                }
-                            }
-
-                            else
-                            {
-                                if (inventory[i].GetComponent<AllElseFails>())
-                                {
-                                    write.Write("9");
-                                }
-
-                                if (inventory[i].GetComponent<NotWithAStick>())
-                                {
-                                    write.Write("4");
-                                }
-
-                                if (inventory[i].GetComponent<MaliciousWindUp>())
-                                {
-                                    write.Write("5");
-                                }
-
-                                if (inventory[i].GetComponent<PositiveNegative>())
-                                {
-                                    write.Write("6");
-                                }
-
-                                if (inventory[i].GetComponent<GoodThingsCome>())
-                                {
-                                    write.Write("8");
-                                }
-
-                                if (inventory[i].GetComponent<TheMostResplendent>())
-                                {
-                                    write.Write("!");
-                                }
-
-                                if (inventory[i].GetComponent<Fulminate>())
-                                {
-                                    write.Write("@");
-                                }
-
-                                if (inventory[i].GetComponent<Forager>())
-                                {
-                                    write.Write("#");
-                                }
-
-                                if (inventory[i].GetComponent<WaitNowImReady>())
-                                {
-                                    write.WriteLine("0");
-                                }
-
-                                if (inventory[i].GetComponent<Efficacy>())
-                                {
-                                    write.WriteLine("1");
-                                }
-
-                                if (inventory[i].GetComponent<Inoculated>())
-                                {
-                                    write.WriteLine("2");
-                                }
-
-                                if (inventory[i].GetComponent<Cadence>())
-                                {
-                                    write.WriteLine("7");
-                                }
-
-                                if (inventory[i].GetComponent<RudeAwakening>())
-                                {
-                                    write.WriteLine("3");
-                                }
-
-                                if (inventory[i].GetComponent<Counterplay>())
-                                {
-                                    write.WriteLine("$");
-                                }
-
-                                if (inventory[i].GetComponent<Enshroud>())
-                                {
-                                    write.WriteLine("%");
-                                }
-
-                                if (inventory[i].GetComponent<GaleForceWinds>())
-                                {
-                                    write.WriteLine("^");
-                                }
-                            }
-
-                        }
+                        write.Write("3");                    
                     }
 
                     if (inventory[i].name == "testSemiFireRifle" || inventory[i].name == "testSemiFireRifle_Exotic")
                     {
-                        write.Write("4");
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
-                        {
-                            write.Write("1");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2)
-                        {
-                            write.Write("2");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
-                        {
-                            write.Write("3");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 4)
-                        {
-                            write.Write("4");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 5)
-                        {
-                            write.Write("5");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
-                        {
-                            write.Write("1");
-                        }
-
-                        else
-                        {
-                            write.Write("0");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
-                        {
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.WriteLine("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.WriteLine("8");
-                            }
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2 || inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
-                        {
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.Write("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.Write("8");
-                            }
-
-                            if (inventory[i].GetComponent<WaitNowImReady>())
-                            {
-                                write.WriteLine("0");
-                            }
-
-                            if (inventory[i].GetComponent<Efficacy>())
-                            {
-                                write.WriteLine("1");
-                            }
-
-                            if (inventory[i].GetComponent<Inoculated>())
-                            {
-                                write.WriteLine("2");
-                            }
-
-                            if (inventory[i].GetComponent<RudeAwakening>())
-                            {
-                                write.WriteLine("3");
-                            }
-
-                            if (inventory[i].GetComponent<NotWithAStick>())
-                            {
-                                write.WriteLine("4");
-                            }
-
-                            if (inventory[i].GetComponent<MaliciousWindUp>())
-                            {
-                                write.WriteLine("5");
-                            }
-
-                            if (inventory[i].GetComponent<PositiveNegative>())
-                            {
-                                write.WriteLine("6");
-                            }
-
-                            if (inventory[i].GetComponent<Cadence>())
-                            {
-                                write.WriteLine("7");
-                            }
-
-                            if (inventory[i].GetComponent<GoodThingsCome>())
-                            {
-                                write.WriteLine("8");
-                            }
-
-                            if (inventory[i].GetComponent<AllElseFails>())
-                            {
-                                write.WriteLine("9");
-                            }
-
-                            if (inventory[i].GetComponent<TheMostResplendent>())
-                            {
-                                write.WriteLine("!");
-                            }
-
-                            if (inventory[i].GetComponent<Fulminate>())
-                            {
-                                write.WriteLine("@");
-                            }
-
-                            if (inventory[i].GetComponent<Forager>())
-                            {
-                                write.WriteLine("#");
-                            }
-
-                            if (inventory[i].GetComponent<Counterplay>())
-                            {
-                                write.WriteLine("$");
-                            }
-
-                            if (inventory[i].GetComponent<Enshroud>())
-                            {
-                                write.WriteLine("%");
-                            }
-
-                            if (inventory[i].GetComponent<GaleForceWinds>())
-                            {
-                                write.WriteLine("^");
-                            }
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
-                        {
-
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.Write("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.Write("8");
-                            }
-
-                            if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
-                            {
-                                if (inventory[i].GetComponent<OffYourOwnSupply>())
-                                {
-                                    write.Write("F");
-                                }
-
-                                if (inventory[i].GetComponent<Inoculated>())
-                                {
-                                    write.WriteLine("2");
-                                }
-                            }
-
-                            else
-                            {
-                                if (inventory[i].GetComponent<AllElseFails>())
-                                {
-                                    write.Write("9");
-                                }
-
-                                if (inventory[i].GetComponent<NotWithAStick>())
-                                {
-                                    write.Write("4");
-                                }
-
-                                if (inventory[i].GetComponent<MaliciousWindUp>())
-                                {
-                                    write.Write("5");
-                                }
-
-                                if (inventory[i].GetComponent<PositiveNegative>())
-                                {
-                                    write.Write("6");
-                                }
-
-                                if (inventory[i].GetComponent<GoodThingsCome>())
-                                {
-                                    write.Write("8");
-                                }
-
-                                if (inventory[i].GetComponent<TheMostResplendent>())
-                                {
-                                    write.Write("!");
-                                }
-
-                                if (inventory[i].GetComponent<Fulminate>())
-                                {
-                                    write.Write("@");
-                                }
-
-                                if (inventory[i].GetComponent<Forager>())
-                                {
-                                    write.Write("#");
-                                }
-
-                                if (inventory[i].GetComponent<WaitNowImReady>())
-                                {
-                                    write.WriteLine("0");
-                                }
-
-                                if (inventory[i].GetComponent<Efficacy>())
-                                {
-                                    write.WriteLine("1");
-                                }
-
-                                if (inventory[i].GetComponent<Inoculated>())
-                                {
-                                    write.WriteLine("2");
-                                }
-
-                                if (inventory[i].GetComponent<Cadence>())
-                                {
-                                    write.WriteLine("7");
-                                }
-
-                                if (inventory[i].GetComponent<RudeAwakening>())
-                                {
-                                    write.WriteLine("3");
-                                }
-
-                                if (inventory[i].GetComponent<Counterplay>())
-                                {
-                                    write.WriteLine("$");
-                                }
-
-                                if (inventory[i].GetComponent<Enshroud>())
-                                {
-                                    write.WriteLine("%");
-                                }
-
-                                if (inventory[i].GetComponent<GaleForceWinds>())
-                                {
-                                    write.WriteLine("^");
-                                }
-                            }
-                        }
+                        write.Write("4");                       
                     }
 
                     if (inventory[i].name == "testShotgun" || inventory[i].name == "testShotgun_Exotic")
                     {
-                        write.Write("5");
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
-                        {
-                            write.Write("1");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2)
-                        {
-                            write.Write("2");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
-                        {
-                            write.Write("3");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 4)
-                        {
-                            write.Write("4");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 5)
-                        {
-                            write.Write("5");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
-                        {
-                            write.Write("1");
-                        }
-
-                        else
-                        {
-                            write.Write("0");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
-                        {
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.WriteLine("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.WriteLine("8");
-                            }
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2 || inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
-                        {
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.Write("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.Write("8");
-                            }
-
-                            if (inventory[i].GetComponent<WaitNowImReady>())
-                            {
-                                write.WriteLine("0");
-                            }
-
-                            if (inventory[i].GetComponent<Efficacy>())
-                            {
-                                write.WriteLine("1");
-                            }
-
-                            if (inventory[i].GetComponent<Inoculated>())
-                            {
-                                write.WriteLine("2");
-                            }
-
-                            if (inventory[i].GetComponent<RudeAwakening>())
-                            {
-                                write.WriteLine("3");
-                            }
-
-                            if (inventory[i].GetComponent<NotWithAStick>())
-                            {
-                                write.WriteLine("4");
-                            }
-
-                            if (inventory[i].GetComponent<MaliciousWindUp>())
-                            {
-                                write.WriteLine("5");
-                            }
-
-                            if (inventory[i].GetComponent<PositiveNegative>())
-                            {
-                                write.WriteLine("6");
-                            }
-
-                            if (inventory[i].GetComponent<Cadence>())
-                            {
-                                write.WriteLine("7");
-                            }
-
-                            if (inventory[i].GetComponent<GoodThingsCome>())
-                            {
-                                write.WriteLine("8");
-                            }
-
-                            if (inventory[i].GetComponent<AllElseFails>())
-                            {
-                                write.WriteLine("9");
-                            }
-
-                            if (inventory[i].GetComponent<TheMostResplendent>())
-                            {
-                                write.WriteLine("!");
-                            }
-
-                            if (inventory[i].GetComponent<Fulminate>())
-                            {
-                                write.WriteLine("@");
-                            }
-
-                            if (inventory[i].GetComponent<Forager>())
-                            {
-                                write.WriteLine("#");
-                            }
-
-                            if (inventory[i].GetComponent<Counterplay>())
-                            {
-                                write.WriteLine("$");
-                            }
-
-                            if (inventory[i].GetComponent<Enshroud>())
-                            {
-                                write.WriteLine("%");
-                            }
-
-                            if (inventory[i].GetComponent<GaleForceWinds>())
-                            {
-                                write.WriteLine("^");
-                            }
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
-                        {
-
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.Write("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.Write("8");
-                            }
-
-                            if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
-                            {
-                                if (inventory[i].GetComponent<SocialDistancePlease>())
-                                {
-                                    write.Write("D");
-                                }
-
-                                if (inventory[i].GetComponent<NotWithAStick>())
-                                {
-                                    write.WriteLine("4");
-                                }
-                            }
-
-                            else
-                            {
-                                if (inventory[i].GetComponent<AllElseFails>())
-                                {
-                                    write.Write("9");
-                                }
-
-                                if (inventory[i].GetComponent<NotWithAStick>())
-                                {
-                                    write.Write("4");
-                                }
-
-                                if (inventory[i].GetComponent<MaliciousWindUp>())
-                                {
-                                    write.Write("5");
-                                }
-
-                                if (inventory[i].GetComponent<PositiveNegative>())
-                                {
-                                    write.Write("6");
-                                }
-
-                                if (inventory[i].GetComponent<GoodThingsCome>())
-                                {
-                                    write.Write("8");
-                                }
-
-                                if (inventory[i].GetComponent<TheMostResplendent>())
-                                {
-                                    write.Write("!");
-                                }
-
-                                if (inventory[i].GetComponent<Fulminate>())
-                                {
-                                    write.Write("@");
-                                }
-
-                                if (inventory[i].GetComponent<Forager>())
-                                {
-                                    write.Write("#");
-                                }
-
-                                if (inventory[i].GetComponent<WaitNowImReady>())
-                                {
-                                    write.WriteLine("0");
-                                }
-
-                                if (inventory[i].GetComponent<Efficacy>())
-                                {
-                                    write.WriteLine("1");
-                                }
-
-                                if (inventory[i].GetComponent<Inoculated>())
-                                {
-                                    write.WriteLine("2");
-                                }
-
-                                if (inventory[i].GetComponent<Cadence>())
-                                {
-                                    write.WriteLine("7");
-                                }
-
-                                if (inventory[i].GetComponent<RudeAwakening>())
-                                {
-                                    write.WriteLine("3");
-                                }
-
-                                if (inventory[i].GetComponent<Counterplay>())
-                                {
-                                    write.WriteLine("$");
-                                }
-
-                                if (inventory[i].GetComponent<Enshroud>())
-                                {
-                                    write.WriteLine("%");
-                                }
-
-                                if (inventory[i].GetComponent<GaleForceWinds>())
-                                {
-                                    write.WriteLine("^");
-                                }
-                            }
-                        }
+                        write.Write("5");                      
                     }
 
                     if (inventory[i].name == "testSingleFireRifle" || inventory[i].name == "testSingleFireRifle_Exotic")
                     {
-                        write.Write("6");
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
-                        {
-                            write.Write("1");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2)
-                        {
-                            write.Write("2");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
-                        {
-                            write.Write("3");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 4)
-                        {
-                            write.Write("4");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 5)
-                        {
-                            write.Write("5");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
-                        {
-                            write.Write("1");
-                        }
-
-                        else
-                        {
-                            write.Write("0");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
-                        {
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.WriteLine("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.WriteLine("8");
-                            }
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2 || inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
-                        {
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.Write("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.Write("8");
-                            }
-
-                            if (inventory[i].GetComponent<WaitNowImReady>())
-                            {
-                                write.WriteLine("0");
-                            }
-
-                            if (inventory[i].GetComponent<Efficacy>())
-                            {
-                                write.WriteLine("1");
-                            }
-
-                            if (inventory[i].GetComponent<Inoculated>())
-                            {
-                                write.WriteLine("2");
-                            }
-
-                            if (inventory[i].GetComponent<RudeAwakening>())
-                            {
-                                write.WriteLine("3");
-                            }
-
-                            if (inventory[i].GetComponent<NotWithAStick>())
-                            {
-                                write.WriteLine("4");
-                            }
-
-                            if (inventory[i].GetComponent<MaliciousWindUp>())
-                            {
-                                write.WriteLine("5");
-                            }
-
-                            if (inventory[i].GetComponent<PositiveNegative>())
-                            {
-                                write.WriteLine("6");
-                            }
-
-                            if (inventory[i].GetComponent<Cadence>())
-                            {
-                                write.WriteLine("7");
-                            }
-
-                            if (inventory[i].GetComponent<GoodThingsCome>())
-                            {
-                                write.WriteLine("8");
-                            }
-
-                            if (inventory[i].GetComponent<AllElseFails>())
-                            {
-                                write.WriteLine("9");
-                            }
-
-                            if (inventory[i].GetComponent<TheMostResplendent>())
-                            {
-                                write.WriteLine("!");
-                            }
-
-                            if (inventory[i].GetComponent<Fulminate>())
-                            {
-                                write.WriteLine("@");
-                            }
-
-                            if (inventory[i].GetComponent<Forager>())
-                            {
-                                write.WriteLine("#");
-                            }
-
-                            if (inventory[i].GetComponent<Counterplay>())
-                            {
-                                write.WriteLine("$");
-                            }
-
-                            if (inventory[i].GetComponent<Enshroud>())
-                            {
-                                write.WriteLine("%");
-                            }
-
-                            if (inventory[i].GetComponent<GaleForceWinds>())
-                            {
-                                write.WriteLine("^");
-                            }
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
-                        {
-
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.Write("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.Write("8");
-                            }
-
-                            if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
-                            {
-                                if (inventory[i].GetComponent<EarlyBerthGetsTheHearst>())
-                                {
-                                    write.Write("E");
-                                }
-
-                                if (inventory[i].GetComponent<Efficacy>())
-                                {
-                                    write.WriteLine("1");
-                                }
-                            }
-
-                            else
-                            {
-                                if (inventory[i].GetComponent<AllElseFails>())
-                                {
-                                    write.Write("9");
-                                }
-
-                                if (inventory[i].GetComponent<NotWithAStick>())
-                                {
-                                    write.Write("4");
-                                }
-
-                                if (inventory[i].GetComponent<MaliciousWindUp>())
-                                {
-                                    write.Write("5");
-                                }
-
-                                if (inventory[i].GetComponent<PositiveNegative>())
-                                {
-                                    write.Write("6");
-                                }
-
-                                if (inventory[i].GetComponent<GoodThingsCome>())
-                                {
-                                    write.Write("8");
-                                }
-
-                                if (inventory[i].GetComponent<TheMostResplendent>())
-                                {
-                                    write.Write("!");
-                                }
-
-                                if (inventory[i].GetComponent<Fulminate>())
-                                {
-                                    write.Write("@");
-                                }
-
-                                if (inventory[i].GetComponent<Forager>())
-                                {
-                                    write.Write("#");
-                                }
-
-                                if (inventory[i].GetComponent<WaitNowImReady>())
-                                {
-                                    write.WriteLine("0");
-                                }
-
-                                if (inventory[i].GetComponent<Efficacy>())
-                                {
-                                    write.WriteLine("1");
-                                }
-
-                                if (inventory[i].GetComponent<Inoculated>())
-                                {
-                                    write.WriteLine("2");
-                                }
-
-                                if (inventory[i].GetComponent<Cadence>())
-                                {
-                                    write.WriteLine("7");
-                                }
-
-                                if (inventory[i].GetComponent<RudeAwakening>())
-                                {
-                                    write.WriteLine("3");
-                                }
-
-                                if (inventory[i].GetComponent<Counterplay>())
-                                {
-                                    write.WriteLine("$");
-                                }
-
-                                if (inventory[i].GetComponent<Enshroud>())
-                                {
-                                    write.WriteLine("%");
-                                }
-
-                                if (inventory[i].GetComponent<GaleForceWinds>())
-                                {
-                                    write.WriteLine("^");
-                                }
-                            }
-                        }
+                        write.Write("6");                      
                     }
 
                     if (inventory[i].name == "testSMG" || inventory[i].name == "testSMG_Exotic")
                     {
-                        write.Write("7");
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
+                        write.Write("7");                      
+                    }
+
+                    if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
+                    {
+                        write.Write("1");
+                    }
+
+                    if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2)
+                    {
+                        write.Write("2");
+                    }
+
+                    if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
+                    {
+                        write.Write("3");
+                    }
+
+                    if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 4)
+                    {
+                        write.Write("4");
+                    }
+
+                    if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 5)
+                    {
+                        write.Write("5");
+                    }
+
+                    if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
+                    {
+                        write.Write("1");
+                    }
+
+                    else
+                    {
+                        write.Write("0");
+                    }
+
+                    if (inventory[i].GetComponent<DeepYield>())
+                    {
+                        write.Write("1");
+                    }
+
+                    if (inventory[i].GetComponent<DeeperYield>())
+                    {
+                        write.Write("2");
+                    }
+
+                    if (inventory[i].GetComponent<DeepStores>())
+                    {
+                        write.Write("3");
+                    }
+
+                    if (inventory[i].GetComponent<DeeperStores>())
+                    {
+                        write.Write("4");
+                    }
+
+                    if (inventory[i].GetComponent<FarSight>())
+                    {
+                        write.Write("5");
+                    }
+
+                    if (inventory[i].GetComponent<FartherSight>())
+                    {
+                        write.Write("6");
+                    }
+
+                    if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
+                    {
+                        if (inventory[i].GetComponent<HastyHands>())
                         {
-                            write.Write("1");
+                            write.WriteLine("7");
                         }
 
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2)
+                        if (inventory[i].GetComponent<HastierHands>())
                         {
-                            write.Write("2");
+                            write.WriteLine("8");
+                        }
+                    }
+
+                    if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2 || inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
+                    {                      
+
+                        if (inventory[i].GetComponent<HastyHands>())
+                        {
+                            write.Write("7");
                         }
 
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
+                        if (inventory[i].GetComponent<HastierHands>())
                         {
-                            write.Write("3");
+                            write.Write("8");
                         }
 
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 4)
+                        if (inventory[i].GetComponent<WaitNowImReady>())
                         {
-                            write.Write("4");
+                            write.WriteLine("0");
                         }
 
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 5)
+                        if (inventory[i].GetComponent<Efficacy>())
                         {
-                            write.Write("5");
+                            write.WriteLine("1");
+                        }
+
+                        if (inventory[i].GetComponent<Inoculated>())
+                        {
+                            write.WriteLine("2");
+                        }
+
+                        if (inventory[i].GetComponent<RudeAwakening>())
+                        {
+                            write.WriteLine("3");
+                        }
+
+                        if (inventory[i].GetComponent<NotWithAStick>())
+                        {
+                            write.WriteLine("4");
+                        }
+
+                        if (inventory[i].GetComponent<MaliciousWindUp>())
+                        {
+                            write.WriteLine("5");
+                        }
+
+                        if (inventory[i].GetComponent<PositiveNegative>())
+                        {
+                            write.WriteLine("6");
+                        }
+
+                        if (inventory[i].GetComponent<Cadence>())
+                        {
+                            write.WriteLine("7");
+                        }
+
+                        if (inventory[i].GetComponent<GoodThingsCome>())
+                        {
+                            write.WriteLine("8");
+                        }
+
+                        if (inventory[i].GetComponent<AllElseFails>())
+                        {
+                            write.WriteLine("9");
+                        }
+
+                        if (inventory[i].GetComponent<TheMostResplendent>())
+                        {
+                            write.WriteLine("!");
+                        }
+
+                        if (inventory[i].GetComponent<Fulminate>())
+                        {
+                            write.WriteLine("@");
+                        }
+
+                        if (inventory[i].GetComponent<Forager>())
+                        {
+                            write.WriteLine("#");
+                        }
+
+                        if (inventory[i].GetComponent<Counterplay>())
+                        {
+                            write.WriteLine("$");
+                        }
+
+                        if (inventory[i].GetComponent<Enshroud>())
+                        {
+                            write.WriteLine("%");
+                        }
+
+                        if (inventory[i].GetComponent<GaleForceWinds>())
+                        {
+                            write.WriteLine("^");
+                        }
+                    }
+
+                    if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
+                    {
+
+                        if (inventory[i].GetComponent<HastyHands>())
+                        {
+                            write.Write("7");
+                        }
+
+                        if (inventory[i].GetComponent<HastierHands>())
+                        {
+                            write.Write("8");
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
                         {
-                            write.Write("1");
+                            //Exotic Full Fire Rifle
+                            if (inventory[i].GetComponent<EquivalentExchange>())
+                            {
+                                write.Write("A");
+                            }
+
+                            if (inventory[i].GetComponent<WaitNowImReady>())
+                            {
+                                write.WriteLine("0");
+                            }
+
+                            //Exotic Machine Gun
+                            if (inventory[i].GetComponent<PayToWin>())
+                            {
+                                write.Write("G");
+                            }
+
+                            if (inventory[i].GetComponent<TheMostResplendent>())
+                            {
+                                write.WriteLine("!");
+                            }
+
+                            //Exotic Pistol
+                            if (inventory[i].GetComponent<ShelterInPlace>())
+                            {
+                                write.Write("C");
+                            }
+
+                            if (inventory[i].GetComponent<PositiveNegative>())
+                            {
+                                write.WriteLine("6");
+                            }
+
+                            //Exotic Semi Fire Rifle
+                            if (inventory[i].GetComponent<OffYourOwnSupply>())
+                            {
+                                write.Write("F");
+                            }
+
+                            if (inventory[i].GetComponent<Inoculated>())
+                            {
+                                write.WriteLine("2");
+                            }
+
+                            //Exotic Shotgun
+                            if (inventory[i].GetComponent<SocialDistancePlease>())
+                            {
+                                write.Write("D");
+                            }
+
+                            if (inventory[i].GetComponent<NotWithAStick>())
+                            {
+                                write.WriteLine("4");
+                            }
+
+                            //Exotic Single Fire Rifle
+                            if (inventory[i].GetComponent<EarlyBerthGetsTheHearst>())
+                            {
+                                write.Write("E");
+                            }
+
+                            if (inventory[i].GetComponent<Efficacy>())
+                            {
+                                write.WriteLine("1");
+                            }
+
+                            //Exotic SMG
+                            if (inventory[i].GetComponent<AbsolutelyNoStops>())
+                            {
+                                write.Write("B");
+                            }
+
+                            if (inventory[i].GetComponent<Forager>())
+                            {
+                                write.WriteLine("#");
+                            }
                         }
 
                         else
                         {
-                            write.Write("0");
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
-                        {
-                            if (inventory[i].GetComponent<DeepYield>())
+                            if (inventory[i].GetComponent<AllElseFails>())
                             {
-                                write.Write("1");
+                                write.Write("9");
                             }
 
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
+                            if (inventory[i].GetComponent<NotWithAStick>())
                             {
                                 write.Write("4");
                             }
 
-                            if (inventory[i].GetComponent<FarSight>())
+                            if (inventory[i].GetComponent<MaliciousWindUp>())
                             {
                                 write.Write("5");
                             }
 
-                            if (inventory[i].GetComponent<FartherSight>())
+                            if (inventory[i].GetComponent<PositiveNegative>())
                             {
                                 write.Write("6");
                             }
 
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.WriteLine("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.WriteLine("8");
-                            }
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2 || inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
-                        {
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.Write("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
+                            if (inventory[i].GetComponent<GoodThingsCome>())
                             {
                                 write.Write("8");
+                            }
+
+                            if (inventory[i].GetComponent<TheMostResplendent>())
+                            {
+                                write.Write("!");
+                            }
+
+                            if (inventory[i].GetComponent<Fulminate>())
+                            {
+                                write.Write("@");
+                            }
+
+                            if (inventory[i].GetComponent<Forager>())
+                            {
+                                write.Write("#");
                             }
 
                             if (inventory[i].GetComponent<WaitNowImReady>())
@@ -3432,54 +1590,14 @@ public class PlayerInventoryScript : MonoBehaviour
                                 write.WriteLine("2");
                             }
 
-                            if (inventory[i].GetComponent<RudeAwakening>())
-                            {
-                                write.WriteLine("3");
-                            }
-
-                            if (inventory[i].GetComponent<NotWithAStick>())
-                            {
-                                write.WriteLine("4");
-                            }
-
-                            if (inventory[i].GetComponent<MaliciousWindUp>())
-                            {
-                                write.WriteLine("5");
-                            }
-
-                            if (inventory[i].GetComponent<PositiveNegative>())
-                            {
-                                write.WriteLine("6");
-                            }
-
                             if (inventory[i].GetComponent<Cadence>())
                             {
                                 write.WriteLine("7");
                             }
 
-                            if (inventory[i].GetComponent<GoodThingsCome>())
+                            if (inventory[i].GetComponent<RudeAwakening>())
                             {
-                                write.WriteLine("8");
-                            }
-
-                            if (inventory[i].GetComponent<AllElseFails>())
-                            {
-                                write.WriteLine("9");
-                            }
-
-                            if (inventory[i].GetComponent<TheMostResplendent>())
-                            {
-                                write.WriteLine("!");
-                            }
-
-                            if (inventory[i].GetComponent<Fulminate>())
-                            {
-                                write.WriteLine("@");
-                            }
-
-                            if (inventory[i].GetComponent<Forager>())
-                            {
-                                write.WriteLine("#");
+                                write.WriteLine("3");
                             }
 
                             if (inventory[i].GetComponent<Counterplay>())
@@ -3495,146 +1613,6 @@ public class PlayerInventoryScript : MonoBehaviour
                             if (inventory[i].GetComponent<GaleForceWinds>())
                             {
                                 write.WriteLine("^");
-                            }
-                        }
-
-                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
-                        {
-
-                            if (inventory[i].GetComponent<DeepYield>())
-                            {
-                                write.Write("1");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperYield>())
-                            {
-                                write.Write("2");
-                            }
-
-                            if (inventory[i].GetComponent<DeepStores>())
-                            {
-                                write.Write("3");
-                            }
-
-                            if (inventory[i].GetComponent<DeeperStores>())
-                            {
-                                write.Write("4");
-                            }
-
-                            if (inventory[i].GetComponent<FarSight>())
-                            {
-                                write.Write("5");
-                            }
-
-                            if (inventory[i].GetComponent<FartherSight>())
-                            {
-                                write.Write("6");
-                            }
-
-                            if (inventory[i].GetComponent<HastyHands>())
-                            {
-                                write.Write("7");
-                            }
-
-                            if (inventory[i].GetComponent<HastierHands>())
-                            {
-                                write.Write("8");
-                            }
-
-                            if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
-                            {
-                                if (inventory[i].GetComponent<AbsolutelyNoStops>())
-                                {
-                                    write.Write("B");
-                                }
-
-                                if (inventory[i].GetComponent<Forager>())
-                                {
-                                    write.WriteLine("#");
-                                }
-                            }
-
-                            else
-                            {
-                                if (inventory[i].GetComponent<AllElseFails>())
-                                {
-                                    write.Write("9");
-                                }
-
-                                if (inventory[i].GetComponent<NotWithAStick>())
-                                {
-                                    write.Write("4");
-                                }
-
-                                if (inventory[i].GetComponent<MaliciousWindUp>())
-                                {
-                                    write.Write("5");
-                                }
-
-                                if (inventory[i].GetComponent<PositiveNegative>())
-                                {
-                                    write.Write("6");
-                                }
-
-                                if (inventory[i].GetComponent<GoodThingsCome>())
-                                {
-                                    write.Write("8");
-                                }
-
-                                if (inventory[i].GetComponent<TheMostResplendent>())
-                                {
-                                    write.Write("!");
-                                }
-
-                                if (inventory[i].GetComponent<Fulminate>())
-                                {
-                                    write.Write("@");
-                                }
-
-                                if (inventory[i].GetComponent<Forager>())
-                                {
-                                    write.Write("#");
-                                }
-
-                                if (inventory[i].GetComponent<WaitNowImReady>())
-                                {
-                                    write.WriteLine("0");
-                                }
-
-                                if (inventory[i].GetComponent<Efficacy>())
-                                {
-                                    write.WriteLine("1");
-                                }
-
-                                if (inventory[i].GetComponent<Inoculated>())
-                                {
-                                    write.WriteLine("2");
-                                }
-
-                                if (inventory[i].GetComponent<Cadence>())
-                                {
-                                    write.WriteLine("7");
-                                }
-
-                                if (inventory[i].GetComponent<RudeAwakening>())
-                                {
-                                    write.WriteLine("3");
-                                }
-
-                                if (inventory[i].GetComponent<Counterplay>())
-                                {
-                                    write.WriteLine("$");
-                                }
-
-                                if (inventory[i].GetComponent<Enshroud>())
-                                {
-                                    write.WriteLine("%");
-                                }
-
-                                if (inventory[i].GetComponent<GaleForceWinds>())
-                                {
-                                    write.WriteLine("^");
-                                }
                             }
                         }
                     }
@@ -3648,6 +1626,9 @@ public class PlayerInventoryScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Records Inventory on input
+    /// </summary>
     private void WriteInventory()
     {
         if(Input.GetKeyDown(KeyCode.Tab))
@@ -3658,12 +1639,19 @@ public class PlayerInventoryScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //Adds Weapon to inventory upon trigger activation
         if(other.gameObject.tag == "Weapon")
         {
             AddInv(other.gameObject);
         }
     }
 
+    /// <summary>
+    /// Throws another Destruct Grenade with no cost, on a timed delay
+    /// </summary>
+    /// <param name="strength">represents grenade throw strength</param>
+    /// <param name="buff">represents new Destruct Grenade damage value</param>
+    /// <returns></returns>
     public IEnumerator FatedFulminateFreeGrenade(float strength, int buff)
     {
         yield return new WaitForSeconds(0.15f);

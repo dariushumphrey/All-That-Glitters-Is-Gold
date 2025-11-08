@@ -9,14 +9,13 @@ public class PlayerMoveScript : MonoBehaviour
     public int sprintSpeed = 22;
     public float speedDampening = -1f; //Governs time taken to slow to a stop after letting go of movement input.
     public float speedAccelerant = 0.5f; //Multiplier to exponentially increase movement speed
-    public float slopeForce;
-    public float slopeForceRayLength;
-    public float slopeCheckLength;
-    public float airborneCheck;
+    public float slopeForce; //Force to apply when traversing slopes
+    public float slopeCheckLength; //Length of raycast used to detect slopes
+    public float airborneCheck; //Length of raycast used to check if airborne
     public float airbornePull = 0.1f; //Multipler to force Player downwards if airborne
     public float evasionUpForce = 8f;
     public float evasionForwardForce = 16f;
-    public float evasionTimeout = 0.8f;
+    public float evasionTimeout = 0.8f; //Duration to wait before ability to Evade again
     public Sprite blankReticle;
     public bool zeroGravity = false; //Governs if Player can freely move in open space; no longer zeroes movement on Y-axis if true
 
@@ -29,13 +28,11 @@ public class PlayerMoveScript : MonoBehaviour
     private PlayerMeleeScript melee;
     internal Rigidbody playerRigid;
     private Camera playerCamera;
-    private Vector3 a, b, c;
-    private Vector3 input;
     private bool done = false;
-    internal float airbornePullReset = 0.0f;
-    internal bool sprinting = false;
-    internal bool evading = false;
-    internal bool evaded = false;
+    internal float airbornePullReset;
+    internal bool sprinting = false; //Player is in the sprinting state if true
+    internal bool evading = false; //Player initiated evading if true
+    internal bool evaded = false; //Player is in Evasion cooldown if true
     internal float horizInput;
     internal float vertInput;
     // Start is called before the first frame update
@@ -55,6 +52,7 @@ public class PlayerMoveScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Inititates Evasion behavior when Player is grounded and can evade again
         if (Input.GetKeyDown(KeyCode.Space) && !evading && !evaded && !Airborne())
         {
             evading = true;
@@ -64,16 +62,10 @@ public class PlayerMoveScript : MonoBehaviour
 
         }
 
+        //Disengages sprinting if Player lets go of input or if they stop moving forward
         if (Input.GetKeyUp(KeyCode.LeftShift) && sprinting || vertInput == 0)
         {
             sprinting = false;
-
-            //if(inventory.gunPlace.gameObject.activeInHierarchy == false)
-            //{
-            //    inventory.gunPlace.gameObject.SetActive(true);
-            //    inventory.reticleSprite.sprite = inventory.inventory[inventory.selection].GetComponent<FirearmScript>().reticle;
-            //}
-
 
             if(inventory.inventory.Count >= 1)
             {
@@ -83,8 +75,10 @@ public class PlayerMoveScript : MonoBehaviour
                 }
             }
             
-
-            inventory.reticleSprite.sprite = inventory.inventory[inventory.selection].GetComponent<FirearmScript>().reticle;
+            if(inventory.inventory.Count >= 1)
+            {
+                inventory.reticleSprite.sprite = inventory.inventory[inventory.selection].GetComponent<FirearmScript>().reticle;
+            }
 
             if (done)
             {
@@ -110,12 +104,14 @@ public class PlayerMoveScript : MonoBehaviour
         Vector3 forward = transform.forward * vertInput;
         Vector3 sideways = transform.right * horizInput;
 
+        //Disables gravity and zeroes downward pull during Melees or Zero Gravity play
         if(melee.meleeLock || zeroGravity)
         {
             playerRigid.useGravity = false;
             airbornePull = 0f;
         }
 
+        //Otherwise, leaves gravity, downward pull unchanged
         else
         {
             forward.y = 0f;
@@ -132,6 +128,7 @@ public class PlayerMoveScript : MonoBehaviour
 
         if (Input.GetButton("Vertical"))
         {
+            //Applies additional force if Player is sprinting. Otherwise, applies standard force
             if (Input.GetKey(KeyCode.LeftShift) && vertInput == 1 && !Airborne())
             {
                 sprinting = true;
@@ -165,6 +162,7 @@ public class PlayerMoveScript : MonoBehaviour
 
         if(Airborne())
         {
+            //Provides controls, VFX visuals for Zero Gravity movement. Otherwise, provides downward force if Player is airborne
             if(zeroGravity)
             {
                 if(Input.GetKey(KeyCode.Z))
@@ -234,20 +232,9 @@ public class PlayerMoveScript : MonoBehaviour
             {
                 playerRigid.AddForce(-Vector3.up * airbornePull);
             }
-
-            //float radius = collider.radius;
-            //float height = collider.height;
-
-            //RaycastHit hit;
-            //if (Physics.Raycast(transform.position + Vector3.up * 0.25f, Vector3.down, out hit, 3f))
-            //{
-            //    if (hit.point != null)
-            //    {
-            //        transform.position = new Vector3(transform.position.x, hit.point.y + height / 2f - collider.center.y, transform.position.z);
-            //    }
-            //}
         }
 
+        //Slows Player-character movement to zero if Player stops moving
         if (horizInput == 0 && vertInput == 0)
         {
             Vector3 velocityActive = playerRigid.velocity;
@@ -320,38 +307,16 @@ public class PlayerMoveScript : MonoBehaviour
 
             evading = false;
         }
-
-        //if((horizInput != 0 || vertInput != 0) && OnSlope())
-        //{
-        //    playerRigid.AddForce(forward * speed + ((c - a) * slopeForce));
-        //}     
-
-        //if (Input.GetKey(KeyCode.W))
-        //{
-        //    playerRigid.AddForce(forward * speed - playerRigid.velocity);
-        //}
-
-        //if (Input.GetKey(KeyCode.A))
-        //{
-        //    playerRigid.AddForce(-sideways * speed - playerRigid.velocity);
-        //}
-
-        //if (Input.GetKey(KeyCode.S))
-        //{
-        //    playerRigid.AddForce(-forward * speed - playerRigid.velocity);
-        //}
-
-        //if (Input.GetKey(KeyCode.D))
-        //{
-        //    playerRigid.AddForce(sideways * speed - playerRigid.velocity);
-        //}
-
     }
 
+    /// <summary>
+    /// Returns true if Player is on slope; returns false if Player is on flat ground
+    /// </summary>
+    /// <returns></returns>
     private bool OnSlope()
     {
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, Vector3.down, out hit, slopeForceRayLength))
+        if(Physics.Raycast(transform.position, Vector3.down, out hit, slopeCheckLength))
         {
             if (hit.normal != Vector3.up)
             {
@@ -362,6 +327,10 @@ public class PlayerMoveScript : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Returns true if Player is airborne; returns false if Player is grounded
+    /// </summary>
+    /// <returns></returns>
     private bool Airborne()
     {
         RaycastHit hit;
@@ -378,6 +347,9 @@ public class PlayerMoveScript : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Applies Rigidbody force up/down/sides of slopes dependent on Dot Product result
+    /// </summary>
     private void SlopeVector()
     {
         Vector3 sideVector;
@@ -408,31 +380,20 @@ public class PlayerMoveScript : MonoBehaviour
                     //Debug.Log("Upwards");
                     playerRigid.AddForce(Vector3.up * slopeForce);
                 }
-
-                //Debug.Log("Upwards");
-                //playerRigid.AddForce(Vector3.up * slopeForce);
             }
 
             else if (Vector3.Dot(hit.normal, transform.forward) > 0)
             {
-                if (vertInput < 0 /*|| horizInput > 0*/)
+                if (vertInput < 0)
                 {
                     playerRigid.AddForce(Vector3.up * slopeForce);
                 }
-
-                //else if(horizInput < 0)
-                //{
-                //    playerRigid.AddForce(Vector3.up * slopeForce);
-                //}
 
                 else
                 {
                     //Debug.Log("Downwards");
                     playerRigid.AddForce(-Vector3.up * slopeForce);
                 }
-
-                //Debug.Log("Downwards");
-                //playerRigid.AddForce(-Vector3.up * slopeForce);
             }
         
             //Handles Horizontal slope traversal
@@ -446,13 +407,9 @@ public class PlayerMoveScript : MonoBehaviour
 
                 else
                 {
-                    Debug.Log("To the Left");
+                    //Debug.Log("To the Left");
                     playerRigid.AddForce(Vector3.up * slopeForce);
                 }
-
-                //Debug.Log("To the Left");
-                //playerRigid.AddForce(Vector3.up * slopeForce);
-
             }
 
             else if (Vector3.Dot(sideVector, transform.forward) < 0)
@@ -470,16 +427,6 @@ public class PlayerMoveScript : MonoBehaviour
 
                 //Debug.Log("To the Right");
                 //playerRigid.AddForce(Vector3.up * slopeForce);
-            }
-
-            else
-            {
-                //if (vertInput != 0)
-                //{
-                //    playerRigid.AddForce(-Vector3.up * slopeForce);
-                //}
-
-                //Debug.Log("Perpendicular");
             }
         }        
     }

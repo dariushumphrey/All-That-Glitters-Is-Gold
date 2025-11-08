@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerCameraScript : MonoBehaviour
 {
-    public float rotateH = 2.0f;
-    public float rotateV = 2.0f;
-    public float vClamp = 30f;
+    public float rotateH = 2.0f; //Strength of horizontal rotation
+    public float rotateV = 2.0f; //Strength of vertical rotation
+    public float vClamp = 30f; //Extent of up/down rotation
     public float characterTurnSpeed = 100f;
     public float zoomDefault = 60f;
     public float zoomMax = 40f;
@@ -21,20 +21,24 @@ public class PlayerCameraScript : MonoBehaviour
     public Image reticleSprite;
     public Image meleeReticle;
     public Sprite meleeSprite;
+
+    //contactOnly - LayerMask that only interacts with Enemies and Surfaces; used for Aim Assist, Melee attacks and Canvas reveals
+    //cameraOnly - LayerMask that only interacts with Surfaces; used for Camera clipping checks
     public LayerMask contactOnly, cameraOnly;
 
-    private float zoomReset = 60f;
+    private float zoomReset;
     private Vector3 forwardDirection; //Used to determine where Camera is looking when compared to the body
-    private Vector3 camPosReset;
+    private Vector3 camPosReset; //Starting position of Camera 
     private Vector3 rayOrigin;
-    private Vector3 distance; //Used to determine where Enemy is when compared to center of screen; used for Aim Assist
+    private Vector3 distance; //Used to determine length between Enemy and screen center; used for Aim Assist
     private RaycastHit hit;
     private Camera playerCamera;
     private PlayerInventoryScript player;
     private PlayerMoveScript move;
     private PlayerMeleeScript melee;
-    internal float yaw = 0.0f;
-    internal float pitch = 0.0f;
+    internal float yaw = 0.0f; //Value that rotates Player, Camera on Y-axis
+    internal float pitch = 0.0f; //Value that rotates Player, Camera on X-axis
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +56,7 @@ public class PlayerCameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Locks the cursor on number inputs
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -73,10 +78,12 @@ public class PlayerCameraScript : MonoBehaviour
 
         else
         {
+            //Controls Camera rotation
             yaw += rotateH * Input.GetAxis("Mouse X");
             pitch -= rotateV * Input.GetAxis("Mouse Y");
             pitch = Mathf.Clamp(pitch, -vClamp, vClamp);
 
+            //Offsets Camera around Player shoulder if camera clipping protections are inactive
             if(!SurfaceIntersection())
             {
                 playerCamera.transform.position = transform.position + (Quaternion.Euler(pitch, yaw, 0) * cameraPosition);
@@ -85,13 +92,14 @@ public class PlayerCameraScript : MonoBehaviour
                 //Debug.DrawRay(offsetCheckPos.transform.position, (playerCamera.transform.position - offsetCheckPos.transform.position).normalized * slider, Color.blue);
             }
 
+            //Rotates Player-character when moving, firing, or throwing grenades
             forwardDirection = (playerCamera.transform.position - transform.position);
             if (move.horizInput != 0 || move.vertInput != 0 || Input.GetButton("Fire1") || player.throwing)
             {
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
-                //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(pitch, yaw, 0), Time.deltaTime * characterTurnSpeed);
             }
 
+            //Rotates Player-character every frame towards Camera forward direction
             //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(pitch, yaw, 0), Time.deltaTime * characterTurnSpeed);
 
             Zoom();
@@ -105,21 +113,27 @@ public class PlayerCameraScript : MonoBehaviour
         }      
     }
 
+    /// <summary>
+    /// Controls Camera zooming and Canvas (Player, Enemy) reveals
+    /// </summary>
     private void Zoom()
     {
         playerCamera.fieldOfView = zoomDefault;
 
         if (Input.GetButton("Fire2"))
         {
+            //Zooms camera until it reaches max zoom
             zoomDefault -= zoomSpeed * Time.deltaTime;
             if (zoomDefault <= zoomMax)
             {
                 zoomDefault = zoomMax;
             }
 
+            //Rotates Player-character in Camera forward direction
             forwardDirection = (playerCamera.transform.position - transform.position);
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
 
+            //Reveals Enemy canvas when zooming into them
             rayOrigin = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
             if (Physics.Raycast(rayOrigin, playerCamera.transform.forward, out hit, Mathf.Infinity, contactOnly))
             {
@@ -141,6 +155,7 @@ public class PlayerCameraScript : MonoBehaviour
             }
 
 
+            //Reveals Weapon canvas
             player.weaponAmmoPage.gameObject.SetActive(true);
             //player.weaponLoad.gameObject.SetActive(true);
             player.lucentText.gameObject.SetActive(true);
@@ -148,6 +163,7 @@ public class PlayerCameraScript : MonoBehaviour
             player.wepStateTimer = player.wepStateTimerReset;
         }
 
+        //Restores Camera zoom to default setting
         else
         {
             zoomDefault += zoomSpeed * Time.deltaTime;
@@ -158,6 +174,9 @@ public class PlayerCameraScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Offsets the Camera from an intersecting surface if the raycast between the Player and Camera position registers a hit
+    /// </summary>
     private void CameraClipCountermeasure()
     {
         Vector3 offset;
@@ -193,6 +212,10 @@ public class PlayerCameraScript : MonoBehaviour
         }      
     }
     
+    /// <summary>
+    /// Returns true if raycast detects a surface between Player and Camera position; returns false if no hit is detected
+    /// </summary>
+    /// <returns></returns>
     public bool SurfaceIntersection()
     {      
         if (Physics.Raycast(offsetCheckPos.transform.position, (playerCamera.transform.position - offsetCheckPos.transform.position).normalized, out hit, collideCheck, cameraOnly))
@@ -211,6 +234,10 @@ public class PlayerCameraScript : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Subtly rotates Camera towards Enemy if distance between them and screen center is less than a Weapon's effective range
+    /// Changes color of reticle between red and white dependent on satisfied condition
+    /// </summary>
     private void AimAssistance()
     {
         rayOrigin = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
@@ -243,6 +270,11 @@ public class PlayerCameraScript : MonoBehaviour
         }           
     }
 
+    /// <summary>
+    /// Assigns a Melee target if raycast detects an Enemy.
+    /// Removes Enemy as target if raycast does not detect an Enemy.
+    /// Overlays a Melee reticle onto an enemy when in range to be attacked.
+    /// </summary>
     private void MeleeAssistance()
     {
         rayOrigin = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));

@@ -6,9 +6,10 @@ using UnityEngine.UI;
 public class PlayerStatusScript : MonoBehaviour
 {
 
-    public int playerScaling;
+    public int playerScaling; //Increases Player Health and Shield by Difficulty number
     public int playerHealth = 500;
     public int playerHealthMax = 500;
+
     //This value buffs player health:
     //-Increasing this number adds a percentage of max health onto current health
     //-Increasing max health allows this number to give more health in return
@@ -16,6 +17,7 @@ public class PlayerStatusScript : MonoBehaviour
 
     public int playerShield = 550;
     public int playerShieldMax = 550;
+
     //This value buffs shield capacity:
     //-Increasing this number adds a percentage of max shield onto current shield
     //-Increasing max health allows this number to give more shield in return
@@ -25,25 +27,24 @@ public class PlayerStatusScript : MonoBehaviour
     public float invincibilityDuration = 0.3f;
     public bool isDead;
     public bool isInvincible;
-    public GameObject immunity;
+    public GameObject immunity; //Visual aid to represent Immunity window
 
     public Slider health, shield;
-    public Image hBar, sBar;
+    public Image hBar, sBar; //Represent Health, Shield values by color
     public ParticleSystem shieldHit;
     public ParticleSystem shieldBreak;
     public ParticleSystem shieldRecharge;
-    private int healthAdd;
-    private int shieldAdd;
+    private int healthAdd; //Player Health is added onto by this value
+    private int shieldAdd; //Player Shield is added onto by this value
     private float regenShieldResetSeconds;
-    private float regenHealthResetSeconds;
-    private bool done = false;
+    private bool done = false; //Prevents operation from repeating if true
     internal PlayerMoveScript move;
     internal PlayerCameraScript cam;
     internal PlayerInventoryScript inv;
-    internal int dmgReceived;
-    internal bool playerHit;
-    internal GameObject counterplayCheat;
-    internal bool counterplayFlag = false;
+    internal int dmgReceived; //Takes damage received and decrements health
+    internal bool playerHit; //Confirms Player has been damaged if true
+    internal GameObject counterplayCheat; //Confirms Weapon with Counterplay is present if not null
+    internal bool counterplayFlag = false; //Confirms the Cheat Counterplay' condition has been met if true
 
     // Start is called before the first frame update
     void Start()
@@ -71,6 +72,7 @@ public class PlayerStatusScript : MonoBehaviour
         health.value = playerHealth;
         shield.value = playerShield;
 
+        //Changes color of Health bar by health thresholds
         if (playerHealth >= playerHealthMax / 2)
         {
             hBar.color = Color.green;
@@ -86,6 +88,7 @@ public class PlayerStatusScript : MonoBehaviour
             hBar.color = Color.blue;
         }
 
+        //Changes color of Shield background when depleted
         if (playerShield <= 0)
         {
             sBar.color = Color.Lerp(Color.red, Color.white, Mathf.PingPong(Time.time, 0.9f));
@@ -112,6 +115,9 @@ public class PlayerStatusScript : MonoBehaviour
         PlayerDeath();
     }
 
+    /// <summary>
+    /// Increases Player base Health and Shield by difficulty
+    /// </summary>
     public void StatusScaling()
     {
         healthPercent *= playerScaling;
@@ -178,6 +184,9 @@ public class PlayerStatusScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Corrects improper Player scaling assignments
+    /// </summary>
     public void StatusCorrections()
     {
         if(playerScaling <= 0)
@@ -191,6 +200,10 @@ public class PlayerStatusScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Manages events where Player has taken damage
+    /// </summary>
+    /// <param name="damageTaken">Damage received by Enemies or Berth explosions</param>
     public void InflictDamage(int damageTaken)
     {
         playerHit = true;
@@ -221,6 +234,9 @@ public class PlayerStatusScript : MonoBehaviour
         }      
     }
 
+    /// <summary>
+    /// Manages event where Player has been defeated
+    /// </summary>
     void PlayerDeath()
     {
         if(playerHealth <= 0)
@@ -242,7 +258,10 @@ public class PlayerStatusScript : MonoBehaviour
             
         }
     }  
-
+    
+    /// <summary>
+    /// Waits before recharging Shield if current Shield strength is less than max Shield
+    /// </summary>
     void ShieldDamageCheck()
     {
         if(isDead != true)
@@ -260,6 +279,9 @@ public class PlayerStatusScript : MonoBehaviour
         }     
     }
 
+    /// <summary>
+    /// Recharges Shield until it reaches full strength
+    /// </summary>
     public IEnumerator RechargeShield()
     {
         yield return new WaitForSeconds(0.1f);
@@ -271,6 +293,9 @@ public class PlayerStatusScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Deactivates Player immunity after delay
+    /// </summary>
     public IEnumerator CancelInvulnerable()
     {
         yield return new WaitForSeconds(invincibilityDuration);
