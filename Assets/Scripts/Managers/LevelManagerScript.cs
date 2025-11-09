@@ -9,37 +9,39 @@ public class LevelManagerScript : MonoBehaviour
 {
     static LevelManagerScript instance = null;
 
+    //Configuration for Main Menu, Campaign, or Viricide behavior
     public enum Setting
     {
         Navigation = 0, Campaign = 1, Viricide = 2
     }
 
     public Setting setting;
-    //Determines Loot rarity and Enemy difficulty. 
-    public int gameSettingState = 1;
+    public int gameSettingState = 1; //Determines Loot rarity and Enemy difficulty. 
 
     public PlayerStatusScript player;
     public EnemyManagerScript manager;
 
-    public GameObject[] chests;
-    public GameObject[] spawners;
-    public GameObject kioskAdjust;
-    public int weaponFocus = -1;
+    public GameObject[] chests; //Array of Chest items
+    public GameObject[] spawners; //Array of Enemy spawners
+    public int weaponFocus = -1; //Value that forces Loot items to spawn specific Weapon types
 
-    public int level = 0;
+    public int level = 0; //Current level
     public float gameTime = 0f;
-    public GameObject eogStatsText;
+    public GameObject eogStatsText; //Displays game end statistics (Viricide)
+
+    //resultsMenu - Menu UI that houses game end statistics (Viricide)
     public GameObject pauseMenu, resultsMenu, controlsMenu;
 
     private float gameEndDelay = 15f;
-    private bool paused = false;
+    private bool paused = false; //Zeroes game time if true
     private GameObject continueButton, restartButton, quitButton, mainMenuButton;
     private GameObject menuReturnButton;
-    internal bool gameComplete = false;
+    internal bool gameComplete = false; //Certifies game completion if true
 
     // Start is called before the first frame update
     void Start()
     {
+        //Destroys duplicate Level Managers when navigating scenes
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -51,6 +53,7 @@ public class LevelManagerScript : MonoBehaviour
             instance = this;
             GameObject.DontDestroyOnLoad(gameObject);
 
+            //Resets game settings when on Main Menu
             if(setting == Setting.Navigation)
             {
                 if(gameComplete)
@@ -73,6 +76,9 @@ public class LevelManagerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Initializes Player, Enemy, Loot quality, and finds UI elements
+    /// </summary>
     void GameSet()
     {
         player = FindObjectOfType<PlayerStatusScript>();
@@ -105,14 +111,7 @@ public class LevelManagerScript : MonoBehaviour
         for(int s = 0; s < spawners.Length; s++)
         {
             spawners[s].GetComponent<SpawnerScript>().difficultySpawn = gameSettingState;
-        }
-
-        kioskAdjust = GameObject.FindGameObjectWithTag("Kiosk");
-        if(kioskAdjust != null)
-        {
-            kioskAdjust.GetComponent<LootScript>().raritySpawn = gameSettingState;
-            kioskAdjust.GetComponent<LootScript>().PriceAdjust();
-        }
+        }       
 
         pauseMenu = GameObject.Find("pauseBG");
         continueButton = GameObject.Find("continueButton");
@@ -138,6 +137,7 @@ public class LevelManagerScript : MonoBehaviour
         menuReturnButton.GetComponent<Button>().onClick.AddListener(ReturnToMainMenu);
         resultsMenu.gameObject.SetActive(false);      
 
+        //Resumes game if game was paused
         if (Time.timeScale != 1)
         {
             Time.timeScale = 1;
@@ -148,6 +148,7 @@ public class LevelManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Permanently unlocks Cursor when on Main Menu
         if(setting == Setting.Navigation)
         {
             Cursor.lockState = CursorLockMode.None;
@@ -158,6 +159,7 @@ public class LevelManagerScript : MonoBehaviour
         {
             if (player != null)
             {
+                //Saves Inventory and reloads scene when Player is defeated
                 if(player.isDead)
                 {
                     if (Input.GetKeyDown(KeyCode.F))
@@ -169,12 +171,9 @@ public class LevelManagerScript : MonoBehaviour
             }
 
             gameTime += Time.deltaTime;
-            weaponFocus = Mathf.Clamp(weaponFocus, -1, 6);
-            //missionTimerText.gameObject.SetActive(false);
-            //DisplayTimer(gametype.gameTimer);
-            //missionTimerText.gameObject.SetActive(false);
-            //missionTimerText = GameObject.Find("MissionTimer");
+            weaponFocus = Mathf.Clamp(weaponFocus, -1, 6); //Locks weaponFocus within a range to prevent incorrect focusing
 
+            //Pauses game if game is incomplete & controls page is hidden
             if (Input.GetKeyDown(KeyCode.Escape) && !gameComplete && controlsMenu.activeInHierarchy == false)
             {
                 if (player.isDead)
@@ -203,6 +202,7 @@ public class LevelManagerScript : MonoBehaviour
                 }
             }
 
+            //Produces game results on a delay (Viricide)
             if(gameComplete)
             {
                 gameEndDelay -= Time.deltaTime;
@@ -230,18 +230,13 @@ public class LevelManagerScript : MonoBehaviour
                 }
             }
         }     
-
-        //if (Input.GetKeyDown(KeyCode.Tab))
-        //{
-        //    gameSettingState++;
-        //    LoadScene();
-        //}
     }
 
+    /// <summary>
+    /// Sets game state and loads specified scene
+    /// </summary>
     public void LoadScene()
     {
-        //Start();
-
         if (gameSettingState <= 0)
         {
             gameSettingState = 1;
@@ -260,6 +255,9 @@ public class LevelManagerScript : MonoBehaviour
         Start();
     }
     
+    /// <summary>
+    /// Grants Viricide access if previously inaccessible
+    /// </summary>
     public void CheckForFirstViricideClear()
     {
         if (PlayerPrefs.GetInt("firstViricideClear") == 1)
@@ -279,11 +277,17 @@ public class LevelManagerScript : MonoBehaviour
         VanishPauseMenu();
     }
 
+    /// <summary>
+    /// Saves Player Inventory
+    /// </summary>
     public void SaveInventory()
     {
         player.GetComponent<PlayerInventoryScript>().WriteOnReset();
     }
 
+    /// <summary>
+    /// Saves Player Inventory, Lucent balance and loads scene
+    /// </summary>
     public void RestartGame()
     {
         player.GetComponent<PlayerInventoryScript>().WriteOnReset();
@@ -296,6 +300,10 @@ public class LevelManagerScript : MonoBehaviour
         Application.Quit();
     }
 
+    /// <summary>
+    /// Loads Main menu after saving Player Inventory, Lucent balance
+    /// Configures Level Manager for use on Main Menu
+    /// </summary>
     public void ReturnToMainMenu()
     {
         level = 0;
@@ -326,11 +334,4 @@ public class LevelManagerScript : MonoBehaviour
     {
         page.gameObject.SetActive(false);
     }
-
-    //void DisplayTimer(float timer)
-    //{
-    //    float minutes = Mathf.FloorToInt(timer / 60);
-    //    float seconds = Mathf.FloorToInt(timer % 60);
-    //    missionTimerText.GetComponent<Text>().text = string.Format("{0:00}:{1:00}", minutes, seconds);
-    //}
 }

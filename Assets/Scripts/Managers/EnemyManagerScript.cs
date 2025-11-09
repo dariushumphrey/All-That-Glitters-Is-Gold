@@ -17,19 +17,22 @@ public class EnemyManagerScript : MonoBehaviour
     //-Inversely, turning this value negative decreases lucentThreshold, spawning Lucent drops less frequently
     public float lucentPercent = -4.25f;
 
+    //loot - Delivery item that produces Weapons
+    //exoticLoot - Delivery item that produces Exotic Weapons
+    //Lucent - Lucent cluster game object
     public GameObject loot, exoticLoot, lucent;
-    public int lootFocus = -1;
-    public List<GameObject> combatants = new List<GameObject>();
-    private GameObject[] enemies;
-    public bool enemyDied = false;
+    public int lootFocus = -1; //Value that targets Weapon type for generation
+    public List<GameObject> combatants = new List<GameObject>(); //List of Enemies
+    private GameObject[] enemies; //Array of Enemies
+    public bool enemyDied = false; //confirms Enemy defeat if true
 
     private float dropThreshReset;
-    private int deathRewardChance;
+    private int deathRewardChance; //Number used for random Loot, Lucent spawning
     internal int cadenceDeadCount = 0;
     internal Vector3 slainPosition, woundedPosition;
-    internal int killCount = 0;
-    internal int damageReceived = 0;
-    internal int damageDealt = 0;
+    internal int killCount = 0; //Total count of defeated Enemies
+    internal int damageReceived = 0; //Total count of Player damage taken
+    internal int damageDealt = 0; //Total count of Player damage dealt
     private PlayerMoveScript player;
 
     // Start is called before the first frame update
@@ -46,6 +49,8 @@ public class EnemyManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Tracks total number of Enemies during play
+        //Increments kill count when Enemy is defeated
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         if(enemyDied)
         {
@@ -56,6 +61,9 @@ public class EnemyManagerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Increases, Decreases drop rates by rarity level
+    /// </summary>
     void RarityCheck()
     {
         if (dropRarity <= 0)
@@ -111,6 +119,10 @@ public class EnemyManagerScript : MonoBehaviour
         }
     }   
 
+    /// <summary>
+    /// Randomly generates Loot, Lucent upon Enemy defeat
+    /// </summary>
+    /// <param name="deathPos">losition of Enemy defeat</param>
     public void DeathReward(Vector3 deathPos)
     {
         //For Loot
@@ -237,7 +249,10 @@ public class EnemyManagerScript : MonoBehaviour
             rewardTwo.GetComponent<Rigidbody>().useGravity = false;
         }
     }
-   
+    
+    /// <summary>
+    /// Clears Enemy list and readds Enemies based on Enemies array
+    /// </summary>
     public void CatalogEnemies()
     {
         combatants.Clear();
@@ -248,6 +263,9 @@ public class EnemyManagerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Removes defeated Enemies from list
+    /// </summary>
     public void RemoveEnemies()
     {       
         for (int e = 0; e < combatants.Count; e++)

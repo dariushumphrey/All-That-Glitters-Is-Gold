@@ -6,12 +6,12 @@ using UnityEngine.AI;
 public class BossManagerScript : MonoBehaviour
 {
     public int bossDifficulty = 1;
-    public List<GameObject> addSpawners = new List<GameObject>();
-    public List<GameObject> chestRewards = new List<GameObject>();
+    public List<GameObject> addSpawners = new List<GameObject>(); //List of Enemy spawners
+    public List<GameObject> chestRewards = new List<GameObject>(); //List of Chest rewards
     internal bool isAlive = true;
     private EnemyManagerScript enemyManager;
     private LevelManagerScript levelManager;
-    private bool done = false;
+    private bool done = false; //Commits an action once if true
   
     void Awake()
     {
@@ -27,6 +27,7 @@ public class BossManagerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Assigns Boss difficulty from Enemy manager, initializes Chest rarity, Weapon focus
         bossDifficulty = enemyManager.dropRarity;
         for (int c = 0; c < chestRewards.Count; c++)
         {
@@ -39,6 +40,7 @@ public class BossManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Reveals Rewards when Boss is defeated
         if(!isAlive && !done)
         {
             StartCoroutine(RewardOnDelay());
@@ -47,6 +49,9 @@ public class BossManagerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Invokes Spawners to create Enemies a certain number of times
+    /// </summary>
     public void TriggerAdds()
     {
         for(int a = 0; a < addSpawners.Count; a++)
@@ -58,6 +63,10 @@ public class BossManagerScript : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Reveals Chest rewards on a delay
+    /// Informs LevelManager that game is complete, grants Viricide access if first clear
+    /// </summary>
     private IEnumerator RewardOnDelay()
     {
         yield return new WaitForSeconds(2f);

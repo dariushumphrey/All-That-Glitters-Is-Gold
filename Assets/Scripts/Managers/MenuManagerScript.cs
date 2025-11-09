@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class MenuManagerScript : MonoBehaviour
 {
+    //Configuration for use on Main Menu or Gameplay
     public enum Setting
     {
         Menu = 0, Game = 1
@@ -12,11 +13,12 @@ public class MenuManagerScript : MonoBehaviour
 
     public Setting setting;
 
+    //ca, vcThumbnail - Image UI that displays Campaign, Viricide level pictures
     public Image caThumbnail, vcThumbnail;
-    public Sprite caLevelOne, caLevelTwo, caLevelThree, vcLevelOne, vcLevelTwo;
-    public Text caDiffText, vcDiffText, caLevelText, vcLevelText, vcWepFocusText;
-    public Button vcButton;
-    public Slider vcDifficulty, vcLevel, vcWepFocus, caDifficulty, caLevel;
+    public Sprite caLevelOne, caLevelTwo, caLevelThree, vcLevelOne, vcLevelTwo; //Images of Level thumbnails
+    public Text caDiffText, vcDiffText, caLevelText, vcLevelText, vcWepFocusText; //Texts that displays difficulty number, level name, or Weapon focus
+    public Button vcButton; //Viricide navigation button
+    public Slider vcDifficulty, vcLevel, vcWepFocus, caDifficulty, caLevel; //Sliders used to select Weapon type, level, or difficulty
     private LevelManagerScript levelManager;
     private WeaponManagerScript weaponManager;
 
@@ -44,6 +46,7 @@ public class MenuManagerScript : MonoBehaviour
     {
         if (setting == Setting.Menu)
         {
+            //Changes Campaign/Viricide thumbnail image by slider value
             if (caLevel.value == 1)
             {
                 caThumbnail.sprite = caLevelOne;
@@ -70,12 +73,14 @@ public class MenuManagerScript : MonoBehaviour
                 vcThumbnail.sprite = vcLevelTwo;
             }
 
+            //Changes Campaign/Viricide difficulty, level text by slider value
             caDiffText.text = "Difficulty: " + caDifficulty.value;
             vcDiffText.text = "Difficulty: " + vcDifficulty.value;
 
             caLevelText.text = "Level " + caLevel.value;
             vcLevelText.text = "Viricide: " + (vcLevel.value - 3);
 
+            //Changes Weapon Focus text by slider value
             if(vcWepFocus.value == -1)
             {
                 vcWepFocusText.text = "Targeted Weapons: " + "\n" + "Random";
@@ -118,6 +123,9 @@ public class MenuManagerScript : MonoBehaviour
         }    
     }
 
+    /// <summary>
+    /// Initializes Viricide game dependent on slider values and loads scene
+    /// </summary>
     public void InitializeViricideGame()
     {
         levelManager.setting = LevelManagerScript.Setting.Viricide;
@@ -128,6 +136,9 @@ public class MenuManagerScript : MonoBehaviour
         levelManager.LoadScene();
     }
 
+    /// <summary>
+    /// Initializes Campaign game dependent on slider values and loads scene
+    /// </summary>
     public void InitializeCampaignGame()
     {
         levelManager.setting = LevelManagerScript.Setting.Campaign;
@@ -153,6 +164,10 @@ public class MenuManagerScript : MonoBehaviour
         Application.Quit();
     }
 
+    /// <summary>
+    /// Configures slider max values by PlayerPref values
+    /// Changes Viricide button interactivity by PlayerPref value
+    /// </summary>
     public void Progression()
     {
         if (PlayerPrefs.GetInt("unlockLevel03") == 1)

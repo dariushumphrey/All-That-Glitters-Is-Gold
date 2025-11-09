@@ -10,6 +10,7 @@ public class PlayerPrefsManagerScript : MonoBehaviour
     {
         kiosk = FindObjectOfType<KioskScript>();
         menu = FindObjectOfType<MenuManagerScript>();
+
         LevelEntitlement();
         DifficultyEntitlement();
         ViricideEntitlement();
@@ -28,6 +29,9 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// //Checks Player ownership of Levels
+    /// </summary>
     void LevelEntitlement()
     {
         if (PlayerPrefs.GetInt("unlockLevel02") == 1)
@@ -51,6 +55,9 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// //Checks Player ownership of Difficulty 5
+    /// </summary>
     void DifficultyEntitlement()
     {
         if (PlayerPrefs.GetInt("unlockDifficulty5") == 1)
@@ -64,6 +71,9 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// //Checks Player ownership of Viricide access
+    /// </summary>
     void ViricideEntitlement()
     {
         if (PlayerPrefs.GetInt("unlockViricide") == 1)
@@ -78,11 +88,17 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// //Checks Player Lucent balance
+    /// </summary>
     void LucentEntitlement()
     {
         kiosk.lucentFunds = PlayerPrefs.GetInt("lucentBalance");
     }
 
+    /// <summary>
+    /// Resets Player progess (all PlayerPrefs, zeroes Lucent balance)
+    /// </summary>
     public void FormatProgression()
     {
         PlayerPrefs.SetInt("unlockLevel02", 0);

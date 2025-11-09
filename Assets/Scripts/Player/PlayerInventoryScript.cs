@@ -49,7 +49,7 @@ public class PlayerInventoryScript : MonoBehaviour
     internal int fulminateBuff; //damage value used to increase Destruct Grenade damage by Fulminate
     internal bool enshroudPresent; //Weapon with Enshroud is present if true
 
-    internal List<string> readdedWeps = new List<string>(10);
+    internal List<string> readdedWeps = new List<string>(10); //List of Weapons (in string form)
     
     // Start is called before the first frame update
     void Start()
