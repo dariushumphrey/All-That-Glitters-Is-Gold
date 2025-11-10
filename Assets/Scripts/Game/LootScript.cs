@@ -5,46 +5,37 @@ using UnityEngine.UI;
 
 public class LootScript : MonoBehaviour
 {
-    public int raritySpawn;
-    public int kioskPrice;
-    public int gamblePrice;
-    public int lootSpamMax = 3;
-    public float pricePercent = 10f;
-    public float gamblePercent = 60f;
-    public int focusTarget = -1;
-    private int priceAdd;
-    private float percentReset;
-    private float gambleReset;
-    public bool isDrop;
-    public bool isChest;
-    public bool isKiosk;
-    public GameObject drop, exoticDrop;
-    public List<GameObject> loot = new List<GameObject>();
-    public Transform lootSpawn;
-    public Material deactivated;
-    public bool debug;
-    public bool spamLoot = false;
+    public int raritySpawn; //Value used to assign Rarity level to Weapons
+    public int lootSpamMax = 3; //Repeats spawning behavior up to this value
+    public int focusTarget = -1; //Represent Weapon type focus by number
+    public bool isDrop; //Confirmed as a Delivery item if true
+    public bool isChest; //Confirmed as a loot chest if true
+    public bool debug; //Allows manual trigger of SpawnLoot() if true
+    public bool spamLoot = false; //Allows repeated Delivery item spawns if true
+    public float spawnRate = 0.08f; //Rate of speed for Loot spawns
 
-    private float spawnAgain, spawnRate;
-    private int lootGrant;
+    //drop - Loot delivery item that spawns standard Weapons
+    //exoticDrop - Loot delivery item that spawns Exotic Weapons
+    public GameObject drop, exoticDrop;
+    public List<GameObject> loot = new List<GameObject>(); //List of Weapons to spawn
+    public Transform lootSpawn; //Spawn position of Weapons, Delivery items
+
+    private float spawnAgain; //Timer used to mediate repeated spawn rate
+    private int lootGrant; //Index used to select specific Weapon
     private PlayerMoveScript player;
-    private bool inProx;
-    private bool turnOff;
-    private int spawnCount = 0;
+    private int spawnCount = 0; //Number of times a spawn has occured
+
     // Start is called before the first frame update
     void Start()
     {
         spawnAgain = 0.0f;
-        spawnRate = 0.08f;
 
-        percentReset = pricePercent;
-        gambleReset = gamblePercent;
         RarityCorrection();
 
-        if(isChest == true)
+        if (debug)
         {
-            if (debug == true)
-            {              
+            if (isChest)
+            {
                 SpawnLoot();
                 return;
             }
@@ -57,17 +48,17 @@ public class LootScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isChest == true)
+        if (debug)
         {
-            if (debug == true)
+            if (Input.GetKeyDown(KeyCode.Alpha0) && isChest)
             {
-                if (Input.GetKeyDown(KeyCode.Alpha0))
-                {
-                    SpawnLoot();
-                }
+                SpawnLoot();
             }
+        }
 
-            if(spamLoot == true)
+        if (isChest)
+        {
+            if (spamLoot)
             {
                 //Debug.Log(spawnCount);
                 spawnAgain += Time.deltaTime;
@@ -83,66 +74,11 @@ public class LootScript : MonoBehaviour
                 }               
             }
         }
-        
-        //if(isKiosk == true)
-        //{
-        //    if(Input.GetKeyDown(KeyCode.E))
-        //    {
-        //        if(player.lucentFunds < kioskPrice)
-        //        {
-        //            //The Player cannot buy a Weapon; There is too little or no Lucent to spend
-        //        }
-
-        //        if (inProx == true && turnOff == false && player.lucentFunds >= kioskPrice)
-        //        {
-        //            player.lucentFunds -= kioskPrice;
-
-        //            if(raritySpawn == 5)
-        //            {
-        //                SpawnExotic();
-        //            }
-
-        //            else
-        //            {
-        //                SpawnDrop();
-        //            }
-        //        }
-        //    }
-
-        //    if (Input.GetKeyDown(KeyCode.Q))
-        //    {
-        //        if (inProx == true && turnOff == false)
-        //        {
-        //            if(player.lucentFunds < gamblePrice)
-        //            {
-        //                //The Player cannot spawn a higher rarity Weapon; There is too little or no Lucent to forfeit
-        //            }
-                   
-        //            else
-        //            {
-        //                if(raritySpawn >= 5)
-        //                {
-        //                    player.lucentFunds -= gamblePrice;
-        //                    SpawnDrop();
-        //                }
-
-        //                else
-        //                {
-        //                    player.lucentFunds -= gamblePrice;
-        //                    raritySpawn++;
-        //                    SpawnDrop();
-
-        //                    player.kioskText.text = " ";
-        //                    //GetComponent<Renderer>().material = deactivated;
-        //                    player.kioskText.text = "Unavailable";
-        //                    turnOff = true;
-        //                }                       
-        //            }                   
-        //        }
-        //    }
-        //}
     }
 
+    /// <summary>
+    /// Fixes incorrect rarity assignments
+    /// </summary>
     void RarityCorrection()
     {
         if(raritySpawn <= 0)
@@ -156,32 +92,10 @@ public class LootScript : MonoBehaviour
         }
     }
 
-    public void PriceAdjust()
-    {
-        if(raritySpawn >= 2)
-        {
-            pricePercent /= 100;
-            pricePercent *= kioskPrice;
-            pricePercent *= raritySpawn;
-            priceAdd = (int)pricePercent;
-            kioskPrice += priceAdd;
-
-            gamblePercent /= 100;
-            gamblePercent *= kioskPrice;
-            gamblePrice = (int)gamblePercent;
-        }
-
-        else
-        {         
-            gamblePercent /= 100;
-            gamblePercent *= kioskPrice;
-            gamblePrice = (int)gamblePercent;
-        }     
-
-        pricePercent = percentReset;
-        gamblePercent = gambleReset;
-    }
-
+    /// <summary>
+    /// Spawns Loot delivery items
+    /// Colors delivery items by rarity
+    /// </summary>
     public void SpawnDrop()
     {
         drop.GetComponent<LootScript>().raritySpawn = raritySpawn;
@@ -227,11 +141,16 @@ public class LootScript : MonoBehaviour
         {
             reward.GetComponent<Rigidbody>().useGravity = false;
         }
+
         //reward.GetComponent<Rigidbody>().AddForce((lootSpawn.transform.forward + lootSpawn.transform.up) * 3f, ForceMode.Impulse);
         reward.GetComponent<Rigidbody>().AddExplosionForce(400f, lootSpawn.transform.position, 10f, 500f);
 
     }
 
+    /// <summary>
+    /// Spawns Loot delivery items
+    /// Colors delivery items by rarity
+    /// </summary>
     public void SpawnExotic()
     {
         exoticDrop.GetComponent<LootScript>().raritySpawn = raritySpawn;
@@ -249,13 +168,16 @@ public class LootScript : MonoBehaviour
         {
             reward.GetComponent<Rigidbody>().useGravity = false;
         }
+
         //reward.GetComponent<Rigidbody>().AddForce((-Vector3.right + Vector3.up) * 3f, ForceMode.Impulse);
         reward.GetComponent<Rigidbody>().AddExplosionForce(400f, lootSpawn.transform.position, 10f, 500f);
     }
 
+    /// <summary>
+    /// Spawns Weapon randomly or specified by focus value
+    /// </summary>
     public void SpawnLoot()
     {
-
         for (int l = 0; l < loot.Count; l++)
         {
             loot[l].GetComponent<FirearmScript>().weaponRarity = raritySpawn;
@@ -272,27 +194,15 @@ public class LootScript : MonoBehaviour
             lootGrant = focusTarget;
         }
 
-        //if(loot[lootGrant].GetComponent<FirearmScript>() != null /*&& loot[lootGrant].GetComponent<FirearmScript>().weaponRarity != raritySpawn*/)
-        //{
-        //    if (loot[lootGrant].GetComponent<FirearmScript>().isExotic == true)
-        //    {
-        //        loot[lootGrant].GetComponent<FirearmScript>().weaponRarity = 5;
-        //    }
-
-        //    else
-        //    {
-        //        loot[lootGrant].GetComponent<FirearmScript>().weaponRarity = raritySpawn;
-        //    }
-        //}
-
         GameObject reward = Instantiate(loot[lootGrant], lootSpawn.transform.position, lootSpawn.transform.rotation);
-        //reward.GetComponent<FirearmScript>().weaponRarity = raritySpawn;
-        //reward.GetComponent<FirearmScript>().RarityAugment();
 
         //Removes (Clone) from name
         reward.name = loot[lootGrant].name;
     }
 
+    /// <summary>
+    /// Triggers SpawnDrop() after a delay
+    /// </summary>
     IEnumerator SpawnRepeatedly()
     {
         spawnAgain = 0.0f;
@@ -301,15 +211,7 @@ public class LootScript : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
-    {
-        if(isChest == true)
-        {
-            if (collision.gameObject.CompareTag("Player"))
-            {
-                return;
-            }
-        }
-        
+    {       
         if(isDrop == true)
         {
             if(collision.gameObject.CompareTag("Player"))
@@ -319,40 +221,4 @@ public class LootScript : MonoBehaviour
             }
         }
     } 
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            //other.gameObject.GetComponent<PlayerInventoryScript>().kioskText.text = "'E' Purchase Random Weapon: " + kioskPrice + "\n" +
-            //        "'Q' Raise Rarity (Spawns rarer weapon, closes Kiosk on purchase): " + gamblePrice;
-
-            //if(raritySpawn == 5)
-            //{
-            //    other.gameObject.GetComponent<PlayerInventoryScript>().kioskText.text = "'E' Purchase Exotic Weapon: " + kioskPrice + "\n" +
-            //        "'Q' Purchase Random Weapon: " + gamblePrice;
-            //}
-
-            //inProx = true;
-            
-            //if(turnOff == true)
-            //{
-            //    other.gameObject.GetComponent<PlayerInventoryScript>().kioskText.text = "Unavailable.";
-            //}
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            inProx = false;
-
-            //if (isKiosk == true)
-            //{
-            //    other.gameObject.GetComponent<PlayerInventoryScript>().kioskText.text = " ";
-            //}
-        }
-    }
-
 }

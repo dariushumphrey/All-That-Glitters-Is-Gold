@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class LucentScript : MonoBehaviour
 {
-    public int lucentGift;
-    public bool threat = false;
-    public GameObject shatterEffect;
+    public int lucentGift; //Lucent cluster worth
+    public bool threat = false; //Grants ability to damage Player if true
+    public GameObject shatterEffect; //VFX that plays on condition
 
-    private float shatterPercent = 150f;
-    private int shatterDamage;
-    private bool cascade = false;
-    internal bool shot = false;
-    internal float shatterDelayTime = 0.3f;
+    private float shatterPercent = 150f; //Percent that cluster damage increases by
+    private int shatterDamage; //Lucent cluster damage
+    private bool cascade = false; //Grants ability to trigger cluster detonation if true
+    internal bool shot = false; //Confirms damage by source if true
+    internal float shatterDelayTime = 0.3f; //Time to wait before detonation
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +23,7 @@ public class LucentScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Applies shatter damage in radius to Enemies, triggers detonation in other clusters
         if(shot)
         {
             Vector3 epicenter = transform.position;
@@ -32,6 +34,7 @@ public class LucentScript : MonoBehaviour
 
                 if(hit.gameObject.CompareTag("Enemy"))
                 {
+                    //Triggers stun mechanic on Bosses
                     if(gameObject.transform.parent != null && gameObject.transform.parent.GetComponent<ReplevinScript>().amBoss)
                     {
                         if(gameObject.GetComponent<Rigidbody>() == null)
@@ -63,18 +66,8 @@ public class LucentScript : MonoBehaviour
 
                 if(hit.gameObject.CompareTag("Lucent"))
                 {
-                    //hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
                     hit.gameObject.GetComponent<LucentScript>().StartCoroutine(hit.gameObject.GetComponent<LucentScript>().Shatter());
                 }
-
-                //Rigidbody inflict = hit.GetComponent<Rigidbody>();
-                //if (inflict != null)
-                //{
-                //    if (inflict.GetComponent<EnemyHealthScript>() != null)
-                //    {
-                //        inflict.GetComponent<EnemyHealthScript>().inflictDamage(shatterDamage);
-                //    }
-                //}
             }
 
             GameObject effect = Instantiate(shatterEffect, transform.position, Quaternion.identity);
@@ -84,6 +77,9 @@ public class LucentScript : MonoBehaviour
         }      
     }
     
+    /// <summary>
+    /// Calculates cluster shatter damage
+    /// </summary>
     public void ShatterCalculation()
     {
         shatterPercent /= 100;
@@ -91,6 +87,9 @@ public class LucentScript : MonoBehaviour
         shatterDamage = (int)shatterPercent;
     }
 
+    /// <summary>
+    ///Applies shatter damage in radius to Enemies, Players (if threat is true), triggers detonation in other clusters after delay
+    /// </summary>
     public IEnumerator Shatter()
     {
         if(gameObject.GetComponent<Rigidbody>() != null)
@@ -148,7 +147,6 @@ public class LucentScript : MonoBehaviour
                     hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(100f, transform.position, 10f, 100f);
                 }
 
-                //hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(100f, transform.position, 10f, 100f);
                 hit.gameObject.GetComponent<LucentScript>().StartCoroutine(hit.gameObject.GetComponent<LucentScript>().Shatter());
 
             }

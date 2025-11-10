@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class SpawnerScript : MonoBehaviour
 {
-    public int difficultySpawn;
-    public int spawnRepeat = 1;
-    public bool spawnIndiv, spawnClust;
-    public Vector3 spawnArena;
-    public List<GameObject> spawned = new List<GameObject>();
-    public List<GameObject> spawnedCluster = new List<GameObject>();
+    public int difficultySpawn; //Enemy toughness specified by difficulty number
+    public int spawnRepeat = 1; //number of times to repeat spawns
+    public int berthChance = 80; //Number to be above in order to apply Berth condition
+    public List<GameObject> spawned = new List<GameObject>(); //List of Enemies to spawn
     private EnemyManagerScript enemy;
 
-    public Collider field;
+    public Collider field; //Trigger-marked Collider used to spawn Enemies within
+    private int berthCondition; //Number used to randomly apply Berth condition
     private Bounds spawnField;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +21,9 @@ public class SpawnerScript : MonoBehaviour
         enemy = FindObjectOfType<EnemyManagerScript>();
     }
 
+    /// <summary>
+    /// Fixes incorrect difficulty assignment
+    /// </summary>
     void DifficultyCorrection()
     {
         if(difficultySpawn <= 0)
@@ -37,17 +40,12 @@ public class SpawnerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(Input.GetKeyDown(KeyCode.Alpha8))
-        //{
-        //    SpawnObject();
-        //}
 
-        //if(Input.GetKeyDown(KeyCode.Alpha7))
-        //{
-        //    SpawnCluster();
-        //}
     }
 
+    /// <summary>
+    /// Spawns a random Enemy type, randomly applies Berth condition
+    /// </summary>
     public void SpawnObject()
     {
         int picker = Random.Range(0, spawned.Count);
@@ -56,15 +54,14 @@ public class SpawnerScript : MonoBehaviour
                                                             Random.Range(-spawnField.extents.y, spawnField.extents.y), 
                                                             Random.Range(-spawnField.extents.z, spawnField.extents.z));
 
-        //Vector3 spawnSite = new Vector3(transform.position.x + Random.Range(-spawnArena.x, spawnArena.x), 0, transform.position.z - Random.Range(-spawnArena.z, spawnArena.z));
         if(spawned[picker].GetComponent<EnemyHealthScript>() != null)
         {
             spawned[picker].GetComponent<EnemyHealthScript>().difficultyValue = difficultySpawn;           
         }
 
         GameObject fresh = Instantiate(spawned[picker], spawnSite, transform.rotation);
-        int berthCondition = Random.Range(0, 101);
-        if (berthCondition > 80 && !spawned[picker].GetComponent<ReplevinScript>().amBoss)
+        berthCondition = Random.Range(0, 101);
+        if (berthCondition > berthChance && !spawned[picker].GetComponent<ReplevinScript>().amBoss)
         {
             fresh.AddComponent<BerthScript>();
             fresh.AddComponent<ColorLerpScript>();
@@ -78,62 +75,32 @@ public class SpawnerScript : MonoBehaviour
         fresh.name = spawned[picker].name;
     }
 
-    void SpawnCluster()
-    {
-        int picker2 = Random.Range(0, spawnedCluster.Count);
-        Vector3 spawnSite = new Vector3(transform.position.x + Random.Range(-spawnArena.x, spawnArena.x), 0, transform.position.z - Random.Range(-spawnArena.z, spawnArena.z));
-        if (spawnedCluster[picker2].GetComponentInChildren<EnemyHealthScript>() != null)
-        {
-            spawnedCluster[picker2].GetComponentInChildren<EnemyHealthScript>().difficultyValue = difficultySpawn;          
-        }
-        GameObject fresh = Instantiate(spawnedCluster[picker2], spawnSite, transform.rotation);
-        fresh.name = spawnedCluster[picker2].name;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            if(spawnIndiv == true)
-            {
-                for (int s = 0; s < spawnRepeat; s++)
-                {
-                    SpawnObject();
-                    //GetComponent<BoxCollider>().enabled = false;
-                }
-
-                enemy.CatalogEnemies();
-                gameObject.SetActive(false);
-            }
-            
-            if(spawnClust == true)
-            {
-                for (int s = 0; s < spawnRepeat; s++)
-                {
-                    SpawnCluster();
-                    //GetComponent<BoxCollider>().enabled = false;
-                }
-
-                enemy.CatalogEnemies();
-                gameObject.SetActive(false);
-
-            }
-        }
-    }
-
-    public void RemoteSpawn()
-    {
-        if (spawnIndiv == true)
-        {
             for (int s = 0; s < spawnRepeat; s++)
             {
                 SpawnObject();
-                //GetComponent<BoxCollider>().enabled = false;
             }
 
             enemy.CatalogEnemies();
             gameObject.SetActive(false);
         }
+    }
+
+    /// <summary>
+    /// Allows other sources to invoke SpawnObject() method
+    /// </summary>
+    public void RemoteSpawn()
+    {
+        for (int s = 0; s < spawnRepeat; s++)
+        {
+            SpawnObject();
+        }
+
+        enemy.CatalogEnemies();
+        gameObject.SetActive(false);
     }
 
     //private void OnDrawGizmos()

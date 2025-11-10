@@ -141,14 +141,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raritySpawn: 1
-  kioskPrice: 0
-  gamblePrice: 0
-  spawnCount: 1
-  pricePercent: 10
-  gamblePercent: 60
+  lootSpamMax: 3
+  focusTarget: -1
   isDrop: 0
   isChest: 1
-  isKiosk: 0
+  spawnRate: 0.08
   drop: {fileID: 0}
   exoticDrop: {fileID: 0}
   loot:
@@ -160,5 +157,5 @@ MonoBehaviour:
   - {fileID: 1640342962202232329, guid: deeff10e063288b49b130d02369c127e, type: 3}
   - {fileID: 4946270343591226302, guid: 0f94d84fb9e4eb045aa6b520d55410ab, type: 3}
   lootSpawn: {fileID: 8233089632965830859}
-  deactivated: {fileID: 0}
-  debug: 1
+  debug: 0
+  spamLoot: 0

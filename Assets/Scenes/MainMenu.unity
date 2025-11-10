@@ -12462,7 +12462,6 @@ MonoBehaviour:
   manager: {fileID: 0}
   chests: []
   spawners: []
-  kioskAdjust: {fileID: 0}
   weaponFocus: -1
   level: 0
   gameTime: 0
@@ -19503,7 +19502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lucentFunds: 0
-  devaluePercent: 20
+  devaluePercent: 70
   timedResetSeconds: 30
   lucentText: {fileID: 2118885833}
   timedResetText: {fileID: 1136334860}

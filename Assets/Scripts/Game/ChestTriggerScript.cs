@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ChestTriggerScript : MonoBehaviour
 {
-    public GameObject chest;
+    public GameObject chest; //Chest game object
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,7 @@ public class ChestTriggerScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //Reactivates Chest, invokes its loot spawn, then game object deactivates itself
         if(other.gameObject.CompareTag("Player"))
         {
             chest.GetComponent<LootScript>().SpawnDrop();

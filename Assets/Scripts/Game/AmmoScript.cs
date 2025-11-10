@@ -11,7 +11,8 @@ public class AmmoScript : MonoBehaviour
 
     private FirearmScript firearm;
     private PlayerInventoryScript player;
-    private int ammoStore = 0;
+    private int ammoStore = 0; //Receives Weapon's reserves size
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +36,8 @@ public class AmmoScript : MonoBehaviour
 
             else
             {
+                //Increases Weapon reserves size by specified percent
+                //Increases all Player Grenade charges by one
                 firearm = other.gameObject.GetComponentInChildren<FirearmScript>();
                 ammoStore = firearm.reserveSize;
 
