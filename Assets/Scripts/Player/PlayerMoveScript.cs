@@ -84,7 +84,8 @@ public class PlayerMoveScript : MonoBehaviour
             {
                 for (int p = 0; p < backThrust.Count; p++)
                 {
-                    backThrust[p].loop = false;
+                    var main = backThrust[p].GetComponent<ParticleSystem>().main;
+                    main.loop = false;
                     backThrust[p].Stop();
                 }
 
@@ -145,7 +146,8 @@ public class PlayerMoveScript : MonoBehaviour
                 {
                     for(int p = 0; p < backThrust.Count; p++)
                     {
-                        backThrust[p].loop = true;
+                        var main = backThrust[p].GetComponent<ParticleSystem>().main;
+                        main.loop = true;
                         backThrust[p].Play();
                     }
 

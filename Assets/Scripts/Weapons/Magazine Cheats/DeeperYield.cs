@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeeperYield : MagazineScript
+public class DeeperYield : MonoBehaviour
 {
     private FirearmScript firearm;
-    private float magazinePercent = 24f;
-    private int magAdd;
+    private float magazinePercent = 24f; //Percent of ammo capacity to increase
+    private int magAdd; //Used to increase max magazine capacity
 
-    public override void Awake()
+    public void Awake()
     {
         firearm = GetComponent<FirearmScript>();
         Cheat();
-        //GetComponent<MagazineScript>().enabled = false;
     }
 
     // Update is called once per frame
@@ -24,7 +23,8 @@ public class DeeperYield : MagazineScript
     void Cheat()
     {
         //Deeper Yield - 24% Magazine Size
-        
+
+        //Adds a percentage of max magazine capacity onto itself, increasing usable ammo
         magazinePercent /= 100;
         magazinePercent *= firearm.ammoSize;
         magAdd = Mathf.RoundToInt(magazinePercent);

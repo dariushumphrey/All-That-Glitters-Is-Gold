@@ -5,11 +5,12 @@ using UnityEngine;
 public class PosNegDOT : MonoBehaviour
 {
     private EnemyHealthScript enemy;
-    internal int dotDamage;
-    internal int dotRarity = 1;
-    private float dotTimer = 0f;
-    private float damageOverTimeProc = 1f;
-    private float damageOverTimeLength = 10f;
+    internal int dotDamage; //Damage applied
+    internal int dotRarity = 1; //Rarity level of damage-over-time effect
+    private float dotTimer = 0f; //Damage timer
+    private float damageOverTimeProc = 1f; //Time to reach before applying damage
+    private float damageOverTimeLength = 10f; //Duration of damage-over-time
+
     // Start is called before the first frame update
     void Start()
     {

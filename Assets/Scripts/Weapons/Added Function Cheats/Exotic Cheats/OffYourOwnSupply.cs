@@ -6,30 +6,32 @@ using UnityEngine.UI;
 public class OffYourOwnSupply : MonoBehaviour
 {
     private FirearmScript firearm;
-    internal GameObject proc;
+    internal GameObject proc; //Text UI that records Cheat activity
     private PlayerStatusScript player;
-    private float movementPercent = 10f;
-    private int moveAdd;
-    private float recoilZero;
-    private float recoilReset;
-    private float reloadPercent = 20f;
+    private float movementPercent = 10f; //% of Player Movement Speed
+    private int moveAdd; //Number used to increase Movement Speed
+    private float recoilZero = 0f;
+    private float recoilReset; //Holds starting Weapon recoil
+    private float reloadPercent = 20f; //% of increased Reload Speed
+
+    //reloadReset, baseReloadReset - Holds starting Weapon Reload Speed
     private float reloadReset;
     private float baseReloadReset;
-    private float damagePercent = 20f;
-    private int damageAdd;
-    private int damageIncrease;
-    private int dmgIncOne, dmgIncTwo, dmgIncThree;
-    private int dmgReset;
-    private int speedReset;
+    private float damagePercent = 20f; //% of Weapon damage
+    private int damageAdd; //Number to increase Weapon damage
+    private int damageIncrease; //Fixed Weapon damage
+    private int dmgReset; //Holds starting Weapon damage
+    private int speedReset; //Holds starting Movement Speed
 
-    private float procTimer;
-    private float procTimerReset = 15.0f;
-    private bool procConfirm;
+    private float procTimer; //Duration of effects
+    private float procTimerReset = 15.0f; //Holds starting effect duration
+    private bool procConfirm; //Affirms Cheat activation if true
+
     // Start is called before the first frame update
     void Start()
     {
         firearm = GetComponent<FirearmScript>();
-        proc.GetComponent<Text>().text = " ";
+        proc.GetComponent<Text>().text = "";
         player = FindObjectOfType<PlayerStatusScript>();
 
         movementPercent /= 100;
@@ -37,7 +39,6 @@ public class OffYourOwnSupply : MonoBehaviour
         moveAdd = (int)movementPercent;
         speedReset = player.GetComponent<PlayerMoveScript>().speed;
 
-        recoilZero = 0.0f;
         recoilReset = firearm.wepRecoil;
 
         reloadPercent /= 100;
@@ -66,6 +67,7 @@ public class OffYourOwnSupply : MonoBehaviour
         //-20% increase in base damage amplified by x2
         //The duration before your Shield begins regenerating will not resume until the bonus ends.
 
+        //Zeroes shield, recoil, increases Movement Speed, and reduces Reload Speed on input
         if(Input.GetKeyDown(KeyCode.E))
         {
             if (procConfirm != true)
@@ -80,6 +82,7 @@ public class OffYourOwnSupply : MonoBehaviour
             }
         }
 
+        //Increases damage for duration of effect
         if(procConfirm == true)
         {
             procTimer -= Time.deltaTime;
@@ -89,6 +92,7 @@ public class OffYourOwnSupply : MonoBehaviour
 
             firearm.damage = damageIncrease;          
 
+            //Restores attributes to default levels when timer expires
             if (procTimer < 0.0f)
             {
                 firearm.damage = dmgReset;
@@ -97,8 +101,7 @@ public class OffYourOwnSupply : MonoBehaviour
                 firearm.reloadSpeed = firearm.reloadReset;
                 player.GetComponent<PlayerMoveScript>().speed = speedReset;
 
-                //player.StartCoroutine(player.RechargeShield());
-                proc.GetComponent<Text>().text = " ";
+                proc.GetComponent<Text>().text = "";
                 procTimer = procTimerReset;
                 procConfirm = false;
                 return;
@@ -110,7 +113,7 @@ public class OffYourOwnSupply : MonoBehaviour
     {
         if (proc != null)
         {
-            proc.GetComponent<Text>().text = " ";
+            proc.GetComponent<Text>().text = "";
         }
     }
 }

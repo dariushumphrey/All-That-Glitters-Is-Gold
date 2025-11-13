@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class FoggerGrenadeScript : MonoBehaviour
 {
-    public float armingTime;
-    public GameObject smokePlume, smokeRadius;
-    private bool hitOnce = false;
-    internal bool enshroudFlag = false;
+    public float armingTime; //Time delay before detonation
+    public GameObject smokePlume, smokeRadius; //VFX for grenade
+    private bool hitOnce = false; //Confirms at least one surface collision if true
+    internal bool enshroudFlag = false; //Confirms the Cheat "Enshroud" is present if true
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +21,10 @@ public class FoggerGrenadeScript : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Produces a Sphere collider with a 10m radius after a delay
+    /// The collider is marked as a trigger to apply effects
+    /// </summary>
     public IEnumerator SetupGrenade()
     {
         yield return new WaitForSeconds(armingTime);
@@ -53,7 +58,9 @@ public class FoggerGrenadeScript : MonoBehaviour
     {
         if(other.gameObject.tag == "Enemy")
         {
-            other.gameObject.AddComponent<SlowedScript>();       
+            other.gameObject.AddComponent<SlowedScript>();
+            
+            //Enshroud allows Fogger Grenades to apply damage-over-time if true
             if(enshroudFlag)
             {
                 if(!other.gameObject.GetComponent<DamageOverTimeScript>())

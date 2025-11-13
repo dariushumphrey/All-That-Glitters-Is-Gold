@@ -5,20 +5,21 @@ using UnityEngine.UI;
 
 public class EquivalentExchange : MonoBehaviour
 {
-    private float damageReturnPercent = 35f;
-    private float dmgRtnPctReset;
-    private float healthReturnPercent = 35f;
-    private float hthRtnPctReset;
-    private float percentCap = 150f;
-    private int damageSteal;
-    private int healthSteal;
-    private int damageRoof;
+    private float damageReturnPercent = 35f; //% of damage converted to Weapon damage
+    private float dmgRtnPctReset; //Holds starting damage % conversion
+    private float healthReturnPercent = 35f; //% of damage converted to Player Health
+    private float hthRtnPctReset; //Holds starting health % conversion
+    private float percentCap = 150f; //% of maximum Weapon damage allowed
+    private int damageSteal; //Number used to increase Weapon damage
+    private int healthSteal; //Number used to increase Player Health
+    private int damageRoof; //Number used to limit Weapon damage
 
     private FirearmScript firearm;
-    internal GameObject proc;
+    internal GameObject proc; //Text UI that records Cheat activity
     private PlayerStatusScript player;
-    private GameObject activation;
+    private GameObject activation; //VFX used to convey activity
     private Color color = Color.red;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,14 +43,9 @@ public class EquivalentExchange : MonoBehaviour
         //Equivalent Exchange
         //___.text = If you are attacked, 35% of damage received is added to this weapon's base damage. Base damage can increase up to 150%. 35% of damage received is returned as health. 
 
-        if (firearm.damage >= damageRoof)
-        {
-            firearm.damage = damageRoof;
-        }
-
         if (player.playerHit == true && firearm.enabled == true)
-        {
-            //Debug.Log(healthSteal);
+        {   
+            //Converts received damage to Weapon damage and Health
             DamageConversion();
             HealthConversion();            
  
@@ -77,11 +73,16 @@ public class EquivalentExchange : MonoBehaviour
             StartCoroutine(DeconfirmProc());
             player.playerHit = false;
 
-            activation.GetComponent<ParticleSystem>().startColor = color;
+            var main = activation.GetComponent<ParticleSystem>().main;
+            main.startColor = color;
+
             Instantiate(activation, gameObject.transform.root.gameObject.transform.position, transform.rotation);
         }
     }
 
+    /// <summary>
+    /// Converts damaged received to Weapon damage
+    /// </summary>
     void DamageConversion()
     {
         damageReturnPercent /= 100;
@@ -90,6 +91,9 @@ public class EquivalentExchange : MonoBehaviour
         damageReturnPercent = dmgRtnPctReset;
     }
 
+    /// <summary>
+    /// Converts damage received to Health
+    /// </summary>
     void HealthConversion()
     {
         healthReturnPercent /= 100;
@@ -101,14 +105,14 @@ public class EquivalentExchange : MonoBehaviour
     IEnumerator DeconfirmProc()
     {
         yield return new WaitForSeconds(1f);
-        proc.GetComponent<Text>().text = " ";
+        proc.GetComponent<Text>().text = "";
     }
 
     private void OnDisable()
     {
         if (proc != null)
         {
-            proc.GetComponent<Text>().text = " ";
+            proc.GetComponent<Text>().text = "";
         }
     }
 }

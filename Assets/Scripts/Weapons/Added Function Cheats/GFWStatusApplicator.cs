@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class GFWStatusApplicator : MonoBehaviour
 {
-    public GameObject particles;
-    private GameObject targeted;
-    private List<GameObject> targets = new List<GameObject>();
-    private bool lockedIn = false;
-    private int targetRandom;
-    internal float debuffMultiplier = 1.75f;
-    internal float travelRadius = 20f;
-    internal float travelLerpSpeed = 1f;
-    internal float effectRadius = 10f;
-    internal float effectDuration = 45f;
-    internal bool fatedFlag = false;
+    public GameObject particles; //VFX used to convey activity
+    private GameObject targeted; //Target that winds will track
+    private List<GameObject> targets = new List<GameObject>(); //List of Enemies
+    private int targetRandom; //Number used to select random targets
+    internal float debuffMultiplier = 1.75f; //Strength of Health debuff
+    internal float travelRadius = 20f; //Radius that winds use to find Enemies
+    internal float travelLerpSpeed = 1f; //Rate of speed for winds 
+    internal float effectRadius = 10f; //Radius that winds use to apply effects
+    internal float effectDuration = 45f; //Duration of winds
+    internal bool fatedFlag = false; //Permits Rarity 5 effects if true
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,9 +29,12 @@ public class GFWStatusApplicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Tracks an Enemy
         if(targeted != null)
         {
             transform.position = Vector3.Lerp(transform.position, targeted.transform.position, travelLerpSpeed * Time.deltaTime);
+
+            //Applies damage-over-time if Rarity 5 Weapon made the winds
             if (!targeted.GetComponent<DamageOverTimeScript>() && !targeted.GetComponent<EnemyHealthScript>().isImmune && fatedFlag)
             {
                 targeted.gameObject.AddComponent<DamageOverTimeScript>();
@@ -39,6 +42,7 @@ public class GFWStatusApplicator : MonoBehaviour
                 targeted.GetComponent<DamageOverTimeScript>().damageOverTimeProc = 1f;
             }
 
+            //Finds a new target if tracked target is defeated
             if (targeted.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
             {
                 targeted = null;
@@ -51,6 +55,7 @@ public class GFWStatusApplicator : MonoBehaviour
             transform.position = transform.position;
         }
 
+        //Removes an Enemy from its list when defeated
         if (targets.Count != 0)
         {
             for (int e = 0; e < targets.Count; e++)
@@ -63,6 +68,9 @@ public class GFWStatusApplicator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Searches for Enemies within its radius to track
+    /// </summary>
     private void FindTarget()
     {
         Vector3 epicenter = transform.position;
@@ -84,6 +92,8 @@ public class GFWStatusApplicator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //Applies debuffs to once-unaffected Enemies
+        //Tracks a target if one was not being tracked
         if(other.gameObject.CompareTag("Enemy"))
         {
             if(targeted == null)
@@ -108,7 +118,9 @@ public class GFWStatusApplicator : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.CompareTag("Enemy"))
+        //Applies debuffs to once-unaffected Enemies
+        //Tracks a target if one was not being tracked
+        if (other.gameObject.CompareTag("Enemy"))
         {
             if (targeted == null)
             {

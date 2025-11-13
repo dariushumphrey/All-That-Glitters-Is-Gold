@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeeperStores : MagazineScript
+public class DeeperStores : MonoBehaviour
 {
     private FirearmScript firearm;
-    private float reservePercent = 30f;
-    private int reserveAdd;
+    private float reservePercent = 30f; //Percent of ammo capacity to increase
+    private int reserveAdd; //Used to increase max reserves capacity
 
-    public override void Awake()
+    public void Awake()
     {
         firearm = GetComponent<FirearmScript>();
         Cheat();
-        //GetComponent<MagazineScript>().enabled = false;
     }
 
     // Update is called once per frame
@@ -25,6 +24,7 @@ public class DeeperStores : MagazineScript
     {
         //Deeper Stores - 30% Reserve Size
 
+        //Adds a percentage of max reserve capacity onto itself, increasing stored ammo
         reservePercent /= 100;
         reservePercent *= firearm.reserveSize;
         reserveAdd = Mathf.RoundToInt(reservePercent);

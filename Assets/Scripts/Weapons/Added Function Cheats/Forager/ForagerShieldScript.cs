@@ -5,7 +5,8 @@ using UnityEngine;
 public class ForagerShieldScript : MonoBehaviour
 {
     private GameObject player;
-    internal int shieldAdd;
+    internal int shieldAdd; //Number used to increase Player Shield
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class ForagerShieldScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //Increase Player Shield up to their maximum Shield strength
         if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerStatusScript>().playerShield += shieldAdd;
@@ -33,6 +35,9 @@ public class ForagerShieldScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Causes pickup to Lerp towards Player after delay
+    /// </summary>
     IEnumerator AutoCollection()
     {
         yield return new WaitForSeconds(1f);

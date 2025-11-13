@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class SolutionGrenadeScript : MonoBehaviour
 {
-    public float armingTime;
-    public GameObject acidPool, acidSteam, acidReaction, cloudDetonation;
-    private bool hitOnce = false;
+    public float armingTime; //Time delay before detonation
+    public GameObject cloudDetonation; //VFX for Grenade
+    private bool hitOnce = false; //Confirms at least one surface collision if true
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,28 +20,13 @@ public class SolutionGrenadeScript : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Produces a Sphere collider with a 7m radius after a delay
+    /// The collider is marked as a trigger to apply effects
+    /// </summary>
     public IEnumerator SetupGrenade()
     {
         yield return new WaitForSeconds(armingTime);
-        //acidPool.GetComponent<ParticleSystem>().Play();
-
-        //GameObject pool = Instantiate(acidPool, transform.position, Quaternion.identity);
-        //pool.name = acidPool.name;
-        //pool.GetComponent<ParticleSystem>().Play();
-        //pool.AddComponent<DestroyScript>();
-        //pool.GetComponent<DestroyScript>().destroyTimer = 24f;
-
-        //GameObject steam = Instantiate(acidSteam, transform.position, Quaternion.identity);
-        //steam.name = acidSteam.name;
-        //steam.GetComponent<ParticleSystem>().Play();
-        //steam.AddComponent<DestroyScript>();
-        //steam.GetComponent<DestroyScript>().destroyTimer = 22f;
-
-        //GameObject reaction = Instantiate(acidReaction, transform.position, Quaternion.identity);
-        //reaction.name = acidReaction.name;
-        //reaction.GetComponent<ParticleSystem>().Play();
-        //reaction.AddComponent<DestroyScript>();
-        //reaction.GetComponent<DestroyScript>().destroyTimer = 22f;
 
         GameObject cloud = Instantiate(cloudDetonation, transform.position, Quaternion.identity);
         cloud.name = cloudDetonation.name;
@@ -53,7 +39,6 @@ public class SolutionGrenadeScript : MonoBehaviour
         gameObject.GetComponent<SphereCollider>().isTrigger = true;
 
         Destroy(gameObject, 1f);
-
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -73,23 +58,6 @@ public class SolutionGrenadeScript : MonoBehaviour
             other.gameObject.GetComponent<DamageOverTimeScript>().dotDamage = 875;
             other.gameObject.GetComponent<DamageOverTimeScript>().damageOverTimeLength = 2f;
         }
-
-        //if(other.gameObject.tag == "Lucent")
-        //{
-        //    other.gameObject.GetComponent<LucentScript>().shatterDelayTime = 1f;
-        //    other.gameObject.GetComponent<LucentScript>().StartCoroutine(other.gameObject.GetComponent<LucentScript>().Shatter());
-        //}
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        //if (other.gameObject.tag == "Enemy")
-        //{
-        //    if(other.gameObject.GetComponent<DamageOverTimeScript>())
-        //    {
-        //        Destroy(other.gameObject.GetComponent<DamageOverTimeScript>());
-        //    }
-        //}
     }
 
     private void OnDrawGizmos()

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SDPHealthDebuff : MonoBehaviour
 {
-    internal GameObject activation;
-    internal int damageAmp = 2;
-    internal int dmgShare;
+    internal GameObject activation; //VFX used to convey activity
+    internal int damageAmp = 2; //Multiplier used to increase damage received
+    internal int dmgShare; //Number used to spread damage
 
     private void Awake()
     {

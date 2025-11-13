@@ -6,15 +6,21 @@ using UnityEngine.UI;
 public class AllElseFails : MonoBehaviour
 {
     private FirearmScript firearm;
-    internal GameObject proc;
+    internal GameObject proc; //Text UI that records Cheat activity
     private PlayerStatusScript player;
-    private GameObject activation, effect;
-    private int dmgNullify = 0;
-    private float nullifyTimer = 3f;
-    private float cooldownTimer = 20f;
+    private GameObject activation; //VFX used to convey activity
+    private int dmgNullify = 0; //Receives damage taken
+    private float nullifyTimer = 3f; //Timer used to keep effects active
+    private float cooldownTimer = 20f; //Duration of effect cooldown
+
+    //nullifyReset - holds starting effect duration
+    //cooldownReset - holds starting cooldown duration
     private float nullifyReset, cooldownReset;
+
+    //invulnerable - Affirms Player immunity if true
+    //cooldown - Affirms effect timeout if true
     private bool invulnerable, cooldown = false;
-    private bool done = false;
+    private bool done = false; //Allows an effect once if true;
 
     // Start is called before the first frame update
     void Start()
@@ -22,24 +28,21 @@ public class AllElseFails : MonoBehaviour
         firearm = GetComponent<FirearmScript>();
         player = FindObjectOfType<PlayerStatusScript>();
         activation = Resources.Load<GameObject>("Particles/AllElseFailsActive");
-        proc.GetComponent<Text>().text = " ";
+        proc.GetComponent<Text>().text = "";
 
-        if(firearm.weaponRarity == 5)
+        var main = activation.GetComponent<ParticleSystem>().main;
+
+        //Rarity 5 Weapons increase immunity duration and decrease cooldown
+        //VFX duration is increased to match effect duration
+        if (firearm.weaponRarity == 5)
         {
             nullifyTimer = 5f;
-            nullifyReset = nullifyTimer;
-            activation.GetComponent<ParticleSystem>().startLifetime = 5f;
-
             cooldownTimer = 10f;
-            cooldownReset = cooldownTimer;
+            main.startLifetime = 5f;
         }
 
-        else
-        {
-            nullifyReset = nullifyTimer;
-            cooldownReset = cooldownTimer;
-        }
-       
+        nullifyReset = nullifyTimer;
+        cooldownReset = cooldownTimer;
     }
 
     // Update is called once per frame
@@ -54,7 +57,7 @@ public class AllElseFails : MonoBehaviour
 
             if(invulnerable)
             {
-                //player.isInvincible = true;
+                //Taking damage adds the full value back as Shield/Health
                 if (player.playerHit == true)
                 {
                     dmgNullify = player.dmgReceived;
@@ -85,6 +88,7 @@ public class AllElseFails : MonoBehaviour
                 nullifyTimer -= Time.deltaTime;
                 proc.GetComponent<Text>().text = "All Else Fails: " + nullifyTimer.ToString("F0") + "s";
 
+                //Produces VFX and childs effect to Player
                 if(!done)
                 {
                     GameObject effect = Instantiate(activation, gameObject.transform.root.gameObject.transform.position + (Vector3.up * 1.5f), transform.rotation, gameObject.transform.root.gameObject.transform);
@@ -104,6 +108,7 @@ public class AllElseFails : MonoBehaviour
                 }
                 
 
+                //Effect expires and enters cooldown
                 if (nullifyTimer <= 0f)
                 {
                     nullifyTimer = nullifyReset;
@@ -124,7 +129,7 @@ public class AllElseFails : MonoBehaviour
                 done = false;
                 cooldownTimer = cooldownReset;
                 cooldown = false;
-                proc.GetComponent<Text>().text = " ";
+                proc.GetComponent<Text>().text = "";
             }
         }
     }
@@ -133,7 +138,7 @@ public class AllElseFails : MonoBehaviour
     {
         if (proc != null)
         {
-            proc.GetComponent<Text>().text = " ";
+            proc.GetComponent<Text>().text = "";
         }
     }
 }

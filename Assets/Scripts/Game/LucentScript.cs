@@ -10,7 +10,6 @@ public class LucentScript : MonoBehaviour
 
     private float shatterPercent = 150f; //Percent that cluster damage increases by
     private int shatterDamage; //Lucent cluster damage
-    private bool cascade = false; //Grants ability to trigger cluster detonation if true
     internal bool shot = false; //Confirms damage by source if true
     internal float shatterDelayTime = 0.3f; //Time to wait before detonation
 

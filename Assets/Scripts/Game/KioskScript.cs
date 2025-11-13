@@ -1053,67 +1053,49 @@ public class KioskScript : MonoBehaviour
         if (stOneStr == "1")
         {
             cheatOne.text = "Deep Yield: " + "\n" + "12% Magazine Size";
-
-            item.GetComponent<FirearmScript>().ammoCheatOne = 50;
             item.AddComponent<DeepYield>();
         }
 
         if (stOneStr == "2")
         {
             cheatOne.text = "Deeper Yield" + "\n" + "24% Magazine Size";
-
-            item.GetComponent<FirearmScript>().ammoCheatOne = 51;
             item.AddComponent<DeeperYield>();
         }
 
         if (stTwoStr == "3")
         {
             cheatTwo.text = "Deep Stores" + "\n" + "15% Reserves Size";
-
-            item.GetComponent<FirearmScript>().ammoCheatTwo = 150;
             item.AddComponent<DeepStores>();
         }
 
         if (stTwoStr == "4")
         {
             cheatTwo.text = "Deeper Stores" + "\n" + "30% Reserves Size";
-
-            item.GetComponent<FirearmScript>().ammoCheatTwo = 151;
             item.AddComponent<DeeperStores>();
         }
 
         if (stThreeStr == "5")
         {
             cheatThree.text = "Far Sight" + "\n" + "10% Effective Range Increase";
-
-            item.GetComponent<FirearmScript>().rangeCheatOne = 250;
             item.AddComponent<FarSight>();
         }
 
         if (stThreeStr == "6")
         {
             cheatThree.text = "Farther Sight" + "\n" + "20% Effective Range Increase";
-
-            item.GetComponent<FirearmScript>().rangeCheatOne = 251;
             item.AddComponent<FartherSight>();
         }
 
         if (stFourStr == "7")
         {
             cheatFour.text = "Hasty Hands" + "\n" + "15% Reload Speed Increase";
-
-            item.GetComponent<FirearmScript>().reloadCheatOne = 350;
             item.AddComponent<HastyHands>();
-
         }
 
         if (stFourStr == "8")
         {
             cheatFour.text = "Hastier Hands" + "\n" + "25% Reload Speed Increase";
-
-            item.GetComponent<FirearmScript>().reloadCheatOne = 351;
             item.AddComponent<HastierHands>();
-
         }
 
         if (wepTypeStr == "1" || wepTypeStr == "2" || wepTypeStr == "7")

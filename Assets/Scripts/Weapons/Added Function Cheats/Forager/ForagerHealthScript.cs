@@ -5,7 +5,8 @@ using UnityEngine;
 public class ForagerHealthScript : MonoBehaviour
 {
     private GameObject player;
-    internal int healthAdd;
+    internal int healthAdd; //Number used to increase Player Health
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class ForagerHealthScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //Increase Player Health up to their maximum Health
         if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerStatusScript>().playerHealth += healthAdd;
@@ -33,6 +35,9 @@ public class ForagerHealthScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Causes pickup to Lerp towards Player after delay
+    /// </summary>
     IEnumerator AutoCollection()
     {
         yield return new WaitForSeconds(1f);

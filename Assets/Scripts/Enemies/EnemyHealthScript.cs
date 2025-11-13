@@ -431,9 +431,6 @@ public class EnemyHealthScript : MonoBehaviour
             manager.RemoveEnemies();
             manager.DeathReward(transform.position);
 
-            manager.CadenceRewardPosition(gameObject.transform.position); //For Cadence positioning only
-            manager.FatedCadenceRewardPosition(gameObject.transform.position); //For Cadence positioning only
-
             if (GetComponent<SDPHealthDebuff>() != null)
             {
                 Vector3 epicenter = transform.position;

@@ -6,18 +6,15 @@ using UnityEngine.UI;
 public class ShelterInPlace : MonoBehaviour
 {
     private FirearmScript firearm;
-    internal GameObject proc;
+    internal GameObject proc; //Text UI that records Cheat activity
     private PlayerStatusScript player;
-    private float absorbPercent = 80f;
-    private float absPctReset;
-    private float refrainTimer = 0.0f;
-    private float refrainDamagePercent = 100f;
-    private float rfnDmgReset;
-    private int refrainDamageAdd;
-    private int dmgAbsorbAdd;
-    private int damageNegate = 0;
-    private int dmgIncrease;
-    private int dmgReset;
+    private float absorbPercent = 80f; //% of damage absorbed
+    private float absPctReset; //Holds starting damage % absorbed
+    private float refrainTimer = 0.0f; //Timer used to grante effects
+    private int dmgAbsorbAdd; //Number used to return Health/Shield
+    private int damageNegate = 0; //Receives damage taken
+    private int dmgIncrease; //Fixed Weapon damage number
+    private int dmgReset; //Holds starting Weapon damage
    
     // Start is called before the first frame update
     void Start()
@@ -27,16 +24,8 @@ public class ShelterInPlace : MonoBehaviour
         proc.GetComponent<Text>().text = " ";
 
         absPctReset = absorbPercent;
-        rfnDmgReset = refrainDamagePercent;
-        dmgIncrease = firearm.damage + refrainDamageAdd;
-
+        dmgIncrease = firearm.damage * 2;
         dmgReset = firearm.damage;
-        refrainDamagePercent /= 100;
-        refrainDamagePercent *= firearm.damage;
-        refrainDamageAdd = (int)refrainDamagePercent;
-        refrainDamagePercent = rfnDmgReset;
-        dmgIncrease = firearm.damage + refrainDamageAdd;
-
     }
 
     // Update is called once per frame
@@ -48,6 +37,7 @@ public class ShelterInPlace : MonoBehaviour
         refrainTimer += Time.deltaTime;
         //Debug.Log(refrainTimer.ToString("F0") + "s");
 
+        //Movement resets damage immediately
         if (Input.GetButton("Horizontal") || Input.GetButton("Vertical")) 
         {
             refrainTimer = 0.0f;
@@ -55,12 +45,14 @@ public class ShelterInPlace : MonoBehaviour
             firearm.damage = dmgReset;
         }
 
+        //Damage increases after two seconds
         if (refrainTimer >= 2.0f)
         {
             proc.GetComponent<Text>().text = "Shelter in Place";
             firearm.damage = dmgIncrease;
         }
 
+        //Taking damage triggers damage resistance if Cheat is active
         if (player.playerHit == true && refrainTimer >= 2.0f)
         {
             damageNegate = player.dmgReceived;
@@ -70,6 +62,9 @@ public class ShelterInPlace : MonoBehaviour
         }           
     }
 
+    /// <summary>
+    /// Converts damaged received into Shield or Health dependent on condition
+    /// </summary>
     void DamageResistConversion()
     {
         absorbPercent /= 100;
@@ -109,7 +104,7 @@ public class ShelterInPlace : MonoBehaviour
     {
         if (proc != null)
         {
-            proc.GetComponent<Text>().text = " ";
+            proc.GetComponent<Text>().text = "";
         }
     }
 }

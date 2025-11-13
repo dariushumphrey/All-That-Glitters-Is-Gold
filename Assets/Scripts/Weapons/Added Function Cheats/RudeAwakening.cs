@@ -7,18 +7,19 @@ public class RudeAwakening : MonoBehaviour
 {
     private FirearmScript firearm;
     private PlayerStatusScript player;
-    private GameObject activation, effect;
-    internal GameObject proc;
+    private GameObject activation; //VFX used to convey activity
+    internal GameObject proc; //Text UI that records Cheat activity
 
-    private int waveStacks = 0;
-    private int waveStacksMax;
+    private int waveStacks = 0; //current count of stacks
+    private int waveStacksMax = 3; //maximum stacks allowed
 
-    private float dmgPct = 1000f;
-    private float dmgIncrease = 20f;
-    private int waveDamage;
-    private int dmgNew;
-    private int dmgReset;
-    internal bool killConfirmed;
+    private float dmgPct = 1000f; //% of Weapon damage used for waveDamage
+    private float dmgIncrease = 20f; //% of Weapon damage -- Rarity 5 only
+    private int waveDamage; //Damage caused by AOE wave
+    private int dmgNew; //Number used to cap Weapon damage -- Rarity 5 only
+    private int dmgReset; //Hold starting damage
+    internal bool killConfirmed; //Affirms achieved kill if true
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,27 +28,20 @@ public class RudeAwakening : MonoBehaviour
         activation = Resources.Load<GameObject>("Particles/RudeAwakeningActive");
         proc.GetComponent<Text>().text = " ";
 
+        //Rarity 5 Weapons increase max stacks and calculates a fixed Weapon damage amount
         if(firearm.weaponRarity == 5)
         {
             waveStacksMax = 6;
-        }
 
-        else
-        {
-            waveStacksMax = 3;
-        }
-
-        dmgPct /= 100;
-        dmgPct *= firearm.damage;
-        waveDamage = (int)dmgPct;
-
-        if(firearm.weaponRarity == 5)
-        {
             dmgReset = firearm.damage;
             dmgIncrease /= 100;
             dmgIncrease *= firearm.damage;
             dmgNew = firearm.damage + (int)dmgIncrease;
         }
+
+        dmgPct /= 100;
+        dmgPct *= firearm.damage;
+        waveDamage = (int)dmgPct;
     }
 
     // Update is called once per frame
@@ -56,6 +50,7 @@ public class RudeAwakening : MonoBehaviour
         //Rude Awakening
         //___.text = "Kills build stacks of a heavy-damage AOE blast. [Space] - Cast Blast"  
 
+        //Confirmed kills grant stacks for AOE wave
         if(killConfirmed)
         {
             if(firearm.weaponRarity == 5)
@@ -76,9 +71,11 @@ public class RudeAwakening : MonoBehaviour
             killConfirmed = false;
         }
 
+        //Having at least one stack increases Weapon damage
+        //Damage is restored to normal otherwise
         if(firearm.weaponRarity == 5)
         {
-            if(waveStacks != 0)
+            if(waveStacks >= 1)
             {
                 firearm.damage = dmgNew;
             }
@@ -89,17 +86,18 @@ public class RudeAwakening : MonoBehaviour
             }
         }
 
-        if (waveStacks != 0)
+        if (waveStacks >= 1)
         {
             proc.GetComponent<Text>().text = "Rude Awakening x" + waveStacks;
         }
 
         else
         {
-            proc.GetComponent<Text>().text = " ";
+            proc.GetComponent<Text>().text = "";
         }       
 
-        if(Input.GetKeyDown(KeyCode.E) && waveStacks != 0)
+        //Pressing 'E' casts an AOE wave if Player has at least one stack
+        if(Input.GetKeyDown(KeyCode.E) && waveStacks >= 1)
         {
             waveStacks--;
             if(waveStacks <= 0)
@@ -121,23 +119,6 @@ public class RudeAwakening : MonoBehaviour
                             hit.gameObject.AddComponent<Rigidbody>();
                             hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
                         }
-
-                        //if (hit.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
-                        //{
-                        //    if(hit.GetComponent<Rigidbody>() != null)
-                        //    {
-                        //        hit.GetComponent<Rigidbody>().AddExplosionForce(30f, epicenter, 7.5f, 40.0f, ForceMode.Impulse);
-                        //    }
-
-                        //    else
-                        //    {
-                        //        hit.gameObject.AddComponent<Rigidbody>();
-                        //        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                        //        gameObject.GetComponent<Rigidbody>().freezeRotation = false;
-
-                        //        hit.GetComponent<Rigidbody>().AddExplosionForce(30f, epicenter, 7.5f, 40.0f, ForceMode.Impulse);
-                        //    }
-                        //}
                     }
                 }
 
@@ -146,19 +127,6 @@ public class RudeAwakening : MonoBehaviour
                     hit.gameObject.GetComponent<LucentScript>().lucentGift = 0;
                     hit.gameObject.GetComponent<LucentScript>().shot = true;
                 }
-
-                //Rigidbody inflict = hit.GetComponent<Rigidbody>();
-                //if (inflict != null)
-                //{
-                //    if (inflict.GetComponent<EnemyHealthScript>() != null)
-                //    {
-                //        inflict.GetComponent<EnemyHealthScript>().inflictDamage(waveDamage);
-                //        if (inflict.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
-                //        {
-                //            inflict.AddExplosionForce(30f, epicenter, 7.5f, 40.0f, ForceMode.Impulse);
-                //        }
-                //    }
-                //}
             }
 
             GameObject effect = Instantiate(activation, gameObject.transform.root.gameObject.transform.position, Quaternion.identity);
@@ -170,7 +138,7 @@ public class RudeAwakening : MonoBehaviour
     {
         if (proc != null)
         {
-            proc.GetComponent<Text>().text = " ";
+            proc.GetComponent<Text>().text = "";
         }
     }
 }

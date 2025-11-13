@@ -5,26 +5,20 @@ using UnityEngine.UI;
 
 public class ShotgunFirearm: FirearmScript
 {
-    public int pellets = 5;
-    public float spread;
-    //internal GameObject targetHit;
+    public int pellets = 5; //Number of projectiles released at once
+    public float spread; //Multiplier that affects bounds of pellets fired
 
-    //public Vector3[] pelletContact;
-
-    //public void Start()
-    //{
-    //    bulletTrail = GetComponent<LineRenderer>();
-    //    gunCam = FindObjectOfType<Camera>();
-    //    confirmHit = false;
-    //    pelletContact = new Vector3[pellets];    
-    //}
-
+    /// <summary>
+    /// Activates Weapon firing behavior
+    /// Provides information to Cheats with hit or kill triggers
+    /// </summary>
     public override void FireWeapon()
     {
         fireAgain = fireAgain + Time.deltaTime;
       
         if (Input.GetButtonDown("Fire1") && currentAmmo >= 1 && fireAgain >= fireRate && !isReloading)
         {
+            //Firing timer resets, Ammo decrements/records number of shots
             fireAgain = 0.0f;
             currentAmmo--;
             ammoSpent++;
@@ -55,15 +49,12 @@ public class ShotgunFirearm: FirearmScript
             
                 RaycastHit hit;
 
-                //bulletTrail.SetPosition(0, barrel.position)  
-
+                //Produces the Bullet Trail
                 GameObject start = new GameObject();
                 GameObject.Destroy(start, 0.1f);
 
                 start.name = "Trail";
-
                 start.AddComponent<LineRenderer>();
-
                 start.GetComponent<LineRenderer>().startWidth = 0.1f;
                 start.GetComponent<LineRenderer>().endWidth = 0.1f;
                 start.GetComponent<LineRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
@@ -71,17 +62,15 @@ public class ShotgunFirearm: FirearmScript
                 start.GetComponent<LineRenderer>().material = bulletTrail;
 
                 start.GetComponent<LineRenderer>().SetPosition(0, barrel.transform.position);
-                //start.GetComponent<LineRenderer>().SetPosition(1, rayOrigin + (gunCam.transform.forward * range));
 
                 if (Physics.Raycast(rayOrigin, gunCam.transform.forward, out hit, range, contactOnly))
                 {
-                    //bulletTrail.SetPosition(1, hit.point);
-                    //Instantiate(DPSNumbers, hit.point, transform.rotation);
                     start.gameObject.transform.position = hit.point;
                     start.GetComponent<LineRenderer>().SetPosition(1, hit.point);
 
                     if (hit.collider.tag == "Enemy")
                     {
+                        //Affirms confirmed hits for Cheats
                         confirmHit = true;
                         if (gameObject.GetComponent<MaliciousWindUp>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                         {
@@ -96,6 +85,7 @@ public class ShotgunFirearm: FirearmScript
                         if (gameObject.GetComponent<Cadence>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                         {
                             gameObject.GetComponent<Cadence>().hitConfirmed = true;
+                            gameObject.GetComponent<Cadence>().clusterPosition = hit.point + (hit.normal * 0.01f);
                         }
 
                         if (gameObject.GetComponent<GoodThingsCome>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
@@ -165,13 +155,12 @@ public class ShotgunFirearm: FirearmScript
                         }
 
                         StartCoroutine(DeconfirmHit());
-                        FatedCadenceRewardPosition(hit.collider.transform.position);
 
                         targetHit = hit.transform.gameObject;
 
-                        //For damage falloff checks
                         if (hit.distance <= effectiveRange)
                         {
+                            //Records damage inflicted on non-immune Enemy hit. Records "Immune" on immune Enemy hit
                             if (hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                             {
                                 string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
@@ -182,8 +171,6 @@ public class ShotgunFirearm: FirearmScript
                                 dpsLinesClear = dpsLinesReset;
 
                                 DPSNumbers.text = "Immune";
-                                //dpsText.GetComponent<Text>().text += "\n" + "Immune";
-                                //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
                             }
 
                             else
@@ -196,17 +183,14 @@ public class ShotgunFirearm: FirearmScript
                                 dpsLinesClear = dpsLinesReset;
 
                                 DPSNumbers.text = damage.ToString();
-                                //dpsText.GetComponent<Text>().text += "\n" + damage.ToString();
-                                //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
-
                                 Instantiate(hit.collider.GetComponent<EnemyHealthScript>().blood, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
 
                             }
 
-                            //Instantiate(DPSNumbers, hit.point, transform.rotation);
                             hit.collider.GetComponent<EnemyHealthScript>().inflictDamage(damage);
                             if (hit.collider.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                             {
+                                //Affirms confirmed kills for Cheats
                                 confirmKill = true;
                                 if (gameObject.GetComponent<NotWithAStick>())
                                 {
@@ -231,7 +215,7 @@ public class ShotgunFirearm: FirearmScript
                                 if (gameObject.GetComponent<Cadence>())
                                 {
                                     gameObject.GetComponent<Cadence>().killConfirmed = true;
-                                    CadenceRewardPosition(hit.collider.transform.position);
+                                    gameObject.GetComponent<Cadence>().clusterPosition = hit.collider.transform.position;
 
                                 }
 
@@ -258,17 +242,12 @@ public class ShotgunFirearm: FirearmScript
                                     Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
                                     hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 5f, ForceMode.Impulse);
                                 }
-
-                                //if (hit.collider.GetComponent<Rigidbody>() != null)
-                                //{
-                                //    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 2f, ForceMode.Impulse);
-                                //}
-
                             }
-                        }
+                        } //For damage falloff checks/kill triggers within Effective Range
 
                         if (hit.distance > effectiveRange)
                         {
+                            //Records damage inflicted on non-immune Enemy hit. Records "Immune" on immune Enemy hit
                             if (hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                             {
                                 string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
@@ -279,8 +258,6 @@ public class ShotgunFirearm: FirearmScript
                                 dpsLinesClear = dpsLinesReset;
 
                                 DPSNumbers.text = "Immune";
-                                //dpsText.GetComponent<Text>().text += "\n" + "Immune";
-                                //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
                             }
 
                             else
@@ -293,17 +270,14 @@ public class ShotgunFirearm: FirearmScript
                                 dpsLinesClear = dpsLinesReset;
 
                                 DPSNumbers.text = (damage / 2).ToString();
-                                //dpsText.GetComponent<Text>().text += "\n" + (damage / 2).ToString();
-                                //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
-
                                 Instantiate(hit.collider.GetComponent<EnemyHealthScript>().blood, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
 
                             }
 
-                            //Instantiate(DPSNumbers, hit.point, transform.rotation);
                             hit.collider.GetComponent<EnemyHealthScript>().inflictDamage(damage / 2);
                             if (hit.collider.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                             {
+                                //Affirms confirmed kills for Cheats
                                 confirmKill = true;
                                 if (gameObject.GetComponent<NotWithAStick>())
                                 {
@@ -328,7 +302,7 @@ public class ShotgunFirearm: FirearmScript
                                 if (gameObject.GetComponent<Cadence>())
                                 {
                                     gameObject.GetComponent<Cadence>().killConfirmed = true;
-                                    CadenceRewardPosition(hit.collider.transform.position);
+                                    gameObject.GetComponent<Cadence>().clusterPosition = hit.collider.transform.position;
 
                                 }
 
@@ -355,31 +329,12 @@ public class ShotgunFirearm: FirearmScript
                                     Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
                                     hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 2.5f, ForceMode.Impulse);
                                 }
-
-                                //if (hit.collider.GetComponent<Rigidbody>() != null)
-                                //{
-                                //    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 2f, ForceMode.Impulse);
-                                //}
                             }
-                        }
+                        } //For damage falloff checks/kill triggers while out of Effective Range
 
                         if (hit.collider.GetComponent<ReplevinScript>() != null)
                         {
                             hit.collider.GetComponent<ReplevinScript>().playerFound = true;
-                        }
-
-                        //For Clusters
-                        if (hit.collider.GetComponent<EnemyLeaderScript>() != null)
-                        {
-                            hit.collider.GetComponent<EnemyLeaderScript>().Pursuit();
-                        }
-
-                        if (hit.collider.GetComponent<EnemyFollowerScript>() != null)
-                        {
-                            if (hit.collider.GetComponent<EnemyFollowerScript>().leader != null && hit.collider.GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
-                            {
-                                hit.collider.GetComponent<EnemyFollowerScript>().leader.Pursuit();
-                            }
                         }
                     }
 
@@ -460,15 +415,12 @@ public class ShotgunFirearm: FirearmScript
 
                 else
                 {
-                    //bulletTrail.SetPosition(1, rayOrigin + (gunCam.transform.forward * range));
-
                     start.gameObject.transform.position = rayOrigin + (gunCam.transform.forward * range);
                     start.GetComponent<LineRenderer>().SetPosition(1, rayOrigin + (gunCam.transform.forward * range));
                 }               
             }
 
             muzzleFlash.Play();
-
         }
     }  
 }

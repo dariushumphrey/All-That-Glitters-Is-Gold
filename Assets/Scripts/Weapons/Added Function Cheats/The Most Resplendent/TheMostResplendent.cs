@@ -6,18 +6,18 @@ using UnityEngine.UI;
 public class TheMostResplendent : MonoBehaviour
 {
     private FirearmScript firearm;
-    internal GameObject proc;
+    internal GameObject proc; //Text UI that records Cheat activity
     private PlayerStatusScript player;
-    private GameObject activation, effect;
-    internal GameObject hardLucent;
+    private GameObject activation; //VFX used to convey activity
+    internal GameObject hardLucent; //Lucent game object 
 
-    private int stackMaximum = 10;
-    private int shots = 0;
-    internal int stackCount = 0;
-    internal int stackMax = 1;
-    private bool done = false;
-    internal bool toggle = false;
-    internal bool hitConfirmed = false;
+    private int shotMaximum = 10; //Goal number of confirmed hits
+    private int shots = 0; //Total number of confirmed hits
+    internal int stackCount = 0; //Total number of owned stacks
+    internal int stackMax = 1; //Maximum number of stacks allowed
+    private bool done = false; //Allows one operation if true;
+    internal bool toggle = false; //Enables/Disables effect if true/false
+    internal bool hitConfirmed = false; //Affirms achieved hit if true
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +27,7 @@ public class TheMostResplendent : MonoBehaviour
         hardLucent = Resources.Load<GameObject>("Game Items/testHardLucent");
         proc.GetComponent<Text>().text = " ";
 
+        //Non-exotic Rarity 5 Weapons increase maximum stacks to 2
         if(firearm.weaponRarity == 5 && !firearm.isExotic)
         {
             stackMax = 2;
@@ -59,11 +60,12 @@ public class TheMostResplendent : MonoBehaviour
             
         }
 
-
+        //Increments confirmed hits up to goal number
+        //Reaching goal number grants one stack
         if (hitConfirmed == true && stackCount != stackMax)
         {
             shots++;
-            if(shots >= stackMaximum)
+            if(shots >= shotMaximum)
             {
                 if(!done)
                 {
@@ -78,6 +80,7 @@ public class TheMostResplendent : MonoBehaviour
             done = false;
         }
 
+        //Enables effect upon input with at least one stacks
         if(Input.GetKeyDown(KeyCode.E) && stackCount >= 1)
         {
             if(!toggle)
@@ -96,7 +99,7 @@ public class TheMostResplendent : MonoBehaviour
     {
         if (proc != null)
         {
-            proc.GetComponent<Text>().text = " ";
+            proc.GetComponent<Text>().text = "";
         }
     }
 }

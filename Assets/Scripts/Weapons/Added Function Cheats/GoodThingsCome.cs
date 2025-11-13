@@ -8,66 +8,58 @@ public class GoodThingsCome : MonoBehaviour
     private FirearmScript firearm;
     private PlayerMoveScript move;
     private PlayerStatusScript player;
-    internal GameObject proc;
-    private float movementPercent = 25f;
-    private int moveNew;
-    private float resistancePercent = 20f;
-    private int dmgReduce;
-    private int resistanceAdd;
-    private float recoilPercent = 45f;
-    private float recoilNew;
-    private float granterTimer = 0f;
-    private float granterStop = 5f;
-    private float granterReset;
-    private int movementReset;
-    private int reserveCurrent;
-    private int reserveReset;
-    private float resistanceReset;
-    private float recoilReset;
-    internal bool hitConfirmed;
-    private bool inFirefight = false;
+    internal GameObject proc; //Text UI that records Cheat activity
+    private float movementPercent = 25f; //% of Movement Speed to increase
+    private int moveNew; //New Player speed 
+    private float resistancePercent = 20f; //% of Damage received to resist
+    private int dmgReduce; //Receives damage taken
+    private int resistanceAdd; //Number used to restore Player Health/Shield
+    private float recoilPercent = 45f; //% of Recoil to reduce
+    private float recoilNew; //New Weapon recoil value
+    private float granterTimer = 0f; //Timer used to activate effects
+    private float granterStop = 5f; //Timer used to revert effects
+    private float granterReset; //Holds starting timer value (granterStop)
+    private int movementReset; //Holds starting Player Movement Speed
+    private int reserveReset; //Holds current Weapon reserve ammo
+    private float resistanceReset; //Holds % of Damage resistance
+    private float recoilReset; //Holds starting Weapon recoil
+    internal bool hitConfirmed; //Affirms achieved hit if true
+    private bool inFirefight = false; //Affirms active Player combat if true
+
     // Start is called before the first frame update
     void Start()
     {
         firearm = GetComponent<FirearmScript>();
         move = FindObjectOfType<PlayerMoveScript>();
         player = FindObjectOfType<PlayerStatusScript>();
-        proc.GetComponent<Text>().text = " ";
+        proc.GetComponent<Text>().text = "";
 
         granterReset = granterStop;
 
+        //Non-exotic Rarity 5 Weapons double the percentages of 
+        //Damage resistance, Movement Speed, and Recoil reduction
         if(firearm.weaponRarity == 5 && !firearm.isExotic)
         {
             resistancePercent *= 2;
-            resistanceReset = resistancePercent;
-
             movementPercent *= 2;
-            movementReset = move.speed;
-            movementPercent /= 100;
-            movementPercent *= move.speed;
-            moveNew = move.speed + (int)movementPercent;
-
             recoilPercent *= 2;
-            recoilReset = firearm.wepRecoil;
-            recoilPercent /= 100;
-            recoilPercent *= firearm.wepRecoil;
-            recoilNew = firearm.wepRecoil - recoilPercent;
         }
 
-        else
-        {
-            resistanceReset = resistancePercent;
+        movementReset = move.speed;
+        resistanceReset = resistancePercent;
+        recoilReset = firearm.wepRecoil;
 
-            movementReset = move.speed;
-            movementPercent /= 100;
-            movementPercent *= move.speed;
-            moveNew = move.speed + (int)movementPercent;
+        movementPercent /= 100;
+        movementPercent *= move.speed;
+        moveNew = move.speed + (int)movementPercent;
 
-            recoilReset = firearm.wepRecoil;
-            recoilPercent /= 100;
-            recoilPercent *= firearm.wepRecoil;
-            recoilNew = firearm.wepRecoil - recoilPercent;
-        }         
+        resistancePercent /= 100;
+        resistancePercent *= dmgReduce;
+        resistanceAdd = (int)resistancePercent;
+
+        recoilPercent /= 100;
+        recoilPercent *= firearm.wepRecoil;
+        recoilNew = firearm.wepRecoil - recoilPercent;
     }
 
     // Update is called once per frame
@@ -80,6 +72,7 @@ public class GoodThingsCome : MonoBehaviour
         //45% Recoil Reduction
         //The bonus ends when you exit combat.
 
+        //Inflicting or receiving damage places Player in a firefight state
         if(hitConfirmed && firearm.enabled == true || player.playerHit == true && firearm.enabled == true) 
         {
             inFirefight = true;
@@ -89,6 +82,7 @@ public class GoodThingsCome : MonoBehaviour
 
         if(inFirefight)
         {
+            //Being in a firefight grants benefits immediately
             if(firearm.weaponRarity == 5 && !firearm.isExotic)
             {
                 move.speed = moveNew;
@@ -103,7 +97,6 @@ public class GoodThingsCome : MonoBehaviour
                 reserveReset = firearm.reserveAmmo;
                 firearm.reserveAmmo = reserveReset;
 
-                //firearm.currentAmmo = firearm.ammoSize;
                 firearm.ammoSpent = 0;
 
                 proc.GetComponent<Text>().text = "Good Things Come Instantly";
@@ -111,6 +104,7 @@ public class GoodThingsCome : MonoBehaviour
 
             else
             {
+                //Being in a firefight for a short time grants benefits
                 granterTimer += Time.deltaTime;
                 if (granterTimer >= 3f)
                 {
@@ -127,6 +121,7 @@ public class GoodThingsCome : MonoBehaviour
                 }
             }         
 
+            //Deactivates benefits when Player disengages from a firefight
             granterStop -= Time.deltaTime;
             if(granterStop <= 0f)
             {
@@ -137,18 +132,16 @@ public class GoodThingsCome : MonoBehaviour
                 firearm.wepRecoil = recoilReset;
 
                 inFirefight = false;
-                proc.GetComponent<Text>().text = " ";
+                proc.GetComponent<Text>().text = "";
             }
         }      
     }
 
+    /// <summary>
+    /// Returns modified damage received back to the Player as Health/Shield
+    /// </summary>
     void DamageResistConversion()
     {
-        resistancePercent /= 100;
-        resistancePercent *= dmgReduce;
-        resistanceAdd = (int)resistancePercent;
-        resistancePercent = resistanceReset;
-
         if (player.playerShield <= 0)
         {
             if (player.playerHealth >= player.playerHealthMax)

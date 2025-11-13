@@ -6,9 +6,10 @@ public class ForagerAmmoScript : MonoBehaviour
 {
     private FirearmScript firearm;
     private PlayerInventoryScript player;
-    private GameObject lerpPoint;
-    internal int ammoAdd;
-    internal int overflowCap;
+    private GameObject lerpPoint; //Object to lerp towards
+    internal int ammoAdd; //Number used to increase Weapon ammo
+    internal int overflowCap; //Number used to limit Weapon magazine
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +25,7 @@ public class ForagerAmmoScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //Fills Weapon ammo up to overflow cap and increase count of equipped grenade
         if(collision.gameObject.CompareTag("Player"))
         {
             firearm = collision.gameObject.GetComponentInChildren<FirearmScript>();
@@ -53,6 +55,9 @@ public class ForagerAmmoScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Causes pickup to Lerp towards Player after delay
+    /// </summary>
     IEnumerator AutoCollection()
     {
         yield return new WaitForSeconds(1f);

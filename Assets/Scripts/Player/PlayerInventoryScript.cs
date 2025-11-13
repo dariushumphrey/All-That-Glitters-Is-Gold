@@ -345,9 +345,6 @@ public class PlayerInventoryScript : MonoBehaviour
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
                 reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                inventory[selection].GetComponent<ReloadSpeedScript>().enabled = true;
-                inventory[selection].GetComponent<RangeScript>().enabled = true;
-                inventory[selection].GetComponent<MagazineScript>().enabled = true;
                 inventory[selection].gameObject.SetActive(true);
 
                 inventory[0].GetComponent<FirearmScript>().enabled = false;
@@ -372,9 +369,6 @@ public class PlayerInventoryScript : MonoBehaviour
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
                 reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                inventory[selection].GetComponent<ReloadSpeedScript>().enabled = true;
-                inventory[selection].GetComponent<RangeScript>().enabled = true;
-                inventory[selection].GetComponent<MagazineScript>().enabled = true;
                 inventory[selection].gameObject.SetActive(true);
 
                 inventory[selection + 1].GetComponent<FirearmScript>().enabled = false;
@@ -411,9 +405,6 @@ public class PlayerInventoryScript : MonoBehaviour
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
                 reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                inventory[selection].GetComponent<ReloadSpeedScript>().enabled = true;
-                inventory[selection].GetComponent<RangeScript>().enabled = true;
-                inventory[selection].GetComponent<MagazineScript>().enabled = true;
                 inventory[selection].gameObject.SetActive(true);
 
                 inventory[inventory.Count - 1].GetComponent<FirearmScript>().enabled = false;
@@ -438,9 +429,6 @@ public class PlayerInventoryScript : MonoBehaviour
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
                 reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                inventory[selection].GetComponent<ReloadSpeedScript>().enabled = true;
-                inventory[selection].GetComponent<RangeScript>().enabled = true;
-                inventory[selection].GetComponent<MagazineScript>().enabled = true;
                 inventory[selection].gameObject.SetActive(true);
 
                 inventory[selection - 1].GetComponent<FirearmScript>().enabled = false;
@@ -543,45 +531,45 @@ public class PlayerInventoryScript : MonoBehaviour
     void DisplayCheats()
     {
         //Yields -- Cheat 1
-        if(inventory[selection].GetComponent<FirearmScript>().ammoCheatOne <= 50)
+        if(inventory[selection].GetComponent<DeepYield>())
         {
             cheatOne.text = "Deep Yield (+12% MAG)";
         }
 
-        if (inventory[selection].GetComponent<FirearmScript>().ammoCheatOne > 50 || inventory[selection].GetComponent<FirearmScript>().isExotic == true)
+        if (inventory[selection].GetComponent<DeeperYield>())
         {
             cheatOne.text = "Deeper Yield (+24% MAG)";
         }
 
         //Stores -- Cheat 2
-        if (inventory[selection].GetComponent<FirearmScript>().ammoCheatTwo <= 150)
+        if (inventory[selection].GetComponent<DeepStores>())
         {
             cheatTwo.text = "Deep Stores (+15% RES)";
         }
 
-        if (inventory[selection].GetComponent<FirearmScript>().ammoCheatTwo > 150 || inventory[selection].GetComponent<FirearmScript>().isExotic == true)
+        if (inventory[selection].GetComponent<DeeperStores>())
         {
             cheatTwo.text = "Deeper Stores (+30% RES)";
         }
 
         //Sights -- Cheat 3
-        if (inventory[selection].GetComponent<FirearmScript>().rangeCheatOne <= 250)
+        if (inventory[selection].GetComponent<FarSight>())
         {
             cheatThree.text = "Far Sight (+10% EFR)";
         }
 
-        if (inventory[selection].GetComponent<FirearmScript>().rangeCheatOne > 250 || inventory[selection].GetComponent<FirearmScript>().isExotic == true)
+        if (inventory[selection].GetComponent<FartherSight>())
         {
             cheatThree.text = "Farther Sight (+20% EFR)";
         }
 
         //Hands -- Cheat 4
-        if (inventory[selection].GetComponent<FirearmScript>().reloadCheatOne <= 350)
+        if (inventory[selection].GetComponent<HastyHands>())
         {
             cheatFour.text = "Hasty Hands (+15% RLD)";
         }
 
-        if (inventory[selection].GetComponent<FirearmScript>().reloadCheatOne > 350 || inventory[selection].GetComponent<FirearmScript>().isExotic == true)
+        if (inventory[selection].GetComponent<HastierHands>())
         {
             cheatFour.text = "Hastier Hands (+25% RLD)";
         }
@@ -596,124 +584,126 @@ public class PlayerInventoryScript : MonoBehaviour
         else if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 2 || inventory[selection].GetComponent<FirearmScript>().weaponRarity == 3)
         {
             //Wait! Now I'm Ready!
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 450)
+            if (inventory[selection].GetComponent<WaitNowImReady>())
             {
                 cheatTraitOne.text = "Wait! Now I'm Ready!" + '\n' +
                     "Kills with this Weapon restore 10% of Shield strength.";               
             }
 
             //Efficacy
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 450 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 500)
+            if (inventory[selection].GetComponent<Efficacy>())
             {
                 cheatTraitOne.text = "Efficacy" + '\n' +
                     "Enemy hits increases this Weapon's base damage by 1%.";
             }
 
             //Inoculated
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 500 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 550)
+            if (inventory[selection].GetComponent<Inoculated>())
             {
                 cheatTraitOne.text = "Inoculated" + '\n' +
                     "Kills with this Weapon restore 5% of Health.";
             }
 
             //Rude Awakening
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 550 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 600)
+            if (inventory[selection].GetComponent<RudeAwakening>())
             {
                 cheatTraitOne.text = "Rude Awakening" + '\n' +
                     "[E] - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
             }
 
             //Not with a Stick
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 600 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 650)
+            if (inventory[selection].GetComponent<NotWithAStick>())
             {
                 cheatTraitOne.text = "Not with a Stick" + '\n' +
                     "Kills with this Weapon increase Effective Range by 30% of max Range.";
             }
 
             //Malicious Wind-Up
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 650 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 700)
+            if (inventory[selection].GetComponent<MaliciousWindUp>())
             {
                 cheatTraitOne.text = "Malicious Wind-Up" + '\n' +
                     "Inflicting Damage increases Reload Speed by 0.75%.";
             }
 
             //Positive-Negative
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 700 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 750)
+            if (inventory[selection].GetComponent<PositiveNegative>())
             {
                 cheatTraitOne.text = "Positive-Negative" + '\n' +
                     "Moving generates a charge. While halfway charged, Enemy hits apply damage-over-time.";
             }
 
             //Cadence
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 750 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 800)
+            if (inventory[selection].GetComponent<Cadence>())
             {
                 cheatTraitOne.text = "Cadence" + '\n' +
                     "Every third Enemy kill spawns a Lucent cluster.";
             }
 
             //Good Things Come
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 800 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 850)
+            if (inventory[selection].GetComponent<GoodThingsCome>())
             {
                 cheatTraitOne.text = "Good Things Come" + '\n' +
                 "Being in combat grants increased movement and reduces recoil and damage taken.";
             }
 
             //All Else Fails
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 850 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 900)
+            if (inventory[selection].GetComponent<AllElseFails>())
             {
                 cheatTraitOne.text = "All Else Fails" + '\n' +
                     "When Shield depletes, all incoming Enemy damage is nullified for three seconds.";
             }
 
             //The Most Resplendent
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 900 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 950) //New
+            if (inventory[selection].GetComponent<TheMostResplendent>())
             {
                 cheatTraitOne.text = "The Most Resplendent" + '\n' +
                     "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
             }
 
             //Fulminate
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 950 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 1000)
+            if (inventory[selection].GetComponent<Fulminate>())
             {
                 cheatTraitOne.text = "Fulminate" + '\n' +
                     "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Melee kills cast a Destruct Grenade.";
             }
 
             //Forager
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 1000 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 1050)
+            if (inventory[selection].GetComponent<Forager>())
             {
                 cheatTraitOne.text = "Forager" + '\n' +
                     "Weapon or Melee kills produce a burst of Lucent clusters, Health, Shield, and Ammo pickups.";
             }
 
             //Counterplay
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 1050 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 1100)
+            if (inventory[selection].GetComponent<Counterplay>())
             {
                 cheatTraitOne.text = "Counterplay" + '\n' +
                     "Hits taken during Evasions casts two Lucent clusters and increases Weapon damage by 10%. Stacks 3x.";
             }
 
             //Enshroud
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 1100 && inventory[selection].GetComponent<FirearmScript>().cheatRNG <= 1150)
+            if (inventory[selection].GetComponent<Enshroud>())
             {
                 cheatTraitOne.text = "Enshroud" + '\n' +
                     "Enemy hits increase Melee range by 15%, up to 200%. Melee kills cast a Fogger Grenade.";
-            } //New
+            }
 
             //Gale Force Winds
-            if (inventory[selection].GetComponent<FirearmScript>().cheatRNG > 1150)
+            if (inventory[selection].GetComponent<GaleForceWinds>())
             {
                 cheatTraitOne.text = "Gale Force Winds" + '\n' +
                     "[E] - Cast traveling winds that applies Health and Slowed debuffs to in-range Enemies. Lasts 45s.";
-            } //New
+            }
 
             cheatTraitTwo.text = " ";
         }
 
         else if (inventory[selection].GetComponent<FirearmScript>().weaponRarity >= 4)
         {
+            //Pool 1--------------------------------------------
+
             //All Else Fails
-            if(inventory[selection].GetComponent<FirearmScript>().fcnChtOne <= 410)
+            if (inventory[selection].GetComponent<AllElseFails>())
             {
                 cheatTraitOne.text = "All Else Fails" + '\n' +
                     "When Shield depletes, all incoming Enemy damage is nullified for three seconds.";
@@ -726,7 +716,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Not with a Stick
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 410 && inventory[selection].GetComponent<FirearmScript>().fcnChtOne <= 420)
+            if (inventory[selection].GetComponent<NotWithAStick>())
             {
                 cheatTraitOne.text = "Not with a Stick" + '\n' +
                     "Kills with this Weapon increase Effective Range by 30% of max Range.";
@@ -739,7 +729,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Malicious Wind-Up
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 420 && inventory[selection].GetComponent<FirearmScript>().fcnChtOne <= 430)
+            if (inventory[selection].GetComponent<MaliciousWindUp>())
             {
                 cheatTraitOne.text = "Malicious Wind-Up" + '\n' +
                     "Inflicting Damage increases Reload Speed by 0.75%.";
@@ -752,7 +742,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Positive-Negative
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 430 && inventory[selection].GetComponent<FirearmScript>().fcnChtOne <= 440)
+            if (inventory[selection].GetComponent<PositiveNegative>())
             {
                 cheatTraitOne.text = "Positive-Negative" + '\n' +
                     "Moving generates a charge. While halfway charged, Enemy hits apply damage-over-time.";
@@ -765,7 +755,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Good Things Come
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 440 && inventory[selection].GetComponent<FirearmScript>().fcnChtOne <= 450)
+            if (inventory[selection].GetComponent<GoodThingsCome>())
             {
                 cheatTraitOne.text = "Good Things Come" + '\n' +
                 "Being in combat grants increased movement and reduces recoil and damage taken.";
@@ -779,7 +769,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //The Most Resplendent
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 450 && inventory[selection].GetComponent<FirearmScript>().fcnChtOne <= 460)
+            if (inventory[selection].GetComponent<TheMostResplendent>())
             {
                 cheatTraitOne.text = "The Most Resplendent" + '\n' +
                     "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
@@ -793,7 +783,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Fulminate
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 460 && inventory[selection].GetComponent<FirearmScript>().fcnChtOne <= 470)
+            if (inventory[selection].GetComponent<Fulminate>())
             {
                 cheatTraitOne.text = "Fulminate" + '\n' +
                     "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Melee kills cast a Destruct Grenade.";
@@ -806,7 +796,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Forager
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtOne > 470)
+            if (inventory[selection].GetComponent<Forager>())
             {
                 cheatTraitOne.text = "Forager" + '\n' +
                     "Weapon or Melee kills produce a burst of Lucent clusters, Health, Shield, and Ammo pickups.";
@@ -818,8 +808,10 @@ public class PlayerInventoryScript : MonoBehaviour
                 }
             }
 
+            //Pool 2--------------------------------------------
+
             //Wait! Now I'm Ready
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 490)
+            if (inventory[selection].GetComponent<WaitNowImReady>())
             {
                 cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
                     "Kills with this Weapon restore 10% of Shield strength.";
@@ -832,7 +824,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Efficacy
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 490 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 500)
+            if (inventory[selection].GetComponent<Efficacy>())
             {
                 cheatTraitTwo.text = "Efficacy" + '\n' +
                     "Enemy hits increases this Weapon's base damage by 1%.";
@@ -845,7 +837,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Inoculated
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 500 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 510)
+            if (inventory[selection].GetComponent<Inoculated>())
             {
                 cheatTraitTwo.text = "Inoculated" + '\n' +
                     "Kills with this Weapon restore 5% of Health.";
@@ -858,7 +850,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Cadence
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 510 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 520)
+            if (inventory[selection].GetComponent<Cadence>())
             {
                 cheatTraitTwo.text = "Cadence" + '\n' +
                     "Every third Enemy kill spawns a Lucent cluster.";
@@ -871,7 +863,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Rude Awakening
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 520 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 530)
+            if (inventory[selection].GetComponent<RudeAwakening>())
             {
                 cheatTraitTwo.text = "Rude Awakening" + '\n' +
                     "[E] - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
@@ -884,7 +876,7 @@ public class PlayerInventoryScript : MonoBehaviour
             } 
 
             //Counterplay
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 530 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 540)
+            if (inventory[selection].GetComponent<Counterplay>())
             {
                 cheatTraitTwo.text = "Counterplay" + '\n' +
                     "Hits taken during Evasions casts two Lucent clusters and increases Weapon damage by 10%. Stacks 3x.";
@@ -897,7 +889,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Enshroud
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 540 && inventory[selection].GetComponent<FirearmScript>().fcnChtTwo <= 550)
+            if (inventory[selection].GetComponent<Enshroud>())
             {
                 cheatTraitTwo.text = "Enshroud" + '\n' +
                     "Enemy hits increase Melee range by 15%, up to 200%. Melee kills cast a Fogger Grenade.";
@@ -907,10 +899,10 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitTwo.text = "Enshroud" + " (Fated)" + '\n' +
                     "Enemy hits increase Melee range by 15%, up to 200%. All Fogger Grenades apply low damage-over-time.";
                 }
-            } //New
+            }
 
             //Gale Force Winds
-            if (inventory[selection].GetComponent<FirearmScript>().fcnChtTwo > 550)
+            if (inventory[selection].GetComponent<GaleForceWinds>())
             {
                 cheatTraitTwo.text = "Gale Force Winds" + '\n' +
                     "[E] - Cast traveling winds that applies Health and Slowed debuffs to in-range Enemies. Lasts 45s.";
@@ -920,7 +912,7 @@ public class PlayerInventoryScript : MonoBehaviour
                     cheatTraitTwo.text = "Gale Force Winds" + " (Fated)" + '\n' +
                     "[E] - Cast faster traveling winds that applies stronger Health debuffs. Applies low damage-over-time to tracked Enemies.";
                 }
-            } //New
+            }
         }
 
 

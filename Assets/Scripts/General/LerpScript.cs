@@ -33,7 +33,11 @@ public class LerpScript : MonoBehaviour
         if(automated)
         {
             lerpProgress += Time.deltaTime * lerpSpeed;
-            thing.transform.position = Vector3.Lerp(positionOne.transform.position, positionTwo.transform.position, lerpProgress);
+
+            if(Time.timeScale == 1)
+            {
+                thing.transform.position = Vector3.Lerp(positionOne.transform.position, positionTwo.transform.position, lerpProgress);
+            }
 
             //Restarts Lerp movement when reaching the end
             if(lerpProgress >= 1f)

@@ -7,18 +7,18 @@ public class MaliciousWindUp : MonoBehaviour
 {
     private FirearmScript firearm;
     private EnemyManagerScript enemy;
-    private ParticleSystem activation;
+    private ParticleSystem activation; //VFX used to convey activity
     private Color color = Color.white;
-    internal GameObject proc;
-    private float decreasePercent = 0.75f;
-    private float fatedDecreasePercent = 1.5f;
-    private float reserveRestore = 5f;
-    private bool done = false;
+    internal GameObject proc; //Text UI that records Cheat activity
+    private float decreasePercent = 0.75f; //% of Reload Speed
+    private float reserveRestore = 5f; //% of Weapon' max reserves
+    private bool done = false; //Affirms completed action if true
 
-    private float reloadReset;
-    private int reserveAdd;
-    internal bool killConfirmed = false;
-    internal bool hitConfirmed = false;
+    private float reloadReset; //Holds starting Reload Speed
+    private int reserveAdd; //Number used to increase Weapon' max reserves
+    internal bool killConfirmed = false; //Affirms achieved kill if true
+    internal bool hitConfirmed = false; //Affirms achieved hit if true
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,41 +28,39 @@ public class MaliciousWindUp : MonoBehaviour
 
         reloadReset = firearm.reloadSpeed;
 
+        //Non-exotic Rarity 5 Weapons increase % of Reload Speed and calculate % of Reserves
+        if (firearm.weaponRarity == 5 && !firearm.isExotic)
+        {
+            decreasePercent = 1.5f;
+
+            reserveRestore /= 100;
+            reserveRestore *= firearm.reserveSize;
+            reserveAdd = (int)reserveRestore;
+        }
+
         decreasePercent /= 100;
         decreasePercent *= firearm.reloadSpeed;
 
-        fatedDecreasePercent /= 100;
-        fatedDecreasePercent *= firearm.reloadSpeed;
 
-        reserveRestore /= 100;
-        reserveRestore *= firearm.reserveSize;
-        reserveAdd = (int)reserveRestore;
-
-        proc.GetComponent<Text>().text = " ";
+        proc.GetComponent<Text>().text = "";
     }
 
     // Update is called once per frame
     void Update()
     {
         //Malicious Wind-Up
-        //___.text = "Inflicting Damage increases Reload Speed by 0.25%. This bonus activates on your next reload. 
+        //___.text = "Inflicting Damage increases Reload Speed by 0.75%. This bonus activates on your next reload. 
 
+        //Confirmed hits increase Reload Speed
         if(hitConfirmed == true && firearm.enabled == true)
         {
-            if(firearm.weaponRarity == 5 && !firearm.isExotic)
-            {
-                firearm.reloadSpeed -= fatedDecreasePercent;
-            }
-
-            else
-            {
-                firearm.reloadSpeed -= decreasePercent;
-            }
+            firearm.reloadSpeed -= decreasePercent;
 
             proc.GetComponent<Text>().text = "Malicious Wind-Up Ready";
             hitConfirmed = false;
         }
 
+        //Reloads restore Reload Speed to default
         if (firearm.isReloading == true && firearm.enabled == true)
         {
             if(firearm.reloadSpeed < reloadReset)
@@ -71,7 +69,9 @@ public class MaliciousWindUp : MonoBehaviour
                 
                 if(!done)
                 {
-                    activation.GetComponent<ParticleSystem>().startColor = color;
+                    var main = activation.GetComponent<ParticleSystem>().main;
+                    main.startColor = color;
+
                     Instantiate(activation, gameObject.transform.root.gameObject.transform.position, transform.rotation);
                     done = true;
                 }
@@ -81,13 +81,14 @@ public class MaliciousWindUp : MonoBehaviour
 
             else
             {
-                proc.GetComponent<Text>().text = " ";
+                proc.GetComponent<Text>().text = "";
 
             }
         }
 
         if(firearm.weaponRarity == 5 && !firearm.isExotic)
         {
+            //Confirmed kills adds % of max Reserves onto current Reserves
             if(killConfirmed == true)
             {
                 firearm.reserveAmmo += reserveAdd;
@@ -104,7 +105,7 @@ public class MaliciousWindUp : MonoBehaviour
     IEnumerator ResetReload()
     {
         yield return new WaitForSeconds(firearm.reloadSpeed);
-        proc.GetComponent<Text>().text = " ";
+        proc.GetComponent<Text>().text = "";
         done = false;
     }
 
@@ -112,7 +113,7 @@ public class MaliciousWindUp : MonoBehaviour
     {
         if (proc != null)
         {
-            proc.GetComponent<Text>().text = " ";
+            proc.GetComponent<Text>().text = "";
         }
     }
 }

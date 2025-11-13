@@ -6,7 +6,8 @@ public class ProjectileScript : MonoBehaviour
 {
     public int damage = 100;
     private EnemyManagerScript manager;
-    public bool berthFlag = false;
+    public bool berthFlag = false; //Enemy holds the Berth condition if true
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +22,11 @@ public class ProjectileScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //Adds its own damage to the EnemyManager's damage tracker before destroying itself
         if(collision.collider.gameObject.tag == "Player")
         {
             manager.damageDealt += damage;
             Destroy(gameObject);
-
         }
     }
 
@@ -35,6 +36,7 @@ public class ProjectileScript : MonoBehaviour
         {
             other.gameObject.GetComponent<PlayerStatusScript>().InflictDamage(damage);
 
+            //Projectile applies damage-over-time if Enemy holds the Berth condition
             if(berthFlag)
             {
                 if(other.gameObject.GetComponent<DamageOverTimeScript>())
@@ -51,6 +53,7 @@ public class ProjectileScript : MonoBehaviour
                 }
             }
 
+            //Adds its own damage to the EnemyManager's damage tracker before destroying itself
             manager.damageDealt += damage;
             Destroy(gameObject);
 

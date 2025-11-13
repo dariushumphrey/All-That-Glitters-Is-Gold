@@ -6,16 +6,15 @@ using UnityEngine.UI;
 public class EarlyBerthGetsTheHearst : MonoBehaviour
 {
     private FirearmScript firearm;
-    internal GameObject proc;
+    internal GameObject proc; //Text UI that records Cheat activity
     private EnemyManagerScript enemy;
 
-    private float ebgthPercent = 200f;
-    private int ebgthDamage;
-    private int triggerCount = 2;
-    private int shotCount;
+    private float ebgthPercent = 200f; //% of Berth damage applied from Weapon damage
+    private int ebgthDamage; //Number used to apply Berth damage
+    private int triggerCount = 2; //Goal number for effect trigger
+    private int shotCount; //Total number of confirmed hits
+    internal bool hitConfirmed; //Affirms achieved hit if true
 
-    private int berthChance;
-    internal bool hitConfirmed;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,16 +24,11 @@ public class EarlyBerthGetsTheHearst : MonoBehaviour
         if (GetComponent<SingleFireFirearm>() != null)
         {
             firearm = GetComponent<SingleFireFirearm>();
-            ebgthPercent /= 100;
-            ebgthPercent *= firearm.damage;
-            ebgthDamage = (int)ebgthPercent;
-
         }
 
-        else
-        {
-            //firearm = GetComponent<FirearmScript>();
-        }
+        ebgthPercent /= 100;
+        ebgthPercent *= firearm.damage;
+        ebgthDamage = (int)ebgthPercent;
     }
 
     // Update is called once per frame
@@ -43,18 +37,20 @@ public class EarlyBerthGetsTheHearst : MonoBehaviour
         //Early Berth gets the Hearst
         //___.text = Every other Enemy hit triggers a Berth detonation, inflicting 200% of Weapon damage. 
 
+        //Confirmed hits increases hit counter
         if (hitConfirmed)
         {
             shotCount++;
             hitConfirmed = false;
         }
 
+        //Applies and invokes Berth detonation on Enemies when goal hits are reached
         if (shotCount >= triggerCount)
         {
             shotCount = 0;
 
             firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.AddComponent<BerthScript>();
-            firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().exoticOverride = true;
+            firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().exoticOverride = true; //Deactivates Player damage
 
             firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().berthDamage = ebgthDamage;
             firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().explodeForce = 30.0f;
@@ -66,40 +62,6 @@ public class EarlyBerthGetsTheHearst : MonoBehaviour
             proc.GetComponent<Text>().text = "Early Berth gets the Hearst";
             StartCoroutine(TextClear());
         }
-
-        //if (firearm.GetComponent<SingleFireFirearm>().targetHit != null)
-        //{
-        //    if (firearm.GetComponent<SingleFireFirearm>().targetHit.GetComponent<EnemyHealthScript>().enemyHit == true)
-        //    {
-        //        berthChance = Random.Range(0, 101);
-
-        //        if (firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>() == null)
-        //        {
-        //            if (berthChance >= 85)
-        //            {
-        //                firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.AddComponent<BerthScript>();
-        //                firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().additionalDamage = ebgthDamage;
-        //                firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().explodeForce = 30.0f;
-        //                //firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().Start();
-        //                firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().Explode();
-
-        //                proc.GetComponent<Text>().text = "Early Berth gets the Hearst";
-        //                StartCoroutine(TextClear());
-        //            }
-        //        }
-
-        //        if (firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>() != null)
-        //        {
-        //            firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().explodeForce = 30.0f;
-        //            firearm.GetComponent<SingleFireFirearm>().targetHit.gameObject.GetComponent<BerthScript>().Explode();
-
-        //            proc.GetComponent<Text>().text = "Early Berth gets the Hearst";
-        //            StartCoroutine(TextClear());
-        //        }
-
-        //        firearm.GetComponent<SingleFireFirearm>().targetHit.GetComponent<EnemyHealthScript>().enemyHit = false;
-        //    }
-        //}
     }
 
     IEnumerator TextClear()

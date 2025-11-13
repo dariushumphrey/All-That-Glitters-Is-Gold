@@ -28,7 +28,6 @@ public class EnemyManagerScript : MonoBehaviour
 
     private float dropThreshReset;
     private int deathRewardChance; //Number used for random Loot, Lucent spawning
-    internal int cadenceDeadCount = 0;
     internal Vector3 slainPosition, woundedPosition;
     internal int killCount = 0; //Total count of defeated Enemies
     internal int damageReceived = 0; //Total count of Player damage taken
@@ -54,7 +53,6 @@ public class EnemyManagerScript : MonoBehaviour
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         if(enemyDied)
         {
-            //cadenceDeadCount++;
             killCount++;
             enemyDied = false;
             //StartCoroutine(EnemyDiedReset());
@@ -215,41 +213,6 @@ public class EnemyManagerScript : MonoBehaviour
         }
     }
 
-    //The Following four methods are to help Cadence determine where to spawn Lucent clusters.
-    public void CadenceRewardPosition(Vector3 deathPos)
-    {
-        slainPosition = deathPos;
-    }
-
-    public void CadenceReward()
-    {
-        GameObject rewardTwo = Instantiate(lucent, slainPosition + Vector3.up, loot.transform.rotation);
-        rewardTwo.GetComponent<LucentScript>().lucentGift *= dropRarity;
-        rewardTwo.GetComponent<LucentScript>().ShatterCalculation();
-        rewardTwo.name = loot.name;
-        if (player.zeroGravity)
-        {
-            rewardTwo.GetComponent<Rigidbody>().useGravity = false;
-        }
-    }
-
-    public void FatedCadenceRewardPosition(Vector3 alivePos)
-    {
-        woundedPosition = alivePos;
-    }
-    
-    public void FatedCadenceReward(Vector3 shotPosition)
-    {
-        GameObject rewardTwo = Instantiate(lucent, shotPosition + Vector3.up, loot.transform.rotation);
-        rewardTwo.GetComponent<LucentScript>().lucentGift *= dropRarity;
-        rewardTwo.GetComponent<LucentScript>().ShatterCalculation();
-        rewardTwo.name = loot.name;
-        if (player.zeroGravity)
-        {
-            rewardTwo.GetComponent<Rigidbody>().useGravity = false;
-        }
-    }
-    
     /// <summary>
     /// Clears Enemy list and readds Enemies based on Enemies array
     /// </summary>

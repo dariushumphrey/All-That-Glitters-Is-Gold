@@ -8,12 +8,12 @@ public class Inoculated : MonoBehaviour
     private FirearmScript firearm;
     private PlayerStatusScript player;
     private EnemyManagerScript enemy;
-    private ParticleSystem activation;
+    private ParticleSystem activation; //VFX used to convey activity
     private Color color = Color.green;
-    internal GameObject proc;
-    private float healthPercent = 5f;
-    private int healthGain;
-    internal bool killConfirmed = false;
+    internal GameObject proc; //Text UI that records Cheat activity
+    private float healthPercent = 5f; //% of Player Max Health
+    private int healthGain; //Number used to add onto current Health
+    internal bool killConfirmed = false; //Affirms achieved kill if true
 
     // Start is called before the first frame update
     void Start()
@@ -22,23 +22,19 @@ public class Inoculated : MonoBehaviour
         enemy = FindObjectOfType<EnemyManagerScript>();
         proc.GetComponent<Text>().text = " ";
         activation = Resources.Load<ParticleSystem>("Particles/cheatProcEffect");
-
         player = FindObjectOfType<PlayerStatusScript>();
 
+        //Non-exotic Rarity 5 Weapons increase amount of Health returned
         if (firearm.weaponRarity == 5 && !firearm.isExotic)
         {
             healthPercent = 10f;
-            healthPercent /= 100;
-            healthPercent *= player.playerHealthMax;
-            healthGain = (int)healthPercent;
         }
 
-        else
-        {
-            healthPercent /= 100;
-            healthPercent *= player.playerHealthMax;
-            healthGain = (int)healthPercent;
-        }
+        healthPercent /= 100;
+        healthPercent *= player.playerHealthMax;
+        healthGain = (int)healthPercent;
+
+        proc.GetComponent<Text>().text = "";
     }
 
     // Update is called once per frame
@@ -46,12 +42,12 @@ public class Inoculated : MonoBehaviour
     {
         if(firearm.enabled == true)
         {
+            //Confirmed kills adds % of max Health onto current health
             if (killConfirmed == true)
             {
                 if (player.playerHealth >= player.playerHealthMax)
                 {
                     player.playerHealth = player.playerHealthMax;
-                    //return;
                 }
 
                 else
@@ -60,18 +56,18 @@ public class Inoculated : MonoBehaviour
                     if (player.playerHealth >= player.playerHealthMax)
                     {
                         player.playerHealth = player.playerHealthMax;
-                        //return;
                     }
 
                     proc.GetComponent<Text>().text = "Inoculated";
                     StartCoroutine(ClearText());
-                    killConfirmed = false;
 
-                    activation.GetComponent<ParticleSystem>().startColor = color;
+                    var main = activation.GetComponent<ParticleSystem>().main;
+                    main.startColor = color;
+
                     Instantiate(activation, gameObject.transform.root.gameObject.transform.position, transform.rotation);
-                    //enemy.StartCoroutine(enemy.EnemyDiedReset());
-                    return;
                 }
+
+                killConfirmed = false;
             }
         }     
     }
@@ -79,14 +75,14 @@ public class Inoculated : MonoBehaviour
     IEnumerator ClearText()
     {
         yield return new WaitForSeconds(1f);
-        proc.GetComponent<Text>().text = " ";
+        proc.GetComponent<Text>().text = "";
     }
 
     private void OnDisable()
     {
         if (proc != null)
         {
-            proc.GetComponent<Text>().text = " ";
+            proc.GetComponent<Text>().text = "";
         }
     }
 }

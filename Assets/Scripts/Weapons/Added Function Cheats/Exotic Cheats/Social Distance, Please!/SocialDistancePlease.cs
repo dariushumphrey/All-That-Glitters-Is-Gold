@@ -7,22 +7,21 @@ public class SocialDistancePlease : MonoBehaviour
 {
     private ShotgunFirearm firearm;
     private PlayerStatusScript player;
-    internal GameObject proc;
-    private EnemyManagerScript manager;
+    internal GameObject proc; //Text UI that records Cheat activity
 
-    private float cheatDamagePercent = 30f;
-    private float damageSpreadPercent = 400f;
-    private float damageTimer;
-    private int damageAdd;
-    private int damageShare;
-    private int damageIncrease;
-    private int damageReset;
+    private float cheatDamagePercent = 30f; //% of Weapon damage
+    private float damageSpreadPercent = 400f; //% of damage shared amongst Enemies
+    private float damageTimer; //Duration of effect
+    private int damageAdd; //Number used to increase Weapon damage
+    private int damageShare; //Number used to spread damage to Enemies
+    private int damageIncrease; //Fixed Weapon damage number
+    private int damageReset; //Holds starting Weapon damage
+
     // Start is called before the first frame update
     void Start()
     {
         firearm = GetComponent<ShotgunFirearm>();
         player = FindObjectOfType<PlayerStatusScript>();
-        manager = FindObjectOfType<EnemyManagerScript>();
         proc.GetComponent<Text>().text = " ";
 
         damageReset = firearm.damage;
@@ -47,11 +46,12 @@ public class SocialDistancePlease : MonoBehaviour
 
         //Debug.Log(damageTimer.ToString("F0") + "s");
 
-        if (!firearm.targetHit)
-        {
-            Debug.Log("No one to transmit debuff to yet.");
-        }
+        //if (!firearm.targetHit)
+        //{
+        //    Debug.Log("No one to transmit debuff to yet.");
+        //}
 
+        //Hit targets receive a Health debuff
         if (firearm.targetHit)
         {
             if (firearm.targetHit.gameObject.GetComponent<SDPHealthDebuff>() == null)
@@ -66,7 +66,7 @@ public class SocialDistancePlease : MonoBehaviour
 
             else
             {               
-                proc.GetComponent<Text>().text = " ";
+                proc.GetComponent<Text>().text = "";
                 firearm.targetHit = null;
             }
 
@@ -74,6 +74,7 @@ public class SocialDistancePlease : MonoBehaviour
 
         }
 
+        //Damage is restored to default when time expires
         if (firearm.damage == damageIncrease)
         {
             damageTimer += Time.deltaTime;          
@@ -88,14 +89,14 @@ public class SocialDistancePlease : MonoBehaviour
     IEnumerator TextClear()
     {
         yield return new WaitForSeconds(0.7f);
-        proc.GetComponent<Text>().text = " ";
+        proc.GetComponent<Text>().text = "";
     }
 
     private void OnDisable()
     {
         if (proc != null)
         {
-            proc.GetComponent<Text>().text = " ";
+            proc.GetComponent<Text>().text = "";
         }
     }
 }

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SlowedScript : MonoBehaviour
 {
-    internal float slowedLength = 10f;
+    internal float slowedLength = 10f; //Duration of effect
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +19,9 @@ public class SlowedScript : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Destroys itself after delay
+    /// </summary>
     private IEnumerator KillDebuff()
     {
         yield return new WaitForSeconds(slowedLength);

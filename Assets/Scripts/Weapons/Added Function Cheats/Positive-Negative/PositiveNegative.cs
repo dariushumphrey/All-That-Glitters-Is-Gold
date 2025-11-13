@@ -6,14 +6,15 @@ using UnityEngine.UI;
 public class PositiveNegative : MonoBehaviour
 {
     private FirearmScript firearm;
-    internal GameObject proc;
+    internal GameObject proc; //Text UI that records Cheat activity
     private PlayerMoveScript move;
-    private GameObject activation, secondTry;
-    private Material originalBullet, electricBullet;
-    private float chargePercentage = 0f;
-    private int chargeAccelerant = 20;
-    private float dotPercent = 100f;
-    private int dotStrength;
+    private GameObject activation; //VFX used to convey activity
+    private Material originalBullet, electricBullet; //Materials to change Weapon bullet trail
+    private float chargePercentage = 0f; //Current % of charge
+    private int chargeAccelerant = 20; //Multipler used to increase charge rate
+    private float dotPercent = 100f; //% of Weapon damage used for damage-over-time
+    private int dotStrength; //Damage used for damage-over-time
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,22 +24,17 @@ public class PositiveNegative : MonoBehaviour
         electricBullet = Resources.Load<Material>("Materials/BulletMaterialPositiveNegative");
         originalBullet = firearm.bulletTrail;
 
+        //Non-exotic Rarity 5 Weapons increase damage-over-time percentage
         if (firearm.weaponRarity == 5 && !firearm.isExotic)
         {
             dotPercent = 200f;
-            dotPercent /= 100;
-            dotPercent *= firearm.damage;
-            dotStrength = (int)dotPercent;
         }
 
-        else
-        {
-            dotPercent /= 100;
-            dotPercent *= firearm.damage;
-            dotStrength = (int)dotPercent;
-        }
+        dotPercent /= 100;
+        dotPercent *= firearm.damage;
+        dotStrength = (int)dotPercent;
 
-        proc.GetComponent<Text>().text = " ";       
+        proc.GetComponent<Text>().text = "";       
         
     }  
 
@@ -48,6 +44,7 @@ public class PositiveNegative : MonoBehaviour
         //Positive-Negative
         //___.text = Moving generates a charge. When charged at least halfway, hitting an Enemy applies damage-over-time for ten seconds, inflicting 100% of Weapon damage once every second.     
 
+        //Weapon' bullet trail changes based on current charge
         if (chargePercentage < 50f)
         {
             firearm.bulletTrail = originalBullet;
@@ -68,13 +65,14 @@ public class PositiveNegative : MonoBehaviour
             proc.GetComponent<Text>().text = " ";
         }
 
+        //Movement input generates charge, up to 100%. 
         if(move.horizInput != 0 || move.vertInput != 0)
         {
             chargePercentage += Time.deltaTime * chargeAccelerant;
                       
             if (chargePercentage >= 50f && Time.timeScale == 1)
             {
-                GameObject secondTry = Instantiate(activation, gameObject.transform.root.gameObject.transform.position + Vector3.down, transform.rotation, gameObject.transform.root);
+                GameObject effect = Instantiate(activation, gameObject.transform.root.gameObject.transform.position + Vector3.down, transform.rotation, gameObject.transform.root);
             }
 
             if (chargePercentage >= 100f)
@@ -83,6 +81,7 @@ public class PositiveNegative : MonoBehaviour
             }
         }
 
+        //Lack of movement loses charge, down to 0%
         else
         {
             if(firearm.isExotic == true)
@@ -101,6 +100,7 @@ public class PositiveNegative : MonoBehaviour
             }
         }
 
+        //Confirmed target hits with half-charge applies damage-over-time
         if(firearm.targetHit)
         {
             if(chargePercentage < 50f)
@@ -135,7 +135,9 @@ public class PositiveNegative : MonoBehaviour
     {
         if (proc != null)
         {
-            proc.GetComponent<Text>().text = " ";
+            proc.GetComponent<Text>().text = "";
         }
+
+        chargePercentage = 0f;
     }  
 }

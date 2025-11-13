@@ -6,17 +6,16 @@ using UnityEngine.UI;
 public class AbsolutelyNoStops : MonoBehaviour
 {
     private FirearmScript firearm;
-    internal GameObject proc;
-    private GameObject activation, secondTry;
+    internal GameObject proc; //Text UI that records Cheat activity
+    private GameObject activation; //VFX used to convey activity
 
-    private bool tick;
-    private int dmgIncrease;
-    private float rofPercent = 50f;
-    private float rofReset;
-    private int dmgReset;
-    private float rldReset;
-    private bool tickedAlready;
-    private bool capOne, capTwo;
+    private bool tick; //Affirms Cheat is active if true
+    private int dmgIncrease; //Fixed Weapon damage
+    private float rofPercent = 50f; //% of Weapon Rate of Fire
+    private float rofReset; //Holds starting Weapon Rate of Fire
+    private int dmgReset; //Holds starting Weapon damage
+    private float rldReset; //Holds starting Weapon Reload Speed
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,11 +43,14 @@ public class AbsolutelyNoStops : MonoBehaviour
         //___.text = Expending your magazine automatically fills it from reserves, amplifies damage by 200%, and reduces Recoil and increases Rate of Fire by 50%. 
         //This bonus ends when ammo reserves are depleted or if you stop firing.
 
-        if(tick && Time.timeScale == 1)
+        //Creates VFX to visualize enabled status
+        if (tick && Time.timeScale == 1)
         {
-            GameObject secondTry = Instantiate(activation, gameObject.transform.position, transform.rotation, gameObject.transform);
+            GameObject effect = Instantiate(activation, gameObject.transform.position, transform.rotation, gameObject.transform);
         }
 
+        //Activates Cheat effects if not previously active
+        //If already active, Weapon instantly reloads
         if (firearm.currentAmmo <= 0 && firearm.reserveAmmo > 0)
         {
             if (tick)
@@ -69,6 +71,7 @@ public class AbsolutelyNoStops : MonoBehaviour
             }
         }
 
+        //Restores attributes to default when reserve ammo is empty or if Weapon ceases firing
         if (firearm.reserveAmmo <= 0 || Input.GetButtonUp("Fire1") && tick)
         {
             tick = false;

@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class TMRHardLucentScript : MonoBehaviour
 {
-    public int shockwaveBuildup = 0;
-    public int shockwaveGoal = 2000;
-    public int shatterDamage;
-    public GameObject lucentCluster;
-    public Collider field;
-    public bool fatedCrystal = false;
-    private GameObject miniLucent;
-    private GameObject shatterEffect;
-    private float shatterPercent = 150f;
-    private float effectTimeTotal = 5.5f;
-    private float lucentProduceTimer = 0.5f;
-    private int pMaxHealth;
-    private float restorePercent = 35f;
-    private int restoreAdd;
-    private float produceReset;
-    private int shatterDamageAdd;
-    private Bounds spawnField;
+    public int shockwaveBuildup = 0; //current buildup strength
+    public int shockwaveGoal = 2000; //Goal number of buildup strength
+    public int shatterDamage; //Damage inflicted
+    public GameObject lucentCluster; //Lucent game object
+    public Collider field; //Zone for cluster spawning
+    public bool fatedCrystal = false; //Enables Rarity 5 behavior if true
+    private GameObject miniLucent; //Lucent game object
+    private GameObject shatterEffect; //VFX used to convey activity
+    private float shatterPercent = 150f; //% of shatter damage
+    private float effectTimeTotal = 5.5f; //Duration of Crystal effect
+    private float lucentProduceTimer = 0.5f; //Goal time to spawn Lucent Clusters
+    private int pMaxHealth; //Holds Player max Health
+    private float restorePercent = 35f; //% to restore Player Health by
+    private int restoreAdd; //Number used to add onto Player Health
+    private float produceReset; //Holds starting Lucent Cluster timer
+    private int shatterDamageAdd; //Number used to add onto crystal/cluster damage
+    private Bounds spawnField; //Bounds that clusters spawn within
 
     // Start is called before the first frame update
     void Start()
@@ -37,12 +37,16 @@ public class TMRHardLucentScript : MonoBehaviour
     {
         LucentPassive();
 
+        //Triggers a damage shockwave when buildup reaches goal
         if(shockwaveBuildup >= shockwaveGoal)
         {
             HardLucentShockwave();
         }
     }
 
+    /// <summary>
+    /// Adjusts Hard Lucent crystal shockwave damage
+    /// </summary>
     public void ShatterCalculation()
     {
         shatterPercent /= 100;
@@ -51,6 +55,9 @@ public class TMRHardLucentScript : MonoBehaviour
         shatterDamage += shatterDamageAdd;
     }
 
+    /// <summary>
+    /// Produces Lucent Clusters when timer reaches zero
+    /// </summary>
     public void LucentPassive()
     {
         lucentProduceTimer -= Time.deltaTime;
@@ -68,11 +75,13 @@ public class TMRHardLucentScript : MonoBehaviour
             miniLucent.GetComponent<LucentScript>().ShatterCalculation();
             miniLucent.name = lucentCluster.name;
 
-            //miniLucent.GetComponent<Rigidbody>().AddExplosionForce(100f, transform.forward, 70f, 30f, ForceMode.Impulse);
             miniLucent.GetComponent<Rigidbody>().AddForce(transform.forward * 10f, ForceMode.Impulse);
         }
     }
 
+    /// <summary>
+    /// Shatters Hard Lucent crystal at end of duration
+    /// </summary>
     public void HardLucentShatter()
     {
         Vector3 epicenter = transform.position;
@@ -88,15 +97,6 @@ public class TMRHardLucentScript : MonoBehaviour
                     {
                         gameObject.AddComponent<Rigidbody>();
                     }
-
-                    //gameObject.transform.parent.GetComponent<ReplevinScript>().stunMechanic = null;
-                    //gameObject.transform.parent.GetComponent<ReplevinScript>().enemy.isImmune = false;
-
-                    //if (gameObject.transform.parent.GetComponent<ReplevinScript>().interrupted == false)
-                    //{
-                    //    gameObject.transform.parent.GetComponent<ReplevinScript>().interrupted = true;
-
-                    //}
                 }
 
                 if (hit.GetComponent<EnemyHealthScript>() != null)
@@ -123,6 +123,9 @@ public class TMRHardLucentScript : MonoBehaviour
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Triggers 10m damage shockwave and resets buildup progress
+    /// </summary>
     public void HardLucentShockwave()
     {
         Vector3 epicenter = transform.position;
@@ -138,15 +141,6 @@ public class TMRHardLucentScript : MonoBehaviour
                     {
                         gameObject.AddComponent<Rigidbody>();
                     }
-
-                    //gameObject.transform.parent.GetComponent<ReplevinScript>().stunMechanic = null;
-                    //gameObject.transform.parent.GetComponent<ReplevinScript>().enemy.isImmune = false;
-
-                    //if (gameObject.transform.parent.GetComponent<ReplevinScript>().interrupted == false)
-                    //{
-                    //    gameObject.transform.parent.GetComponent<ReplevinScript>().interrupted = true;
-
-                    //}
                 }
 
                 if (hit.GetComponent<EnemyHealthScript>() != null)
@@ -173,6 +167,9 @@ public class TMRHardLucentScript : MonoBehaviour
         shockwaveBuildup = 0;
     }
 
+    /// <summary>
+    /// Detonates Hard Lucent crystal after delay
+    /// </summary>
     public IEnumerator KillHardLucent()
     {
         yield return new WaitForSeconds(effectTimeTotal);
@@ -183,6 +180,7 @@ public class TMRHardLucentScript : MonoBehaviour
     {
         if(fatedCrystal)
         {
+            //Increases Player Health if Player collides into crystal
             if (collision.gameObject.tag == "Player")
             {
                 pMaxHealth = collision.gameObject.GetComponent<PlayerStatusScript>().playerHealthMax;

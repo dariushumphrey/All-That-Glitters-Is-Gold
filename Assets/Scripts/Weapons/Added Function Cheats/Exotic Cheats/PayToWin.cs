@@ -6,18 +6,18 @@ using UnityEngine.UI;
 public class PayToWin : MonoBehaviour
 {
     private FirearmScript firearm;
-    internal GameObject proc;
+    internal GameObject proc; //Text UI that records Cheat activity
     private PlayerInventoryScript player;
-    private GameObject activation;
+    private GameObject activation; //VFX used to convey activity
     private Color color = Color.cyan;
 
-    private float damageBuff = 50f;
-    private float reloadReset;
-    private int damageAdd;
-    private int stackNum;
-    private int dmgIncrease;
-    private int dmgReset;
-    internal bool hitConfirmed = false;
+    private float damageBuff = 50f; //% of Weapon damage
+    private int damageAdd; //Number used to increase Weapon damage
+    private int stackNum; //Number of current Stacks
+    private int dmgIncrease; //Fixed Weapon damage number
+    private int dmgReset; //Holds starting Weapon damage
+    internal bool hitConfirmed = false; //Affirms achieved hit if true
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,8 +25,6 @@ public class PayToWin : MonoBehaviour
         proc.GetComponent<Text>().text = " ";
         player = FindObjectOfType<PlayerInventoryScript>();
         activation = Resources.Load<GameObject>("Particles/cheatProcEffect");
-
-        reloadReset = firearm.reloadSpeed;
 
         damageBuff /= 100;
         damageBuff *= firearm.damage;
@@ -41,7 +39,7 @@ public class PayToWin : MonoBehaviour
     void Update()
     {
         //Pay to Win
-        //___.text = 'Space' - Consume 10,000 Lucent currency to create 150 stacks of a 50% base damage increase. Activating the conversion on an empty magazine instantly reloads the weapon. Enemy hits removes three stacks.
+        //___.text = 'Space' - Consume 10,000 Lucent currency to create 150 stacks of a 50% base damage increase. Enemy hits removes three stacks.
 
         if(stackNum >= 1 && firearm.enabled == true)
         {
@@ -50,7 +48,7 @@ public class PayToWin : MonoBehaviour
 
         else
         {
-            proc.GetComponent<Text>().text = " ";
+            proc.GetComponent<Text>().text = "";
         }
 
         if(stackNum <= 0)
@@ -65,9 +63,9 @@ public class PayToWin : MonoBehaviour
 
         StackGranter();
 
+        //Confirmed hits subtract three stacks
         if(hitConfirmed == true)
-        {
-           
+        {      
             if (stackNum >= 1)
             {
                 stackNum -= 3;
@@ -76,6 +74,9 @@ public class PayToWin : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Controls stack acquisition
+    /// </summary>
     void StackGranter()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -103,16 +104,12 @@ public class PayToWin : MonoBehaviour
             {
                 player.lucentFunds -= 5280;              
                 stackNum = 150;
-                if(firearm.currentAmmo <= 0)
-                {
-                    //firearm.reloadSpeed = 0.0f;
-                    //firearm.ReloadWeapon();
-                }
 
-                activation.GetComponent<ParticleSystem>().startColor = color;
+                var main = activation.GetComponent<ParticleSystem>().main;
+                main.startColor = color;
+
                 Instantiate(activation, gameObject.transform.root.gameObject.transform.position, transform.rotation);
 
-                //firearm.reloadSpeed = reloadReset;
             }
         }
     }
@@ -121,7 +118,7 @@ public class PayToWin : MonoBehaviour
     {
         if (proc != null)
         {
-            proc.GetComponent<Text>().text = " ";
+            proc.GetComponent<Text>().text = "";
         }
     }
 }

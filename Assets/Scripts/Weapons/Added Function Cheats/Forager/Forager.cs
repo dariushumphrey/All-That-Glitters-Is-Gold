@@ -5,34 +5,34 @@ using UnityEngine.UI;
 
 public class Forager : MonoBehaviour
 {
-    private float healthPercent = 1f;
-    private int healthAssign;
+    private float healthPercent = 1f; //% of Player Health
+    private int healthAssign; //Number used to increase Player Health
 
-    private float shieldPercent = 2f;
-    private int shieldAssign;
+    private float shieldPercent = 2f; //% of Player Shield
+    private int shieldAssign; //Number used to increase Player Shield
 
-    private float ammoPercent = 15f;
-    private float magOverflowPercent = 150f;
-    private int ammoAssign;
-    private int overflowAssign;
+    private float ammoPercent = 15f; //% of Weapon magazine size
+    private float magOverflowPercent = 150f; //% of Weapon magazine beyond its original size
+    private int ammoAssign; //Number used to increase current Weapon magazine
+    private int overflowAssign; //Number used to overflow Weapon magazine size
 
-    private int burstCount = 10;
+    private int burstCount = 10; //Number of pickups in a burst
     private GameObject healthPickup;
     private GameObject shieldPickup;
     private GameObject ammoPickup;
     private GameObject lucentCluster;
-    private List<GameObject> burst = new List<GameObject>();
+    private List<GameObject> burst = new List<GameObject>(); //List of pickups
 
-    private int shotMaximum = 10;
-    private int shots = 0;
-    private bool done = false;
+    private int shotMaximum = 10; //Goal number of confirmed hits
+    private int shots = 0; //Total number of confirmed hits
+    private bool done = false; //Allows one operation if true;
     private FirearmScript firearm;
     private PlayerStatusScript status;
     private PlayerMeleeScript melee;
-    internal GameObject proc;
-    internal bool killConfirmed = false;
-    internal bool hitConfirmed = false;
-    internal Vector3 burstPosition;
+    internal GameObject proc; //Text UI that records Cheat activity
+    internal bool killConfirmed = false; //Affirms achieved kill if true
+    internal bool hitConfirmed = false; //Affirms achieved hit if true
+    internal Vector3 burstPosition; //Spawn position of burst
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +41,7 @@ public class Forager : MonoBehaviour
         status = FindObjectOfType<PlayerStatusScript>();
         melee = FindObjectOfType<PlayerMeleeScript>();
 
+        //Non-exotic Rarity 5 Weapons double the percentages, number of total pickups
         if (firearm.weaponRarity == 5 && !firearm.isExotic)
         {
             healthPercent *= 2;
@@ -85,8 +86,10 @@ public class Forager : MonoBehaviour
         //Forager
         //____.text = "Weapon or Melee kills produce a burst of Lucent clusters, Health, Shield, and Ammo pickups."
 
+        //Permits use of Forager's melee effects while Weapon is active
         melee.foragerCheat = gameObject;
 
+        //Creates a pickup burst at the goal number
         if(firearm.weaponRarity == 5)
         {
             if (hitConfirmed == true)
@@ -108,6 +111,7 @@ public class Forager : MonoBehaviour
             }
         }
 
+        //Produces a burst of pickups on Enemy defeats
         if (killConfirmed)
         {
             for(int b = 0; b <= burstCount; b++)
@@ -155,18 +159,21 @@ public class Forager : MonoBehaviour
     IEnumerator ClearText()
     {
         yield return new WaitForSeconds(1f);
-        proc.GetComponent<Text>().text = " ";
+        proc.GetComponent<Text>().text = "";
     }
 
     private void OnDisable()
     {
         if (proc != null)
         {
-            proc.GetComponent<Text>().text = " ";
+            proc.GetComponent<Text>().text = "";
             melee.foragerCheat = null;
         }
     }
 
+    /// <summary>
+    /// Creates a pickup burst
+    /// </summary>
     public void ForagerBurst()
     {
         for (int b = 0; b <= burstCount; b++)

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class DebuffScript : MonoBehaviour
 {
-    internal float damageAmp = 1.5f;
-    internal float debuffLength = 5f;
+    internal float damageAmp = 1.5f; //Muliplier to increase damage taken
+    internal float debuffLength = 5f; //Duration of effect
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,9 @@ public class DebuffScript : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Destroys itself after delay
+    /// </summary>
     private IEnumerator KillDebuff()
     {
         yield return new WaitForSeconds(debuffLength);

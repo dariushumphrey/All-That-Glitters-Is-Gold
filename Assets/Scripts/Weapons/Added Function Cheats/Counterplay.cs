@@ -5,17 +5,16 @@ using UnityEngine.UI;
 
 public class Counterplay : MonoBehaviour
 {
-    private float dmgIncreasePercent = 10f;
-    private int dmgAdd;
-    private int stackCountActive, stackCountCap;
-    private bool done = false;
+    private float dmgIncreasePercent = 10f; //% to increase Weapon damage
+    private int dmgAdd; //Number used to increase Weapon damage
+    private int stackCountActive; //Current number of stacks
+    private int stackCountCap = 3; //Maximum allowed stacks
     private FirearmScript firearm;
     private PlayerStatusScript status;
     private PlayerInventoryScript inventory;
     private PlayerMoveScript move;
     private GameObject lucentCluster;
-    internal GameObject proc;
-    internal bool counterplayFlag = false;
+    internal GameObject proc; //Text UI that records Cheat activity
 
     // Start is called before the first frame update
     void Start()
@@ -31,14 +30,10 @@ public class Counterplay : MonoBehaviour
         dmgIncreasePercent *= firearm.damage;
         dmgAdd = (int)dmgIncreasePercent;
 
+        //Non-exotic Rarity 5 Weapons increase total stack maximum
         if(firearm.weaponRarity == 5)
         {
             stackCountCap = 10;
-        }
-
-        else
-        {
-            stackCountCap = 3;
         }
     }
 
@@ -53,8 +48,10 @@ public class Counterplay : MonoBehaviour
             proc.GetComponent<Text>().text = "Counterplay x" + stackCountActive;
         }
 
+        //Allows Counterplay's effect to be triggered
         status.counterplayCheat = gameObject;
 
+        //Being damaged with this Weapon active spawns two Lucent clusters
         if (status.counterplayFlag)
         {
             GameObject payoff = Instantiate(lucentCluster, status.transform.position + (status.transform.right * 2f), Quaternion.identity);
@@ -69,6 +66,7 @@ public class Counterplay : MonoBehaviour
             payoffTheSequel.GetComponent<LucentScript>().ShatterCalculation();
             payoffTheSequel.GetComponent<LucentScript>().StartCoroutine(payoffTheSequel.GetComponent<LucentScript>().Shatter());
 
+            //Rarity 5 Weapons spawn a Solution Grenade
             if (firearm.weaponRarity == 5)
             {
                 GameObject solution = Instantiate(inventory.grenades[1], transform.position + Vector3.down, Quaternion.Euler(new Vector3(90f, 0f, 0f)));
@@ -76,12 +74,8 @@ public class Counterplay : MonoBehaviour
                 solution.GetComponent<SolutionGrenadeScript>().StartCoroutine(solution.GetComponent<SolutionGrenadeScript>().SetupGrenade());
             }
 
-            if (stackCountActive >= stackCountCap)
-            {
-                //Do nothing
-            }
-
-            else
+            //Increases damage if maximum stacks haven't been reached
+            if (stackCountActive != stackCountCap)
             {
                 stackCountActive++;
                 firearm.damage += dmgAdd;
@@ -91,17 +85,11 @@ public class Counterplay : MonoBehaviour
         }
     }
 
-    //IEnumerator ClearText()
-    //{
-    //    yield return new WaitForSeconds(1f);
-    //    proc.GetComponent<Text>().text = " ";
-    //}
-
     private void OnDisable()
     {
         if (proc != null)
         {
-            proc.GetComponent<Text>().text = " ";
+            proc.GetComponent<Text>().text = "";
             status.counterplayCheat = null;
         }
     }

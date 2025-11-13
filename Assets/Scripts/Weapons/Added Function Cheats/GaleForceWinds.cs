@@ -7,27 +7,26 @@ public class GaleForceWinds : MonoBehaviour
 {
     private FirearmScript firearm;
     private PlayerMoveScript move;
-    internal GameObject proc;
+    internal GameObject proc; //Text UI that records Cheat activity
     internal GameObject applicator;
 
-    private float sprintConfirm = 5f;
-    private float sprintReset;
-    private int chargeAccelerant = 2;
-    private int sprintAccelerant = 5;
-    internal int chargeCount = 0;
-    internal float chargePercentage = 0f;
-    internal bool done = false;
-    internal bool toggle = false;
+    private int chargeAccelerant = 2; //Multipler that increases charge through moving
+    private int sprintAccelerant = 5; //Multipler that increases charge through Sprinting
+    internal int chargeCount = 0; //Number of current uses
+    internal float chargePercentage = 0f; //% of current Charge
+    internal bool done = false; //Permits one operation if true
+    internal bool toggle = false; //Enables/Disables effect if true/false
+
     // Start is called before the first frame update
     void Start()
     {
         firearm = GetComponent<FirearmScript>();
         move = FindObjectOfType<PlayerMoveScript>();
 
-        sprintReset = sprintConfirm;
         proc.GetComponent<Text>().text = " ";
         applicator = Resources.Load<GameObject>("Game Items/GaleForceWindsApply");
 
+        //Non-exotic Rarity 5 Weapons double the charge multiplier from Sprinting
         if(firearm.weaponRarity == 5)
         {
             sprintAccelerant *= 2;
@@ -40,7 +39,7 @@ public class GaleForceWinds : MonoBehaviour
         //Gale Force Winds
         //___.text = Sprinting or moving generates a charge. The next charged shot casts severe winds that applies Health and Slowed debuffs to in-range Enemies.
 
-
+        //Moving or Sprinting generates a charge, granting a use when reaching 100%
         if(move.horizInput != 0 || move.vertInput != 0)
         {
             if(move.sprinting)
@@ -89,6 +88,7 @@ public class GaleForceWinds : MonoBehaviour
             proc.GetComponent<Text>().text = "";
         }
 
+        //Toggles Cheat effects upon input at full charge
         if (Input.GetKeyDown(KeyCode.E) && chargePercentage >= 100f)
         {
             if (!toggle)

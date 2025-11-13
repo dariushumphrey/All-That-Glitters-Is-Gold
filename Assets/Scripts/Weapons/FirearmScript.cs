@@ -26,20 +26,22 @@ public class FirearmScript : MonoBehaviour
     public float aimAssistStrength = 0.2f; //Value that governs strength of Aim Assist pull towards target
     public bool isExotic; //Exotics only -- Determines whether weapon is Exotic and can take Exotic cheats
     public string flavorText; //Optional Text "Lore" for weapons
-    public LayerMask contactOnly;
+    public LayerMask contactOnly; //Ensures Raycast contact with specified layers
+    public bool saved; // If checked, weapon will not generate cheats for itself -- savable weapons only
+    public bool display; //If checked, Weapon will not do anything -- for Inventory screen only
     private int damageAdd; //adds additional damage onto total damage
-    private float dmgPctReset;
+    private float dmgPctReset; //Holds starting damage percent
 
     //Additional Components
-    public Camera gunCam; //Camera used to determine start of Raycast
-    public Material bulletTrail;
-    public Transform barrel;
+    public Camera gunCam; //Camera used for Raycast
+    public Material bulletTrail; //LineRenderer Material for bullet visual
+    public Transform barrel; //Origin point for Raycast
     public TextMesh DPSNumbers; //TextMesh that displays damage in-environment when hitting an Enemy
     public Sprite reticle;
-    public ParticleSystem muzzleFlash; //Effect that plays when firing a Weapon
-    public ParticleSystem sparks; //Effect that plays when striking an object with the "Surface" layer;
-    internal GameObject targetHit;
-    internal GameObject procOne, procTwo, dpsText;
+    public ParticleSystem muzzleFlash; //VFX for firing a Weapon
+    public ParticleSystem sparks; //VFX for striking an object with the "Surface" layer;
+    internal GameObject targetHit; //Holds reference of damaged Enemy
+    internal GameObject procOne, procTwo, dpsText; //Text objects that track Cheat, Damage activity
     internal PlayerInventoryScript inv;
     internal Vector3 cadencePosition, fatedCadencePosition;
     internal Color bulletTrailColor = Color.yellow;
@@ -47,26 +49,16 @@ public class FirearmScript : MonoBehaviour
     //Hidden variables
     internal float fireAgain; //Seconds to wait until weapon can fire
     internal int ammoSpent = 0; //Tracks how many times weapon has fired -- used to subtract from reserve ammo
-    internal bool isReloading = false;
+    internal bool isReloading = false; //Confirms an active reload if true
     internal float reloadReset;
-    internal bool confirmHit; //Tracks whether weapon shot is a confirmed hit on Enemy
-    internal bool confirmKill;
-    internal string currentDPSLine = "";
-    internal string newDPSLine;
-    internal int indentSpace = 0;
-    internal float dpsLinesClear = 2f;
+    internal bool confirmHit; //Affirms an achieved hit if true
+    internal bool confirmKill; //Affirms an achieved defeat if true
+    internal string currentDPSLine = ""; //Records damage history
+    internal string newDPSLine; //Records most recent damage
+    internal int indentSpace = 0; //Amount of applied indentation
+    internal float dpsLinesClear = 2f; //Clears damage history after this time
     internal float dpsLinesReset;
-
-    //RNG numbers
-    internal int ammoCheatOne; // Determines Current Ammo augments
-    internal int ammoCheatTwo; // Determines Resereve Ammo augments
-    internal int rangeCheatOne; // Determines Effective Range augments
-    internal int reloadCheatOne; // Determines Reload Speed augments
-    internal int cheatRNG; // Determines Weapon added Functions augments -- Overridden if weapon is Exotic
-    internal int fcnChtOne;
-    internal int fcnChtTwo;
-    public bool saved; // If checked, weapon will not generate cheats for itself -- savable weapons only
-    public bool display; //If checked, Weapon will not do anything -- for Inventory screen only
+    internal int cheatRNG; // Number used to randomly generate Cheats
 
     void Awake()
     {
@@ -75,6 +67,8 @@ public class FirearmScript : MonoBehaviour
             return;
         }
 
+        //Retrieves Text UI for Cheat activity, Damage history
+        //Applies Rarity effects and generates Cheats
         else
         {
             procOne = GameObject.Find("weaponCheatText (1)");
@@ -90,10 +84,6 @@ public class FirearmScript : MonoBehaviour
             }
 
             dpsText = GameObject.Find("dpsText");
-            //if (dpsText.GetComponent<Text>() != null)
-            //{
-            //    dpsText.GetComponent<Text>().text = " ";
-            //}
             dpsLinesReset = dpsLinesClear;
 
             RarityAugment();
@@ -113,9 +103,10 @@ public class FirearmScript : MonoBehaviour
             return;
         }
 
+        //Retrieves Inventory, Main Camera
+        //Initializes hit and kill statuses, saves starting Reload Speed
         else
         {
-            //bulletTrail = GetComponent<LineRenderer>();
             inv = FindObjectOfType<PlayerInventoryScript>();
             gunCam = Camera.main;
             confirmHit = false;
@@ -134,8 +125,8 @@ public class FirearmScript : MonoBehaviour
 
         else
         {
-            DeconfirmKill();
 
+            //Allows for updates to damage history, Weapon behaviors if the game isn't paused
             if (Time.timeScale == 0)
             {
                 return;
@@ -155,24 +146,14 @@ public class FirearmScript : MonoBehaviour
                 }
 
                 AmmoReloadCheck();
-
-                //if (isReloading)
-                //{
-                //    reloadSpeed = reloadReset;
-                //    StartCoroutine(ReloadWep());
-                //    reloadSpeed -= Time.deltaTime;
-                //    if (reloadSpeed <= 0f)
-                //    {
-                //        reloadSpeed = reloadReset;
-                //        ReloadWeapon();
-                //    }
-                //}
-
                 FireWeapon();
             }
         }       
     }
 
+    /// <summary>
+    /// Applies damage increases based on Weapon rarity
+    /// </summary>
     public virtual void RarityAugment()
     {
         dmgPctReset = damagePercent;
@@ -180,50 +161,9 @@ public class FirearmScript : MonoBehaviour
         if(weaponRarity <= 0)
         {
             weaponRarity = 1;
-            damage *= weaponRarity;
         }
 
-        if(weaponRarity == 1)
-        {
-            damage *= weaponRarity;
-        }
-
-        if (weaponRarity == 2)
-        {
-            damagePercent *= weaponRarity;
-            damagePercent /= 100;
-            damagePercent *= damage;
-            damageAdd = (int)damagePercent;
-
-            damage += damageAdd;
-            damagePercent = dmgPctReset;
-
-            //damage *= weaponRarity;
-        }
-
-        if (weaponRarity == 3)
-        {
-            damagePercent *= weaponRarity;
-            damagePercent /= 100;
-            damagePercent *= damage;
-            damageAdd = (int)damagePercent;
-
-            damage += damageAdd;
-            damagePercent = dmgPctReset;
-        }
-
-        if (weaponRarity == 4)
-        {
-            damagePercent *= weaponRarity;
-            damagePercent /= 100;
-            damagePercent *= damage;
-            damageAdd = (int)damagePercent;
-
-            damage += damageAdd;
-            damagePercent = dmgPctReset;
-        }
-
-        if (weaponRarity == 5 && !isExotic)
+        if (weaponRarity >= 2 && !isExotic)
         {
             damagePercent *= weaponRarity;
             damagePercent /= 100;
@@ -243,13 +183,13 @@ public class FirearmScript : MonoBehaviour
 
             damage += damageAdd;
             damagePercent = dmgPctReset;
-
         }
 
         //If rarity set 6 or more, auto-corrects to highest rarity.
-        if (weaponRarity >= 6 /*|| isExotic == true*/)
+        if (weaponRarity >= 6)
         {
             weaponRarity = 5;
+
             damagePercent *= weaponRarity;
             damagePercent /= 100;
             damagePercent *= damage;
@@ -259,6 +199,9 @@ public class FirearmScript : MonoBehaviour
         }       
     }  
 
+    /// <summary>
+    /// Generates Ammo Stat Cheats through RNG
+    /// </summary>
     public virtual void AmmoCheats()
     {
         if (isExotic == true)
@@ -273,31 +216,35 @@ public class FirearmScript : MonoBehaviour
             return;
         }
 
-        ammoCheatOne = Random.Range(0, 101);
-        ammoCheatTwo = Random.Range(100, 201);
+        cheatRNG = Random.Range(0, 101);
 
-        if (ammoCheatOne <= 50)
+        if (cheatRNG <= 50)
         {
             gameObject.AddComponent<DeepYield>();
         }
 
-        if (ammoCheatOne > 50)
+        else
         {
             gameObject.AddComponent<DeeperYield>();
         }
 
-        if (ammoCheatTwo <= 150)
+        cheatRNG = Random.Range(100, 201);
+
+        if (cheatRNG <= 150)
         {
             gameObject.AddComponent<DeepStores>();
         }
 
-        if (ammoCheatTwo > 150)
+        else
         {
             gameObject.AddComponent<DeeperStores>();
         }       
 
     }
 
+    /// <summary>
+    /// Generates Range Stat Cheats through RNG
+    /// </summary>
     public virtual void RangeCheats()
     {
         if(isExotic == true)
@@ -311,19 +258,22 @@ public class FirearmScript : MonoBehaviour
             return;
         }
 
-        rangeCheatOne = Random.Range(200, 301);
+        cheatRNG = Random.Range(200, 301);
 
-        if(rangeCheatOne <= 250)
+        if(cheatRNG <= 250)
         {
             gameObject.AddComponent<FarSight>();
         }
 
-        if (rangeCheatOne > 250)
+        else
         {
             gameObject.AddComponent<FartherSight>();          
         }
     }
 
+    /// <summary>
+    /// Generates Reload Speed Stat Cheats through RNG
+    /// </summary>
     public virtual void ReloadSpeedCheats()
     {
         if(isExotic == true)
@@ -337,22 +287,25 @@ public class FirearmScript : MonoBehaviour
             return;
         }
 
-        reloadCheatOne = Random.Range(300, 401);
+        cheatRNG = Random.Range(300, 401);
 
-        if(reloadCheatOne <= 350)
+        if(cheatRNG <= 350)
         {
             gameObject.AddComponent<HastyHands>();           
         }
 
-        if (reloadCheatOne > 350)
+        else
         {
             gameObject.AddComponent<HastierHands>();           
         }
     }
 
+    /// <summary>
+    /// Generates Functional Cheats through RNG and Rarity 
+    /// </summary>
     public virtual void CheatGenerator()
     {
-        if(isExotic == true)
+        if (isExotic == true)
         {
             cheatRNG = cheatOverride;
             if(cheatRNG == -1)
@@ -552,123 +505,125 @@ public class FirearmScript : MonoBehaviour
                 gameObject.AddComponent<GaleForceWinds>();
                 gameObject.GetComponent<GaleForceWinds>().proc = procOne;
                 procTwo.GetComponent<Text>().text = " ";
-            } //New
+            }
         }
         
         if(weaponRarity >= 4)
         {
-            fcnChtOne = Random.Range(400, 481);
-            if(fcnChtOne <= 410)
+            cheatRNG = Random.Range(400, 481);
+            if(cheatRNG <= 410)
             {
                 gameObject.AddComponent<AllElseFails>();
                 gameObject.GetComponent<AllElseFails>().proc = procOne;
             }
 
-            if (fcnChtOne > 410 && fcnChtOne <= 420)
+            if (cheatRNG > 410 && cheatRNG <= 420)
             {
                 gameObject.AddComponent<NotWithAStick>();
                 gameObject.GetComponent<NotWithAStick>().proc = procOne;
 
             }
 
-            if (fcnChtOne > 420 && fcnChtOne <= 430)
+            if (cheatRNG > 420 && cheatRNG <= 430)
             {
                 gameObject.AddComponent<MaliciousWindUp>();
                 gameObject.GetComponent<MaliciousWindUp>().proc = procOne;
 
             }
 
-            if (fcnChtOne > 430 && fcnChtOne <= 440)
+            if (cheatRNG > 430 && cheatRNG <= 440)
             {
                 gameObject.AddComponent<PositiveNegative>();
                 gameObject.GetComponent<PositiveNegative>().proc = procOne;
 
             }
 
-            if (fcnChtOne > 440 && fcnChtOne <= 450)
+            if (cheatRNG > 440 && cheatRNG <= 450)
             {
                 gameObject.AddComponent<GoodThingsCome>();
                 gameObject.GetComponent<GoodThingsCome>().proc = procOne;
 
             }
 
-            if (fcnChtOne > 450 && fcnChtOne <= 460)
+            if (cheatRNG > 450 && cheatRNG <= 460)
             {
                 gameObject.AddComponent<TheMostResplendent>();
                 gameObject.GetComponent<TheMostResplendent>().proc = procOne;
             }
 
-            if (fcnChtOne > 460 && fcnChtOne <= 470)
+            if (cheatRNG > 460 && cheatRNG <= 470)
             {
                 gameObject.AddComponent<Fulminate>();
                 gameObject.GetComponent<Fulminate>().proc = procOne;
             }
 
-            if(fcnChtOne > 470)
+            if(cheatRNG > 470)
             {
                 gameObject.AddComponent<Forager>();
                 gameObject.GetComponent<Forager>().proc = procOne;
             }
 
-            fcnChtTwo = Random.Range(480, 561);
-            if (fcnChtTwo <= 490)
+            cheatRNG = Random.Range(480, 561);
+            if (cheatRNG <= 490)
             {
                 gameObject.AddComponent<WaitNowImReady>();
                 gameObject.GetComponent<WaitNowImReady>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 490 && fcnChtTwo <= 500)
+            if (cheatRNG > 490 && cheatRNG <= 500)
             {
                 gameObject.AddComponent<Efficacy>();
                 gameObject.GetComponent<Efficacy>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 500 && fcnChtTwo <= 510)
+            if (cheatRNG > 500 && cheatRNG <= 510)
             {
                 gameObject.AddComponent<Inoculated>();
                 gameObject.GetComponent<Inoculated>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 510 && fcnChtTwo <= 520)
+            if (cheatRNG > 510 && cheatRNG <= 520)
             {
                 gameObject.AddComponent<Cadence>();
                 gameObject.GetComponent<Cadence>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 520 && fcnChtTwo <= 530)
+            if (cheatRNG > 520 && cheatRNG <= 530)
             {
                 gameObject.AddComponent<RudeAwakening>();
                 gameObject.GetComponent<RudeAwakening>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 530 && fcnChtTwo <= 540)
+            if (cheatRNG > 530 && cheatRNG <= 540)
             {
                 gameObject.AddComponent<Counterplay>();
                 gameObject.GetComponent<Counterplay>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 540 && fcnChtTwo <= 550)
+            if (cheatRNG > 540 && cheatRNG <= 550)
             {
                 gameObject.AddComponent<Enshroud>();
                 gameObject.GetComponent<Enshroud>().proc = procTwo;
 
             }
 
-            if (fcnChtTwo > 550)
+            if (cheatRNG > 550)
             {
                 gameObject.AddComponent<GaleForceWinds>();
                 gameObject.GetComponent<GaleForceWinds>().proc = procTwo;
-
             }
         }
     }
 
+    /// <summary>
+    /// Prevents reloads during firing, lack of ammo or holding a full magazine
+    /// </summary>
     public virtual void AmmoReloadCheck()
     {      
         if (Input.GetKeyDown(KeyCode.R) && currentAmmo != 0 || currentAmmo <= 0 && reserveAmmo != 0)
@@ -692,7 +647,6 @@ public class FirearmScript : MonoBehaviour
                 //weaponLoad.gameObject.SetActive(true);
                 inv.lucentText.gameObject.SetActive(true);
                 inv.wepStateTimer = inv.wepStateTimerReset;
-                //return;
             }
 
             else if (currentAmmo <= 0 && reserveAmmo <= 0)
@@ -703,7 +657,6 @@ public class FirearmScript : MonoBehaviour
                 //weaponLoad.gameObject.SetActive(true);
                 inv.lucentText.gameObject.SetActive(true);
                 inv.wepStateTimer = inv.wepStateTimerReset;
-                //return;
             }
 
             else if (currentAmmo >= ammoSize)
@@ -720,18 +673,21 @@ public class FirearmScript : MonoBehaviour
             {
                 isReloading = true;
                 StartCoroutine(ReloadWep());
-
-                //return;
             }
         }
     }
 
+    /// <summary>
+    /// Activates Weapon firing behavior
+    /// Provides information to Cheats with hit or kill triggers
+    /// </summary>
     public virtual void FireWeapon()
     {
         fireAgain += Time.deltaTime;
 
         if (Input.GetButton("Fire1") && currentAmmo >= 1 && fireAgain >= fireRate && !isReloading)
         {
+            //Firing timer resets, Ammo decrements/records number of shots
             fireAgain = 0.0f;
             currentAmmo--;
             ammoSpent++;
@@ -750,6 +706,7 @@ public class FirearmScript : MonoBehaviour
             Vector3 rayOrigin = gunCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hit;
 
+            //Produces the Bullet Trail
             GameObject start = new GameObject();
             GameObject.Destroy(start, 0.1f);
 
@@ -761,18 +718,14 @@ public class FirearmScript : MonoBehaviour
             start.GetComponent<LineRenderer>().material = bulletTrail;
             start.GetComponent<LineRenderer>().SetPosition(0, barrel.transform.position);
 
-            //bulletTrail.SetPosition(0, barrel.position);
-
             if (Physics.Raycast(rayOrigin, gunCam.transform.forward, out hit, range, contactOnly))
             {
                 start.gameObject.transform.position = hit.point;
                 start.GetComponent<LineRenderer>().SetPosition(1, hit.point);
 
-                //bulletTrail.SetPosition(1, hit.point);
-                //Instantiate(DPSNumbers, hit.point, transform.rotation);
-
                 if(hit.collider.tag == "Enemy")
                 {
+                    //Affirms confirmed hits for Cheats
                     confirmHit = true;
                     if (gameObject.GetComponent<MaliciousWindUp>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                     {
@@ -787,6 +740,7 @@ public class FirearmScript : MonoBehaviour
                     if (gameObject.GetComponent<Cadence>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                     {
                         gameObject.GetComponent<Cadence>().hitConfirmed = true;
+                        gameObject.GetComponent<Cadence>().clusterPosition = hit.point + (hit.normal * 0.01f);
                     }
 
                     if (gameObject.GetComponent<GoodThingsCome>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
@@ -861,14 +815,11 @@ public class FirearmScript : MonoBehaviour
                     }
 
                     StartCoroutine(DeconfirmHit());
-                    FatedCadenceRewardPosition(hit.collider.transform.position);
                     targetHit = hit.transform.gameObject;
 
-                    //Debug.Log(hit.transform.gameObject);
-
-                    //For damage falloff checks/kill triggers within Effective Range
                     if (hit.distance <= effectiveRange)
                     {
+                        //Records damage inflicted on non-immune Enemy hit. Records "Immune" on immune Enemy hit
                         if(hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                         {
                             string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
@@ -879,8 +830,6 @@ public class FirearmScript : MonoBehaviour
                             dpsLinesClear = dpsLinesReset;
 
                             DPSNumbers.text = "Immune";
-                            //dpsText.GetComponent<Text>().text += "\n" + "Immune";
-                            //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
                         }
 
                         else
@@ -893,16 +842,13 @@ public class FirearmScript : MonoBehaviour
                             dpsLinesClear = dpsLinesReset;
 
                             DPSNumbers.text = damage.ToString();
-                            //dpsText.GetComponent<Text>().text += "\n" + damage.ToString();
-                            //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
-
                             Instantiate(hit.collider.GetComponent<EnemyHealthScript>().blood, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
                         }
 
-                        //Instantiate(DPSNumbers, hit.point, transform.rotation);
                         hit.collider.GetComponent<EnemyHealthScript>().inflictDamage(damage);
                         if(hit.collider.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                         {
+                            //Affirms confirmed kills for Cheats
                             confirmKill = true;
                             if(gameObject.GetComponent<NotWithAStick>())
                             {
@@ -927,7 +873,7 @@ public class FirearmScript : MonoBehaviour
                             if (gameObject.GetComponent<Cadence>())
                             {
                                 gameObject.GetComponent<Cadence>().killConfirmed = true;
-                                CadenceRewardPosition(hit.collider.transform.position);
+                                gameObject.GetComponent<Cadence>().clusterPosition = hit.collider.transform.position;
                             }
 
                             if (gameObject.GetComponent<RudeAwakening>())
@@ -955,11 +901,11 @@ public class FirearmScript : MonoBehaviour
                                 hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 20f, ForceMode.Impulse);
                             }
                         }
-                    }
+                    } //For damage falloff checks/kill triggers within Effective Range
 
-                    //For damage falloff checks/kill triggers while out of Effective Range
                     if (hit.distance > effectiveRange)
                     {
+                        //Records damage inflicted on non-immune Enemy hit. Records "Immune" on immune Enemy hit
                         if (hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                         {
                             string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
@@ -970,8 +916,6 @@ public class FirearmScript : MonoBehaviour
                             dpsLinesClear = dpsLinesReset;
 
                             DPSNumbers.text = "Immune";
-                            //dpsText.GetComponent<Text>().text += "\n" + "Immune";
-                            //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
                         }
 
                         else
@@ -984,17 +928,13 @@ public class FirearmScript : MonoBehaviour
                             dpsLinesClear = dpsLinesReset;
 
                             DPSNumbers.text = (damage / 2).ToString();
-                            //dpsText.GetComponent<Text>().text += "\n" + (damage / 2).ToString();
-                            //dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
-
                             Instantiate(hit.collider.GetComponent<EnemyHealthScript>().blood, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
-
                         }
 
-                        //Instantiate(DPSNumbers, hit.point, transform.rotation);
                         hit.collider.GetComponent<EnemyHealthScript>().inflictDamage(damage / 2);
                         if (hit.collider.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                         {
+                            //Affirms confirmed kills for Cheats
                             confirmKill = true;
                             if (gameObject.GetComponent<NotWithAStick>())
                             {
@@ -1019,8 +959,7 @@ public class FirearmScript : MonoBehaviour
                             if (gameObject.GetComponent<Cadence>())
                             {
                                 gameObject.GetComponent<Cadence>().killConfirmed = true;
-                                CadenceRewardPosition(hit.collider.transform.position);
-
+                                gameObject.GetComponent<Cadence>().clusterPosition = hit.collider.transform.position;
                             }
 
                             if (gameObject.GetComponent<RudeAwakening>())
@@ -1046,34 +985,13 @@ public class FirearmScript : MonoBehaviour
                                 Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
                                 hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 10f, ForceMode.Impulse);
                             }
-
-                            //if (hit.collider.GetComponent<Rigidbody>() != null)
-                            //{
-                            //    hit.collider.GetComponent<Rigidbody>().AddForce(-hit.collider.transform.forward * 0.5f, ForceMode.Impulse);
-                            //}
-
                         }
-                    }
+                    } //For damage falloff checks/kill triggers while out of Effective Range
 
                     if (hit.collider.GetComponent<ReplevinScript>() != null)
                     {
                         hit.collider.GetComponent<ReplevinScript>().playerFound = true;
                     }
-
-                    //For Clusters
-                    if (hit.collider.GetComponent<EnemyLeaderScript>() != null)
-                    {
-                        hit.collider.GetComponent<EnemyLeaderScript>().Pursuit();
-                    }
-
-                    if (hit.collider.GetComponent<EnemyFollowerScript>() != null)
-                    {
-                        if(hit.collider.GetComponent<EnemyFollowerScript>().leader != null && hit.collider.GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
-                        {
-                            hit.collider.GetComponent<EnemyFollowerScript>().leader.Pursuit();
-                        }
-                    }
-
                 }
 
                 if (hit.collider.tag == "Lucent")
@@ -1090,7 +1008,7 @@ public class FirearmScript : MonoBehaviour
 
                 if (hit.collider.gameObject.layer == 8) //If this Weapon strikes an object with the "Surface" layer
                 {
-                    if (gameObject.GetComponent<TheMostResplendent>())
+                    if(gameObject.GetComponent<TheMostResplendent>())
                     {
                         if(gameObject.GetComponent<TheMostResplendent>().stackCount >= 1 && gameObject.GetComponent<TheMostResplendent>().toggle)
                         {
@@ -1149,18 +1067,18 @@ public class FirearmScript : MonoBehaviour
 
             else
             {
-                //bulletTrail.SetPosition(1, rayOrigin + (gunCam.transform.forward * range));
-
                 start.gameObject.transform.position = rayOrigin + (gunCam.transform.forward * range);
                 start.GetComponent<LineRenderer>().SetPosition(1, rayOrigin + (gunCam.transform.forward * range));
             }
 
             muzzleFlash.Play();
-
-        }
-        
+        }    
     }
 
+    /// <summary>
+    /// Refills a Weapon's magazine
+    /// Used when a Cheat requires an instant reload
+    /// </summary>
     public virtual void ReloadWeapon()
     {
         if(reserveAmmo <= ammoSpent)
@@ -1185,6 +1103,9 @@ public class FirearmScript : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Refills a Weapon's magazine after a delay
+    /// </summary>
     public virtual IEnumerator ReloadWep()
     {
         yield return new WaitForSeconds(reloadSpeed);
@@ -1213,28 +1134,12 @@ public class FirearmScript : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Reverts affirmation that hit has been achieved after a delay
+    /// </summary>
     public virtual IEnumerator DeconfirmHit()
     {
         yield return new WaitForSeconds(0.01f);
         confirmHit = false;
     }
-
-    public virtual void DeconfirmKill()
-    {
-        if(confirmKill)
-        {
-            confirmKill = false;
-        }
-    }
-
-    //The Following methods helps Cadence determine where to spawn Lucent clusters.
-    public virtual void CadenceRewardPosition(Vector3 killPosition)
-    {
-        cadencePosition = killPosition;
-    }
-
-    public virtual void FatedCadenceRewardPosition(Vector3 shotPosition)
-    {
-        fatedCadencePosition = shotPosition;
-    }  
 }
