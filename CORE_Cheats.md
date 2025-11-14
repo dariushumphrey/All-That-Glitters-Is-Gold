@@ -205,7 +205,7 @@ Destruct Grenades are explosive munitions that inflicts 9,000 damage in an 8m ra
 
 It requires 35 confirmed Enemy hits to reach the 70% damage cap. Any Enemy hit during the duration will refresh the timer. Destruct Grenades cast on Melee kills is not limited by cooldowns and does not require an active timer to activate, but Fulminate is required to be active in order to throw double Destruct Grenades. 
 
-* [Fulminate.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Fulminate.cs) can be viewed here. [PlayerMeleeScript.cs](/Assets/Scripts/Player/PlayerMeleeScript.cs#L61-L66) and [PlayerInventoryScript.cs](/Assets/Scripts/Player/PlayerInventoryScript.cs#L1145-L1163) hold the remainder of Fulminate's actions (Grenade casts on Melee kills and damage application, respectively).
+* [Fulminate.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Fulminate.cs) can be viewed here. [PlayerMeleeScript.cs](/Assets/Scripts/Player/PlayerMeleeScript.cs#L69-L75) and [PlayerInventoryScript.cs](/Assets/Scripts/Player/PlayerInventoryScript.cs#L1141-L1159) hold the remainder of Fulminate's actions (Grenade casts on Melee kills and damage application, respectively).
 
 ![Fulminate](https://github.com/user-attachments/assets/c13632e7-9c54-4a26-8bc8-dde19929ca42)
 
@@ -224,7 +224,7 @@ Ammo pickups can overflow a Weapon's current magazine up to 150% of its maximum 
   * Ammo pickup strength increases to 30%.
   * Every tenth confirmed hit on a non-immune Boss enemy produces a burst.
 
-* [Forager.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Forager/Forager.cs) can be viewed here.
+* [Forager.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Forager/Forager.cs) can be viewed here. [PlayerMeleeScript.cs](/Assets/Scripts/Player/PlayerMeleeScript.cs#L77-L82) handles Forager's burst triggers on Melee defeats.
 
 ![Forager](https://github.com/user-attachments/assets/e8507ac7-1645-4063-826e-cc95212b6443)
 
@@ -234,7 +234,7 @@ Counterplay casts two Lucent Clusters that detonate after 0.25 seconds and perma
 
 Solution Grenades are gaseous munitions that applies significant damage-over-time in a 7m radius, applying 875 damage every 0.25 seconds, for an effect duration of two seconds.
 
-* [Counterplay.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Counterplay.cs) can be viewed here. [ReplevinScript.cs](/Assets/Scripts/Enemies/ReplevinScript.cs#L661-L664) handles the condition that Counterplay requires to activate.
+* [Counterplay.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Counterplay.cs) can be viewed here. [ReplevinScript.cs](/Assets/Scripts/Enemies/ReplevinScript.cs#L695-L698) handles the condition that Counterplay requires to activate.
 
 ![Counterplay](https://github.com/user-attachments/assets/34471ad6-ac59-4c9c-8323-30936be99dab)
 
@@ -247,7 +247,7 @@ Fogger Grenades are smoke munitions that apply a Movement Speed debuff to Enemie
 Melee attack range is described as the distance required to initiate a Melee attack. Enshroud caps Melee attack range to 21m. Any Enemy hit during the duration will refresh the timer. Fogger Grenades cast on Melee kills are limited by a 12 second cooldown.
   * (Fated) Fogger Grenade cast on Melee kills' cooldown is reduced to six seconds. Fogger Grenade casts either through Melee kills with Enshroud or throws will allow them to apply damage-over-time, applying 150 damage once every second, for an effect duration of 20 seconds.
 
-* [Enshroud.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Enshroud.cs) can be viewed here. [PlayerMeleeScript.cs](/Assets/Scripts/Player/PlayerMeleeScript.cs#L74-L86) holds the remainder of Enshroud's actions (Fogger Grenade casts on Melee kills).
+* [Enshroud.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Enshroud.cs) can be viewed here. [PlayerMeleeScript.cs](/Assets/Scripts/Player/PlayerMeleeScript.cs#L84-L98) holds the remainder of Enshroud's actions (Fogger Grenade casts on Melee kills).
 
 ![Enshroud](https://github.com/user-attachments/assets/f42258a3-93d5-4db5-a91c-ed3d1121aa84)
 
@@ -312,7 +312,7 @@ The damage increase lasts for ten seconds. Upon expiration, the Weapon's damage 
 
 "Social Distance, Please!" is assigned to the Shotgun Weapon type. Its companion Cheat is [Not with a Stick.](#not-with-a-stick)
 
-* [SocialDistancePlease.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Social%20Distance%2C%20Please!/SocialDistancePlease.cs) can be viewed here. [EnemyHealthScript.cs](/Assets/Scripts/Enemies/EnemyHealthScript.cs#L437-L465) holds the damage spread behavior when an Enemy is defeated.
+* [SocialDistancePlease.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Social%20Distance%2C%20Please!/SocialDistancePlease.cs) can be viewed here. [EnemyHealthScript.cs](/Assets/Scripts/Enemies/EnemyHealthScript.cs#L331-L351) holds the damage spread behavior when an Enemy is defeated.
 
 ![SocialDistancePlease](https://github.com/user-attachments/assets/8f908001-ccda-4da4-bf98-e429250e1131)
 
