@@ -246,80 +246,92 @@ using (StreamWriter write = new StreamWriter(filepath))
 			if (inventory[i].name == "testFullFireRifle" || inventory[i].name == "testFullFireRifle_Exotic")
 			{
 				write.Write("1");
-				if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
+			}
+
+			if (inventory[i].name == "testMachineGun" || inventory[i].name == "testMachineGun_Exotic")
+			//Writes "2", And so on, up to 7.
+
+			if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
+			{
+				write.Write("1");
+			}
+
+			if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2)
+			//Writes "2" and so on, up to 5.
+
+			if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
+			{
+				write.Write("1");
+			}
+
+			else
+			//Writes "0". 
+
+			//Statistical Cheat process
+			if (inventory[i].GetComponent<DeepYield>())
+			{
+				write.Write("1");
+			}
+
+			if (inventory[i].GetComponent<DeeperYield>())					
+			//Writes "2" and so on, up to 6.
+
+			if (inventory[i].weaponRarity == 1)
+			{
+				if (inventory[i].GetComponent<HastyHands>())
 				{
-					write.Write("1");
+					write.WriteLine("7");
 				}
 
-				if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
-				//Writes "2" and so on, up to 5.
+				if (inventory[i].GetComponent<HastierHands>())
+				//Writes "8"
+			}
+
+			if(inventory[i].GetComponent<FirearmScript>().weaponRarity == 2 || inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
+			{
+				if (inventory[i].GetComponent<HastyHands>())
+				{
+					write.Write("7");
+				}
+
+				if (inventory[i].GetComponent<HastierHands>())
+				//Writes "8"
+
+				if (inventory[i].GetComponent<WaitNowImReady>())
+				//Writes "0" and so on, up to 9. Newer Cheats use special characters: (!, @, #, $, %, and ^)
+			}
+
+			if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
+			{
+				if (inventory[i].GetComponent<HastyHands>())
+				{
+					write.Write("7");
+				}
+
+				if (inventory[i].GetComponent<HastierHands>())
+				//Writes "8"
 
 				if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
 				{
-					write.Write("1");
-				}
+					//Records Exotic Cheat character, denoted as A-G
+					if (inventory[i].GetComponent<EquivalentExchange>())
+					//Writes "A"
 
-				else
-				//Writes "0". 
-
-				if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
-				{
-					//Statistical Cheat process
-					if (inventory[i].GetComponent<DeepYield>())
-					{
-						write.Write("1");
-					}
-
-					if (inventory[i].GetComponent<DeeperYield>())					
-					//Writes "2" and so on, up to 8. 7-8 end with WriteLine statements as recording concludes.
-				}
-
-				if(inventory[i].GetComponent<FirearmScript>().weaponRarity == 2 || inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
-				{
-					//Statistical Cheat process, followed by:
 					if (inventory[i].GetComponent<WaitNowImReady>())
-					{
-						write.WriteLine("0");
-					}
-
-					if (inventory[i].GetComponent<Efficacy>())
-					//Writes "1" and so on, up to 9. Newer Cheats use special characters: (!, @, #, $, %, and ^)
-				}
-
-				if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
-				{
-					//Statistical Cheat process, followed by:
-					if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
-					{
-						if (inventory[i].GetComponent<EquivalentExchange>())
-						{
-                                    write.Write("A");
-						}
-						//If Weapon is Exotic, letters A-G are used.
-
-						if (inventory[i].GetComponent<WaitNowImReady>())
-						{
-                                    write.WriteLine("0");
-						}
-					}
-
-					else
-					{
-						//The next character comes from a pool between (9, 4, 5, 6, 8, !, @, or #)
-						if (inventory[i].GetComponent<AllElseFails>())
-						{
-							write.Write("9");
-						}
-
-						//the last character comes from a pool between (0, 1, 2, 7, 3, $, %, or ^)
-						if (inventory[i].GetComponent<Cadence>())
-						{
-							write.WriteLine("7");
-						}
-					}
+					//Writes "0"
 				}
 			}
-			//This is repeated for all other Weapon types
+
+			else
+			{
+				//The next character comes from a pool between (9, 4, 5, 6, 8, !, @, or #)
+				if (inventory[i].GetComponent<AllElseFails>())
+				//Writes "9"
+
+				//the last character comes from a pool between (0, 1, 2, 7, 3, $, %, or ^)
+				if (inventory[i].GetComponent<Cadence>())
+				//Writes "7"
+			}
 		}
 	}
 }
@@ -335,102 +347,88 @@ string c = "Comic Sans"; //Initializing a string.
 for (int s = 0; s < player.readdedWeps.Count; s++)
 {
 	c = player.readdedWeps[s];
-	wep = c[0];
-	wepStr = wep.ToString();
-
-	rar = c[1];
-	rarStr = rar.ToString();
-
-	exo = c[2];
-	exoStr = exo.ToString();
-
-	cOne = c[3];
-	cOneStr = cOne.ToString();
-
-	cTwo = c[4];
-	cTwoStr = cTwo.ToString();
-
-	cThree = c[5];
-	cThreeStr = cThree.ToString();
-
-	cFour = c[6];
-	cFourStr = cFour.ToString();
+	wepStr = c[0].ToString();
+	rarStr = c[1].ToString();
+	exoStr = c[2].ToString();
+	cOneStr = c[3].ToString();
+	cTwoStr = c[4].ToString();
+	cThreeStr = c[5].ToString();
+	cFourStr = c[6].ToString();
 
 	if(player.readdedWeps[s].Length == 8)
 	{
-		cFive = c[7];
-		cFiveStr = cFive.ToString();
+		cFiveStr = c[7].ToString();
 	}
 
 	if(player.readdedWeps[s].Length == 9)
 	{
-		cFive = c[7];
-		cFiveStr = cFive.ToString();
-
-		cSix = c[8];
-		cSixStr = cSix.ToString();
+		cFiveStr = c[7].ToString();
+		cSixStr = c[8].ToString();
 	}
 
 	if (wepStr == "1")
 	{
 		GameObject item = Instantiate(weapons[0], transform.position, transform.rotation);
 		item.name = weapons[0].name;
-
-		if (rarStr == "1")
-		{
-			item.GetComponent<FirearmScript>().weaponRarity = 1;
-		}
-		//And so on, assigning rarities up to 5 for weapons.
-
-		if (cOneStr == "1")
-		{
-			item.AddComponent<DeepYield>();
-		}
-
-		if (cOneStr == "2")
-		{
-			item.AddComponent<DeeperYield>();
-		}
-
-		if (cTwoStr == "3")
-		//Adds the component, "Deep Stores". Adds "Deeper Stores" if cTwoStr is "4".
-
-		if (cThreeStr == "5")
-		//Adds the component, "Far Sight". Adds "Farther Sight" if cThreeStr is "6".
-
-		if (cFourStr == "7")
-		//Adds the component, "Hasty Hands". Adds "Hastier Hands" if cFourStr is "8".
-
-		if (player.readdedWeps[s].Length == 8)
-		{
-			if (cFiveStr == "0")
-			{
-				item.AddComponent<WaitNowImReady>();
-			}
-			//And so on, up to 9, or special characters: (!, @, #, $, %, or ^)
-		}
-
-		if (player.readdedWeps[s].Length == 9)
-		{
-			if (cFiveStr == "A")
-			//Exotic Cheats are recorded between A-G. In this case, "A" adds Exotic Functional Cheat "Equivalent Exchange". 
-
-			//Otherwise, the next component comes from a pool between (9, 4, 5, 6, 8, !, @, or #)
-			if (cFiveStr == "5")
-			{
-				item.AddComponent<MaliciousWindUp>();
-			}
-
-			//The last component comes from a pool between (0, 1, 2, 7, 3, $, %, or ^)
-			if (cSixStr == "2")
-			{
-				item.AddComponent<Inoculated>();
-			}
-		}
-
-		yield return new WaitForSeconds(spawnDelayTimer);
 	}
-	//This is repeated for all other Weapon types
+
+	if (wepStr == "2")
+	//Creates a Machine Gun, and so on, up to the last Weapon type
+
+	if (rarStr == "1")
+	{
+		item.GetComponent<FirearmScript>().weaponRarity = 1;
+	}
+	//And so on, assigning rarities up to 5 for weapons.
+
+	if (cOneStr == "1")
+	{
+		item.AddComponent<DeepYield>();
+	}
+
+	if (cOneStr == "2")
+	//Adds the component, "Deeper Yield".
+
+	if (cTwoStr == "3")
+	//Adds the component, "Deep Stores". Adds "Deeper Stores" if cTwoStr is "4".
+
+	if (cThreeStr == "5")
+	//Adds the component, "Far Sight". Adds "Farther Sight" if cThreeStr is "6".
+
+	if (cFourStr == "7")
+	//Adds the component, "Hasty Hands". Adds "Hastier Hands" if cFourStr is "8".
+
+	if (player.readdedWeps[s].Length == 8)
+	{
+		if (cFiveStr == "0")
+		{
+			item.AddComponent<WaitNowImReady>();
+		}
+		//And so on, up to 9, or special characters: (!, @, #, $, %, or ^)
+	}
+
+	if (player.readdedWeps[s].Length == 9)
+	{
+		if (cFiveStr == "A")
+		{
+			item.AddComponent<EquivalentExchange>();
+		}
+		//And so on, up to "G"
+			
+		//The next component comes from a pool between (9, 4, 5, 6, 8, !, @, or #)
+		if (cFiveStr == "5")
+		{
+			item.AddComponent<MaliciousWindUp>();
+		}
+
+		//The last component comes from a pool between (0, 1, 2, 7, 3, $, %, or ^)
+		if (cSixStr == "2")
+		{
+			item.AddComponent<Inoculated>();
+		}
+	}
+
+	yield return new WaitForSeconds(spawnDelayTimer);
 }
 ```
 </details>
@@ -465,33 +463,32 @@ This system is performative, and has yet to produce instances of two of the same
 ```csharp
 public virtual void AmmoCheats()
 {
-        if (isExotic == true)
-		//Exotics generate the best Cheat variant and leave the method.
-		return;
+	if (isExotic == true)
+	//Exotics generate the best Cheat variant and leave the method.
+	return;
 
-        if (saved == true)
-        //Weapons made by the WeaponManager add Cheats directly, so there is no need to generate.
-		return;
+	if (saved == true)
+	//Weapons made by the WeaponManager add Cheats directly, so there is no need to generate.
+	return;
 
-        ammoCheatOne = Random.Range(0, 101);
-        ammoCheatTwo = Random.Range(100, 201);
+	cheatRNG = Random.Range(0, 101);
+	if(cheatRNG <= 50)
+	{
+		gameObject.AddComponent<DeepYield>();
+	}
 
-        if(ammoCheatOne <= 50)
-        {
-			gameObject.AddComponent<DeepYield>();
-		}
+	else
+	//Adds the component, "Deeper Yield". 
 
-        if (ammoCheatOne > 50)
-        //Adds the component, "Deeper Yield". 
+	cheatRNG = Random.Range(100, 201);
 
-        if (ammoCheatTwo <= 150)
-		{
-			gameObject.AddComponent<DeepStores>();
-		}
+	if (cheatRNG <= 150)
+	{
+		gameObject.AddComponent<DeepStores>();
+	}
 
-        if (ammoCheatTwo > 150)
-        //Adds the component, "Deeper Stores".      
-
+	else
+	//Adds the component, "Deeper Stores".      
 }
 //Other Statistical Cheat methods operate identically.
 //...
@@ -500,7 +497,6 @@ public virtual void CheatGenerator()
 	if(isExotic == true)
 	{
 		//Exotic weapons use negative numbers to denote what Functional Cheats to receive.
- 		cheatRNG = cheatOverride;
 		if(cheatRNG == -1)
 		{
 			gameObject.AddComponent<EquivalentExchange>();
@@ -538,26 +534,25 @@ public virtual void CheatGenerator()
 	if(weaponRarity >= 4)
 	{
 		//Pool #1 
-		fcnChtOne = Random.Range(400, 481);
-		if(fcnChtOne <= 410)
+		cheatRNG = Random.Range(400, 481);
+		if(cheatRNG  <= 410)
 		{
 			gameObject.AddComponent<AllElseFails>();
 			gameObject.GetComponent<AllElseFails>().proc = procOne;
 		}
 
-		if (fcnChtOne > 410 && fcnChtOne <= 420)
+		if (cheatRNG > 410 && cheatRNG <= 420)
 		//Adds Cheat "Not With a Stick", and so on, with last range between (471 and 480)
 
 		//Pool #2
-		fcnChtTwo = Random.Range(480, 561);
-		if (fcnChtTwo <= 490)
+		cheatRNG  = Random.Range(480, 561);
+		if (cheatRNG  <= 490)
 		{
 			gameObject.AddComponent<WaitNowImReady>();
 			gameObject.GetComponent<WaitNowImReady>().proc = procTwo;
-	
 		}
 
-		if (fcnChtTwo > 490 && fcnChtTwo <= 500)
+		if (cheatRNG > 490 && cheatRNG <= 500)
 		//Adds Cheat "Efficacy" and so on, with last range between (551 and 560)
 	}
 }
