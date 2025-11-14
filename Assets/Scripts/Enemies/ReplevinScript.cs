@@ -10,127 +10,126 @@ public class ReplevinScript : MonoBehaviour
     //This value buffs enemy damage:
     //-Increasing this number adds a percentage of current damage onto itself
     //-Increasing damage allows this number to inflict more damage in return
-    //-Note: The code that increases this number by difficulty is in the EnemyHealthScript.
     public float damagePercent = 10f;
+    private int damageAdd; //Number used to increase Enemy damage
+
+    [Header("General")]
 
     public int moveSpeed = 5;
     public int boostSpeed = 7;
-    public int nmaAccel = 8;
-    public float meleeRangeCheck; //Distance required for Enemy to register Player position for melees
-    public float meleeRangeMin; //value required to register as a melee hit
-    public float meleeAttackTimer = 0.8f; //Time to wait before committing a Melee attack
-    public float meleeLimit = 1f; //Governs how far Enemy will melee on position before timing out
-    public float meleeTimeout; //Time to wait before melee-ing again
-    public float meleeAttackForce;
-
-    public float chargeRangeCheck; //Distance required for Enemy to register Player position for charges
-    public float chargeRangeMin; //value required to register as a charge hit
-    public float chargeLimit = 1f; //Governs how far Enemy will charge on position before timing out
-    public float chargeOvershoot = 2f; //Governs how far Enemy will travel beyond the Player's last position while charging
-    public float chargeTimeout; //Time to wait before charging again
-    public float chargeBuildup = 1f;
-    public float chargeAttackForce;
-
+    public int enemyAcceleration = 8;
     public float rotationStrength = 2f; //Governs turning speed of Enemy while Player is in range
-    public float gapClose = 0f; //Governs speed of pounce; 0.07-0.1 is optimal  
-    public float pounceLimit = 1.5f; //Governs how far Enemy will pounce on position before timing out
-    public float jumpLimit = 4f; //Governs how far Enemy will jump towards Player before timing out
-    public float jumpForce = 5f;
-    public float forwardForce = 4f;
-    public float rangedAttackForce;
-    public float punchTimeout; //Time to wait before pouncing again
-    public float jumpTimeout; //Time to wait before jumping again
-    public GameObject jumpTakeoff;
-    public float airtimeShort = 2f;
-    public float rangeATKMin;
-    public float attackRate;
-    private float berthJumpCarpetBombTimer = 0.15f;
-    private float berthJumpTimerReset;
+    public bool amBoss; //Affirms Boss status if true
+    public bool amSentry; //Affirms stationary, inactive Nav Mesh Agent if true
+    public LayerMask contactOnly; //Permits raycast interaction only with specified Layers
+    public Transform attackStartPoint; //Origin point of Enemy attack
+    public GameObject stunningLucent; //Harmful Lucent Cluster game object
+
+    [Header("Melee Attack settings")]
+
+    public float meleeRangeCheck; //Distance required for Enemy to begin attack
+    public float meleeRangeMin; //Melee attack range
+    public float meleeAttackTimer = 0.8f; //Time to wait before committing a Melee attack
+    public float meleeTimeout; //Time to wait before next melee
+    public float meleeAttackForce;
+    public float attackRate; //Rate of speed of which attacks occur
+
+    [Header("Range Attack settings")]
 
     //This value buffs attack rate of Ranged enemies:
     //-Increasing this number adds a percentage of fire rate onto itself, allowing for faster firing.
-    //-Note: The code that increases this number by difficulty is in the EnemyHealthScript.
-    public float rangeAttackRate;
     public float rangeAttackChange = 15f;
-    public GameObject rangeProjectile;
-    public float agitationLimit;
-    public bool amLeader;
-    public bool amFollower;
-    public bool amHunter;
-    public bool amBoss;
-    public bool amSentry;
-    public Transform attackStartPoint;
-    public Transform jumpCheck;
-    public LineRenderer attackLine;
-    public Material outRangeColor;
-    public Material inRangeColor;
-    public Material rangeHitColor;
-    public List<GameObject> cluster = new List<GameObject>();
-    public GameObject leader;
-    public GameObject stunningLucent, stunMechanic;
+    public float rangeAttackRate;
+    public float rangedAttackForce;
+    public float rangeATKMin; //Distance required for Enemy to begin attack
+    public GameObject rangeProjectile; //Projectile game object
+
+    [Header("Charge Attack settings")]
+
+    public float chargeRangeCheck; //Distance required for Enemy to begin attack
+    public float chargeRangeMin; //Charge attack range
+    public float chargeLimit = 1f; //Governs how far Enemy will charge on position before timing out
+    public float chargeOvershoot = 2f; //Governs how far Enemy will travel beyond the Player's last position
+    public float chargeTimeout; //Time to wait before charging again
+    public float chargeBuildup = 1f; //Time delay before next action -- Bosses only
+    public float chargeAttackForce;
+
+    [Header("Pounce Attack settings")]
+
+    public float gapClose = 0f; //Governs speed of pounce; 0.07-0.1 is optimal  
+    public float pounceLimit = 1.5f; //Governs how far Enemy will pounce on position before timing out
+    public float punchTimeout; //Time to wait before pouncing again
+
+    [Header("Jump Attack settings")]
+
+    public float jumpLimit = 4f; //Governs how far Enemy will jump towards Player before timing out
+    public float jumpForce = 5f; //Upwards jump force
+    public float forwardForce = 4f; //Forward jump force
+    public float jumpTimeout; //Time to wait before jumping again
+    public float airtimeShort = 2f; //Forces another jump if grounded
+    public float berthJumpCarpetBombTimer = 0.15f; //Harmful cluster drop rate -- Berth only
+    public GameObject jumpTakeoff; //VFX used when jumping
+    public Transform jumpCheck; //Transform used to determine if grounded
 
     internal NavMeshAgent self;
     internal EnemyHealthScript enemy;
     private EnemyManagerScript manager;
     internal BossManagerScript boss; //For bosses only -- Used to spawn enemies when returning immune
-    private Vector3 focus;
-    private Vector3 distance, lastKnownDistance;
-    private Vector3 lastPlayerPosition;
-    private Vector3 recoilPosition;
-    private LayerMask layer, layerTwo, layerTotal;
 
-    private GameObject[] waypoint;
-    private int waypointNext;
-    private float accuracy = 5.0f;
-    private GameObject player;
-    internal bool playerFound = false;
+    //distance - Describes length between Player and Enemy
+    //lastKnownDistance - Describes last recorded length between Player and Enemy
+    //lastPlayerPosition - Describes last recorded Player position
+    //recoilPosition - Describes stagger position when hitting Lucent wall -- Bosses only
+    private Vector3 distance, lastKnownDistance, lastPlayerPosition, recoilPosition;
+    internal GameObject stunMechanic; //New Lucent Cluster game object
 
-    private float slowedPercent = 50f;
-    private float slowPctReset;
-    private int moveSpeedSlow;
-    private int boostSpeedSlow;
-    private int nmaAccelSlow;
-    internal int moveSpeedReset;
-    internal int boostSpeedReset;
-    internal int nmaAccelReset;
-    internal bool interrupted = false;
+    private GameObject[] waypoint; //Array of waypoints
+    private int waypointNext; //Number used to randomly choose next waypoint
+    private float accuracy = 5.0f; //Goal length between Waypoint and Enemy
+    private GameObject player; //Player game object
 
-    private int accelReset;
-    private float meleeReset;
-    private float chargeReset;
-    private float buildupReset;
-    private float punchReset;
-    private float jumpReset;
-    private float airtimeReset;
-    private float attackAgain;
-    private float agitationTimer;
-    private float gapCloseReset;
-    private bool destinationSet = false;
-    private bool gathered = false;
-    private bool throwTarget = false;
-    private bool agitated;
-    private bool canAttackAgain = true;
-    private bool recorded = false;
-    private bool fireSequence = false;
-    private bool attackLock = false;
-    private bool meleePause = false;
-    private bool ramTimeout = false;
-    private bool slamTimeout = false;
-    private bool fireTimeout = false;
-    private bool lockOn = false;
-    private bool addWave = false;
+    internal int moveSpeedSlow; //Modified Enemy speed when Slowed
+    internal int boostSpeedSlow; //Modified Enemy boost speed when Slowed
+    internal int nmaAccelSlow; //Modified NavMeshAgent acceleration when Slowed
+    internal int moveSpeedReset; //Holds starting Enemy speed
+    internal int boostSpeedReset; //Holds starting Enemy boost speed
+    internal int accelReset; //Holds starting NavMeshAgent acceleration
+
+    private float meleeReset; //Holds starting Melee attack timer
+    private float chargeReset; //Holds starting Charge attack timer
+    private float buildupReset; //Holds starting Charge attack delay timer
+    private float punchReset; //Holds starting Pounce attack timer
+    private float jumpReset; //Holds starting Jump attack timer
+    private float airtimeReset; //Holds starting Force jump timer
+    private float attackAgain; //Holds starting attack rate
+    private float gapCloseReset; //Holds starting Pounce attack speed
+    private float berthJumpTimerReset; //Holds starting Berth Jump cluster timer
+    private bool destinationSet = false; //Affirms location if true
+    private bool gathered = false; //Affirms cluster has been spawned if true -- Bosses only
+    private bool throwTarget = false; //Affirms Enemy can throw cluster at Player if true -- Bosses only
+    private bool canAttackAgain = true; //Affirms Enemy can attack once more if true
+    private bool recorded = false; //Affirms information has been saved for attack if true
+    private bool attackLock = false; //Affirms Enemy is using Raycast for attack if true
+    private bool ramTimeout = false; //Affirms Charge enemy has ended attack if true
+    private bool slamTimeout = false; //Affirms Jump, Pounce Enemy has ended attack if true
+    private bool lockOn = false; //Affirms Jump Enemy is lerping to Players if true
+    private bool addWave = false; //Affirms Boss has spawned Enemies if true
+    internal bool interrupted = false; //Affirms Boss can be damaged if true
 
     // Start is called before the first frame update
     void Start()
     {
-        slowPctReset = slowedPercent;
         moveSpeedReset = moveSpeed;
         boostSpeedReset = boostSpeed;
-        nmaAccelReset = nmaAccel;
-
-        layer = LayerMask.GetMask("Player");
-        layerTwo = LayerMask.GetMask("Surface");
-        layerTotal = layer | layerTwo;
+        accelReset = enemyAcceleration;
+        gapCloseReset = gapClose;
+        meleeReset = meleeAttackTimer;
+        chargeReset = chargeTimeout;
+        punchReset = punchTimeout;
+        jumpReset = jumpTimeout;
+        airtimeReset = airtimeShort;
+        buildupReset = chargeBuildup;
+        berthJumpTimerReset = berthJumpCarpetBombTimer;
 
         self = GetComponent<NavMeshAgent>();
         waypoint = GameObject.FindGameObjectsWithTag("Waypoint");
@@ -144,99 +143,50 @@ public class ReplevinScript : MonoBehaviour
             boss = FindObjectOfType<BossManagerScript>();
         }
 
-        slowedPercent /= 100;
-        slowedPercent *= moveSpeed;
-        moveSpeedSlow = (int)slowedPercent;
-
-        slowedPercent = slowPctReset;
-        slowedPercent /= 100;
-        slowedPercent *= boostSpeed;
-        boostSpeedSlow = (int)slowedPercent;
-
-        slowedPercent = slowPctReset;
-        slowedPercent /= 100;
-        slowedPercent *= nmaAccel;
-        nmaAccelSlow = (int)slowedPercent;
-
-        playerFound = false;
-
-        accelReset = nmaAccel;
-        gapCloseReset = gapClose;
-        meleeReset = meleeAttackTimer;
-        chargeReset = chargeTimeout;
-        punchReset = punchTimeout;
-        jumpReset = jumpTimeout;
-        airtimeReset = airtimeShort;
-        buildupReset = chargeBuildup;
-        berthJumpTimerReset = berthJumpCarpetBombTimer;
-        agitationTimer = 0.0f;
-        agitated = false;
-
-        if(amLeader)
-        {
-            leader = gameObject;
-
-            if (cluster.Count > 0)
-            {
-                for (int f = 0; f < cluster.Count; f++)
-                {
-                    cluster[f].GetComponent<ReplevinScript>().leader = gameObject;
-                }
-            }
-        }
+        AttackScaling();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(self.velocity.magnitude);
-
-        GrowingAgitation();
-        ClusterManagement();
         CanSeePlayer();
         HaveIDied();
-        CheckForSlowedDebuff();
 
         if(jumpCheck != null)
         {
             AmIGrounded();
-            //Debug.Log(AmIGrounded());
         }        
     }
 
-    public void ClusterManagement()
+    /// <summary>
+    /// Modifies Enemy damage, Ranged attack rate by Difficulty number
+    /// </summary>
+    private void AttackScaling()
     {
-        for (int z = 0; z < cluster.Count; z++)
+        if(enemy.difficultyValue >= 2)
         {
-            if (cluster[z].GetComponent<EnemyHealthScript>().healthCurrent <= 0)
-            {
-                cluster.RemoveAt(z);
-            }
+            damagePercent *= enemy.difficultyValue;
+            damagePercent /= 100;
+            damagePercent *= damage;
+            damageAdd = (int)damagePercent;
+            damage += damageAdd;
+
+            rangeAttackChange *= enemy.difficultyValue;
+            rangeAttackChange /= 100;
+            rangeAttackChange *= rangeAttackRate;
+            rangeAttackRate -= rangeAttackChange;
         }
     }
 
-    public void GrowingAgitation()
-    {
-        if(playerFound)
-        {
-            agitationTimer += Time.deltaTime;
-            //Debug.Log(agitationTimer);
-
-            if (agitationTimer >= agitationLimit)
-            {
-                agitated = true;
-                agitationTimer = 0.0f;
-
-            }
-        }
-    }
-   
+    /// <summary>
+    /// Reports true if Player is found, false if not
+    /// </summary>
     public bool CanSeePlayer()
     {
         RaycastHit rayInfo;
         Vector3 rayToTarget = player.transform.position - transform.position;
         //Debug.DrawRay(transform.position, rayToTarget);
-        if(Physics.Raycast(transform.position, rayToTarget, out rayInfo, Mathf.Infinity, layerTotal))
+        if(Physics.Raycast(transform.position, rayToTarget, out rayInfo, Mathf.Infinity, contactOnly))
         {
             if(rayInfo.transform.gameObject.tag == "Player")
             {
@@ -247,6 +197,9 @@ public class ReplevinScript : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Reports true if Enemy is on ground, false if not
+    /// </summary>
     public bool AmIGrounded()
     {
         //Debug.DrawRay(jumpCheck.transform.position + Vector3.up, Vector3.down * 1.3f, Color.red);
@@ -263,6 +216,9 @@ public class ReplevinScript : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Reports true if Enemy is alive, false if not
+    /// </summary>
     public bool HaveIDied()
     {
         if(enemy.healthCurrent <= 0)
@@ -273,132 +229,9 @@ public class ReplevinScript : MonoBehaviour
         return false;
     }
 
-    private void CheckForSlowedDebuff()
-    {
-        if(gameObject.GetComponent<SlowedScript>())
-        {
-            if(amBoss)
-            {
-                Destroy(gameObject.GetComponent<SlowedScript>());
-            }
-
-            else
-            {
-                moveSpeed = moveSpeedSlow;
-                boostSpeed = boostSpeedSlow;
-                nmaAccel = nmaAccelSlow;
-            }
-        }
-    }
-
-    [Task]
-    bool Monitor(float turnAngle)
-    {
-        Vector3 p = transform.position + Quaternion.AngleAxis(turnAngle, Vector3.up) * transform.forward;
-        focus = p;
-        return true;
-    }
-
-    [Task]
-    public void LookAtFocus()
-    {
-        Vector3 direction = focus - transform.position;
-
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 10);
-
-        if (Task.isInspected)
-        {
-            Task.current.debugInfo = string.Format("angle={0}", Vector3.Angle(transform.forward, direction));
-        }
-
-        if (Vector3.Angle(transform.forward, direction) < 5.0f)
-        {
-            Task.current.Succeed();
-        }
-    }
-
-    [Task]
-    public void VisitWaypoint()
-    {      
-        self.SetDestination(waypoint[waypointNext].transform.position);
-
-        if (Task.isInspected)
-        {
-            Task.current.debugInfo = string.Format("t={0:0.00}", Time.time);
-        }
-
-        if (self.remainingDistance <= self.stoppingDistance && !self.pathPending)
-        {
-            Task.current.Succeed();
-        }
-    }
-
-    [Task]
-    public void FollowLeader()
-    {
-        if(amFollower)
-        {
-            focus = leader.transform.position;
-            self.SetDestination(focus);
-        }
-
-        if (Task.isInspected)
-        {
-            Task.current.debugInfo = string.Format("t={0:0.00}", Time.time);
-        }
-
-        if (self.remainingDistance <= self.stoppingDistance && !self.pathPending)
-        {
-            Task.current.Succeed();
-        }
-
-    }
-
-    [Task]
-    public void PlayerLockOn()
-    {
-        playerFound = true;
-        focus = player.transform.position;
-        Task.current.Succeed();
-    }
-
-    [Task]
-    public void PlayerSeek()
-    {
-        self.SetDestination(focus);
-        Task.current.Succeed();
-    }
-
-    [Task]
-    public bool IsPlayerClose()
-    {
-        distance = transform.position - player.transform.position;
-        if(distance.magnitude <= meleeRangeMin)
-        {
-            return true;
-        }
-
-        else
-        {
-            return false;
-        }
-    }
-
-    [Task]
-    public bool IsPlayerFar()
-    {
-        distance = transform.position - player.transform.position;
-        if (distance.magnitude >= rangeATKMin)
-        {
-            return true;
-        }
-
-        else
-        {
-            return false;
-        }
-    }
-
+    /// <summary>
+    /// Controls Melee attack behaviors between Boss and non-Boss Enemies
+    /// </summary>
     [Task]
     public void AttackMelee()
     {
@@ -411,7 +244,6 @@ public class ReplevinScript : MonoBehaviour
             if(amBoss)
             {
                 self.speed = boostSpeed;
-                //self.SetDestination(player.transform.position);
                 distance = transform.position - player.transform.position;
                 attackAgain += Time.deltaTime;
                 
@@ -430,8 +262,6 @@ public class ReplevinScript : MonoBehaviour
 
                 if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin))
                 {
-                    //attackLine.SetPosition(1, hit.point);
-                    //attackLine.material = rangeHitColor;
 
                     if (hit.collider.tag == "Hard Lucent" && !gathered)
                     {
@@ -443,11 +273,6 @@ public class ReplevinScript : MonoBehaviour
                             Destroy(stunMechanic.GetComponent<Rigidbody>());
                         }
 
-                        //if (stunMechanic.GetComponent<BoxCollider>())
-                        //{
-                        //    stunMechanic.GetComponent<BoxCollider>().enabled = false;
-                        //}
-
                         gathered = true;
                         throwTarget = true;
                     }
@@ -457,13 +282,10 @@ public class ReplevinScript : MonoBehaviour
                 {
                     addWave = true;
                     self.speed = 0;
-                    //self.acceleration = 0;
                     meleeTimeout -= Time.deltaTime;
                     if (meleeTimeout <= 0f)
                     {
                         self.speed = moveSpeedReset;
-                        //self.acceleration = nmaAccelReset;
-
                         destinationSet = false;
                         gathered = false;
                         recorded = false;
@@ -496,7 +318,6 @@ public class ReplevinScript : MonoBehaviour
                     if(CanSeePlayer())
                     {
                         self.SetDestination(player.transform.position);
-                        //self.ResetPath();
                         self.speed = moveSpeed;                  
 
                         if (distance.magnitude <= meleeRangeCheck)
@@ -505,11 +326,7 @@ public class ReplevinScript : MonoBehaviour
                             {
                                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-distance, Vector3.up), rotationStrength);
 
-                                //attackLine.SetPosition(1, hit.point);
-                                //attackLine.material = rangeHitColor;
-
                                 lastPlayerPosition = (hit.point - transform.position).normalized;
-                                //lastKnownDistance = lastPlayerPosition - transform.position;
                                 recorded = true;
 
                                 if (stunMechanic.GetComponent<Rigidbody>() == null)
@@ -528,22 +345,20 @@ public class ReplevinScript : MonoBehaviour
                             }
 
                             self.speed = moveSpeed / 2;
-                            self.acceleration = nmaAccel / 2;
+                            self.acceleration = enemyAcceleration / 2;
 
                             meleeAttackTimer -= Time.deltaTime;
                             if (meleeAttackTimer <= 0f)
                             {
                                 attackLock = true;
                                 self.speed = boostSpeed;
-                                self.acceleration = nmaAccel;
+                                self.acceleration = enemyAcceleration;
 
                                 if (attackLock)
                                 {
                                     meleeAttackTimer = 0f;
                                     if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin))
                                     {
-                                        //attackLine.SetPosition(1, hit.point);
-                                        //attackLine.material = rangeHitColor;
 
                                         if (hit.collider.tag == "Player" && attackAgain >= attackRate)
                                         {
@@ -563,7 +378,6 @@ public class ReplevinScript : MonoBehaviour
                                             //This code shoves the Player with particular force in their opposite direction.
                                             //This is a melee attack, shoving the player with less force, subtly offsetting the player upwards to distinguish it from a charge.
                                             Vector3 knockbackDir = -hit.collider.transform.forward;
-                                            //knockbackDir.y = 0;
                                             hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
 
                                             manager.damageDealt += damage;
@@ -574,17 +388,7 @@ public class ReplevinScript : MonoBehaviour
                                             destinationSet = false;
                                             gathered = false;
                                             recorded = false;
-                                            throwTarget = false;
-
-                                            //if (GetComponent<EnemyFollowerScript>() != null)
-                                            //{
-                                            //    if (GetComponent<EnemyFollowerScript>().leader != null && GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
-                                            //    {
-                                            //        GetComponent<EnemyFollowerScript>().leader.Pursuit();
-                                            //    }
-
-                                            //    GetComponent<EnemyFollowerScript>().ChasePlayer();
-                                            //}              
+                                            throwTarget = false;         
                                         }
                                     }
                                 }
@@ -603,7 +407,6 @@ public class ReplevinScript : MonoBehaviour
                         self.speed = moveSpeed;
                         self.SetDestination(player.transform.position);
                         self.acceleration = accelReset;
-                        //attackLine.material = inRangeColor;
                     }
                 }
             }
@@ -612,26 +415,18 @@ public class ReplevinScript : MonoBehaviour
             else
             {
                 self.speed = moveSpeed;
-                //self.SetDestination(player.transform.position);
                 distance = transform.position - player.transform.position;
                 attackAgain += Time.deltaTime;
-                //Vector3 rayOrigin = attackStartPoint.transform.position;
-                //RaycastHit hit;
-
-                //attackLine.SetPosition(0, attackStartPoint.position);
-                //attackLine.SetPosition(1, rayOrigin + (attackStartPoint.transform.forward * meleeRangeMin));
-                //attackLine.material = inRangeColor;
 
                 if (CanSeePlayer())
                 {
                     self.SetDestination(player.transform.position);
-                    //self.ResetPath();
                     self.speed = boostSpeed;
 
                     if (distance.magnitude <= meleeRangeCheck)
                     {
                         self.speed = moveSpeed / 2;
-                        self.acceleration = nmaAccel / 2;
+                        self.acceleration = enemyAcceleration / 2;
 
                         meleeAttackTimer -= Time.deltaTime;
                         if (meleeAttackTimer <= 0f)
@@ -644,8 +439,6 @@ public class ReplevinScript : MonoBehaviour
                                 meleeAttackTimer = 0f;
                                 if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin))
                                 {
-                                    //attackLine.SetPosition(1, hit.point);
-                                    //attackLine.material = rangeHitColor;
 
                                     if (hit.collider.tag == "Player" && attackAgain >= attackRate)
                                     {
@@ -675,23 +468,12 @@ public class ReplevinScript : MonoBehaviour
                                             //This code shoves the Player with particular force in their opposite direction.
                                             //This is a melee attack, shoving the player with less force, subtly offsetting the player upwards to distinguish it from a charge.
                                             Vector3 knockbackDir = -hit.collider.transform.forward;
-                                            //knockbackDir.y = 0;
                                             hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
 
                                             manager.damageDealt += damage;
 
                                             attackLock = false;
-                                            meleeAttackTimer = meleeReset;
-
-                                            //if (GetComponent<EnemyFollowerScript>() != null)
-                                            //{
-                                            //    if (GetComponent<EnemyFollowerScript>().leader != null && GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
-                                            //    {
-                                            //        GetComponent<EnemyFollowerScript>().leader.Pursuit();
-                                            //    }
-
-                                            //    GetComponent<EnemyFollowerScript>().ChasePlayer();
-                                            //}              
+                                            meleeAttackTimer = meleeReset;           
                                         }
                                     }
                                 }
@@ -710,7 +492,6 @@ public class ReplevinScript : MonoBehaviour
                     self.speed = moveSpeed;
                     self.SetDestination(player.transform.position);
                     self.acceleration = accelReset;
-                    //attackLine.material = inRangeColor;
                 }
             }          
         }
@@ -718,9 +499,6 @@ public class ReplevinScript : MonoBehaviour
         else
         {
             self.enabled = false;
-
-            attackLine.SetPosition(0, attackStartPoint.position);
-            attackLine.SetPosition(1, attackStartPoint.position);
         }
         
 
@@ -728,6 +506,9 @@ public class ReplevinScript : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Controls Range attack behaviors for Enemies
+    /// </summary>
     [Task]
     public void AttackRange()
     {
@@ -740,28 +521,11 @@ public class ReplevinScript : MonoBehaviour
                 self.enabled = false;
             }
 
-            //if (self.enabled != true)
-            //{
-            //    self.enabled = true;
-            //    self.SetDestination(player.transform.position);
-            //}
-
-            //else
-            //{
-            //    self.SetDestination(player.transform.position);
-            //}
-
             distance = transform.position - player.transform.position;
             attackAgain += Time.deltaTime;
 
             Vector3 rayOrigin = attackStartPoint.transform.position;
-            RaycastHit hit;
-
-            //attackLine.SetPosition(0, attackStartPoint.position);
-            //attackLine.SetPosition(1, rayOrigin + (attackStartPoint.transform.forward * rangeATKMin));
-            //attackLine.material = outRangeColor;
-
-            //transform.LookAt(player.transform.position);        
+            RaycastHit hit;  
 
             if(CanSeePlayer())
             {
@@ -775,14 +539,10 @@ public class ReplevinScript : MonoBehaviour
                     self.SetDestination(player.transform.position);
                 }
 
-                //attackLine.SetPosition(1, player.transform.position);
-                //attackLine.material = inRangeColor;
-
                 if (distance.magnitude <= rangeATKMin)
                 {
                     if(!amSentry)
                     {
-                        //self.enabled = false;
                         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-distance, Vector3.up), rotationStrength);
                     }
 
@@ -790,7 +550,6 @@ public class ReplevinScript : MonoBehaviour
                     {
                         if (hit.collider.tag == "Enemy")
                         {
-                            //attackLine.SetPosition(1, hit.collider.transform.position);
                             //Debug.Log("Danger of Friendly Fire; Aborting!");
                             Task.current.Fail();
                         }
@@ -799,9 +558,6 @@ public class ReplevinScript : MonoBehaviour
                         {
                             attackAgain = 0.0f;
 
-                            //attackLine.SetPosition(1, player.transform.position);
-                            //attackLine.material = rangeHitColor;
-
                             GameObject projectile = Instantiate(rangeProjectile, attackStartPoint.transform.position, attackStartPoint.transform.rotation);
                             projectile.GetComponent<ProjectileScript>().damage = damage;
                             if (GetComponent<BerthScript>())
@@ -809,17 +565,7 @@ public class ReplevinScript : MonoBehaviour
                                 projectile.GetComponent<ProjectileScript>().berthFlag = true;
                             }
 
-                            projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * rangedAttackForce);
-                          
-                            //projectile.transform.position = attackStartPoint.transform.position;
-                            //projectile.transform.rotation = attackStartPoint.transform.rotation;
-                            //projectile.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-
-                            //projectile.GetComponent<SphereCollider>().isTrigger = true;
-                            //projectile.AddComponent<Rigidbody>();
-
-                            //projectile.AddComponent<ProjectileScript>();
-
+                            projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * rangedAttackForce);                      
                         }
                     }
                 }            
@@ -842,34 +588,32 @@ public class ReplevinScript : MonoBehaviour
         else
         {
             self.enabled = false;
-
-            attackLine.SetPosition(0, attackStartPoint.position);
-            attackLine.SetPosition(1, attackStartPoint.position);
         }     
 
         Task.current.Succeed();
     }
 
+    /// <summary>
+    /// Controls Charge attack behaviors between Boss and non-Boss Enemies
+    /// </summary>
     [Task]
     public void AttackCharge()
     {
         if(!HaveIDied())
         {
-            //self.SetDestination(player.transform.position);
             Vector3 rayOrigin = attackStartPoint.transform.position;
             RaycastHit hit;
 
             //This behavior dictates Charge combat for Bosses
             if(amBoss)
             {
-                //self.speed = moveSpeed;
                 distance = player.transform.position - transform.position;
 
                 if(distance.magnitude <= chargeRangeCheck && CanSeePlayer())
                 {
                     self.ResetPath();
                     self.speed = boostSpeed;
-                    self.acceleration = nmaAccel;
+                    self.acceleration = enemyAcceleration;
 
                     //Debug.Log(attackLock + " | " + ramTimeout);
                     if(!attackLock && !ramTimeout)
@@ -889,7 +633,6 @@ public class ReplevinScript : MonoBehaviour
                                 lastPlayerPosition = hit.point + distance * chargeOvershoot;
                                 attackLock = true;
 
-                                //self.SetDestination(lastPlayerPosition);
                                 GameObject takeoff = Instantiate(jumpTakeoff, transform.position + Vector3.down, transform.rotation);
                                 recorded = true;
                             }
@@ -900,7 +643,6 @@ public class ReplevinScript : MonoBehaviour
 
                     Debug.DrawRay(transform.position, distance, Color.red);
                     Debug.DrawRay(transform.position, lastPlayerPosition, Color.green);
-                    //self.SetDestination(lastPlayerPosition);
                     lastKnownDistance = lastPlayerPosition - transform.position;
                     //Debug.Log(lastKnownDistance.magnitude + " | " + self.stoppingDistance);
 
@@ -924,11 +666,6 @@ public class ReplevinScript : MonoBehaviour
                         self.SetDestination(lastPlayerPosition);
                         if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, chargeRangeMin))
                         {
-                            //if(hit.point != null)
-                            //{
-                            //    attackLock = false;
-                            //    ramTimeout = true;
-                            //}
 
                             if (hit.collider.tag == "Hard Lucent")
                             {
@@ -938,8 +675,6 @@ public class ReplevinScript : MonoBehaviour
 
                                 interrupted = true;
                                 chargeBuildup = buildupReset;
-
-                                //StartCoroutine(BossChargeStopLerp());
 
                                 enemy.isImmune = false;
                                 chargeTimeout *= 3;
@@ -981,16 +716,6 @@ public class ReplevinScript : MonoBehaviour
 
                                     manager.damageDealt += damage;
 
-                                    //if (GetComponent<EnemyFollowerScript>() != null)
-                                    //{
-                                    //    if (GetComponent<EnemyFollowerScript>().leader != null && GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
-                                    //    {
-                                    //        GetComponent<EnemyFollowerScript>().leader.Pursuit();
-                                    //    }
-
-                                    //    GetComponent<EnemyFollowerScript>().ChasePlayer();
-                                    //}
-
                                     chargeBuildup = buildupReset;
                                     attackLock = false;
                                     ramTimeout = true;
@@ -1019,7 +744,7 @@ public class ReplevinScript : MonoBehaviour
                 {
                     self.ResetPath();
                     self.speed = boostSpeed;
-                    self.acceleration = nmaAccel * 2;
+                    self.acceleration = enemyAcceleration * 2;
 
                     if (!recorded)
                     {
@@ -1057,12 +782,7 @@ public class ReplevinScript : MonoBehaviour
                     if (attackLock)
                     {
                         if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, chargeRangeMin))
-                        {
-                            //if(hit.point != null)
-                            //{
-                            //    attackLock = false;
-                            //    ramTimeout = true;
-                            //}                         
+                        {               
 
                             if (hit.collider.tag == "Player")
                             {
@@ -1105,16 +825,6 @@ public class ReplevinScript : MonoBehaviour
 
                                     manager.damageDealt += damage;
 
-                                    //if (GetComponent<EnemyFollowerScript>() != null)
-                                    //{
-                                    //    if (GetComponent<EnemyFollowerScript>().leader != null && GetComponent<EnemyFollowerScript>().leader.GetComponent<EnemyHealthScript>().healthCurrent > 0)
-                                    //    {
-                                    //        GetComponent<EnemyFollowerScript>().leader.Pursuit();
-                                    //    }
-
-                                    //    GetComponent<EnemyFollowerScript>().ChasePlayer();
-                                    //}
-
                                     attackLock = false;
                                     ramTimeout = true;
                                 }
@@ -1131,36 +841,19 @@ public class ReplevinScript : MonoBehaviour
 
                 }
             }
-            //Vector3 chargeVector = transform.position - player.transform.position;
-
-            //GameObject help = new GameObject();
-            //help = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            //help.transform.position = player.transform.position - chargeVector;
-
-            //Debug.DrawRay(player.transform.position - chargeVector, chargeVector, Color.blue);
-
-            //attackLine.SetPosition(0, attackStartPoint.position);
-            //attackLine.SetPosition(1, rayOrigin + (attackStartPoint.transform.forward * chargeRangeMin));
-            //attackLine.material = inRangeColor;
-
-            
-
-            //Debug.DrawRay(transform.position, -distance, Color.red);
-            //Debug.DrawRay(transform.position, -distance * chargeOvershoot, Color.green);
-
         }
 
         else
         {
             self.enabled = false;
-
-            attackLine.SetPosition(0, attackStartPoint.position);
-            attackLine.SetPosition(1, attackStartPoint.position);
         }
 
         Task.current.Succeed();
     }
 
+    /// <summary>
+    /// Controls Jump attack behaviors for Enemies
+    /// </summary>
     [Task]
     public void MajorAttackJump()
     {
@@ -1186,7 +879,6 @@ public class ReplevinScript : MonoBehaviour
                     if (hit.collider.tag == "Player")
                     {
                         lastPlayerPosition = (hit.point - transform.position).normalized;
-                        //lastKnownDistance = lastPlayerPosition - transform.position;
                         recorded = true;
 
                         if (gameObject.GetComponent<Rigidbody>() == null)
@@ -1199,11 +891,7 @@ public class ReplevinScript : MonoBehaviour
                         gameObject.GetComponent<Rigidbody>().AddForce((transform.forward * forwardForce), ForceMode.Impulse);
                         GameObject takeoff = Instantiate(jumpTakeoff, transform.position + Vector3.down, transform.rotation);
 
-                        //Debug.Log(lastPlayerPosition);
-                        //Debug.Log(lastKnownDistance.magnitude);
-                        //slamTimeout = true;
                     }
-
                 }
 
                 if(AmIGrounded())
@@ -1241,21 +929,14 @@ public class ReplevinScript : MonoBehaviour
                     }
                 }
 
-                //transform.position = Vector3.Lerp(transform.position, lastPlayerPosition, gapClose);
-                //lastKnownDistance = lastPlayerPosition - transform.position;
-                //Debug.Log(lastKnownDistance.magnitude + " | " + self.stoppingDistance);
-                //Debug.Log(distance.magnitude + " | " + jumpLimit);
-
                 if (distance.magnitude <= jumpLimit)
                 {
-                    //self.speed = 0;
                     lockOn = true;
                 }
 
                 if (lockOn && Time.timeScale == 1)
                 {
                     transform.position = Vector3.Lerp(transform.position, player.transform.position, gapClose);
-                    //slamTimeout = true;
 
                     if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hitTheSequel, 2f))
                     {
@@ -1329,10 +1010,6 @@ public class ReplevinScript : MonoBehaviour
                 airtimeShort = airtimeReset;
                 self.SetDestination(player.transform.position);
             }
-
-            //attackLine.SetPosition(0, attackStartPoint.position);
-            //attackLine.SetPosition(1, rayOrigin + (attackStartPoint.transform.forward * meleeRangeMin));
-            //attackLine.material = inRangeColor;
         }
 
         else
@@ -1343,6 +1020,9 @@ public class ReplevinScript : MonoBehaviour
         Task.current.Succeed();
     }
 
+    /// <summary>
+    /// Controls Pounce attack behaviors for Enemies
+    /// </summary>
     [Task]
     public void MajorAttackPounce()
     {
@@ -1429,10 +1109,6 @@ public class ReplevinScript : MonoBehaviour
                 self.SetDestination(player.transform.position);
             }
 
-            //attackLine.SetPosition(0, attackStartPoint.position);
-            //attackLine.SetPosition(1, rayOrigin + (attackStartPoint.transform.forward * meleeRangeMin));
-            //attackLine.material = inRangeColor;
-
             Task.current.Succeed();
         }
 
@@ -1441,8 +1117,11 @@ public class ReplevinScript : MonoBehaviour
             self.enabled = false;
         }
         
-    }  
+    }
 
+    /// <summary>
+    /// Delays return to Charge attack behavior
+    /// </summary>
     [Task]
     public void RamTimeout()
     {
@@ -1456,7 +1135,7 @@ public class ReplevinScript : MonoBehaviour
             {         
                 chargeTimeout = chargeReset;
                 self.speed = moveSpeed;
-                self.acceleration = nmaAccel;
+                self.acceleration = enemyAcceleration;
 
                 if (amBoss)
                 {
@@ -1487,8 +1166,11 @@ public class ReplevinScript : MonoBehaviour
 
         Task.current.Succeed();
 
-    }  
+    }
 
+    /// <summary>
+    /// Delays return to Jump attack behavior
+    /// </summary>
     [Task]
     public void JumpTimeout()
     {
@@ -1512,6 +1194,9 @@ public class ReplevinScript : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Delays return to Pounce attack behavior
+    /// </summary>
     [Task]
     public void PounceTimeout()
     {
@@ -1533,123 +1218,9 @@ public class ReplevinScript : MonoBehaviour
 
     }
 
-    [Task]
-    public void Retreat()
-    {
-        distance = player.transform.position - transform.position;
-        self.SetDestination(transform.position - distance);
-        if(distance.magnitude > meleeRangeMin)
-        {
-
-        }
-
-        Task.current.Succeed();
-    }   
-
-    [Task]
-    public void ChooseNextWaypoint()
-    {
-        if (waypoint.Length == 0)
-        {
-            return;
-        }
-
-        if (Vector3.Distance(waypoint[waypointNext].transform.position, self.transform.position) < accuracy)
-        {
-            waypointNext = Random.Range(0, waypoint.Length);
-        }
-
-        Task.current.Succeed();
-    }  
-    
-    [Task]
-    public bool PlayerFound()
-    {
-        if(!playerFound)
-        {
-            return false;
-        }
-
-        else
-        {          
-            return true;
-        }
-    }
-
-    [Task]
-    public void AlertMyCluster()
-    {
-        if(playerFound)
-        {
-            if (amLeader && cluster.Count > 0)
-            {
-                for (int f = 0; f < cluster.Count; f++)
-                {
-                    cluster[f].GetComponent<ReplevinScript>().playerFound = true;
-                    cluster[f].GetComponent<ReplevinScript>().focus = player.transform.position;
-                }
-            }
-        }
-        
-        Task.current.Succeed();
-    }
-
-    [Task]
-    public bool AmILeading()
-    {
-        if (!amLeader)
-        {
-            return false;
-        }
-
-        else
-        {          
-            return true;
-        }
-    }
-
-    [Task]
-    public bool AmIFollowing()
-    {
-        if (!amFollower)
-        {
-            return false;
-        }
-
-        else
-        {
-            return true;
-        }
-    }
-
-    [Task]
-    public bool AmIHunting()
-    {
-        if (!amHunter)
-        {
-            return false;
-        }
-
-        else
-        {
-            return true;
-        }
-    }
-
-    [Task]
-    public bool Agitated()
-    {
-        if(agitated)
-        {
-            return true;
-        }
-
-        else
-        {
-            return false;
-        }
-    }
-
+    /// <summary>
+    /// Creates Harmful Lucent cluster under airborne Jump Enemies
+    /// </summary>
     public IEnumerator BerthJumpCarpetBomb()
     {
         yield return new WaitForSeconds(0.5f);
@@ -1660,10 +1231,12 @@ public class ReplevinScript : MonoBehaviour
         stunMechanic.name = stunningLucent.name;
     }
 
+    /// <summary>
+    /// Stops Boss-level Charge Enemy stunned movement
+    /// </summary>
     public IEnumerator BossChargeStopLerp()
     {
         yield return new WaitForSeconds(0.5f);
         interrupted = false;
     }
-
 }

@@ -342,11 +342,6 @@ public class SemiFireFirearm : FirearmScript
                         }
                     }
                 } //For damage falloff checks/kill triggers while out of Effective Range
-
-                if (hit.collider.GetComponent<ReplevinScript>() != null)
-                {
-                    hit.collider.GetComponent<ReplevinScript>().playerFound = true;
-                }
             }
 
             if (hit.collider.tag == "Lucent")

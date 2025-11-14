@@ -5,59 +5,63 @@ using UnityEngine.UI;
 
 public class EnemyHealthScript : MonoBehaviour
 {
-    public int difficultyValue;
+    public int difficultyValue; //Increases toughness of Enemy Health
     public int healthCurrent = 2000;
     public int healthMax = 2000;
+
     //This value buffs enemy health:
     //-Increasing this number adds a percentage of max health onto current health
     //-Increasing max health allows this number to give more health in return
     public float healthPercent = 20f;
+    public int lucentYield = 200; //Amount of Lucent awarded when defeated
 
-    public int lucentYield = 200;
     //This value buffs Lucent awarded on deaths:
     //-Increasing this number adds a percentage of set Lucent onto itself
     //-Increasing base Lucent yield allows this number to add more Lucent in return
     public float lucentPercent = 20f;
+    public bool isImmune; //Affirms imperviousness to damage when true
+    public GameObject ammoReward; //Weapon ammo pickup
 
-    public bool isImmune;
-    public bool isDummy;
-    public GameObject corpse;
-    public GameObject ammoReward;
+    public Canvas visual; //Canvas object that visualizes Enemy health
 
-    public Canvas visual;
+    //currentHealth - Slider representing existing Health
+    //healthLost - Slider representing subtracted Health
     public Slider currentHealth, healthLost;
+
+    //curHealthColor - Image representing existing Health
+    //losHealthColor - Image representing lost Health
+    //debuffNotice - Image used when debuff is received
+    //dotNotice - Image used when damage-over-time is received
+    //slowNotice - Image used when slowed effect is received
     public Image curHealthColor, losHealthColor, debuffNotice, dotNotice, slowNotice;
     public Text enemyName;
-    public ParticleSystem blood; //Effect that plays when Enemy has been damaged
-    public float ammoRewardThreshold = 80f; //Required number to be at or above in order to spawn Ammunition.
-    private float lhUpdateTimer = 1f;
-    private float lhUpdateReset;
-    internal float canvasTimer = 2f;
-    internal float canvasTimerReset;
+    public ParticleSystem blood; //VFX played when Enemy is damaged
+    public float ammoRewardThreshold = 80f; //Goal number to be at or above to spawn Ammunition.
 
-    private int healthAdd;
-    private int damageAdd;
-    private int lucentAdd;
-    private float fireRateAdd;
-    private int ammoRewardChance;
+    private float lhUpdateTimer = 1f; //Duration to wait before updating lost Health slider
+    private float lhUpdateReset; //Holds starting lost health update duration
+    internal float canvasTimer = 2f; //Duration before Canvas disappears
+    internal float canvasTimerReset; //Holds starting Canvas disappear timer
+    private int healthAdd; //Number used to increase Enemy Health
+    private int lucentAdd; //Number used to increase Lucent awarded on defeats
+    private float fireRateAdd; //Number used to increase Ranged attack rate
+    private int ammoRewardChance; //Number used to randomly award ammo
     private EnemyManagerScript manager;
     private ReplevinScript attack;
     private BerthScript berth;
     private PlayerInventoryScript player;
-    private LayerMask layer = 7;
-    internal bool enemyHit;
-    internal int damageHit;
-    private bool done = false;
+    internal bool enemyHit; //Affirms Enemy has been hit if true
+    internal int damageHit; //Holds received damage taken
+    private bool done = false; //Permits one execution if true
 
     // Start is called before the first frame update
     public void Start()
     {
-        //healthCurrent = healthMax;
         manager = FindObjectOfType<EnemyManagerScript>();
         attack = GetComponent<ReplevinScript>();
         player = FindObjectOfType<PlayerInventoryScript>();
 
-        DifficultyMatch();
+        DifficultyMatch(); //Scales Enemy toughness by Difficulty number
 
         debuffNotice.gameObject.SetActive(false);
         dotNotice.gameObject.SetActive(false);
@@ -69,25 +73,20 @@ public class EnemyHealthScript : MonoBehaviour
         healthLost.value = healthCurrent;
         enemyName.text = gameObject.name;
         visual.gameObject.SetActive(false);
+        enemyHit = false;
 
-        if (GetComponent<BerthScript>() == null)
-        {
-            return;
-        }
-
-        else
+        if(GetComponent<BerthScript>())
         {
             berth = GetComponent<BerthScript>();
-        }
-
-        enemyHit = false;
-        
+        }     
     }
 
     // Update is called once per frame
     void Update()
     {
         currentHealth.value = healthCurrent;
+
+        //Updates lost Health slider when timer expires
         lhUpdateTimer -= Time.deltaTime;
         if(lhUpdateTimer <= 0f)
         {
@@ -95,12 +94,14 @@ public class EnemyHealthScript : MonoBehaviour
             healthLost.value = healthCurrent;
         }
 
+        //For bosses, Canvas is active on-screen
         if(attack.boss && healthCurrent > 0)
         {
             canvasTimer = canvasTimerReset;
             visual.gameObject.SetActive(true);
         }
 
+        //Canvas disappears when timer expires
         canvasTimer -= Time.deltaTime;
         if (canvasTimer <= 0f)
         {
@@ -116,6 +117,7 @@ public class EnemyHealthScript : MonoBehaviour
             }
         }
 
+        //Effect images (damage-over-time, Health debuff, slowed) appear, disappear if component is detected
         if (GetComponent<PosNegDOT>() != null || GetComponent<DamageOverTimeScript>() != null)
         {
             if (dotNotice.gameObject.activeInHierarchy == false)
@@ -156,23 +158,16 @@ public class EnemyHealthScript : MonoBehaviour
             slowNotice.gameObject.SetActive(false);
         }
     
-        if (isDummy == true)
-        {
-            return;
-        }
-
         if (healthCurrent <= 0)
         {
-            if(isDummy == true)
-            {
-                return;
-            }
 
-            //manager.enemyDied = true;
             EnemyDeath();
         }
     }
 
+    /// <summary>
+    /// Modifies Enemy max Health, damage dependent on Difficulty number
+    /// </summary>
     public void DifficultyMatch()
     {
         //If difficulty value 0 or less, auto-corrects to lowest difficulty.
@@ -180,7 +175,6 @@ public class EnemyHealthScript : MonoBehaviour
         {
             difficultyValue = 1;
             healthCurrent = healthMax;
-            attack.damage *= difficultyValue;
 
             currentHealth.maxValue = healthMax;
             currentHealth.value = healthCurrent;
@@ -190,9 +184,7 @@ public class EnemyHealthScript : MonoBehaviour
 
         if (difficultyValue == 1)
         {
-            //healthMax += healthAdd;
             healthCurrent = healthMax;
-            attack.damage *= difficultyValue;
 
             currentHealth.maxValue = healthMax;
             currentHealth.value = healthCurrent;
@@ -201,22 +193,14 @@ public class EnemyHealthScript : MonoBehaviour
 
         }
 
-        if (difficultyValue == 2)
+        if (difficultyValue >= 2 && difficultyValue <= 5)
         {
             healthPercent *= difficultyValue;
             healthPercent /= 100;
             healthPercent *= healthMax;
             healthAdd = (int)healthPercent;
-
-            attack.damagePercent *= difficultyValue;
-            attack.damagePercent /= 100;
-            attack.damagePercent *= attack.damage;
-            damageAdd = (int)attack.damagePercent;
-
-            attack.rangeAttackChange *= difficultyValue;
-            attack.rangeAttackChange /= 100;
-            attack.rangeAttackChange *= attack.rangeAttackRate;
-            attack.rangeAttackRate -= attack.rangeAttackChange;
+            healthMax += healthAdd;
+            healthCurrent = healthMax;
 
             lucentPercent *= difficultyValue;
             lucentPercent /= 100;
@@ -224,117 +208,32 @@ public class EnemyHealthScript : MonoBehaviour
             lucentAdd = (int)lucentPercent;
             lucentYield += lucentAdd;
 
-            healthMax += healthAdd;
-            healthCurrent = healthMax;
-            attack.damage += damageAdd;
-
             currentHealth.maxValue = healthMax;
             currentHealth.value = healthCurrent;
-            curHealthColor.color = Color.green;
-            losHealthColor.color = Color.red;
 
-        }
+            if(difficultyValue == 2)
+            {
+                curHealthColor.color = Color.green;
+                losHealthColor.color = Color.red;
+            }
 
-        if (difficultyValue == 3)
-        {
-            healthPercent *= difficultyValue;
-            healthPercent /= 100;
-            healthPercent *= healthMax;
-            healthAdd = (int)healthPercent;
+            else if(difficultyValue == 3)
+            {
+                curHealthColor.color = Color.red;
+                losHealthColor.color = Color.white;
+            }
 
-            attack.damagePercent *= difficultyValue;
-            attack.damagePercent /= 100;
-            attack.damagePercent *= attack.damage;
-            damageAdd = (int)attack.damagePercent;
+            else if (difficultyValue == 4)
+            {
+                curHealthColor.color = Color.yellow;
+                losHealthColor.color = Color.red;
+            }
 
-            attack.rangeAttackChange *= difficultyValue;
-            attack.rangeAttackChange /= 100;
-            attack.rangeAttackChange *= attack.rangeAttackRate;
-            attack.rangeAttackRate -= attack.rangeAttackChange;
-
-            lucentPercent *= difficultyValue;
-            lucentPercent /= 100;
-            lucentPercent *= lucentYield;
-            lucentAdd = (int)lucentPercent;
-            lucentYield += lucentAdd;
-
-            healthMax += healthAdd;
-            healthCurrent = healthMax;
-            attack.damage += damageAdd;
-
-            currentHealth.maxValue = healthMax;
-            currentHealth.value = healthCurrent;
-            curHealthColor.color = Color.red;
-            losHealthColor.color = Color.white;
-
-        }
-
-        if (difficultyValue == 4)
-        {
-            healthPercent *= difficultyValue;
-            healthPercent /= 100;
-            healthPercent *= healthMax;
-            healthAdd = (int)healthPercent;
-
-            attack.damagePercent *= difficultyValue;
-            attack.damagePercent /= 100;
-            attack.damagePercent *= attack.damage;
-            damageAdd = (int)attack.damagePercent;
-
-            attack.rangeAttackChange *= difficultyValue;
-            attack.rangeAttackChange /= 100;
-            attack.rangeAttackChange *= attack.rangeAttackRate;
-            attack.rangeAttackRate -= attack.rangeAttackChange;
-
-            lucentPercent *= difficultyValue;
-            lucentPercent /= 100;
-            lucentPercent *= lucentYield;
-            lucentAdd = (int)lucentPercent;
-            lucentYield += lucentAdd;
-
-            healthMax += healthAdd;
-            healthCurrent = healthMax;
-            attack.damage += damageAdd;
-
-            currentHealth.maxValue = healthMax;
-            currentHealth.value = healthCurrent;
-            curHealthColor.color = Color.yellow;
-            losHealthColor.color = Color.red;
-
-        }
-
-        if (difficultyValue == 5)
-        {
-            healthPercent *= difficultyValue;
-            healthPercent /= 100;
-            healthPercent *= healthMax;
-            healthAdd = (int)healthPercent;
-
-            attack.damagePercent *= difficultyValue;
-            attack.damagePercent /= 100;
-            attack.damagePercent *= attack.damage;
-            damageAdd = (int)attack.damagePercent;
-
-            attack.rangeAttackChange *= difficultyValue;
-            attack.rangeAttackChange /= 100;
-            attack.rangeAttackChange *= attack.rangeAttackRate;
-            attack.rangeAttackRate -= attack.rangeAttackChange;
-
-            lucentPercent *= difficultyValue;
-            lucentPercent /= 100;
-            lucentPercent *= lucentYield;
-            lucentAdd = (int)lucentPercent;
-            lucentYield += lucentAdd;
-
-            healthMax += healthAdd;
-            healthCurrent = healthMax;
-            attack.damage += damageAdd;
-
-            currentHealth.maxValue = healthMax;
-            currentHealth.value = healthCurrent;
-            curHealthColor.color = Color.cyan;
-            losHealthColor.color = Color.red;
-
+            else if (difficultyValue == 5)
+            {
+                curHealthColor.color = Color.cyan;
+                losHealthColor.color = Color.red;
+            }
         }
 
         //If difficulty value 6 or more, auto-corrects to highest difficulty.
@@ -345,10 +244,14 @@ public class EnemyHealthScript : MonoBehaviour
             healthPercent /= 100;
             healthPercent *= healthMax;
             healthAdd = (int)healthPercent;
-
             healthMax += healthAdd;
             healthCurrent = healthMax;
-            attack.damage *= difficultyValue;
+
+            lucentPercent *= difficultyValue;
+            lucentPercent /= 100;
+            lucentPercent *= lucentYield;
+            lucentAdd = (int)lucentPercent;
+            lucentYield += lucentAdd;
 
             currentHealth.maxValue = healthMax;
             currentHealth.value = healthCurrent;
@@ -358,6 +261,10 @@ public class EnemyHealthScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Applies damage received to Health
+    /// </summary>
+    /// <param name="damageTaken">represents damage received</param>
     public void inflictDamage(int damageTaken)
     {
         if(isImmune)
@@ -369,15 +276,9 @@ public class EnemyHealthScript : MonoBehaviour
         damageHit = damageTaken;
         manager.damageReceived += damageHit;
 
-        //if(GetComponent<PosNegDOT>() != null)
-        //{
-        //    dotNotice.gameObject.SetActive(true);
-        //}
-
         if (GetComponent<SDPHealthDebuff>() != null)
         {
             healthCurrent -= (damageHit * GetComponent<SDPHealthDebuff>().damageAmp);
-            //debuffNotice.gameObject.SetActive(true);
         }
 
         else if (GetComponent<DebuffScript>() != null)
@@ -403,23 +304,19 @@ public class EnemyHealthScript : MonoBehaviour
             }
         }
 
-        //healthCurrent -= damageHit;
         currentHealth.value = healthCurrent;
         lhUpdateTimer = lhUpdateReset;
         canvasTimer = canvasTimerReset;
-        //StartCoroutine(HealthLostDelayedUpdate());
     }
 
+    /// <summary>
+    /// Marks Enemy as a corpse, awards Lucent & Ammo, and unfreezes Rigidbody constraints
+    /// </summary>
     void EnemyDeath()
     {
-        //Debug.Log(transform.position);
-        //manager.deathPos = transform.position;
-
         if(!done)
         {
-            //Instantiate(corpse, transform.position, transform.rotation);
             gameObject.tag = "Corpse";
-            corpse.layer = 7;
 
             ammoRewardChance = Random.Range(0, 101);
             if (ammoRewardChance >= ammoRewardThreshold)
@@ -448,15 +345,6 @@ public class EnemyHealthScript : MonoBehaviour
                             }
                         }
                     }
-
-                    //Rigidbody inflict = hit.GetComponent<Rigidbody>();
-                    //if (inflict != null)
-                    //{
-                    //    if (inflict.GetComponent<EnemyHealthScript>() != null)
-                    //    {
-                    //        inflict.GetComponent<EnemyHealthScript>().inflictDamage(GetComponent<SDPHealthDebuff>().dmgShare);
-                    //    }
-                    //}
                 }
 
                 Instantiate(GetComponent<SDPHealthDebuff>().activation, transform.position, Quaternion.identity);
@@ -500,18 +388,4 @@ public class EnemyHealthScript : MonoBehaviour
 
         Destroy(gameObject, 5f);
     }
-
-    IEnumerator RestoreMovement()
-    {
-        yield return new WaitForSeconds(0.1f);
-        attack.moveSpeed = attack.moveSpeedReset;
-        attack.boostSpeed = attack.boostSpeedReset;
-        attack.nmaAccel = attack.nmaAccelReset;
-    }
-
-    //public IEnumerator HealthLostDelayedUpdate()
-    //{
-    //    yield return new WaitForSeconds(0.75f);
-    //    healthLost.value = healthCurrent;
-    //}
 }

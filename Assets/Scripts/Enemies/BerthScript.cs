@@ -5,7 +5,8 @@ using UnityEngine.AI;
 
 public class BerthScript : MonoBehaviour
 {
-    public int berthDamage = 375;
+    public int berthDamage = 375; //Berth explosive damage
+
     //This value buffs damage performed by Berth explosions:
     //-Increasing this number adds a percentage of Berth damage onto itself
     //-Increasing Berth damage allows this number to increase damage in return
@@ -14,11 +15,9 @@ public class BerthScript : MonoBehaviour
     public float explodeForce = 50.0f;
 
     private EnemyHealthScript foe;
-    private GameObject activation;
-    //private GameObject itself;
-    private int enemyDamageMultiplier = 30;
-    private int berthDamageAdd;
-    internal bool exoticOverride = false;
+    private GameObject activation; //VFX used to convey activity
+    private int berthDamageAdd; //Number used to add onto Berth damage
+    internal bool exoticOverride = false; //Negates Player damage if true
 
     public void Awake()
     {
@@ -29,13 +28,7 @@ public class BerthScript : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        //itself = gameObject;
-        if(exoticOverride)
-        {
-            //Do nothing - Exotic Single Fire Weapon added this Script and only needs to change base Damage.
-        }
-
-        else
+        if(!exoticOverride)
         {
             BerthDifficultyMatch();
         }
@@ -47,22 +40,25 @@ public class BerthScript : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Increases explosive damage by Enemy difficulty
+    /// </summary>
     public void BerthDifficultyMatch()
     {
-
         if (foe.difficultyValue >= 2)
         {
-            //additionalDamage *= foe.difficultyValue;
-            //enemyDamageMultiplier *= foe.difficultyValue;
             berthPercent *= foe.difficultyValue;
             berthPercent /= 100;
             berthPercent *= berthDamage;
+
             berthDamageAdd = (int)berthPercent;
-            berthDamage += berthDamageAdd;
-            
+            berthDamage += berthDamageAdd;           
         }
     }
 
+    /// <summary>
+    /// Applies damage to Players, other Enemies, and detonates Lucent clusters
+    /// </summary>
     public void Explode()
     {
         Vector3 epicenter = transform.position;
@@ -86,24 +82,15 @@ public class BerthScript : MonoBehaviour
             {
                 if (hit.GetComponent<PlayerStatusScript>() != null)
                 {
-                    if(hit.GetComponent<PlayerStatusScript>().isInvincible == true)
-                    {
-                        //Do nothing
-                    }
-
-                    else
+                    if(!hit.GetComponent<PlayerStatusScript>().isInvincible)
                     {
                         hit.GetComponent<PlayerStatusScript>().InflictDamage(berthDamage);
-                        //if (hit.GetComponent<PlayerStatusScript>().playerShield <= 0)
-                        //{
-                        //    hit.GetComponent<PlayerStatusScript>().InflictDamage(berthDamage);
-                        //}
 
                         if (hit.GetComponent<PlayerStatusScript>().playerHealth <= 0)
                         {
                             hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(explodeForce, epicenter, explodeRadius, 40.0f, ForceMode.Impulse);
                         }
-                    }                    
+                    }               
                 }
             }
 
