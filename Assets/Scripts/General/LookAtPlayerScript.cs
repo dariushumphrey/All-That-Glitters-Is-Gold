@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class LookAtPlayerScript : MonoBehaviour
 {
-    private Transform enemy;
     private GameObject player;
+    private GameObject cam;
+    internal Vector3 camPos;
     // Start is called before the first frame update
     void Start()
     {
-        enemy = gameObject.transform;
-        player = GameObject.FindGameObjectWithTag("MainCamera");
+        player = GameObject.FindGameObjectWithTag("Player");
+        cam = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     // Update is called once per frame
     void Update()
     {
-        enemy.LookAt(player.transform.position);
+        cam.transform.LookAt(player.transform);
     }
 }

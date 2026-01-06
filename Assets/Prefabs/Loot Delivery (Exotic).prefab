@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8142452723782106147}
   - component: {fileID: 8142452723782106144}
   m_Layer: 0
-  m_Name: testLootDropExotic (1)
+  m_Name: Loot Delivery (Exotic)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

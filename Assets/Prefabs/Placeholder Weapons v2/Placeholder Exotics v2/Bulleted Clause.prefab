@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8504602914094039597}
   - component: {fileID: 2505689442717205402}
   m_Layer: 0
-  m_Name: testMachineGun
+  m_Name: Bulleted Clause
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,7 +36,7 @@ Transform:
   - {fileID: 2564031941273592129}
   - {fileID: 4501788843187118250}
   - {fileID: 5875407823686912471}
-  - {fileID: 6456400585847396420}
+  - {fileID: 5492570536158468404}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -71,17 +71,17 @@ MonoBehaviour:
   ammoSize: 100
   reserveAmmo: 0
   reserveSize: 720
-  weaponRarity: 1
-  cheatOverride: 0
+  weaponRarity: 5
+  cheatOverride: -7
   fireRate: 0.1
   effectiveRange: 45
   range: 90
   reloadSpeed: 4
   wepRecoil: 0.7
-  aimAssistStrength: 0.1
-  isExotic: 0
-  flavorText: A humble standard-issue Rifle. For situations that require a crushing
-    weight.
+  aimAssistStrength: 0.15
+  isExotic: 1
+  flavorText: '"Only a fool would strike Lucent deals with no exploitable loopholes
+    for themselves. Wealth is found in the hoard."'
   contactOnly:
     serializedVersion: 2
     m_Bits: 832
@@ -90,7 +90,7 @@ MonoBehaviour:
   barrel: {fileID: 5875407823686912471}
   DPSNumbers: {fileID: 5234994289257708790, guid: d5df90bddb669ef4fa3d8f2d8c2773a4, type: 3}
   reticle: {fileID: 21300000, guid: bf0954672952bed4bac2f60319debf44, type: 3}
-  muzzleFlash: {fileID: 5840131538162713786}
+  muzzleFlash: {fileID: 4097831860870063743}
   sparks: {fileID: 7193588280022282015, guid: 7e86620f782720041b9300eda8cfef98, type: 3}
   saved: 0
   display: 0
@@ -155,7 +155,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8547a5ea8fb44294391e56537a11c739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -251,7 +251,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8547a5ea8fb44294391e56537a11c739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -347,7 +347,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8547a5ea8fb44294391e56537a11c739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -382,7 +382,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &5200908877136590786
+--- !u!1 &7716004780655098817
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -390,7 +390,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6456400585847396420}
+  - component: {fileID: 5492570536158468404}
   m_Layer: 0
   m_Name: Particles
   m_TagString: Untagged
@@ -398,18 +398,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6456400585847396420
+--- !u!4 &5492570536158468404
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5200908877136590786}
+  m_GameObject: {fileID: 7716004780655098817}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5840131538162713788}
+  - {fileID: 4097831860870063737}
   m_Father: {fileID: 4677409490183303690}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -504,7 +504,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8547a5ea8fb44294391e56537a11c739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -600,7 +600,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8547a5ea8fb44294391e56537a11c739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -696,7 +696,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8547a5ea8fb44294391e56537a11c739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -731,12 +731,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1001 &8784588357455406950
+--- !u!1001 &1169559852736300451
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 6456400585847396420}
+    m_TransformParent: {fileID: 5492570536158468404}
     m_Modifications:
     - target: {fileID: 2946884816300663770, guid: d6ac82efaf934634b8da088a9188c53f, type: 3}
       propertyPath: m_RootOrder
@@ -772,13 +772,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6ac82efaf934634b8da088a9188c53f, type: 3}
---- !u!4 &5840131538162713788 stripped
+--- !u!4 &4097831860870063737 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2946884816300663770, guid: d6ac82efaf934634b8da088a9188c53f, type: 3}
-  m_PrefabInstance: {fileID: 8784588357455406950}
+  m_PrefabInstance: {fileID: 1169559852736300451}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &5840131538162713786 stripped
+--- !u!198 &4097831860870063743 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 2946884816300663772, guid: d6ac82efaf934634b8da088a9188c53f, type: 3}
-  m_PrefabInstance: {fileID: 8784588357455406950}
+  m_PrefabInstance: {fileID: 1169559852736300451}
   m_PrefabAsset: {fileID: 0}

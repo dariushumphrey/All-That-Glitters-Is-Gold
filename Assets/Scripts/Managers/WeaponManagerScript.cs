@@ -328,7 +328,7 @@ public class WeaponManagerScript : MonoBehaviour
             {
                 if (wepStr == "1")
                 {
-                    wepName.text = "Full Fire Rifle_Exotic";
+                    wepName.text = "Outstanding Warrant";
                     rarityCheck.text = "Exotic";
 
                     item.GetComponent<FirearmScript>().isExotic = true;
@@ -341,7 +341,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                 if (wepStr == "2")
                 {
-                    wepName.text = "Machine Gun_Exotic";
+                    wepName.text = "Bulleted Clause";
                     rarityCheck.text = "Exotic";
 
                     item.GetComponent<FirearmScript>().isExotic = true;
@@ -349,12 +349,12 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<FirearmScript>().RarityAugment();
                     item.GetComponent<FirearmScript>().flavorText = "''Only a fool would strike Lucent deals with no exploitable loopholes for themselves. Wealth is found in the hoard.''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
-                    item.name = weapons[0].name + "_Exotic";
+                    item.name = weapons[1].name + "_Exotic";
                 }
 
                 if (wepStr == "3")
                 {
-                    wepName.text = "Pistol_Exotic";
+                    wepName.text = "Apathetic";
                     rarityCheck.text = "Exotic";
 
                     item.GetComponent<FirearmScript>().isExotic = true;
@@ -362,12 +362,12 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<FirearmScript>().RarityAugment();
                     item.GetComponent<FirearmScript>().flavorText = "''I stand firm in the face of Terror. I am a weed in its terrace. It matters not the Human or the Replevin; I cannot be moved.''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
-                    item.name = weapons[0].name + "_Exotic";
+                    item.name = weapons[2].name + "_Exotic";
                 }
 
                 if (wepStr == "4")
                 {
-                    wepName.text = "Semi Fire Rifle_Exotic";
+                    wepName.text = "The Fatal Cardio";
                     rarityCheck.text = "Exotic";
 
                     item.GetComponent<FirearmScript>().isExotic = true;
@@ -375,12 +375,12 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<FirearmScript>().RarityAugment();
                     item.GetComponent<FirearmScript>().flavorText = "WARNING: Persistent use of the cognitive Supercharger may result in cardiac implosion. Proceed? [Y] or [N]";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
-                    item.name = weapons[0].name + "_Exotic";
+                    item.name = weapons[3].name + "_Exotic";
                 }
 
                 if (wepStr == "5")
                 {
-                    wepName.text = "Shotgun_Exotic";
+                    wepName.text = "Viral Shadow";
                     rarityCheck.text = "Exotic";
 
                     item.GetComponent<FirearmScript>().isExotic = true;
@@ -388,12 +388,12 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<FirearmScript>().RarityAugment();
                     item.GetComponent<FirearmScript>().flavorText = "''Isn't it wonderful when we all do our part?''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
-                    item.name = weapons[0].name + "_Exotic";
+                    item.name = weapons[4].name + "_Exotic";
                 }
 
                 if (wepStr == "6")
                 {
-                    wepName.text = "Single Fire Rifle_Exotic";
+                    wepName.text = "Every Second Sun";
                     rarityCheck.text = "Exotic";
 
                     item.GetComponent<FirearmScript>().isExotic = true;
@@ -401,12 +401,12 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<FirearmScript>().RarityAugment();
                     item.GetComponent<FirearmScript>().flavorText = "''The Resplendent, for all its igneous light, could never have unveiled the shaded plot. The victims are owed retribution of a thermobaric kind.''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
-                    item.name = weapons[0].name + "_Exotic";
+                    item.name = weapons[5].name + "_Exotic";
                 }
 
                 if (wepStr == "7")
                 {
-                    wepName.text = "Submachine Gun_Exotic";
+                    wepName.text = "Underfoot";
                     rarityCheck.text = "Exotic";
 
                     item.GetComponent<FirearmScript>().isExotic = true;
@@ -414,7 +414,7 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<FirearmScript>().RarityAugment();
                     item.GetComponent<FirearmScript>().flavorText = "Using this Weapon feels like a perpetual Calvary charge. For where you're going, you won't be needing any breaks.";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
-                    item.name = weapons[0].name + "_Exotic";
+                    item.name = weapons[6].name + "_Exotic";
                 }
             }
 
@@ -1012,7 +1012,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
                         item.GetComponent<FirearmScript>().flavorText = "Such is the law.";
-                        item.name = weapons[0].name + "_Exotic";
+                        item.name ="Outstanding Warrant";
                     }
 
                     if (wepStr == "2")
@@ -1020,7 +1020,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
                         item.GetComponent<FirearmScript>().flavorText = "Only a fool would strike Lucent deals with no exploitable loopholes for themselves. Wealth is found in the hoard.";
-                        item.name = weapons[1].name + "_Exotic";
+                        item.name = "Bulleted Clause";
                     }
 
                     if (wepStr == "3")
@@ -1028,7 +1028,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
                         item.GetComponent<FirearmScript>().flavorText = "I stand firm in the face of Terror. I am a weed in its terrace. It matters not the Human or the Replevin; I cannot be moved.";
-                        item.name = weapons[2].name + "_Exotic";
+                        item.name = "Apathetic";
                     }
 
                     if (wepStr == "4")
@@ -1036,7 +1036,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
                         item.GetComponent<FirearmScript>().flavorText = "WARNING: Persistent use of the cognitive Supercharger may result in cardiac implosion. Proceed? [Y] or [N]";
-                        item.name = weapons[3].name + "_Exotic";
+                        item.name = "The Fatal Cardio";
                     }
 
                     if (wepStr == "5")
@@ -1044,7 +1044,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
                         item.GetComponent<FirearmScript>().flavorText = "Isn't it wonderful when we all do our part?";
-                        item.name = weapons[4].name + "_Exotic";
+                        item.name = "Viral Shadow";
                     }
 
                     if (wepStr == "6")
@@ -1052,7 +1052,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
                         item.GetComponent<FirearmScript>().flavorText = "The Resplendent, for all its igneous light, could never have thwarted the terrible plot. These victims are owed retribution of a thermobaric kind.";
-                        item.name = weapons[5].name + "_Exotic";
+                        item.name = "Every Second Sun";
                     }
 
                     if (wepStr == "7")
@@ -1060,7 +1060,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
                         item.GetComponent<FirearmScript>().flavorText = "Using this Weapon feels like a perpetual Calvary charge. For where you're going, you won't be needing any breaks.";
-                        item.name = weapons[6].name + "_Exotic";
+                        item.name = "Underfoot";
                     }
                 }
 

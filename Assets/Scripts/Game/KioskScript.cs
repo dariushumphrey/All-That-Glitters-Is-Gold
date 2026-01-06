@@ -366,6 +366,41 @@ public class KioskScript : MonoBehaviour
                     rarities[p].text = "Exotic";
                     quality.normalColor = Color.cyan;
                     quality.highlightedColor = Color.cyan;
+
+                    if (wepTypeStr == "1")
+                    {
+                        names[p].text = "Outstanding Warrant";
+                    }
+
+                    if (wepTypeStr == "2")
+                    {
+                        names[p].text = "Bulleted Clause";
+                    }
+
+                    if (wepTypeStr == "3")
+                    {
+                        names[p].text = "Apathetic";
+                    }
+
+                    if (wepTypeStr == "4")
+                    {
+                        names[p].text = "The Fatal Cardio";
+                    }
+
+                    if (wepTypeStr == "5")
+                    {
+                        names[p].text = "Viral Shadow";
+                    }
+
+                    if (wepTypeStr == "6")
+                    {
+                        names[p].text = "Every Second Sun";
+                    }
+
+                    if (wepTypeStr == "7")
+                    {
+                        names[p].text = "Underfoot";
+                    }
                 }
 
                 else
@@ -1000,42 +1035,49 @@ public class KioskScript : MonoBehaviour
 
                 if (wepTypeStr == "1")
                 {
+                    wepName.text = "Outstanding Warrant";
                     item.GetComponent<FirearmScript>().flavorText = "''Such is the law.''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }
 
                 if (wepTypeStr == "2")
                 {
+                    wepName.text = "Bulleted Clause";
                     item.GetComponent<FirearmScript>().flavorText = "''Only a fool would strike Lucent deals with no exploitable loopholes for themselves. Wealth is found in the hoard.''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }
 
                 if (wepTypeStr == "3")
                 {
+                    wepName.text = "Apathetic";
                     item.GetComponent<FirearmScript>().flavorText = "''I stand firm in the face of Terror. I am a weed in its terrace. It matters not the Human or the Replevin; I cannot be moved.''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }
 
                 if (wepTypeStr == "4")
                 {
+                    wepName.text = "The Fatal Cardio";
                     item.GetComponent<FirearmScript>().flavorText = "WARNING: Persistent use of the cognitive Supercharger may result in cardiac implosion. Proceed? [Y] or [N]";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }
 
                 if (wepTypeStr == "5")
                 {
+                    wepName.text = "Viral Shadow";
                     item.GetComponent<FirearmScript>().flavorText = "''Isn't it wonderful when we all do our part?''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }
 
                 if (wepTypeStr == "6")
                 {
+                    wepName.text = "Every Second Sun";
                     item.GetComponent<FirearmScript>().flavorText = "''The Resplendent, for all its igneous light, could never have unveiled the shaded plot. The victims are owed retribution of a thermobaric kind.''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }
 
                 if (wepTypeStr == "7")
                 {
+                    wepName.text = "Underfoot";
                     item.GetComponent<FirearmScript>().flavorText = "Using this Weapon feels like a perpetual Calvary charge. For where you're going, you won't be needing any breaks.";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }

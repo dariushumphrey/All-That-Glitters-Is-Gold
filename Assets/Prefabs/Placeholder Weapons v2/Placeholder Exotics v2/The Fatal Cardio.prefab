@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8547a5ea8fb44294391e56537a11c739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -187,7 +187,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8547a5ea8fb44294391e56537a11c739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -222,37 +222,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &5877446791347854588
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2015228718135812101}
-  m_Layer: 0
-  m_Name: Particles
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2015228718135812101
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5877446791347854588}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4339914621463982809}
-  m_Father: {fileID: 8162629741130002465}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6132017854543559869
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +234,7 @@ GameObject:
   - component: {fileID: 1620275558545221743}
   - component: {fileID: 4221928478634662968}
   m_Layer: 0
-  m_Name: testSemiFireRifle
+  m_Name: The Fatal Cardio
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -287,7 +256,7 @@ Transform:
   - {fileID: 2860261125204403115}
   - {fileID: 8834703214448782617}
   - {fileID: 7696681327373029990}
-  - {fileID: 2015228718135812101}
+  - {fileID: 5650719356367739887}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -322,17 +291,17 @@ MonoBehaviour:
   ammoSize: 27
   reserveAmmo: 0
   reserveSize: 282
-  weaponRarity: 1
-  cheatOverride: 0
+  weaponRarity: 5
+  cheatOverride: -6
   fireRate: 0.08
   effectiveRange: 40
   range: 80
   reloadSpeed: 2
   wepRecoil: 0.3
-  aimAssistStrength: 0.25
-  isExotic: 0
-  flavorText: A humble standard-issue Rifle. For when a percussive strike must cull
-    the hard-headed.
+  aimAssistStrength: 0.3
+  isExotic: 1
+  flavorText: 'WARNING: Persistent use of the cognitive Supercharger may result in
+    cardiac implosion. Proceed? [Y] or [N]'
   contactOnly:
     serializedVersion: 2
     m_Bits: 832
@@ -341,7 +310,7 @@ MonoBehaviour:
   barrel: {fileID: 7696681327373029990}
   DPSNumbers: {fileID: 5234994289257708790, guid: d5df90bddb669ef4fa3d8f2d8c2773a4, type: 3}
   reticle: {fileID: 21300000, guid: 6e7845fc409d61143b87112359fd9bdf, type: 3}
-  muzzleFlash: {fileID: 4339914621463982815}
+  muzzleFlash: {fileID: 747959641511361862}
   sparks: {fileID: 7193588280022282015, guid: 7e86620f782720041b9300eda8cfef98, type: 3}
   saved: 0
   display: 0
@@ -407,7 +376,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8547a5ea8fb44294391e56537a11c739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -503,7 +472,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8547a5ea8fb44294391e56537a11c739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -538,12 +507,43 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1001 &4358354651806534623
+--- !u!1 &8482508093713032288
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5650719356367739887}
+  m_Layer: 0
+  m_Name: Particles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5650719356367739887
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8482508093713032288}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 747959641511361856}
+  m_Father: {fileID: 8162629741130002465}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &729807958344926278
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 2015228718135812101}
+    m_TransformParent: {fileID: 5650719356367739887}
     m_Modifications:
     - target: {fileID: 18442299356477696, guid: 9640a4fd974fe2a4faf73ded3c2136d2, type: 3}
       propertyPath: looping
@@ -603,13 +603,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9640a4fd974fe2a4faf73ded3c2136d2, type: 3}
---- !u!4 &4339914621463982809 stripped
+--- !u!4 &747959641511361856 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 18442299356477702, guid: 9640a4fd974fe2a4faf73ded3c2136d2, type: 3}
-  m_PrefabInstance: {fileID: 4358354651806534623}
+  m_PrefabInstance: {fileID: 729807958344926278}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &4339914621463982815 stripped
+--- !u!198 &747959641511361862 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 18442299356477696, guid: 9640a4fd974fe2a4faf73ded3c2136d2, type: 3}
-  m_PrefabInstance: {fileID: 4358354651806534623}
+  m_PrefabInstance: {fileID: 729807958344926278}
   m_PrefabAsset: {fileID: 0}

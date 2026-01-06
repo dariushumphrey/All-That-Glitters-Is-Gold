@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 8409764785146193109}
   - component: {fileID: 8409764785146193111}
   m_Layer: 0
-  m_Name: testPistol_Exotic
+  m_Name: Apathetic
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

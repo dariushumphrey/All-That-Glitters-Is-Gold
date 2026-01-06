@@ -1234,13 +1234,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 3
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 15, y: 0, z: 15}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
-  spawnedCluster: []
   field: {fileID: 26709103}
 --- !u!65 &26709101
 BoxCollider:
@@ -2515,14 +2512,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 5
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 10, y: 0, z: 10}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
-  spawnedCluster: []
   field: {fileID: 57732735}
 --- !u!65 &57732733
 BoxCollider:
@@ -15600,12 +15594,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 3
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 15, y: 0, z: 15}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
-  spawnedCluster: []
   field: {fileID: 390099553}
 --- !u!65 &390099555
 BoxCollider:
@@ -16974,15 +16965,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 2
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 15, y: 0, z: 15}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
   - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
-  spawnedCluster: []
   field: {fileID: 420649243}
 --- !u!65 &420649245
 BoxCollider:
@@ -18389,12 +18377,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 3
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 15, y: 0, z: 15}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
-  spawnedCluster: []
   field: {fileID: 453995441}
 --- !u!65 &453995443
 BoxCollider:
@@ -21002,12 +20987,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 3
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 15, y: 0, z: 15}
+  berthChance: 80
   spawned:
   - {fileID: 521107327305974619, guid: a34edfc0fcf7164489c3a955e7b50438, type: 3}
-  spawnedCluster: []
   field: {fileID: 503702504}
 --- !u!65 &503702506
 BoxCollider:
@@ -23000,16 +22982,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 1
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 10, y: 0, z: 10}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
   - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
   - {fileID: 521107327305974619, guid: a34edfc0fcf7164489c3a955e7b50438, type: 3}
-  spawnedCluster: []
   field: {fileID: 539221779}
 --- !u!4 &539221781
 Transform:
@@ -27195,16 +27174,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 1
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 10, y: 0, z: 10}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
   - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
   - {fileID: 521107327305974619, guid: a34edfc0fcf7164489c3a955e7b50438, type: 3}
-  spawnedCluster: []
   field: {fileID: 618744978}
 --- !u!4 &618744980
 Transform:
@@ -27927,12 +27903,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 12
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 15, y: 0, z: 15}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: a7919f2284eb3dd4a8b5b9c3b384eef9, type: 3}
-  spawnedCluster: []
   field: {fileID: 633821597}
 --- !u!65 &633821595
 BoxCollider:
@@ -30292,12 +30265,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 15
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 15, y: 0, z: 15}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: a7919f2284eb3dd4a8b5b9c3b384eef9, type: 3}
-  spawnedCluster: []
   field: {fileID: 691896039}
 --- !u!65 &691896041
 BoxCollider:
@@ -30614,12 +30584,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 1
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 10, y: 0, z: 10}
+  berthChance: 80
   spawned:
   - {fileID: 521107327305974619, guid: 297c98140951b2344ab3a033f8d98ca4, type: 3}
-  spawnedCluster: []
   field: {fileID: 694527553}
 --- !u!65 &694527555
 BoxCollider:
@@ -32811,15 +32778,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 5
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 10, y: 0, z: 10}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
   - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
-  spawnedCluster: []
   field: {fileID: 745776803}
 --- !u!65 &745776801
 BoxCollider:
@@ -34842,9 +34806,8 @@ MonoBehaviour:
   - {fileID: 745776799}
   - {fileID: 0}
   - {fileID: 1650218113}
-  kioskAdjust: {fileID: 0}
   weaponFocus: -1
-  level: 3
+  level: 4
   gameTime: 0
   eogStatsText: {fileID: 0}
   pauseMenu: {fileID: 254236117}
@@ -36792,15 +36755,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 5
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 10, y: 0, z: 20}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
   - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
-  spawnedCluster: []
   field: {fileID: 844456497}
 --- !u!65 &844456495
 BoxCollider:
@@ -38569,15 +38529,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 2
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 15, y: 0, z: 15}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
   - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
-  spawnedCluster: []
   field: {fileID: 888620093}
 --- !u!65 &888620095
 BoxCollider:
@@ -51771,15 +51728,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 2
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 15, y: 0, z: 15}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
   - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
-  spawnedCluster: []
   field: {fileID: 1207031295}
 --- !u!65 &1207031297
 BoxCollider:
@@ -55121,12 +55075,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 3
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 15, y: 0, z: 15}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
-  spawnedCluster: []
   field: {fileID: 1286726869}
 --- !u!65 &1286726871
 BoxCollider:
@@ -61219,12 +61170,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 15
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 15, y: 0, z: 15}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: a7919f2284eb3dd4a8b5b9c3b384eef9, type: 3}
-  spawnedCluster: []
   field: {fileID: 1469629788}
 --- !u!65 &1469629790
 BoxCollider:
@@ -63893,16 +63841,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 1
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 10, y: 0, z: 10}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
   - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
   - {fileID: 521107327305974619, guid: a34edfc0fcf7164489c3a955e7b50438, type: 3}
-  spawnedCluster: []
   field: {fileID: 1531795535}
 --- !u!4 &1531795537
 Transform:
@@ -64428,15 +64373,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 7
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 15, y: 0, z: 15}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
   - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
-  spawnedCluster: []
   field: {fileID: 1548297188}
 --- !u!65 &1548297190
 BoxCollider:
@@ -69338,13 +69280,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 10
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 15, y: 0, z: 15}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
   - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
-  spawnedCluster: []
   field: {fileID: 1650218114}
 --- !u!65 &1650218116
 BoxCollider:
@@ -72452,12 +72391,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 15
-  spawnIndiv: 1
-  spawnClust: 0
-  spawnArena: {x: 15, y: 0, z: 15}
+  berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: a7919f2284eb3dd4a8b5b9c3b384eef9, type: 3}
-  spawnedCluster: []
   field: {fileID: 1759015725}
 --- !u!65 &1759015727
 BoxCollider:

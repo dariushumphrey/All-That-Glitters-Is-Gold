@@ -244,7 +244,9 @@ public class PlayerStatusScript : MonoBehaviour
             isDead = true;
             gameObject.GetComponent<Rigidbody>().freezeRotation = false;
             move.enabled = false;
+
             cam.enabled = false;
+            //cam.gameObject.AddComponent<LookAtPlayerScript>();
 
             //inv.lucentFunds = 0;
             if (inv.inventory.Count > 0 && !move.sprinting)

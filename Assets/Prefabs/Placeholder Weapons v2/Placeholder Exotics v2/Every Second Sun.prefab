@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8547a5ea8fb44294391e56537a11c739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -157,7 +157,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8547a5ea8fb44294391e56537a11c739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 1640342962202232340}
   - component: {fileID: 1640342962202232330}
   m_Layer: 0
-  m_Name: testSingleFireRifle
+  m_Name: Every Second Sun
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,7 +226,7 @@ Transform:
   - {fileID: 1640342962016243636}
   - {fileID: 1640342962337783883}
   - {fileID: 1640342963350316065}
-  - {fileID: 2073643834723270517}
+  - {fileID: 6818230063477624395}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -261,17 +261,17 @@ MonoBehaviour:
   ammoSize: 24
   reserveAmmo: 0
   reserveSize: 192
-  weaponRarity: 1
-  cheatOverride: 0
+  weaponRarity: 5
+  cheatOverride: -5
   fireRate: 0.1
   effectiveRange: 50
   range: 80
   reloadSpeed: 2.5
   wepRecoil: 0.5
-  aimAssistStrength: 0.3
-  isExotic: 0
-  flavorText: A humble standard-issue Rifle. For when the only certainty for peace
-    is distance.
+  aimAssistStrength: 0.35
+  isExotic: 1
+  flavorText: The Resplendence, for all its igneous light, could never have thwarted
+    the terrible plot. These victims are owed retribution of a thermobaric kind.
   contactOnly:
     serializedVersion: 2
     m_Bits: 832
@@ -280,7 +280,7 @@ MonoBehaviour:
   barrel: {fileID: 1640342963350316065}
   DPSNumbers: {fileID: 5234994289257708790, guid: d5df90bddb669ef4fa3d8f2d8c2773a4, type: 3}
   reticle: {fileID: 21300000, guid: 77531d269d4b7df408f0963ad90f97bc, type: 3}
-  muzzleFlash: {fileID: 6350690256889942711}
+  muzzleFlash: {fileID: 6230697459993529932}
   sparks: {fileID: 7193588280022282015, guid: 7e86620f782720041b9300eda8cfef98, type: 3}
   saved: 0
   display: 0
@@ -345,7 +345,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8547a5ea8fb44294391e56537a11c739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -441,7 +441,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8547a5ea8fb44294391e56537a11c739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -506,7 +506,7 @@ Transform:
   m_Father: {fileID: 1640342962202232341}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6146184996233615754
+--- !u!1 &5732146030599818981
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -514,7 +514,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2073643834723270517}
+  - component: {fileID: 6818230063477624395}
   m_Layer: 0
   m_Name: Particles
   m_TagString: Untagged
@@ -522,27 +522,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2073643834723270517
+--- !u!4 &6818230063477624395
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6146184996233615754}
+  m_GameObject: {fileID: 5732146030599818981}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6350690256889942705}
+  - {fileID: 6230697459993529930}
   m_Father: {fileID: 1640342962202232341}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &316689272761652154
+--- !u!1001 &734322340137062209
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 2073643834723270517}
+    m_TransformParent: {fileID: 6818230063477624395}
     m_Modifications:
     - target: {fileID: 6649340631570645259, guid: fab259bab93b1ac489b7e575c28cf024, type: 3}
       propertyPath: m_RootOrder
@@ -606,13 +606,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fab259bab93b1ac489b7e575c28cf024, type: 3}
---- !u!4 &6350690256889942705 stripped
+--- !u!4 &6230697459993529930 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6649340631570645259, guid: fab259bab93b1ac489b7e575c28cf024, type: 3}
-  m_PrefabInstance: {fileID: 316689272761652154}
+  m_PrefabInstance: {fileID: 734322340137062209}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &6350690256889942711 stripped
+--- !u!198 &6230697459993529932 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 6649340631570645261, guid: fab259bab93b1ac489b7e575c28cf024, type: 3}
-  m_PrefabInstance: {fileID: 316689272761652154}
+  m_PrefabInstance: {fileID: 734322340137062209}
   m_PrefabAsset: {fileID: 0}

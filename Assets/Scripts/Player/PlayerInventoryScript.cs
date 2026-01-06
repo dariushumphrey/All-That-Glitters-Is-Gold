@@ -1225,37 +1225,37 @@ public class PlayerInventoryScript : MonoBehaviour
             {
                 for (int i = 0; i < inventory.Count; i++)
                 {
-                    if (inventory[i].name == "testFullFireRifle" || inventory[i].name == "testFullFireRifle_Exotic")
+                    if (inventory[i].name == "Full Fire Rifle" || inventory[i].name == "Outstanding Warrant")
                     {
                         write.Write("1");                    
                     }
 
-                    if (inventory[i].name == "testMachineGun" || inventory[i].name == "testMachineGun_Exotic")
+                    if (inventory[i].name == "Machine Gun" || inventory[i].name == "Bulleted Clause")
                     {
                         write.Write("2");                      
                     }
 
-                    if (inventory[i].name == "testPistol" || inventory[i].name == "testPistol_Exotic")
+                    if (inventory[i].name == "Pistol" || inventory[i].name == "Apathetic")
                     {
                         write.Write("3");                    
                     }
 
-                    if (inventory[i].name == "testSemiFireRifle" || inventory[i].name == "testSemiFireRifle_Exotic")
+                    if (inventory[i].name == "Semi Fire Rifle" || inventory[i].name == "The Fatal Cardio")
                     {
                         write.Write("4");                       
                     }
 
-                    if (inventory[i].name == "testShotgun" || inventory[i].name == "testShotgun_Exotic")
+                    if (inventory[i].name == "Shotgun" || inventory[i].name == "Viral Shadow")
                     {
                         write.Write("5");                      
                     }
 
-                    if (inventory[i].name == "testSingleFireRifle" || inventory[i].name == "testSingleFireRifle_Exotic")
+                    if (inventory[i].name == "Single Fire Rifle" || inventory[i].name == "Every Second Sun")
                     {
                         write.Write("6");                      
                     }
 
-                    if (inventory[i].name == "testSMG" || inventory[i].name == "testSMG_Exotic")
+                    if (inventory[i].name == "SMG" || inventory[i].name == "Underfoot")
                     {
                         write.Write("7");                      
                     }
