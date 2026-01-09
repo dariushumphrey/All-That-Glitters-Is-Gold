@@ -61,8 +61,8 @@ public class FirearmScript : MonoBehaviour
     internal int cheatRNG; // Number used to randomly generate Cheats
 
     void Awake()
-    {
-        if(display)
+    {       
+        if (display)
         {
             return;
         }
@@ -97,8 +97,8 @@ public class FirearmScript : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        if(display)
+    {       
+        if (display)
         {
             return;
         }
@@ -164,7 +164,8 @@ public class FirearmScript : MonoBehaviour
         }
 
         if (weaponRarity >= 2 && !isExotic)
-        {
+        {            
+
             damagePercent *= weaponRarity;
             damagePercent /= 100;
             damagePercent *= damage;
@@ -172,6 +173,21 @@ public class FirearmScript : MonoBehaviour
 
             damage += damageAdd;
             damagePercent = dmgPctReset;
+
+            if (weaponRarity == 2 || weaponRarity == 3)
+            {
+                flavorText += " Its rarity grants this Weapon a new property.";
+            }
+
+            if (weaponRarity == 4)
+            {
+                flavorText += " This Treasured Weapon takes on an additional property.";
+            }
+
+            if (weaponRarity == 5)
+            {
+                flavorText += " Lucent-touched, this Fated Weapon shines and surpasses.";
+            }
         }
 
         if (weaponRarity == 5 && isExotic)

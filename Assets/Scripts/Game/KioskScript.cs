@@ -946,7 +946,7 @@ public class KioskScript : MonoBehaviour
             wepName.text = "Full Fire Rifle";
             item = Instantiate(playerInventory.weapons[0], playerInventory.transform.position, playerInventory.transform.rotation);
             item.name = playerInventory.weapons[0].name;
-            flavor.text = item.GetComponent<FirearmScript>().flavorText;           
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;           
         }
 
         if (wepTypeStr == "2")
@@ -954,7 +954,7 @@ public class KioskScript : MonoBehaviour
             wepName.text = "Machine Gun";
             item = Instantiate(playerInventory.weapons[1], playerInventory.transform.position, playerInventory.transform.rotation);
             item.name = playerInventory.weapons[1].name;
-            flavor.text = item.GetComponent<FirearmScript>().flavorText;          
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;          
         }
 
         if (wepTypeStr == "3")
@@ -962,7 +962,7 @@ public class KioskScript : MonoBehaviour
             wepName.text = "Pistol";
             item = Instantiate(playerInventory.weapons[2], playerInventory.transform.position, playerInventory.transform.rotation);
             item.name = playerInventory.weapons[2].name;
-            flavor.text = item.GetComponent<FirearmScript>().flavorText;          
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;          
         }
 
         if (wepTypeStr == "4")
@@ -970,7 +970,7 @@ public class KioskScript : MonoBehaviour
             wepName.text = "Semi Fire Rifle";
             item = Instantiate(playerInventory.weapons[3], playerInventory.transform.position, playerInventory.transform.rotation);
             item.name = playerInventory.weapons[3].name;
-            flavor.text = item.GetComponent<FirearmScript>().flavorText;           
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;           
         }
 
         if (wepTypeStr == "5")
@@ -978,7 +978,7 @@ public class KioskScript : MonoBehaviour
             wepName.text = "Shotgun";
             item = Instantiate(playerInventory.weapons[4], playerInventory.transform.position, playerInventory.transform.rotation);
             item.name = playerInventory.weapons[4].name;
-            flavor.text = item.GetComponent<FirearmScript>().flavorText;          
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;          
         }
 
         if (wepTypeStr == "6")
@@ -986,7 +986,7 @@ public class KioskScript : MonoBehaviour
             wepName.text = "Single Fire Rifle";
             item = Instantiate(playerInventory.weapons[5], playerInventory.transform.position, playerInventory.transform.rotation);
             item.name = playerInventory.weapons[5].name;
-            flavor.text = item.GetComponent<FirearmScript>().flavorText;         
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;         
         }
 
         if (wepTypeStr == "7")
@@ -994,7 +994,7 @@ public class KioskScript : MonoBehaviour
             wepName.text = "Submachine Gun";
             item = Instantiate(playerInventory.weapons[6], playerInventory.transform.position, playerInventory.transform.rotation);
             item.name = playerInventory.weapons[6].name;
-            flavor.text = item.GetComponent<FirearmScript>().flavorText;          
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;          
         }
 
         if (wepRarStr == "1")
@@ -1024,6 +1024,8 @@ public class KioskScript : MonoBehaviour
             item.GetComponent<FirearmScript>().weaponRarity = 4;
             item.GetComponent<FirearmScript>().RarityAugment();
         }
+
+        flavor.text = item.GetComponent<FirearmScript>().flavorText;
 
         if (wepRarStr == "5")
         {
@@ -1089,6 +1091,7 @@ public class KioskScript : MonoBehaviour
             {
                 rarityCheck.text = "Fated";
                 item.GetComponent<FirearmScript>().RarityAugment();
+                flavor.text = item.GetComponent<FirearmScript>().flavorText;
             }
         }
 

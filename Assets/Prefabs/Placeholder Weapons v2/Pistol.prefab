@@ -329,11 +329,12 @@ MonoBehaviour:
   wepRecoil: 0.4
   aimAssistStrength: 0.2
   isExotic: 0
-  flavorText: 'A humble standard-issue Handgun. For when quickness must supersede
-    indecision. '
+  flavorText: 'A Pistol. For when quickness must supersede indecision. '
   contactOnly:
     serializedVersion: 2
     m_Bits: 832
+  saved: 0
+  display: 0
   gunCam: {fileID: 0}
   bulletTrail: {fileID: 2100000, guid: 6eb7043751433984592b6e728e79a720, type: 2}
   barrel: {fileID: 8409764785146193108}
@@ -341,8 +342,6 @@ MonoBehaviour:
   reticle: {fileID: 21300000, guid: 77531d269d4b7df408f0963ad90f97bc, type: 3}
   muzzleFlash: {fileID: 9136385418313758309}
   sparks: {fileID: 7193588280022282015, guid: 7e86620f782720041b9300eda8cfef98, type: 3}
-  saved: 0
-  display: 0
 --- !u!1001 &2489859691206768488
 PrefabInstance:
   m_ObjectHideFlags: 0

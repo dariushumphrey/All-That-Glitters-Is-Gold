@@ -299,10 +299,12 @@ MonoBehaviour:
   wepRecoil: 2
   aimAssistStrength: 0.1
   isExotic: 0
-  flavorText: A humble standard-issue Shotgun. For the doling of instant death.
+  flavorText: A Shotgun. For the doling of instant death.
   contactOnly:
     serializedVersion: 2
     m_Bits: 832
+  saved: 0
+  display: 0
   gunCam: {fileID: 0}
   bulletTrail: {fileID: 2100000, guid: 6eb7043751433984592b6e728e79a720, type: 2}
   barrel: {fileID: 699337692789952376}
@@ -310,8 +312,6 @@ MonoBehaviour:
   reticle: {fileID: 21300000, guid: 77d8a4da14139db488713bdc3acc9d49, type: 3}
   muzzleFlash: {fileID: 7890184668673658883}
   sparks: {fileID: 7193588280022282015, guid: 7e86620f782720041b9300eda8cfef98, type: 3}
-  saved: 0
-  display: 0
   pellets: 9
   spread: 0.4
 --- !u!1 &699337693747348053

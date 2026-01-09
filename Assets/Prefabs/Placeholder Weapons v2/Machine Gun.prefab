@@ -80,11 +80,12 @@ MonoBehaviour:
   wepRecoil: 0.7
   aimAssistStrength: 0.1
   isExotic: 0
-  flavorText: A humble standard-issue Rifle. For situations that require a crushing
-    weight.
+  flavorText: A Machine Gun. For situations requiring a crushing weight.
   contactOnly:
     serializedVersion: 2
     m_Bits: 832
+  saved: 0
+  display: 0
   gunCam: {fileID: 0}
   bulletTrail: {fileID: 2100000, guid: 6eb7043751433984592b6e728e79a720, type: 2}
   barrel: {fileID: 5875407823686912471}
@@ -92,8 +93,6 @@ MonoBehaviour:
   reticle: {fileID: 21300000, guid: bf0954672952bed4bac2f60319debf44, type: 3}
   muzzleFlash: {fileID: 5840131538162713786}
   sparks: {fileID: 7193588280022282015, guid: 7e86620f782720041b9300eda8cfef98, type: 3}
-  saved: 0
-  display: 0
 --- !u!1 &2076142987824462105
 GameObject:
   m_ObjectHideFlags: 0

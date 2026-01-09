@@ -33,6 +33,7 @@ public class LevelManagerScript : MonoBehaviour
     public GameObject pauseMenu, resultsMenu, controlsMenu;
 
     private float gameEndDelay = 15f;
+    private float gameRetryDelay = 5f;
     private bool paused = false; //Zeroes game time if true
     private GameObject continueButton, restartButton, quitButton, mainMenuButton;
     private GameObject menuReturnButton;
@@ -162,11 +163,19 @@ public class LevelManagerScript : MonoBehaviour
                 //Saves Inventory and reloads scene when Player is defeated
                 if(player.isDead)
                 {
-                    if (Input.GetKeyDown(KeyCode.F))
+                    gameRetryDelay -= Time.deltaTime;
+                    if(gameRetryDelay <= 0f)
                     {
+                        gameRetryDelay = 5f;
                         player.GetComponent<PlayerInventoryScript>().WriteOnReset();
                         LoadScene();
                     }
+
+                    //if (Input.GetKeyDown(KeyCode.F))
+                    //{
+                    //    player.GetComponent<PlayerInventoryScript>().WriteOnReset();
+                    //    LoadScene();
+                    //}
                 }               
             }
 

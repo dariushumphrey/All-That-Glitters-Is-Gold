@@ -230,7 +230,7 @@ public class WeaponManagerScript : MonoBehaviour
             item = Instantiate(weapons[0], transform.position, transform.rotation);
             item.name = weapons[0].name;
             wepName.text = "Full Fire Rifle";
-            flavor.text = item.GetComponent<FirearmScript>().flavorText;                       
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;                       
         }
 
         if (wepStr == "2")
@@ -239,7 +239,7 @@ public class WeaponManagerScript : MonoBehaviour
             item = Instantiate(weapons[1], transform.position, transform.rotation);
             item.name = weapons[1].name;
             wepName.text = "Machine Gun";
-            flavor.text = item.GetComponent<FirearmScript>().flavorText;           
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;           
         }
 
         if (wepStr == "3")
@@ -248,7 +248,7 @@ public class WeaponManagerScript : MonoBehaviour
             item = Instantiate(weapons[2], transform.position, transform.rotation);
             item.name = weapons[2].name;
             wepName.text = "Pistol";
-            flavor.text = item.GetComponent<FirearmScript>().flavorText;          
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;          
         }
 
         if (wepStr == "4")
@@ -257,7 +257,7 @@ public class WeaponManagerScript : MonoBehaviour
             item = Instantiate(weapons[3], transform.position, transform.rotation);
             item.name = weapons[3].name;
             wepName.text = "Semi Fire Rifle";
-            flavor.text = item.GetComponent<FirearmScript>().flavorText;         
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;         
         }
 
         if (wepStr == "5")
@@ -266,7 +266,7 @@ public class WeaponManagerScript : MonoBehaviour
             item = Instantiate(weapons[4], transform.position, transform.rotation);
             item.name = weapons[4].name;
             wepName.text = "Shotgun";
-            flavor.text = item.GetComponent<FirearmScript>().flavorText;         
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;         
         }
 
         if (wepStr == "6")
@@ -275,7 +275,7 @@ public class WeaponManagerScript : MonoBehaviour
             item = Instantiate(weapons[5], transform.position, transform.rotation);
             item.name = weapons[5].name;
             wepName.text = "Single Fire Rifle";
-            flavor.text = item.GetComponent<FirearmScript>().flavorText;          
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;          
         }
 
         if (wepStr == "7")
@@ -284,7 +284,7 @@ public class WeaponManagerScript : MonoBehaviour
             item = Instantiate(weapons[6], transform.position, transform.rotation);
             item.name = weapons[6].name;
             wepName.text = "Submachine Gun";
-            flavor.text = item.GetComponent<FirearmScript>().flavorText;         
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;         
         }
 
         item.transform.parent = gameObject.transform;
@@ -318,6 +318,8 @@ public class WeaponManagerScript : MonoBehaviour
             item.GetComponent<FirearmScript>().weaponRarity = 4;
             item.GetComponent<FirearmScript>().RarityAugment();
         }
+
+        flavor.text = item.GetComponent<FirearmScript>().flavorText;
 
         if (rarStr == "5")
         {
@@ -422,6 +424,8 @@ public class WeaponManagerScript : MonoBehaviour
             {
                 item.GetComponent<FirearmScript>().isExotic = false;
                 item.GetComponent<FirearmScript>().RarityAugment();
+
+                flavor.text = item.GetComponent<FirearmScript>().flavorText;
             }
         }
 

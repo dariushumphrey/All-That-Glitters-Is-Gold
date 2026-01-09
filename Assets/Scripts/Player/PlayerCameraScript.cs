@@ -32,7 +32,7 @@ public class PlayerCameraScript : MonoBehaviour
     private Vector3 rayOrigin;
     private Vector3 distance; //Used to determine length between Enemy and screen center; used for Aim Assist
     private RaycastHit hit;
-    private Camera playerCamera;
+    internal Camera playerCamera;
     private PlayerInventoryScript player;
     private PlayerMoveScript move;
     private PlayerMeleeScript melee;

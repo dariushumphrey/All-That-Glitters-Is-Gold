@@ -112,7 +112,7 @@ public class PlayerStatusScript : MonoBehaviour
         }
 
         ShieldDamageCheck();
-        PlayerDeath();
+        //PlayerDeath();
     }
 
     /// <summary>
@@ -208,7 +208,7 @@ public class PlayerStatusScript : MonoBehaviour
     {
         playerHit = true;
 
-        if(isInvincible)
+        if(isInvincible || isDead)
         {        
             return;
         }
@@ -223,13 +223,16 @@ public class PlayerStatusScript : MonoBehaviour
                 playerShield -= dmgReceived;
                 regenShieldSeconds = regenShieldResetSeconds;
                 StopCoroutine(RechargeShield());
-                return;
             }
 
             else
             {
                 playerHealth -= dmgReceived;
-                return;
+                if(playerHealth <= 0f)
+                {
+                    isDead = true;
+                    PlayerDeath();
+                }
             }
         }      
     }
@@ -239,14 +242,15 @@ public class PlayerStatusScript : MonoBehaviour
     /// </summary>
     void PlayerDeath()
     {
-        if(playerHealth <= 0)
+        if(isDead)
         {
-            isDead = true;
+            //isDead = true;
             gameObject.GetComponent<Rigidbody>().freezeRotation = false;
             move.enabled = false;
 
             cam.enabled = false;
-            //cam.gameObject.AddComponent<LookAtPlayerScript>();
+            cam.GetComponent<PlayerCameraScript>().playerCamera.gameObject.AddComponent<LookAtPlayerScript>();
+            //cam.GetComponent<PlayerCameraScript>().playerCamera.transform.parent = gameObject.transform;
 
             //inv.lucentFunds = 0;
             if (inv.inventory.Count > 0 && !move.sprinting)
