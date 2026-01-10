@@ -38,6 +38,8 @@ public class LevelManagerScript : MonoBehaviour
     private GameObject continueButton, restartButton, quitButton, mainMenuButton;
     private GameObject menuReturnButton;
     internal bool gameComplete = false; //Certifies game completion if true
+    internal AsyncOperation async;
+    internal Text levelLoadText; //Text that displays Async level load progress
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +69,10 @@ public class LevelManagerScript : MonoBehaviour
                 {
                     Time.timeScale = 1;
                 }
+
+                levelLoadText = GameObject.Find("asyncLoadText").GetComponent<Text>();
+                levelLoadText.text = "";
+
                 return;
             }
 
@@ -259,6 +265,31 @@ public class LevelManagerScript : MonoBehaviour
         SceneManager.LoadScene(level);
     }
 
+    IEnumerator LoadSceneAsync()
+    {
+        async = SceneManager.LoadSceneAsync(level);
+        async.allowSceneActivation = false;
+
+        while (!async.isDone)
+        {
+            levelLoadText.text = "Loading: " + async.progress * 100 + "%";
+
+            if (async.progress >= 0.9f)
+            {
+                StartCoroutine(LoadAsyncedScene());
+            }
+
+            yield return null;
+
+        }
+    }
+
+    IEnumerator LoadAsyncedScene()
+    {
+        yield return new WaitForSeconds(4f);
+        async.allowSceneActivation = true;
+    }
+
     private void OnLevelWasLoaded(int level)
     {
         Start();
@@ -342,5 +373,10 @@ public class LevelManagerScript : MonoBehaviour
     public void ClosePage(GameObject page)
     {
         page.gameObject.SetActive(false);
+    }
+
+    public void StartAsyncSceneLoad()
+    {
+        StartCoroutine(LoadSceneAsync());
     }
 }
