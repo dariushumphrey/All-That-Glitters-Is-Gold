@@ -32,6 +32,7 @@ public class LevelManagerScript : MonoBehaviour
     //resultsMenu - Menu UI that houses game end statistics (Viricide)
     public GameObject pauseMenu, resultsMenu, controlsMenu;
 
+    private TransitionManagerScript transition;
     private float gameEndDelay = 15f;
     private float gameRetryDelay = 5f;
     private bool paused = false; //Zeroes game time if true
@@ -96,6 +97,10 @@ public class LevelManagerScript : MonoBehaviour
         manager = FindObjectOfType<EnemyManagerScript>();
         manager.dropRarity = gameSettingState;
         manager.lootFocus = weaponFocus;
+
+        transition = FindObjectOfType<TransitionManagerScript>();
+        levelLoadText = GameObject.Find("asyncLoadText").GetComponent<Text>();
+        levelLoadText.text = "";
 
         chests = GameObject.FindGameObjectsWithTag("Chest");
         for(int c = 0; c < chests.Length; c++)
@@ -290,6 +295,17 @@ public class LevelManagerScript : MonoBehaviour
         async.allowSceneActivation = true;
     }
 
+    IEnumerator LoadAsyncedSceneDelay()
+    {
+        yield return new WaitForSeconds(4f);
+        StartAsyncSceneLoad();
+    }
+
+    public void StartAsyncSceneLoad()
+    {
+        StartCoroutine(LoadSceneAsync());
+    }
+
     private void OnLevelWasLoaded(int level)
     {
         Start();
@@ -356,7 +372,14 @@ public class LevelManagerScript : MonoBehaviour
             Time.timeScale = 1;
         }
 
-        LoadScene();
+        if (pauseMenu.gameObject.activeSelf != false)
+        {
+            pauseMenu.gameObject.SetActive(false);
+        }
+
+        transition.fadeToBlack = true;
+        StartAsyncSceneLoad();
+        //LoadScene();
     }
 
     private void VanishPauseMenu()
@@ -373,10 +396,5 @@ public class LevelManagerScript : MonoBehaviour
     public void ClosePage(GameObject page)
     {
         page.gameObject.SetActive(false);
-    }
-
-    public void StartAsyncSceneLoad()
-    {
-        StartCoroutine(LoadSceneAsync());
     }
 }

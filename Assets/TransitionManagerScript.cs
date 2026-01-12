@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public class TransitionManagerScript : MonoBehaviour
 {
+    public enum Setting
+    {
+        MainMenu = 0, Gameplay = 1
+    }
+
+    public Setting setting;
+
     public float fadeAccelerant = 2f;
     public Image fadeImage;
     public bool fadeToBlack, fadeToGame;
@@ -18,7 +25,11 @@ public class TransitionManagerScript : MonoBehaviour
     {
         fadeImageColor = fadeImage.color;
         alphaValue = fadeImage.color.a;
-        fadeToGame = true;
+
+        if(setting == Setting.MainMenu)
+        {
+            fadeToGame = true;
+        }
     }
 
     // Update is called once per frame
@@ -32,10 +43,11 @@ public class TransitionManagerScript : MonoBehaviour
             fadeImage.color = fadeImageColor;
         }
 
-        if(fadeToGame)
+        if (fadeToGame)
         {
             alphaValue -= Time.deltaTime * fadeAccelerant;
-            if(alphaValue <= 0)
+
+            if (alphaValue <= 0)
             {
                 fadeToGame = false;
             }

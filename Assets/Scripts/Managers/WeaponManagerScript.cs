@@ -29,6 +29,7 @@ public class WeaponManagerScript : MonoBehaviour
     private PlayerInventoryScript player;
     private MenuManagerScript menu;
     private KioskScript kiosk;
+    private TransitionManagerScript transition;
     string wepStr, rarStr, exoStr, cOneStr, cTwoStr, cThreeStr, cFourStr, cFiveStr, cSixStr; //Strings that describe Weapon attributes
     float dismantleTimerReset, spawnDelayTimer;
     bool track = true; //WeaponManager position assigned to Player position if true
@@ -40,6 +41,7 @@ public class WeaponManagerScript : MonoBehaviour
         if(setting == Setting.Gameplay)
         {
             player = FindObjectOfType<PlayerInventoryScript>();
+            transition = FindObjectOfType<TransitionManagerScript>();
 
             for (int i = 0; i < weapons.Count; i++)
             {
@@ -1415,6 +1417,7 @@ public class WeaponManagerScript : MonoBehaviour
         }
 
         track = false;
+        transition.fadeToGame = true;
     }
 
     /// <summary>
