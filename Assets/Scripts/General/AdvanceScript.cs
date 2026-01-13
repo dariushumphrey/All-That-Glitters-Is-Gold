@@ -6,6 +6,7 @@ public class AdvanceScript : MonoBehaviour
 {
     public int levelIndex = 0; //Represents Scene to load
     public bool incomingMenu; //Returns the Player to Main Menu if true
+    public TransitionManagerScript transition;
 
     private LevelManagerScript level;
     private PlayerInventoryScript player;
@@ -36,6 +37,8 @@ public class AdvanceScript : MonoBehaviour
                 }
 
                 PlayerPrefs.SetInt("lucentBalance", player.lucentFunds);
+
+                level.gameComplete = true;
                 level.ReturnToMainMenu();
             }
 
@@ -50,8 +53,14 @@ public class AdvanceScript : MonoBehaviour
 
                 level.level = levelIndex;
                 level.SaveInventory();
-                level.LoadScene();
-            }           
+
+                level.gameComplete = true;
+                level.StartCoroutine(level.LoadAsyncedSceneDelay());
+                //level.LoadScene();
+            }
+
+            transition.StartCoroutine(transition.GameToBlackFadeDelay());
+            gameObject.SetActive(false);
         }
     }
 

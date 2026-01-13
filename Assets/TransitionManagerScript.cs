@@ -77,4 +77,10 @@ public class TransitionManagerScript : MonoBehaviour
 
         fadeToBlack = true;
     }
+
+    public IEnumerator GameToBlackFadeDelay()
+    {
+        yield return new WaitForSeconds(3f);
+        fadeToBlack = true;
+    }
 }

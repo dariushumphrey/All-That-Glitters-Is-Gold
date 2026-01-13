@@ -134,7 +134,7 @@ public class MenuManagerScript : MonoBehaviour
         levelManager.weaponFocus = (int)vcWepFocus.value;
 
         //levelManager.LoadScene();
-        levelManager.StartAsyncSceneLoad();
+        levelManager.StartCoroutine(levelManager.LoadAsyncedSceneDelay());
     }
 
     /// <summary>
@@ -147,7 +147,7 @@ public class MenuManagerScript : MonoBehaviour
         levelManager.level = (int)caLevel.value;
 
         //levelManager.LoadScene();
-        levelManager.StartAsyncSceneLoad();
+        levelManager.StartCoroutine(levelManager.LoadAsyncedSceneDelay());
     }
 
     public void OpenPage(GameObject page)

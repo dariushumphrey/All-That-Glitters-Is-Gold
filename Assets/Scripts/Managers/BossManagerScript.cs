@@ -84,5 +84,14 @@ public class BossManagerScript : MonoBehaviour
 
         levelManager.gameComplete = true;
         levelManager.CheckForFirstViricideClear();
+
+        StartCoroutine(GameEndDelay());
+
+    }
+
+    private IEnumerator GameEndDelay()
+    {
+        yield return new WaitForSeconds(15f);
+        levelManager.ReturnToMainMenu();
     }
 }

@@ -1571,7 +1571,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -12670,6 +12670,7 @@ MonoBehaviour:
   level: 0
   gameTime: 0
   eogStatsText: {fileID: 0}
+  resultsNotice: {fileID: 0}
   pauseMenu: {fileID: 0}
   resultsMenu: {fileID: 0}
   controlsMenu: {fileID: 0}
@@ -15724,6 +15725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a355c68955cf6f94083f6b795ee503ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setting: 0
   fadeAccelerant: 2
   fadeImage: {fileID: 810538679}
   fadeToBlack: 0
