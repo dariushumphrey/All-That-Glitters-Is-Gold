@@ -911,6 +911,8 @@ public class WeaponManagerScript : MonoBehaviour
     /// </summary>
     private IEnumerator RespawnWeapons()
     {
+        yield return new WaitForSeconds(spawnDelayTimer);
+
         string c = "Comic Sans";
 
         for (int s = 0; s < player.readdedWeps.Count; s++)

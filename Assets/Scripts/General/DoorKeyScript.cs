@@ -5,10 +5,11 @@ using UnityEngine;
 public class DoorKeyScript : MonoBehaviour
 {
     public bool isBlueKey, isRedKey = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -33,7 +34,6 @@ public class DoorKeyScript : MonoBehaviour
                 {
                     other.gameObject.GetComponent<PlayerInventoryScript>().redKey = true;
                     other.gameObject.GetComponent<PlayerInventoryScript>().rKey.gameObject.SetActive(true);
-
                 }
             }
 

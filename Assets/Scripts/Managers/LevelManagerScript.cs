@@ -34,6 +34,7 @@ public class LevelManagerScript : MonoBehaviour
     public GameObject pauseMenu, resultsMenu, controlsMenu;
 
     private TransitionManagerScript transition;
+    private CheckpointManagerScript checkpoint;
     private float gameEndDelay = 10f;
     private float gameRetryDelay = 5f;
     private bool paused = false; //Zeroes game time if true
@@ -42,6 +43,7 @@ public class LevelManagerScript : MonoBehaviour
     internal bool gameComplete = false; //Certifies game completion if true
     internal AsyncOperation async;
     internal Text levelLoadText; //Text that displays Async level load progress
+    internal bool lvlProgressSaved = false;
 
     // Start is called before the first frame update
     void Start()
@@ -102,6 +104,13 @@ public class LevelManagerScript : MonoBehaviour
         transition = FindObjectOfType<TransitionManagerScript>();
         levelLoadText = GameObject.Find("asyncLoadText").GetComponent<Text>();
         levelLoadText.text = "";
+
+        checkpoint = FindObjectOfType<CheckpointManagerScript>();
+
+        if(lvlProgressSaved)
+        {
+            checkpoint.checkpointReached = true;
+        }
 
         chests = GameObject.FindGameObjectsWithTag("Chest");
         for(int c = 0; c < chests.Length; c++)
