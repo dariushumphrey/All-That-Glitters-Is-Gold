@@ -38,6 +38,8 @@ public class AdvanceScript : MonoBehaviour
 
                 PlayerPrefs.SetInt("lucentBalance", player.lucentFunds);
 
+                level.lvlProgressSaved = false;
+
                 level.gameComplete = true;
                 level.ReturnToMainMenu();
             }
@@ -53,6 +55,8 @@ public class AdvanceScript : MonoBehaviour
 
                 level.level = levelIndex;
                 level.SaveInventory();
+
+                level.lvlProgressSaved = false;
 
                 level.gameComplete = true;
                 level.StartCoroutine(level.LoadAsyncedSceneDelay());

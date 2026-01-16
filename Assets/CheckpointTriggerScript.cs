@@ -31,6 +31,10 @@ public class CheckpointTriggerScript : MonoBehaviour
                 if(other.gameObject.GetComponent<PlayerInventoryScript>().redKey)
                 {
                     level.lvlProgressSaved = true;
+
+                    checkpoint.checkpointNotice.GetComponent<Text>().text = "Checkpoint Reached";
+                    checkpoint.StartCoroutine(checkpoint.ClearNotice());
+                    gameObject.SetActive(false);
                 }
             }
 
@@ -39,6 +43,10 @@ public class CheckpointTriggerScript : MonoBehaviour
                 if (other.gameObject.GetComponent<PlayerInventoryScript>().blueKey)
                 {
                     level.lvlProgressSaved = true;
+
+                    checkpoint.checkpointNotice.GetComponent<Text>().text = "Checkpoint Reached";
+                    checkpoint.StartCoroutine(checkpoint.ClearNotice());
+                    gameObject.SetActive(false);
                 }
             }
 
@@ -47,13 +55,12 @@ public class CheckpointTriggerScript : MonoBehaviour
                 if (other.gameObject.GetComponent<PlayerInventoryScript>().redKey && other.gameObject.GetComponent<PlayerInventoryScript>().blueKey)
                 {
                     level.lvlProgressSaved = true;
+
+                    checkpoint.checkpointNotice.GetComponent<Text>().text = "Checkpoint Reached";
+                    checkpoint.StartCoroutine(checkpoint.ClearNotice());
+                    gameObject.SetActive(false);
                 }
             }
-
-            checkpoint.checkpointNotice.GetComponent<Text>().text = "Checkpoint Acquired";
-            checkpoint.StartCoroutine(checkpoint.ClearNotice());
-
-            gameObject.SetActive(false);
         }
     }
 }

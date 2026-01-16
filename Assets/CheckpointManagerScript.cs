@@ -13,6 +13,7 @@ public class CheckpointManagerScript : MonoBehaviour
     public GameObject weaponManager;
     public GameObject redKey, blueKey;
     public List<GameObject> spawnerGroups = new List<GameObject>();
+    public List<GameObject> doorConsoles = new List<GameObject>();
     public List<GameObject> doorTriggers = new List<GameObject>();
     public List<GameObject> events = new List<GameObject>();
 
@@ -41,8 +42,40 @@ public class CheckpointManagerScript : MonoBehaviour
                 blueKey.transform.position = player.transform.position;
             }
 
+            if (spawnerGroups.Count >= 1)
+            {
+                for (int s = 0; s < spawnerGroups.Count; s++)
+                {
+                    spawnerGroups[s].SetActive(false);
+                }
+            }
+
+            if (doorConsoles.Count >= 1)
+            {
+                for (int d = 0; d < doorConsoles.Count; d++)
+                {
+                    doorConsoles[d].GetComponent<DoorConsoleScript>().accepted = true;
+                }
+            }
+
+            if (doorTriggers.Count >= 1)
+            {
+                for (int d = 0; d < doorTriggers.Count; d++)
+                {
+                    doorTriggers[d].SetActive(false);
+                }
+            }
+
+            if(events.Count >= 1)
+            {
+                for (int e = 0; e < events.Count; e++)
+                {
+                    events[e].transform.position = player.transform.position;
+                }
+            }
+
             checkpointTrigger.gameObject.SetActive(false);
-        }
+        }     
     }
 
     // Update is called once per frame
