@@ -21,7 +21,7 @@ public class PositiveNegative : MonoBehaviour
         firearm = GetComponent<FirearmScript>();
         move = FindObjectOfType<PlayerMoveScript>();
         activation = Resources.Load<GameObject>("Particles/PositiveNegativeActive");
-        electricBullet = Resources.Load<Material>("Materials/BulletMaterialPositiveNegative");
+        electricBullet = Resources.Load<Material>("Materials/Weapons/BulletMaterialPositiveNegative");
         originalBullet = firearm.bulletTrail;
 
         //Non-exotic Rarity 5 Weapons increase damage-over-time percentage

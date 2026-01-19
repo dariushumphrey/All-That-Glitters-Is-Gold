@@ -42,6 +42,7 @@ public class ReplevinScript : MonoBehaviour
     public float rangeAttackRate;
     public float rangedAttackForce;
     public float rangeATKMin; //Distance required for Enemy to begin attack
+    public float strafeDistance = 2f; //Extra distance extension for strafe action
     public GameObject rangeProjectile; //Projectile game object
 
     [Header("Charge Attack settings")]
@@ -80,7 +81,9 @@ public class ReplevinScript : MonoBehaviour
     //lastKnownDistance - Describes last recorded length between Player and Enemy
     //lastPlayerPosition - Describes last recorded Player position
     //recoilPosition - Describes stagger position when hitting Lucent wall -- Bosses only
-    private Vector3 distance, lastKnownDistance, lastPlayerPosition, recoilPosition;
+    //strafePos - Holds position for Enemy to strafe towards
+    //strafeCalc - Describes calculated strafing direction
+    private Vector3 distance, lastKnownDistance, lastPlayerPosition, recoilPosition, strafePos, strafeCalc;
     internal GameObject stunMechanic; //New Lucent Cluster game object
 
     private GameObject[] waypoint; //Array of waypoints
@@ -521,7 +524,7 @@ public class ReplevinScript : MonoBehaviour
                 self.enabled = false;
             }
 
-            distance = transform.position - player.transform.position;
+            distance = player.transform.position - transform.position;
             attackAgain += Time.deltaTime;
 
             Vector3 rayOrigin = attackStartPoint.transform.position;
@@ -534,10 +537,10 @@ public class ReplevinScript : MonoBehaviour
                     transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-distance, Vector3.up), rotationStrength);
                 }
 
-                else
-                {
-                    self.SetDestination(player.transform.position);
-                }
+                //else
+                //{
+                //    self.SetDestination(player.transform.position);
+                //}
 
                 if (distance.magnitude <= rangeATKMin)
                 {
@@ -546,28 +549,48 @@ public class ReplevinScript : MonoBehaviour
                         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-distance, Vector3.up), rotationStrength);
                     }
 
-                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeATKMin) && attackAgain >= rangeAttackRate)
+                    self.ResetPath();
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
+
+                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeATKMin))
                     {
-                        if (hit.collider.tag == "Enemy")
+                        if (hit.collider.tag == "Player")
                         {
-                            //Debug.Log("Danger of Friendly Fire; Aborting!");
-                            Task.current.Fail();
-                        }
+                            Vector3 strafeCalc = Vector3.Cross(player.transform.position, Vector3.up);
 
-                        else
-                        {
-                            attackAgain = 0.0f;
+                            strafePos = player.transform.position + strafeCalc * strafeDistance;
 
-                            GameObject projectile = Instantiate(rangeProjectile, attackStartPoint.transform.position, attackStartPoint.transform.rotation);
-                            projectile.GetComponent<ProjectileScript>().damage = damage;
-                            if (GetComponent<BerthScript>())
-                            {
-                                projectile.GetComponent<ProjectileScript>().berthFlag = true;
-                            }
+                            recorded = true;
 
-                            projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * rangedAttackForce);                      
                         }
                     }
+
+                    Debug.DrawLine(transform.position, player.transform.position + strafeCalc * strafeDistance, Color.red);
+                    Debug.DrawLine(player.transform.position, player.transform.position + strafeCalc * strafeDistance, Color.green);
+                    //Debug.DrawLine(player.transform.position, player.transform.position + strafeCalc * strafeDistance, Color.green);
+
+                    //if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeATKMin) && attackAgain >= rangeAttackRate)
+                    //{
+                    //    if (hit.collider.tag == "Enemy")
+                    //    {
+                    //        //Debug.Log("Danger of Friendly Fire; Aborting!");
+                    //        Task.current.Fail();
+                    //    }
+
+                    //    else
+                    //    {
+                    //        attackAgain = 0.0f;
+
+                    //        GameObject projectile = Instantiate(rangeProjectile, attackStartPoint.transform.position, attackStartPoint.transform.rotation);
+                    //        projectile.GetComponent<ProjectileScript>().damage = damage;
+                    //        if (GetComponent<BerthScript>())
+                    //        {
+                    //            projectile.GetComponent<ProjectileScript>().berthFlag = true;
+                    //        }
+
+                    //        projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * rangedAttackForce);                      
+                    //    }
+                    //}
                 }            
             }
 
