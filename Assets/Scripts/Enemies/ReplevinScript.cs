@@ -43,6 +43,8 @@ public class ReplevinScript : MonoBehaviour
     public float rangedAttackForce;
     public float rangeATKMin; //Distance required for Enemy to begin attack
     public float strafeDistance = 2f; //Extra distance extension for strafe action
+    public float strafeLimit = 1f; //Extent of strafe goal before stopping
+    public float strafeTimer = 3f; //Time delay before committing new strafe action
     public GameObject rangeProjectile; //Projectile game object
 
     [Header("Charge Attack settings")]
@@ -106,6 +108,7 @@ public class ReplevinScript : MonoBehaviour
     private float airtimeReset; //Holds starting Force jump timer
     private float attackAgain; //Holds starting attack rate
     private float gapCloseReset; //Holds starting Pounce attack speed
+    private float strafeReset; //Holds sttarting strafe time delay
     private float berthJumpTimerReset; //Holds starting Berth Jump cluster timer
     private bool destinationSet = false; //Affirms location if true
     private bool gathered = false; //Affirms cluster has been spawned if true -- Bosses only
@@ -133,6 +136,7 @@ public class ReplevinScript : MonoBehaviour
         airtimeReset = airtimeShort;
         buildupReset = chargeBuildup;
         berthJumpTimerReset = berthJumpCarpetBombTimer;
+        strafeReset = strafeTimer;
 
         self = GetComponent<NavMeshAgent>();
         waypoint = GameObject.FindGameObjectsWithTag("Waypoint");
@@ -528,70 +532,94 @@ public class ReplevinScript : MonoBehaviour
             attackAgain += Time.deltaTime;
 
             Vector3 rayOrigin = attackStartPoint.transform.position;
-            RaycastHit hit;  
+            RaycastHit hit;
 
-            if(CanSeePlayer())
+            if (distance.magnitude <= rangeATKMin && CanSeePlayer())
             {
-                if(amSentry)
+                if (amSentry)
                 {
                     transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-distance, Vector3.up), rotationStrength);
                 }
 
-                //else
-                //{
-                //    self.SetDestination(player.transform.position);
-                //}
-
-                if (distance.magnitude <= rangeATKMin)
+                else
                 {
-                    if(!amSentry)
-                    {
-                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-distance, Vector3.up), rotationStrength);
-                    }
-
-                    self.ResetPath();
                     transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
 
-                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeATKMin))
+                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeATKMin) && !recorded)
                     {
                         if (hit.collider.tag == "Player")
                         {
-                            Vector3 strafeCalc = Vector3.Cross(player.transform.position, Vector3.up);
+                            if (strafeTimer != strafeReset)
+                            {
+                                strafeTimer = strafeReset;
+                            }
 
-                            strafePos = player.transform.position + strafeCalc * strafeDistance;
+                            self.ResetPath();
 
-                            recorded = true;
+                            int strafeAction = Random.Range(0, 2);
+                            if(strafeAction == 0)
+                            {
+                                strafeCalc = Vector3.Cross(distance, transform.up);
+                            }
 
+                            else
+                            {
+                                strafeCalc = Vector3.Cross(distance, -transform.up);
+                            }
+
+                            strafePos = transform.position + strafeCalc * strafeDistance;
+
+                            Vector3 strafeDirection = strafePos - transform.position;
+                            if (!Physics.Raycast(rayOrigin, strafeDirection.normalized, out hit, strafeDirection.magnitude, contactOnly))
+                            {
+                                self.SetDestination(strafePos);
+                                recorded = true;
+                            }
                         }
                     }
 
-                    Debug.DrawLine(transform.position, player.transform.position + strafeCalc * strafeDistance, Color.red);
-                    Debug.DrawLine(player.transform.position, player.transform.position + strafeCalc * strafeDistance, Color.green);
-                    //Debug.DrawLine(player.transform.position, player.transform.position + strafeCalc * strafeDistance, Color.green);
+                    lastKnownDistance = strafePos - transform.position;
+                    //Debug.Log(lastKnownDistance.magnitude + " | " + strafeLimit);
 
-                    //if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeATKMin) && attackAgain >= rangeAttackRate)
-                    //{
-                    //    if (hit.collider.tag == "Enemy")
-                    //    {
-                    //        //Debug.Log("Danger of Friendly Fire; Aborting!");
-                    //        Task.current.Fail();
-                    //    }
+                    if (lastKnownDistance.magnitude <= strafeLimit)
+                    {
+                        strafeTimer -= Time.deltaTime;
+                        if (strafeTimer <= 0f)
+                        {
+                            recorded = false;
+                        }
+                    }
 
-                    //    else
-                    //    {
-                    //        attackAgain = 0.0f;
+                    Debug.DrawRay(transform.position, distance, Color.red);
+                    //Debug.DrawRay(transform.position, distance * strafeDistance, Color.green);
+                    Debug.DrawRay(transform.position, transform.up, Color.blue);
+                    Debug.DrawLine(transform.position, strafePos, Color.white);
 
-                    //        GameObject projectile = Instantiate(rangeProjectile, attackStartPoint.transform.position, attackStartPoint.transform.rotation);
-                    //        projectile.GetComponent<ProjectileScript>().damage = damage;
-                    //        if (GetComponent<BerthScript>())
-                    //        {
-                    //            projectile.GetComponent<ProjectileScript>().berthFlag = true;
-                    //        }
+                    
+                }
 
-                    //        projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * rangedAttackForce);                      
-                    //    }
-                    //}
-                }            
+                //if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeATKMin) && attackAgain >= rangeAttackRate)
+                //{
+                //    if (hit.collider.tag == "Enemy")
+                //    {
+                //        //Debug.Log("Danger of Friendly Fire; Aborting!");
+                //        Task.current.Fail();
+                //    }
+
+                //    else
+                //    {
+                //        attackAgain = 0.0f;
+
+                //        GameObject projectile = Instantiate(rangeProjectile, attackStartPoint.transform.position, attackStartPoint.transform.rotation);
+                //        projectile.GetComponent<ProjectileScript>().damage = damage;
+                //        if (GetComponent<BerthScript>())
+                //        {
+                //            projectile.GetComponent<ProjectileScript>().berthFlag = true;
+                //        }
+
+                //        projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * rangedAttackForce);                      
+                //    }
+                //}
             }
 
             else
@@ -603,6 +631,7 @@ public class ReplevinScript : MonoBehaviour
 
                 else
                 {
+                    recorded = false;
                     self.SetDestination(player.transform.position);
                 }
             }

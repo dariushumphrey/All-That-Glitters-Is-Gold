@@ -2671,7 +2671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultySpawn: 1
-  spawnRepeat: 1
+  spawnRepeat: 10
   berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
