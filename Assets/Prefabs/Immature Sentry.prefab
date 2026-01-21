@@ -190,9 +190,15 @@ MonoBehaviour:
   meleeTimeout: 0
   meleeAttackForce: 1750
   attackRate: 1
-  rangeAttackRate: 1
-  rangedAttackForce: 2250
+  rangeAttackChange: 15
+  rangeAttackRate: 0.08
+  rangedAttackForce: 150
   rangeATKMin: 20
+  rangeEngagementDistance: 25
+  rangeAttackCount: 2
+  strafeDistance: 2
+  strafeLimit: 1
+  strafeTimer: 3
   rangeProjectile: {fileID: 7101181237062747686, guid: 70bd89594efeb624f9d56ec2e948ce2a, type: 3}
   chargeRangeCheck: 0
   chargeRangeMin: 1

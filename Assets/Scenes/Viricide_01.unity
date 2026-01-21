@@ -2671,10 +2671,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultySpawn: 1
-  spawnRepeat: 10
+  spawnRepeat: 5
   berthChance: 80
   spawned:
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
+  - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
+  - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
   field: {fileID: 57732735}
 --- !u!65 &57732733
 BoxCollider:

@@ -190,9 +190,11 @@ MonoBehaviour:
   meleeAttackForce: 1750
   attackRate: 1
   rangeAttackChange: 15
-  rangeAttackRate: 1
-  rangedAttackForce: 2250
+  rangeAttackRate: 0.08
+  rangedAttackForce: 150
   rangeATKMin: 20
+  rangeEngagementDistance: 25
+  rangeAttackCount: 2
   strafeDistance: 0.5
   strafeLimit: 2
   strafeTimer: 2

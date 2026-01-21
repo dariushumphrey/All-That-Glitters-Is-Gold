@@ -38,10 +38,12 @@ public class ReplevinScript : MonoBehaviour
 
     //This value buffs attack rate of Ranged enemies:
     //-Increasing this number adds a percentage of fire rate onto itself, allowing for faster firing.
-    public float rangeAttackChange = 15f;
+    public float rangeAttackChange = 50f;
     public float rangeAttackRate;
     public float rangedAttackForce;
     public float rangeATKMin; //Distance required for Enemy to begin attack
+    public float rangeEngagementDistance; //Distance required for Enemy to setup attack
+    public int rangeAttackCount = 0; //Maximum range attacks to perform
     public float strafeDistance = 2f; //Extra distance extension for strafe action
     public float strafeLimit = 1f; //Extent of strafe goal before stopping
     public float strafeTimer = 3f; //Time delay before committing new strafe action
@@ -100,6 +102,7 @@ public class ReplevinScript : MonoBehaviour
     internal int boostSpeedReset; //Holds starting Enemy boost speed
     internal int accelReset; //Holds starting NavMeshAgent acceleration
 
+    private int burstCount = 0; //Total count of range attacks performed
     private float meleeReset; //Holds starting Melee attack timer
     private float chargeReset; //Holds starting Charge attack timer
     private float buildupReset; //Holds starting Charge attack delay timer
@@ -110,6 +113,7 @@ public class ReplevinScript : MonoBehaviour
     private float gapCloseReset; //Holds starting Pounce attack speed
     private float strafeReset; //Holds sttarting strafe time delay
     private float berthJumpTimerReset; //Holds starting Berth Jump cluster timer
+    private float rangeCooldown; //Time to wait before next range attack
     private bool destinationSet = false; //Affirms location if true
     private bool gathered = false; //Affirms cluster has been spawned if true -- Bosses only
     private bool throwTarget = false; //Affirms Enemy can throw cluster at Player if true -- Bosses only
@@ -118,6 +122,7 @@ public class ReplevinScript : MonoBehaviour
     private bool attackLock = false; //Affirms Enemy is using Raycast for attack if true
     private bool ramTimeout = false; //Affirms Charge enemy has ended attack if true
     private bool slamTimeout = false; //Affirms Jump, Pounce Enemy has ended attack if true
+    private bool rangeTimeout = false; //Affirms Range Enemy has ended attack if rue
     private bool lockOn = false; //Affirms Jump Enemy is lerping to Players if true
     private bool addWave = false; //Affirms Boss has spawned Enemies if true
     internal bool interrupted = false; //Affirms Boss can be damaged if true
@@ -180,8 +185,8 @@ public class ReplevinScript : MonoBehaviour
 
             rangeAttackChange *= enemy.difficultyValue;
             rangeAttackChange /= 100;
-            rangeAttackChange *= rangeAttackRate;
-            rangeAttackRate -= rangeAttackChange;
+            rangeAttackChange *= rangeAttackCount;
+            rangeAttackCount += (int)rangeAttackChange;
         }
     }
 
@@ -529,12 +534,10 @@ public class ReplevinScript : MonoBehaviour
             }
 
             distance = player.transform.position - transform.position;
-            attackAgain += Time.deltaTime;
-
             Vector3 rayOrigin = attackStartPoint.transform.position;
             RaycastHit hit;
 
-            if (distance.magnitude <= rangeATKMin && CanSeePlayer())
+            if (distance.magnitude <= rangeEngagementDistance && CanSeePlayer())
             {
                 if (amSentry)
                 {
@@ -556,18 +559,28 @@ public class ReplevinScript : MonoBehaviour
 
                             self.ResetPath();
 
-                            int strafeAction = Random.Range(0, 2);
+                            int strafeAction = Random.Range(0, 4);
                             if(strafeAction == 0)
                             {
                                 strafeCalc = Vector3.Cross(distance, transform.up);
+                                strafePos = transform.position + strafeCalc * strafeDistance;
                             }
 
-                            else
+                            else if (strafeAction == 1)
                             {
                                 strafeCalc = Vector3.Cross(distance, -transform.up);
+                                strafePos = transform.position + strafeCalc * strafeDistance;
                             }
 
-                            strafePos = transform.position + strafeCalc * strafeDistance;
+                            else if(strafeAction == 2)
+                            {
+                                strafePos = transform.position + distance * strafeDistance / 2;
+                            }
+                            
+                            else
+                            {
+                                strafePos = transform.position - distance * strafeDistance;
+                            }
 
                             Vector3 strafeDirection = strafePos - transform.position;
                             if (!Physics.Raycast(rayOrigin, strafeDirection.normalized, out hit, strafeDirection.magnitude, contactOnly))
@@ -590,36 +603,46 @@ public class ReplevinScript : MonoBehaviour
                         }
                     }
 
-                    Debug.DrawRay(transform.position, distance, Color.red);
-                    //Debug.DrawRay(transform.position, distance * strafeDistance, Color.green);
-                    Debug.DrawRay(transform.position, transform.up, Color.blue);
-                    Debug.DrawLine(transform.position, strafePos, Color.white);
-
-                    
+                    //Debug.DrawRay(transform.position, distance, Color.red);
+                    //Debug.DrawRay(transform.position, transform.up, Color.blue);
+                    //Debug.DrawLine(transform.position, strafePos, Color.white);
+                  
                 }
 
-                //if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeATKMin) && attackAgain >= rangeAttackRate)
-                //{
-                //    if (hit.collider.tag == "Enemy")
-                //    {
-                //        //Debug.Log("Danger of Friendly Fire; Aborting!");
-                //        Task.current.Fail();
-                //    }
+                if(!attackLock)
+                {
+                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeEngagementDistance, contactOnly))
+                    {
+                        if (hit.collider.tag == "Player")
+                        {
+                            int randomTime = 0;
 
-                //    else
-                //    {
-                //        attackAgain = 0.0f;
+                            float[] delays = { 1f, 1.25f, 1.5f, 2f };
+                            randomTime = Random.Range(0, delays.Length);
+                            rangeCooldown = delays[randomTime];
 
-                //        GameObject projectile = Instantiate(rangeProjectile, attackStartPoint.transform.position, attackStartPoint.transform.rotation);
-                //        projectile.GetComponent<ProjectileScript>().damage = damage;
-                //        if (GetComponent<BerthScript>())
-                //        {
-                //            projectile.GetComponent<ProjectileScript>().berthFlag = true;
-                //        }
+                            StartCoroutine(RangeAttackShot());
+                            //burstAttack = true;
+                            attackLock = true;
+                        }
 
-                //        projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * rangedAttackForce);                      
-                //    }
-                //}
+                        if (hit.collider.tag == "Enemy")
+                        {
+                            Task.current.Fail();
+                        }
+                    }
+                }
+                
+                if(attackLock && rangeTimeout)
+                {
+                    attackAgain += Time.deltaTime;
+                    if(attackAgain >= rangeCooldown)
+                    {
+                        attackAgain = 0.0f;
+                        attackLock = false;
+                        rangeTimeout = false;
+                    }
+                }
             }
 
             else
@@ -1290,5 +1313,31 @@ public class ReplevinScript : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         interrupted = false;
+    }
+
+    public IEnumerator RangeAttackShot()
+    {
+        yield return new WaitForSeconds(rangeAttackRate);
+
+        GameObject projectile = Instantiate(rangeProjectile, attackStartPoint.transform.position, attackStartPoint.transform.rotation);
+        projectile.GetComponent<ProjectileScript>().damage = damage;
+        if (GetComponent<BerthScript>())
+        {
+            projectile.GetComponent<ProjectileScript>().berthFlag = true;
+        }
+
+        projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * (rangedAttackForce * distance.magnitude));
+
+        burstCount++;
+        if(burstCount != rangeAttackCount)
+        {
+            StartCoroutine(RangeAttackShot());
+        }
+
+        else
+        {
+            burstCount = 0;
+            rangeTimeout = true;
+        }
     }
 }
