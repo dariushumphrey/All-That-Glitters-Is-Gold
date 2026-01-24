@@ -68,14 +68,14 @@ MonoBehaviour:
   damage: 600
   damagePercent: 10
   currentAmmo: 0
-  ammoSize: 100
+  ammoSize: 75
   reserveAmmo: 0
-  reserveSize: 720
+  reserveSize: 420
   weaponRarity: 1
   cheatOverride: 0
   fireRate: 0.1
-  effectiveRange: 45
-  range: 90
+  effectiveRange: 40
+  range: 50
   reloadSpeed: 4
   wepRecoil: 0.7
   aimAssistStrength: 0.1

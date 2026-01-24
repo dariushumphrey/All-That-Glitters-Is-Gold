@@ -314,18 +314,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48213352b9f89314286311c882025ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 580
+  damage: 1060
   damagePercent: 10
   currentAmmo: 0
-  ammoSize: 16
+  ammoSize: 9
   reserveAmmo: 0
-  reserveSize: 174
+  reserveSize: 108
   weaponRarity: 1
   cheatOverride: 0
-  fireRate: 0.09
-  effectiveRange: 25
-  range: 35
-  reloadSpeed: 1
+  fireRate: 0.15
+  effectiveRange: 30
+  range: 40
+  reloadSpeed: 0.9
   wepRecoil: 0.4
   aimAssistStrength: 0.2
   isExotic: 0
