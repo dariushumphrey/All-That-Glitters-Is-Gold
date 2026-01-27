@@ -214,6 +214,11 @@ public class SingleFireFirearm : FirearmScript
                                 gameObject.GetComponent<Forager>().burstPosition = hit.collider.transform.position + Vector3.up;
                             }
 
+                            if (gameObject.GetComponent<Superweapon>())
+                            {
+                                gameObject.GetComponent<Superweapon>().killConfirmed = true;
+                            }
+
                             if (hit.collider.GetComponent<Rigidbody>() == null)
                             {
                                 hit.collider.gameObject.AddComponent<Rigidbody>();
@@ -225,7 +230,7 @@ public class SingleFireFirearm : FirearmScript
                             {
                                 Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
                                 hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 10f, ForceMode.Impulse);
-                            }
+                            }                          
                         }
                     } //For damage falloff checks/kill triggers within Effective Range
 
@@ -297,6 +302,11 @@ public class SingleFireFirearm : FirearmScript
                             {
                                 gameObject.GetComponent<Forager>().killConfirmed = true;
                                 gameObject.GetComponent<Forager>().burstPosition = hit.collider.transform.position + Vector3.up;
+                            }
+
+                            if (gameObject.GetComponent<Superweapon>())
+                            {
+                                gameObject.GetComponent<Superweapon>().killConfirmed = true;
                             }
 
                             if (hit.collider.GetComponent<Rigidbody>() == null)

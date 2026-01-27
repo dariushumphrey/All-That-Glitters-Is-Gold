@@ -541,7 +541,7 @@ public class ReplevinScript : MonoBehaviour
             {
                 if (amSentry)
                 {
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-distance, Vector3.up), rotationStrength);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
                 }
 
                 else
@@ -649,7 +649,7 @@ public class ReplevinScript : MonoBehaviour
             {
                 if (amSentry)
                 {
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-distance, Vector3.up), rotationStrength);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
                 }
 
                 else

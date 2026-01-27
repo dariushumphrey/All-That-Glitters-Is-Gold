@@ -18,6 +18,7 @@ public class PlayerMoveScript : MonoBehaviour
     public float evasionTimeout = 0.8f; //Duration to wait before ability to Evade again
     public Sprite blankReticle;
     public bool zeroGravity = false; //Governs if Player can freely move in open space; no longer zeroes movement on Y-axis if true
+    internal bool zgOverride = false; //Prevents Zero Gravity from deactivation if true
 
     public List<ParticleSystem> backThrust = new List<ParticleSystem>();
     public List<ParticleSystem> frontThrust = new List<ParticleSystem>();
@@ -35,6 +36,8 @@ public class PlayerMoveScript : MonoBehaviour
     internal bool evaded = false; //Player is in Evasion cooldown if true
     internal float horizInput;
     internal float vertInput;
+    internal bool volant = false; //Functional Cheat Volant is active if true
+
     // Start is called before the first frame update
     void Start()
     {
@@ -177,7 +180,7 @@ public class PlayerMoveScript : MonoBehaviour
                     playerRigid.AddForce(-transform.up * speed * speedAccelerant);
                 }
 
-                if(vertInput == 1)
+                if(vertInput == 1 || volant)
                 {
                     for (int p = 0; p < backThrust.Count; p++)
                     {
@@ -193,7 +196,7 @@ public class PlayerMoveScript : MonoBehaviour
                     }
                 }
 
-                if (vertInput == -1)
+                if (vertInput == -1 || volant)
                 {
                     for (int p = 0; p < frontThrust.Count; p++)
                     {

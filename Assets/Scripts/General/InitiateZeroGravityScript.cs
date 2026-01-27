@@ -16,20 +16,33 @@ public class InitiateZeroGravityScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Player") && activate)
         {
-            other.gameObject.GetComponent<PlayerMoveScript>().zeroGravity = true;
+            if(!other.gameObject.GetComponent<PlayerMoveScript>().zeroGravity)
+            {
+                other.gameObject.GetComponent<PlayerMoveScript>().zeroGravity = true;
+                other.gameObject.GetComponent<PlayerMoveScript>().zgOverride = true;
+            }
+
+            else if(other.gameObject.GetComponent<PlayerMoveScript>().zeroGravity && other.gameObject.GetComponent<PlayerMoveScript>().volant)
+            {
+                other.gameObject.GetComponent<PlayerMoveScript>().zgOverride = true;
+            }
         }
 
         if (other.gameObject.CompareTag("Player") && deactivate)
         {
-            other.gameObject.GetComponent<PlayerMoveScript>().zeroGravity = false;
-            other.gameObject.GetComponent<PlayerMoveScript>().airbornePull = other.gameObject.GetComponent<PlayerMoveScript>().airbornePullReset;
+            if (other.gameObject.GetComponent<PlayerMoveScript>().zeroGravity)
+            {
+                other.gameObject.GetComponent<PlayerMoveScript>().zeroGravity = false;
+                other.gameObject.GetComponent<PlayerMoveScript>().zgOverride = false;
+                other.gameObject.GetComponent<PlayerMoveScript>().airbornePull = other.gameObject.GetComponent<PlayerMoveScript>().airbornePullReset;
+            }
         }
     }
 }

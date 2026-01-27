@@ -327,11 +327,11 @@ public class FirearmScript : MonoBehaviour
             if(cheatRNG == -1)
             {
                 gameObject.AddComponent<EquivalentExchange>();
-                gameObject.AddComponent<WaitNowImReady>();
+                gameObject.AddComponent<Inoculated>();
 
                 gameObject.GetComponent<EquivalentExchange>().proc = procOne;
-                gameObject.GetComponent<WaitNowImReady>().proc = procTwo;
-            } //Equivalent Exchange + Wait! Now I'm Ready
+                gameObject.GetComponent<Inoculated>().proc = procTwo;
+            } //Equivalent Exchange + Inoculated
 
             if(cheatRNG == -2)
             {
@@ -344,12 +344,12 @@ public class FirearmScript : MonoBehaviour
 
             if(cheatRNG == -3)
             {
-                gameObject.AddComponent<ShelterInPlace>();
-                gameObject.AddComponent<PositiveNegative>();
+                gameObject.AddComponent<Superweapon>();
+                gameObject.AddComponent<Counterplay>();
 
-                gameObject.GetComponent<ShelterInPlace>().proc = procOne;
-                gameObject.GetComponent<PositiveNegative>().proc = procTwo;
-            } //Shelter In Place + Positive-Negative
+                gameObject.GetComponent<Superweapon>().proc = procOne;
+                gameObject.GetComponent<Counterplay>().proc = procTwo;
+            } //Superweapon + Counterplay
 
             if(cheatRNG == -4)
             {
@@ -372,13 +372,13 @@ public class FirearmScript : MonoBehaviour
 
             if(cheatRNG == -6)
             {
-                gameObject.AddComponent<OffYourOwnSupply>();
-                gameObject.AddComponent<Inoculated>();
+                gameObject.AddComponent<Volant>();
+                gameObject.AddComponent<WaitNowImReady>();
 
-                gameObject.GetComponent<OffYourOwnSupply>().proc = procOne;
-                gameObject.GetComponent<Inoculated>().proc = procTwo;
+                gameObject.GetComponent<Volant>().proc = procOne;
+                gameObject.GetComponent<WaitNowImReady>().proc = procTwo;
 
-            } //Off your Own Supply + Inoculated
+            } //Volant + Wait! Now I'm Ready
 
             if(cheatRNG == -7)
             {

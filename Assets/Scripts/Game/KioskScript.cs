@@ -195,7 +195,7 @@ public class KioskScript : MonoBehaviour
                 if(wepTypeStr == "1")
                 {
                     fcOneStr = "A";
-                    fcTwoStr = "0";
+                    fcTwoStr = "2";
                 }
 
                 if (wepTypeStr == "2")
@@ -207,13 +207,13 @@ public class KioskScript : MonoBehaviour
                 if (wepTypeStr == "3")
                 {
                     fcOneStr = "C";
-                    fcTwoStr = "6";
+                    fcTwoStr = "$";
                 }
 
                 if (wepTypeStr == "4")
                 {
                     fcOneStr = "F";
-                    fcTwoStr = "2";
+                    fcTwoStr = "0";
                 }
 
                 if (wepTypeStr == "5")
@@ -581,13 +581,13 @@ public class KioskScript : MonoBehaviour
 
                 if (fcOneStr == "C")
                 {
-                    functionOnes[p].text = "Shelter in Place";
+                    functionOnes[p].text = "Superweapon";
 
                 }
 
                 if (fcOneStr == "F")
                 {
-                    functionOnes[p].text = "Off your own supply";
+                    functionOnes[p].text = "Volant";
 
                 }
 
@@ -664,12 +664,6 @@ public class KioskScript : MonoBehaviour
                     functionTwos[p].text = "The Most Resplendent";
                 } //Pay to Win pairing
 
-                if (fcTwoStr == "6")
-                {
-                    functionTwos[p].text = "Positive-Negative";
-
-                } //Shelter in Place pairing
-
                 if (fcTwoStr == "4")
                 {
                     functionTwos[p].text = "Not with a Stick";
@@ -685,7 +679,7 @@ public class KioskScript : MonoBehaviour
                 if (fcTwoStr == "0")
                 {
                     functionTwos[p].text = "Wait! Now I'm Ready!";
-                } //Equivalent Exchange pairing
+                } //Volant pairing
               
                 if (fcTwoStr == "1")
                 {
@@ -697,7 +691,7 @@ public class KioskScript : MonoBehaviour
                 {
                     functionTwos[p].text = "Inoculated";
 
-                } //Off your own Supply pairing
+                } //Equivalent Exchange pairing
 
                 if (fcTwoStr == "7")
                 {
@@ -715,7 +709,7 @@ public class KioskScript : MonoBehaviour
                 {
                     functionTwos[p].text = "Counterplay";
 
-                }
+                } //Superweapon pairing
 
                 if (fcTwoStr == "%")
                 {
@@ -1299,14 +1293,14 @@ public class KioskScript : MonoBehaviour
 
             if (fcOneStr == "C")
             {
-                cheatTraitOne.text = "Shelter in Place" + '\n' +
-                    "Refraining from moving amplifies Weapon damage by 100% and grants 80% damage reduction. Resuming movement ends the bonus.";
+                cheatTraitOne.text = "Superweapon" + '\n' +
+                    "Kills grant stacks of damage resistance. Stacks 8x. [E] - Charge an extreme-damage shot, inflicting 1000% of Weapon damage per stack.";
             }
 
             if (fcOneStr == "F")
             {
-                cheatTraitOne.text = "Off Your Own Supply" + '\n' +
-                    "Sacrificing your Shield grants 10% Movement Speed, 80% Reload Speed, 140% Weapon damage, and zero Recoil.";
+                cheatTraitOne.text = "Volant" + '\n' +
+                    "[E] - Enables character flight until Shield is broken or disenaged.";
             }
 
             if (fcOneStr == "D")
@@ -1382,13 +1376,7 @@ public class KioskScript : MonoBehaviour
             {
                 cheatTraitTwo.text = "The Most Resplendent" + '\n' +
                         "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
-            } //Pay to Win pairing
-           
-            if (fcTwoStr == "6")
-            {
-                cheatTraitTwo.text = "Positive-Negative" + '\n' +
-                        "Moving generates a charge. While halfway charged, Enemy hits applies 100% of Weapon damage as damage-over-time for ten seconds.";
-            } //Shelter in Place pairing
+            } //Pay to Win pairing         
            
             if (fcTwoStr == "4")
             {
@@ -1406,7 +1394,7 @@ public class KioskScript : MonoBehaviour
             {
                 cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
                        "Kills with this Weapon restore 10% of Shield strength.";
-            } //Equivalent Exchange pairing
+            } //Volant pairing
             
             if (fcTwoStr == "1")
             {
@@ -1418,7 +1406,7 @@ public class KioskScript : MonoBehaviour
             {
                 cheatTraitTwo.text = "Inoculated" + '\n' +
                     "Kills with this Weapon restore 5% of Health.";
-            } //Off your own Supply pairing
+            } //Equivalent Exchange pairing
 
             if (fcTwoStr == "7")
             {
@@ -1437,7 +1425,7 @@ public class KioskScript : MonoBehaviour
             {
                 cheatTraitTwo.text = "Counterplay" + '\n' +
                 "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
-            }
+            } //Superweapon pairing
 
             if (fcTwoStr == "%")
             {

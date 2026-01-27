@@ -72,6 +72,9 @@ public class PlayerStatusScript : MonoBehaviour
         health.value = playerHealth;
         shield.value = playerShield;
 
+        playerHealth = Mathf.Clamp(playerHealth, 0, playerHealthMax);
+        playerShield = Mathf.Clamp(playerShield, 0, playerShieldMax);
+
         //Changes color of Health bar by health thresholds
         if (playerHealth >= playerHealthMax / 2)
         {

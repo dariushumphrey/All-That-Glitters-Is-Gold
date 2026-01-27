@@ -137,7 +137,7 @@ public class LootScript : MonoBehaviour
             }
         }
 
-        if (player.zeroGravity)
+        if (player.zeroGravity && player.zgOverride)
         {
             reward.GetComponent<Rigidbody>().useGravity = false;
         }
@@ -164,7 +164,7 @@ public class LootScript : MonoBehaviour
             reward.GetComponent<ColorLerpScript>().colorTwo = Color.white;
         }
 
-        if (player.zeroGravity)
+        if (player.zeroGravity && player.zgOverride)
         {
             reward.GetComponent<Rigidbody>().useGravity = false;
         }

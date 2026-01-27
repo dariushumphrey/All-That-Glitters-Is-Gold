@@ -922,9 +922,9 @@ public class PlayerInventoryScript : MonoBehaviour
             cheatTraitOne.text = "Equivalent Exchange" + '\n' +
                 "Taking Enemy damage adds 35% of the hit to this Weapon's base damage and as Health.";
 
-            cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
-                   "Kills with this weapon restore 10% of Shield strength.";
-        } //Equivalent Exchange + Wait! Now I'm Ready!
+            cheatTraitTwo.text = "Inoculated" + '\n' +
+                   "Kills with this Weapon restore 5% of Health.";
+        } //Equivalent Exchange + Inoculated
 
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -2)
         {
@@ -937,12 +937,12 @@ public class PlayerInventoryScript : MonoBehaviour
 
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -3)
         {
-            cheatTraitOne.text = "Shelter in Place" + '\n' +
-                "Refraining from moving amplifies Weapon damage by 100% and provides 80% damage reduction.";
+            cheatTraitOne.text = "Superweapon" + '\n' +
+                "Kills grant stacks of damage resistance. Stacks 8x. [E] - Charge an extreme-damage shot, inflicting 1000% of Weapon damage per stack.";
 
-            cheatTraitTwo.text = "Positive-Negative" + '\n' +
-                    "Moving generates a charge. While halfway charged, Enemy hits apply damage-over-time.";
-        } //Shelter in Place + Positive-Negative
+            cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken during Evasions casts two Lucent clusters and increases Weapon damage by 10%. Stacks 3x.";
+        } //Superweapon + Counterplay
 
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -4)
         {
@@ -964,12 +964,12 @@ public class PlayerInventoryScript : MonoBehaviour
 
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -6)
         {
-            cheatTraitOne.text = "Off Your Own Supply" + '\n' +
-                "[E] - Sacrificing your Shield grants increased movement, Reload Speed, Weapon damage and zero Recoil.";
+            cheatTraitOne.text = "Volant" + '\n' +
+                "[E] - Enables character flight until Shield is broken or disenaged.";
 
-            cheatTraitTwo.text = "Inoculated" + '\n' +
-                    "Kills with this Weapon restore 5% of Health.";
-        } //Off your own Supply + Inoculated
+            cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
+                    "Kills with this weapon restore 10% of Shield strength.";
+        } //Volant + Wait! Now I'm Ready!
 
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -7)
         {
@@ -1453,9 +1453,9 @@ public class PlayerInventoryScript : MonoBehaviour
                                 write.Write("A");
                             }
 
-                            if (inventory[i].GetComponent<WaitNowImReady>())
+                            if (inventory[i].GetComponent<Inoculated>())
                             {
-                                write.WriteLine("0");
+                                write.WriteLine("2");
                             }
 
                             //Exotic Machine Gun
@@ -1470,25 +1470,25 @@ public class PlayerInventoryScript : MonoBehaviour
                             }
 
                             //Exotic Pistol
-                            if (inventory[i].GetComponent<ShelterInPlace>())
+                            if (inventory[i].GetComponent<Superweapon>())
                             {
                                 write.Write("C");
                             }
 
-                            if (inventory[i].GetComponent<PositiveNegative>())
+                            if (inventory[i].GetComponent<Counterplay>())
                             {
-                                write.WriteLine("6");
+                                write.WriteLine("$");
                             }
 
                             //Exotic Semi Fire Rifle
-                            if (inventory[i].GetComponent<OffYourOwnSupply>())
+                            if (inventory[i].GetComponent<Volant>())
                             {
                                 write.Write("F");
                             }
 
-                            if (inventory[i].GetComponent<Inoculated>())
+                            if (inventory[i].GetComponent<WaitNowImReady>())
                             {
-                                write.WriteLine("2");
+                                write.WriteLine("8");
                             }
 
                             //Exotic Shotgun

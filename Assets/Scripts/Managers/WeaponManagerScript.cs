@@ -636,14 +636,14 @@ public class WeaponManagerScript : MonoBehaviour
 
             if (cFiveStr == "C")
             {
-                cheatTraitOne.text = "Shelter in Place" + '\n' +
-                    "Refraining from moving amplifies Weapon damage by 100% and grants 80% damage reduction. Resuming movement ends the bonus.";
+                cheatTraitOne.text = "Superweapon" + '\n' +
+                    "Kills grant stacks of damage resistance. Stacks 8x. [E] - Charge an extreme-damage shot, inflicting 1000% of Weapon damage per stack.";
             }
 
             if (cFiveStr == "F")
             {
-                cheatTraitOne.text = "Off Your Own Supply" + '\n' +
-                    "Sacrificing your Shield grants 10% Movement Speed, 80% Reload Speed, 140% Weapon damage, and zero Recoil.";
+                cheatTraitOne.text = "Volant" + '\n' +
+                    "[E] - Enables character flight until Shield is broken or disenaged.";
             }
 
             if (cFiveStr == "D")
@@ -775,13 +775,6 @@ public class WeaponManagerScript : MonoBehaviour
                         "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
             }
 
-            //Shelter in Place pairing
-            if (cSixStr == "6")
-            {
-                cheatTraitTwo.text = "Positive-Negative" + '\n' +
-                        "Moving generates a charge. While halfway charged, Enemy hits applies 100% of Weapon damage as damage-over-time for ten seconds.";
-            }
-
             //Social Distance, Please! pairing
             if (cSixStr == "4")
             {
@@ -796,7 +789,7 @@ public class WeaponManagerScript : MonoBehaviour
                         "Weapon or Melee kills produce a burst of Lucent clusters, Health, Shield, and Ammo pickups.";
             }
 
-            //Equivalent Exchange pairing
+            //Volant pairing
             if (cSixStr == "0")
             {
                 cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
@@ -824,7 +817,7 @@ public class WeaponManagerScript : MonoBehaviour
 
             }
 
-            //Off your own Supply pairing
+            //Equivalent Exchange pairing
             if (cSixStr == "2")
             {
                 cheatTraitTwo.text = "Inoculated" + '\n' +
@@ -865,6 +858,7 @@ public class WeaponManagerScript : MonoBehaviour
 
             }
 
+            //Superweapon pairing
             if (cSixStr == "$")
             {
                 cheatTraitTwo.text = "Counterplay" + '\n' +
@@ -1254,15 +1248,15 @@ public class WeaponManagerScript : MonoBehaviour
                 if (cFiveStr == "C")
                 {
                     item.GetComponent<FirearmScript>().cheatRNG = -3;
-                    item.AddComponent<ShelterInPlace>();
-                    item.GetComponent<ShelterInPlace>().proc = item.GetComponent<FirearmScript>().procOne;
+                    item.AddComponent<Superweapon>();
+                    item.GetComponent<Superweapon>().proc = item.GetComponent<FirearmScript>().procOne;
                 }
 
                 if (cFiveStr == "F")
                 {
                     item.GetComponent<FirearmScript>().cheatRNG = -6;
-                    item.AddComponent<OffYourOwnSupply>();
-                    item.GetComponent<OffYourOwnSupply>().proc = item.GetComponent<FirearmScript>().procOne;
+                    item.AddComponent<Volant>();
+                    item.GetComponent<Volant>().proc = item.GetComponent<FirearmScript>().procOne;
                 }
 
                 if (cFiveStr == "D")
@@ -1342,13 +1336,6 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<TheMostResplendent>().proc = item.GetComponent<FirearmScript>().procTwo;
                 }
 
-                //Shelter in Place pairing
-                if (cSixStr == "6")
-                {
-                    item.AddComponent<PositiveNegative>();
-                    item.GetComponent<PositiveNegative>().proc = item.GetComponent<FirearmScript>().procTwo;
-                }
-
                 //Social Distance, Please! pairing
                 if (cSixStr == "4")
                 {
@@ -1363,7 +1350,7 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procTwo;
                 }
 
-                //Equivalent Exchange pairing
+                //Volant pairing
                 if (cSixStr == "0")
                 {
                     item.AddComponent<WaitNowImReady>();
@@ -1377,7 +1364,7 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<Efficacy>().proc = item.GetComponent<FirearmScript>().procTwo;
                 }
 
-                //Off your own Supply pairing
+                //Equivalent Exchange pairing
                 if (cSixStr == "2")
                 {
                     item.AddComponent<Inoculated>();
@@ -1396,6 +1383,7 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<RudeAwakening>().proc = item.GetComponent<FirearmScript>().procTwo;
                 }
 
+                //Superweapon pairing
                 if (cSixStr == "$")
                 {
                     item.AddComponent<Counterplay>();

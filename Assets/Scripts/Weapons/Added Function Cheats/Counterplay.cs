@@ -31,7 +31,7 @@ public class Counterplay : MonoBehaviour
         dmgAdd = (int)dmgIncreasePercent;
 
         //Non-exotic Rarity 5 Weapons increase total stack maximum
-        if(firearm.weaponRarity == 5)
+        if(firearm.weaponRarity == 5 && !firearm.isExotic)
         {
             stackCountCap = 10;
         }
@@ -67,7 +67,7 @@ public class Counterplay : MonoBehaviour
             payoffTheSequel.GetComponent<LucentScript>().StartCoroutine(payoffTheSequel.GetComponent<LucentScript>().Shatter());
 
             //Rarity 5 Weapons spawn a Solution Grenade
-            if (firearm.weaponRarity == 5)
+            if (firearm.weaponRarity == 5 && !firearm.isExotic)
             {
                 GameObject solution = Instantiate(inventory.grenades[1], transform.position + Vector3.down, Quaternion.Euler(new Vector3(90f, 0f, 0f)));
                 solution.GetComponent<SolutionGrenadeScript>().armingTime = 0.0f;

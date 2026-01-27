@@ -86,6 +86,8 @@ public class EnemyHealthScript : MonoBehaviour
     {
         currentHealth.value = healthCurrent;
 
+        healthCurrent = Mathf.Clamp(healthCurrent, 0, healthMax);
+
         //Updates lost Health slider when timer expires
         lhUpdateTimer -= Time.deltaTime;
         if(lhUpdateTimer <= 0f)

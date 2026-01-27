@@ -32,6 +32,7 @@ public class EnemyManagerScript : MonoBehaviour
     internal int killCount = 0; //Total count of defeated Enemies
     internal int damageReceived = 0; //Total count of Player damage taken
     internal int damageDealt = 0; //Total count of Player damage dealt
+    internal bool volant = false; //Functional Cheat Volant is active if true
     private PlayerMoveScript player;
 
     // Start is called before the first frame update
@@ -164,7 +165,7 @@ public class EnemyManagerScript : MonoBehaviour
 
             //Removes (Clone) from name
             reward.name = loot.name;
-            if(player.zeroGravity)
+            if(player.zeroGravity && !volant)
             {
                 reward.GetComponent<Rigidbody>().useGravity = false;
             }
@@ -187,7 +188,7 @@ public class EnemyManagerScript : MonoBehaviour
 
                 //Removes (Clone) from name
                 reward.name = loot.name;
-                if (player.zeroGravity)
+                if (player.zeroGravity && !volant)
                 {
                     reward.GetComponent<Rigidbody>().useGravity = false;
                 }
@@ -206,7 +207,7 @@ public class EnemyManagerScript : MonoBehaviour
 
             //Removes (Clone) from name
             rewardTwo.name = loot.name;
-            if (player.zeroGravity)
+            if (player.zeroGravity && !volant)
             {
                 rewardTwo.GetComponent<Rigidbody>().useGravity = false;
             }
