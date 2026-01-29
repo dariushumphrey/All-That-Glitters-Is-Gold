@@ -181,9 +181,10 @@ MonoBehaviour:
   amSentry: 1
   contactOnly:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 328
   attackStartPoint: {fileID: 78844624223129820}
   stunningLucent: {fileID: 0}
+  meleeEngagementDistance: 0
   meleeRangeCheck: 0
   meleeRangeMin: 2
   meleeAttackTimer: 0.8

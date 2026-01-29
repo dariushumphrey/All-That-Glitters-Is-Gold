@@ -145,12 +145,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 78844624512772179}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1
+  m_Radius: 0.5
   m_Speed: 5
-  m_Acceleration: 4
+  m_Acceleration: 5
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 1
+  m_AngularSpeed: 180
+  m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -172,9 +172,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 110
   damagePercent: 20
-  moveSpeed: 4
+  moveSpeed: 7
   boostSpeed: 10
-  enemyAcceleration: 8
+  enemyAcceleration: 16
   rotationStrength: 2
   amBoss: 0
   amSentry: 0
@@ -183,15 +183,22 @@ MonoBehaviour:
     m_Bits: 264
   attackStartPoint: {fileID: 78844624223129820}
   stunningLucent: {fileID: 0}
-  meleeRangeCheck: 10
-  meleeRangeMin: 2
-  meleeAttackTimer: 0.8
+  meleeEngagementDistance: 20
+  meleeRangeCheck: 7
+  meleeRangeMin: 15
+  meleeAttackTimer: 5
   meleeTimeout: 1.5
   meleeAttackForce: 50000
   attackRate: 1
+  rangeAttackChange: 50
   rangeAttackRate: 1
   rangedAttackForce: 0
   rangeATKMin: 7
+  rangeEngagementDistance: 0
+  rangeAttackCount: 0
+  strafeDistance: 0.75
+  strafeLimit: 2
+  strafeTimer: 2
   rangeProjectile: {fileID: 7101181237062747686, guid: 70bd89594efeb624f9d56ec2e948ce2a, type: 3}
   chargeRangeCheck: 0
   chargeRangeMin: 1

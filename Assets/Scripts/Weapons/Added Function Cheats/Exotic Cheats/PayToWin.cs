@@ -39,7 +39,7 @@ public class PayToWin : MonoBehaviour
     void Update()
     {
         //Pay to Win
-        //___.text = 'Space' - Consume 10,000 Lucent currency to create 150 stacks of a 50% base damage increase. Enemy hits removes three stacks.
+        //___.text = 'Space' - Consume 30,000 Lucent to create 150 stacks of a 50% base damage increase. Enemy hits removes three stacks.
 
         if(stackNum >= 1 && firearm.enabled == true)
         {
@@ -94,7 +94,7 @@ public class PayToWin : MonoBehaviour
                 return;
             }
 
-            else if (player.lucentFunds < 5280)
+            else if (player.lucentFunds < 30000)
             {
                 //If the Player has less than 5,280 Lucent funds, they cannot create stacks. 
                 return;
@@ -102,7 +102,7 @@ public class PayToWin : MonoBehaviour
 
             else
             {
-                player.lucentFunds -= 5280;              
+                player.lucentFunds -= 30000;              
                 stackNum = 150;
 
                 var main = activation.GetComponent<ParticleSystem>().main;

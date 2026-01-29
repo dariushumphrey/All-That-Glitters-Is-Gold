@@ -196,6 +196,8 @@ public class LevelManagerScript : MonoBehaviour
                     {
                         gameRetryDelay = 5f;
                         player.GetComponent<PlayerInventoryScript>().WriteOnReset();
+                        PlayerPrefs.SetInt("lucentBalance", player.GetComponent<PlayerInventoryScript>().lucentFunds);
+
                         LoadScene();
                     }
 

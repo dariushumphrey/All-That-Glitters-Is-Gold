@@ -974,7 +974,7 @@ public class PlayerInventoryScript : MonoBehaviour
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -7)
         {
             cheatTraitOne.text = "Pay to Win" + '\n' +
-                "[E] - Consume 5,280 Lucent for a 50% Weapon damage increase. Stacks 150x.";
+                "[E] - Consume 30,000 Lucent for a 50% Weapon damage increase. Stacks 150x.";
 
             cheatTraitTwo.text = "The Most Resplendent" + '\n' +
                     "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
