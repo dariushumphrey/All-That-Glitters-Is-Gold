@@ -1913,7 +1913,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 5
-  berthChance: 80
+  berthChance: 90
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   field: {fileID: 51223415}
@@ -2583,7 +2583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 5
-  berthChance: 80
+  berthChance: 90
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   field: {fileID: 86302979}
@@ -3163,7 +3163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 7
-  berthChance: 80
+  berthChance: 90
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   field: {fileID: 102185204}
@@ -9153,7 +9153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 5
-  berthChance: 80
+  berthChance: 90
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   field: {fileID: 329500736}
@@ -9813,7 +9813,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 10
-  berthChance: 80
+  berthChance: 90
   spawned:
   - {fileID: 78844624512772179, guid: a7919f2284eb3dd4a8b5b9c3b384eef9, type: 3}
   field: {fileID: 348715948}
@@ -10564,7 +10564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 10
-  berthChance: 80
+  berthChance: 90
   spawned:
   - {fileID: 78844624512772179, guid: a7919f2284eb3dd4a8b5b9c3b384eef9, type: 3}
   field: {fileID: 376475813}
@@ -20912,7 +20912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 5
-  berthChance: 80
+  berthChance: 90
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   field: {fileID: 741090524}
@@ -28590,7 +28590,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 3
-  berthChance: 80
+  berthChance: 90
   spawned:
   - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
   field: {fileID: 1007316695}
@@ -30287,7 +30287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 20
-  berthChance: 80
+  berthChance: 90
   spawned:
   - {fileID: 78844624512772179, guid: a7919f2284eb3dd4a8b5b9c3b384eef9, type: 3}
   field: {fileID: 1063766860}
@@ -34386,7 +34386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 5
-  berthChance: 80
+  berthChance: 90
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   field: {fileID: 1199033884}
@@ -46192,7 +46192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 5
-  berthChance: 80
+  berthChance: 90
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   field: {fileID: 1642945185}
@@ -52498,7 +52498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 10
-  berthChance: 80
+  berthChance: 90
   spawned:
   - {fileID: 78844624512772179, guid: a7919f2284eb3dd4a8b5b9c3b384eef9, type: 3}
   field: {fileID: 1898758352}
@@ -53150,7 +53150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 10
-  berthChance: 80
+  berthChance: 90
   spawned:
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   field: {fileID: 1910684435}

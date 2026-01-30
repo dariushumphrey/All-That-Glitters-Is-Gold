@@ -1488,7 +1488,7 @@ public class PlayerInventoryScript : MonoBehaviour
 
                             if (inventory[i].GetComponent<WaitNowImReady>())
                             {
-                                write.WriteLine("8");
+                                write.WriteLine("0");
                             }
 
                             //Exotic Shotgun

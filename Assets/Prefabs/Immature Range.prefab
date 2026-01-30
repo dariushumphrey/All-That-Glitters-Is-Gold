@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 55
   damagePercent: 50
-  moveSpeed: 5
+  moveSpeed: 7
   boostSpeed: 10
   enemyAcceleration: 8
   rotationStrength: 2

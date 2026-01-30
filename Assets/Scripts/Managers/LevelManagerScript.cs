@@ -346,6 +346,7 @@ public class LevelManagerScript : MonoBehaviour
         if(gameComplete)
         {
             gameComplete = false;
+            lvlProgressSaved = false;
         }
 
         async.allowSceneActivation = true;

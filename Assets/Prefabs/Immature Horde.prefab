@@ -232,7 +232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultyValue: 1
   healthCurrent: 2000
-  healthMax: 500
+  healthMax: 1000
   healthPercent: 30
   lucentYield: 50
   lucentPercent: 20

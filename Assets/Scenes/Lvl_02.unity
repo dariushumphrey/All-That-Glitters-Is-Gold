@@ -5465,13 +5465,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultySpawn: 1
-  spawnRepeat: 3
-  berthChance: 80
+  spawnRepeat: 5
+  berthChance: 90
   spawned:
-  - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
-  - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
-  - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
+  - {fileID: 521107327305974619, guid: a34edfc0fcf7164489c3a955e7b50438, type: 3}
   field: {fileID: 132281809}
 --- !u!65 &132281811
 BoxCollider:
@@ -5484,8 +5482,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 8, y: 2, z: 0.25}
-  m_Center: {x: -28, y: -4.2, z: 71.9}
+  m_Size: {x: 8, y: 8, z: 0.25}
+  m_Center: {x: -28, y: -1.15, z: 71.9}
 --- !u!4 &132281812
 Transform:
   m_ObjectHideFlags: 0
@@ -11631,13 +11629,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultySpawn: 1
-  spawnRepeat: 3
-  berthChance: 80
+  spawnRepeat: 20
+  berthChance: 90
   spawned:
-  - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
-  - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
-  - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
   field: {fileID: 311445013}
 --- !u!65 &311445015
 BoxCollider:
@@ -13108,13 +13103,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultySpawn: 1
-  spawnRepeat: 3
-  berthChance: 80
+  spawnRepeat: 20
+  berthChance: 90
   spawned:
-  - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
   - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
-  - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
-  - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
   field: {fileID: 345977115}
 --- !u!65 &345977117
 BoxCollider:
@@ -13852,14 +13844,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultySpawn: 1
-  spawnRepeat: 5
-  berthChance: 80
+  spawnRepeat: 7
+  berthChance: 90
   spawned:
-  - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
-  - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
-  - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
-  - {fileID: 521107327305974619, guid: a34edfc0fcf7164489c3a955e7b50438, type: 3}
   field: {fileID: 367549529}
 --- !u!65 &367549531
 BoxCollider:
@@ -15649,13 +15637,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultySpawn: 1
-  spawnRepeat: 3
-  berthChance: 80
+  spawnRepeat: 5
+  berthChance: 90
   spawned:
-  - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
-  - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
-  - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
+  - {fileID: 521107327305974619, guid: a34edfc0fcf7164489c3a955e7b50438, type: 3}
   field: {fileID: 421146919}
 --- !u!65 &421146921
 BoxCollider:
@@ -15668,8 +15654,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 8, y: 2, z: 0.25}
-  m_Center: {x: -28, y: -4.2, z: 71.9}
+  m_Size: {x: 8, y: 8, z: 0.25}
+  m_Center: {x: -28, y: -1.09, z: 71.9}
 --- !u!4 &421146922
 Transform:
   m_ObjectHideFlags: 0
@@ -29547,7 +29533,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 100
-  berthChance: 80
+  berthChance: 90
   spawned:
   - {fileID: 78844624512772179, guid: a7919f2284eb3dd4a8b5b9c3b384eef9, type: 3}
   field: {fileID: 753828712}
@@ -46248,14 +46234,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultySpawn: 1
-  spawnRepeat: 5
-  berthChance: 80
+  spawnRepeat: 7
+  berthChance: 90
   spawned:
-  - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
-  - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
-  - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
-  - {fileID: 521107327305974619, guid: a34edfc0fcf7164489c3a955e7b50438, type: 3}
   field: {fileID: 1145997207}
 --- !u!65 &1145997209
 BoxCollider:
@@ -46268,8 +46250,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 8, y: 2, z: 0.25}
-  m_Center: {x: -28, y: -4.2, z: 71.9}
+  m_Size: {x: 8, y: 8, z: 0.25}
+  m_Center: {x: -28, y: -1.21, z: 71.9}
 --- !u!4 &1145997210
 Transform:
   m_ObjectHideFlags: 0
@@ -56153,13 +56135,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpawn: 1
   spawnRepeat: 7
-  berthChance: 80
+  berthChance: 90
   spawned:
-  - {fileID: 78844624512772179, guid: 154afba0a216e8643a2920b3755e6114, type: 3}
-  - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
   - {fileID: 3640483985821525250, guid: 3aceb095e66a466449543432dd99b8aa, type: 3}
-  - {fileID: 521107327305974619, guid: a34edfc0fcf7164489c3a955e7b50438, type: 3}
   field: {fileID: 1370344752}
 --- !u!65 &1370344754
 BoxCollider:
@@ -56172,8 +56151,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 16, y: 2, z: 0.11}
-  m_Center: {x: 8, y: 1.88, z: -4.07}
+  m_Size: {x: 16, y: 8, z: 0.11}
+  m_Center: {x: 8, y: 4.9, z: -4.07}
 --- !u!4 &1370344755
 Transform:
   m_ObjectHideFlags: 0
