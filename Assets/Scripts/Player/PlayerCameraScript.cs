@@ -280,7 +280,7 @@ public class PlayerCameraScript : MonoBehaviour
         rayOrigin = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
         if (Physics.Raycast(rayOrigin, playerCamera.transform.forward, out hit, melee.meleeRange, contactOnly))
         {
-            if (hit.collider.tag == "Enemy")
+            if (hit.collider.tag == "Enemy" || hit.collider.tag == "Combustible Lucent")
             {
                 melee.meleeTarget = hit.collider.gameObject;
 
@@ -301,11 +301,14 @@ public class PlayerCameraScript : MonoBehaviour
 
         if (melee.meleeTarget != null)
         {
-            if (melee.meleeTarget.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
+            if(melee.meleeTarget.GetComponent<EnemyHealthScript>())
             {
-                melee.meleeTarget = null;
-                meleeReticle.sprite = move.blankReticle;
-                meleeReticle.color = Color.white;
+                if(melee.meleeTarget.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
+                {
+                    melee.meleeTarget = null;
+                    meleeReticle.sprite = move.blankReticle;
+                    meleeReticle.color = Color.white;
+                }
             }
         }       
     }

@@ -108,6 +108,16 @@ public class PlayerMeleeScript : MonoBehaviour
 
                 meleeLock = false;
             }
+
+            if(hit.collider.tag == "Combustible Lucent")
+            {
+                if(!hit.collider.gameObject.GetComponent<CombustibleLucentScript>().primed)
+                {
+                    hit.collider.gameObject.GetComponent<CombustibleLucentScript>().IlluminateOnHit();
+                }
+
+                meleeLock = false;
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ public class BossManagerScript : MonoBehaviour
     public int bossDifficulty = 1;
     public List<GameObject> addSpawners = new List<GameObject>(); //List of Enemy spawners
     public List<GameObject> chestRewards = new List<GameObject>(); //List of Chest rewards
+    public List<GameObject> lockedDoors = new List<GameObject>();
     internal bool isAlive = true;
     private EnemyManagerScript enemyManager;
     private LevelManagerScript levelManager;
@@ -22,6 +23,14 @@ public class BossManagerScript : MonoBehaviour
         {
             chestRewards[c].gameObject.SetActive(false);            
         }
+
+        if(lockedDoors.Count >= 1)
+        {
+            for (int d = 0; d < lockedDoors.Count; d++)
+            {
+                lockedDoors[d].gameObject.GetComponent<DoorScript>().locked = true;
+            }
+        }     
     }
 
     // Start is called before the first frame update
@@ -82,11 +91,21 @@ public class BossManagerScript : MonoBehaviour
             }
         }
 
-        levelManager.gameComplete = true;
-        levelManager.CheckForFirstViricideClear();
+        if (lockedDoors.Count >= 1)
+        {
+            for (int d = 0; d < lockedDoors.Count; d++)
+            {
+                lockedDoors[d].gameObject.GetComponent<DoorScript>().locked = false;
+            }
+        }
 
-        StartCoroutine(GameEndDelay());
+        if (levelManager.setting == LevelManagerScript.Setting.Viricide)
+        {
+            levelManager.gameComplete = true;
+            levelManager.CheckForFirstViricideClear();
 
+            StartCoroutine(GameEndDelay());
+        }
     }
 
     private IEnumerator GameEndDelay()
