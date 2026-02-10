@@ -347,6 +347,10 @@ public class LevelManagerScript : MonoBehaviour
         {
             gameComplete = false;
             lvlProgressSaved = false;
+            if(level == 0)
+            {
+                setting = Setting.Navigation;
+            }
         }
 
         async.allowSceneActivation = true;

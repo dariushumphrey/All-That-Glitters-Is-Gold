@@ -125,6 +125,7 @@ public class ReplevinScript : MonoBehaviour
     private float meleeCooldown; //Time to wait before next melee attack
     private float playerDetected; //Timer spent seeing Player
     private float detectionLimit = 2f; //Goal time from seeing Player
+    private float ambushTime = 0.75f; //Delay used to speed up lerp movement -- Bosses only
     private bool destinationSet = false; //Affirms location if true
     private bool gathered = false; //Affirms cluster has been spawned if true -- Bosses only
     private bool throwTarget = false; //Affirms Enemy can throw cluster at Player if true -- Bosses only
@@ -1095,6 +1096,11 @@ public class ReplevinScript : MonoBehaviour
                 {
                     transform.position = Vector3.Lerp(transform.position, waypoint[waypointNext].transform.position, gapClose * Time.deltaTime);
 
+                    if (player.GetComponent<PlayerInventoryScript>().inventory[player.GetComponent<PlayerInventoryScript>().selection].GetComponent<FirearmScript>().IsFiring())
+                    {
+                        jumpReset = 0f;
+                    }
+
                     if (Vector3.Distance(waypoint[waypointNext].transform.position, transform.position) < accuracy)
                     {
                         if(primedLucent)
@@ -1113,8 +1119,15 @@ public class ReplevinScript : MonoBehaviour
                             Vector3 waypointDistance = waypoint[waypointNext + 1].transform.position - transform.position;
                             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(waypointDistance, Vector3.up), rotationStrength);
                         }
+                        
 
                         jumpTimeout -= Time.deltaTime;
+
+                        if (player.GetComponent<PlayerInventoryScript>().inventory[player.GetComponent<PlayerInventoryScript>().selection].GetComponent<FirearmScript>().IsFiring())
+                        {
+                            jumpTimeout = 0f;
+                        }
+
                         if (jumpTimeout <= 0f)
                         {
                             if(primedLucent)
@@ -1136,6 +1149,10 @@ public class ReplevinScript : MonoBehaviour
                                             GameObject takeoff = Instantiate(jumpTakeoff, transform.position + Vector3.down, transform.rotation);
 
                                             attackLock = true;
+                                            if(jumpReset != detectionLimit)
+                                            {
+                                                jumpReset = detectionLimit;
+                                            }
                                             jumpTimeout = jumpReset;
                                         }
                                     }                                                               
@@ -1158,7 +1175,7 @@ public class ReplevinScript : MonoBehaviour
                                         playerDetected = 0f;
                                     }
 
-                                    jumpTimeout = jumpReset;
+                                    jumpTimeout = ambushTime;
 
                                 }
                             }
@@ -1170,7 +1187,8 @@ public class ReplevinScript : MonoBehaviour
                                     transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
 
                                     playerDetected += Time.deltaTime;
-                                    if (playerDetected >= detectionLimit)
+                                    if (playerDetected >= detectionLimit || 
+                                        player.GetComponent<PlayerInventoryScript>().inventory[player.GetComponent<PlayerInventoryScript>().selection].GetComponent<FirearmScript>().IsFiring())
                                     {
                                         if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin) && !recorded)
                                         {
@@ -1195,6 +1213,10 @@ public class ReplevinScript : MonoBehaviour
                                         }
 
                                         playerDetected = 0f;
+                                        if (jumpReset != detectionLimit)
+                                        {
+                                            jumpReset = detectionLimit;
+                                        }
                                         jumpTimeout = jumpReset;
                                     }
                                 }
@@ -1217,7 +1239,6 @@ public class ReplevinScript : MonoBehaviour
                                     }
 
                                     jumpTimeout = jumpReset;
-
                                 }
                             }                                                                            
                         }
@@ -1264,7 +1285,7 @@ public class ReplevinScript : MonoBehaviour
                             {
                                 if (hit.collider.GetComponent<CombustibleLucentScript>().primed)
                                 {
-                                    hit.collider.GetComponent<CombustibleLucentScript>().CombustOnDelay();
+                                    hit.collider.GetComponent<CombustibleLucentScript>().Combust();
                                     jumpTimeout *= 2;
                                     enemy.isImmune = false;
                                     addWave = true;

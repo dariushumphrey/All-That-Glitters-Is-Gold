@@ -147,6 +147,8 @@ public class FirearmScript : MonoBehaviour
 
                 AmmoReloadCheck();
                 FireWeapon();
+                IsFiring();
+                Debug.Log(IsFiring());
             }
         }       
     }
@@ -1084,6 +1086,16 @@ public class FirearmScript : MonoBehaviour
 
             muzzleFlash.Play();
         }    
+    }
+
+    public virtual bool IsFiring()
+    {
+        if(Input.GetButtonDown("Fire1") && !isReloading && currentAmmo >= 1)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>
