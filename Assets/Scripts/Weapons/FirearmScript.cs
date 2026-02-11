@@ -148,7 +148,6 @@ public class FirearmScript : MonoBehaviour
                 AmmoReloadCheck();
                 FireWeapon();
                 IsFiring();
-                Debug.Log(IsFiring());
             }
         }       
     }
