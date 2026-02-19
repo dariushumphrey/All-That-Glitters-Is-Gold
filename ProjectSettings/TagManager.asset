@@ -21,6 +21,7 @@ TagManager:
   - Surface
   - Hard Lucent
   - Combustible Lucent
+  - Stalactite Lucent
   layers:
   - Default
   - TransparentFX

@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 220
   damagePercent: 25
-  moveSpeed: 8
+  moveSpeed: 12
   boostSpeed: 30
   enemyAcceleration: 48
   rotationStrength: 2
@@ -191,12 +191,12 @@ MonoBehaviour:
   meleeAttackForce: 75000
   attackRate: 1
   rangeAttackChange: 15
-  rangeAttackRate: 1
-  rangedAttackForce: 0
+  rangeAttackRate: 0.08
+  rangedAttackForce: 150
   rangeATKMin: 7
-  rangeEngagementDistance: 0
-  rangeAttackCount: 0
-  strafeDistance: 2
+  rangeEngagementDistance: 35
+  rangeAttackCount: 3
+  strafeDistance: 0.25
   strafeLimit: 1
   strafeTimer: 3
   rangeProjectile: {fileID: 7101181237062747686, guid: 70bd89594efeb624f9d56ec2e948ce2a, type: 3}
@@ -207,13 +207,13 @@ MonoBehaviour:
   chargeTimeout: 1.5
   chargeBuildup: 1
   chargeAttackForce: 5000
-  gapClose: 5
+  gapClose: 4
   pounceLimit: 2
   punchTimeout: 2
   jumpLimit: 8
-  jumpForce: 6
-  forwardForce: 24
-  jumpTimeout: 2
+  jumpForce: 10
+  forwardForce: 14
+  jumpTimeout: 0.75
   airtimeShort: 1.5
   berthJumpCarpetBombTimer: 0.15
   jumpTakeoff: {fileID: 2056866271575102109, guid: e436b8ce7e2020e47a954d998deb3c8d, type: 3}
@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b4fa109f4ef7141b00f5657e3beeef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficultyValue: 2
+  difficultyValue: 1
   healthCurrent: 4000
   healthMax: 40000
   healthPercent: 30

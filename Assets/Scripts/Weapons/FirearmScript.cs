@@ -1073,6 +1073,14 @@ public class FirearmScript : MonoBehaviour
                         }
                     }
 
+                    if (hit.collider.gameObject.GetComponent<StalactiteLucentScript>())
+                    {
+                        if(hit.collider.gameObject.GetComponent<StalactiteLucentScript>().hostCrystal)
+                        {
+                            hit.collider.gameObject.GetComponent<StalactiteLucentScript>().LucentPassive();
+                        }
+                    }
+
                     Instantiate(sparks, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
                 }
             }
