@@ -48,6 +48,9 @@ public class StalactiteLucentScript : MonoBehaviour
                         if (hit.gameObject.GetComponent<ReplevinScript>().amBoss)
                         {
                             hit.gameObject.GetComponent<ReplevinScript>().enemy.isImmune = false;
+                            hit.gameObject.GetComponent<ReplevinScript>().slamTimeout = true;
+                            hit.gameObject.GetComponent<ReplevinScript>().addWave = true;
+                            hit.gameObject.GetComponent<ReplevinScript>().destinationSet = false;
                         }
 
                         if (hit.GetComponent<EnemyHealthScript>() != null)

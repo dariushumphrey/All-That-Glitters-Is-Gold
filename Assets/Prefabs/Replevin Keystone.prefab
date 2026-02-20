@@ -183,11 +183,11 @@ MonoBehaviour:
     m_Bits: 264
   attackStartPoint: {fileID: 521107326973885396}
   stunningLucent: {fileID: 0}
-  meleeEngagementDistance: 0
-  meleeRangeCheck: 0
+  meleeEngagementDistance: 20
+  meleeRangeCheck: 8
   meleeRangeMin: 24
-  meleeAttackTimer: 0.8
-  meleeTimeout: 0
+  meleeAttackTimer: 5
+  meleeTimeout: 1.5
   meleeAttackForce: 75000
   attackRate: 1
   rangeAttackChange: 15
@@ -196,7 +196,7 @@ MonoBehaviour:
   rangeATKMin: 7
   rangeEngagementDistance: 35
   rangeAttackCount: 3
-  strafeDistance: 0.25
+  strafeDistance: 0.5
   strafeLimit: 1
   strafeTimer: 3
   rangeProjectile: {fileID: 7101181237062747686, guid: 70bd89594efeb624f9d56ec2e948ce2a, type: 3}
@@ -213,7 +213,7 @@ MonoBehaviour:
   jumpLimit: 8
   jumpForce: 10
   forwardForce: 14
-  jumpTimeout: 0.75
+  jumpTimeout: 1
   airtimeShort: 1.5
   berthJumpCarpetBombTimer: 0.15
   jumpTakeoff: {fileID: 2056866271575102109, guid: e436b8ce7e2020e47a954d998deb3c8d, type: 3}
@@ -233,8 +233,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultyValue: 1
   healthCurrent: 4000
-  healthMax: 40000
-  healthPercent: 30
+  healthMax: 100000
+  healthPercent: 20
   lucentYield: 400
   lucentPercent: 20
   isImmune: 1

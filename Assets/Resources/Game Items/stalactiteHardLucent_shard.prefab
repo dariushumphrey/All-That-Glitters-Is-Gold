@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85126059ad467ae46a8234aab0bcfa14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shatterDamage: 100
+  shatterDamage: 500
   lucentCluster: {fileID: 0}
   raycastPoint: {fileID: 5748347861696550985}
   field: {fileID: 0}
