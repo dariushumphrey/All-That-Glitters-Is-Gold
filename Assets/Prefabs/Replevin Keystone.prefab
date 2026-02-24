@@ -150,7 +150,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 240
-  m_StoppingDistance: 1.25
+  m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -182,9 +182,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 264
   attackStartPoint: {fileID: 521107326973885396}
-  stunningLucent: {fileID: 0}
+  stunningLucent: {fileID: 130336942800207938, guid: 258ebae35e746864fab23c14795d4ec1, type: 3}
   meleeEngagementDistance: 20
-  meleeRangeCheck: 8
+  meleeRangeCheck: 15
   meleeRangeMin: 24
   meleeAttackTimer: 5
   meleeTimeout: 1.5
@@ -193,29 +193,29 @@ MonoBehaviour:
   rangeAttackChange: 15
   rangeAttackRate: 0.08
   rangedAttackForce: 150
-  rangeATKMin: 7
+  rangeATKMin: 20
   rangeEngagementDistance: 35
-  rangeAttackCount: 3
+  rangeAttackCount: 2
   strafeDistance: 0.5
-  strafeLimit: 1
-  strafeTimer: 3
+  strafeLimit: 1.5
+  strafeTimer: 2
   rangeProjectile: {fileID: 7101181237062747686, guid: 70bd89594efeb624f9d56ec2e948ce2a, type: 3}
   chargeRangeCheck: 25
   chargeRangeMin: 2
   chargeLimit: 1.5
-  chargeOvershoot: 0.1
+  chargeOvershoot: 0.3
   chargeTimeout: 1.5
   chargeBuildup: 1
   chargeAttackForce: 5000
-  gapClose: 4
-  pounceLimit: 2
-  punchTimeout: 2
+  gapClose: 35
+  pounceLimit: 1.5
+  punchTimeout: 1
   jumpLimit: 8
   jumpForce: 10
   forwardForce: 14
   jumpTimeout: 1
   airtimeShort: 1.5
-  berthJumpCarpetBombTimer: 0.15
+  berthJumpCarpetBombTimer: 0.05
   jumpTakeoff: {fileID: 2056866271575102109, guid: e436b8ce7e2020e47a954d998deb3c8d, type: 3}
   jumpCheck: {fileID: 9046807996112585156}
   waypoint: []
@@ -231,9 +231,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b4fa109f4ef7141b00f5657e3beeef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficultyValue: 1
+  difficultyValue: 5
   healthCurrent: 4000
-  healthMax: 100000
+  healthMax: 40000
   healthPercent: 20
   lucentYield: 400
   lucentPercent: 20

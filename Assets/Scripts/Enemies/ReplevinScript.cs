@@ -111,7 +111,9 @@ public class ReplevinScript : MonoBehaviour
     internal int accelReset; //Holds starting NavMeshAgent acceleration
 
     private int burstCount = 0; //Total count of range attacks performed
-    private int phaseTwoHealthThreshold;
+    private int phaseTwoAttackCount = 1;
+    private int phaseTwoAttackLimit = 3;
+    private int phaseTwoAttackChoice = 0;
     private float meleeReset; //Holds starting Melee attack timer
     private float chargeReset; //Holds starting Charge attack timer
     private float buildupReset; //Holds starting Charge attack delay timer
@@ -139,6 +141,7 @@ public class ReplevinScript : MonoBehaviour
     private bool strafeRight, strafeLeft;
     private bool recoilBack = false;
     private bool phaseTwo = false;
+    private bool burstAttack = false;
     private bool lockOn = false; //Affirms Jump Enemy is lerping to Players if true
     internal bool addWave = false; //Affirms Boss has spawned Enemies if true
     internal bool interrupted = false; //Affirms Boss can be damaged if true
@@ -1658,7 +1661,7 @@ public class ReplevinScript : MonoBehaviour
                                         //Selects a random duration to delay next attack, then initiates attack
                                         int randomTime = 0;
 
-                                        float[] delays = { 0.25f, 0.5f, 0.75f, 1f };
+                                        float[] delays = { 0.75f, 1f, 1.25f };
                                         randomTime = Random.Range(0, delays.Length);
                                         rangeCooldown = delays[randomTime];
 
@@ -1692,21 +1695,24 @@ public class ReplevinScript : MonoBehaviour
                 else
                 {
                     if(CanSeePlayer())
-                    {
-                        if (distance.magnitude <= meleeEngagementDistance)
-                        {
-                            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
-
-                            meleeAttackTimer -= Time.deltaTime;
-                            if (meleeAttackTimer <= 0f)
-                            {
-                                meleeAttackTimer = 0f;
-                                attackLock = true;
-                            }
-                        }
-
+                    {                       
                         if (!attackLock)
                         {
+                            if (distance.magnitude <= meleeEngagementDistance)
+                            {
+                                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
+
+                                meleeAttackTimer -= Time.deltaTime;
+                                if (meleeAttackTimer <= 0f)
+                                {
+                                    meleeAttackTimer = 0f;
+                                    recorded = false;
+
+                                    phaseTwoAttackChoice = Random.Range(0, 2);
+                                    attackLock = true;
+                                }
+                            }
+
                             if (distance.magnitude <= meleeRangeCheck)
                             {
                                 if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin) && !recorded)
@@ -1728,7 +1734,10 @@ public class ReplevinScript : MonoBehaviour
                                         }
 
                                         self.SetDestination(strafePos);
-                                        recorded = true;
+                                        if(!attackLock)
+                                        {
+                                            recorded = true;
+                                        }                                        
                                     }
                                 }
                             }
@@ -1751,7 +1760,10 @@ public class ReplevinScript : MonoBehaviour
                                     strafeRight = false;
                                 }
 
-                                recorded = true;
+                                if (!attackLock)
+                                {
+                                    recorded = true;
+                                }
                             }
 
                             lastKnownDistance = strafePos - transform.position;
@@ -1770,173 +1782,373 @@ public class ReplevinScript : MonoBehaviour
 
                         else
                         {
-                            if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin) && !recorded)
+                            if(phaseTwoAttackChoice == 0)
                             {
-                                if (hit.collider.tag == "Player")
+                                if (distance.magnitude <= meleeRangeMin && CanSeePlayer())
                                 {
-                                    lastPlayerPosition = hit.point;
-                                    recorded = true;
-                                    //Debug.Log(lastPlayerPosition);
-                                    //Debug.Log(lastKnownDistance.magnitude);
-                                    GameObject takeoff = Instantiate(jumpTakeoff, transform.position + Vector3.down, transform.rotation);
+                                    self.ResetPath();
+                                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
 
-                                    if (!GetComponent<BerthScript>())
+                                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin) && !recorded)
                                     {
-                                        subject.materials[materialIndex].color = attackTell;
-                                    }
-
-                                }
-                            }
-
-                            transform.position = Vector3.Lerp(transform.position, lastPlayerPosition, gapClose * Time.deltaTime);
-                            lastKnownDistance = lastPlayerPosition - transform.position;
-                            //Debug.Log(lastKnownDistance.magnitude + " | " + self.stoppingDistance);
-
-                            if (lastKnownDistance.magnitude <= pounceLimit)
-                            {
-                                slamTimeout = true;
-
-                                if (!GetComponent<BerthScript>())
-                                {
-                                    subject.materials[materialIndex].color = Color.red;
-                                }
-                            }
-
-                            if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hitTheSequel, 2f))
-                            {
-                                if (hitTheSequel.collider.tag == "Player" && canAttackAgain)
-                                {
-                                    if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
-                                    {
-                                        if (gameObject.GetComponent<DebuffScript>() == null)
+                                        if (hit.collider.tag == "Player")
                                         {
-                                            gameObject.AddComponent<DebuffScript>();
-                                        }
+                                            lastPlayerPosition = hit.point;
+                                            recorded = true;
+                                            //Debug.Log(lastPlayerPosition);
+                                            //Debug.Log(lastKnownDistance.magnitude);
+                                            GameObject takeoff = Instantiate(jumpTakeoff, transform.position + Vector3.down, transform.rotation);
 
-                                        if (hit.collider.GetComponent<PlayerStatusScript>().counterplayCheat)
-                                        {
-                                            hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
-                                        }
-
-                                        slamTimeout = true;
-                                        canAttackAgain = false;
-
-                                        if (!GetComponent<BerthScript>())
-                                        {
-                                            subject.materials[materialIndex].color = Color.red;
                                         }
                                     }
 
-                                    else
+                                    transform.position = Vector3.MoveTowards(transform.position, lastPlayerPosition, gapClose * Time.deltaTime);
+                                    lastKnownDistance = lastPlayerPosition - transform.position;
+                                    //Debug.Log(lastKnownDistance.magnitude + " | " + pounceLimit);
+
+                                    if (recorded)
                                     {
-                                        hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
-                                        hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
-
-                                        Vector3 knockbackDir = transform.forward;
-                                        knockbackDir.y = 0;
-                                        hitTheSequel.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
-
-                                        manager.damageDealt += damage;
-
-                                        slamTimeout = true;
-                                        canAttackAgain = false;
-
-                                        if (!GetComponent<BerthScript>())
+                                        berthJumpCarpetBombTimer -= Time.deltaTime;
+                                        if (lastKnownDistance.magnitude > pounceLimit && berthJumpCarpetBombTimer <= 0f)
                                         {
-                                            subject.materials[materialIndex].color = Color.red;
+                                            berthJumpCarpetBombTimer = berthJumpTimerReset;
+
+                                            stunMechanic = Instantiate(stunningLucent, attackStartPoint.transform.position + (-Vector3.forward * 2.5f), Quaternion.identity);
+                                            stunMechanic.GetComponent<LucentScript>().threat = true;
+                                            stunMechanic.GetComponent<LucentScript>().shatterDelayTime = 3f;
+                                            stunMechanic.GetComponent<LucentScript>().StartCoroutine(stunMechanic.GetComponent<LucentScript>().Shatter());
+                                            stunMechanic.name = stunningLucent.name;
+                                        }
+                                    }
+
+                                    if (lastKnownDistance.magnitude <= pounceLimit || !canAttackAgain)
+                                    {
+                                        transform.position = lastPlayerPosition + Vector3.up * 1.04f;
+
+                                        meleeAttackTimer = meleeReset;
+                                        punchTimeout -= Time.deltaTime;
+                                        gapClose = 0f;
+                                        if (punchTimeout <= 0f)
+                                        {
+                                            gapClose = gapCloseReset;
+                                            punchTimeout = punchReset;
+                                            berthJumpCarpetBombTimer = berthJumpTimerReset;
+                                            recorded = false;
+                                            canAttackAgain = true;
+
+                                            if (phaseTwoAttackCount != phaseTwoAttackLimit)
+                                            {
+                                                phaseTwoAttackCount++;
+                                            }
+
+                                            else
+                                            {
+                                                phaseTwoAttackCount = 1;
+
+                                                //Selects a random duration to delay next attack, then initiates attack
+                                                int randomTime = 0;
+
+                                                float[] delays = { 3f, 4f, 5f };
+                                                randomTime = Random.Range(0, delays.Length);
+                                                meleeReset = delays[randomTime];
+
+                                                meleeAttackTimer = meleeReset;
+
+                                                attackLock = false;
+                                            }
+                                        }
+                                    }
+
+                                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hitTheSequel, 2f))
+                                    {
+                                        if (hitTheSequel.collider.tag == "Player" && canAttackAgain)
+                                        {
+                                            if (hitTheSequel.collider.GetComponent<PlayerStatusScript>().isInvincible)
+                                            {
+                                                if (gameObject.GetComponent<DebuffScript>() == null)
+                                                {
+                                                    gameObject.AddComponent<DebuffScript>();
+                                                }
+
+                                                if (hitTheSequel.collider.GetComponent<PlayerStatusScript>().counterplayCheat)
+                                                {
+                                                    hitTheSequel.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
+                                                }
+
+                                                canAttackAgain = false;
+                                            }
+
+                                            else
+                                            {
+                                                hitTheSequel.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+                                                hitTheSequel.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+
+                                                Vector3 knockbackDir = transform.forward;
+                                                knockbackDir.y = 0;
+                                                hitTheSequel.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
+
+                                                manager.damageDealt += damage;
+
+                                                canAttackAgain = false;
+                                            }
                                         }
                                     }
                                 }
-                            }
 
-                            //meleeTimeout -= Time.deltaTime;
+                                else
+                                {
+                                    if (self.enabled == false)
+                                    {
+                                        self.enabled = true;
+                                    }
 
-                            //if (meleeTimeout > 0f)
-                            //{
-                            //    self.SetDestination(player.transform.position);
+                                    gapClose = gapCloseReset;
+                                    punchTimeout = punchReset;
+                                    recorded = false;
+                                    attackLock = false;
+                                    canAttackAgain = true;
+                                    phaseTwoAttackCount = 0;
 
-                            //    if (!GetComponent<BerthScript>())
-                            //    {
-                            //        subject.materials[materialIndex].color = attackTell;
-                            //    }
+                                    //Selects a random duration to delay next attack, then initiates attack
+                                    int randomTime = 0;
 
-                            //    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, 1.25f))
-                            //    {
-                            //        if (hit.collider.tag == "Player")
-                            //        {
-                            //            if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
-                            //            {
-                            //                if (gameObject.GetComponent<DebuffScript>() == null)
-                            //                {
-                            //                    gameObject.AddComponent<DebuffScript>();
-                            //                }
+                                    float[] delays = { 3f, 4f, 5f };
+                                    randomTime = Random.Range(0, delays.Length);
+                                    meleeReset = delays[randomTime];
 
-                            //                if (hit.collider.GetComponent<PlayerStatusScript>().counterplayCheat)
-                            //                {
-                            //                    hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
-                            //                }
-                            //            }
+                                    meleeAttackTimer = meleeReset;
 
-                            //            else
-                            //            {
-                            //                hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
-                            //                hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+                                    self.SetDestination(player.transform.position);
+                                }
+                            } //Pounce Attack for Phase 2 Combat
 
-                            //                //This code shoves the Player with particular force in their opposite direction.
-                            //                //This is a melee attack, shoving the player with less force, subtly offsetting the player upwards to distinguish it from a charge.
-                            //                Vector3 knockbackDir = -hit.collider.transform.forward;
-                            //                hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
+                            else
+                            {
+                                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
 
-                            //                manager.damageDealt += damage;
-                            //            }
+                                if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeEngagementDistance) && !recorded)
+                                {
+                                    if (hit.collider.tag == "Player")
+                                    {
+                                        if (strafeTimer != strafeReset)
+                                        {
+                                            strafeTimer = strafeReset;
+                                        } //Resets strafe timer
 
-                            //            //Selects a random duration to delay next attack, then initiates attack
-                            //            int randomTime = 0;
+                                        self.ResetPath();
 
-                            //            float[] delays = { 3f, 5f, 7f };
-                            //            randomTime = Random.Range(0, delays.Length);
-                            //            meleeReset = delays[randomTime];
+                                        int strafeAction = Random.Range(0, 3);
+                                        if (strafeAction == 0)
+                                        {
+                                            strafeCalc = Vector3.Cross(distance, transform.up);
+                                            strafePos = transform.position + strafeCalc * (strafeDistance * 2);
+                                        } //Strafes to the right
 
-                            //            meleeAttackTimer = meleeReset;
-                            //            if (recorded)
-                            //            {
-                            //                recorded = false;
-                            //            }
+                                        else if (strafeAction == 1)
+                                        {
+                                            strafeCalc = Vector3.Cross(distance, -transform.up);
+                                            strafePos = transform.position + strafeCalc * (strafeDistance * 2);
+                                        } //Strafes to the left
 
-                            //            if (!GetComponent<BerthScript>())
-                            //            {
-                            //                subject.materials[materialIndex].color = Color.red;
-                            //            }
+                                        else
+                                        {
+                                            strafePos = transform.position + distance * strafeDistance / 2;
+                                        } //Moves forward
 
-                            //            meleeTimeout = meleeCooldown;
-                            //            attackLock = false;
-                            //        }
-                            //    }
-                            //}
+                                        Vector3 strafeDirection = strafePos - transform.position;
+                                        if (!Physics.Raycast(rayOrigin, strafeDirection.normalized, out hit, strafeDirection.magnitude, contactOnly))
+                                        {
+                                            //self.SetDestination(strafePos);
+                                            recorded = true;
+                                        }
+                                    }
+                                }
 
-                            //else
-                            //{
-                            //    //Selects a random duration to delay next attack, then initiates attack
-                            //    int randomTime = 0;
+                                transform.position = Vector3.MoveTowards(transform.position, strafePos, gapClose * Time.deltaTime);
+                                lastKnownDistance = strafePos - transform.position;
+                                //Debug.Log(lastKnownDistance.magnitude + " | " + strafeLimit);
 
-                            //    float[] delays = { 3f, 5f, 7f };
-                            //    randomTime = Random.Range(0, delays.Length);
-                            //    meleeReset = delays[randomTime];
+                                //Enemy resets recorded state when within previous strafe position for a duration
+                                if (lastKnownDistance.magnitude <= strafeLimit)
+                                {
+                                    if(!burstAttack)
+                                    {
+                                        if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeEngagementDistance, contactOnly))
+                                        {
+                                            if (hit.collider.tag == "Player")
+                                            {
+                                                //Selects a random duration to delay next attack, then initiates attack
+                                                int randomTime = 0;
 
-                            //    meleeAttackTimer = meleeReset;
-                            //    if (recorded)
-                            //    {
-                            //        recorded = false;
-                            //    }
+                                                float[] delays = { 0.25f, 0.5f, 0.75f };
+                                                randomTime = Random.Range(0, delays.Length);
+                                                rangeCooldown = delays[randomTime];
 
-                            //    if (!GetComponent<BerthScript>())
-                            //    {
-                            //        subject.materials[materialIndex].color = Color.red;
-                            //    }
+                                                StartCoroutine(RangeAttackShot());
+                                                burstAttack = true;
+                                                //attackLock = true;
+                                            }
 
-                            //    meleeTimeout = meleeCooldown;
-                            //    attackLock = false;
-                            //}
+                                            if (hit.collider.tag == "Enemy")
+                                            {
+                                                Task.current.Fail();
+                                            }
+                                        }
+                                    }
+                                    
+                                    strafeTimer -= Time.deltaTime;
+                                    if (strafeTimer <= 0f)
+                                    {
+                                        meleeAttackTimer = meleeReset;
+                                        recorded = false;
+
+                                        if (phaseTwoAttackCount != phaseTwoAttackLimit)
+                                        {
+                                            phaseTwoAttackCount++;
+                                        }
+
+                                        else
+                                        {
+                                            phaseTwoAttackCount = 1;
+
+                                            //Selects a random duration to delay next attack, then initiates attack
+                                            int randomTime = 0;
+
+                                            float[] delays = { 3f, 4f, 5f };
+                                            randomTime = Random.Range(0, delays.Length);
+                                            meleeReset = delays[randomTime];
+
+                                            meleeAttackTimer = meleeReset;
+
+                                            attackLock = false;
+                                        }
+                                    }
+                                }
+
+                                //Delays attack behavior until timer expires
+                                if(burstAttack && rangeTimeout)
+                                {
+                                    attackAgain += Time.deltaTime;
+                                    if (attackAgain >= rangeCooldown)
+                                    {
+                                        attackAgain = 0.0f;
+                                        burstAttack = false;
+                                        rangeTimeout = false;
+                                    }
+                                }
+
+                                //if (distance.magnitude <= meleeRangeMin && CanSeePlayer())
+                                //{
+                                //    self.ResetPath();
+                                //    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
+
+                                //    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin) && !recorded)
+                                //    {
+                                //        if (hit.collider.tag == "Player")
+                                //        {
+                                //            lastPlayerPosition = hit.point;
+                                //            recoilPosition = transform.position - (hit.point - transform.position) * strafeDistance;
+                                //            recorded = true;
+                                //            //Debug.Log(lastPlayerPosition);
+                                //            //Debug.Log(lastKnownDistance.magnitude);
+                                //            GameObject takeoff = Instantiate(jumpTakeoff, transform.position + Vector3.down, transform.rotation);
+
+                                //            if (!GetComponent<BerthScript>())
+                                //            {
+                                //                subject.materials[materialIndex].color = attackTell;
+                                //            }
+                                //        }
+                                //    }
+
+                                //    if(!recoilBack)
+                                //    {
+                                //        transform.position = Vector3.Lerp(transform.position, lastPlayerPosition, gapClose * Time.deltaTime);
+                                //        lastKnownDistance = lastPlayerPosition - transform.position;
+                                //    }
+
+                                //    else
+                                //    {
+                                //        //Debug.DrawLine(transform.position, -distance, Color.blue);
+                                //        transform.position = Vector3.Lerp(transform.position, recoilPosition, gapClose * Time.deltaTime);
+                                //        lastKnownDistance = transform.position - recoilPosition;
+                                //        Debug.Log(lastKnownDistance.magnitude + " | " + pounceLimit);
+                                //    }
+
+                                //    //transform.position = Vector3.Lerp(transform.position, lastPlayerPosition, gapClose * Time.deltaTime);
+                                //    //lastKnownDistance = lastPlayerPosition - transform.position;
+                                //    //Debug.Log(lastKnownDistance.magnitude + " | " + self.stoppingDistance);
+
+                                //    if (lastKnownDistance.magnitude <= pounceLimit)
+                                //    {
+                                //        slamTimeout = true;
+
+                                //        if (!GetComponent<BerthScript>())
+                                //        {
+                                //            subject.materials[materialIndex].color = Color.red;
+                                //        }
+                                //    }
+
+                                //    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hitTheSequel, 2f))
+                                //    {
+                                //        if (hitTheSequel.collider.tag == "Player" && canAttackAgain)
+                                //        {
+                                //            if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
+                                //            {
+                                //                if (gameObject.GetComponent<DebuffScript>() == null)
+                                //                {
+                                //                    gameObject.AddComponent<DebuffScript>();
+                                //                }
+
+                                //                if (hit.collider.GetComponent<PlayerStatusScript>().counterplayCheat)
+                                //                {
+                                //                    hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
+                                //                }
+
+                                //                slamTimeout = true;
+                                //                canAttackAgain = false;
+
+                                //                if (!GetComponent<BerthScript>())
+                                //                {
+                                //                    subject.materials[materialIndex].color = Color.red;
+                                //                }
+                                //            }
+
+                                //            else
+                                //            {
+                                //                hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+                                //                hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+
+                                //                Vector3 knockbackDir = transform.forward;
+                                //                knockbackDir.y = 0;
+                                //                hitTheSequel.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
+
+                                //                manager.damageDealt += damage;
+
+                                //                slamTimeout = true;
+                                //                canAttackAgain = false;
+
+                                //                if (!GetComponent<BerthScript>())
+                                //                {
+                                //                    subject.materials[materialIndex].color = Color.red;
+                                //                }
+                                //            }
+                                //        }
+                                //    }
+                                //}
+
+                                //else
+                                //{
+                                //    if (self.enabled == false)
+                                //    {
+                                //        self.enabled = true;
+                                //    }
+
+                                //    recorded = false;
+                                //    recoilBack = false;
+                                //    self.SetDestination(player.transform.position);
+                                //}
+                            } //Range Attack for Phase 2 Combat
+
                         }
                     }
 
@@ -1952,121 +2164,8 @@ public class ReplevinScript : MonoBehaviour
                         self.acceleration = accelReset;
                     }                  
                 }
-                
-                
-                //if (distance.magnitude <= meleeRangeMin && CanSeePlayer())
-                //{
-                //    self.ResetPath();
-                //    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
-
-                //    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin) && !recorded)
-                //    {
-                //        if (hit.collider.tag == "Player")
-                //        {
-                //            lastPlayerPosition = hit.point;
-                //            recoilPosition = transform.position - (hit.point - transform.position) * strafeDistance;
-                //            recorded = true;
-                //            //Debug.Log(lastPlayerPosition);
-                //            //Debug.Log(lastKnownDistance.magnitude);
-                //            GameObject takeoff = Instantiate(jumpTakeoff, transform.position + Vector3.down, transform.rotation);
-
-                //            if (!GetComponent<BerthScript>())
-                //            {
-                //                subject.materials[materialIndex].color = attackTell;
-                //            }
-                //        }
-                //    }
-
-                //    if(!recoilBack)
-                //    {
-                //        transform.position = Vector3.Lerp(transform.position, lastPlayerPosition, gapClose * Time.deltaTime);
-                //        lastKnownDistance = lastPlayerPosition - transform.position;
-                //    }
-
-                //    else
-                //    {
-                //        //Debug.DrawLine(transform.position, -distance, Color.blue);
-                //        transform.position = Vector3.Lerp(transform.position, recoilPosition, gapClose * Time.deltaTime);
-                //        lastKnownDistance = transform.position - recoilPosition;
-                //        Debug.Log(lastKnownDistance.magnitude + " | " + pounceLimit);
-                //    }
-
-                //    //transform.position = Vector3.Lerp(transform.position, lastPlayerPosition, gapClose * Time.deltaTime);
-                //    //lastKnownDistance = lastPlayerPosition - transform.position;
-                //    //Debug.Log(lastKnownDistance.magnitude + " | " + self.stoppingDistance);
-
-                //    if (lastKnownDistance.magnitude <= pounceLimit)
-                //    {
-                //        slamTimeout = true;
-
-                //        if (!GetComponent<BerthScript>())
-                //        {
-                //            subject.materials[materialIndex].color = Color.red;
-                //        }
-                //    }
-
-                //    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hitTheSequel, 2f))
-                //    {
-                //        if (hitTheSequel.collider.tag == "Player" && canAttackAgain)
-                //        {
-                //            if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
-                //            {
-                //                if (gameObject.GetComponent<DebuffScript>() == null)
-                //                {
-                //                    gameObject.AddComponent<DebuffScript>();
-                //                }
-
-                //                if (hit.collider.GetComponent<PlayerStatusScript>().counterplayCheat)
-                //                {
-                //                    hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
-                //                }
-
-                //                slamTimeout = true;
-                //                canAttackAgain = false;
-
-                //                if (!GetComponent<BerthScript>())
-                //                {
-                //                    subject.materials[materialIndex].color = Color.red;
-                //                }
-                //            }
-
-                //            else
-                //            {
-                //                hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
-                //                hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
-
-                //                Vector3 knockbackDir = transform.forward;
-                //                knockbackDir.y = 0;
-                //                hitTheSequel.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
-
-                //                manager.damageDealt += damage;
-
-                //                slamTimeout = true;
-                //                canAttackAgain = false;
-
-                //                if (!GetComponent<BerthScript>())
-                //                {
-                //                    subject.materials[materialIndex].color = Color.red;
-                //                }
-                //            }
-                //        }
-                //    }
-                //}
-
-                //else
-                //{
-                //    if (self.enabled == false)
-                //    {
-                //        self.enabled = true;
-                //    }
-
-                //    recorded = false;
-                //    recoilBack = false;
-                //    self.SetDestination(player.transform.position);
-                //}
-
-
-            }
+                                           
+            } //This behavior dictates Pounce combat for Bosses
 
             else
             {
@@ -2168,7 +2267,7 @@ public class ReplevinScript : MonoBehaviour
                     recorded = false;
                     self.SetDestination(player.transform.position);
                 }
-            }
+            } //This behavior dictates Pounce combat for standard Enemies
 
             Task.current.Succeed();
         }
@@ -2335,6 +2434,11 @@ public class ReplevinScript : MonoBehaviour
                                 {
                                     self.enabled = true;
                                 }
+
+                                if (gameObject.GetComponent<Rigidbody>() != null)
+                                {
+                                    Destroy(gameObject.GetComponent<Rigidbody>());
+                                }
                             }
 
                             boss.TriggerAdds();
@@ -2406,14 +2510,28 @@ public class ReplevinScript : MonoBehaviour
 
         yield return new WaitForSeconds(rangeAttackRate);
 
-        GameObject projectile = Instantiate(rangeProjectile, attackStartPoint.transform.position, attackStartPoint.transform.rotation);
-        projectile.GetComponent<ProjectileScript>().damage = damage;
-        if (GetComponent<BerthScript>())
+        if(amBoss && phaseTwo)
         {
-            projectile.GetComponent<ProjectileScript>().berthFlag = true;
+            stunMechanic = Instantiate(stunningLucent, attackStartPoint.transform.position, attackStartPoint.transform.rotation);
+            stunMechanic.GetComponent<LucentScript>().threat = true;
+            stunMechanic.GetComponent<LucentScript>().shatterDelayTime = 0.45f;
+            stunMechanic.GetComponent<LucentScript>().StartCoroutine(stunMechanic.GetComponent<LucentScript>().Shatter());
+            stunMechanic.name = stunningLucent.name;
+
+            stunMechanic.GetComponent<Rigidbody>().AddForce(stunMechanic.transform.forward * (rangedAttackForce * distance.magnitude));
         }
 
-        projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * (rangedAttackForce * distance.magnitude));
+        else
+        {
+            GameObject projectile = Instantiate(rangeProjectile, attackStartPoint.transform.position, attackStartPoint.transform.rotation);
+            projectile.GetComponent<ProjectileScript>().damage = damage;
+            if (GetComponent<BerthScript>())
+            {
+                projectile.GetComponent<ProjectileScript>().berthFlag = true;
+            }
+
+            projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * (rangedAttackForce * distance.magnitude));
+        }
 
         burstCount++;
         if(burstCount != rangeAttackCount)
