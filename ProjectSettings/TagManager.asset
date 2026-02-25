@@ -22,6 +22,7 @@ TagManager:
   - Hard Lucent
   - Combustible Lucent
   - Stalactite Lucent
+  - Directional Light
   layers:
   - Default
   - TransparentFX

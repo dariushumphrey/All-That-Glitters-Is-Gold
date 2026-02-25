@@ -23,7 +23,6 @@ public class ReplevinScript : MonoBehaviour
     public bool amSentry; //Affirms stationary, inactive Nav Mesh Agent if true
     public LayerMask contactOnly; //Permits raycast interaction only with specified Layers
     public Transform attackStartPoint; //Origin point of Enemy attack
-    public GameObject stunningLucent; //Harmful Lucent Cluster game object
 
     [Header("Melee Attack settings")]
 
@@ -77,6 +76,12 @@ public class ReplevinScript : MonoBehaviour
     public GameObject jumpTakeoff; //VFX used when jumping
     public Transform jumpCheck; //Transform used to determine if grounded
 
+    [Header("Boss Settings")]
+    public int phaseTwoAttackLimit = 3;
+    public GameObject phaseTwoAppearance;
+    public GameObject stunningLucent; //Harmful Lucent Cluster game object
+    private GameObject directionalLight;
+
     private EnemyManagerScript manager;
     private Color attackTell = Color.white;
     private int materialIndex = 1; //Index used to find Material
@@ -96,9 +101,10 @@ public class ReplevinScript : MonoBehaviour
     private Vector3 lucentPrimed; //Describes length between Boss and Combustible Lucent -- Bosses only
     private GameObject primedLucent; //Lucent used to trigger damage phase -- Bosses only
     private GameObject[] combustibleLucent; //List of damage-mechanic Lucent -- Bosses only
+    private GameObject[] stalactiteLucent; //List of damage-mechanic Lucent -- Bosses only
     internal GameObject stunMechanic; //New Lucent Cluster game object
 
-    public GameObject[] waypoint; //Array of waypoints
+    private GameObject[] waypoint; //Array of waypoints
     private int waypointNext; //Number used to randomly choose next waypoint
     private float accuracy = 5.0f; //Goal length between Waypoint and Enemy
     private GameObject player; //Player game object
@@ -112,7 +118,6 @@ public class ReplevinScript : MonoBehaviour
 
     private int burstCount = 0; //Total count of range attacks performed
     private int phaseTwoAttackCount = 1;
-    private int phaseTwoAttackLimit = 3;
     private int phaseTwoAttackChoice = 0;
     private float meleeReset; //Holds starting Melee attack timer
     private float chargeReset; //Holds starting Charge attack timer
@@ -139,8 +144,8 @@ public class ReplevinScript : MonoBehaviour
     internal bool slamTimeout = false; //Affirms Jump, Pounce Enemy has ended attack if true
     private bool rangeTimeout = false; //Affirms Range Enemy has ended attack if true
     private bool strafeRight, strafeLeft;
-    private bool recoilBack = false;
-    private bool phaseTwo = false;
+    internal bool phaseTwo = false;
+    internal bool protection = false;
     private bool burstAttack = false;
     private bool lockOn = false; //Affirms Jump Enemy is lerping to Players if true
     internal bool addWave = false; //Affirms Boss has spawned Enemies if true
@@ -1590,7 +1595,7 @@ public class ReplevinScript : MonoBehaviour
                             punchTimeout *= 2;
                         }
 
-                        if (Vector3.Distance(waypoint[waypointNext].transform.position, transform.position) < 3.0f)
+                        if (Vector3.Distance(waypoint[waypointNext].transform.position, transform.position) < accuracy)
                         {
                             if (self.enabled == true)
                             {
@@ -1609,6 +1614,8 @@ public class ReplevinScript : MonoBehaviour
                                 Vector3 waypointDistance = waypoint[waypointNext + 1].transform.position - transform.position;
                                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(waypointDistance, Vector3.up), rotationStrength);
                             }
+
+                            transform.position = Vector3.MoveTowards(transform.position, waypoint[waypointNext].transform.position + (Vector3.up * 2f), gapClose * Time.deltaTime);
 
                             jumpTimeout -= Time.deltaTime;
                             if (jumpTimeout <= 0f)
@@ -1636,6 +1643,7 @@ public class ReplevinScript : MonoBehaviour
                                 GameObject takeoff = Instantiate(jumpTakeoff, transform.position + Vector3.down, transform.rotation);
 
                                 jumpTimeout = jumpReset;
+                                airtimeShort = airtimeReset;
                             }
 
                             if (AmIGrounded())
@@ -1645,6 +1653,16 @@ public class ReplevinScript : MonoBehaviour
                                     gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                                     gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                                 }
+                            }
+                        }
+
+                        else
+                        {
+                            airtimeShort -= Time.deltaTime;
+                            if(airtimeShort <= 0f)
+                            {
+                                airtimeShort = 0f;
+                                transform.position = Vector3.MoveTowards(transform.position, waypoint[waypointNext].transform.position + (Vector3.up * 2f), gapClose * Time.deltaTime);
                             }
                         }
 
@@ -1687,6 +1705,18 @@ public class ReplevinScript : MonoBehaviour
                                     attackLock = false;
                                     rangeTimeout = false;
                                 }
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        if (AmIGrounded())
+                        {
+                            if (gameObject.GetComponent<Rigidbody>() != null)
+                            {
+                                gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                                gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                             }
                         }
                     }
@@ -2037,116 +2067,7 @@ public class ReplevinScript : MonoBehaviour
                                     }
                                 }
 
-                                //if (distance.magnitude <= meleeRangeMin && CanSeePlayer())
-                                //{
-                                //    self.ResetPath();
-                                //    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
-
-                                //    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin) && !recorded)
-                                //    {
-                                //        if (hit.collider.tag == "Player")
-                                //        {
-                                //            lastPlayerPosition = hit.point;
-                                //            recoilPosition = transform.position - (hit.point - transform.position) * strafeDistance;
-                                //            recorded = true;
-                                //            //Debug.Log(lastPlayerPosition);
-                                //            //Debug.Log(lastKnownDistance.magnitude);
-                                //            GameObject takeoff = Instantiate(jumpTakeoff, transform.position + Vector3.down, transform.rotation);
-
-                                //            if (!GetComponent<BerthScript>())
-                                //            {
-                                //                subject.materials[materialIndex].color = attackTell;
-                                //            }
-                                //        }
-                                //    }
-
-                                //    if(!recoilBack)
-                                //    {
-                                //        transform.position = Vector3.Lerp(transform.position, lastPlayerPosition, gapClose * Time.deltaTime);
-                                //        lastKnownDistance = lastPlayerPosition - transform.position;
-                                //    }
-
-                                //    else
-                                //    {
-                                //        //Debug.DrawLine(transform.position, -distance, Color.blue);
-                                //        transform.position = Vector3.Lerp(transform.position, recoilPosition, gapClose * Time.deltaTime);
-                                //        lastKnownDistance = transform.position - recoilPosition;
-                                //        Debug.Log(lastKnownDistance.magnitude + " | " + pounceLimit);
-                                //    }
-
-                                //    //transform.position = Vector3.Lerp(transform.position, lastPlayerPosition, gapClose * Time.deltaTime);
-                                //    //lastKnownDistance = lastPlayerPosition - transform.position;
-                                //    //Debug.Log(lastKnownDistance.magnitude + " | " + self.stoppingDistance);
-
-                                //    if (lastKnownDistance.magnitude <= pounceLimit)
-                                //    {
-                                //        slamTimeout = true;
-
-                                //        if (!GetComponent<BerthScript>())
-                                //        {
-                                //            subject.materials[materialIndex].color = Color.red;
-                                //        }
-                                //    }
-
-                                //    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hitTheSequel, 2f))
-                                //    {
-                                //        if (hitTheSequel.collider.tag == "Player" && canAttackAgain)
-                                //        {
-                                //            if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
-                                //            {
-                                //                if (gameObject.GetComponent<DebuffScript>() == null)
-                                //                {
-                                //                    gameObject.AddComponent<DebuffScript>();
-                                //                }
-
-                                //                if (hit.collider.GetComponent<PlayerStatusScript>().counterplayCheat)
-                                //                {
-                                //                    hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
-                                //                }
-
-                                //                slamTimeout = true;
-                                //                canAttackAgain = false;
-
-                                //                if (!GetComponent<BerthScript>())
-                                //                {
-                                //                    subject.materials[materialIndex].color = Color.red;
-                                //                }
-                                //            }
-
-                                //            else
-                                //            {
-                                //                hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
-                                //                hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
-
-                                //                Vector3 knockbackDir = transform.forward;
-                                //                knockbackDir.y = 0;
-                                //                hitTheSequel.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
-
-                                //                manager.damageDealt += damage;
-
-                                //                slamTimeout = true;
-                                //                canAttackAgain = false;
-
-                                //                if (!GetComponent<BerthScript>())
-                                //                {
-                                //                    subject.materials[materialIndex].color = Color.red;
-                                //                }
-                                //            }
-                                //        }
-                                //    }
-                                //}
-
-                                //else
-                                //{
-                                //    if (self.enabled == false)
-                                //    {
-                                //        self.enabled = true;
-                                //    }
-
-                                //    recorded = false;
-                                //    recoilBack = false;
-                                //    self.SetDestination(player.transform.position);
-                                //}
+                                
                             } //Range Attack for Phase 2 Combat
 
                         }
@@ -2399,6 +2320,7 @@ public class ReplevinScript : MonoBehaviour
         {
             punchTimeout -= Time.deltaTime;
             gapClose = 0f;
+
             if (punchTimeout <= 0f)
             {
                 if(amBoss)
@@ -2409,9 +2331,17 @@ public class ReplevinScript : MonoBehaviour
                     attackLock = false;
                     canAttackAgain = true;
 
+                    protection = true;
+                    StartCoroutine(RemoveProtection());
+
                     if (!enemy.isImmune && !phaseTwo)
                     {
                         enemy.isImmune = true;
+
+                        if (gameObject.GetComponent<Rigidbody>() != null)
+                        {
+                            Destroy(gameObject.GetComponent<Rigidbody>());
+                        }
                     }
 
                     if (boss != null && addWave == true)
@@ -2439,6 +2369,28 @@ public class ReplevinScript : MonoBehaviour
                                 {
                                     Destroy(gameObject.GetComponent<Rigidbody>());
                                 }
+
+                                punchReset = 1f;
+                                punchTimeout = punchReset;
+
+                                phaseTwoAppearance.SetActive(true);
+                                gameObject.AddComponent<PhaseTwoVisualSetupScript>();
+
+                                directionalLight = GameObject.FindGameObjectWithTag("Directional Light");
+                                directionalLight.AddComponent<LightLerpScript>();
+
+                                directionalLight.GetComponent<LightLerpScript>().light = directionalLight;
+                                directionalLight.GetComponent<LightLerpScript>().colorOne = Color.white;
+                                directionalLight.GetComponent<LightLerpScript>().colorTwo = Color.red;
+                                directionalLight.GetComponent<LightLerpScript>().accelerant = 10f;
+                                directionalLight.GetComponent<LightLerpScript>().single = true;
+
+                                stalactiteLucent = GameObject.FindGameObjectsWithTag("Stalactite Lucent");
+                                for(int s = 0; s < stalactiteLucent.Length; s++)
+                                {
+                                    stalactiteLucent[s].GetComponent<StalactiteLucentScript>().passiveDrops = true;
+                                }
+
                             }
 
                             boss.TriggerAdds();
@@ -2451,17 +2403,6 @@ public class ReplevinScript : MonoBehaviour
                             addWave = false;
                         }
                     }
-
-                    //if (!recoilBack)
-                    //{
-                    //    recoilBack = true;
-                    //}
-
-                    //else
-                    //{
-                    //    recoilBack = false;
-                    //    recorded = false;
-                    //}
                 }
 
                 else
@@ -2550,5 +2491,11 @@ public class ReplevinScript : MonoBehaviour
 
             rangeTimeout = true;
         }
+    }
+
+    IEnumerator RemoveProtection()
+    {
+        yield return new WaitForSeconds(3f);
+        protection = false;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class StalactiteLucentScript : MonoBehaviour
 {
     public int shatterDamage;
+    public float dropDelay;
     public GameObject lucentCluster; //Lucent game object
     public GameObject raycastPoint;
     public Collider field; //Zone for cluster spawning
@@ -17,6 +18,7 @@ public class StalactiteLucentScript : MonoBehaviour
     private RaycastHit hit;
     private GameObject lucentShard; //Lucent game object
     private GameObject shatterEffect; //VFX used to convey activity
+    internal bool passiveDrops = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +30,16 @@ public class StalactiteLucentScript : MonoBehaviour
         if(fragment)
         {
             Destroy(gameObject, 2f);
+        }
+
+        if(hostCrystal)
+        {
+            //Selects a random duration to delay next attack, then initiates attack
+            int randomTime = 0;
+
+            float[] delays = { 0.75f, 1f, 1.25f };
+            randomTime = Random.Range(0, delays.Length);
+            dropDelay = delays[randomTime];
         }
     }
 
@@ -45,7 +57,7 @@ public class StalactiteLucentScript : MonoBehaviour
                     if (hit.gameObject.CompareTag("Enemy"))
                     {
                         //Triggers stun mechanic on Bosses
-                        if (hit.gameObject.GetComponent<ReplevinScript>().amBoss)
+                        if (hit.gameObject.GetComponent<ReplevinScript>().amBoss && !hit.gameObject.GetComponent<ReplevinScript>().protection && !hit.gameObject.GetComponent<ReplevinScript>().phaseTwo)
                         {
                             hit.gameObject.GetComponent<ReplevinScript>().enemy.isImmune = false;
                             hit.gameObject.GetComponent<ReplevinScript>().slamTimeout = true;
@@ -76,10 +88,20 @@ public class StalactiteLucentScript : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+
+        else if(hostCrystal && passiveDrops)
+        {
+            dropDelay -= Time.deltaTime;
+            if(dropDelay <= 0f && !cooldown)
+            {
+                dropDelay = 0f;
+                LucentPassive();
+            }
+        }
     }
 
     /// <summary>
-    /// Produces Lucent Clusters
+    /// Produces Lucent Fragments
     /// </summary>
     public void LucentPassive()
     {      
@@ -94,14 +116,38 @@ public class StalactiteLucentScript : MonoBehaviour
             lucentShard.name = lucentCluster.name;
             lucentShard.GetComponent<Rigidbody>().AddForce(transform.forward * 10f, ForceMode.Impulse);
 
+            GameObject vfx = Instantiate(shatterEffect, spawnSite, Quaternion.identity);
+            vfx.name = shatterEffect.name;
+
             cooldown = true;
-            StartCoroutine(CooldownRemovalDelay());
+
+            if(passiveDrops)
+            {
+                PassiveCooldownRemovalDelay();
+            }
+
+            else
+            {
+                StartCoroutine(CooldownRemovalDelay());
+            }
         }     
     }
 
     public IEnumerator CooldownRemovalDelay()
     {
         yield return new WaitForSeconds(0.04f);
+        cooldown = false;
+    }
+
+    public void PassiveCooldownRemovalDelay()
+    {
+        //Selects a random duration to delay next attack, then initiates attack
+        int randomTime = 0;
+
+        float[] delays = { 0.75f, 1f, 1.25f };
+        randomTime = Random.Range(0, delays.Length);
+        dropDelay = delays[randomTime];
+
         cooldown = false;
     }
 

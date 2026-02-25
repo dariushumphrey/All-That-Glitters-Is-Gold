@@ -100,7 +100,7 @@ MeshRenderer:
   m_Materials:
   - {fileID: 2100000, guid: 86830a873e7092747abada611fbab726, type: 2}
   - {fileID: 2100000, guid: 7a2288c2219ed044cac0a54337e95e52, type: 2}
-  - {fileID: 2100000, guid: 79dc7ad5e1577524ab6d93b8f98f06b6, type: 2}
+  - {fileID: 2100000, guid: b239bba5c592ea6469e54a89d5f0ce79, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -183,6 +183,7 @@ MonoBehaviour:
     m_Bits: 264
   attackStartPoint: {fileID: 521107326973885396}
   stunningLucent: {fileID: 0}
+  meleeEngagementDistance: 0
   meleeRangeCheck: 0
   meleeRangeMin: 20
   meleeAttackTimer: 0.8
@@ -193,6 +194,11 @@ MonoBehaviour:
   rangeAttackRate: 1
   rangedAttackForce: 0
   rangeATKMin: 7
+  rangeEngagementDistance: 0
+  rangeAttackCount: 0
+  strafeDistance: 2
+  strafeLimit: 1
+  strafeTimer: 3
   rangeProjectile: {fileID: 7101181237062747686, guid: 70bd89594efeb624f9d56ec2e948ce2a, type: 3}
   chargeRangeCheck: 25
   chargeRangeMin: 2
@@ -212,6 +218,7 @@ MonoBehaviour:
   berthJumpCarpetBombTimer: 0.15
   jumpTakeoff: {fileID: 2056866271575102109, guid: e436b8ce7e2020e47a954d998deb3c8d, type: 3}
   jumpCheck: {fileID: 9046807996112585156}
+  waypoint: []
 --- !u!114 &521107327305974612
 MonoBehaviour:
   m_ObjectHideFlags: 0
