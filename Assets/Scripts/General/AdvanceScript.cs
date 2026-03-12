@@ -25,15 +25,18 @@ public class AdvanceScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!boss.isAlive && advanceOnDelay)
+        if(boss != null)
         {
-            if(!done)
+            if (!boss.isAlive && advanceOnDelay)
             {
-                StartCoroutine(RemoteLevelNavigation());
-            }
+                if (!done)
+                {
+                    StartCoroutine(RemoteLevelNavigation());
+                }
 
-            done = true;
-        }
+                done = true;
+            }
+        }       
     }
 
     private void OnTriggerEnter(Collider other)
