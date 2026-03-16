@@ -171,7 +171,6 @@ public class LevelManagerScript : MonoBehaviour
         {
             Time.timeScale = 1;
         }
-      
     }
 
     // Update is called once per frame
@@ -347,6 +346,7 @@ public class LevelManagerScript : MonoBehaviour
         {
             gameComplete = false;
             lvlProgressSaved = false;
+            gameTime = 0f;
             if(level == 0)
             {
                 setting = Setting.Navigation;

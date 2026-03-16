@@ -2384,6 +2384,7 @@ public class ReplevinScript : MonoBehaviour
                                 directionalLight.GetComponent<LightLerpScript>().colorTwo = Color.red;
                                 directionalLight.GetComponent<LightLerpScript>().accelerant = 10f;
                                 directionalLight.GetComponent<LightLerpScript>().single = true;
+                                directionalLight.GetComponent<LightLerpScript>().forColor = true;
 
                                 stalactiteLucent = GameObject.FindGameObjectsWithTag("Stalactite Lucent");
                                 for(int s = 0; s < stalactiteLucent.Length; s++)
