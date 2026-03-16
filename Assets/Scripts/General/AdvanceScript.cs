@@ -65,6 +65,8 @@ public class AdvanceScript : MonoBehaviour
                 if(level.setting == LevelManagerScript.Setting.Campaign)
                 {
                     CheckForLevelEntitlement();
+                    CheckForDifficultyEntitlement();
+                    CheckForViricideEntitlement();
                 }
 
                 PlayerPrefs.SetInt("lucentBalance", player.lucentFunds);
@@ -110,6 +112,8 @@ public class AdvanceScript : MonoBehaviour
             if (level.setting == LevelManagerScript.Setting.Campaign)
             {
                 CheckForLevelEntitlement();
+                CheckForDifficultyEntitlement();
+                CheckForViricideEntitlement();
             }
 
             PlayerPrefs.SetInt("lucentBalance", player.lucentFunds);
@@ -156,6 +160,32 @@ public class AdvanceScript : MonoBehaviour
             else
             {
                 PlayerPrefs.SetInt("unlockLevel03", 1);
+            }
+        }
+
+        if (levelIndex == 4)
+        {
+            if (PlayerPrefs.GetInt("unlockLevel04") == 1)
+            {
+                //Do nothing
+            }
+
+            else
+            {
+                PlayerPrefs.SetInt("unlockLevel04", 1);
+            }
+        }
+
+        if (levelIndex == 5)
+        {
+            if (PlayerPrefs.GetInt("unlockLevel05") == 1)
+            {
+                //Do nothing
+            }
+
+            else
+            {
+                PlayerPrefs.SetInt("unlockLevel05", 1);
             }
         }
     }

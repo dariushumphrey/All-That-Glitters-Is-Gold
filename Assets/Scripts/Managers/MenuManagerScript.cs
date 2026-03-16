@@ -15,7 +15,7 @@ public class MenuManagerScript : MonoBehaviour
 
     //ca, vcThumbnail - Image UI that displays Campaign, Viricide level pictures
     public Image caThumbnail, vcThumbnail;
-    public Sprite caLevelOne, caLevelTwo, caLevelThree, vcLevelOne, vcLevelTwo; //Images of Level thumbnails
+    public Sprite caLevelOne, caLevelTwo, caLevelThree, caLevelFour, caLevelFive, vcLevelOne, vcLevelTwo; //Images of Level thumbnails
     public Text caDiffText, vcDiffText, caLevelText, vcLevelText, vcWepFocusText; //Texts that displays difficulty number, level name, or Weapon focus
     public Button vcButton; //Viricide navigation button
     public Slider vcDifficulty, vcLevel, vcWepFocus, caDifficulty, caLevel; //Sliders used to select Weapon type, level, or difficulty
@@ -60,6 +60,16 @@ public class MenuManagerScript : MonoBehaviour
             else if (caLevel.value == 3)
             {
                 caThumbnail.sprite = caLevelThree;
+            }
+
+            else if (caLevel.value == 4)
+            {
+                caThumbnail.sprite = caLevelFour;
+            }
+
+            else
+            {
+                caThumbnail.sprite = caLevelFive;
             }
 
 
@@ -171,7 +181,17 @@ public class MenuManagerScript : MonoBehaviour
     /// </summary>
     public void Progression()
     {
-        if (PlayerPrefs.GetInt("unlockLevel03") == 1)
+        if (PlayerPrefs.GetInt("unlockLevel05") == 1)
+        {
+            caLevel.maxValue = 5;
+        }
+
+        else if (PlayerPrefs.GetInt("unlockLevel04") == 1)
+        {
+            caLevel.maxValue = 4;
+        }
+
+        else if (PlayerPrefs.GetInt("unlockLevel03") == 1)
         {
             caLevel.maxValue = 3;
         }

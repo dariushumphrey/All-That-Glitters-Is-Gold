@@ -18,6 +18,9 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         //Debug.Log(PlayerPrefs.GetInt("unlockLevel02"));
         //Debug.Log(PlayerPrefs.GetInt("unlockLevel03"));
 
+        //PlayerPrefs.SetInt("unlockLevel05", 1);
+        //PlayerPrefs.SetInt("unlockLevel04", 1);
+        //PlayerPrefs.SetInt("unlockLevel03", 1);
         //PlayerPrefs.SetInt("unlockLevel02", 1);
         //PlayerPrefs.SetInt("unlockDifficulty5", 1);
         //PlayerPrefs.SetInt("unlockViricide", 1);
@@ -52,6 +55,26 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         else
         {
             PlayerPrefs.SetInt("unlockLevel03", 0);
+        }
+
+        if (PlayerPrefs.GetInt("unlockLevel04") == 1)
+        {
+            //Do nothing
+        }
+
+        else
+        {
+            PlayerPrefs.SetInt("unlockLevel04", 0);
+        }
+
+        if (PlayerPrefs.GetInt("unlockLevel05") == 1)
+        {
+            //Do nothing
+        }
+
+        else
+        {
+            PlayerPrefs.SetInt("unlockLevel05", 0);
         }
     }
 
@@ -103,6 +126,8 @@ public class PlayerPrefsManagerScript : MonoBehaviour
     {
         PlayerPrefs.SetInt("unlockLevel02", 0);
         PlayerPrefs.SetInt("unlockLevel03", 0);
+        PlayerPrefs.SetInt("unlockLevel04", 0);
+        PlayerPrefs.SetInt("unlockLevel05", 0);
         PlayerPrefs.SetInt("unlockDifficulty5", 0);
         PlayerPrefs.SetInt("unlockViricide", 0);
         PlayerPrefs.SetInt("lucentBalance", 0);

@@ -33,17 +33,6 @@ public class RevealScript : MonoBehaviour
                     }
                 }
             }
-
-            if (hide.Count > 0)
-            {
-                if (level.gameSettingState >= startConcealOn)
-                {
-                    for (int v = 0; v < hide.Count; v++)
-                    {
-                        hide[v].gameObject.SetActive(false);
-                    }
-                }
-            }
         }      
     }
 

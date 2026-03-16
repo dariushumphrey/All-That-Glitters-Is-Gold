@@ -70,6 +70,7 @@ MonoBehaviour:
   vertical: 0
   horizontal: 0
   diagonal: 1
+  overrideOpen: 0
 --- !u!114 &926734437167711382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +95,7 @@ MonoBehaviour:
   vertical: 0
   horizontal: 0
   diagonal: 1
+  overrideOpen: 0
 --- !u!1 &3033843244425414896
 GameObject:
   m_ObjectHideFlags: 0

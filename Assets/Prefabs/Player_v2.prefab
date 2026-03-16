@@ -418,7 +418,6 @@ MonoBehaviour:
   speedDampening: -2
   speedAccelerant: 2
   slopeForce: 200
-  slopeForceRayLength: 5
   slopeCheckLength: 2
   airborneCheck: 1.3
   airbornePull: 2000
@@ -459,7 +458,7 @@ MonoBehaviour:
   zoomMax: 40
   zoomSpeed: 100
   collideCheck: 2.55
-  offsetMult: 1
+  offsetMult: 1.35
   offsetPushZ: 0.5
   offsetPushY: 0.75
   cameraPosition: {x: 1.154395, y: 0.956768, z: -2.61}
@@ -499,7 +498,6 @@ MonoBehaviour:
   throwStrength: 0
   throwMin: 30
   throwMax: 80
-  foggerGrenade: {fileID: 7810528506078395390, guid: 849e37250196ee540b19af0ab4e1a00d, type: 3}
   blueKey: 0
   redKey: 0
   bKey: {fileID: 1514831611526700794}
@@ -1455,7 +1453,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4681357765906300350}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.015, z: -0.554}
+  m_LocalPosition: {x: 0, y: 0.015, z: -0.499}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 722000160554778763}

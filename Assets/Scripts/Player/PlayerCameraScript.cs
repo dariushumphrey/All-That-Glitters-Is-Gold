@@ -181,7 +181,7 @@ public class PlayerCameraScript : MonoBehaviour
     {
         Vector3 offset;
         RaycastHit hit;
-        if (Physics.Raycast(offsetCheckPos.transform.position, (playerCamera.transform.position - offsetCheckPos.transform.position).normalized, out hit, collideCheck, cameraOnly))
+        if (Physics.Raycast(offsetCheckPos.transform.position, (playerCamera.transform.position - offsetCheckPos.transform.position).normalized, out hit, collideCheck * offsetMult, cameraOnly))
         {
             if (hit.point != null)
             {
@@ -194,14 +194,14 @@ public class PlayerCameraScript : MonoBehaviour
                 {
                     //hit.normal = new Vector3(0, offsetPushY, offsetPushZ);
                     offset = hit.point + (hit.normal + new Vector3(0, offsetPushY, offsetPushZ));
-                    playerCamera.transform.position = offset * offsetMult;
+                    playerCamera.transform.position = offset /** offsetMult*/;
 
                     //cameraPosition.z = -hit.distance * offsetPushZ;
                     //cameraPosition.x = hit.distance * offsetPushX;
                     //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
 
                     Debug.DrawRay(offsetCheckPos.transform.position, (playerCamera.transform.position - offsetCheckPos.transform.position).normalized * collideCheck, Color.yellow);
-                    Debug.DrawLine(hit.point, offset * offsetMult, Color.red);
+                    Debug.DrawLine(hit.point, offset /** offsetMult*/, Color.red);
                     //Debug.DrawRay(hit.point, hit.normal + new Vector3(offsetPushX, 0, 0), Color.red);
                     //Debug.DrawRay(hit.point, hit.normal + new Vector3(0, 0, offsetPushZ), Color.blue);
                     //Debug.DrawRay(hit.point, hit.normal + new Vector3(0, offsetPushY, 0), Color.green);
