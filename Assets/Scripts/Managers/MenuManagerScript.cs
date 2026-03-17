@@ -16,7 +16,7 @@ public class MenuManagerScript : MonoBehaviour
     //ca, vcThumbnail - Image UI that displays Campaign, Viricide level pictures
     public Image caThumbnail, vcThumbnail;
     public Sprite caLevelOne, caLevelTwo, caLevelThree, caLevelFour, caLevelFive, vcLevelOne, vcLevelTwo; //Images of Level thumbnails
-    public Text caDiffText, vcDiffText, caLevelText, vcLevelText, vcWepFocusText; //Texts that displays difficulty number, level name, or Weapon focus
+    public Text caDiffText, vcDiffText, caLevelText, vcLevelText, vcWepFocusText, caObjectiveText; //Texts that displays difficulty number, level name, or Weapon focus
     public Button vcButton; //Viricide navigation button
     public Slider vcDifficulty, vcLevel, vcWepFocus, caDifficulty, caLevel; //Sliders used to select Weapon type, level, or difficulty
     private LevelManagerScript levelManager;
@@ -50,25 +50,35 @@ public class MenuManagerScript : MonoBehaviour
             if (caLevel.value == 1)
             {
                 caThumbnail.sprite = caLevelOne;
+                caObjectiveText.text = "A vermin threat infests the Resplendent from the top down." + '\n' + 
+                    "Objective: Find transit into the station's center.";
             }
 
             else if (caLevel.value == 2)
             {
                 caThumbnail.sprite = caLevelTwo;
+                caObjectiveText.text = "The crisis at hand lies beyond the current route." + '\n' +
+                    "Objective: Stop the tram.";
             }
 
             else if (caLevel.value == 3)
             {
                 caThumbnail.sprite = caLevelThree;
+                caObjectiveText.text = "A hidden Replevin threat guards passage to ground zero." + '\n' +
+                    "Objective: Kill the Replevin Ambuscade.";
             }
 
             else if (caLevel.value == 4)
             {
                 caThumbnail.sprite = caLevelFour;
+                caObjectiveText.text = "The epicenter is upwards, through the miasmic hordes." + '\n' +
+                    "Objective: Reach the building's elevator.";
             }
 
             else
             {
+                caObjectiveText.text = "At last, the apex of Replevin terror is found." + '\n' +
+                    "Objective: Kill the Replevin Keystone.";
                 caThumbnail.sprite = caLevelFive;
             }
 
