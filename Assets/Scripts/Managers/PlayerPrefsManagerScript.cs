@@ -24,6 +24,7 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         //PlayerPrefs.SetInt("unlockLevel02", 1);
         //PlayerPrefs.SetInt("unlockDifficulty5", 1);
         //PlayerPrefs.SetInt("unlockViricide", 1);
+        //PlayerPrefs.SetInt("firstViricideClear", 1);
     }
 
     // Update is called once per frame

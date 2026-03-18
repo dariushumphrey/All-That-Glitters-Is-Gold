@@ -338,20 +338,20 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<FirearmScript>().isExotic = true;
                     //item.GetComponent<FirearmScript>().damagePercent = 60f;
                     item.GetComponent<FirearmScript>().RarityAugment();
-                    item.GetComponent<FirearmScript>().flavorText = "''Such is the law.''";
+                    item.GetComponent<FirearmScript>().flavorText = "''The time has come to collect.'' ";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                     item.name = weapons[0].name + "_Exotic";
                 }
 
                 if (wepStr == "2")
                 {
-                    wepName.text = "Bulleted Clause";
+                    wepName.text = "The Dismissal";
                     rarityCheck.text = "Exotic";
 
                     item.GetComponent<FirearmScript>().isExotic = true;
                     //item.GetComponent<FirearmScript>().damagePercent = 60f;
                     item.GetComponent<FirearmScript>().RarityAugment();
-                    item.GetComponent<FirearmScript>().flavorText = "''Only a fool would strike Lucent deals with no exploitable loopholes for themselves. Wealth is found in the hoard.''";
+                    item.GetComponent<FirearmScript>().flavorText = "''Wealth is found in the hoard. The Replevin know this; They are territorial, but are otherwise unbothersome.''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                     item.name = weapons[1].name + "_Exotic";
                 }
@@ -364,20 +364,20 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<FirearmScript>().isExotic = true;
                     //item.GetComponent<FirearmScript>().damagePercent = 60f;
                     item.GetComponent<FirearmScript>().RarityAugment();
-                    item.GetComponent<FirearmScript>().flavorText = "''I stand firm in the face of Terror. I am a weed in its terrace. It matters not the Human or the Replevin; I cannot be moved.''";
+                    item.GetComponent<FirearmScript>().flavorText = "At what point do the restraints simply fail?";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                     item.name = weapons[2].name + "_Exotic";
                 }
 
                 if (wepStr == "4")
                 {
-                    wepName.text = "The Fatal Cardio";
+                    wepName.text = "Mercies";
                     rarityCheck.text = "Exotic";
 
                     item.GetComponent<FirearmScript>().isExotic = true;
                     //item.GetComponent<FirearmScript>().damagePercent = 60f;
                     item.GetComponent<FirearmScript>().RarityAugment();
-                    item.GetComponent<FirearmScript>().flavorText = "WARNING: Persistent use of the cognitive Supercharger may result in cardiac implosion. Proceed? [Y] or [N]";
+                    item.GetComponent<FirearmScript>().flavorText = "FORAGER operatives are known for on-site procurement tactics. ''Looting'' is a word the robbed often use.";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                     item.name = weapons[3].name + "_Exotic";
                 }
@@ -390,20 +390,20 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<FirearmScript>().isExotic = true;
                     //item.GetComponent<FirearmScript>().damagePercent = 60f;
                     item.GetComponent<FirearmScript>().RarityAugment();
-                    item.GetComponent<FirearmScript>().flavorText = "''Isn't it wonderful when we all do our part?''";
+                    item.GetComponent<FirearmScript>().flavorText = "''The Resplendent fell victim to a first-of-its-kind case of ''Interstellar agro-terrorism''. This was no mere plot.''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                     item.name = weapons[4].name + "_Exotic";
                 }
 
                 if (wepStr == "6")
                 {
-                    wepName.text = "Every Second Sun";
+                    wepName.text = "Contempt For Fellows";
                     rarityCheck.text = "Exotic";
 
                     item.GetComponent<FirearmScript>().isExotic = true;
                     //item.GetComponent<FirearmScript>().damagePercent = 60f;
                     item.GetComponent<FirearmScript>().RarityAugment();
-                    item.GetComponent<FirearmScript>().flavorText = "''The Resplendent, for all its igneous light, could never have unveiled the shaded plot. The victims are owed retribution of a thermobaric kind.''";
+                    item.GetComponent<FirearmScript>().flavorText = "''Force-feeding Replevin Lucent, a resource known to modify behavior on ingestion, defies most known interstellar laws.''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                     item.name = weapons[5].name + "_Exotic";
                 }
@@ -1013,7 +1013,7 @@ public class WeaponManagerScript : MonoBehaviour
                     {
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
-                        item.GetComponent<FirearmScript>().flavorText = "Such is the law.";
+                        item.GetComponent<FirearmScript>().flavorText = "''The time has come to collect.'' ";
                         item.name ="Outstanding Warrant";
                     }
 
@@ -1021,15 +1021,15 @@ public class WeaponManagerScript : MonoBehaviour
                     {
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
-                        item.GetComponent<FirearmScript>().flavorText = "Only a fool would strike Lucent deals with no exploitable loopholes for themselves. Wealth is found in the hoard.";
-                        item.name = "Bulleted Clause";
+                        item.GetComponent<FirearmScript>().flavorText = "''Wealth is found in the hoard. The Replevin know this; They are territorial, but are otherwise unbothersome.''";
+                        item.name = "The Dismissal";
                     }
 
                     if (wepStr == "3")
                     {
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
-                        item.GetComponent<FirearmScript>().flavorText = "I stand firm in the face of Terror. I am a weed in its terrace. It matters not the Human or the Replevin; I cannot be moved.";
+                        item.GetComponent<FirearmScript>().flavorText = "At what point do the restraints simply fail?";
                         item.name = "Apathetic";
                     }
 
@@ -1037,15 +1037,15 @@ public class WeaponManagerScript : MonoBehaviour
                     {
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
-                        item.GetComponent<FirearmScript>().flavorText = "WARNING: Persistent use of the cognitive Supercharger may result in cardiac implosion. Proceed? [Y] or [N]";
-                        item.name = "The Fatal Cardio";
+                        item.GetComponent<FirearmScript>().flavorText = "FORAGER operatives are known for on-site procurement tactics. ''Looting'' is a word the robbed often use.";
+                        item.name = "Mercies";
                     }
 
                     if (wepStr == "5")
                     {
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
-                        item.GetComponent<FirearmScript>().flavorText = "Isn't it wonderful when we all do our part?";
+                        item.GetComponent<FirearmScript>().flavorText = "''The Resplendent fell victim to a first-of-its-kind case of ''Interstellar agro-terrorism''. This was no mere plot.''";
                         item.name = "Viral Shadow";
                     }
 
@@ -1053,8 +1053,8 @@ public class WeaponManagerScript : MonoBehaviour
                     {
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
-                        item.GetComponent<FirearmScript>().flavorText = "The Resplendent, for all its igneous light, could never have thwarted the terrible plot. These victims are owed retribution of a thermobaric kind.";
-                        item.name = "Every Second Sun";
+                        item.GetComponent<FirearmScript>().flavorText = "''Force-feeding Replevin Lucent, a resource known to modify behavior on ingestion, defies most known interstellar laws.''";
+                        item.name = "Contempt For Fellows";
                     }
 
                     if (wepStr == "7")

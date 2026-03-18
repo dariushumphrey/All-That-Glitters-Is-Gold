@@ -234,10 +234,12 @@ MonoBehaviour:
   wepRecoil: 0.4
   aimAssistStrength: 0.2
   isExotic: 1
-  flavorText: '"Such is the law." '
+  flavorText: '"The time has come to collect." '
   contactOnly:
     serializedVersion: 2
     m_Bits: 832
+  saved: 0
+  display: 0
   gunCam: {fileID: 0}
   bulletTrail: {fileID: 2100000, guid: 6eb7043751433984592b6e728e79a720, type: 2}
   barrel: {fileID: 4036329082904990596}
@@ -245,8 +247,6 @@ MonoBehaviour:
   reticle: {fileID: 21300000, guid: bf0954672952bed4bac2f60319debf44, type: 3}
   muzzleFlash: {fileID: 3438407611730657925}
   sparks: {fileID: 7193588280022282015, guid: 7e86620f782720041b9300eda8cfef98, type: 3}
-  saved: 0
-  display: 0
 --- !u!1 &4036329083052133171
 GameObject:
   m_ObjectHideFlags: 0

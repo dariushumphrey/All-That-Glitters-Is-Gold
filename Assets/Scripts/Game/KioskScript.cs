@@ -374,7 +374,7 @@ public class KioskScript : MonoBehaviour
 
                     if (wepTypeStr == "2")
                     {
-                        names[p].text = "Bulleted Clause";
+                        names[p].text = "The Dismissal";
                     }
 
                     if (wepTypeStr == "3")
@@ -384,7 +384,7 @@ public class KioskScript : MonoBehaviour
 
                     if (wepTypeStr == "4")
                     {
-                        names[p].text = "The Fatal Cardio";
+                        names[p].text = "Mercies";
                     }
 
                     if (wepTypeStr == "5")
@@ -394,7 +394,7 @@ public class KioskScript : MonoBehaviour
 
                     if (wepTypeStr == "6")
                     {
-                        names[p].text = "Every Second Sun";
+                        names[p].text = "Contempt For Fellows";
                     }
 
                     if (wepTypeStr == "7")
@@ -1032,42 +1032,42 @@ public class KioskScript : MonoBehaviour
                 if (wepTypeStr == "1")
                 {
                     wepName.text = "Outstanding Warrant";
-                    item.GetComponent<FirearmScript>().flavorText = "''Such is the law.''";
+                    item.GetComponent<FirearmScript>().flavorText = "''The time has come to collect.'' ";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }
 
                 if (wepTypeStr == "2")
                 {
-                    wepName.text = "Bulleted Clause";
-                    item.GetComponent<FirearmScript>().flavorText = "''Only a fool would strike Lucent deals with no exploitable loopholes for themselves. Wealth is found in the hoard.''";
+                    wepName.text = "The Dismissal";
+                    item.GetComponent<FirearmScript>().flavorText = "''Wealth is found in the hoard. The Replevin know this; They are territorial, but are otherwise unbothersome.''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }
 
                 if (wepTypeStr == "3")
                 {
                     wepName.text = "Apathetic";
-                    item.GetComponent<FirearmScript>().flavorText = "''I stand firm in the face of Terror. I am a weed in its terrace. It matters not the Human or the Replevin; I cannot be moved.''";
+                    item.GetComponent<FirearmScript>().flavorText = "At what point do the restraints simply fail?'";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }
 
                 if (wepTypeStr == "4")
                 {
-                    wepName.text = "The Fatal Cardio";
-                    item.GetComponent<FirearmScript>().flavorText = "WARNING: Persistent use of the cognitive Supercharger may result in cardiac implosion. Proceed? [Y] or [N]";
+                    wepName.text = "Mercies";
+                    item.GetComponent<FirearmScript>().flavorText = "FORAGER operatives are known for on-site procurement tactics. ''Looting'' is a word the robbed often use.";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }
 
                 if (wepTypeStr == "5")
                 {
                     wepName.text = "Viral Shadow";
-                    item.GetComponent<FirearmScript>().flavorText = "''Isn't it wonderful when we all do our part?''";
+                    item.GetComponent<FirearmScript>().flavorText = "''The Resplendent fell victim to a first-of-its-kind case of ''Interstellar agro-terrorism''. This was no mere plot.''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }
 
                 if (wepTypeStr == "6")
                 {
-                    wepName.text = "Every Second Sun";
-                    item.GetComponent<FirearmScript>().flavorText = "''The Resplendent, for all its igneous light, could never have unveiled the shaded plot. The victims are owed retribution of a thermobaric kind.''";
+                    wepName.text = "Contempt For Fellows";
+                    item.GetComponent<FirearmScript>().flavorText = "''Force-feeding Replevin Lucent, a resource known to modify behavior on ingestion, defies most known interstellar laws.''";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }
 

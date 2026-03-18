@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8504602914094039597}
   - component: {fileID: 2505689442717205402}
   m_Layer: 0
-  m_Name: Bulleted Clause
+  m_Name: The Dismissal
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,11 +80,13 @@ MonoBehaviour:
   wepRecoil: 0.7
   aimAssistStrength: 0.15
   isExotic: 1
-  flavorText: '"Only a fool would strike Lucent deals with no exploitable loopholes
-    for themselves. Wealth is found in the hoard."'
+  flavorText: '"Wealth is found in the hoard. The Replevin know this; They are territorial,
+    but are otherwise unbothersome."'
   contactOnly:
     serializedVersion: 2
     m_Bits: 832
+  saved: 0
+  display: 0
   gunCam: {fileID: 0}
   bulletTrail: {fileID: 2100000, guid: 6eb7043751433984592b6e728e79a720, type: 2}
   barrel: {fileID: 5875407823686912471}
@@ -92,8 +94,6 @@ MonoBehaviour:
   reticle: {fileID: 21300000, guid: bf0954672952bed4bac2f60319debf44, type: 3}
   muzzleFlash: {fileID: 4097831860870063743}
   sparks: {fileID: 7193588280022282015, guid: 7e86620f782720041b9300eda8cfef98, type: 3}
-  saved: 0
-  display: 0
 --- !u!1 &2076142987824462105
 GameObject:
   m_ObjectHideFlags: 0

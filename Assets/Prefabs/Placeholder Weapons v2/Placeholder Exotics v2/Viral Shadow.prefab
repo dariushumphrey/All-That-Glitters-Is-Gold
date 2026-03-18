@@ -299,10 +299,13 @@ MonoBehaviour:
   wepRecoil: 2
   aimAssistStrength: 0.15
   isExotic: 1
-  flavorText: '"Isn''t it wonderful when we all do our part?" '
+  flavorText: '"The Resplendent fell victim to a first-of-its-kind case of "Interstellar
+    agro-terrorism". This was no mere plot."'
   contactOnly:
     serializedVersion: 2
     m_Bits: 832
+  saved: 0
+  display: 0
   gunCam: {fileID: 0}
   bulletTrail: {fileID: 2100000, guid: 6eb7043751433984592b6e728e79a720, type: 2}
   barrel: {fileID: 699337692789952376}
@@ -310,8 +313,6 @@ MonoBehaviour:
   reticle: {fileID: 21300000, guid: 77d8a4da14139db488713bdc3acc9d49, type: 3}
   muzzleFlash: {fileID: 1618971890412695077}
   sparks: {fileID: 7193588280022282015, guid: 7e86620f782720041b9300eda8cfef98, type: 3}
-  saved: 0
-  display: 0
   pellets: 9
   spread: 0.3
 --- !u!1 &699337693747348053

@@ -1288,7 +1288,7 @@ public class PlayerInventoryScript : MonoBehaviour
                         write.Write("1");                    
                     }
 
-                    if (inventory[i].name == "Machine Gun" || inventory[i].name == "Bulleted Clause")
+                    if (inventory[i].name == "Machine Gun" || inventory[i].name == "The Dismissal")
                     {
                         write.Write("2");                      
                     }
@@ -1298,7 +1298,7 @@ public class PlayerInventoryScript : MonoBehaviour
                         write.Write("3");                    
                     }
 
-                    if (inventory[i].name == "Semi Fire Rifle" || inventory[i].name == "The Fatal Cardio")
+                    if (inventory[i].name == "Semi Fire Rifle" || inventory[i].name == "Mercies")
                     {
                         write.Write("4");                       
                     }
@@ -1308,7 +1308,7 @@ public class PlayerInventoryScript : MonoBehaviour
                         write.Write("5");                      
                     }
 
-                    if (inventory[i].name == "Single Fire Rifle" || inventory[i].name == "Every Second Sun")
+                    if (inventory[i].name == "Single Fire Rifle" || inventory[i].name == "Contempt For Fellows")
                     {
                         write.Write("6");                      
                     }
