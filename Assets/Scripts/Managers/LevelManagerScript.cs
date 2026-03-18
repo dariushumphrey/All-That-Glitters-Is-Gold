@@ -292,7 +292,7 @@ public class LevelManagerScript : MonoBehaviour
                 //paused = true;
                 resultsMenu.gameObject.SetActive(true);
                 menuReturnButton.gameObject.SetActive(false);
-                eogStatsText.gameObject.GetComponent<Text>().text = "Level 0" + (level - 1) + " Cleared:" + "\n" +
+                eogStatsText.gameObject.GetComponent<Text>().text = SceneManager.GetActiveScene().name + " Cleared:" + "\n" +
                     "Time: " + string.Format("{0:00}:{1:00}", minutes, seconds) + "\n" +
                     "Kills: " + manager.killCount + "\n" +
                     "Damage Dealt: " + manager.damageReceived.ToString("N0") + "\n" +

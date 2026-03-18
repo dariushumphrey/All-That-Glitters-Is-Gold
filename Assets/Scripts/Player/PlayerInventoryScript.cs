@@ -20,6 +20,7 @@ public class PlayerInventoryScript : MonoBehaviour
     public float throwMin, throwMax;
     public bool blueKey, redKey = false; //confirms ownership of colored key if true
     public GameObject bKey, rKey; //objects that visually convey key ownership
+    public GameObject fGrenade, sGrenade, dGrenade; //objects that visually convey equipped grenade
 
     //weaponCurAmmo - text that displays Weapon's current ammo
     //weaponResAmmo - text that displays Weapons' reserve ammo
@@ -245,16 +246,73 @@ public class PlayerInventoryScript : MonoBehaviour
         if(grenadeSelection == 0)
         {
             grenadeText.text = "Fog: " + fogGrenadeCharges;
+            if(fogGrenadeCharges <= 0)
+            {
+                fGrenade.gameObject.SetActive(false);
+            }
+
+            else
+            {
+                fGrenade.gameObject.SetActive(true);
+            }
+
+            if(sGrenade.activeInHierarchy)
+            {
+                sGrenade.gameObject.SetActive(false);
+            }
+
+            if(dGrenade.activeInHierarchy)
+            {
+                dGrenade.gameObject.SetActive(false);
+            }
         }
 
         if (grenadeSelection == 1)
         {
             grenadeText.text = "Sol: " + solGrenadeCharges;
+            if(fGrenade.activeInHierarchy)
+            {
+                fGrenade.gameObject.SetActive(false);
+            }
+
+            if(solGrenadeCharges <= 0)
+            {
+                sGrenade.gameObject.SetActive(false);
+            }
+
+            else
+            {
+                sGrenade.gameObject.SetActive(true);
+            }
+
+            if(dGrenade.activeInHierarchy)
+            {
+                dGrenade.gameObject.SetActive(false);
+            }
         }
 
         if (grenadeSelection == 2)
         {
             grenadeText.text = "Des: " + desGrenadeCharges;
+            if(fGrenade.activeInHierarchy)
+            {
+                fGrenade.gameObject.SetActive(false);
+            }
+
+            if(sGrenade.activeInHierarchy)
+            {
+                sGrenade.gameObject.SetActive(false);
+            }
+
+            if(desGrenadeCharges <= 0)
+            {
+                dGrenade.gameObject.SetActive(false);
+            }
+
+            else
+            {
+                dGrenade.gameObject.SetActive(true);
+            }
         }
 
         lucentText.text = lucentFunds.ToString("N0");

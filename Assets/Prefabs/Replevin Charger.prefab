@@ -170,8 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd140123654490f409cc4836d25b8033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 220
-  damagePercent: 25
+  damage: 330
+  damagePercent: 30
   moveSpeed: 8
   boostSpeed: 30
   enemyAcceleration: 48
@@ -182,7 +182,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 264
   attackStartPoint: {fileID: 521107326973885396}
-  stunningLucent: {fileID: 0}
   meleeEngagementDistance: 0
   meleeRangeCheck: 0
   meleeRangeMin: 20
@@ -218,7 +217,9 @@ MonoBehaviour:
   berthJumpCarpetBombTimer: 0.15
   jumpTakeoff: {fileID: 2056866271575102109, guid: e436b8ce7e2020e47a954d998deb3c8d, type: 3}
   jumpCheck: {fileID: 9046807996112585156}
-  waypoint: []
+  phaseTwoAttackLimit: 3
+  phaseTwoAppearance: {fileID: 0}
+  stunningLucent: {fileID: 0}
 --- !u!114 &521107327305974612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,8 +234,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultyValue: 1
   healthCurrent: 4000
-  healthMax: 40000
-  healthPercent: 30
+  healthMax: 50000
+  healthPercent: 50
   lucentYield: 400
   lucentPercent: 20
   isImmune: 1

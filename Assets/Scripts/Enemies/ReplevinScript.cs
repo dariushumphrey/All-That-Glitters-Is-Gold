@@ -302,7 +302,6 @@ public class ReplevinScript : MonoBehaviour
 
                 if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin))
                 {
-
                     if (hit.collider.tag == "Hard Lucent" && !gathered)
                     {
                         stunMechanic = Instantiate(stunningLucent, attackStartPoint.transform.position + transform.forward, attackStartPoint.transform.rotation, gameObject.transform);
@@ -382,57 +381,73 @@ public class ReplevinScript : MonoBehaviour
                                 stunMechanic.GetComponent<Rigidbody>().AddForce((lastPlayerPosition + Vector3.up) * jumpForce, ForceMode.Impulse);
                                 stunMechanic.GetComponent<Rigidbody>().AddForce((transform.forward * forwardForce), ForceMode.Impulse);
                                 stunMechanic = null;
+
+                                attackLock = true;
                             }
 
-                            self.speed = moveSpeed / 2;
-                            self.acceleration = enemyAcceleration / 2;
+                            //self.speed = moveSpeed / 2;
+                            //self.acceleration = enemyAcceleration / 2;
 
-                            meleeAttackTimer -= Time.deltaTime;
+                            
                             if (meleeAttackTimer <= 0f)
                             {
-                                attackLock = true;
+                                attackLock = false;
+                                meleeAttackTimer = meleeReset;
+
+                                destinationSet = false;
+                                gathered = false;
+                                recorded = false;
+                                throwTarget = false;
+
+                                self.speed = moveSpeed;
+                                self.acceleration = accelReset;
+
+                                subject.materials[materialIndex].color = Color.red;
+                              
+                            }
+
+                            if (attackLock)
+                            {
+                                meleeAttackTimer -= Time.deltaTime;
+
                                 self.speed = boostSpeed;
                                 self.acceleration = enemyAcceleration;
 
-                                if (attackLock)
+                                subject.materials[materialIndex].color = attackTell;
+
+                                if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin))
                                 {
-                                    meleeAttackTimer = 0f;
-                                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin))
+                                    if (hit.collider.tag == "Player" && attackAgain >= attackRate)
                                     {
+                                        attackAgain = 0.0f;
 
-                                        if (hit.collider.tag == "Player" && attackAgain >= attackRate)
+                                        if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
                                         {
-                                            attackAgain = 0.0f;
-
-                                            if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
+                                            if (gameObject.GetComponent<DebuffScript>() == null)
                                             {
-                                                if (gameObject.GetComponent<DebuffScript>() == null)
-                                                {
-                                                    gameObject.AddComponent<DebuffScript>();
-                                                }
+                                                gameObject.AddComponent<DebuffScript>();
                                             }
-
-                                            hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
-                                            hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
-
-                                            //This code shoves the Player with particular force in their opposite direction.
-                                            //This is a melee attack, shoving the player with less force, subtly offsetting the player upwards to distinguish it from a charge.
-                                            Vector3 knockbackDir = -hit.collider.transform.forward;
-                                            hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
-
-                                            manager.damageDealt += damage;
-
-                                            attackLock = false;
-                                            meleeAttackTimer = meleeReset;
-
-                                            destinationSet = false;
-                                            gathered = false;
-                                            recorded = false;
-                                            throwTarget = false;         
                                         }
+
+                                        hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+                                        hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+
+                                        //This code shoves the Player with particular force in their opposite direction.
+                                        //This is a melee attack, shoving the player with less force, subtly offsetting the player upwards to distinguish it from a charge.
+                                        Vector3 knockbackDir = -hit.collider.transform.forward;
+                                        hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
+
+                                        manager.damageDealt += damage;
+
+                                        //attackLock = false;
+                                        //meleeAttackTimer = meleeReset;
+
+                                        //destinationSet = false;
+                                        //gathered = false;
+                                        //recorded = false;
+                                        //throwTarget = false;
                                     }
                                 }
-
                             }
                         }
 

@@ -16,9 +16,9 @@ public class MenuManagerScript : MonoBehaviour
     //ca, vcThumbnail - Image UI that displays Campaign, Viricide level pictures
     public Image caThumbnail, vcThumbnail;
     public Sprite caLevelOne, caLevelTwo, caLevelThree, caLevelFour, caLevelFive, vcLevelOne, vcLevelTwo; //Images of Level thumbnails
-    public Text caDiffText, vcDiffText, caLevelText, vcLevelText, vcWepFocusText, caObjectiveText; //Texts that displays difficulty number, level name, or Weapon focus
+    public Text caDiffText, vcDiffText, caLevelText, vcLevelText, vcWepFocusText, caObjectiveText, caCheckpointText; //Texts that displays difficulty number, level name, or Weapon focus
     public Button vcButton; //Viricide navigation button
-    public Slider vcDifficulty, vcLevel, vcWepFocus, caDifficulty, caLevel; //Sliders used to select Weapon type, level, or difficulty
+    public Slider vcDifficulty, vcLevel, vcWepFocus, caDifficulty, caLevel, caCheckpoint; //Sliders used to select Weapon type, level, or difficulty
     private LevelManagerScript levelManager;
     private WeaponManagerScript weaponManager;
 
@@ -52,6 +52,18 @@ public class MenuManagerScript : MonoBehaviour
                 caThumbnail.sprite = caLevelOne;
                 caObjectiveText.text = "A vermin threat infests the Resplendent from the top down." + '\n' + 
                     "Objective: Find transit into the station's center.";
+
+                if(PlayerPrefs.GetInt("lvl01Checkpoint") == 1)
+                {
+                    caCheckpoint.gameObject.SetActive(true);
+                    caCheckpointText.gameObject.SetActive(true);
+                }
+
+                else
+                {
+                    caCheckpoint.gameObject.SetActive(false);
+                    caCheckpointText.gameObject.SetActive(false);
+                }
             }
 
             else if (caLevel.value == 2)
@@ -59,6 +71,18 @@ public class MenuManagerScript : MonoBehaviour
                 caThumbnail.sprite = caLevelTwo;
                 caObjectiveText.text = "The crisis at hand lies beyond the current route." + '\n' +
                     "Objective: Stop the tram.";
+
+                if (PlayerPrefs.GetInt("lvl02Checkpoint") == 1)
+                {
+                    caCheckpoint.gameObject.SetActive(true);
+                    caCheckpointText.gameObject.SetActive(true);
+                }
+
+                else
+                {
+                    caCheckpoint.gameObject.SetActive(false);
+                    caCheckpointText.gameObject.SetActive(false);
+                }
             }
 
             else if (caLevel.value == 3)
@@ -66,6 +90,18 @@ public class MenuManagerScript : MonoBehaviour
                 caThumbnail.sprite = caLevelThree;
                 caObjectiveText.text = "A hidden Replevin threat guards passage to ground zero." + '\n' +
                     "Objective: Kill the Replevin Ambuscade.";
+
+                if (PlayerPrefs.GetInt("lvl03Checkpoint") == 1)
+                {
+                    caCheckpoint.gameObject.SetActive(true);
+                    caCheckpointText.gameObject.SetActive(true);
+                }
+
+                else
+                {
+                    caCheckpoint.gameObject.SetActive(false);
+                    caCheckpointText.gameObject.SetActive(false);
+                }
             }
 
             else if (caLevel.value == 4)
@@ -73,6 +109,18 @@ public class MenuManagerScript : MonoBehaviour
                 caThumbnail.sprite = caLevelFour;
                 caObjectiveText.text = "The epicenter is upwards, through the miasmic hordes." + '\n' +
                     "Objective: Reach the building's elevator.";
+
+                if (PlayerPrefs.GetInt("lvl04Checkpoint") == 1)
+                {
+                    caCheckpoint.gameObject.SetActive(true);
+                    caCheckpointText.gameObject.SetActive(true);
+                }
+
+                else
+                {
+                    caCheckpoint.gameObject.SetActive(false);
+                    caCheckpointText.gameObject.SetActive(false);
+                }
             }
 
             else
@@ -80,15 +128,27 @@ public class MenuManagerScript : MonoBehaviour
                 caObjectiveText.text = "At last, the apex of Replevin terror is found." + '\n' +
                     "Objective: Kill the Replevin Keystone.";
                 caThumbnail.sprite = caLevelFive;
+
+                if (PlayerPrefs.GetInt("lvl05Checkpoint") == 1)
+                {
+                    caCheckpoint.gameObject.SetActive(true);
+                    caCheckpointText.gameObject.SetActive(true);
+                }
+
+                else
+                {
+                    caCheckpoint.gameObject.SetActive(false);
+                    caCheckpointText.gameObject.SetActive(false);
+                }
             }
 
 
-            if (vcLevel.value == 4)
+            if (vcLevel.value == 6)
             {
                 vcThumbnail.sprite = vcLevelOne;
             }
 
-            else if (vcLevel.value == 5)
+            else if (vcLevel.value == 7)
             {
                 vcThumbnail.sprite = vcLevelTwo;
             }
@@ -98,7 +158,17 @@ public class MenuManagerScript : MonoBehaviour
             vcDiffText.text = "Difficulty: " + vcDifficulty.value;
 
             caLevelText.text = "Level " + caLevel.value;
-            vcLevelText.text = "Viricide: " + (vcLevel.value - 3);
+            vcLevelText.text = "Viricide: " + (vcLevel.value - 5);
+
+            if(caCheckpoint.value == 1)
+            {
+                caCheckpointText.text = "Start - Checkpoint";
+            }
+
+            else
+            {
+                caCheckpointText.text = "Start - Fresh";
+            }
 
             //Changes Weapon Focus text by slider value
             if(vcWepFocus.value == -1)
@@ -153,6 +223,11 @@ public class MenuManagerScript : MonoBehaviour
         levelManager.level = (int)vcLevel.value;
         levelManager.weaponFocus = (int)vcWepFocus.value;
 
+        if(levelManager.lvlProgressSaved)
+        {
+            levelManager.lvlProgressSaved = false;
+        }
+
         //levelManager.LoadScene();
         levelManager.StartCoroutine(levelManager.LoadAsyncedSceneDelay());
     }
@@ -165,6 +240,15 @@ public class MenuManagerScript : MonoBehaviour
         levelManager.setting = LevelManagerScript.Setting.Campaign;
         levelManager.gameSettingState = (int)caDifficulty.value;
         levelManager.level = (int)caLevel.value;
+        if(caCheckpoint.value == 1)
+        {
+            levelManager.lvlProgressSaved = true;
+        }
+
+        else
+        {
+            levelManager.lvlProgressSaved = false;
+        }
 
         //levelManager.LoadScene();
         levelManager.StartCoroutine(levelManager.LoadAsyncedSceneDelay());

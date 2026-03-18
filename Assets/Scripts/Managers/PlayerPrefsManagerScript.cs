@@ -128,6 +128,11 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         PlayerPrefs.SetInt("unlockLevel03", 0);
         PlayerPrefs.SetInt("unlockLevel04", 0);
         PlayerPrefs.SetInt("unlockLevel05", 0);
+        PlayerPrefs.SetInt("lvl01Checkpoint", 0);
+        PlayerPrefs.SetInt("lvl02Checkpoint", 0);
+        PlayerPrefs.SetInt("lvl03Checkpoint", 0);
+        PlayerPrefs.SetInt("lvl04Checkpoint", 0);
+        PlayerPrefs.SetInt("lvl05Checkpoint", 0);
         PlayerPrefs.SetInt("unlockDifficulty5", 0);
         PlayerPrefs.SetInt("unlockViricide", 0);
         PlayerPrefs.SetInt("lucentBalance", 0);
