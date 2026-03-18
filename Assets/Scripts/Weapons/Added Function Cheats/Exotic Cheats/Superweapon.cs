@@ -133,6 +133,7 @@ public class Superweapon : MonoBehaviour
                     start.GetComponent<LineRenderer>().SetPosition(1, rayOrigin + (firearm.gunCam.transform.forward * 90f));
 
                     superweaponCharge = 0f;
+                    superweaponPercent = 0f;
                     superweaponReset = superweaponPercent;
                     superweaponDamage = 0;
 
