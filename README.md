@@ -2,7 +2,7 @@
 
 ![ATGIG_again](https://github.com/user-attachments/assets/712197db-c4d8-4179-aa3e-41242f8013d4)
 
-Current Version: MVP 0.1.6 (10/27/2025)
+Current Version: MVP 0.1.7 (3/18/2026)
 
 # Contents:
 
