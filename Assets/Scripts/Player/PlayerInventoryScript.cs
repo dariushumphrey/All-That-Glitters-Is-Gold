@@ -9,6 +9,7 @@ public class PlayerInventoryScript : MonoBehaviour
     //Optional
     public string filepath = "inventory.txt";
 
+    public bool sortToggle = false; //Sorts between favorite Weapons and all Weapons if true
     public int lucentFunds;
     public int fogGrenadeCharges = 0; //number of Fogger Grenades
     public int solGrenadeCharges = 0; //number of Solution Grenades
@@ -38,7 +39,10 @@ public class PlayerInventoryScript : MonoBehaviour
 
     //invMonitor - text that displays inventory position/total inventory size
     //rarityCheck - text that displays Weapon rarity
-    private Text invMonitor, rarityCheck, dismantleText;
+    private Text invMonitor, sortingMonitor, favoriteMark, rarityCheck, dismantleText;
+    private bool automateLeft; //Automatically increments selection value if true
+    private bool automateRight;
+    private int automateSelection = 0; //Searches for favorite Weapons on behalf of selection (variable)
     internal int selection, grenadeSelection; //index values used to select Weapons/Grenades
     private float dismantleTimer = 1f;
     private float dismantleTimerReset;
@@ -70,6 +74,8 @@ public class PlayerInventoryScript : MonoBehaviour
         cheatTraitOne = GameObject.Find("weaponCheat (5)").GetComponent<Text>();
         cheatTraitTwo = GameObject.Find("weaponCheat (6)").GetComponent<Text>();
         invMonitor = GameObject.Find("invMonitor").GetComponent<Text>();
+        favoriteMark = GameObject.Find("favoriteWepMark").GetComponent<Text>();
+        sortingMonitor = GameObject.Find("sortingMonitor").GetComponent<Text>();
         rarityCheck = GameObject.Find("weaponRarity").GetComponent<Text>();
         dismantleText = GameObject.Find("deletingText").GetComponent<Text>();
         reticleSprite = GameObject.Find("reticleImage").GetComponent<Image>();
@@ -92,7 +98,9 @@ public class PlayerInventoryScript : MonoBehaviour
         lucentText.gameObject.SetActive(false);
         grenadeText.gameObject.SetActive(false);
         wepStateTimerReset = wepStateTimer;
-        
+
+        sortingMonitor.text = "Sort: Favorite";
+
     }
 
     // Update is called once per frame
@@ -137,8 +145,47 @@ public class PlayerInventoryScript : MonoBehaviour
             }         
         }
 
+        if(weaponPage.gameObject.activeInHierarchy == true)
+        {
+            if(Input.GetKeyDown(KeyCode.F))
+            {
+                if(!inventory[selection].GetComponent<FirearmScript>().favorite)
+                {
+                    inventory[selection].GetComponent<FirearmScript>().favorite = true;
+                }
+
+                else
+                {
+                    inventory[selection].GetComponent<FirearmScript>().favorite = false;
+                }
+            }
+        }
+
+        if(sortToggle)
+        {
+            sortingMonitor.text = "Sort: Favorite";
+        }
+        
+        else
+        {
+            sortingMonitor.text = "Sort: All";
+        }
+
+        if (inventory.Count >= 1)
+        {
+            if(inventory[selection].GetComponent<FirearmScript>().favorite)
+            {
+                favoriteMark.text = "*";
+            }
+
+            else
+            {
+                favoriteMark.text = "";
+            }
+        }
+
         //Hides Inventory page if game is running
-        if(Input.GetKeyDown(KeyCode.DownArrow) && Time.timeScale != 0)
+        if (Input.GetKeyDown(KeyCode.DownArrow) && Time.timeScale != 0)
         {
             weaponPage.gameObject.SetActive(false);
         }
@@ -378,6 +425,84 @@ public class PlayerInventoryScript : MonoBehaviour
     /// </summary>
     private void SwitchInv()
     {
+        if (weaponPage.gameObject.activeInHierarchy == true)
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                if (sortToggle)
+                {
+                    sortToggle = false;
+                }
+
+                else
+                {
+                    sortToggle = true;
+                }
+            }
+        }
+
+        if (automateLeft)
+        {
+            inventory[selection].GetComponent<FirearmScript>().enabled = false;
+            inventory[selection].gameObject.SetActive(false);
+
+            if (automateSelection <= 0 && inventory.Count >= 1)
+            {
+                automateSelection = inventory.Count - 1;
+            }
+
+            else
+            {
+                automateSelection--;
+            }
+
+            if (inventory[automateSelection].GetComponent<FirearmScript>().favorite)
+            {
+                selection = automateSelection;
+
+                inventory[selection].GetComponent<FirearmScript>().enabled = true;
+                reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
+                inventory[selection].gameObject.SetActive(true);
+
+                weaponAmmoPage.gameObject.SetActive(true);
+                lucentText.gameObject.SetActive(true);
+                wepStateTimer = wepStateTimerReset;
+
+                automateLeft = false;
+            }
+        } //Automates Inventory navigation left until a favorite Weapon is found
+
+        if (automateRight)
+        {
+            inventory[selection].GetComponent<FirearmScript>().enabled = false;
+            inventory[selection].gameObject.SetActive(false);
+
+            if (automateSelection >= inventory.Count - 1 && inventory.Count >= 1)
+            {
+                automateSelection = 0;
+            }
+
+            else
+            {
+                automateSelection++;
+            }
+
+            if (inventory[automateSelection].GetComponent<FirearmScript>().favorite)
+            {
+                selection = automateSelection;
+
+                inventory[selection].GetComponent<FirearmScript>().enabled = true;
+                reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
+                inventory[selection].gameObject.SetActive(true);
+
+                weaponAmmoPage.gameObject.SetActive(true);
+                lucentText.gameObject.SetActive(true);
+                wepStateTimer = wepStateTimerReset;
+
+                automateRight = false;
+            }
+        } //Automates Inventory navigation right until a favorite Weapon is found
+
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             //Prevents switching when inventory is empty
@@ -394,50 +519,72 @@ public class PlayerInventoryScript : MonoBehaviour
                 return;
             }
 
+            //Prevents switching if Weapon is reloading
+            if(inventory[selection].GetComponent<FirearmScript>().isReloading)
+            {
+                return;
+            }
+
             //selection--;
 
             //Activates the Weapon at the end of the Inventory if you switch at the front. Otherwise, index goes left.
             if (selection <= 0 && inventory.Count >= 1)
             {
-                selection = inventory.Count - 1;
+                if(sortToggle)
+                {
+                    automateSelection = selection;
+                    automateLeft = true;
+                }
 
-                inventory[selection].GetComponent<FirearmScript>().enabled = true;
-                reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                inventory[selection].gameObject.SetActive(true);
+                else
+                {
+                    selection = inventory.Count - 1;
 
-                inventory[0].GetComponent<FirearmScript>().enabled = false;
-                inventory[0].gameObject.SetActive(false);
+                    inventory[selection].GetComponent<FirearmScript>().enabled = true;
+                    reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
+                    inventory[selection].gameObject.SetActive(true);
 
-                weaponAmmoPage.gameObject.SetActive(true);
-                lucentText.gameObject.SetActive(true);
-                wepStateTimer = wepStateTimerReset;
-                return;
+                    inventory[0].GetComponent<FirearmScript>().enabled = false;
+                    inventory[0].gameObject.SetActive(false);
 
+                    weaponAmmoPage.gameObject.SetActive(true);
+                    lucentText.gameObject.SetActive(true);
+                    wepStateTimer = wepStateTimerReset;
+                    return;
+                }            
             }
 
             else
             {
-                selection--;
+                if(sortToggle)
+                {
+                    automateSelection = selection;
+                    automateLeft = true;
+                }
 
-                //Prevents running off the inventory backwards
-                //if (selection <= -1 && inventory.Count >= 1)
-                //{
-                //    selection = 0;
-                //}
+                else
+                {
+                    selection--;
 
-                inventory[selection].GetComponent<FirearmScript>().enabled = true;
-                reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                inventory[selection].gameObject.SetActive(true);
+                    //Prevents running off the inventory backwards
+                    //if (selection <= -1 && inventory.Count >= 1)
+                    //{
+                    //    selection = 0;
+                    //}
 
-                inventory[selection + 1].GetComponent<FirearmScript>().enabled = false;
-                inventory[selection + 1].gameObject.SetActive(false);
+                    inventory[selection].GetComponent<FirearmScript>().enabled = true;
+                    reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
+                    inventory[selection].gameObject.SetActive(true);
 
-                weaponAmmoPage.gameObject.SetActive(true);
-                lucentText.gameObject.SetActive(true);
-                wepStateTimer = wepStateTimerReset;
-                return;
+                    inventory[selection + 1].GetComponent<FirearmScript>().enabled = false;
+                    inventory[selection + 1].gameObject.SetActive(false);
+
+                    weaponAmmoPage.gameObject.SetActive(true);
+                    lucentText.gameObject.SetActive(true);
+                    wepStateTimer = wepStateTimerReset;
+                    return;
+                }                        
             }
-
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -456,47 +603,71 @@ public class PlayerInventoryScript : MonoBehaviour
                 return;
             }
 
+            //Prevents switching if Weapon is reloading
+            if (inventory[selection].GetComponent<FirearmScript>().isReloading)
+            {
+                return;
+            }
+
             //Activates the Weapon at the front of the Inventory if you switch at the end. Otherwise, index goes right.
             if (selection >= inventory.Count - 1 && inventory.Count >= 1)
             {
-                selection = 0;
+                if (sortToggle)
+                {
+                    automateSelection = selection;
+                    automateRight = true;
+                }
 
-                inventory[selection].GetComponent<FirearmScript>().enabled = true;
-                reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                inventory[selection].gameObject.SetActive(true);
+                else
+                {
+                    selection = 0;
 
-                inventory[inventory.Count - 1].GetComponent<FirearmScript>().enabled = false;
-                inventory[inventory.Count - 1].gameObject.SetActive(false);
+                    inventory[selection].GetComponent<FirearmScript>().enabled = true;
+                    reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
+                    inventory[selection].gameObject.SetActive(true);
 
-                weaponAmmoPage.gameObject.SetActive(true);
-                lucentText.gameObject.SetActive(true);
-                wepStateTimer = wepStateTimerReset;
+                    inventory[inventory.Count - 1].GetComponent<FirearmScript>().enabled = false;
+                    inventory[inventory.Count - 1].gameObject.SetActive(false);
 
-                return;
+                    weaponAmmoPage.gameObject.SetActive(true);
+                    lucentText.gameObject.SetActive(true);
+                    wepStateTimer = wepStateTimerReset;
+
+                    return;
+                }             
             }
 
             else
             {
-                selection++;
+                if (sortToggle)
+                {
+                    automateSelection = selection;
+                    automateRight = true;
+                }
 
-                //Prevents running off the inventory forwards
-                //if (selection >= inventory.Count)
-                //{
-                //    selection = inventory.Count - 1;
-                //}
+                else
+                {
+                    selection++;
 
-                inventory[selection].GetComponent<FirearmScript>().enabled = true;
-                reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                inventory[selection].gameObject.SetActive(true);
+                    //Prevents running off the inventory forwards
+                    //if (selection >= inventory.Count)
+                    //{
+                    //    selection = inventory.Count - 1;
+                    //}
 
-                inventory[selection - 1].GetComponent<FirearmScript>().enabled = false;
-                inventory[selection - 1].gameObject.SetActive(false);
+                    inventory[selection].GetComponent<FirearmScript>().enabled = true;
+                    reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
+                    inventory[selection].gameObject.SetActive(true);
 
-                weaponAmmoPage.gameObject.SetActive(true);
-                lucentText.gameObject.SetActive(true);
-                wepStateTimer = wepStateTimerReset;
+                    inventory[selection - 1].GetComponent<FirearmScript>().enabled = false;
+                    inventory[selection - 1].gameObject.SetActive(false);
 
-                return;
+                    weaponAmmoPage.gameObject.SetActive(true);
+                    lucentText.gameObject.SetActive(true);
+                    wepStateTimer = wepStateTimerReset;
+
+                    return;
+                }         
             }          
         }
     }
@@ -508,70 +679,78 @@ public class PlayerInventoryScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.X))
         {
-            dismantleTimer -= Time.deltaTime;
-            dismantleText.text = "Dismantling...";
-            dismantleText.color = Color.Lerp(Color.red, Color.black, dismantleTimer);
-         
-            if(dismantleTimer <= 0.0f)
+            if(inventory[selection].GetComponent<FirearmScript>().favorite)
             {
-                if (selection <= -1 && inventory.Count <= 0)
+                return;
+            } //Favorite Weapons cannot be dismantled
+
+            else
+            {
+                dismantleTimer -= Time.deltaTime;
+                dismantleText.text = "Dismantling...";
+                dismantleText.color = Color.Lerp(Color.red, Color.black, dismantleTimer);
+
+                if (dismantleTimer <= 0.0f)
                 {
-                    //Debug.Log("Cannot dismantle; no items in inventory");
-                    return;
-                }
-
-                //Creats, assigns gameObject "rid" to disposed Weapon
-                //Inventory removes selected Weapon, "rid" is destroyed
-                GameObject rid = inventory[selection];
-                inventory.RemoveAt(selection);
-                Destroy(rid);
-
-                //selection decrements if equal to or higher than Inventory size
-                if (selection >= inventory.Count)
-                {
-                    selection--;
-
-                    //selection returns to -1 if Inventory size is zero
-                    //Otherwise, activates next Weapon
                     if (selection <= -1 && inventory.Count <= 0)
                     {
-                        selection = -1;
+                        //Debug.Log("Cannot dismantle; no items in inventory");
                         return;
                     }
 
+                    //Creats, assigns gameObject "rid" to disposed Weapon
+                    //Inventory removes selected Weapon, "rid" is destroyed
+                    GameObject rid = inventory[selection];
+                    inventory.RemoveAt(selection);
+                    Destroy(rid);
+
+                    //selection decrements if equal to or higher than Inventory size
+                    if (selection >= inventory.Count)
+                    {
+                        selection--;
+
+                        //selection returns to -1 if Inventory size is zero
+                        //Otherwise, activates next Weapon
+                        if (selection <= -1 && inventory.Count <= 0)
+                        {
+                            selection = -1;
+                            return;
+                        }
+
+                        else
+                        {
+                            inventory[selection].GetComponent<FirearmScript>().enabled = true;
+                            inventory[selection].gameObject.SetActive(true);
+                            reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
+
+                        }
+                    }
+
+                    //selection activates first Weapon in inventory
+                    if (selection <= -1 && inventory.Count >= 1)
+                    {
+                        selection = 0;
+                        inventory[selection].GetComponent<FirearmScript>().enabled = true;
+                        inventory[selection].gameObject.SetActive(true);
+                        reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
+                    }
+
+                    //selection activates current Weapon in inventory
                     else
                     {
                         inventory[selection].GetComponent<FirearmScript>().enabled = true;
                         inventory[selection].gameObject.SetActive(true);
                         reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-
                     }
+
+                    dismantleTimer = dismantleTimerReset;
+
+                    weaponAmmoPage.gameObject.SetActive(true);
+                    lucentText.gameObject.SetActive(true);
+                    wepStateTimer = wepStateTimerReset;
+
                 }
-
-                //selection activates first Weapon in inventory
-                if (selection <= -1 && inventory.Count >= 1)
-                {
-                    selection = 0;
-                    inventory[selection].GetComponent<FirearmScript>().enabled = true;
-                    inventory[selection].gameObject.SetActive(true);
-                    reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                }
-
-                //selection activates current Weapon in inventory
-                else
-                {
-                    inventory[selection].GetComponent<FirearmScript>().enabled = true;
-                    inventory[selection].gameObject.SetActive(true);
-                    reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                }
-
-                dismantleTimer = dismantleTimerReset;
-
-                weaponAmmoPage.gameObject.SetActive(true);
-                lucentText.gameObject.SetActive(true);
-                wepStateTimer = wepStateTimerReset;
-
-            }
+            }           
         }
 
         if (Input.GetKeyUp(KeyCode.X))
@@ -594,9 +773,14 @@ public class PlayerInventoryScript : MonoBehaviour
             cheatOne.text = "Deep Yield (+12% MAG)";
         }
 
-        if (inventory[selection].GetComponent<DeeperYield>())
+        else if (inventory[selection].GetComponent<DeeperYield>())
         {
             cheatOne.text = "Deeper Yield (+24% MAG)";
+        }
+
+        else
+        {
+            cheatOne.text = "";
         }
 
         //Stores -- Cheat 2
@@ -605,9 +789,14 @@ public class PlayerInventoryScript : MonoBehaviour
             cheatTwo.text = "Deep Stores (+15% RES)";
         }
 
-        if (inventory[selection].GetComponent<DeeperStores>())
+        else if (inventory[selection].GetComponent<DeeperStores>())
         {
             cheatTwo.text = "Deeper Stores (+30% RES)";
+        }
+
+        else
+        {
+            cheatTwo.text = "";
         }
 
         //Sights -- Cheat 3
@@ -616,9 +805,14 @@ public class PlayerInventoryScript : MonoBehaviour
             cheatThree.text = "Far Sight (+10% EFR)";
         }
 
-        if (inventory[selection].GetComponent<FartherSight>())
+        else if (inventory[selection].GetComponent<FartherSight>())
         {
             cheatThree.text = "Farther Sight (+20% EFR)";
+        }
+
+        else
+        {
+            cheatThree.text = "";
         }
 
         //Hands -- Cheat 4
@@ -627,19 +821,24 @@ public class PlayerInventoryScript : MonoBehaviour
             cheatFour.text = "Hasty Hands (+15% RLD)";
         }
 
-        if (inventory[selection].GetComponent<HastierHands>())
+        else if (inventory[selection].GetComponent<HastierHands>())
         {
             cheatFour.text = "Hastier Hands (+25% RLD)";
         }
 
-        //Extended Functions -- Cheat 5
-        if (inventory[selection].GetComponent<FirearmScript>().weaponRarity <= 1)
+        else
         {
-            cheatTraitOne.text = " ";
-            cheatTraitTwo.text = " ";
+            cheatFour.text = "";
+        }
+
+        //Extended Functions -- Cheat 5
+        if (inventory[selection].GetComponent<FirearmScript>().weaponRarity <= 2)
+        {
+            cheatTraitOne.text = "";
+            cheatTraitTwo.text = "";
         }
         
-        else if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 2 || inventory[selection].GetComponent<FirearmScript>().weaponRarity == 3)
+        else if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 3)
         {
             //Wait! Now I'm Ready!
             if (inventory[selection].GetComponent<WaitNowImReady>())
@@ -1353,6 +1552,32 @@ public class PlayerInventoryScript : MonoBehaviour
                         write.Write("0");
                     }
 
+                    if (inventory[i].GetComponent<FirearmScript>().favorite)
+                    {
+                        if(inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
+                        {
+                            write.WriteLine("1");
+                        }
+
+                        else
+                        {
+                            write.Write("1");
+                        }                 
+                    }
+
+                    else
+                    {
+                        if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
+                        {
+                            write.WriteLine("0");
+                        }
+
+                        else
+                        {
+                            write.Write("0");
+                        }                 
+                    }
+
                     if (inventory[i].GetComponent<DeepYield>())
                     {
                         write.Write("1");
@@ -1383,7 +1608,7 @@ public class PlayerInventoryScript : MonoBehaviour
                         write.Write("6");
                     }
 
-                    if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
+                    if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2)
                     {
                         if (inventory[i].GetComponent<HastyHands>())
                         {
@@ -1396,7 +1621,7 @@ public class PlayerInventoryScript : MonoBehaviour
                         }
                     }
 
-                    if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 2 || inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
+                    if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
                     {                      
 
                         if (inventory[i].GetComponent<HastyHands>())

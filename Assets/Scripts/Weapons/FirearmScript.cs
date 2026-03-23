@@ -11,6 +11,7 @@ public class FirearmScript : MonoBehaviour
     //-Increasing this number adds a percentage of current damage onto itself
     //-Increasing damage allows this number to inflict more damage in return
     public float damagePercent = 10f;
+    public bool favorite = false; //Marks this Weapon as a favorite if true
 
     public int currentAmmo;
     public int ammoSize; //Max magazine size
@@ -112,6 +113,9 @@ public class FirearmScript : MonoBehaviour
             confirmHit = false;
             confirmKill = false;
             reloadReset = reloadSpeed;
+
+            currentAmmo = ammoSize;
+            reserveAmmo = reserveSize;
         }      
     }
 
@@ -175,14 +179,19 @@ public class FirearmScript : MonoBehaviour
             damage += damageAdd;
             damagePercent = dmgPctReset;
 
-            if (weaponRarity == 2 || weaponRarity == 3)
+            if (weaponRarity == 2)
             {
-                flavorText += " Its rarity grants this Weapon a new property.";
+                flavorText += " This Sought Weapon gains new properties.";
+            }
+
+            if (weaponRarity == 3)
+            {
+                flavorText += " This Coveted Weapon makes use of a new Cheat.";
             }
 
             if (weaponRarity == 4)
             {
-                flavorText += " This Treasured Weapon takes on an additional property.";
+                flavorText += " This Treasured Weapon takes on an additional Cheat.";
             }
 
             if (weaponRarity == 5)
@@ -228,7 +237,7 @@ public class FirearmScript : MonoBehaviour
             return;
         }
 
-        if (saved == true)
+        if (saved == true || weaponRarity <= 1)
         {
             return;
         }
@@ -270,7 +279,7 @@ public class FirearmScript : MonoBehaviour
             return;
         }    
 
-        if (saved == true)
+        if (saved == true || weaponRarity <= 1)
         {
             return;
         }
@@ -299,7 +308,7 @@ public class FirearmScript : MonoBehaviour
             return;
         }
 
-        if (saved == true)
+        if (saved == true || weaponRarity <= 1)
         {
             return;
         }
@@ -393,12 +402,12 @@ public class FirearmScript : MonoBehaviour
             return;
         }
 
-        if (saved == true)
+        if (saved == true || weaponRarity <= 2)
         {
             return;
         }
 
-        if(weaponRarity == 2 || weaponRarity == 3)
+        if(weaponRarity == 3)
         {
             cheatRNG = Random.Range(400, 1201);
             //cheatRNG = 1151;
