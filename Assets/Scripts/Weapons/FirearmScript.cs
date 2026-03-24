@@ -60,6 +60,7 @@ public class FirearmScript : MonoBehaviour
     internal float dpsLinesClear = 2f; //Clears damage history after this time
     internal float dpsLinesReset;
     internal int cheatRNG; // Number used to randomly generate Cheats
+    internal int platformRNG; //Number used to randomly generate Platforms
 
     void Awake()
     {       
@@ -87,6 +88,7 @@ public class FirearmScript : MonoBehaviour
             dpsText = GameObject.Find("dpsText");
             dpsLinesReset = dpsLinesClear;
 
+            PlatformAugment();
             RarityAugment();
             AmmoCheats();
             RangeCheats();
@@ -154,6 +156,44 @@ public class FirearmScript : MonoBehaviour
                 IsFiring();
             }
         }       
+    }
+
+    /// <summary>
+    /// Applies preset Weapon performance/passive effect behaviors
+    /// </summary>
+    public virtual void PlatformAugment()
+    {
+        platformRNG = Random.Range(0, 6);
+
+        if(platformRNG == 0)
+        {
+            gameObject.AddComponent<DefaultPlatform>();
+        }
+
+        else if(platformRNG == 1)
+        {
+            gameObject.AddComponent<EfficientPlatform>();
+        }
+
+        else if(platformRNG == 2)
+        {
+            gameObject.AddComponent<ChatterPlatform>();
+        }
+
+        else if (platformRNG == 3)
+        {
+            gameObject.AddComponent<TemperedPlatform>();
+        }
+
+        else if (platformRNG == 4)
+        {
+            gameObject.AddComponent<SiphonicPlatform>();
+        }
+
+        else
+        {
+            gameObject.AddComponent<MiningPlatform>();
+        }
     }
 
     /// <summary>
@@ -753,6 +793,18 @@ public class FirearmScript : MonoBehaviour
                 {
                     //Affirms confirmed hits for Cheats
                     confirmHit = true;
+
+                    if(gameObject.GetComponent<SiphonicPlatform>())
+                    {
+                        gameObject.GetComponent<SiphonicPlatform>().confirmedHit = true;
+                    }
+
+                    if (gameObject.GetComponent<MiningPlatform>())
+                    {
+                        gameObject.GetComponent<MiningPlatform>().confirmedHit = true;
+                        gameObject.GetComponent<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
+                    }
+
                     if (gameObject.GetComponent<MaliciousWindUp>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                     {
                         gameObject.GetComponent<MaliciousWindUp>().hitConfirmed = true;
@@ -1029,7 +1081,13 @@ public class FirearmScript : MonoBehaviour
 
                 if (hit.collider.gameObject.layer == 8) //If this Weapon strikes an object with the "Surface" layer
                 {
-                    if(gameObject.GetComponent<TheMostResplendent>())
+                    if (gameObject.GetComponent<MiningPlatform>())
+                    {
+                        gameObject.GetComponent<MiningPlatform>().confirmedHit = true;
+                        gameObject.GetComponent<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
+                    }
+
+                    if (gameObject.GetComponent<TheMostResplendent>())
                     {
                         if(gameObject.GetComponent<TheMostResplendent>().stackCount >= 1 && gameObject.GetComponent<TheMostResplendent>().toggle)
                         {

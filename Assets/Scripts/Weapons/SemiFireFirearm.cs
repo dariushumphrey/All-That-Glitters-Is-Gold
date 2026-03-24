@@ -88,6 +88,18 @@ public class SemiFireFirearm : FirearmScript
             {
                 //Affirms confirmed hits for Cheats
                 confirmHit = true;
+
+                if (gameObject.GetComponent<SiphonicPlatform>())
+                {
+                    gameObject.GetComponent<SiphonicPlatform>().confirmedHit = true;
+                }
+
+                if (gameObject.GetComponent<MiningPlatform>())
+                {
+                    gameObject.GetComponent<MiningPlatform>().confirmedHit = true;
+                    gameObject.GetComponent<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
+                }
+
                 if (gameObject.GetComponent<MaliciousWindUp>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                 {
                     gameObject.GetComponent<MaliciousWindUp>().hitConfirmed = true;
@@ -357,6 +369,12 @@ public class SemiFireFirearm : FirearmScript
 
             if (hit.collider.gameObject.layer == 8) //If this Weapon strikes an object with the "Surface" layer
             {
+                if (gameObject.GetComponent<MiningPlatform>())
+                {
+                    gameObject.GetComponent<MiningPlatform>().confirmedHit = true;
+                    gameObject.GetComponent<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
+                }
+
                 if (gameObject.GetComponent<TheMostResplendent>())
                 {
                     if (gameObject.GetComponent<TheMostResplendent>().stackCount >= 1 && gameObject.GetComponent<TheMostResplendent>().toggle)

@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultPlatform : MonoBehaviour
+public class TemperedPlatform : MonoBehaviour
 {
-    private float damagePercent = 0f;
-    private float fireRatePercent = 0f;
-    private float recoilPercent = 0f;
-    private float aimAssistPercent = 0f;
-    private float cameraZoomPercent = 100f;
+    private float damagePercent = 17.5f;
+    private float fireRatePercent = 20f;
+    private float recoilPercent = 20f;
+    private float aimAssistPercent = 50f;
+    private float cameraZoomPercent = 70f;
     private float cameraZoomNew, cameraZoomOld;
 
     private FirearmScript firearm;
@@ -30,7 +30,7 @@ public class DefaultPlatform : MonoBehaviour
 
         recoilPercent /= 100f;
         recoilPercent *= firearm.wepRecoil;
-        firearm.wepRecoil += recoilPercent;
+        firearm.wepRecoil -= recoilPercent;
 
         aimAssistPercent /= 100f;
         aimAssistPercent *= firearm.aimAssistStrength;

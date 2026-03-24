@@ -66,6 +66,11 @@ public class PlayerMeleeScript : MonoBehaviour
                 hit.collider.gameObject.GetComponent<EnemyHealthScript>().inflictDamage(meleeDamage);
                 if(hit.collider.gameObject.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                 {
+                    if(gameObject.GetComponentInChildren<SiphonicPlatform>())
+                    {
+                        gameObject.GetComponentInChildren<SiphonicPlatform>().confirmedMeleeKill = true;
+                    }
+
                     //Produces a Destruct Grenade that detonates instantly
                     if(fulminateCheat != null)
                     {

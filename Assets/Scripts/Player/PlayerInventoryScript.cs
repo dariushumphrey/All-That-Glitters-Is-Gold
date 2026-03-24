@@ -34,7 +34,7 @@ public class PlayerInventoryScript : MonoBehaviour
 
     private Image weaponPage; //In-game Inventory page
     internal Image reticleSprite;
-    private Text wepName, wepStats, flavor;
+    private Text wepName, wepStats, flavor, platformText;
     private Text cheatOne, cheatTwo, cheatThree, cheatFour, cheatTraitOne, cheatTraitTwo;
 
     //invMonitor - text that displays inventory position/total inventory size
@@ -67,6 +67,7 @@ public class PlayerInventoryScript : MonoBehaviour
         wepName = GameObject.Find("weaponName").GetComponent<Text>();
         wepStats = GameObject.Find("weaponStats").GetComponent<Text>();
         flavor = GameObject.Find("flavorText").GetComponent<Text>();
+        platformText = GameObject.Find("platformText").GetComponent<Text>();
         cheatOne = GameObject.Find("weaponCheat (1)").GetComponent<Text>();
         cheatTwo = GameObject.Find("weaponCheat (2)").GetComponent<Text>();
         cheatThree = GameObject.Find("weaponCheat (3)").GetComponent<Text>();
@@ -763,12 +764,43 @@ public class PlayerInventoryScript : MonoBehaviour
     }
 
     /// <summary>
-    /// Displays Stat, Functional Cheats dependent on RNG numbers rolled
+    /// Displays Platforms, Stat and Functional Cheats dependent on component detection
     /// </summary>
     void DisplayCheats()
     {
+        //Platforms
+        if(inventory[selection].GetComponent<DefaultPlatform>())
+        {
+            platformText.text = "Default - Standard performance.";
+        }
+
+        else if (inventory[selection].GetComponent<EfficientPlatform>())
+        {
+            platformText.text = "Efficient - Configured for slow-firing, high-damage.";
+        }
+
+        else if (inventory[selection].GetComponent<ChatterPlatform>())
+        {
+            platformText.text = "Chatter - Configured for fast-firing, low-damage.";
+        }
+
+        else if (inventory[selection].GetComponent<TemperedPlatform>())
+        {
+            platformText.text = "Tempered - Tuned for highest damage, improved firing and control.";
+        }
+
+        else if (inventory[selection].GetComponent<SiphonicPlatform>())
+        {
+            platformText.text = "Siphonic - Enemy hits, Melee kills restore 1% of Health & Shield.";
+        }
+
+        else
+        {
+            platformText.text = "Mining - Fires Lucent explosive rounds.";
+        }
+
         //Yields -- Cheat 1
-        if(inventory[selection].GetComponent<DeepYield>())
+        if (inventory[selection].GetComponent<DeepYield>())
         {
             cheatOne.text = "Deep Yield (+12% MAG)";
         }

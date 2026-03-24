@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultPlatform : MonoBehaviour
+public class EfficientPlatform : MonoBehaviour
 {
-    private float damagePercent = 0f;
-    private float fireRatePercent = 0f;
-    private float recoilPercent = 0f;
-    private float aimAssistPercent = 0f;
-    private float cameraZoomPercent = 100f;
+    private float damagePercent = 10f;
+    private float fireRatePercent = 40f;
+    private float recoilPercent = 10f;
+    private float aimAssistPercent = 35f;
+    private float cameraZoomPercent = 75f;
     private float cameraZoomNew, cameraZoomOld;
 
     private FirearmScript firearm;
@@ -26,15 +26,15 @@ public class DefaultPlatform : MonoBehaviour
 
         fireRatePercent /= 100f;
         fireRatePercent *= firearm.fireRate;
-        firearm.fireRate -= fireRatePercent;
+        firearm.fireRate += fireRatePercent;
 
         recoilPercent /= 100f;
         recoilPercent *= firearm.wepRecoil;
-        firearm.wepRecoil += recoilPercent;
+        firearm.wepRecoil -= recoilPercent;
 
         aimAssistPercent /= 100f;
         aimAssistPercent *= firearm.aimAssistStrength;
-        firearm.aimAssistStrength += aimAssistPercent;
+        firearm.aimAssistStrength -= aimAssistPercent;
 
         cameraZoomOld = 40f;
 
