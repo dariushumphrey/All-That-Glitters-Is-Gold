@@ -30,7 +30,7 @@ public class WeaponManagerScript : MonoBehaviour
     private MenuManagerScript menu;
     private KioskScript kiosk;
     private TransitionManagerScript transition;
-    string wepStr, rarStr, exoStr, cOneStr, cTwoStr, cThreeStr, cFourStr, cFiveStr, cSixStr, favStr; //Strings that describe Weapon attributes
+    string wepStr, rarStr, exoStr, cOneStr, cTwoStr, cThreeStr, cFourStr, cFiveStr, cSixStr, favStr, pltStr; //Strings that describe Weapon attributes
     float dismantleTimerReset, spawnDelayTimer;
     bool track = true; //WeaponManager position assigned to Player position if true
 
@@ -916,32 +916,33 @@ public class WeaponManagerScript : MonoBehaviour
             rarStr = c[1].ToString();
             exoStr = c[2].ToString();
             favStr = c[3].ToString();
+            pltStr = c[4].ToString();
 
-            if (player.readdedWeps[s].Length == 8)
+            if (player.readdedWeps[s].Length == 9)
             {
-                cOneStr = c[4].ToString();
-                cTwoStr = c[5].ToString();
-                cThreeStr = c[6].ToString();
-                cFourStr = c[7].ToString();
+                cOneStr = c[5].ToString();
+                cTwoStr = c[6].ToString();
+                cThreeStr = c[7].ToString();
+                cFourStr = c[8].ToString();
             }          
-
-            if(player.readdedWeps[s].Length == 9)
-            {
-                cOneStr = c[4].ToString();
-                cTwoStr = c[5].ToString();
-                cThreeStr = c[6].ToString();
-                cFourStr = c[7].ToString();
-                cFiveStr = c[8].ToString();
-            }
 
             if(player.readdedWeps[s].Length == 10)
             {
-                cOneStr = c[4].ToString();
-                cTwoStr = c[5].ToString();
-                cThreeStr = c[6].ToString();
-                cFourStr = c[7].ToString();
-                cFiveStr = c[8].ToString();
-                cSixStr = c[9].ToString();
+                cOneStr = c[5].ToString();
+                cTwoStr = c[6].ToString();
+                cThreeStr = c[7].ToString();
+                cFourStr = c[8].ToString();
+                cFiveStr = c[9].ToString();
+            }
+
+            if(player.readdedWeps[s].Length == 11)
+            {
+                cOneStr = c[5].ToString();
+                cTwoStr = c[6].ToString();
+                cThreeStr = c[7].ToString();
+                cFourStr = c[8].ToString();
+                cFiveStr = c[9].ToString();
+                cSixStr = c[10].ToString();
             }
 
             if (wepStr == "1")
@@ -1096,47 +1097,90 @@ public class WeaponManagerScript : MonoBehaviour
                 item.GetComponent<FirearmScript>().favorite = false;
             }
 
-            if (cOneStr == "1")
+            if(pltStr == "1")
             {
-                item.AddComponent<DeepYield>();
+                item.AddComponent<DefaultPlatform>();
             }
 
-            if (cOneStr == "2")
+            if (pltStr == "2")
             {
-                item.AddComponent<DeeperYield>();
+                item.AddComponent<EfficientPlatform>();
             }
 
-            if (cTwoStr == "3")
+            if (pltStr == "3")
             {
-                item.AddComponent<DeepStores>();
+                item.AddComponent<ChatterPlatform>();
             }
 
-            if (cTwoStr == "4")
+            if (pltStr == "4")
             {
-                item.AddComponent<DeeperStores>();
+                item.AddComponent<TemperedPlatform>();
             }
 
-            if (cThreeStr == "5")
+            if (pltStr == "5")
             {
-                item.AddComponent<FarSight>();
+                item.AddComponent<SiphonicPlatform>();
             }
 
-            if (cThreeStr == "6")
+            if (pltStr == "6")
             {
-                item.AddComponent<FartherSight>();
+                item.AddComponent<MiningPlatform>();
             }
 
-            if (cFourStr == "7")
+            if (pltStr == "7")
             {
-                item.AddComponent<HastyHands>();
+                item.AddComponent<TrenchantPlatform>();
             }
 
-            if (cFourStr == "8")
+            if (pltStr == "8")
             {
-                item.AddComponent<HastierHands>();
+                item.AddComponent<CachePlatform>();
             }
 
-            if (player.readdedWeps[s].Length == 9)
+            if(player.readdedWeps[s].Length >= 9)
+            {
+                if (cOneStr == "1")
+                {
+                    item.AddComponent<DeepYield>();
+                }
+
+                if (cOneStr == "2")
+                {
+                    item.AddComponent<DeeperYield>();
+                }
+
+                if (cTwoStr == "3")
+                {
+                    item.AddComponent<DeepStores>();
+                }
+
+                if (cTwoStr == "4")
+                {
+                    item.AddComponent<DeeperStores>();
+                }
+
+                if (cThreeStr == "5")
+                {
+                    item.AddComponent<FarSight>();
+                }
+
+                if (cThreeStr == "6")
+                {
+                    item.AddComponent<FartherSight>();
+                }
+
+                if (cFourStr == "7")
+                {
+                    item.AddComponent<HastyHands>();
+                }
+
+                if (cFourStr == "8")
+                {
+                    item.AddComponent<HastierHands>();
+                }
+            }        
+
+            if (player.readdedWeps[s].Length == 10)
             {
                 if (cFiveStr == "0")
                 {
@@ -1251,7 +1295,7 @@ public class WeaponManagerScript : MonoBehaviour
                 }
             }
 
-            if (player.readdedWeps[s].Length == 10)
+            if (player.readdedWeps[s].Length == 11)
             {
                 //Exotic Functional Cheats
                 if (cFiveStr == "A")

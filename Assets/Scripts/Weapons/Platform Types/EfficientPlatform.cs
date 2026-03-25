@@ -8,7 +8,7 @@ public class EfficientPlatform : MonoBehaviour
     private float fireRatePercent = 40f;
     private float recoilPercent = 10f;
     private float aimAssistPercent = 35f;
-    private float cameraZoomPercent = 75f;
+    private float cameraZoomPercent = 80f;
     private float cameraZoomNew, cameraZoomOld;
 
     private FirearmScript firearm;

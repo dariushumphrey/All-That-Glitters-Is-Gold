@@ -163,37 +163,92 @@ public class FirearmScript : MonoBehaviour
     /// </summary>
     public virtual void PlatformAugment()
     {
-        platformRNG = Random.Range(0, 6);
+        if (isExotic == true)
+        {
+            if (cheatOverride == -1)
+            {
+                gameObject.AddComponent<SiphonicPlatform>();
+            } //Exotic Full Fire Rifle receives the Siphonic platform
+
+            if (cheatOverride == -2)
+            {
+                gameObject.AddComponent<ChatterPlatform>();
+            } //Exotic SMG receives the Chatter platform
+
+            if (cheatOverride == -3)
+            {
+                gameObject.AddComponent<EfficientPlatform>();
+            } //Exotic Pistol receives the Efficient platform
+
+            if (cheatOverride == -4)
+            {
+                gameObject.AddComponent<TemperedPlatform>();
+            } //Exotic Shotgun receives the Tempered platform
+
+            if (cheatOverride == -5)
+            {
+                gameObject.AddComponent<CachePlatform>();
+            } //Exotic Single Fire Rifle receives the Cache platform
+
+            if (cheatOverride == -6)
+            {
+                gameObject.AddComponent<TrenchantPlatform>();
+            } //Exotic Semi Fire Rifle receives the Trenchant platform
+
+            if (cheatOverride == -7)
+            {
+                gameObject.AddComponent<MiningPlatform>();
+            } //Exotic Machine Gun receives the Mining platform
+
+            return;
+        }
+
+        if (saved == true)
+        {
+            return;
+        }
+
+        platformRNG = Random.Range(0, 8);
 
         if(platformRNG == 0)
         {
             gameObject.AddComponent<DefaultPlatform>();
-        }
+        } //Default Platform
 
         else if(platformRNG == 1)
         {
             gameObject.AddComponent<EfficientPlatform>();
-        }
+        } //Efficient Platform
 
         else if(platformRNG == 2)
         {
             gameObject.AddComponent<ChatterPlatform>();
-        }
+        } //Chatter Platform
 
         else if (platformRNG == 3)
         {
             gameObject.AddComponent<TemperedPlatform>();
-        }
+        } //Tempered Platform
 
         else if (platformRNG == 4)
         {
             gameObject.AddComponent<SiphonicPlatform>();
-        }
+        } //Siphonic Platform
+
+        else if (platformRNG == 5)
+        {
+            gameObject.AddComponent<MiningPlatform>();
+        } //Mining Platform
+
+        else if (platformRNG == 6)
+        {
+            gameObject.AddComponent<TrenchantPlatform>();
+        } //Trenchant Platform
 
         else
         {
-            gameObject.AddComponent<MiningPlatform>();
-        }
+            gameObject.AddComponent<CachePlatform>();
+        } //Cache Platform
     }
 
     /// <summary>
@@ -803,6 +858,12 @@ public class FirearmScript : MonoBehaviour
                     {
                         gameObject.GetComponent<MiningPlatform>().confirmedHit = true;
                         gameObject.GetComponent<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
+                    }
+
+                    if (gameObject.GetComponent<TrenchantPlatform>())
+                    {
+                        gameObject.GetComponent<TrenchantPlatform>().confirmedHit = true;
+                        gameObject.GetComponent<TrenchantPlatform>().enemy = hit.collider.gameObject;
                     }
 
                     if (gameObject.GetComponent<MaliciousWindUp>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)

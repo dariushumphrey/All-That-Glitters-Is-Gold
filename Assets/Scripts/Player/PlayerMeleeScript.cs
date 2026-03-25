@@ -64,7 +64,14 @@ public class PlayerMeleeScript : MonoBehaviour
             if (hit.collider.tag == "Enemy")
             {
                 hit.collider.gameObject.GetComponent<EnemyHealthScript>().inflictDamage(meleeDamage);
-                if(hit.collider.gameObject.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
+
+                if (gameObject.GetComponentInChildren<TrenchantPlatform>())
+                {
+                    gameObject.GetComponentInChildren<TrenchantPlatform>().confirmedMeleeHit = true;
+                    gameObject.GetComponentInChildren<TrenchantPlatform>().enemy = hit.collider.gameObject;
+                }
+
+                if (hit.collider.gameObject.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                 {
                     if(gameObject.GetComponentInChildren<SiphonicPlatform>())
                     {

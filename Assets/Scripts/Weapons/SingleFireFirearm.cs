@@ -67,6 +67,12 @@ public class SingleFireFirearm : FirearmScript
                         gameObject.GetComponent<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
                     }
 
+                    if (gameObject.GetComponent<TrenchantPlatform>())
+                    {
+                        gameObject.GetComponent<TrenchantPlatform>().confirmedHit = true;
+                        gameObject.GetComponent<TrenchantPlatform>().enemy = hit.collider.gameObject;
+                    }
+
                     if (gameObject.GetComponent<MaliciousWindUp>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                     {
                         gameObject.GetComponent<MaliciousWindUp>().hitConfirmed = true;
