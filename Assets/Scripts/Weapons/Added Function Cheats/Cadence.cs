@@ -83,6 +83,19 @@ public class Cadence : MonoBehaviour
         }
     }
 
+    public void RemoteProc()
+    {
+        if (firearm.weaponRarity != 5)
+        {
+            deadCount++;
+        }
+
+        else
+        {
+            shotCount++;
+        }
+    }
+
     IEnumerator ClearText()
     {
         yield return new WaitForSeconds(0.5f);

@@ -98,12 +98,13 @@ public class Superweapon : MonoBehaviour
                     Vector3 rayOrigin = firearm.gunCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
 
                     GameObject start = new GameObject();
-                    GameObject.Destroy(start, 0.1f);
+                    GameObject.Destroy(start, 0.3f);
 
                     start.name = "Trail";
                     start.AddComponent<LineRenderer>();
                     start.GetComponent<LineRenderer>().startWidth = 1f;
                     start.GetComponent<LineRenderer>().endWidth = 1f;
+                    start.GetComponent<LineRenderer>().widthMultiplier = 10f;
                     start.GetComponent<LineRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
                     start.GetComponent<LineRenderer>().material = superweaponShotMaterial;
                     start.GetComponent<LineRenderer>().SetPosition(0, firearm.barrel.transform.position);

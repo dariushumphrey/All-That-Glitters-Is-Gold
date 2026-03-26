@@ -14,6 +14,8 @@ public class MunitionScript : MonoBehaviour
     public LayerMask contactOnly; //Ensures Raycast accounts for Surfaces
     public List<GameObject> targets = new List<GameObject>();
 
+    private bool killConfirmed, hitConfirmed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,18 +50,8 @@ public class MunitionScript : MonoBehaviour
         foreach (Collider contact in affected)
         {
             if(contact.CompareTag("Enemy"))
-            {
-                targets.Add(contact.gameObject);
-
-                if (contact.GetComponent<EnemyHealthScript>() != null)
-                {
-                    contact.GetComponent<EnemyHealthScript>().inflictDamage(explosiveDamage);
-                    if (contact.GetComponent<EnemyHealthScript>().healthCurrent <= 0 && contact.GetComponent<Rigidbody>() == null)
-                    {
-                        contact.gameObject.AddComponent<Rigidbody>();
-                        contact.gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
-                    }
-                }
+            {               
+                targets.Add(contact.gameObject);             
             }
 
             if (contact.CompareTag("Lucent"))
@@ -93,14 +85,75 @@ public class MunitionScript : MonoBehaviour
 
         }
 
-        if(targets.Count >= 1)
+        if (targets.Count >= 1)
         {
-            for(int t = 0; t < targets.Count; t++)
+            for (int t = 0; t < targets.Count; t++)
             {
-                hostLauncher.GetComponent<LauncherFirearm>().detectedTargets.Add(targets[t]);
+                if (targets[t].GetComponent<EnemyHealthScript>() != null)
+                {
+                    targets[t].GetComponent<EnemyHealthScript>().inflictDamage(explosiveDamage);
+
+                    if (hostLauncher.GetComponent<Efficacy>())
+                    {
+                        hostLauncher.GetComponent<Efficacy>().RemoteProc();
+                    }
+
+                    if (hostLauncher.GetComponent<MaliciousWindUp>())
+                    {
+                        hostLauncher.GetComponent<MaliciousWindUp>().RemoteProc();
+                    }
+
+                    if (hostLauncher.GetComponent<PositiveNegative>())
+                    {
+                        hostLauncher.GetComponent<PositiveNegative>().applyOn.Add(targets[t]);
+                        hostLauncher.GetComponent<PositiveNegative>().RemoteProc();
+                    }
+
+                    if (hostLauncher.GetComponent<Cadence>())
+                    {
+                        hostLauncher.GetComponent<Cadence>().clusterPosition = targets[t].transform.position + (Vector3.up * 0.01f);
+                        hostLauncher.GetComponent<Cadence>().RemoteProc();
+                    }
+
+                    if (targets[t].GetComponent<EnemyHealthScript>().healthCurrent <= 0)
+                    {
+                        if (hostLauncher.GetComponent<WaitNowImReady>())
+                        {
+                            hostLauncher.GetComponent<WaitNowImReady>().RemoteProc();
+                        }
+
+                        if (hostLauncher.GetComponent<Inoculated>())
+                        {
+                            hostLauncher.GetComponent<Inoculated>().RemoteProc();
+                        }
+
+                        if (hostLauncher.GetComponent<RudeAwakening>())
+                        {
+                            hostLauncher.GetComponent<RudeAwakening>().RemoteProc();
+                        }
+
+                        if (hostLauncher.GetComponent<NotWithAStick>())
+                        {
+                            hostLauncher.GetComponent<NotWithAStick>().RemoteProc();
+                        }
+
+                        if (hostLauncher.GetComponent<Cadence>())
+                        {
+                            hostLauncher.GetComponent<Cadence>().clusterPosition = targets[t].transform.position + (Vector3.up * 0.01f);
+                            hostLauncher.GetComponent<Cadence>().RemoteProc();
+                        }
+
+                        if (targets[t].GetComponent<Rigidbody>() == null)
+                        {
+                            targets[t].gameObject.AddComponent<Rigidbody>();
+                            targets[t].gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
+                        }
+                    }
+                }
             }
 
-            hostLauncher.GetComponent<LauncherFirearm>().ExtendedFunctions();
+            targets.Clear();
+            //hostLauncher.GetComponent<LauncherFirearm>().ExtendedFunctions();
         }
 
         GameObject effect = Instantiate(detonationEffect, transform.position, Quaternion.identity);

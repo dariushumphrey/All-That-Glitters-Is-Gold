@@ -228,7 +228,7 @@ MonoBehaviour:
   effectiveRange: 30
   range: 50
   reloadSpeed: 3
-  wepRecoil: 2
+  wepRecoil: 0.6
   aimAssistStrength: 0.1
   isExotic: 0
   flavorText: A Grenade Launcher. For when clearance is demanded.

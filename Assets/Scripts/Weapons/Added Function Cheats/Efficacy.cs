@@ -73,6 +73,23 @@ public class Efficacy : MonoBehaviour
         }
     }
 
+    public void RemoteProc()
+    {
+        firearm.damage += dmgAdd;
+
+        if (firearm.weaponRarity == 5 && !firearm.isExotic)
+        {
+            if (firearm.damage >= damageRoof)
+            {
+                firearm.damage = damageRoof;
+            }
+        }
+
+        proc.GetComponent<Text>().text = "Efficacy";
+        hitConfirmed = false;
+        StartCoroutine(ClearText());
+    }
+
     IEnumerator ClearText()
     {
         yield return new WaitForSeconds(1.5f);

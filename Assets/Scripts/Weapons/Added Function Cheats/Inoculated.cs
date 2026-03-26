@@ -34,7 +34,7 @@ public class Inoculated : MonoBehaviour
         healthPercent *= player.playerHealthMax;
         healthGain = (int)healthPercent;
 
-        proc.GetComponent<Text>().text = "";
+        //proc.GetComponent<Text>().text = "";
     }
 
     // Update is called once per frame
@@ -70,6 +70,31 @@ public class Inoculated : MonoBehaviour
                 killConfirmed = false;
             }
         }     
+    }
+
+    public void RemoteProc()
+    {
+        if (player.playerHealth >= player.playerHealthMax)
+        {
+            player.playerHealth = player.playerHealthMax;
+        }
+
+        else
+        {
+            player.playerHealth += healthGain;
+            if (player.playerHealth >= player.playerHealthMax)
+            {
+                player.playerHealth = player.playerHealthMax;
+            }
+
+            proc.GetComponent<Text>().text = "Inoculated";
+            StartCoroutine(ClearText());
+
+            var main = activation.GetComponent<ParticleSystem>().main;
+            main.startColor = color;
+
+            Instantiate(activation, gameObject.transform.root.gameObject.transform.position, transform.rotation);
+        }
     }
 
     IEnumerator ClearText()

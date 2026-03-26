@@ -134,6 +134,24 @@ public class RudeAwakening : MonoBehaviour
         }
     }
 
+    public void RemoteProc()
+    {
+        if (firearm.weaponRarity == 5)
+        {
+            waveStacks += 2;
+        }
+
+        else
+        {
+            waveStacks++;
+        }
+
+        if (waveStacks >= waveStacksMax)
+        {
+            waveStacks = waveStacksMax;
+        }
+    }
+
     private void OnDisable()
     {
         if (proc != null)

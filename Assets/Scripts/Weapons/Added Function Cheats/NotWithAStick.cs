@@ -63,6 +63,10 @@ public class NotWithAStick : MonoBehaviour
             if (firearm.weaponRarity != 5 || firearm.isExotic)
             {
                 firearm.effectiveRange = efReset;
+                if (firearm is LauncherFirearm)
+                {
+                    firearm.GetComponent<LauncherFirearm>().shotForceForward = efReset;
+                }
                 proc.GetComponent<Text>().text = "";
             }
         }
@@ -79,6 +83,32 @@ public class NotWithAStick : MonoBehaviour
                 firearm.aimAssistStrength = aaReset;
                 benefitTimer = benefitTimerReset;
                 proc.GetComponent<Text>().text = "";
+            }
+        }
+    }
+
+    public void RemoteProc()
+    {
+        firearm.effectiveRange += efIncrease;
+        if(firearm is LauncherFirearm)
+        {
+            firearm.GetComponent<LauncherFirearm>().shotForceForward += efIncrease;
+        }
+
+        proc.GetComponent<Text>().text = "Not with a Stick";
+
+        if (firearm.effectiveRange >= firearm.range)
+        {
+            firearm.effectiveRange = firearm.range;
+            if (firearm is LauncherFirearm)
+            {
+                firearm.GetComponent<LauncherFirearm>().shotForceForward = firearm.range;
+            }
+
+            if (firearm.weaponRarity == 5 && !firearm.isExotic)
+            {
+                maxed = true;
+                firearm.aimAssistStrength = 0.5f;
             }
         }
     }

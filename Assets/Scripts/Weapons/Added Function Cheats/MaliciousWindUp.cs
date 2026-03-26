@@ -102,6 +102,22 @@ public class MaliciousWindUp : MonoBehaviour
         }
     }
 
+    public void RemoteProc()
+    {
+        firearm.reloadSpeed -= decreasePercent;
+        proc.GetComponent<Text>().text = "Malicious Wind-Up Ready";
+
+        if (firearm.weaponRarity == 5 && !firearm.isExotic)
+        {
+            //Confirmed kills adds % of max Reserves onto current Reserves
+            firearm.reserveAmmo += reserveAdd;
+            if (firearm.reserveAmmo >= firearm.reserveSize)
+            {
+                firearm.reserveAmmo = firearm.reserveSize;
+            }
+        }
+    }
+
     IEnumerator ResetReload()
     {
         yield return new WaitForSeconds(firearm.reloadSpeed);

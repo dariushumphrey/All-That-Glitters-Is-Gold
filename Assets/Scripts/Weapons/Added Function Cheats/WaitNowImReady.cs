@@ -71,6 +71,31 @@ public class WaitNowImReady : MonoBehaviour
         }      
     }
 
+    public void RemoteProc()
+    {
+        if (player.playerShield >= player.playerShieldMax)
+        {
+            player.playerShield = player.playerShieldMax;
+        }
+
+        else
+        {
+            player.playerShield += shieldGain;
+            if (player.playerShield >= player.playerShieldMax)
+            {
+                player.playerShield = player.playerShieldMax;
+            }
+
+            proc.GetComponent<Text>().text = "Wait! Now, I'm Ready!";
+            StartCoroutine(ClearText());
+
+            var main = activation.GetComponent<ParticleSystem>().main;
+            main.startColor = color;
+
+            Instantiate(activation, gameObject.transform.root.gameObject.transform.position, transform.rotation);
+        }
+    }
+
     IEnumerator ClearText()
     {
         yield return new WaitForSeconds(1f);
