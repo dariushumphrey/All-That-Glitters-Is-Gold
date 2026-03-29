@@ -137,6 +137,13 @@ public class GoodThingsCome : MonoBehaviour
         }      
     }
 
+    public void RemoteProc()
+    {
+        inFirefight = true;
+        hitConfirmed = false;
+        granterStop = granterReset;
+    }
+
     /// <summary>
     /// Returns modified damage received back to the Player as Health/Shield
     /// </summary>

@@ -89,4 +89,18 @@ public class TrenchantPlatform : MonoBehaviour
             }
         }
     }
+
+    public void RemoteProc()
+    {
+        if (!enemy.GetComponent<DebuffScript>())
+        {
+            enemy.AddComponent<DebuffScript>();
+            enemy = null;
+        }
+
+        else
+        {
+            enemy = null;
+        }
+    }
 }

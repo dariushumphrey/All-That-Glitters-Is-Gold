@@ -120,6 +120,17 @@ public class Enshroud : MonoBehaviour
         }
     }
 
+    public void RemoteProc()
+    {
+        melee.meleeRange += meleeExtend;
+        if (melee.meleeRange >= meleeCap)
+        {
+            melee.meleeRange = meleeCap;
+        }
+
+        buffTimer = buffTimerReset;
+    }
+
     private void OnDisable()
     {
         if (proc != null)

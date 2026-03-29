@@ -95,6 +95,28 @@ public class TheMostResplendent : MonoBehaviour
         }
     }
 
+    public void RemoteProc()
+    {
+        //Increments confirmed hits up to goal number
+        //Reaching goal number grants one stack
+        if (stackCount != stackMax)
+        {
+            shots++;
+            if (shots >= shotMaximum)
+            {
+                if (!done)
+                {
+                    stackCount++;
+                    done = true;
+                }
+
+                shots = 0;
+            }
+
+            done = false;
+        }
+    }
+
     private void OnDisable()
     {
         if (proc != null)

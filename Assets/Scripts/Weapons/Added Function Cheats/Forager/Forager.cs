@@ -156,6 +156,64 @@ public class Forager : MonoBehaviour
         }
     }
 
+    public void RemoteProc()
+    {
+        if (firearm.weaponRarity == 5)
+        {
+            shots++;
+            if (shots >= shotMaximum)
+            {
+                if (!done)
+                {
+                    ForagerBurst();
+                    done = true;
+                }
+
+                shots = 0;
+            }
+
+            done = false;
+        }
+
+        for (int b = 0; b <= burstCount; b++)
+        {
+            int index = Random.Range(0, 4);
+
+            GameObject pickup = Instantiate(burst[index], burstPosition, Quaternion.Euler(new Vector3(Random.Range(0f, 360f), 0f, 0f)));
+            pickup.name = burst[index].name;
+
+            if (pickup.GetComponent<ForagerHealthScript>())
+            {
+                pickup.GetComponent<ForagerHealthScript>().healthAdd = healthAssign;
+            }
+
+            if (pickup.GetComponent<ForagerShieldScript>())
+            {
+                pickup.GetComponent<ForagerShieldScript>().shieldAdd = shieldAssign;
+            }
+
+            if (pickup.GetComponent<ForagerAmmoScript>())
+            {
+                pickup.GetComponent<ForagerAmmoScript>().ammoAdd = ammoAssign;
+                pickup.GetComponent<ForagerAmmoScript>().overflowCap = overflowAssign;
+            }
+
+            if (pickup.GetComponent<LucentScript>())
+            {
+                pickup.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+                pickup.GetComponent<LucentScript>().ShatterCalculation();
+                pickup.GetComponent<LucentScript>().shatterDelayTime = 0.25f;
+                pickup.GetComponent<LucentScript>().StartCoroutine(pickup.GetComponent<LucentScript>().Shatter());
+            }
+
+            //pickup.GetComponent<Rigidbody>().AddForce(pickup.transform.forward, ForceMode.Impulse);
+        }
+
+        proc.GetComponent<Text>().text = "Forager";
+        StartCoroutine(ClearText());
+    }
+
     IEnumerator ClearText()
     {
         yield return new WaitForSeconds(1f);

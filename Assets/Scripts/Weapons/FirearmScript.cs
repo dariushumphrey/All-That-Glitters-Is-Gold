@@ -504,7 +504,7 @@ public class FirearmScript : MonoBehaviour
 
         if(weaponRarity == 3)
         {
-            cheatRNG = Random.Range(400, 1201);
+            cheatRNG = Random.Range(400, 1251);
             //cheatRNG = 1151;
             if (cheatRNG <= 450)
             {
@@ -621,17 +621,24 @@ public class FirearmScript : MonoBehaviour
                 procTwo.GetComponent<Text>().text = " ";
             }
 
-            if (cheatRNG > 1150)
+            if (cheatRNG > 1150 && cheatRNG <= 1200)
             {
                 gameObject.AddComponent<GaleForceWinds>();
                 gameObject.GetComponent<GaleForceWinds>().proc = procOne;
+                procTwo.GetComponent<Text>().text = " ";
+            }
+
+            if (cheatRNG > 1200)
+            {
+                gameObject.AddComponent<ActivatorDrone>();
+                gameObject.GetComponent<ActivatorDrone>().proc = procOne;
                 procTwo.GetComponent<Text>().text = " ";
             }
         }
         
         if(weaponRarity >= 4)
         {
-            cheatRNG = Random.Range(400, 481);
+            cheatRNG = Random.Range(400, 491);
             if(cheatRNG <= 410)
             {
                 gameObject.AddComponent<AllElseFails>();
@@ -678,10 +685,16 @@ public class FirearmScript : MonoBehaviour
                 gameObject.GetComponent<Fulminate>().proc = procOne;
             }
 
-            if(cheatRNG > 470)
+            if(cheatRNG > 470 && cheatRNG <= 480)
             {
                 gameObject.AddComponent<Forager>();
                 gameObject.GetComponent<Forager>().proc = procOne;
+            }
+
+            if (cheatRNG > 480)
+            {
+                gameObject.AddComponent<ActivatorDrone>();
+                gameObject.GetComponent<ActivatorDrone>().proc = procOne;
             }
 
             cheatRNG = Random.Range(480, 561);

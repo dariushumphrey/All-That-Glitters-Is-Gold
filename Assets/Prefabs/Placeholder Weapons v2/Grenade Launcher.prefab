@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feb382564903c7e41a5c0f1034a85a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 3000
+  damage: 5000
   damagePercent: 10
   favorite: 0
   currentAmmo: 0
@@ -225,8 +225,8 @@ MonoBehaviour:
   weaponRarity: 1
   cheatOverride: 0
   fireRate: 0.4
-  effectiveRange: 30
-  range: 50
+  effectiveRange: 50
+  range: 100
   reloadSpeed: 3
   wepRecoil: 0.6
   aimAssistStrength: 0.1

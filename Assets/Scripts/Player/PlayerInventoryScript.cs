@@ -999,6 +999,13 @@ public class PlayerInventoryScript : MonoBehaviour
                     "[E] - Cast traveling winds that applies Health and Slowed debuffs to in-range Enemies. Lasts 45s.";
             }
 
+            //Activator Drone
+            if (inventory[selection].GetComponent<ActivatorDrone>())
+            {
+                cheatTraitOne.text = "Activator Drone" + '\n' +
+                    "Passively attacks enemies, or can receive a target by aiming. Attacks trigger weapon passives.";
+            }
+
             cheatTraitTwo.text = " ";
         }
 
@@ -1109,6 +1116,19 @@ public class PlayerInventoryScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Forager" + " (Fated)" + '\n' +
                     "Kills produce stronger bursts of Lucent clusters, Health, Shield, and Ammo pickups. Every tenth hit on Bosses produce a burst.";
+                }
+            }
+
+            //Activator Drone
+            if (inventory[selection].GetComponent<ActivatorDrone>())
+            {
+                cheatTraitOne.text = "Activator Drone" + '\n' +
+                    "Passively attacks enemies, or can receive a target by aiming. Attacks trigger weapon passives.";
+
+                if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
+                {
+                    cheatTraitOne.text = "Activator Drone" + " (Fated)" + '\n' +
+                    "The drone can activate Cheats ''Wait! Now I'm Ready!'', Efficacy, Inoculated, Cadence, and Enshroud.";
                 }
             }
 
@@ -1564,6 +1584,11 @@ public class PlayerInventoryScript : MonoBehaviour
                         write.Write("7");                      
                     }
 
+                    if (inventory[i].name == "Grenade Launcher")
+                    {
+                        write.Write("8");
+                    }
+
                     if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
                     {
                         write.Write("1");
@@ -1850,6 +1875,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             {
                                 write.WriteLine("^");
                             }
+
+                            if (inventory[i].GetComponent<ActivatorDrone>())
+                            {
+                                write.WriteLine("&");
+                            }
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -1985,6 +2015,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Forager>())
                                 {
                                     write.Write("#");
+                                }
+
+                                if (inventory[i].GetComponent<ActivatorDrone>())
+                                {
+                                    write.Write("&");
                                 }
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())

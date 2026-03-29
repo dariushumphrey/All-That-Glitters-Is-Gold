@@ -115,6 +115,21 @@ public class Fulminate : MonoBehaviour
         }
     }
 
+    public void RemoteProc()
+    {
+        player.fulminatePresent = true;
+
+        destructDamage += dmgAdd;
+        if (destructDamage >= dmgCap)
+        {
+            destructDamage = dmgCap;
+        }
+
+        player.fulminateBuff = destructDamage;
+
+        buffTimer = buffTimerReset;
+    }
+
     IEnumerator ClearText()
     {
         yield return new WaitForSeconds(1.5f);

@@ -68,4 +68,23 @@ public class MiningPlatform : MonoBehaviour
             confirmedHit = false;
         }
     }
+
+    public void RemoteProc()
+    {
+        GameObject lucent = Instantiate(cluster, clusterPosition, transform.rotation);
+        lucent.name = cluster.name;
+        lucent.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+
+        lucent.GetComponent<LucentScript>().shatterDelayTime = 0f;
+        //lucent.GetComponent<LucentScript>().lucentGift = (int)damagePercent;
+        lucent.GetComponent<LucentScript>().lucentGift *= firearm.weaponRarity;
+        lucent.GetComponent<LucentScript>().ShatterCalculation();
+        lucent.GetComponent<LucentScript>().StartCoroutine(lucent.GetComponent<LucentScript>().Shatter());
+
+        //inventory.lucentFunds += lucentAdd;
+        //if(inventory.lucentFunds >= 100000)
+        //{
+        //    inventory.lucentFunds = 100000;
+        //}
+    }
 }

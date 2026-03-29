@@ -994,6 +994,13 @@ public class WeaponManagerScript : MonoBehaviour
                 item.name = weapons[6].name;            
             }
 
+            if (wepStr == "8")
+            {
+                //Debug.Log("Respawning Grenade Launcher");
+                item = Instantiate(weapons[7], transform.position, transform.rotation);
+                item.name = weapons[7].name;
+            }
+
             if (rarStr == "1")
             {
                 item.GetComponent<FirearmScript>().weaponRarity = 1;
@@ -1293,6 +1300,13 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procOne;
                     item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                 }
+
+                if (cFiveStr == "&")
+                {
+                    item.AddComponent<ActivatorDrone>();
+                    item.GetComponent<ActivatorDrone>().proc = item.GetComponent<FirearmScript>().procOne;
+                    item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                }
             }
 
             if (player.readdedWeps[s].Length == 11)
@@ -1394,6 +1408,12 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     item.AddComponent<Forager>();
                     item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procOne;
+                }
+
+                if (cFiveStr == "&")
+                {
+                    item.AddComponent<ActivatorDrone>();
+                    item.GetComponent<ActivatorDrone>().proc = item.GetComponent<FirearmScript>().procOne;
                 }
 
                 //Pay to Win pairing

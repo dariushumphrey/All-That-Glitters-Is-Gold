@@ -87,4 +87,19 @@ public class SiphonicPlatform : MonoBehaviour
             confirmedMeleeKill = false;
         }
     }
+
+    public void RemoteProc()
+    {
+        status.playerHealth += healthAdd;
+        if (status.playerHealth >= status.playerHealthMax)
+        {
+            status.playerHealth = status.playerHealthMax;
+        }
+
+        status.playerShield += shieldAdd;
+        if (status.playerShield >= status.playerShieldMax)
+        {
+            status.playerShield = status.playerShieldMax;
+        }
+    }
 }
