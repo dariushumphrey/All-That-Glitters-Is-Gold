@@ -945,56 +945,56 @@ public class WeaponManagerScript : MonoBehaviour
                 cSixStr = c[10].ToString();
             }
 
-            if (wepStr == "1")
+            if (wepStr == "0")
             {
                 //Debug.Log("Respawning Full Fire Rifle");
                 item = Instantiate(weapons[0], transform.position, transform.rotation);
                 item.name = weapons[0].name;  
             }
 
-            if (wepStr == "2")
+            if (wepStr == "1")
             {
                 //Debug.Log("Respawning Machine Gun");
                 item = Instantiate(weapons[1], transform.position, transform.rotation);
                 item.name = weapons[1].name;           
             }
 
-            if (wepStr == "3")
+            if (wepStr == "2")
             {
                 //Debug.Log("Respawning Pistol");
                 item = Instantiate(weapons[2], transform.position, transform.rotation);
                 item.name = weapons[2].name;          
             }
 
-            if (wepStr == "4")
+            if (wepStr == "3")
             {
                 //Debug.Log("Respawning Semi Fire Rifle");
                 item = Instantiate(weapons[3], transform.position, transform.rotation);
                 item.name = weapons[3].name;             
             }
 
-            if (wepStr == "5")
+            if (wepStr == "4")
             {
                 //Debug.Log("Respawning Shotgun");
                 item = Instantiate(weapons[4], transform.position, transform.rotation);
                 item.name = weapons[4].name;              
             }
 
-            if (wepStr == "6")
+            if (wepStr == "5")
             {
                 //Debug.Log("Respawning Single Fire Rifle");
                 item = Instantiate(weapons[5], transform.position, transform.rotation);
                 item.name = weapons[5].name;           
             }
 
-            if (wepStr == "7")
+            if (wepStr == "6")
             {
                 //Debug.Log("Respawning SMG");
                 item = Instantiate(weapons[6], transform.position, transform.rotation);
                 item.name = weapons[6].name;            
             }
 
-            if (wepStr == "8")
+            if (wepStr == "7")
             {
                 //Debug.Log("Respawning Grenade Launcher");
                 item = Instantiate(weapons[7], transform.position, transform.rotation);

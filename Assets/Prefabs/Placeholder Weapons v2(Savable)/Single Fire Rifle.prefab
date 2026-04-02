@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1640342962202232329, guid: deeff10e063288b49b130d02369c127e, type: 3}
       propertyPath: m_Name
-      value: testSingleFireRifle
+      value: Single Fire Rifle
       objectReference: {fileID: 0}
     - target: {fileID: 1640342962202232330, guid: deeff10e063288b49b130d02369c127e, type: 3}
       propertyPath: saved

@@ -1305,7 +1305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2226015776433168421, guid: dc76dc46f0c39dd4781fabde742ae707, type: 3}
       propertyPath: ShapeModule.radius.value
-      value: 1.19
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 2226015776433168421, guid: dc76dc46f0c39dd4781fabde742ae707, type: 3}
       propertyPath: ShapeModule.radiusThickness
@@ -1325,7 +1325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2226015776433168421, guid: dc76dc46f0c39dd4781fabde742ae707, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 0.6
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2226015776433168421, guid: dc76dc46f0c39dd4781fabde742ae707, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
@@ -1419,7 +1419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2226015776433168421, guid: dc76dc46f0c39dd4781fabde742ae707, type: 3}
       propertyPath: ShapeModule.radius.value
-      value: 1.19
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 2226015776433168421, guid: dc76dc46f0c39dd4781fabde742ae707, type: 3}
       propertyPath: ShapeModule.radiusThickness
@@ -1439,7 +1439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2226015776433168421, guid: dc76dc46f0c39dd4781fabde742ae707, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 0.6
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2226015776433168421, guid: dc76dc46f0c39dd4781fabde742ae707, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar

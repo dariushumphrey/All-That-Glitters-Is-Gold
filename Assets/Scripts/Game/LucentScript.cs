@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class LucentScript : MonoBehaviour
 {
@@ -13,10 +15,19 @@ public class LucentScript : MonoBehaviour
     internal bool shot = false; //Confirms damage by source if true
     internal float shatterDelayTime = 0.3f; //Time to wait before detonation
 
+    internal GameObject dpsText; //Text objects that track Cheat, Damage activity
+    internal string indent; //Used to produce new lines
+    internal string currentIteration; //Used to capture current state of dpsText
+    internal string currentDPSLine = ""; //Records damage history
+    internal string newDPSLine; //Records most recent damage
+    internal int indentSpace = 0; //Amount of applied indentation
+    internal float dpsLinesClear = 2f; //Clears damage history after this time
+    internal float dpsLinesReset;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        dpsText = GameObject.Find("dpsText");
     }
 
     // Update is called once per frame
@@ -52,8 +63,14 @@ public class LucentScript : MonoBehaviour
                         }
                     }
 
+                    indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
+                    currentIteration = Regex.Replace(dpsText.GetComponent<Text>().text, "<.*?>", string.Empty);
+
                     if (hit.GetComponent<EnemyHealthScript>() != null)
                     {
+                        newDPSLine = "<size=36><color=cyan>" + indent + shatterDamage.ToString() + "</color></size>";
+                        currentDPSLine = newDPSLine + "\n" + "<size=24><color=silver>" + currentIteration + "</color></size>";
+
                         hit.GetComponent<EnemyHealthScript>().inflictDamage(shatterDamage);
                         if (hit.GetComponent<EnemyHealthScript>().healthCurrent <= 0 && hit.GetComponent<Rigidbody>() == null)
                         {
@@ -61,6 +78,10 @@ public class LucentScript : MonoBehaviour
                             hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
                         }
                     }
+
+                    dpsText.GetComponent<Text>().text = currentDPSLine;
+                    dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                    dpsLinesClear = dpsLinesReset;
                 }
 
                 if(hit.gameObject.CompareTag("Lucent"))
@@ -124,7 +145,6 @@ public class LucentScript : MonoBehaviour
                     if (gameObject.transform.parent.GetComponent<ReplevinScript>().interrupted == false)
                     {
                         gameObject.transform.parent.GetComponent<ReplevinScript>().interrupted = true;
-
                     }
                 }
 

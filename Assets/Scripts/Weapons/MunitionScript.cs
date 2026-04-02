@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class MunitionScript : MonoBehaviour
 {
@@ -172,42 +173,21 @@ public class MunitionScript : MonoBehaviour
         {
             for (int t = 0; t < targets.Count; t++)
             {
+                hostLauncher.GetComponent<FirearmScript>().indent = new string(' ', hostLauncher.GetComponent<FirearmScript>().currentDPSLine.Split('\n').Length * hostLauncher.GetComponent<FirearmScript>().indentSpace);
+                hostLauncher.GetComponent<FirearmScript>().currentIteration = Regex.Replace(hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<Text>().text, "<.*?>", string.Empty);
+
                 if (targets[t].GetComponent<EnemyHealthScript>() != null)
                 {
                     if (targets[t].GetComponent<EnemyHealthScript>().isImmune)
                     {
-                        string indent = new string(' ', hostLauncher.GetComponent<FirearmScript>().currentDPSLine.Split('\n').Length * hostLauncher.GetComponent<FirearmScript>().indentSpace);
-                        hostLauncher.GetComponent<FirearmScript>().newDPSLine = indent + "Immune";
-                        hostLauncher.GetComponent<FirearmScript>().currentDPSLine = hostLauncher.GetComponent<FirearmScript>().newDPSLine + "\n" + hostLauncher.GetComponent<FirearmScript>().currentDPSLine;
-                        hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<Text>().text = hostLauncher.GetComponent<FirearmScript>().currentDPSLine;
-                        hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().clearTimer = hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().timerReset;
-                        hostLauncher.GetComponent<FirearmScript>().dpsLinesClear = hostLauncher.GetComponent<FirearmScript>().dpsLinesReset;
-
-                        hostLauncher.GetComponent<FirearmScript>().DPSNumbers.text = "Immune";
+                        hostLauncher.GetComponent<FirearmScript>().newDPSLine = "<size=36>" + hostLauncher.GetComponent<FirearmScript>().indent + "Immune" + "</size>";
+                        hostLauncher.GetComponent<FirearmScript>().currentDPSLine = hostLauncher.GetComponent<FirearmScript>().newDPSLine + "\n" + "<size=24><color=silver>" + hostLauncher.GetComponent<FirearmScript>().currentIteration + "</color></size>";
                     }
 
                     else
                     {
-                        string indent = new string(' ', hostLauncher.GetComponent<FirearmScript>().currentDPSLine.Split('\n').Length * hostLauncher.GetComponent<FirearmScript>().indentSpace);
-
-                        if(activatorDroneFlag)
-                        {
-                            hostLauncher.GetComponent<FirearmScript>().newDPSLine = indent + activatorDroneDamage.ToString();
-                        }
-
-                        else
-                        {
-                            hostLauncher.GetComponent<FirearmScript>().newDPSLine = indent + hostLauncher.GetComponent<FirearmScript>().damage.ToString();
-                        }
-
-                        //hostLauncher.GetComponent<FirearmScript>().newDPSLine = indent + hostLauncher.GetComponent<FirearmScript>().damage.ToString();
-                        hostLauncher.GetComponent<FirearmScript>().currentDPSLine = hostLauncher.GetComponent<FirearmScript>().newDPSLine + "\n" + hostLauncher.GetComponent<FirearmScript>().currentDPSLine;
-                        hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<Text>().text = hostLauncher.GetComponent<FirearmScript>().currentDPSLine;
-                        hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().clearTimer = hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().timerReset;
-                        hostLauncher.GetComponent<FirearmScript>().dpsLinesClear = hostLauncher.GetComponent<FirearmScript>().dpsLinesReset;
-
-                        hostLauncher.GetComponent<FirearmScript>().DPSNumbers.text = hostLauncher.GetComponent<FirearmScript>().damage.ToString();
-                        //Instantiate(targets[t].GetComponent<EnemyHealthScript>().blood, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+                        hostLauncher.GetComponent<FirearmScript>().newDPSLine = "<size=36>" + hostLauncher.GetComponent<FirearmScript>().indent + hostLauncher.GetComponent<FirearmScript>().damage.ToString() + "</size>";
+                        hostLauncher.GetComponent<FirearmScript>().currentDPSLine = hostLauncher.GetComponent<FirearmScript>().newDPSLine + "\n" + "<size=24><color=silver>" + hostLauncher.GetComponent<FirearmScript>().currentIteration + "</color></size>";                     
                     }
 
                     targets[t].GetComponent<EnemyHealthScript>().inflictDamage(explosiveDamage);
@@ -315,6 +295,10 @@ public class MunitionScript : MonoBehaviour
 
 
                 }
+
+                hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<Text>().text = hostLauncher.GetComponent<FirearmScript>().currentDPSLine;
+                hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().clearTimer = hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().timerReset;
+                hostLauncher.GetComponent<FirearmScript>().dpsLinesClear = hostLauncher.GetComponent<FirearmScript>().dpsLinesReset;
             }
 
             targets.Clear();
@@ -352,32 +336,22 @@ public class MunitionScript : MonoBehaviour
         {
             for (int t = 0; t < targets.Count; t++)
             {
+                hostLauncher.GetComponent<FirearmScript>().indent = new string(' ', hostLauncher.GetComponent<FirearmScript>().currentDPSLine.Split('\n').Length * hostLauncher.GetComponent<FirearmScript>().indentSpace);
+                hostLauncher.GetComponent<FirearmScript>().currentIteration = Regex.Replace(hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<Text>().text, "<.*?>", string.Empty);
+
                 if (targets[t].GetComponent<EnemyHealthScript>() != null)
                 {
                     if (targets[t].GetComponent<EnemyHealthScript>().isImmune)
                     {
-                        string indent = new string(' ', hostLauncher.GetComponent<FirearmScript>().currentDPSLine.Split('\n').Length * hostLauncher.GetComponent<FirearmScript>().indentSpace);
-                        hostLauncher.GetComponent<FirearmScript>().newDPSLine = indent + "Immune";
-                        hostLauncher.GetComponent<FirearmScript>().currentDPSLine = hostLauncher.GetComponent<FirearmScript>().newDPSLine + "\n" + hostLauncher.GetComponent<FirearmScript>().currentDPSLine;
-                        hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<Text>().text = hostLauncher.GetComponent<FirearmScript>().currentDPSLine;
-                        hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().clearTimer = hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().timerReset;
-                        hostLauncher.GetComponent<FirearmScript>().dpsLinesClear = hostLauncher.GetComponent<FirearmScript>().dpsLinesReset;
-
-                        hostLauncher.GetComponent<FirearmScript>().DPSNumbers.text = "Immune";
+                        hostLauncher.GetComponent<FirearmScript>().newDPSLine = "<size=36><color=yellow>" + hostLauncher.GetComponent<FirearmScript>().indent + "Immune" + "</color></size>";
+                        hostLauncher.GetComponent<FirearmScript>().currentDPSLine = hostLauncher.GetComponent<FirearmScript>().newDPSLine + "\n" + "<size=24><color=silver>" + hostLauncher.GetComponent<FirearmScript>().currentIteration + "</color></size>";
                     }
 
                     else
                     {
-                        string indent = new string(' ', hostLauncher.GetComponent<FirearmScript>().currentDPSLine.Split('\n').Length * hostLauncher.GetComponent<FirearmScript>().indentSpace);
-
-                        hostLauncher.GetComponent<FirearmScript>().newDPSLine = indent + activatorDroneDamage.ToString();
-                        hostLauncher.GetComponent<FirearmScript>().currentDPSLine = hostLauncher.GetComponent<FirearmScript>().newDPSLine + "\n" + hostLauncher.GetComponent<FirearmScript>().currentDPSLine;
-                        hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<Text>().text = hostLauncher.GetComponent<FirearmScript>().currentDPSLine;
-                        hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().clearTimer = hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().timerReset;
-                        hostLauncher.GetComponent<FirearmScript>().dpsLinesClear = hostLauncher.GetComponent<FirearmScript>().dpsLinesReset;
-
-                        hostLauncher.GetComponent<FirearmScript>().DPSNumbers.text = activatorDroneDamage.ToString();
-                        //Instantiate(targets[t].GetComponent<EnemyHealthScript>().blood, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+                        hostLauncher.GetComponent<FirearmScript>().newDPSLine = "<size=36><color=yellow>" + hostLauncher.GetComponent<FirearmScript>().indent + activatorDroneDamage.ToString() + "</color></size>";
+                        hostLauncher.GetComponent<FirearmScript>().currentDPSLine = hostLauncher.GetComponent<FirearmScript>().newDPSLine + "\n" + "<size=24><color=silver>" + hostLauncher.GetComponent<FirearmScript>().currentIteration + "</color></size>";
+                        //Instantiate(targets[t].GetComponent<EnemyHealthScript>().blood, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));                    
                     }
 
                     targets[t].GetComponent<EnemyHealthScript>().inflictDamage(explosiveDamage);
@@ -435,6 +409,10 @@ public class MunitionScript : MonoBehaviour
                         }
                     }              
                 }
+
+                hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<Text>().text = hostLauncher.GetComponent<FirearmScript>().currentDPSLine;
+                hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().clearTimer = hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().timerReset;
+                hostLauncher.GetComponent<FirearmScript>().dpsLinesClear = hostLauncher.GetComponent<FirearmScript>().dpsLinesReset;
             }
 
             targets.Clear();

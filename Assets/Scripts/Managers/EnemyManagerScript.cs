@@ -124,44 +124,14 @@ public class EnemyManagerScript : MonoBehaviour
     /// <param name="deathPos">losition of Enemy defeat</param>
     public void DeathReward(Vector3 deathPos)
     {
-        //For Loot
-        if(loot.GetComponent<LootScript>() != null)
-        {
-            loot.GetComponent<LootScript>().raritySpawn = dropRarity;
-        }
-
         deathRewardChance = Random.Range(0, 101);
         //Debug.Log(deathRewardChance + "|" + dropThreshold);
 
         if (deathRewardChance <= dropThreshold)
         {
             GameObject reward = Instantiate(loot, deathPos + Vector3.up, loot.transform.rotation);
+            reward.GetComponent<LootScript>().raritySpawn = dropRarity;
             reward.GetComponent<LootScript>().focusTarget = lootFocus;
-
-            if (dropRarity == 1)
-            {
-                reward.GetComponent<Renderer>().material.color = Color.gray;
-            }
-
-            else if (dropRarity == 2)
-            {
-                reward.GetComponent<Renderer>().material.color = Color.green;
-            }
-
-            else if (dropRarity == 3)
-            {
-                reward.GetComponent<Renderer>().material.color = Color.red;
-            }
-
-            else if (dropRarity == 4)
-            {
-                reward.GetComponent<Renderer>().material.color = Color.yellow;
-            }
-
-            else if (dropRarity == 5)
-            {
-                reward.GetComponent<Renderer>().material.color = Color.cyan;
-            }
 
             //Removes (Clone) from name
             reward.name = loot.name;
@@ -177,14 +147,10 @@ public class EnemyManagerScript : MonoBehaviour
             deathRewardChance = Random.Range(0, 102);
             if (deathRewardChance >= 100)
             {
-                GameObject reward = Instantiate(exoticLoot, deathPos + Vector3.up, loot.transform.rotation);
+                GameObject reward = Instantiate(loot, deathPos + Vector3.up, loot.transform.rotation);
+                reward.GetComponent<LootScript>().exoticDelivery = true;
+                reward.GetComponent<LootScript>().raritySpawn = 5;
                 reward.GetComponent<LootScript>().focusTarget = lootFocus;
-
-                if (reward.GetComponent<ColorLerpScript>() != null)
-                {
-                    reward.GetComponent<ColorLerpScript>().colorOne = Color.cyan;
-                    reward.GetComponent<ColorLerpScript>().colorTwo = Color.white;
-                }
 
                 //Removes (Clone) from name
                 reward.name = loot.name;

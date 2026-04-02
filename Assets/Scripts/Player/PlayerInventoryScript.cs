@@ -1551,42 +1551,42 @@ public class PlayerInventoryScript : MonoBehaviour
                 {
                     if (inventory[i].name == "Full Fire Rifle" || inventory[i].name == "Outstanding Warrant")
                     {
-                        write.Write("1");                    
+                        write.Write("0");                    
                     }
 
                     if (inventory[i].name == "Machine Gun" || inventory[i].name == "The Dismissal")
                     {
-                        write.Write("2");                      
+                        write.Write("1");                      
                     }
 
                     if (inventory[i].name == "Pistol" || inventory[i].name == "Apathetic")
                     {
-                        write.Write("3");                    
+                        write.Write("2");                    
                     }
 
                     if (inventory[i].name == "Semi Fire Rifle" || inventory[i].name == "Mercies")
                     {
-                        write.Write("4");                       
+                        write.Write("3");                       
                     }
 
                     if (inventory[i].name == "Shotgun" || inventory[i].name == "Viral Shadow")
                     {
-                        write.Write("5");                      
+                        write.Write("4");                      
                     }
 
                     if (inventory[i].name == "Single Fire Rifle" || inventory[i].name == "Contempt For Fellows")
                     {
-                        write.Write("6");                      
+                        write.Write("5");                      
                     }
 
                     if (inventory[i].name == "SMG" || inventory[i].name == "Underfoot")
                     {
-                        write.Write("7");                      
+                        write.Write("6");                      
                     }
 
                     if (inventory[i].name == "Grenade Launcher")
                     {
-                        write.Write("8");
+                        write.Write("7");
                     }
 
                     if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)

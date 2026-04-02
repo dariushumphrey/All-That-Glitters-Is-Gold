@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1358942852155973169, guid: 377cbf7d40de48b429110cefefee5025, type: 3}
       propertyPath: m_Name
-      value: testMachineGun
+      value: Machine Gun
       objectReference: {fileID: 0}
     - target: {fileID: 2505689442717205402, guid: 377cbf7d40de48b429110cefefee5025, type: 3}
       propertyPath: saved

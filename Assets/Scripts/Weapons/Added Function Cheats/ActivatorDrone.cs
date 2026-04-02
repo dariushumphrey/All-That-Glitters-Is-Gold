@@ -81,24 +81,28 @@ public class ActivatorDrone : MonoBehaviour
     void Update()
     {
         forwardDirection = (camera.playerCamera.transform.position - transform.position);
-        if (Input.GetButton("Fire2"))
-        {
-            adInstance.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(camera.playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
-            //adInstance.transform.eulerAngles = new Vector3(0f, camera.yaw, 0.0f);
-            proc.GetComponent<Text>().text = "AD: Targeting";
-        }
 
-        else if (adInstance.GetComponent<ADDrone>().CanSeeEnemy())
+        if(Time.timeScale == 1)
         {
-            adInstance.transform.rotation = Quaternion.Lerp(adInstance.transform.rotation,
-                Quaternion.LookRotation(adInstance.GetComponent<ADDrone>().targetVector, Vector3.up), characterTurnSpeed);
-            proc.GetComponent<Text>().text = "AD: Engaging";
-        }
+            if (Input.GetButton("Fire2"))
+            {
+                adInstance.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(camera.playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
+                //adInstance.transform.eulerAngles = new Vector3(0f, camera.yaw, 0.0f);
+                proc.GetComponent<Text>().text = "AD: Targeting";
+            }
 
-        else
-        {
-            proc.GetComponent<Text>().text = "AD: Standby";
-        }
+            else if (adInstance.GetComponent<ADDrone>().CanSeeEnemy())
+            {
+                adInstance.transform.rotation = Quaternion.Lerp(adInstance.transform.rotation,
+                    Quaternion.LookRotation(adInstance.GetComponent<ADDrone>().targetVector, Vector3.up), characterTurnSpeed);
+                proc.GetComponent<Text>().text = "AD: Engaging";
+            }
+
+            else
+            {
+                proc.GetComponent<Text>().text = "AD: Standby";
+            }
+        }      
     }
 
     void FixedUpdate()

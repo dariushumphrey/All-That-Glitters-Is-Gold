@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class ADDrone : MonoBehaviour
 {
@@ -147,31 +148,22 @@ public class ADDrone : MonoBehaviour
                         start.gameObject.transform.position = hit.point;
                         start.GetComponent<LineRenderer>().SetPosition(1, hit.point);
 
+                        hostWeapon.GetComponent<FirearmScript>().indent = new string(' ', hostWeapon.GetComponent<FirearmScript>().currentDPSLine.Split('\n').Length * hostWeapon.GetComponent<FirearmScript>().indentSpace);
+                        hostWeapon.GetComponent<FirearmScript>().currentIteration = Regex.Replace(hostWeapon.GetComponent<FirearmScript>().dpsText.GetComponent<Text>().text, "<.*?>", string.Empty);
+
                         if (hit.collider.GetComponent<EnemyHealthScript>() != null)
                         {
                             if (hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                             {
-                                string indent = new string(' ', hostWeapon.GetComponent<FirearmScript>().currentDPSLine.Split('\n').Length * hostWeapon.GetComponent<FirearmScript>().indentSpace);
-                                hostWeapon.GetComponent<FirearmScript>().newDPSLine = indent + "Immune";
-                                hostWeapon.GetComponent<FirearmScript>().currentDPSLine = hostWeapon.GetComponent<FirearmScript>().newDPSLine + "\n" + hostWeapon.GetComponent<FirearmScript>().currentDPSLine;
-                                hostWeapon.GetComponent<FirearmScript>().dpsText.GetComponent<Text>().text = hostWeapon.GetComponent<FirearmScript>().currentDPSLine;
-                                hostWeapon.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().clearTimer = hostWeapon.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().timerReset;
-                                hostWeapon.GetComponent<FirearmScript>().dpsLinesClear = hostWeapon.GetComponent<FirearmScript>().dpsLinesReset;
-
-                                hostWeapon.GetComponent<FirearmScript>().DPSNumbers.text = "Immune";
+                                hostWeapon.GetComponent<FirearmScript>().newDPSLine = "<size=36><color=yellow>" + hostWeapon.GetComponent<FirearmScript>().indent + "Immune" + "</color></size>";
+                                hostWeapon.GetComponent<FirearmScript>().currentDPSLine = hostWeapon.GetComponent<FirearmScript>().newDPSLine + "\n" + "<size=24><color=silver>" + hostWeapon.GetComponent<FirearmScript>().currentIteration + "</color></size>";
                             }
 
                             else
                             {
-                                string indent = new string(' ', hostWeapon.GetComponent<FirearmScript>().currentDPSLine.Split('\n').Length * hostWeapon.GetComponent<FirearmScript>().indentSpace);
-                                hostWeapon.GetComponent<FirearmScript>().newDPSLine = indent + damage.ToString();
-                                hostWeapon.GetComponent<FirearmScript>().currentDPSLine = hostWeapon.GetComponent<FirearmScript>().newDPSLine + "\n" + hostWeapon.GetComponent<FirearmScript>().currentDPSLine;
-                                hostWeapon.GetComponent<FirearmScript>().dpsText.GetComponent<Text>().text = hostWeapon.GetComponent<FirearmScript>().currentDPSLine;
-                                hostWeapon.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().clearTimer = hostWeapon.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().timerReset;
-                                hostWeapon.GetComponent<FirearmScript>().dpsLinesClear = hostWeapon.GetComponent<FirearmScript>().dpsLinesReset;
-
-                                hostWeapon.GetComponent<FirearmScript>().DPSNumbers.text = damage.ToString();
-                                //Instantiate(targets[t].GetComponent<EnemyHealthScript>().blood, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+                                hostWeapon.GetComponent<FirearmScript>().newDPSLine = "<size=36><color=yellow>" + hostWeapon.GetComponent<FirearmScript>().indent + damage.ToString() + "</color></size>";
+                                hostWeapon.GetComponent<FirearmScript>().currentDPSLine = hostWeapon.GetComponent<FirearmScript>().newDPSLine + "\n" + "<size=24><color=silver>" + hostWeapon.GetComponent<FirearmScript>().currentIteration + "</color></size>";
+                                Instantiate(hit.collider.GetComponent<EnemyHealthScript>().blood, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
                             }
 
                             if (siphonicFlag)
@@ -222,6 +214,10 @@ public class ADDrone : MonoBehaviour
                                
                             }
                         }
+
+                        hostWeapon.GetComponent<FirearmScript>().dpsText.GetComponent<Text>().text = hostWeapon.GetComponent<FirearmScript>().currentDPSLine;
+                        hostWeapon.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().clearTimer = hostWeapon.GetComponent<FirearmScript>().dpsText.GetComponent<TextClearScript>().timerReset;
+                        hostWeapon.GetComponent<FirearmScript>().dpsLinesClear = hostWeapon.GetComponent<FirearmScript>().dpsLinesReset;
 
                         muzzleFlash.Play();
                     }                  

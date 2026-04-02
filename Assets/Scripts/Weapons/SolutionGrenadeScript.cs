@@ -54,9 +54,12 @@ public class SolutionGrenadeScript : MonoBehaviour
     {
         if(other.gameObject.tag == "Enemy")
         {
-            other.gameObject.AddComponent<DamageOverTimeScript>();
-            other.gameObject.GetComponent<DamageOverTimeScript>().dotDamage = 875;
-            other.gameObject.GetComponent<DamageOverTimeScript>().damageOverTimeLength = 2f;
+            if(!other.gameObject.GetComponent<DamageOverTimeScript>())
+            {
+                other.gameObject.AddComponent<DamageOverTimeScript>();
+                other.gameObject.GetComponent<DamageOverTimeScript>().dotDamage = 875;
+                other.gameObject.GetComponent<DamageOverTimeScript>().damageOverTimeLength = 2f;
+            }
         }
     }
 

@@ -11,7 +11,7 @@ public class LightLerpScript : MonoBehaviour
     public bool forColor, forIntensity;
     public float accelerant = 1f;
     public float newIntensity, originalIntensity;
-    private float progress = 0f;
+    public float progress = 0f;
     // Start is called before the first frame update
     void Start()
     {

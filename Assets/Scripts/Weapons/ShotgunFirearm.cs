@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class ShotgunFirearm: FirearmScript
 {
@@ -173,36 +174,25 @@ public class ShotgunFirearm: FirearmScript
                         }
 
                         StartCoroutine(DeconfirmHit());
-
                         targetHit = hit.transform.gameObject;
+
+                        indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
+                        currentIteration = Regex.Replace(dpsText.GetComponent<Text>().text, "<.*?>", string.Empty);
 
                         if (hit.distance <= effectiveRange)
                         {
                             //Records damage inflicted on non-immune Enemy hit. Records "Immune" on immune Enemy hit
                             if (hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                             {
-                                string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
-                                newDPSLine = indent + "Immune";
-                                currentDPSLine = newDPSLine + "\n" + currentDPSLine;
-                                dpsText.GetComponent<Text>().text = currentDPSLine;
-                                dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
-                                dpsLinesClear = dpsLinesReset;
-
-                                DPSNumbers.text = "Immune";
+                                newDPSLine = "<size=36>" + indent + "Immune" + "</size>";
+                                currentDPSLine = newDPSLine + "\n" + "<size=24><color=silver>" + currentIteration + "</color></size>";
                             }
 
                             else
                             {
-                                string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
-                                newDPSLine = indent + damage.ToString();
-                                currentDPSLine = newDPSLine + "\n" + currentDPSLine;
-                                dpsText.GetComponent<Text>().text = currentDPSLine;
-                                dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
-                                dpsLinesClear = dpsLinesReset;
-
-                                DPSNumbers.text = damage.ToString();
+                                newDPSLine = "<size=36>" + indent + damage.ToString() + "</size>";
+                                currentDPSLine = newDPSLine + "\n" + "<size=24><color=silver>" + currentIteration + "</color></size>";
                                 Instantiate(hit.collider.GetComponent<EnemyHealthScript>().blood, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
-
                             }
 
                             hit.collider.GetComponent<EnemyHealthScript>().inflictDamage(damage);
@@ -268,28 +258,15 @@ public class ShotgunFirearm: FirearmScript
                             //Records damage inflicted on non-immune Enemy hit. Records "Immune" on immune Enemy hit
                             if (hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                             {
-                                string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
-                                newDPSLine = indent + "Immune";
-                                currentDPSLine = newDPSLine + "\n" + currentDPSLine;
-                                dpsText.GetComponent<Text>().text = currentDPSLine;
-                                dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
-                                dpsLinesClear = dpsLinesReset;
-
-                                DPSNumbers.text = "Immune";
+                                newDPSLine = "<size=36>" + indent + "Immune" + "</size>";
+                                currentDPSLine = newDPSLine + "\n" + "<size=24><color=silver>" + currentIteration + "</color></size>";
                             }
 
                             else
                             {
-                                string indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
-                                newDPSLine = indent + (damage / 2).ToString();
-                                currentDPSLine = newDPSLine + "\n" + currentDPSLine;
-                                dpsText.GetComponent<Text>().text = currentDPSLine;
-                                dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
-                                dpsLinesClear = dpsLinesReset;
-
-                                DPSNumbers.text = (damage / 2).ToString();
+                                newDPSLine = "<size=36>" + indent + (damage/2).ToString() + "</size>";
+                                currentDPSLine = newDPSLine + "\n" + "<size=24><color=silver>" + currentIteration + "</color></size>";
                                 Instantiate(hit.collider.GetComponent<EnemyHealthScript>().blood, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
-
                             }
 
                             hit.collider.GetComponent<EnemyHealthScript>().inflictDamage(damage / 2);
@@ -349,6 +326,10 @@ public class ShotgunFirearm: FirearmScript
                                 }
                             }
                         } //For damage falloff checks/kill triggers while out of Effective Range
+
+                        dpsText.GetComponent<Text>().text = currentDPSLine;
+                        dpsText.GetComponent<TextClearScript>().clearTimer = dpsText.GetComponent<TextClearScript>().timerReset;
+                        dpsLinesClear = dpsLinesReset;
                     }
 
                     if(hit.collider.tag == "Player")

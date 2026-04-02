@@ -35,7 +35,7 @@ public class LevelManagerScript : MonoBehaviour
 
     private TransitionManagerScript transition;
     private CheckpointManagerScript checkpoint;
-    private float gameEndDelay = 10f;
+    private float gameEndDelay = 20f;
     private float gameRetryDelay = 5f;
     private bool paused = false; //Zeroes game time if true
     private GameObject continueButton, restartButton, quitButton, mainMenuButton;
