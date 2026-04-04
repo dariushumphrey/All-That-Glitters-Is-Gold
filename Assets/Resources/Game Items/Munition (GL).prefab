@@ -245,11 +245,13 @@ MonoBehaviour:
   explosiveDamage: 0
   explosiveRange: 7
   hitDetectionLength: 2
+  isExoticMunition: 0
+  isMine: 0
   hitDetection: {fileID: 1941796329118958446}
   detonationEffect: {fileID: 5330984550639292925, guid: fcbe256356737b045b0ebb9f06ff10ea, type: 3}
   contactOnly:
     serializedVersion: 2
-    m_Bits: 832
+    m_Bits: 2880
   targets: []
 --- !u!1 &6329086659941191204
 GameObject:

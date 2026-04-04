@@ -246,7 +246,7 @@ MonoBehaviour:
   damage: 1
   contactOnly:
     serializedVersion: 2
-    m_Bits: 832
+    m_Bits: 2880
   targets: []
   bulletTrail: {fileID: 2100000, guid: 6eb7043751433984592b6e728e79a720, type: 2}
   targetingTrail: {fileID: 2100000, guid: aca51fc703008ac42a9c88b4a82b802d, type: 2}

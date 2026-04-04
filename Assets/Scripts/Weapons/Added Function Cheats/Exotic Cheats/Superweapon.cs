@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class Superweapon : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Superweapon : MonoBehaviour
     private PlayerStatusScript player;
     private Material superweaponShotMaterial; //LineRenderer Material for bullet visual
     private GameObject superweaponLight; //Light object used to visualize charge
+    private GameObject superweaponKill; //VFX used on Enemy defeat
+    private GameObject superweaponAOE; //VFX used around Player
     private GameObject destructGrenade; //Destruct Grenade - used to spawn on defeated enemies
     private GameObject activation; //VFX used to convey activity
     private GameObject light; //Holds reference to spawned light
@@ -42,6 +45,8 @@ public class Superweapon : MonoBehaviour
         superweaponShotMaterial = Resources.Load<Material>("Materials/Weapons/SuperweaponShotMaterial");
         destructGrenade = Resources.Load<GameObject>("Game Items/DestructGrenade");
         activation = Resources.Load<GameObject>("Particles/SuperweaponActive");
+        superweaponKill = Resources.Load<GameObject>("Particles/SuperweaponKillImpactVFX");
+        superweaponAOE = Resources.Load<GameObject>("Particles/SuperweaponAOEVFX");
         superweaponLight = Resources.Load<GameObject>("Particles/Lights/lucentShatterThreatIntensityLight");
 
         resistPercentReset = resistPercent;
@@ -109,12 +114,18 @@ public class Superweapon : MonoBehaviour
                     start.GetComponent<LineRenderer>().material = superweaponShotMaterial;
                     start.GetComponent<LineRenderer>().SetPosition(0, firearm.barrel.transform.position);
 
-                    RaycastHit[] allHits = Physics.RaycastAll(rayOrigin, firearm.gunCam.transform.forward, 90f, contactOnly);                 
+                    RaycastHit[] allHits = Physics.RaycastAll(rayOrigin, firearm.gunCam.transform.forward, 90f, contactOnly);
+
+                    firearm.indent = new string(' ', firearm.currentDPSLine.Split('\n').Length * firearm.indentSpace);
+                    firearm.currentIteration = Regex.Replace(firearm.dpsText.GetComponent<Text>().text, "<.*?>", string.Empty);                 
 
                     for (int s = 0; s < allHits.Length; s++)
                     {
                         if(allHits[s].collider.CompareTag("Enemy"))
                         {
+                            firearm.newDPSLine = "<size=36><color=red>" + firearm.indent + superweaponDamage + "</color></size>";
+                            firearm.currentDPSLine = firearm.newDPSLine + "\n" + "<size=24><color=silver>" + firearm.currentIteration + "</color></size>";
+
                             allHits[s].collider.GetComponent<EnemyHealthScript>().inflictDamage(superweaponDamage);
                             if(allHits[s].collider.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                             {
@@ -123,8 +134,18 @@ public class Superweapon : MonoBehaviour
                                 destruction.GetComponent<DestructGrenadeScript>().armingTime = 0f;
                                 destruction.GetComponent<DestructGrenadeScript>().StartCoroutine(destruction.GetComponent<DestructGrenadeScript>().SetupGrenade());
                             }
+
+                            
                         }
+
+                        Instantiate(superweaponKill, allHits[s].point + (allHits[s].normal * 0.01f), Quaternion.LookRotation(allHits[s].normal));
                     }
+
+                    firearm.dpsText.GetComponent<Text>().text = firearm.currentDPSLine;
+                    firearm.dpsText.GetComponent<TextClearScript>().clearTimer = firearm.dpsText.GetComponent<TextClearScript>().timerReset;
+                    firearm.dpsLinesClear = firearm.dpsLinesReset;
+
+                    Instantiate(superweaponAOE, transform.position, transform.rotation);
 
                     Vector3 knockbackDir = -transform.parent.root.forward;
                     knockbackDir.y = 0;
@@ -150,6 +171,8 @@ public class Superweapon : MonoBehaviour
                     proc.GetComponent<Text>().text = "";
 
                     toggle = false;
+
+                    
                 }
             }
 

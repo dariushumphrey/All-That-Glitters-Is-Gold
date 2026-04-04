@@ -106,10 +106,10 @@ public class LootScript : MonoBehaviour
 
         if(isDrop)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                GenerateWeapon();
-            }
+            //if (Input.GetKeyDown(KeyCode.Alpha1))
+            //{
+            //    GenerateWeapon();
+            //}
 
             if (raritySpawn == 5 && exoticDelivery)
             {
@@ -325,7 +325,9 @@ public class LootScript : MonoBehaviour
 
             else
             {
-                reward.name = "Grenade Launcher (Exotic)";
+                reward.name = "Nebulous At Best";
+                reward.GetComponent<FirearmScript>().cheatOverride = -8;
+                reward.GetComponent<FirearmScript>().Awake();
             }
 
         }
@@ -980,7 +982,7 @@ public class LootScript : MonoBehaviour
 
             else
             {
-                clpLtType.GetComponent<Text>().text = "Grenade Launcher (Exotic)";
+                clpLtType.GetComponent<Text>().text = "Nebulous At Best";
             }
 
         }
@@ -1696,6 +1698,19 @@ public class LootScript : MonoBehaviour
                         "<i>Firing increases fire rate.</i>";
                 clpLtFncChtTwo.GetComponent<Text>().text = "Forager\n" +
                         "<i>Kills produce pickup bursts.</i>";
+            }
+
+            if (wepTypeStr == "7")
+            {
+                wepPltStr = "3";
+                fcOneStr = "H";
+                fcTwoStr = "6";
+                clpLtPlatform.GetComponent<Text>().text = "Chatter\n" +
+                        "<i>Fast-firing, lower damage.</i>";
+                clpLtFncChtOne.GetComponent<Text>().text = "Flashpoint\n" +
+                        "<i>Fire Lucent mines.</i>";
+                clpLtFncChtTwo.GetComponent<Text>().text = "Positive-Negative\n" +
+                        "<i>Apply damage-over-time.</i>";
             }
 
             lootString = wepTypeStr + wepRarStr + wepExoStr + wepFavStr + wepPltStr +

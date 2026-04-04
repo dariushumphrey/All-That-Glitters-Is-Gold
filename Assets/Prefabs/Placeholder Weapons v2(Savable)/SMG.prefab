@@ -59,5 +59,9 @@ PrefabInstance:
       propertyPath: saved
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4946270343591226303, guid: 0f94d84fb9e4eb045aa6b520d55410ab, type: 3}
+      propertyPath: contactOnly.m_Bits
+      value: 2880
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f94d84fb9e4eb045aa6b520d55410ab, type: 3}

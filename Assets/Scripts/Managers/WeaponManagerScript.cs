@@ -1030,7 +1030,7 @@ public class WeaponManagerScript : MonoBehaviour
 
                 if (exoStr == "1")
                 {
-                    if (wepStr == "1")
+                    if (wepStr == "0")
                     {
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
@@ -1038,7 +1038,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.name ="Outstanding Warrant";
                     }
 
-                    if (wepStr == "2")
+                    if (wepStr == "1")
                     {
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
@@ -1046,7 +1046,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.name = "The Dismissal";
                     }
 
-                    if (wepStr == "3")
+                    if (wepStr == "2")
                     {
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
@@ -1054,7 +1054,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.name = "Apathetic";
                     }
 
-                    if (wepStr == "4")
+                    if (wepStr == "3")
                     {
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
@@ -1062,7 +1062,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.name = "Mercies";
                     }
 
-                    if (wepStr == "5")
+                    if (wepStr == "4")
                     {
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
@@ -1070,7 +1070,7 @@ public class WeaponManagerScript : MonoBehaviour
                         item.name = "Viral Shadow";
                     }
 
-                    if (wepStr == "6")
+                    if (wepStr == "5")
                     {
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
@@ -1078,12 +1078,20 @@ public class WeaponManagerScript : MonoBehaviour
                         item.name = "Contempt For Fellows";
                     }
 
-                    if (wepStr == "7")
+                    if (wepStr == "6")
                     {
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
                         item.GetComponent<FirearmScript>().flavorText = "Using this Weapon feels like a perpetual Calvary charge. For where you're going, you won't be needing any breaks.";
                         item.name = "Underfoot";
+                    }
+
+                    if (wepStr == "7")
+                    {
+                        item.GetComponent<FirearmScript>().isExotic = true;
+                        item.GetComponent<FirearmScript>().RarityAugment();
+                        item.GetComponent<FirearmScript>().flavorText = "Just when you thought you understood how the world works.";
+                        item.name = "Nebulous At Best";
                     }
                 }
 
@@ -1361,6 +1369,13 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<AbsolutelyNoStops>().proc = item.GetComponent<FirearmScript>().procOne;
                 }
 
+                if (cFiveStr == "H")
+                {
+                    item.GetComponent<FirearmScript>().cheatRNG = -8;
+                    item.AddComponent<Flashpoint>();
+                    item.GetComponent<Flashpoint>().proc = item.GetComponent<FirearmScript>().procOne;
+                }
+
 
                 if (cFiveStr == "9")
                 {
@@ -1435,6 +1450,12 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     item.AddComponent<Forager>();
                     item.GetComponent<Forager>().proc = item.GetComponent<FirearmScript>().procTwo;
+                }
+
+                if (cSixStr == "6")
+                {
+                    item.AddComponent<PositiveNegative>();
+                    item.GetComponent<PositiveNegative>().proc = item.GetComponent<FirearmScript>().procTwo;
                 }
 
                 //Volant pairing

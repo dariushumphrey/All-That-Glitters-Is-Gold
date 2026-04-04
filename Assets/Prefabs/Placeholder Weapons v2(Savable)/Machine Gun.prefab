@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: saved
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2505689442717205402, guid: 377cbf7d40de48b429110cefefee5025, type: 3}
+      propertyPath: contactOnly.m_Bits
+      value: 2880
+      objectReference: {fileID: 0}
     - target: {fileID: 4677409490183303690, guid: 377cbf7d40de48b429110cefefee5025, type: 3}
       propertyPath: m_RootOrder
       value: 0

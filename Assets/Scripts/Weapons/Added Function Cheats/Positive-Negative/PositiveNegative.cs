@@ -85,17 +85,9 @@ public class PositiveNegative : MonoBehaviour
         //Lack of movement loses charge, down to 0%
         else
         {
-            if(firearm.isExotic == true)
-            {
-                chargePercentage -= Time.deltaTime * chargeAccelerant / 5;
-            }
+            chargePercentage -= Time.deltaTime * chargeAccelerant;
 
-            else
-            {
-                chargePercentage -= Time.deltaTime * chargeAccelerant;
-            }
-
-            if(chargePercentage <= 0)
+            if (chargePercentage <= 0)
             {
                 chargePercentage = 0f;
             }

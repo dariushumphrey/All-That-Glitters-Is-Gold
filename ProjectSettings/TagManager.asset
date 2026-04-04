@@ -23,6 +23,7 @@ TagManager:
   - Combustible Lucent
   - Stalactite Lucent
   - Directional Light
+  - Mine
   layers:
   - Default
   - TransparentFX
@@ -35,7 +36,7 @@ TagManager:
   - Surface
   - Lucent
   - Setpiece
-  - 
+  - Mine
   - 
   - 
   - 

@@ -79,7 +79,7 @@ public class PlayerMeleeScript : MonoBehaviour
                 indent = new string(' ', currentDPSLine.Split('\n').Length * indentSpace);
                 currentIteration = Regex.Replace(dpsText.GetComponent<Text>().text, "<.*?>", string.Empty);
 
-                newDPSLine = "<size=36><color=red>" + indent + meleeDamage.ToString() + "</color></size>";
+                newDPSLine = "<size=36><color=purple>" + indent + meleeDamage.ToString() + "</color></size>";
                 currentDPSLine = newDPSLine + "\n" + "<size=24><color=silver>" + currentIteration + "</color></size>";               
 
                 hit.collider.gameObject.GetComponent<EnemyHealthScript>().inflictDamage(meleeDamage);

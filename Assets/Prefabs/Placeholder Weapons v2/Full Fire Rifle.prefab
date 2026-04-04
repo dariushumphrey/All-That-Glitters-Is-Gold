@@ -221,6 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 560
   damagePercent: 10
+  favorite: 0
   currentAmmo: 0
   ammoSize: 25
   reserveAmmo: 0
@@ -237,7 +238,7 @@ MonoBehaviour:
   flavorText: A Full-Auto Rifle. For when proven conventions will do.
   contactOnly:
     serializedVersion: 2
-    m_Bits: 832
+    m_Bits: 2880
   saved: 0
   display: 0
   gunCam: {fileID: 0}

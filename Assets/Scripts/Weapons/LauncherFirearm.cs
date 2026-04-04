@@ -54,6 +54,12 @@ public class LauncherFirearm : FirearmScript
             launched.GetComponent<MunitionScript>().hostLauncher = gameObject;
             launched.GetComponent<MunitionScript>().explosiveDamage = damage;
 
+            if(isExotic)
+            {
+                launched.GetComponent<MunitionScript>().isExoticMunition = true;
+                launched.GetComponent<MunitionScript>().isMine = true;
+            }
+
             launched.GetComponent<Rigidbody>().AddForce(estLandingPos * shotForceForward + Vector3.up * shotForceUp, ForceMode.VelocityChange);
 
 

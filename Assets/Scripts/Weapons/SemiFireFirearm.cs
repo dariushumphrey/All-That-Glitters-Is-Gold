@@ -428,6 +428,18 @@ public class SemiFireFirearm : FirearmScript
 
                 Instantiate(sparks, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
             }
+
+            if (hit.collider.gameObject.layer == 11) //If this Weapon strikes an object with the "Mine" layer
+            {
+                if (gameObject.GetComponent<MiningPlatform>())
+                {
+                    gameObject.GetComponent<MiningPlatform>().confirmedHit = true;
+                    gameObject.GetComponent<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
+
+                }
+
+                hit.collider.gameObject.GetComponent<MunitionScript>().TriggerMunition();
+            }
         }
 
         else

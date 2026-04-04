@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: saved
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4221928478634662968, guid: 3f4df3b443f259746949c8b0fd6168fe, type: 3}
+      propertyPath: contactOnly.m_Bits
+      value: 2880
+      objectReference: {fileID: 0}
     - target: {fileID: 6132017854543559869, guid: 3f4df3b443f259746949c8b0fd6168fe, type: 3}
       propertyPath: m_Name
       value: Semi Fire Rifle

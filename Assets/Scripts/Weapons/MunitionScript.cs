@@ -11,6 +11,8 @@ public class MunitionScript : MonoBehaviour
     public int explosiveDamage;
     public float explosiveRange;
     public float hitDetectionLength = 2f;
+    public bool isExoticMunition;
+    public bool isMine;
     public Transform hitDetection;
     public GameObject detonationEffect; //VFX for munition
     public LayerMask contactOnly; //Ensures Raycast accounts for Surfaces
@@ -19,10 +21,21 @@ public class MunitionScript : MonoBehaviour
     internal bool activatorDroneFlag = false;
     internal bool fatedActivatorDrone = false;
     internal int activatorDroneDamage;
+
+    private float speedDampening = -4f; //Governs time taken to slow to a stop after letting go of movement input.
+
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 3f);
+        if(!isExoticMunition)
+        {
+            Destroy(gameObject, 3f);
+        }
+
+        else
+        {
+            Destroy(gameObject, 60f);
+        }
     }
 
     // Update is called once per frame
@@ -38,7 +51,10 @@ public class MunitionScript : MonoBehaviour
 
             else
             {
-                TriggerMunition();
+                if (!isMine)
+                {
+                    TriggerMunition();
+                }
             }
 
             if (hostLauncher.gameObject.GetComponent<MiningPlatform>())
@@ -100,7 +116,40 @@ public class MunitionScript : MonoBehaviour
 
                 }
             }
+
+            if(hit.collider.gameObject.GetComponent<StalactiteLucentScript>())
+                    {
+                if (hit.collider.gameObject.GetComponent<StalactiteLucentScript>().hostCrystal)
+                {
+                    hit.collider.gameObject.GetComponent<StalactiteLucentScript>().LucentPassive();
+                }
+            }
+
+            if (hit.collider.gameObject.layer == 11) //If this Weapon strikes an object with the "Mine" layer
+            {
+                if (gameObject.GetComponent<MiningPlatform>())
+                {
+                    gameObject.GetComponent<MiningPlatform>().confirmedHit = true;
+                    gameObject.GetComponent<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
+
+                }
+
+                hit.collider.gameObject.GetComponent<MunitionScript>().TriggerMunition();
+            }
         }
+
+        //if (isExoticMunition && isMine)
+        //{
+        //    Vector3 epicenter = transform.position;
+        //    Collider[] affected = Physics.OverlapSphere(transform.position, explosiveRange, contactOnly);
+        //    foreach (Collider contact in affected)
+        //    {
+        //        if (contact.CompareTag("Enemy"))
+        //        {
+        //            TriggerMunition();
+        //        }
+        //    }
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
@@ -114,7 +163,10 @@ public class MunitionScript : MonoBehaviour
 
             else
             {
-                TriggerMunition();
+                if(!isMine)
+                {
+                    TriggerMunition();
+                }
             }
 
             if (hostLauncher.gameObject.GetComponent<MiningPlatform>())
@@ -148,6 +200,17 @@ public class MunitionScript : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if(isExoticMunition && isMine)
+        {
+            Vector3 velocityActive = GetComponent<Rigidbody>().velocity;
+            Vector3 velocityRest = Vector3.zero;
+
+            GetComponent<Rigidbody>().velocity = Vector3.Lerp(velocityActive, velocityRest, 1 - Mathf.Exp(speedDampening * Time.deltaTime));
+        }
+    }
+
     /// <summary>
     /// Collects colliders and applies damage to Enemies, detonates Lucent in its radius
     /// </summary>
@@ -166,6 +229,14 @@ public class MunitionScript : MonoBehaviour
             {
                 contact.gameObject.GetComponent<LucentScript>().lucentGift = 0;
                 contact.gameObject.GetComponent<LucentScript>().shot = true;
+            }        
+
+            if (contact.gameObject.GetComponent<StalactiteLucentScript>())
+            {
+                if (contact.gameObject.GetComponent<StalactiteLucentScript>().hostCrystal)
+                {
+                    contact.gameObject.GetComponent<StalactiteLucentScript>().LucentPassive();
+                }
             }
         }
 

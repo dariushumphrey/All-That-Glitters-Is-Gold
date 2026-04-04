@@ -203,6 +203,11 @@ public class FirearmScript : MonoBehaviour
                 gameObject.AddComponent<MiningPlatform>();
             } //Exotic Machine Gun receives the Mining platform
 
+            if (cheatOverride == -8)
+            {
+                gameObject.AddComponent<ChatterPlatform>();
+            } //Exotic Grenade Launcher receives the Chatter platform
+
             return;
         }
 
@@ -496,6 +501,15 @@ public class FirearmScript : MonoBehaviour
                 gameObject.GetComponent<PayToWin>().proc = procOne;
                 gameObject.GetComponent<TheMostResplendent>().proc = procTwo;
             } //Pay to Win + The Most Resplendent
+
+            if (cheatRNG == -8)
+            {
+                gameObject.AddComponent<Flashpoint>();
+                gameObject.AddComponent<PositiveNegative>();
+
+                gameObject.GetComponent<Flashpoint>().proc = procOne;
+                gameObject.GetComponent<PositiveNegative>().proc = procTwo;
+            } //Flashpoint + Positive-Negative
 
             return;
         }
@@ -1209,6 +1223,18 @@ public class FirearmScript : MonoBehaviour
                     }
 
                     Instantiate(sparks, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+                }
+
+                if (hit.collider.gameObject.layer == 11) //If this Weapon strikes an object with the "Mine" layer
+                {
+                    if (gameObject.GetComponent<MiningPlatform>())
+                    {
+                        gameObject.GetComponent<MiningPlatform>().confirmedHit = true;
+                        gameObject.GetComponent<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
+
+                    }
+
+                    hit.collider.gameObject.GetComponent<MunitionScript>().TriggerMunition();
                 }
             }
 

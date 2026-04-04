@@ -1303,6 +1303,15 @@ public class PlayerInventoryScript : MonoBehaviour
             cheatTraitTwo.text = "The Most Resplendent" + '\n' +
                     "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
         } //Pay to Win + The Most Resplendent
+
+        if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -8)
+        {
+            cheatTraitOne.text = "Flashpoint" + '\n' +
+                "Fires floating Lucent mines. [E] - Detonates all active mines.";
+
+            cheatTraitTwo.text = "Positive-Negative" + '\n' +
+                    "Moving generates a charge. While halfway charged, Enemy hits apply damage-over-time.";
+        } //Flashpoint + Positive-Negative
     }
 
     /// <summary>
@@ -1584,7 +1593,7 @@ public class PlayerInventoryScript : MonoBehaviour
                         write.Write("6");                      
                     }
 
-                    if (inventory[i].name == "Grenade Launcher")
+                    if (inventory[i].name == "Grenade Launcher" || inventory[i].name == "Nebulous At Best")
                     {
                         write.Write("7");
                     }
@@ -1972,6 +1981,17 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Forager>())
                                 {
                                     write.WriteLine("#");
+                                }
+
+                                //Exotic Grenade Launcher
+                                if (inventory[i].GetComponent<Flashpoint>())
+                                {
+                                    write.Write("H");
+                                }
+
+                                if (inventory[i].GetComponent<PositiveNegative>())
+                                {
+                                    write.WriteLine("6");
                                 }
                             }
 
