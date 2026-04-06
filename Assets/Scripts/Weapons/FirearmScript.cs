@@ -776,56 +776,59 @@ public class FirearmScript : MonoBehaviour
     /// Prevents reloads during firing, lack of ammo or holding a full magazine
     /// </summary>
     public virtual void AmmoReloadCheck()
-    {      
-        if (Input.GetKeyDown(KeyCode.R) && currentAmmo != 0 || currentAmmo <= 0 && reserveAmmo != 0)
+    {
+        if(!isReloading)
         {
-            if(Input.GetButton("Fire1") || Input.GetButtonDown("Fire1"))
+            if (Input.GetKeyDown(KeyCode.R) && currentAmmo != 0 || Input.GetButtonUp("Fire1") && currentAmmo <= 0 && reserveAmmo != 0)
             {
-                Debug.Log("Cannot reload; Weapon is being actively fired!");
+                if (Input.GetButton("Fire1") || Input.GetButtonDown("Fire1"))
+                {
+                    Debug.Log("Cannot reload; Weapon is being actively fired!");
 
-                inv.weaponAmmoPage.gameObject.SetActive(true);
-                //weaponLoad.gameObject.SetActive(true);
-                inv.lucentText.gameObject.SetActive(true);
-                inv.wepStateTimer = inv.wepStateTimerReset;
-                return;
+                    inv.weaponAmmoPage.gameObject.SetActive(true);
+                    //weaponLoad.gameObject.SetActive(true);
+                    inv.lucentText.gameObject.SetActive(true);
+                    inv.wepStateTimer = inv.wepStateTimerReset;
+                    //return;
+                }
+
+                else if (currentAmmo >= 0 && reserveAmmo <= 0)
+                {
+                    Debug.Log("Cannot reload; no spare ammo!");
+
+                    inv.weaponAmmoPage.gameObject.SetActive(true);
+                    //weaponLoad.gameObject.SetActive(true);
+                    inv.lucentText.gameObject.SetActive(true);
+                    inv.wepStateTimer = inv.wepStateTimerReset;
+                }
+
+                else if (currentAmmo <= 0 && reserveAmmo <= 0)
+                {
+                    Debug.Log("Cannot reload; no ammo!");
+
+                    inv.weaponAmmoPage.gameObject.SetActive(true);
+                    //weaponLoad.gameObject.SetActive(true);
+                    inv.lucentText.gameObject.SetActive(true);
+                    inv.wepStateTimer = inv.wepStateTimerReset;
+                }
+
+                else if (currentAmmo >= ammoSize)
+                {
+                    Debug.Log("Cannot reload; magazine is full!");
+
+                    inv.weaponAmmoPage.gameObject.SetActive(true);
+                    //weaponLoad.gameObject.SetActive(true);
+                    inv.lucentText.gameObject.SetActive(true);
+                    inv.wepStateTimer = inv.wepStateTimerReset;
+                }
+
+                else
+                {
+                    //isReloading = true;
+                    StartCoroutine(ReloadWep());
+                }
             }
-
-            if (currentAmmo >= 0 && reserveAmmo <= 0)
-            {
-                Debug.Log("Cannot reload; no spare ammo!");
-
-                inv.weaponAmmoPage.gameObject.SetActive(true);
-                //weaponLoad.gameObject.SetActive(true);
-                inv.lucentText.gameObject.SetActive(true);
-                inv.wepStateTimer = inv.wepStateTimerReset;
-            }
-
-            else if (currentAmmo <= 0 && reserveAmmo <= 0)
-            {
-                Debug.Log("Cannot reload; no ammo!");
-
-                inv.weaponAmmoPage.gameObject.SetActive(true);
-                //weaponLoad.gameObject.SetActive(true);
-                inv.lucentText.gameObject.SetActive(true);
-                inv.wepStateTimer = inv.wepStateTimerReset;
-            }
-
-            else if (currentAmmo >= ammoSize)
-            {
-                Debug.Log("Cannot reload; magazine is full!");
-
-                inv.weaponAmmoPage.gameObject.SetActive(true);
-                //weaponLoad.gameObject.SetActive(true);
-                inv.lucentText.gameObject.SetActive(true);
-                inv.wepStateTimer = inv.wepStateTimerReset;
-            }
-
-            else
-            {
-                isReloading = true;
-                StartCoroutine(ReloadWep());
-            }
-        }
+        }     
     }
 
     /// <summary>
@@ -1264,7 +1267,8 @@ public class FirearmScript : MonoBehaviour
     /// </summary>
     public virtual void ReloadWeapon()
     {
-        if(reserveAmmo <= ammoSpent)
+        isReloading = true;
+        if (reserveAmmo <= ammoSpent)
         {
             currentAmmo += reserveAmmo;
         }
@@ -1291,6 +1295,7 @@ public class FirearmScript : MonoBehaviour
     /// </summary>
     public virtual IEnumerator ReloadWep()
     {
+        isReloading = true;
         yield return new WaitForSeconds(reloadSpeed);
         if (reserveAmmo <= ammoSpent)
         {

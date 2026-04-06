@@ -18,9 +18,13 @@ public class WeaponManagerScript : MonoBehaviour
 
     public List<string> observedWeps = new List<string>(10); //List of Weapons from inventory.txt
     public string filepath = "inventory.txt"; //Inventory file name
-    public Text wepName, flavor, rarityCheck, invMonitor, stats, dismantleText, appraisal; //Texts that display Weapon stats, worth, and dismantle notices
+    public Text wepName, flavor, rarityCheck, invMonitor, stats, dismantleText, appraisal, favNotice, wepPlatform; //Texts that display Weapon stats, worth, and dismantle notices
     public Text cheatOne, cheatTwo, cheatThree, cheatFour, cheatTraitOne, cheatTraitTwo; //Texts that displays Weapon cheats
-    public Text lucentText; //Displays Player Lucent balance
+    public Button sellButton;
+
+    //lucentText - Displays Player Lucent balance
+    //sortingText - Displays active Inventory sorting type
+    public Text lucentText, sortingText, favoriteText;
     public GameObject invNavigation; //Collection of on-screen Inventory page navigation buttons
     public float dismantleTimer;
 
@@ -30,6 +34,12 @@ public class WeaponManagerScript : MonoBehaviour
     private MenuManagerScript menu;
     private KioskScript kiosk;
     private TransitionManagerScript transition;
+    private bool sortToggle = false;
+    private bool automateLeft, automateRight;
+    private bool invInputHold = false;
+    private int automateSelection = 0; //Searches for favorite Weapons on behalf of selection (variable)
+    private string favCheck;
+    private char[] weaponToModify;
     string wepStr, rarStr, exoStr, cOneStr, cTwoStr, cThreeStr, cFourStr, cFiveStr, cSixStr, favStr, pltStr; //Strings that describe Weapon attributes
     float dismantleTimerReset, spawnDelayTimer;
     bool track = true; //WeaponManager position assigned to Player position if true
@@ -130,9 +140,24 @@ public class WeaponManagerScript : MonoBehaviour
             //Activates Inventory page navigation, dismantle behaviors, tracks Inventory size
             else
             {
-                SwitchInv();
-                DismantleInv();
+                if(!invInputHold)
+                {
+                    SwitchInv();
+                    DismantleInv();
+                    ChangeFavoriteState();
+                }
+
                 invMonitor.text = (selection + 1) + " / " + observedWeps.Count;
+
+                if(sortToggle)
+                {
+                    sortingText.text = "Sort by: Favorite";
+                }
+
+                else
+                {
+                    sortingText.text = "Sort by: All";
+                }
             }
 
             lucentText.text = "Lucent: " + kiosk.lucentFunds.ToString("N0");
@@ -208,25 +233,39 @@ public class WeaponManagerScript : MonoBehaviour
         wepStr = c[0].ToString();
         rarStr = c[1].ToString();
         exoStr = c[2].ToString();
-        cOneStr = c[3].ToString();
-        cTwoStr = c[4].ToString();
-        cThreeStr = c[5].ToString();
-        cFourStr = c[6].ToString();
-
-        if (observedWeps[selection].Length == 8)
-        {
-            cFiveStr = c[7].ToString();
-        }
+        favStr = c[3].ToString();
+        pltStr = c[4].ToString();
 
         if (observedWeps[selection].Length == 9)
         {
-            cFiveStr = c[7].ToString();
-            cSixStr = c[8].ToString();
+            cOneStr = c[5].ToString();
+            cTwoStr = c[6].ToString();
+            cThreeStr = c[7].ToString();
+            cFourStr = c[8].ToString();
+        }
+
+        if (observedWeps[selection].Length == 10)
+        {
+            cOneStr = c[5].ToString();
+            cTwoStr = c[6].ToString();
+            cThreeStr = c[7].ToString();
+            cFourStr = c[8].ToString();
+            cFiveStr = c[9].ToString();
+        }
+
+        if (observedWeps[selection].Length == 11)
+        {
+            cOneStr = c[5].ToString();
+            cTwoStr = c[6].ToString();
+            cThreeStr = c[7].ToString();
+            cFourStr = c[8].ToString();
+            cFiveStr = c[9].ToString();
+            cSixStr = c[10].ToString();
         }
 
         invMonitor.text = (selection + 1) + " / " + observedWeps.Count;
 
-        if (wepStr == "1")
+        if (wepStr == "0")
         {
             //Debug.Log("Displaying Full Fire Rifle");
             item = Instantiate(weapons[0], transform.position, transform.rotation);
@@ -235,7 +274,7 @@ public class WeaponManagerScript : MonoBehaviour
             //flavor.text = item.GetComponent<FirearmScript>().flavorText;                       
         }
 
-        if (wepStr == "2")
+        if (wepStr == "1")
         {
             //Debug.Log("Displaying Machine Gun");
             item = Instantiate(weapons[1], transform.position, transform.rotation);
@@ -244,7 +283,7 @@ public class WeaponManagerScript : MonoBehaviour
             //flavor.text = item.GetComponent<FirearmScript>().flavorText;           
         }
 
-        if (wepStr == "3")
+        if (wepStr == "2")
         {
             //Debug.Log("Displaying Pistol");
             item = Instantiate(weapons[2], transform.position, transform.rotation);
@@ -253,7 +292,7 @@ public class WeaponManagerScript : MonoBehaviour
             //flavor.text = item.GetComponent<FirearmScript>().flavorText;          
         }
 
-        if (wepStr == "4")
+        if (wepStr == "3")
         {
             //Debug.Log("Displaying Semi Fire Rifle");
             item = Instantiate(weapons[3], transform.position, transform.rotation);
@@ -262,7 +301,7 @@ public class WeaponManagerScript : MonoBehaviour
             //flavor.text = item.GetComponent<FirearmScript>().flavorText;         
         }
 
-        if (wepStr == "5")
+        if (wepStr == "4")
         {
             //Debug.Log("Displaying Shotgun");
             item = Instantiate(weapons[4], transform.position, transform.rotation);
@@ -271,7 +310,7 @@ public class WeaponManagerScript : MonoBehaviour
             //flavor.text = item.GetComponent<FirearmScript>().flavorText;         
         }
 
-        if (wepStr == "6")
+        if (wepStr == "5")
         {
             //Debug.Log("Displaying Single Fire Rifle");
             item = Instantiate(weapons[5], transform.position, transform.rotation);
@@ -280,7 +319,7 @@ public class WeaponManagerScript : MonoBehaviour
             //flavor.text = item.GetComponent<FirearmScript>().flavorText;          
         }
 
-        if (wepStr == "7")
+        if (wepStr == "6")
         {
             //Debug.Log("Displaying Submachine Gun");
             item = Instantiate(weapons[6], transform.position, transform.rotation);
@@ -289,7 +328,68 @@ public class WeaponManagerScript : MonoBehaviour
             //flavor.text = item.GetComponent<FirearmScript>().flavorText;         
         }
 
+        if (wepStr == "7")
+        {
+            //Debug.Log("Displaying Grenade Launcher");
+            item = Instantiate(weapons[7], transform.position, transform.rotation);
+            item.name = weapons[7].name;
+            wepName.text = "Grenade Launcher";
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;         
+        }
+
         item.transform.parent = gameObject.transform;
+
+        if (pltStr == "1")
+        {
+            wepPlatform.text = "Default Platform - Standard performance.";
+            item.AddComponent<DefaultPlatform>();
+        }
+
+        if (pltStr == "2")
+        {
+            wepPlatform.text = "Efficient Platform - Configured for slow-firing, high-damage.";
+            item.AddComponent<EfficientPlatform>();
+        }
+
+        if (pltStr == "3")
+        {
+            wepPlatform.text = "Chatter Platform - Configured for fast-firing, low-damage.";
+            item.AddComponent<ChatterPlatform>();
+        }
+
+        if (pltStr == "4")
+        {
+            wepPlatform.text = "Tempered Platform - Tuned for highest damage, improved firing and control.";
+            item.AddComponent<TemperedPlatform>();
+        }
+
+        if (pltStr == "5")
+        {
+            wepPlatform.text = "Siphonic Platform - Weapon hits restore 1% Health & Shield. Melee Kills restore 15% Health & Shield.";
+            item.AddComponent<SiphonicPlatform>();
+        }
+
+        if (pltStr == "6")
+        {
+            wepPlatform.text = "Mining Platform - Fires Lucent explosive rounds.";
+            item.AddComponent<MiningPlatform>();
+        }
+
+        if (pltStr == "7")
+        {
+            wepPlatform.text = "Trenchant Platform -" + "\n" + 
+                "Evasions slow enemies." + "\n" +
+                "Melees apply damage-over-time." + "\n" + 
+                "Weapon hits apply Health debuffs.";
+            item.AddComponent<TrenchantPlatform>();
+        }
+
+        if (pltStr == "8")
+        {
+            wepPlatform.text = "Cache Platform - Regenerates all grenades every two seconds." + "\n" +
+                "Activator Drones fire mini-Rockets.";
+            item.AddComponent<CachePlatform>();
+        }
 
         if (rarStr == "1")
         {
@@ -330,7 +430,7 @@ public class WeaponManagerScript : MonoBehaviour
 
             if (exoStr == "1")
             {
-                if (wepStr == "1")
+                if (wepStr == "0")
                 {
                     wepName.text = "Outstanding Warrant";
                     rarityCheck.text = "Exotic";
@@ -343,7 +443,7 @@ public class WeaponManagerScript : MonoBehaviour
                     item.name = weapons[0].name + "_Exotic";
                 }
 
-                if (wepStr == "2")
+                if (wepStr == "1")
                 {
                     wepName.text = "The Dismissal";
                     rarityCheck.text = "Exotic";
@@ -356,7 +456,7 @@ public class WeaponManagerScript : MonoBehaviour
                     item.name = weapons[1].name + "_Exotic";
                 }
 
-                if (wepStr == "3")
+                if (wepStr == "2")
                 {
                     wepName.text = "Apathetic";
                     rarityCheck.text = "Exotic";
@@ -369,7 +469,7 @@ public class WeaponManagerScript : MonoBehaviour
                     item.name = weapons[2].name + "_Exotic";
                 }
 
-                if (wepStr == "4")
+                if (wepStr == "3")
                 {
                     wepName.text = "Mercies";
                     rarityCheck.text = "Exotic";
@@ -382,7 +482,7 @@ public class WeaponManagerScript : MonoBehaviour
                     item.name = weapons[3].name + "_Exotic";
                 }
 
-                if (wepStr == "5")
+                if (wepStr == "4")
                 {
                     wepName.text = "Viral Shadow";
                     rarityCheck.text = "Exotic";
@@ -395,7 +495,7 @@ public class WeaponManagerScript : MonoBehaviour
                     item.name = weapons[4].name + "_Exotic";
                 }
 
-                if (wepStr == "6")
+                if (wepStr == "5")
                 {
                     wepName.text = "Contempt For Fellows";
                     rarityCheck.text = "Exotic";
@@ -408,7 +508,7 @@ public class WeaponManagerScript : MonoBehaviour
                     item.name = weapons[5].name + "_Exotic";
                 }
 
-                if (wepStr == "7")
+                if (wepStr == "6")
                 {
                     wepName.text = "Underfoot";
                     rarityCheck.text = "Exotic";
@@ -419,6 +519,19 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<FirearmScript>().flavorText = "Using this Weapon feels like a perpetual Calvary charge. For where you're going, you won't be needing any breaks.";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                     item.name = weapons[6].name + "_Exotic";
+                }
+
+                if (wepStr == "7")
+                {
+                    wepName.text = "Nebulous At Best";
+                    rarityCheck.text = "Exotic";
+
+                    item.GetComponent<FirearmScript>().isExotic = true;
+                    //item.GetComponent<FirearmScript>().damagePercent = 60f;
+                    item.GetComponent<FirearmScript>().RarityAugment();
+                    item.GetComponent<FirearmScript>().flavorText = "Just when you thought you understood how the world works.";
+                    flavor.text = item.GetComponent<FirearmScript>().flavorText;
+                    item.name = weapons[7].name + "_Exotic";
                 }
             }
 
@@ -431,56 +544,24 @@ public class WeaponManagerScript : MonoBehaviour
             }
         }
 
-        if (cOneStr == "1")
+        if (favStr == "1")
         {
-            cheatOne.text = "Deep Yield: " + "\n" + "12% Magazine Size";
-            item.AddComponent<DeepYield>();
+            favNotice.text = "*";
+            sellButton.interactable = false;
+            favoriteText.text = "Unmark as Favorite";
+            //item.GetComponent<FirearmScript>().favorite = true;
         }
 
-        if (cOneStr == "2")
+        else
         {
-            cheatOne.text = "Deeper Yield" + "\n" + "24% Magazine Size";
-            item.AddComponent<DeeperYield>();
-        }
-
-        if (cTwoStr == "3")
-        {
-            cheatTwo.text = "Deep Stores" + "\n" + "15% Reserves Size";
-            item.AddComponent<DeepStores>();
-        }
-
-        if (cTwoStr == "4")
-        {
-            cheatTwo.text = "Deeper Stores" + "\n" + "30% Reserves Size";
-            item.AddComponent<DeeperStores>();
-        }
-
-        if (cThreeStr == "5")
-        {
-            cheatThree.text = "Far Sight" + "\n" + "10% Effective Range Increase";
-            item.AddComponent<FarSight>();
-        }
-
-        if (cThreeStr == "6")
-        {
-            cheatThree.text = "Farther Sight" + "\n" + "20% Effective Range Increase";
-            item.AddComponent<FartherSight>();
-        }
-
-        if (cFourStr == "7")
-        {
-            cheatFour.text = "Hasty Hands" + "\n" + "15% Reload Speed Increase";
-            item.AddComponent<HastyHands>();
-        }
-
-        if (cFourStr == "8")
-        {
-            cheatFour.text = "Hastier Hands" + "\n" + "25% Reload Speed Increase";
-            item.AddComponent<HastierHands>();
+            favNotice.text = "";
+            sellButton.interactable = true;
+            favoriteText.text = "Mark as Favorite";
+            //item.GetComponent<FirearmScript>().favorite = false;
         }
 
         //Changes Weapon statistics by Weapon type (Rate of Fire primarily changes)
-        if (wepStr == "1" || wepStr == "2" || wepStr == "7")
+        if (wepStr == "0" || wepStr == "1" || wepStr == "6")
         {
             stats.text = "Damage: " + item.GetComponent<FirearmScript>().damage.ToString() + "\n" +
                          "Reload Speed: " + item.GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +
@@ -491,7 +572,7 @@ public class WeaponManagerScript : MonoBehaviour
                          "Rate of Fire: " + Mathf.Round(item.GetComponent<FirearmScript>().fireRate * 10000).ToString() + " RPM";
         }
 
-        else if (wepStr == "3" || wepStr == "4" || wepStr == "6")
+        else if (wepStr == "2" || wepStr == "3" || wepStr == "5")
         {
             stats.text = "Damage: " + item.GetComponent<FirearmScript>().damage.ToString() + "\n" +
                          "Reload Speed: " + item.GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +
@@ -502,7 +583,7 @@ public class WeaponManagerScript : MonoBehaviour
                          "Rate of Fire: " + Mathf.Round(item.GetComponent<FirearmScript>().fireRate * 1000).ToString() + " RPM";
         }
 
-        else if (wepStr == "5")
+        else if (wepStr == "4" || wepStr == "7")
         {
             stats.text = "Damage: " + item.GetComponent<FirearmScript>().damage.ToString() + "\n" +
                          "Reload Speed: " + item.GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +
@@ -513,391 +594,475 @@ public class WeaponManagerScript : MonoBehaviour
                          "Rate of Fire: " + Mathf.Round(item.GetComponent<FirearmScript>().fireRate * 100).ToString() + " RPM";
         }
 
-        if (observedWeps[selection].Length == 8)
+        if (observedWeps[selection].Length >= 9)
         {
-            if (cFiveStr == "0")
+            if (cOneStr == "1")
             {
-                cheatTraitOne.text = "Wait! Now I'm Ready!" + "\n" +
-                    "Kills with this Weapon restore 10% of Shield strength.";
-
+                cheatOne.text = "Deep Yield" + "\n" + "<i>12% Magazine Size</i>";
+                item.AddComponent<DeepYield>();
             }
 
-            if (cFiveStr == "1")
+            if (cOneStr == "2")
             {
-                cheatTraitOne.text = "Efficacy" + '\n' +
-                     "Enemy hits increases this Weapon's base damage by 1%. Reloading resets its base damage.";
+                cheatOne.text = "Deeper Yield" + "\n" + "<i>24% Magazine Size</i>";
+                item.AddComponent<DeeperYield>();
             }
 
-            if (cFiveStr == "2")
+            if (cTwoStr == "3")
             {
-                cheatTraitOne.text = "Inoculated" + '\n' +
-                    "Kills with this Weapon restore 5% of Health.";
+                cheatTwo.text = "Deep Stores" + "\n" + "<i>15% Reserves Size</i>";
+                item.AddComponent<DeepStores>();
             }
 
-            if (cFiveStr == "3")
+            if (cTwoStr == "4")
             {
-                cheatTraitOne.text = "Rude Awakening" + '\n' +
-                    "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                    "'E' - Cast Blast";
+                cheatTwo.text = "Deeper Stores" + "\n" + "<i>30% Reserves Size</i>";
+                item.AddComponent<DeeperStores>();
             }
 
-            if (cFiveStr == "4")
+            if (cThreeStr == "5")
             {
-                cheatTraitOne.text = "Not with a Stick" + '\n' +
-                    "Kills with this Weapon increase Effective Range by 30% of max Range until your next reload.";
+                cheatThree.text = "Far Sight" + "\n" + "<i>10% Effective Range Increase</i>";
+                item.AddComponent<FarSight>();
             }
 
-            if (cFiveStr == "5")
+            if (cThreeStr == "6")
             {
-                cheatTraitOne.text = "Malicious Wind-Up" + '\n' +
-                    "Inflicting damage increases Reload Speed by 0.75%. This bonus activates on your next reload.";
+                cheatThree.text = "Farther Sight" + "\n" + "<i>20% Effective Range Increase</i>";
+                item.AddComponent<FartherSight>();
             }
 
-            if (cFiveStr == "6")
+            if (cFourStr == "7")
             {
-                cheatTraitOne.text = "Positive-Negative" + '\n' +
-                    "Moving generates a charge. While halfway charged, Enemy hits applies 100% of Weapon damage as damage-over-time for ten seconds.";
+                cheatFour.text = "Hasty Hands" + "\n" + "<i>15% Reload Speed Increase</i>";
+                item.AddComponent<HastyHands>();
             }
 
-            if (cFiveStr == "7")
+            if (cFourStr == "8")
             {
-                cheatTraitOne.text = "Cadence" + '\n' +
-                    "Every third Enemy kill spawns a Lucent cluster.";
+                cheatFour.text = "Hastier Hands" + "\n" + "<i>25% Reload Speed Increase</i>";
+                item.AddComponent<HastierHands>();
             }
 
-            if (cFiveStr == "8")
+            if (observedWeps[selection].Length == 10)
             {
-                cheatTraitOne.text = "Good Things Come" + '\n' +
-                    "Being in combat for three seconds grants 25% Movement Speed, 20% damage reduction, and 45% Recoil reduction until you leave combat.";
-            }
-
-            if (cFiveStr == "9")
-            {
-                cheatTraitOne.text = "All Else Fails" + '\n' +
-                    "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
-            }
-
-            if (cFiveStr == "!")
-            {
-                cheatTraitOne.text = "The Most Resplendent" + '\n' +
-                "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
-                "'[E]' - Toggle cast";
-            }
-
-            if (cFiveStr == "@")
-            {
-                cheatTraitOne.text = "Fulminate" + '\n' +
-                "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
-            }
-
-            if (cFiveStr == "#")
-            {
-                cheatTraitOne.text = "Forager" + '\n' +
-                "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
-            }
-
-            if (cFiveStr == "$")
-            {
-                cheatTraitOne.text = "Counterplay" + '\n' +
-                "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
-            }
-
-            if (cFiveStr == "%")
-            {
-                cheatTraitOne.text = "Enshroud" + '\n' +
-                "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
-            }
-
-            if (cFiveStr == "^")
-            {
-                cheatTraitOne.text = "Gale Force Winds" + '\n' +
-                "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
-                "'[E]' - Toggle cast";
-            }
-
-            cheatTraitTwo.text = " ";
-        }
-
-        if (observedWeps[selection].Length == 9)
-        {
-            //Exotic Functional Cheats
-            if (cFiveStr == "A")
-            {
-                cheatTraitOne.text = "Equivalent Exchange" + '\n' +
-                    "Taking Enemy damage adds 35% of damage received to this Weapon's base damage and to your Health. Base damage can increase up to 150%.";
-            }
-
-            if (cFiveStr == "G")
-            {
-                cheatTraitOne.text = "Pay to Win" + '\n' +
-                    "Consume 30,000 Lucent to grant stacks of a 50% Weapon damage increase. Stacks 150x." + "\n" +
-                    "'E' - Consume Lucent";
-            }
-
-            if (cFiveStr == "C")
-            {
-                cheatTraitOne.text = "Superweapon" + '\n' +
-                    "Kills grant stacks of damage resistance. Stacks 8x. [E] - Charge an extreme-damage shot, inflicting 1000% of Weapon damage per stack.";
-            }
-
-            if (cFiveStr == "F")
-            {
-                cheatTraitOne.text = "Volant" + '\n' +
-                    "[E] - Enables character flight until Shield is broken or disenaged.";
-            }
-
-            if (cFiveStr == "D")
-            {
-                cheatTraitOne.text = "Social Distance, please!" + '\n' +
-                    "Weapon hits temporarily increase Weapon damage by 30% and adds a Health debuff. Kills spread 400% of Weapon damage to nearby enemies.";
-            }
-
-            if (cFiveStr == "E")
-            {
-                cheatTraitOne.text = "The Early Berth gets the Hearst" + '\n' +
-                    "Every other Enemy hit triggers a Berth detonation, inflicting 200% of Weapon damage.";
-            }
-
-            if (cFiveStr == "B")
-            {
-                cheatTraitOne.text = "Absolutely No Stops" + '\n' +
-                    "Expending your magazine fills it from reserves, amplifies Weapon damage by 200%, and increases Rate of Fire by 50%.";
-            }
-
-
-            if (cFiveStr == "9")
-            {
-                cheatTraitOne.text = "All Else Fails" + '\n' +
-                    "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
-
-                if (rarStr == "5")
+                if (cFiveStr == "0")
                 {
-                    cheatTraitOne.text = "All Else Fails" + " (Fated)" + '\n' +
-                    "When Shield is depleted, all incoming Enemy damage is nullified for five seconds. Cooldown: 10 Seconds.";
-                }
-            }
-
-            if (cFiveStr == "4")
-            {
-                cheatTraitOne.text = "Not with a Stick" + '\n' +
-                    "Kills with this Weapon increase Effective Range by 30% of max Range until your next reload.";
-
-                if (rarStr == "5")
-                {
-                    cheatTraitOne.text = "Not with a Stick" + " (Fated)" + '\n' +
-                    "Kills increase Effective Range by 30% of max Range. Maximizing Effective Range increases Aim Assist halfway to full strength for 20 seconds.";
-                }
-            }
-
-            if (cFiveStr == "5")
-            {
-                cheatTraitOne.text = "Malicious Wind-Up" + '\n' +
-                    "Inflicting Damage increases Reload Speed by 0.75%. This bonus activates on your next reload.";
-
-                if (rarStr == "5")
-                {
-                    cheatTraitOne.text = "Malicious Wind-Up" + " (Fated)" + '\n' +
-                    "Inflicting Damage increases Reload Speed by 1.5%. Kills restore 5% of this weapon's reserves.";
-                }
-            }
-
-            if (cFiveStr == "6")
-            {
-                cheatTraitOne.text = "Positive-Negative" + '\n' +
-                    "Moving generates a charge. While halfway charged, Enemy hits applies 100% of Weapon damage as damage-over-time for ten seconds.";
-
-                if (rarStr == "5")
-                {
-                    cheatTraitOne.text = "Positive-Negative" + " (Fated)" + '\n' +
-                    "Moving generates a charge. While halfway charged, Enemy hits applies 200% of Weapon damage as damage-over-time for ten seconds.";
-                }
-            }
-
-            if (cFiveStr == "8")
-            {
-                cheatTraitOne.text = "Good Things Come" + '\n' +
-                    "Being in combat for three seconds grants 25% Movement Speed, 20% damage reduction, and 45% Recoil reduction until you leave combat.";
-
-                if (rarStr == "5")
-                {
-                    cheatTraitOne.text = "Good Things Come" + " (Fated)" + '\n' +
-                        "Being in combat instantly grants 50% Movement Speed, 40% damage reduction, 90% Recoil reduction, and Infinite Ammo until you leave combat.";
+                    cheatTraitOne.text = "Wait! Now I'm Ready!" + "\n" +
+                        "Kills with this Weapon restore 10% of Shield strength.";
 
                 }
 
-            }
-
-            if (cFiveStr == "!")
-            {
-                cheatTraitOne.text = "The Most Resplendent" + '\n' +
-                "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
-                "'[E]' - Toggle cast";
-
-                if (rarStr == "5")
+                if (cFiveStr == "1")
                 {
-                    cheatTraitOne.text = "The Most Resplendent" + " (Fated)" + '\n' +
-                        "Create a Hard Lucent crystal that produces Lucent clusters. " +
-                        "Stacks 2x. Physically colliding with the crystal shatters it, restoring 35% of Health.";
+                    cheatTraitOne.text = "Efficacy" + '\n' +
+                         "Enemy hits increases this Weapon's base damage by 1%. Reloading resets its base damage.";
                 }
-            }
 
-            if (cFiveStr == "@")
-            {
-                cheatTraitOne.text = "Fulminate" + '\n' +
-                "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
-
-                if (rarStr == "5")
+                if (cFiveStr == "2")
                 {
-                    cheatTraitOne.text = "Fulminate" + " (Fated)" + '\n' +
-                        "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Melee kills cast a Destruct Grenade. " +
-                        "Passively throw two Destruct Grenades.";
+                    cheatTraitOne.text = "Inoculated" + '\n' +
+                        "Kills with this Weapon restore 5% of Health.";
                 }
-            }
 
-            if (cFiveStr == "#")
-            {
-                cheatTraitOne.text = "Forager" + '\n' +
-                "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
-
-                if (rarStr == "5")
+                if (cFiveStr == "3")
                 {
-                    cheatTraitOne.text = "Forager" + " (Fated)" + '\n' +
-                        "Weapon or Melee kills produce bursts of Lucent clusters, 2% Health, 4% Shield, and 30% Ammo pickups. " +
-                        "Every 10th Boss hit produces one burst.";
+                    cheatTraitOne.text = "Rude Awakening" + '\n' +
+                        "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
+                        "'E' - Cast Blast";
                 }
-            }
 
-
-            //Pay to Win pairing
-            if (cSixStr == "!")
-            {
-                cheatTraitTwo.text = "The Most Resplendent" + '\n' +
-                        "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
-            }
-
-            //Social Distance, Please! pairing
-            if (cSixStr == "4")
-            {
-                cheatTraitTwo.text = "Not with a Stick" + '\n' +
+                if (cFiveStr == "4")
+                {
+                    cheatTraitOne.text = "Not with a Stick" + '\n' +
                         "Kills with this Weapon increase Effective Range by 30% of max Range until your next reload.";
-            }
-
-            //Absolutely no breaks! Pairing
-            if (cSixStr == "#")
-            {
-                cheatTraitTwo.text = "Forager" + '\n' +
-                        "Weapon or Melee kills produce a burst of Lucent clusters, Health, Shield, and Ammo pickups.";
-            }
-
-            //Volant pairing
-            if (cSixStr == "0")
-            {
-                cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
-                       "Kills with this Weapon restore 10% of Shield strength.";
-
-                if (rarStr == "5" && exoStr != "1")
-                {
-                    cheatTraitTwo.text = "Wait! Now I'm Ready!" + " (Fated)" + '\n' +
-                    "Kills with this Weapon restore 20% of Shield strength.";
                 }
 
-            }
-
-            //Early Berth gets the Hearst pairing
-            if (cSixStr == "1")
-            {
-                cheatTraitTwo.text = "Efficacy" + '\n' +
-                     "Enemy hits increases this Weapon's base damage by 1%. Reloading resets its base damage.";
-
-                if (rarStr == "5")
+                if (cFiveStr == "5")
                 {
-                    cheatTraitTwo.text = "Efficacy" + " (Fated)" + '\n' +
-                    "Enemy hits increases this Weapon's base damage by 2%. Base damage can increase up to 125%, and cannot be reset on reloads.";
+                    cheatTraitOne.text = "Malicious Wind-Up" + '\n' +
+                        "Inflicting damage increases Reload Speed by 0.75%. This bonus activates on your next reload.";
                 }
 
-            }
-
-            //Equivalent Exchange pairing
-            if (cSixStr == "2")
-            {
-                cheatTraitTwo.text = "Inoculated" + '\n' +
-                    "Kills with this Weapon restore 5% of Health.";
-
-                if (rarStr == "5")
+                if (cFiveStr == "6")
                 {
-                    cheatTraitTwo.text = "Inoculated" + " (Fated)" + '\n' +
-                    "Kills with this Weapon restore 10% of Health.";
+                    cheatTraitOne.text = "Positive-Negative" + '\n' +
+                        "Moving generates a charge. While halfway charged, Enemy hits applies 100% of Weapon damage as damage-over-time for ten seconds.";
                 }
 
-            }
-
-            if (cSixStr == "7")
-            {
-                cheatTraitTwo.text = "Cadence" + '\n' +
-                    "Every third Enemy kill spawns a Lucent cluster.";
-
-                if (rarStr == "5")
+                if (cFiveStr == "7")
                 {
-                    cheatTraitTwo.text = "Cadence" + " (Fated)" + '\n' +
-                    "Every third Weapon hit spawns a Lucent cluster.";
+                    cheatTraitOne.text = "Cadence" + '\n' +
+                        "Every third Enemy kill spawns a Lucent cluster.";
                 }
 
-            }
-
-            if (cSixStr == "3")
-            {
-                cheatTraitTwo.text = "Rude Awakening" + '\n' +
-                     "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                    "'E' - Cast Blast";
-
-                if (rarStr == "5")
+                if (cFiveStr == "8")
                 {
-                    cheatTraitTwo.text = "Rude Awakening" + " (Fated)" + '\n' +
-                    "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 6x. Having any stack increases Weapon damage by 20%.";
+                    cheatTraitOne.text = "Good Things Come" + '\n' +
+                        "Being in combat for three seconds grants 25% Movement Speed, 20% damage reduction, and 45% Recoil reduction until you leave combat.";
                 }
 
-            }
-
-            //Superweapon pairing
-            if (cSixStr == "$")
-            {
-                cheatTraitTwo.text = "Counterplay" + '\n' +
-                "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
-
-                if (rarStr == "5")
+                if (cFiveStr == "9")
                 {
-                    cheatTraitTwo.text = "Counterplay" + " (Fated)" + '\n' +
-                    "Hits taken during Evasions casts two Lucent clusters, a Solution Grenade, and permanently increases Weapon damage by 10%. Stacks 10x.";
+                    cheatTraitOne.text = "All Else Fails" + '\n' +
+                        "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
                 }
-            }
 
-            if (cSixStr == "%")
-            {
-                cheatTraitTwo.text = "Enshroud" + '\n' +
-                "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
-
-                if (rarStr == "5")
+                if (cFiveStr == "!")
                 {
-                    cheatTraitTwo.text = "Enshroud" + " (Fated)" + '\n' +
-                    "Enemy hits increase Melee range by 15%, up to 200%. Melee kills cast a Fogger Grenade. " +
-                    "All Fogger Grenades apply low damage-over-time.";
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
                 }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+                }
+
+                if (cFiveStr == "$")
+                {
+                    cheatTraitOne.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+                }
+
+                if (cFiveStr == "%")
+                {
+                    cheatTraitOne.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+                }
+
+                if (cFiveStr == "^")
+                {
+                    cheatTraitOne.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+                }
+
+                if (cFiveStr == "&")
+                {
+                    cheatTraitOne.text = "Activator Drone" + '\n' +
+                        "Passively attacks enemies, or can receive a target by aiming. Attacks trigger weapon passives.";
+                }
+
+                cheatTraitTwo.text = " ";
             }
 
-            if (cSixStr == "^")
+            if (observedWeps[selection].Length == 11)
             {
-                cheatTraitTwo.text = "Gale Force Winds" + '\n' +
-                "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
-                "'[E]' - Toggle cast";
-
-                if (rarStr == "5")
+                //Exotic Functional Cheats
+                if (cFiveStr == "A")
                 {
-                    cheatTraitTwo.text = "Gale Force Winds" + " (Fated)" + '\n' +
-                    "Cast faster traveling winds that applies Slowed and stronger Health debuffs to Enemies. " +
-                    "Applies damage-over-time to tracked Enemies.";
+                    cheatTraitOne.text = "Equivalent Exchange" + '\n' +
+                        "Taking Enemy damage adds 35% of damage received to this Weapon's base damage and to your Health. Base damage can increase up to 150%.";
+                }
+
+                if (cFiveStr == "G")
+                {
+                    cheatTraitOne.text = "Pay to Win" + '\n' +
+                        "Consume 30,000 Lucent to grant stacks of a 50% Weapon damage increase. Stacks 150x." + "\n" +
+                        "'E' - Consume Lucent";
+                }
+
+                if (cFiveStr == "C")
+                {
+                    cheatTraitOne.text = "Superweapon" + '\n' +
+                        "Kills grant stacks of damage resistance. Stacks 8x. [E] - Charge an extreme-damage shot, inflicting 1000% of Weapon damage per stack.";
+                }
+
+                if (cFiveStr == "F")
+                {
+                    cheatTraitOne.text = "Volant" + '\n' +
+                        "[E] - Enables character flight until Shield is broken or disenaged.";
+                }
+
+                if (cFiveStr == "D")
+                {
+                    cheatTraitOne.text = "Social Distance, please!" + '\n' +
+                        "Weapon hits temporarily increase Weapon damage by 30% and adds a Health debuff. Kills spread 400% of Weapon damage to nearby enemies.";
+                }
+
+                if (cFiveStr == "E")
+                {
+                    cheatTraitOne.text = "The Early Berth gets the Hearst" + '\n' +
+                        "Every other Enemy hit triggers a Berth detonation, inflicting 200% of Weapon damage.";
+                }
+
+                if (cFiveStr == "B")
+                {
+                    cheatTraitOne.text = "Absolutely No Stops" + '\n' +
+                        "Expending your magazine fills it from reserves, amplifies Weapon damage by 200%, and increases Rate of Fire by 50%.";
+                }
+
+                if (cFiveStr == "H")
+                {
+                    cheatTraitOne.text = "Flashpoint" + '\n' +
+                        "Fires floating Lucent mines. [E] - Detonates all active mines.";
+                }
+
+
+                if (cFiveStr == "9")
+                {
+                    cheatTraitOne.text = "All Else Fails" + '\n' +
+                        "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "All Else Fails" + " (Fated)" + '\n' +
+                        "When Shield is depleted, all incoming Enemy damage is nullified for five seconds. Cooldown: 10 Seconds.";
+                    }
+                }
+
+                if (cFiveStr == "4")
+                {
+                    cheatTraitOne.text = "Not with a Stick" + '\n' +
+                        "Kills with this Weapon increase Effective Range by 30% of max Range until your next reload.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Not with a Stick" + " (Fated)" + '\n' +
+                        "Kills increase Effective Range by 30% of max Range. Maximizing Effective Range increases Aim Assist halfway to full strength for 20 seconds.";
+                    }
+                }
+
+                if (cFiveStr == "5")
+                {
+                    cheatTraitOne.text = "Malicious Wind-Up" + '\n' +
+                        "Inflicting Damage increases Reload Speed by 0.75%. This bonus activates on your next reload.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Malicious Wind-Up" + " (Fated)" + '\n' +
+                        "Inflicting Damage increases Reload Speed by 1.5%. Kills restore 5% of this weapon's reserves.";
+                    }
+                }
+
+                if (cFiveStr == "6")
+                {
+                    cheatTraitOne.text = "Positive-Negative" + '\n' +
+                        "Moving generates a charge. While halfway charged, Enemy hits applies 100% of Weapon damage as damage-over-time for ten seconds.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Positive-Negative" + " (Fated)" + '\n' +
+                        "Moving generates a charge. While halfway charged, Enemy hits applies 200% of Weapon damage as damage-over-time for ten seconds.";
+                    }
+                }
+
+                if (cFiveStr == "8")
+                {
+                    cheatTraitOne.text = "Good Things Come" + '\n' +
+                        "Being in combat for three seconds grants 25% Movement Speed, 20% damage reduction, and 45% Recoil reduction until you leave combat.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Good Things Come" + " (Fated)" + '\n' +
+                            "Being in combat instantly grants 50% Movement Speed, 40% damage reduction, 90% Recoil reduction, and Infinite Ammo until you leave combat.";
+
+                    }
+
+                }
+
+                if (cFiveStr == "!")
+                {
+                    cheatTraitOne.text = "The Most Resplendent" + '\n' +
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "The Most Resplendent" + " (Fated)" + '\n' +
+                            "Create a Hard Lucent crystal that produces Lucent clusters. " +
+                            "Stacks 2x. Physically colliding with the crystal shatters it, restoring 35% of Health.";
+                    }
+                }
+
+                if (cFiveStr == "@")
+                {
+                    cheatTraitOne.text = "Fulminate" + '\n' +
+                    "Enemy hits increase Destruct Grenade damage by 2%, up to 70%, for seven seconds. Melee kills cast a Destruct Grenade.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Fulminate" + " (Fated)" + '\n' +
+                            "Enemy hits increase Destruct Grenade damage by 2%, up to 70%. Melee kills cast a Destruct Grenade. " +
+                            "Passively throw two Destruct Grenades.";
+                    }
+                }
+
+                if (cFiveStr == "#")
+                {
+                    cheatTraitOne.text = "Forager" + '\n' +
+                    "Weapon or Melee kills produce a burst of Lucent clusters, 1% Health, 2% Shield, and 15% Ammo pickups.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Forager" + " (Fated)" + '\n' +
+                            "Weapon or Melee kills produce bursts of Lucent clusters, 2% Health, 4% Shield, and 30% Ammo pickups. " +
+                            "Every 10th Boss hit produces one burst.";
+                    }
+                }
+
+                if (cFiveStr == "&")
+                {
+                    cheatTraitOne.text = "Activator Drone" + '\n' +
+                        "Passively attacks enemies, or can receive a target by aiming. Attacks trigger weapon passives.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Activator Drone" + " (Fated)" + '\n' +
+                        "The drone can activate Cheats ''Wait! Now I'm Ready!'', Efficacy, Inoculated, Cadence, and Enshroud.";
+                    }
+                }
+
+
+                //Pay to Win pairing
+                if (cSixStr == "!")
+                {
+                    cheatTraitTwo.text = "The Most Resplendent" + '\n' +
+                            "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
+                }
+
+                //Social Distance, Please! pairing
+                if (cSixStr == "4")
+                {
+                    cheatTraitTwo.text = "Not with a Stick" + '\n' +
+                            "Kills with this Weapon increase Effective Range by 30% of max Range until your next reload.";
+                }
+
+                //Absolutely no breaks! Pairing
+                if (cSixStr == "#")
+                {
+                    cheatTraitTwo.text = "Forager" + '\n' +
+                            "Weapon or Melee kills produce a burst of Lucent clusters, Health, Shield, and Ammo pickups.";
+                }
+
+                //Flashpoint Pairing
+                if (cSixStr == "6")
+                {
+                    cheatTraitTwo.text = "Positive-Negative" + '\n' +
+                        "Moving generates a charge. While halfway charged, Enemy hits applies 100% of Weapon damage as damage-over-time for ten seconds.";
+                }
+
+                //Volant pairing
+                if (cSixStr == "0")
+                {
+                    cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
+                           "Kills with this Weapon restore 10% of Shield strength.";
+
+                    if (rarStr == "5" && exoStr != "1")
+                    {
+                        cheatTraitTwo.text = "Wait! Now I'm Ready!" + " (Fated)" + '\n' +
+                        "Kills with this Weapon restore 20% of Shield strength.";
+                    }
+
+                }
+
+                //Early Berth gets the Hearst pairing
+                if (cSixStr == "1")
+                {
+                    cheatTraitTwo.text = "Efficacy" + '\n' +
+                         "Enemy hits increases this Weapon's base damage by 1%. Reloading resets its base damage.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Efficacy" + " (Fated)" + '\n' +
+                        "Enemy hits increases this Weapon's base damage by 2%. Base damage can increase up to 125%, and cannot be reset on reloads.";
+                    }
+
+                }
+
+                //Equivalent Exchange pairing
+                if (cSixStr == "2")
+                {
+                    cheatTraitTwo.text = "Inoculated" + '\n' +
+                        "Kills with this Weapon restore 5% of Health.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Inoculated" + " (Fated)" + '\n' +
+                        "Kills with this Weapon restore 10% of Health.";
+                    }
+
+                }
+
+                if (cSixStr == "7")
+                {
+                    cheatTraitTwo.text = "Cadence" + '\n' +
+                        "Every third Enemy kill spawns a Lucent cluster.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Cadence" + " (Fated)" + '\n' +
+                        "Every third Weapon hit spawns a Lucent cluster.";
+                    }
+
+                }
+
+                if (cSixStr == "3")
+                {
+                    cheatTraitTwo.text = "Rude Awakening" + '\n' +
+                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
+                        "'E' - Cast Blast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Rude Awakening" + " (Fated)" + '\n' +
+                        "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 6x. Having any stack increases Weapon damage by 20%.";
+                    }
+
+                }
+
+                //Superweapon pairing
+                if (cSixStr == "$")
+                {
+                    cheatTraitTwo.text = "Counterplay" + '\n' +
+                    "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Counterplay" + " (Fated)" + '\n' +
+                        "Hits taken during Evasions casts two Lucent clusters, a Solution Grenade, and permanently increases Weapon damage by 10%. Stacks 10x.";
+                    }
+                }
+
+                if (cSixStr == "%")
+                {
+                    cheatTraitTwo.text = "Enshroud" + '\n' +
+                    "Enemy hits increase Melee range by 15%, up to 200%, for seven seconds. Melee kills cast a Fogger Grenade. Cooldown: 12 seconds.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Enshroud" + " (Fated)" + '\n' +
+                        "Enemy hits increase Melee range by 15%, up to 200%. Melee kills cast a Fogger Grenade. " +
+                        "All Fogger Grenades apply low damage-over-time.";
+                    }
+                }
+
+                if (cSixStr == "^")
+                {
+                    cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
+                    "'[E]' - Toggle cast";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Gale Force Winds" + " (Fated)" + '\n' +
+                        "Cast faster traveling winds that applies Slowed and stronger Health debuffs to Enemies. " +
+                        "Applies damage-over-time to tracked Enemies.";
+                    }
                 }
             }
         }
+        
+        
     }
 
     /// <summary>
@@ -1523,6 +1688,73 @@ public class WeaponManagerScript : MonoBehaviour
     /// </summary>
     private void SwitchInv()
     {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (sortToggle)
+            {
+                sortToggle = false;
+            }
+
+            else
+            {
+                sortToggle = true;
+            }
+        }
+
+        if (automateLeft)
+        {
+            if (automateSelection <= 0 && observedWeps.Count >= 1)
+            {
+                automateSelection = observedWeps.Count - 1;
+            }
+
+            else
+            {
+                automateSelection--;
+            }
+
+            string o = observedWeps[automateSelection];
+            favCheck = o[3].ToString();
+
+            if (favCheck == "1")
+            {
+                selection = automateSelection;
+
+
+                DisplayWeapons();
+                appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+
+                automateLeft = false;
+            }
+            
+        } //Automates Inventory navigation left until a favorite Weapon is found
+
+        if (automateRight)
+        {
+            if (automateSelection >= observedWeps.Count - 1 && observedWeps.Count >= 1)
+            {
+                automateSelection = 0;
+            }
+
+            else
+            {
+                automateSelection++;
+            }
+
+            string o = observedWeps[automateSelection];
+            favCheck = o[3].ToString();
+
+            if (favCheck == "1")
+            {
+                selection = automateSelection;
+
+                DisplayWeapons();
+                appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+
+                automateRight = false;
+            }
+        } //Automates Inventory navigation right until a favorite Weapon is found
+
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             //Prevents switching when inventory is empty
@@ -1546,32 +1778,38 @@ public class WeaponManagerScript : MonoBehaviour
                 //Activates the Weapon at the end of the Inventory if you switch at the front. Otherwise, index goes left.
                 if (selection <= 0 && observedWeps.Count >= 1)
                 {
-                    selection = observedWeps.Count - 1;
+                    if (sortToggle)
+                    {
+                        automateSelection = selection;
+                        automateLeft = true;
+                    }
+
+                    else
+                    {
+                        selection = observedWeps.Count - 1;
+
+                        DisplayWeapons();
+                        appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+                    }
                 }
 
                 else
                 {
-                    selection--;
+                    if (sortToggle)
+                    {
+                        automateSelection = selection;
+                        automateLeft = true;
+                    }
 
-                    //Prevents running off the inventory backwards
-                    //if (selection <= -1 && inventory.Count >= 1)
-                    //{
-                    //    selection = 0;
-                    //}
+                    else
+                    {
+                        selection--;
 
+                        DisplayWeapons();
+                        appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+                    }
                 }
-
-                //Prevents running off the inventory backwards
-                //if (selection <= -1 && observedWeps.Count >= 1)
-                //{
-                //    selection = 0;
-                //}
-
-                DisplayWeapons();
-                appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
-
             }
-
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -1597,29 +1835,37 @@ public class WeaponManagerScript : MonoBehaviour
                 //Activates the Weapon at the front of the Inventory if you switch at the end. Otherwise, index goes right.
                 if (selection >= observedWeps.Count - 1 && observedWeps.Count >= 1)
                 {
-                    selection = 0;
+                    if (sortToggle)
+                    {
+                        automateSelection = selection;
+                        automateRight = true;
+                    }
+
+                    else
+                    {
+                        selection = 0;
+
+                        DisplayWeapons();
+                        appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+                    }
                 }
 
                 else
                 {
-                    selection++;
+                    if (sortToggle)
+                    {
+                        automateSelection = selection;
+                        automateRight = true;
+                    }
 
-                    //Prevents running off the inventory forwards
-                    //if (selection >= inventory.Count)
-                    //{
-                    //    selection = inventory.Count - 1;
-                    //}             
+                    else
+                    {
+                        selection++;
+
+                        DisplayWeapons();
+                        appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+                    }            
                 }
-
-                //Prevents running off the inventory forwards
-                //if (selection >= observedWeps.Count)
-                //{
-                //    selection = observedWeps.Count - 1;
-                //}
-
-                DisplayWeapons();
-                appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
-
             }
         }
     }
@@ -1631,62 +1877,72 @@ public class WeaponManagerScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.X))
         {
-            dismantleTimer -= Time.deltaTime;
-            dismantleText.text = "Selling...";
-            dismantleText.color = Color.Lerp(Color.cyan, Color.black, dismantleTimer);
-
-            if (dismantleTimer <= 0.0f)
+            string d = observedWeps[selection];
+            favCheck = d[3].ToString();
+            if (favCheck == "1")
             {
-                if (selection <= -1 && observedWeps.Count <= 0)
+                return;
+            } //Favorite Weapons cannot be sold
+
+            else
+            {
+                dismantleTimer -= Time.deltaTime;
+                dismantleText.text = "Selling...";
+                dismantleText.color = Color.Lerp(Color.cyan, Color.black, dismantleTimer);
+
+                if (dismantleTimer <= 0.0f)
                 {
-                    Debug.Log("Cannot dismantle; no items in inventory");
-                    return;
-                }
-
-                kiosk.lucentFunds += (int)kiosk.inventoryWorth[selection];
-                if (kiosk.lucentFunds >= 100000)
-                {
-                    kiosk.lucentFunds = 100000;
-                }
-
-                observedWeps.RemoveAt(selection);
-                kiosk.inventoryWorth.RemoveAt(selection);
-
-                if (gameObject.transform.childCount > 0)
-                {
-                    foreach (Transform child in transform)
-                    {
-                        Destroy(child.gameObject);
-                    }
-                }
-
-                if (selection >= observedWeps.Count)
-                {
-                    selection--;
-                    dismantleTimer = dismantleTimerReset;
-
                     if (selection <= -1 && observedWeps.Count <= 0)
                     {
-                        selection = -1;
-                        invNavigation.SetActive(false);
-
+                        Debug.Log("Cannot dismantle; no items in inventory");
                         return;
                     }
 
+                    kiosk.lucentFunds += (int)kiosk.inventoryWorth[selection];
+                    if (kiosk.lucentFunds >= 100000)
+                    {
+                        kiosk.lucentFunds = 100000;
+                    }
+
+                    observedWeps.RemoveAt(selection);
+                    kiosk.inventoryWorth.RemoveAt(selection);
+
+                    if (gameObject.transform.childCount > 0)
+                    {
+                        foreach (Transform child in transform)
+                        {
+                            Destroy(child.gameObject);
+                        }
+                    }
+
+                    if (selection >= observedWeps.Count)
+                    {
+                        selection--;
+                        dismantleTimer = dismantleTimerReset;
+
+                        if (selection <= -1 && observedWeps.Count <= 0)
+                        {
+                            selection = -1;
+                            invNavigation.SetActive(false);
+
+                            return;
+                        }
+
+                    }
+
+                    if (selection <= -1 && observedWeps.Count >= 1)
+                    {
+                        selection = 0;
+
+                    }
+
+                    DisplayWeapons();
+                    SaveInventory();
+                    appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+
+                    dismantleTimer = dismantleTimerReset;
                 }
-
-                if (selection <= -1 && observedWeps.Count >= 1)
-                {
-                    selection = 0;
-
-                }
-
-                DisplayWeapons();
-                SaveInventory();
-                appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
-
-                dismantleTimer = dismantleTimerReset;
-            }         
+            }                
         }
 
         if (Input.GetKeyUp(KeyCode.X))
@@ -1695,6 +1951,14 @@ public class WeaponManagerScript : MonoBehaviour
             dismantleText.text = " ";
             dismantleText.color = Color.black;
             return;
+        }
+    }
+
+    private void ChangeFavoriteState()
+    {
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            ModifyFavoriteState();
         }
     }
 
@@ -1738,6 +2002,34 @@ public class WeaponManagerScript : MonoBehaviour
     /// </summary>
     public void SwitchInvLeft()
     {
+        if (automateLeft)
+        {
+            if (automateSelection <= 0 && observedWeps.Count >= 1)
+            {
+                automateSelection = observedWeps.Count - 1;
+            }
+
+            else
+            {
+                automateSelection--;
+            }
+
+            string o = observedWeps[automateSelection];
+            favCheck = o[3].ToString();
+
+            if (favCheck == "1")
+            {
+                selection = automateSelection;
+
+
+                DisplayWeapons();
+                appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+
+                automateLeft = false;
+            }
+
+        } //Automates Inventory navigation left until a favorite Weapon is found
+
         //Prevents switching when inventory is empty
         if (selection <= -1)
         {
@@ -1759,29 +2051,37 @@ public class WeaponManagerScript : MonoBehaviour
             //Activates the Weapon at the end of the Inventory if you switch at the front. Otherwise, index goes left.
             if (selection <= 0 && observedWeps.Count >= 1)
             {
-                selection = observedWeps.Count - 1;            
+                if (sortToggle)
+                {
+                    automateSelection = selection;
+                    automateLeft = true;
+                }
+
+                else
+                {
+                    selection = observedWeps.Count - 1;
+
+                    DisplayWeapons();
+                    appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+                }
             }
 
             else
             {
-                selection--;
+                if (sortToggle)
+                {
+                    automateSelection = selection;
+                    automateLeft = true;
+                }
 
-                //Prevents running off the inventory backwards
-                //if (selection <= -1 && inventory.Count >= 1)
-                //{
-                //    selection = 0;
-                //}
-                
-            }
+                else
+                {
+                    selection--;
 
-            //Prevents running off the inventory backwards
-            //if (selection <= -1 && observedWeps.Count >= 1)
-            //{
-            //    selection = 0;
-            //}
-
-            DisplayWeapons();
-            appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+                    DisplayWeapons();
+                    appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+                }
+            }           
         }
     }
 
@@ -1790,6 +2090,32 @@ public class WeaponManagerScript : MonoBehaviour
     /// </summary>
     public void SwitchInvRight()
     {
+        if (automateRight)
+        {
+            if (automateSelection >= observedWeps.Count - 1 && observedWeps.Count >= 1)
+            {
+                automateSelection = 0;
+            }
+
+            else
+            {
+                automateSelection++;
+            }
+
+            string o = observedWeps[automateSelection];
+            favCheck = o[3].ToString();
+
+            if (favCheck == "1")
+            {
+                selection = automateSelection;
+
+                DisplayWeapons();
+                appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+
+                automateRight = false;
+            }
+        } //Automates Inventory navigation right until a favorite Weapon is found
+
         //Prevents switching when inventory is empty
         if (selection <= -1)
         {
@@ -1811,29 +2137,37 @@ public class WeaponManagerScript : MonoBehaviour
             //Activates the Weapon at the front of the Inventory if you switch at the end. Otherwise, index goes right.
             if (selection >= observedWeps.Count - 1 && observedWeps.Count >= 1)
             {
-                selection = 0;             
+                if (sortToggle)
+                {
+                    automateSelection = selection;
+                    automateRight = true;
+                }
+
+                else
+                {
+                    selection = 0;
+
+                    DisplayWeapons();
+                    appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+                }
             }
 
             else
             {
-                selection++;
+                if (sortToggle)
+                {
+                    automateSelection = selection;
+                    automateRight = true;
+                }
 
-                //Prevents running off the inventory forwards
-                //if (selection >= inventory.Count)
-                //{
-                //    selection = inventory.Count - 1;
-                //}             
+                else
+                {
+                    selection++;
+
+                    DisplayWeapons();
+                    appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+                }          
             }
-
-            //Prevents running off the inventory forwards
-            //if (selection >= observedWeps.Count)
-            //{
-            //    selection = observedWeps.Count - 1;
-            //}
-
-            DisplayWeapons();
-            appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
-
         }
     }
 
@@ -1890,6 +2224,52 @@ public class WeaponManagerScript : MonoBehaviour
         DisplayWeapons();
         SaveInventory();
         appraisal.text = "Value: " + kiosk.inventoryWorth[selection].ToString("N0");
+    }
+
+    /// <summary>
+    /// Main Menu Inventory page interaction that changes sorting type between All and Favorite
+    /// </summary>
+    public void ChangeSortingType()
+    {
+        if (sortToggle)
+        {
+            sortToggle = false;
+        }
+
+        else
+        {
+            sortToggle = true;
+        }
+    }
+
+    public void ModifyFavoriteState()
+    {
+        string f = observedWeps[selection];
+        weaponToModify = f.ToCharArray();
+
+        if(weaponToModify[3] == '1')
+        {
+            weaponToModify[3] = '0';
+        }
+
+        else
+        {
+            weaponToModify[3] = '1';
+        }
+
+        observedWeps[selection] = new string(weaponToModify);
+        //SaveInventory();
+        DisplayWeapons();
+    }
+
+    public void InventoryInputControlsDeactivate()
+    {
+        invInputHold = true;
+    }
+
+    public void InventoryInputControlsActivate()
+    {
+        invInputHold = false;
     }
 
     public void SaveInventory()

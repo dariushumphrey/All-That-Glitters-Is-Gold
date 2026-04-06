@@ -19,9 +19,13 @@ public class TrenchantPlatform : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        firearm = GetComponent<FirearmScript>();     
-        cam = FindObjectOfType<PlayerCameraScript>();
-        move = FindObjectOfType<PlayerMoveScript>();
+        firearm = GetComponent<FirearmScript>();
+
+        if (!firearm.display)
+        {
+            move = FindObjectOfType<PlayerMoveScript>();
+            cam = FindObjectOfType<PlayerCameraScript>();
+        }
 
         damagePercent /= 100f;
         damagePercent *= firearm.damage;
@@ -37,9 +41,12 @@ public class TrenchantPlatform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cam.zoomMax = cameraZoomNew;
+        if (cam)
+        {
+            cam.zoomMax = cameraZoomNew;
+        }
 
-        if(confirmedHit)
+        if (confirmedHit)
         {
             if(!enemy.GetComponent<DebuffScript>())
             {
@@ -73,21 +80,24 @@ public class TrenchantPlatform : MonoBehaviour
             confirmedMeleeHit = false;
         }
         
-        if(move.evading)
+        if(move)
         {
-            Vector3 epicenter = transform.position;
-            Collider[] affected = Physics.OverlapSphere(transform.position, 5f);
-            foreach (Collider hit in affected)
+            if (move.evading)
             {
-                if (hit.gameObject.CompareTag("Enemy"))
+                Vector3 epicenter = transform.position;
+                Collider[] affected = Physics.OverlapSphere(transform.position, 5f);
+                foreach (Collider hit in affected)
                 {
-                    if (!hit.gameObject.GetComponent<SlowedScript>())
+                    if (hit.gameObject.CompareTag("Enemy"))
                     {
-                        hit.gameObject.AddComponent<SlowedScript>();
+                        if (!hit.gameObject.GetComponent<SlowedScript>())
+                        {
+                            hit.gameObject.AddComponent<SlowedScript>();
+                        }
                     }
                 }
             }
-        }
+        }       
     }
 
     public void RemoteProc()

@@ -23,6 +23,7 @@ public class PlayerStatusScript : MonoBehaviour
     //-Increasing max health allows this number to give more shield in return
     public float shieldPercent = 20f;
 
+    public int rechargeAccelerant = 2;
     public float regenShieldSeconds = 7.0f;
     public float invincibilityDuration = 0.3f;
     public bool isDead;
@@ -36,6 +37,8 @@ public class PlayerStatusScript : MonoBehaviour
     public ParticleSystem shieldRecharge;
     private int healthAdd; //Player Health is added onto by this value
     private int shieldAdd; //Player Shield is added onto by this value
+    private int rechargeAdd; //Player Shield is recharged by this value
+    private float rechargePercent = 1f;
     private float regenShieldResetSeconds;
     private bool done = false; //Prevents operation from repeating if true
     internal PlayerMoveScript move;
@@ -114,8 +117,13 @@ public class PlayerStatusScript : MonoBehaviour
             }
         }
 
-        ShieldDamageCheck();
+        //ShieldDamageCheck();
         //PlayerDeath();
+    }
+
+    private void FixedUpdate()
+    {
+        ShieldDamageCheck();
     }
 
     /// <summary>
@@ -185,6 +193,10 @@ public class PlayerStatusScript : MonoBehaviour
             health.maxValue = playerHealthMax;
             shield.maxValue = playerShieldMax;
         }
+
+        rechargePercent /= 100;
+        rechargePercent *= playerShieldMax;
+        rechargeAdd = (int)rechargePercent;
     }
 
     /// <summary>
@@ -280,9 +292,16 @@ public class PlayerStatusScript : MonoBehaviour
                 regenShieldSeconds -= Time.deltaTime;
                 if (regenShieldSeconds <= 0.0f)
                 {
+                    regenShieldSeconds = 0f;
+                    playerShield += rechargeAdd * rechargeAccelerant;
+                    if (playerShield >= playerShieldMax)
+                    {
+                        playerShield = playerShieldMax;
+                        regenShieldSeconds = regenShieldResetSeconds;
+                    }
                     //shieldText.text = "Recharging...";
-                    StartCoroutine(RechargeShield());
-                    return;
+                    //StartCoroutine(RechargeShield());
+                    //return;
                 }
             }
         }     

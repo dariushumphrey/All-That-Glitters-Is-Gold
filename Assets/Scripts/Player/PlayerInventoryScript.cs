@@ -228,7 +228,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
 
             //Stats for Shotguns
-            else if(inventory[selection].GetComponent<ShotgunFirearm>() != null)
+            else if(inventory[selection].GetComponent<ShotgunFirearm>() != null || inventory[selection].GetComponent<LauncherFirearm>() != null)
             {
                 wepStats.text = "Damage: " + inventory[selection].GetComponent<FirearmScript>().damage.ToString() + "\n" +
                           "Reload Speed: " + inventory[selection].GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +

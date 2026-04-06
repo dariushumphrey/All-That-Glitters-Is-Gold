@@ -19,9 +19,13 @@ public class CachePlatform : MonoBehaviour
     {
         regenerateReset = regenerateTimer;
 
-        firearm = GetComponent<FirearmScript>();     
-        cam = FindObjectOfType<PlayerCameraScript>();
-        inventory = FindObjectOfType<PlayerInventoryScript>();
+        firearm = GetComponent<FirearmScript>();
+
+        if (!firearm.display)
+        {
+            cam = FindObjectOfType<PlayerCameraScript>();
+            inventory = FindObjectOfType<PlayerInventoryScript>();
+        }
 
         damagePercent /= 100f;
         damagePercent *= firearm.damage;
@@ -36,16 +40,22 @@ public class CachePlatform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cam.zoomMax = cameraZoomNew;
-
-        regenerateTimer -= Time.deltaTime;
-        if(regenerateTimer <= 0f)
+        if (cam)
         {
-            regenerateTimer = regenerateReset;
+            cam.zoomMax = cameraZoomNew;
+        }
 
-            inventory.fogGrenadeCharges++;
-            inventory.solGrenadeCharges++;
-            inventory.desGrenadeCharges++;
+        if(!firearm.display)
+        {
+            regenerateTimer -= Time.deltaTime;
+            if (regenerateTimer <= 0f)
+            {
+                regenerateTimer = regenerateReset;
+
+                inventory.fogGrenadeCharges++;
+                inventory.solGrenadeCharges++;
+                inventory.desGrenadeCharges++;
+            }
         }
     }
 }

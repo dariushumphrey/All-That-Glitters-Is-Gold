@@ -18,7 +18,10 @@ public class EfficientPlatform : MonoBehaviour
     void Start()
     {
         firearm = GetComponent<FirearmScript>();
-        cam = FindObjectOfType<PlayerCameraScript>();
+        if (!firearm.display)
+        {
+            cam = FindObjectOfType<PlayerCameraScript>();
+        }
 
         damagePercent /= 100f;
         damagePercent *= firearm.damage;
@@ -46,6 +49,9 @@ public class EfficientPlatform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cam.zoomMax = cameraZoomNew;
+        if (cam)
+        {
+            cam.zoomMax = cameraZoomNew;
+        }
     }
 }

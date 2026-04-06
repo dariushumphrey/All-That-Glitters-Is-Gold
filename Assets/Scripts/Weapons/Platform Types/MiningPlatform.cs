@@ -23,17 +23,21 @@ public class MiningPlatform : MonoBehaviour
     void Start()
     {
         firearm = GetComponent<FirearmScript>();
-        inventory = FindObjectOfType<PlayerInventoryScript>();
-        cam = FindObjectOfType<PlayerCameraScript>();
-        cluster = Resources.Load<GameObject>("Game Items/testLucent");
+
+        if (!firearm.display)
+        {
+            inventory = FindObjectOfType<PlayerInventoryScript>();
+            cam = FindObjectOfType<PlayerCameraScript>();
+            cluster = Resources.Load<GameObject>("Game Items/testLucent");
+
+            lucentPercent /= 100;
+            lucentPercent *= inventory.lucentFunds;
+            lucentAdd = (int)lucentPercent;
+        }      
 
         damagePercent /= 100f;
         damagePercent *= firearm.damage;
-        firearm.damage += (int)damagePercent;
-
-        lucentPercent /= 100;
-        lucentPercent *= inventory.lucentFunds;
-        lucentAdd = (int)lucentPercent;
+        firearm.damage += (int)damagePercent;       
 
         cameraZoomOld = 40f;
         cameraZoomPercent /= 100f;
@@ -45,9 +49,12 @@ public class MiningPlatform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cam.zoomMax = cameraZoomNew;
+        if(cam)
+        {
+            cam.zoomMax = cameraZoomNew;
+        }
 
-        if(confirmedHit)
+        if (confirmedHit)
         {
             GameObject lucent = Instantiate(cluster, clusterPosition, transform.rotation);
             lucent.name = cluster.name;

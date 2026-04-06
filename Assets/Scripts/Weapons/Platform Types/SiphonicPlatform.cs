@@ -25,20 +25,24 @@ public class SiphonicPlatform : MonoBehaviour
     void Start()
     {
         firearm = GetComponent<FirearmScript>();
-        status = FindObjectOfType<PlayerStatusScript>();
-        cam = FindObjectOfType<PlayerCameraScript>();
+
+        if (!firearm.display)
+        {
+            status = FindObjectOfType<PlayerStatusScript>();
+            cam = FindObjectOfType<PlayerCameraScript>();
+
+            healthPercent /= 100;
+            healthPercent *= status.playerHealthMax;
+            healthAdd = (int)healthPercent;
+
+            shieldPercent /= 100;
+            shieldPercent *= status.playerShieldMax;
+            shieldAdd = (int)shieldPercent;
+        }
 
         damagePercent /= 100f;
         damagePercent *= firearm.damage;
-        firearm.damage += (int)damagePercent;
-
-        healthPercent /= 100;
-        healthPercent *= status.playerHealthMax;
-        healthAdd = (int)healthPercent;
-
-        shieldPercent /= 100;
-        shieldPercent *= status.playerShieldMax;
-        shieldAdd = (int)shieldPercent;
+        firearm.damage += (int)damagePercent;      
 
         cameraZoomOld = 40f;
 
@@ -51,7 +55,10 @@ public class SiphonicPlatform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cam.zoomMax = cameraZoomNew;
+        if (cam)
+        {
+            cam.zoomMax = cameraZoomNew;
+        }
 
         if (confirmedHit)
         {
