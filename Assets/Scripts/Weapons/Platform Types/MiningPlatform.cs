@@ -20,7 +20,7 @@ public class MiningPlatform : MonoBehaviour
     internal Vector3 clusterPosition; //Lucent Cluster spawn position
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         firearm = GetComponent<FirearmScript>();
 

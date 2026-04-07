@@ -1624,7 +1624,7 @@ public class LootScript : MonoBehaviour
 
             if (wepTypeStr == "1")
             {
-                wepPltStr = "5";
+                wepPltStr = "6";
                 fcOneStr = "G";
                 fcTwoStr = "!";
                 clpLtPlatform.GetComponent<Text>().text = "Mining\n" +

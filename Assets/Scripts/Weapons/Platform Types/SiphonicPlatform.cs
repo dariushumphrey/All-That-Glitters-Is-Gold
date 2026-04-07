@@ -22,7 +22,7 @@ public class SiphonicPlatform : MonoBehaviour
     private PlayerCameraScript cam;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         firearm = GetComponent<FirearmScript>();
 

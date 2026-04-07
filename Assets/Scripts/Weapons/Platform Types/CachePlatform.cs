@@ -15,7 +15,7 @@ public class CachePlatform : MonoBehaviour
     private PlayerInventoryScript inventory;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         regenerateReset = regenerateTimer;
 

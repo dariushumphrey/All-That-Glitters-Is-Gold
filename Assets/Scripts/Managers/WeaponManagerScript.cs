@@ -349,30 +349,35 @@ public class WeaponManagerScript : MonoBehaviour
         {
             wepPlatform.text = "Efficient Platform - Configured for slow-firing, high-damage.";
             item.AddComponent<EfficientPlatform>();
+            item.GetComponent<EfficientPlatform>().Start();
         }
 
         if (pltStr == "3")
         {
             wepPlatform.text = "Chatter Platform - Configured for fast-firing, low-damage.";
             item.AddComponent<ChatterPlatform>();
+            item.GetComponent<ChatterPlatform>().Start();
         }
 
         if (pltStr == "4")
         {
             wepPlatform.text = "Tempered Platform - Tuned for highest damage, improved firing and control.";
             item.AddComponent<TemperedPlatform>();
+            item.GetComponent<TemperedPlatform>().Start();
         }
 
         if (pltStr == "5")
         {
             wepPlatform.text = "Siphonic Platform - Weapon hits restore 1% Health & Shield. Melee Kills restore 15% Health & Shield.";
             item.AddComponent<SiphonicPlatform>();
+            item.GetComponent<SiphonicPlatform>().Start();
         }
 
         if (pltStr == "6")
         {
             wepPlatform.text = "Mining Platform - Fires Lucent explosive rounds.";
             item.AddComponent<MiningPlatform>();
+            item.GetComponent<MiningPlatform>().Start();
         }
 
         if (pltStr == "7")
@@ -382,6 +387,7 @@ public class WeaponManagerScript : MonoBehaviour
                 "Melees apply damage-over-time." + "\n" + 
                 "Weapon hits apply Health debuffs.";
             item.AddComponent<TrenchantPlatform>();
+            item.GetComponent<TrenchantPlatform>().Start();
         }
 
         if (pltStr == "8")
@@ -389,20 +395,27 @@ public class WeaponManagerScript : MonoBehaviour
             wepPlatform.text = "Cache Platform - Regenerates all grenades every two seconds." + "\n" +
                 "Activator Drones fire mini-Rockets.";
             item.AddComponent<CachePlatform>();
+            item.GetComponent<CachePlatform>().Start();
         }
 
         if (rarStr == "1")
         {
             rarityCheck.text = "Usual";
 
+            cheatOne.text = "";
+            cheatTwo.text = "";
+            cheatThree.text = "";
+            cheatFour.text = "";
             cheatTraitOne.text = " ";
             cheatTraitTwo.text = " ";
-
         }
 
         if (rarStr == "2")
         {
             rarityCheck.text = "Sought";
+
+            cheatTraitOne.text = " ";
+            cheatTraitTwo.text = " ";
             item.GetComponent<FirearmScript>().weaponRarity = 2;
             item.GetComponent<FirearmScript>().RarityAugment();
         }
@@ -410,6 +423,7 @@ public class WeaponManagerScript : MonoBehaviour
         if (rarStr == "3")
         {
             rarityCheck.text = "Coveted";
+            cheatTraitTwo.text = " ";
             item.GetComponent<FirearmScript>().weaponRarity = 3;
             item.GetComponent<FirearmScript>().RarityAugment();
         }

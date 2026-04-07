@@ -17,7 +17,7 @@ public class TrenchantPlatform : MonoBehaviour
     private PlayerMoveScript move;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         firearm = GetComponent<FirearmScript>();
 
