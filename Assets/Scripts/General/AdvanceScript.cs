@@ -54,6 +54,8 @@ public class AdvanceScript : MonoBehaviour
 
                 PlayerPrefs.SetInt("lucentBalance", player.lucentFunds);
 
+                level.manager.RemoveAllEnemies();
+
                 level.lvlProgressSaved = false;
 
                 level.gameComplete = true;
@@ -70,6 +72,8 @@ public class AdvanceScript : MonoBehaviour
                 }
 
                 PlayerPrefs.SetInt("lucentBalance", player.lucentFunds);
+
+                level.manager.RemoveAllEnemies();
 
                 level.level = levelIndex;
                 level.SaveInventory();
@@ -101,6 +105,8 @@ public class AdvanceScript : MonoBehaviour
 
             PlayerPrefs.SetInt("lucentBalance", player.lucentFunds);
 
+            level.manager.RemoveAllEnemies();
+
             level.lvlProgressSaved = false;
 
             level.gameComplete = true;
@@ -117,6 +123,8 @@ public class AdvanceScript : MonoBehaviour
             }
 
             PlayerPrefs.SetInt("lucentBalance", player.lucentFunds);
+
+            level.manager.RemoveAllEnemies();
 
             level.level = levelIndex;
             level.SaveInventory();

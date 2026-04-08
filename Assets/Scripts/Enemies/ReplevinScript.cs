@@ -1595,6 +1595,8 @@ public class ReplevinScript : MonoBehaviour
 
                 if(!phaseTwo)
                 {
+                    enemy.healthCurrent = Mathf.Clamp(enemy.healthCurrent, (enemy.healthMax / 2) - 1, enemy.healthMax);
+
                     if (!slamTimeout)
                     {
                         if (!destinationSet)

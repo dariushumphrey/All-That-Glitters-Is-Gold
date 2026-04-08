@@ -2591,10 +2591,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultySpawn: 1
-  spawnRepeat: 5
+  spawnRepeat: 10
   berthChance: 90
   spawned:
-  - {fileID: 78844624512772179, guid: 9dfb729d8e680784e9cebb65594f3527, type: 3}
+  - {fileID: 78844624512772179, guid: 5e03e9a2556c9b14b9dfdfaa5370a35a, type: 3}
   field: {fileID: 57732735}
 --- !u!65 &57732733
 BoxCollider:
@@ -7183,6 +7183,10 @@ PrefabInstance:
     - target: {fileID: 4604165123743557479, guid: b77cfc120f308b749aec21db24219f36, type: 3}
       propertyPath: m_Name
       value: placeholder_bench (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4604165123743557479, guid: b77cfc120f308b749aec21db24219f36, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b77cfc120f308b749aec21db24219f36, type: 3}
@@ -17468,13 +17472,18 @@ MonoBehaviour:
   stats: {fileID: 0}
   dismantleText: {fileID: 0}
   appraisal: {fileID: 0}
+  favNotice: {fileID: 0}
+  wepPlatform: {fileID: 0}
   cheatOne: {fileID: 0}
   cheatTwo: {fileID: 0}
   cheatThree: {fileID: 0}
   cheatFour: {fileID: 0}
   cheatTraitOne: {fileID: 0}
   cheatTraitTwo: {fileID: 0}
+  sellButton: {fileID: 0}
   lucentText: {fileID: 0}
+  sortingText: {fileID: 0}
+  favoriteText: {fileID: 0}
   invNavigation: {fileID: 0}
   dismantleTimer: 0
 --- !u!4 &424498897
@@ -46364,6 +46373,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: placeholder_bench (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 4604165123743557479, guid: b77cfc120f308b749aec21db24219f36, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b77cfc120f308b749aec21db24219f36, type: 3}
 --- !u!4 &1073163770 stripped
@@ -61054,6 +61067,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8881102057233506689, guid: ef8b390eb276f1245a60b0823579ae66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef8b390eb276f1245a60b0823579ae66, type: 3}
 --- !u!4 &1472147406 stripped
@@ -65483,6 +65500,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: placeholder_bench (22)
       objectReference: {fileID: 0}
+    - target: {fileID: 4604165123743557479, guid: b77cfc120f308b749aec21db24219f36, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b77cfc120f308b749aec21db24219f36, type: 3}
 --- !u!4 &1584190806 stripped
@@ -67117,6 +67138,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 731661946569148711, guid: b8f3fabc11f03234a8eea4941c0dfbb8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8f3fabc11f03234a8eea4941c0dfbb8, type: 3}
 --- !u!4 &1613122884 stripped
@@ -67178,6 +67203,10 @@ PrefabInstance:
     - target: {fileID: 4604165123743557479, guid: b77cfc120f308b749aec21db24219f36, type: 3}
       propertyPath: m_Name
       value: placeholder_bench (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4604165123743557479, guid: b77cfc120f308b749aec21db24219f36, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b77cfc120f308b749aec21db24219f36, type: 3}
@@ -76417,6 +76446,10 @@ PrefabInstance:
     - target: {fileID: 4604165123743557479, guid: b77cfc120f308b749aec21db24219f36, type: 3}
       propertyPath: m_Name
       value: placeholder_bench (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4604165123743557479, guid: b77cfc120f308b749aec21db24219f36, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b77cfc120f308b749aec21db24219f36, type: 3}

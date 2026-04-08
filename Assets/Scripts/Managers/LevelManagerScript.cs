@@ -193,11 +193,20 @@ public class LevelManagerScript : MonoBehaviour
                     gameRetryDelay -= Time.deltaTime;
                     if(gameRetryDelay <= 0f)
                     {
-                        gameRetryDelay = 5f;
-                        player.GetComponent<PlayerInventoryScript>().WriteOnReset();
-                        PlayerPrefs.SetInt("lucentBalance", player.GetComponent<PlayerInventoryScript>().lucentFunds);
+                        if(gameComplete)
+                        {
+                            gameRetryDelay = 5f;
+                            player.RespawnPlayer();
+                        }
 
-                        LoadScene();
+                        else
+                        {
+                            gameRetryDelay = 5f;
+                            player.GetComponent<PlayerInventoryScript>().WriteOnReset();
+                            PlayerPrefs.SetInt("lucentBalance", player.GetComponent<PlayerInventoryScript>().lucentFunds);
+
+                            LoadScene();
+                        }
                     }
 
                     //if (Input.GetKeyDown(KeyCode.F))

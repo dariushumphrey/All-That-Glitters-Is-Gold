@@ -272,7 +272,7 @@ public class EnemyHealthScript : MonoBehaviour
         if(isImmune)
         {
             return;
-        }
+        }      
 
         enemyHit = true;
         damageHit = damageTaken;

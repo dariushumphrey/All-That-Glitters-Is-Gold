@@ -207,4 +207,18 @@ public class EnemyManagerScript : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Deactivates every enemy detected in-game
+    /// </summary>
+    public void RemoveAllEnemies()
+    {
+        if(combatants.Count >= 1)
+        {
+            for (int e = 0; e < combatants.Count; e++)
+            {
+                combatants[e].gameObject.SetActive(false);
+            }
+        }
+    }
 }

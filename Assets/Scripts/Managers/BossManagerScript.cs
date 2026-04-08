@@ -70,6 +70,8 @@ public class BossManagerScript : MonoBehaviour
                 addSpawners[a].GetComponent<SpawnerScript>().SpawnObject();
             }
         }
+
+        enemyManager.CatalogEnemies();
     }
     
     /// <summary>
@@ -106,6 +108,8 @@ public class BossManagerScript : MonoBehaviour
 
             StartCoroutine(GameEndDelay());
         }
+
+        enemyManager.RemoveAllEnemies();
     }
 
     private IEnumerator GameEndDelay()

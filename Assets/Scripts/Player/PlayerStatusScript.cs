@@ -331,6 +331,36 @@ public class PlayerStatusScript : MonoBehaviour
         immunity.SetActive(false);
     }
 
+    /// <summary>
+    /// Respawns Player (in events of death after game completion)
+    /// </summary>
+    public void RespawnPlayer()
+    {
+        isDead = false;
+
+        transform.position = transform.position + Vector3.up;
+        transform.rotation = Quaternion.identity;
+
+        gameObject.GetComponent<Rigidbody>().freezeRotation = true;
+        move.enabled = true;
+        cam.enabled = true;
+
+        if (cam.GetComponent<PlayerCameraScript>().playerCamera.gameObject.GetComponent<LookAtPlayerScript>())
+        {
+            Destroy(cam.GetComponent<PlayerCameraScript>().playerCamera.gameObject.GetComponent<LookAtPlayerScript>());
+        }
+
+        if (inv.inventory.Count > 0 && !move.sprinting)
+        {
+            inv.GetComponentInChildren<FirearmScript>().enabled = true;
+        }
+
+        inv.enabled = true;
+
+        playerHealth = playerHealthMax;
+        playerShield = playerShieldMax;
+    }
+
     //private void OnDrawGizmos()
     //{
     //    Gizmos.DrawWireSphere(transform.position, 7f);
