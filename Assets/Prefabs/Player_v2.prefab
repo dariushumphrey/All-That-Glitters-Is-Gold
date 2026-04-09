@@ -761,7 +761,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateH: 3
   rotateV: 2
-  vClamp: 30
+  vClamp: 35
   characterTurnSpeed: 25
   zoomDefault: 60
   zoomMax: 40
@@ -794,10 +794,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   filepath: inventory.txt
+  sortToggle: 0
   lucentFunds: 0
   fogGrenadeCharges: 3
   solGrenadeCharges: 3
   desGrenadeCharges: 3
+  maxGrenades: 3
   inventory: []
   grenades:
   - {fileID: 7810528506078395390, guid: 849e37250196ee540b19af0ab4e1a00d, type: 3}
@@ -840,6 +842,7 @@ MonoBehaviour:
   playerShield: 550
   playerShieldMax: 550
   shieldPercent: 20
+  rechargeAccelerant: 2
   regenShieldSeconds: 7
   invincibilityDuration: 0.2
   isDead: 0

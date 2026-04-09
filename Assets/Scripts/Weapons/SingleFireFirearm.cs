@@ -125,7 +125,7 @@ public class SingleFireFirearm : FirearmScript
                         gameObject.GetComponent<Fulminate>().hitConfirmed = true;
                     }
 
-                    if (gameObject.GetComponent<Forager>() && weaponRarity == 5 && !hit.collider.GetComponent<EnemyHealthScript>().isImmune && hit.collider.GetComponent<ReplevinScript>().amBoss)
+                    if (gameObject.GetComponent<Forager>() && weaponRarity == 5 && !isExotic && !hit.collider.GetComponent<EnemyHealthScript>().isImmune && hit.collider.GetComponent<ReplevinScript>().amBoss)
                     {
                         gameObject.GetComponent<Forager>().hitConfirmed = true;
                         gameObject.GetComponent<Forager>().burstPosition = hit.collider.transform.position + (Vector3.up * 2);

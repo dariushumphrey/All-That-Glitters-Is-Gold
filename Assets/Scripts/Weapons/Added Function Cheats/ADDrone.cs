@@ -224,6 +224,12 @@ public class ADDrone : MonoBehaviour
                 }
             }
         }
+
+        else
+        {
+            engagedTarget = null;
+            EnemyTargetAcquisiion();
+        }
     }
 
     private void OnTriggerEnter(Collider other)

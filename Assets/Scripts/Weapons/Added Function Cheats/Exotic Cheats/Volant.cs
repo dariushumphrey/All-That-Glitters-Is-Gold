@@ -8,12 +8,15 @@ public class Volant : MonoBehaviour
     private FirearmScript firearm;
     internal GameObject proc; //Text UI that records Cheat activity
     private PlayerMoveScript move;
+    private PlayerCameraScript cam;
     private PlayerStatusScript status;
     private EnemyManagerScript enemy;
 
     internal bool toggle = false; //Enables/Disables effect if true/false
     internal bool voluntary = false; //Affirms manual Cheat activation if true
     internal bool cheatOverride = false; //Prevents Cheat deactivation if true -- Zero Gravity sections only
+    private float startingVClamp, fixedVClamp;
+
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +24,12 @@ public class Volant : MonoBehaviour
         firearm = GetComponent<FirearmScript>();
         proc.GetComponent<Text>().text = "";
         move = FindObjectOfType<PlayerMoveScript>();
+        cam = FindObjectOfType<PlayerCameraScript>();
         status = FindObjectOfType<PlayerStatusScript>();
         enemy = FindObjectOfType<EnemyManagerScript>();
+
+        startingVClamp = cam.vClamp;
+        fixedVClamp = 89f;
     }
 
     // Update is called once per frame
@@ -49,6 +56,8 @@ public class Volant : MonoBehaviour
 
                     proc.GetComponent<Text>().text = "Volant";
                     move.zeroGravity = true;
+
+                    cam.vClamp = fixedVClamp;
                     toggle = true;
                 }
 
@@ -60,6 +69,8 @@ public class Volant : MonoBehaviour
 
                     proc.GetComponent<Text>().text = "";
                     move.zeroGravity = false;
+
+                    cam.vClamp = startingVClamp;
                     toggle = false;
                 }
             }
@@ -75,6 +86,8 @@ public class Volant : MonoBehaviour
 
                 proc.GetComponent<Text>().text = "";
                 move.zeroGravity = false;
+
+                cam.vClamp = startingVClamp;
                 toggle = false;
             }
         }
@@ -94,6 +107,8 @@ public class Volant : MonoBehaviour
 
             proc.GetComponent<Text>().text = "";
             move.zeroGravity = false;
+
+            cam.vClamp = startingVClamp;
             toggle = false;
         }
 

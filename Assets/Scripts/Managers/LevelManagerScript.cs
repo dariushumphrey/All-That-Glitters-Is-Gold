@@ -222,7 +222,7 @@ public class LevelManagerScript : MonoBehaviour
                 gameTime += Time.deltaTime;
             }
 
-            weaponFocus = Mathf.Clamp(weaponFocus, -1, 6); //Locks weaponFocus within a range to prevent incorrect focusing
+            weaponFocus = Mathf.Clamp(weaponFocus, -1, 8); //Locks weaponFocus within a range to prevent incorrect focusing
 
             //Pauses game if game is incomplete & controls page is hidden
             if (Input.GetKeyDown(KeyCode.Escape) && !gameComplete && controlsMenu.activeInHierarchy == false)
