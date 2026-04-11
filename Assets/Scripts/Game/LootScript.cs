@@ -972,7 +972,7 @@ public class LootScript : MonoBehaviour
 
             else if (wepTypeStr == "5")
             {
-                clpLtType.GetComponent<Text>().text = "Contempt for Fellows";
+                clpLtType.GetComponent<Text>().text = "Contempt For Fellows";
             }
 
             else if (wepTypeStr == "6")
