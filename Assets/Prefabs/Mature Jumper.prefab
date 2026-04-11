@@ -182,16 +182,22 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 264
   attackStartPoint: {fileID: 521107326973885396}
-  stunningLucent: {fileID: 130336942800207938, guid: 258ebae35e746864fab23c14795d4ec1, type: 3}
+  meleeEngagementDistance: 0
   meleeRangeCheck: 0
   meleeRangeMin: 20
   meleeAttackTimer: 0.8
   meleeTimeout: 0
   meleeAttackForce: 50000
   attackRate: 1
+  rangeAttackChange: 50
   rangeAttackRate: 1
   rangedAttackForce: 0
   rangeATKMin: 7
+  rangeEngagementDistance: 0
+  rangeAttackCount: 0
+  strafeDistance: 2
+  strafeLimit: 1
+  strafeTimer: 3
   rangeProjectile: {fileID: 7101181237062747686, guid: 70bd89594efeb624f9d56ec2e948ce2a, type: 3}
   chargeRangeCheck: 0
   chargeRangeMin: 1
@@ -211,6 +217,9 @@ MonoBehaviour:
   berthJumpCarpetBombTimer: 0.15
   jumpTakeoff: {fileID: 2056866271575102109, guid: e436b8ce7e2020e47a954d998deb3c8d, type: 3}
   jumpCheck: {fileID: 9046807996112585156}
+  phaseTwoAttackLimit: 3
+  phaseTwoAppearance: {fileID: 0}
+  stunningLucent: {fileID: 130336942800207938, guid: 258ebae35e746864fab23c14795d4ec1, type: 3}
 --- !u!114 &521107327305974612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b4fa109f4ef7141b00f5657e3beeef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficultyValue: 5
+  difficultyValue: 1
   healthCurrent: 4000
   healthMax: 4000
   healthPercent: 30
@@ -231,6 +240,7 @@ MonoBehaviour:
   lucentPercent: 20
   isImmune: 0
   ammoReward: {fileID: 7365210831971423931, guid: f6da525fb110dbe44889874ff9230cc0, type: 3}
+  healthReward: {fileID: 7276464464817301024, guid: 12b6a5a357d1fe14f88818b5dc47a195, type: 3}
   visual: {fileID: 7359600070731082801}
   currentHealth: {fileID: 7119660202440320784}
   healthLost: {fileID: 2973260331873985421}
@@ -241,7 +251,8 @@ MonoBehaviour:
   slowNotice: {fileID: 867190430083702682}
   enemyName: {fileID: 1862094787530126103}
   blood: {fileID: 7072170553810055041, guid: 9f892db6ca1cf5d4e9b62828e30f13c5, type: 3}
-  ammoRewardThreshold: 80
+  ammoRewardThreshold: 95
+  healthRewardThreshold: 95
 --- !u!114 &6725181074624287141
 MonoBehaviour:
   m_ObjectHideFlags: 0

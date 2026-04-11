@@ -489,6 +489,7 @@ MonoBehaviour:
   lucentPercent: 20
   isImmune: 1
   ammoReward: {fileID: 7365210831971423931, guid: f6da525fb110dbe44889874ff9230cc0, type: 3}
+  healthReward: {fileID: 7276464464817301024, guid: 12b6a5a357d1fe14f88818b5dc47a195, type: 3}
   visual: {fileID: 2509649139060254914}
   currentHealth: {fileID: 2754092899139347427}
   healthLost: {fileID: 7905428513732913022}
@@ -499,7 +500,8 @@ MonoBehaviour:
   slowNotice: {fileID: 5259778612807162729}
   enemyName: {fileID: 6710891803211888612}
   blood: {fileID: 7072170553810055041, guid: 9f892db6ca1cf5d4e9b62828e30f13c5, type: 3}
-  ammoRewardThreshold: 80
+  ammoRewardThreshold: 95
+  healthRewardThreshold: 95
 --- !u!114 &6725181074624287141
 MonoBehaviour:
   m_ObjectHideFlags: 0

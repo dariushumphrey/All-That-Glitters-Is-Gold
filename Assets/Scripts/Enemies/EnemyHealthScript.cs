@@ -21,6 +21,7 @@ public class EnemyHealthScript : MonoBehaviour
     public float lucentPercent = 20f;
     public bool isImmune; //Affirms imperviousness to damage when true
     public GameObject ammoReward; //Weapon ammo pickup
+    public GameObject healthReward; //Health Delivery item
 
     public Canvas visual; //Canvas object that visualizes Enemy health
 
@@ -37,6 +38,7 @@ public class EnemyHealthScript : MonoBehaviour
     public Text enemyName;
     public ParticleSystem blood; //VFX played when Enemy is damaged
     public float ammoRewardThreshold = 80f; //Goal number to be at or above to spawn Ammunition.
+    public float healthRewardThreshold = 50f; //Goal number to be at or above to spawn Health Delivery
 
     private float lhUpdateTimer = 1f; //Duration to wait before updating lost Health slider
     private float lhUpdateReset; //Holds starting lost health update duration
@@ -46,6 +48,7 @@ public class EnemyHealthScript : MonoBehaviour
     private int lucentAdd; //Number used to increase Lucent awarded on defeats
     private float fireRateAdd; //Number used to increase Ranged attack rate
     private int ammoRewardChance; //Number used to randomly award ammo
+    private int healthRewardChance; //Number used to randomly award Health
     private EnemyManagerScript manager;
     private ReplevinScript attack;
     private BerthScript berth;
@@ -323,7 +326,15 @@ public class EnemyHealthScript : MonoBehaviour
             ammoRewardChance = Random.Range(0, 101);
             if (ammoRewardChance >= ammoRewardThreshold)
             {
-                Instantiate(ammoReward, transform.position, transform.rotation);
+                GameObject ammo = Instantiate(ammoReward, transform.position, transform.rotation);
+                ammo.name = ammoReward.name;
+            }
+
+            healthRewardChance = Random.Range(0, 101);
+            if(healthRewardChance >= healthRewardThreshold)
+            {
+                GameObject health = Instantiate(healthReward, transform.position, transform.rotation);
+                health.name = healthReward.name;
             }
 
             manager.enemyDied = true;

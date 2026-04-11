@@ -183,7 +183,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 328
   attackStartPoint: {fileID: 78844624223129820}
-  stunningLucent: {fileID: 0}
   meleeEngagementDistance: 0
   meleeRangeCheck: 0
   meleeRangeMin: 2
@@ -219,6 +218,9 @@ MonoBehaviour:
   berthJumpCarpetBombTimer: 0.15
   jumpTakeoff: {fileID: 0}
   jumpCheck: {fileID: 0}
+  phaseTwoAttackLimit: 3
+  phaseTwoAppearance: {fileID: 0}
+  stunningLucent: {fileID: 0}
 --- !u!114 &78844624512772188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +241,7 @@ MonoBehaviour:
   lucentPercent: 20
   isImmune: 0
   ammoReward: {fileID: 7365210831971423931, guid: f6da525fb110dbe44889874ff9230cc0, type: 3}
+  healthReward: {fileID: 7276464464817301024, guid: 12b6a5a357d1fe14f88818b5dc47a195, type: 3}
   visual: {fileID: 736498202130661849}
   currentHealth: {fileID: 1068480422299241208}
   healthLost: {fileID: 4997087895613345381}
@@ -249,7 +252,8 @@ MonoBehaviour:
   slowNotice: {fileID: 6922874208706507378}
   enemyName: {fileID: 8488547680442457855}
   blood: {fileID: 7072170553810055041, guid: 9f892db6ca1cf5d4e9b62828e30f13c5, type: 3}
-  ammoRewardThreshold: 101
+  ammoRewardThreshold: 95
+  healthRewardThreshold: 95
 --- !u!114 &6590982941324376749
 MonoBehaviour:
   m_ObjectHideFlags: 0
