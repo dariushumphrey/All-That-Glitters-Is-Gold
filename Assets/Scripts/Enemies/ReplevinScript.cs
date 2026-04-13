@@ -79,6 +79,7 @@ public class ReplevinScript : MonoBehaviour
     [Header("Boss Settings")]
     public int phaseTwoAttackLimit = 3;
     public GameObject phaseTwoAppearance;
+    public GameObject[] appendages;
     public GameObject stunningLucent; //Harmful Lucent Cluster game object
     private GameObject directionalLight;
 
@@ -125,7 +126,7 @@ public class ReplevinScript : MonoBehaviour
     private float punchReset; //Holds starting Pounce attack timer
     private float jumpReset; //Holds starting Jump attack timer
     private float airtimeReset; //Holds starting Force jump timer
-    private float attackAgain; //Holds starting attack rate
+    internal float attackAgain; //Holds starting attack rate
     private float gapCloseReset; //Holds starting Pounce attack speed
     private float strafeReset; //Holds starting strafe time delay
     private float berthJumpTimerReset; //Holds starting Berth Jump cluster timer
@@ -139,7 +140,7 @@ public class ReplevinScript : MonoBehaviour
     private bool throwTarget = false; //Affirms Enemy can throw cluster at Player if true -- Bosses only
     private bool canAttackAgain = true; //Affirms Enemy can attack once more if true
     private bool recorded = false; //Affirms information has been saved for attack if true
-    private bool attackLock = false; //Affirms Enemy is using Raycast for attack if true
+    internal bool attackLock = false; //Affirms Enemy is using Raycast for attack if true
     private bool ramTimeout = false; //Affirms Charge enemy has ended attack if true
     internal bool slamTimeout = false; //Affirms Jump, Pounce Enemy has ended attack if true
     private bool rangeTimeout = false; //Affirms Range Enemy has ended attack if true
@@ -2392,6 +2393,11 @@ public class ReplevinScript : MonoBehaviour
 
                                 phaseTwoAppearance.SetActive(true);
                                 gameObject.AddComponent<PhaseTwoVisualSetupScript>();
+
+                                for(int a = 0; a < appendages.Length; a++)
+                                {
+                                    appendages[a].GetComponent<AppendageScript>().useAttackAgain = false;
+                                }
 
                                 directionalLight = GameObject.FindGameObjectWithTag("Directional Light");
                                 directionalLight.AddComponent<LightLerpScript>();
