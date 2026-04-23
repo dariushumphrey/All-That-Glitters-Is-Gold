@@ -24,6 +24,7 @@ TagManager:
   - Stalactite Lucent
   - Directional Light
   - Mine
+  - Spectrum Lucent
   layers:
   - Default
   - TransparentFX

@@ -1225,6 +1225,14 @@ public class FirearmScript : MonoBehaviour
                         }
                     }
 
+                    if (hit.collider.gameObject.GetComponent<SpectrumLucentScript>())
+                    {
+                        if(!hit.collider.gameObject.GetComponent<SpectrumLucentScript>().converted)
+                        {
+                            hit.collider.gameObject.GetComponent<SpectrumLucentScript>().ConvertCluster();
+                        }                      
+                    }
+
                     Instantiate(sparks, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
                 }
 
