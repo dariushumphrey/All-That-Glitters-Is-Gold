@@ -6,13 +6,14 @@ public class SpectrumLucentSpawnerScript : MonoBehaviour
 {
     public bool active = false;
     public GameObject spectrumLucent;
+    public int spawnMax = 5;
     public float lucentProduceTimer = 0.5f; //Goal time to spawn Lucent Clusters
     private float produceReset; //Holds starting Lucent Cluster timer
     private Bounds spawnField; //Bounds that clusters spawn within
     public Collider field; //Zone for cluster spawning
 
     private GameObject miniLucent; //Lucent game object
-
+    private int spawnCount = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +45,22 @@ public class SpectrumLucentSpawnerScript : MonoBehaviour
             miniLucent.name = spectrumLucent.name;
 
             miniLucent.GetComponent<Rigidbody>().AddForce(transform.forward * 10f, ForceMode.Impulse);
+            if (spawnCount <= spawnMax)
+            {
+                spawnCount++;
+            }
+
+            else
+            {
+                active = false;
+                StartCoroutine(ResetCount());
+            }
         }
+    }
+
+    public IEnumerator ResetCount()
+    {
+        yield return new WaitForSeconds(1f);
+        spawnCount = 0;
     }
 }

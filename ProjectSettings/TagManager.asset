@@ -25,6 +25,8 @@ TagManager:
   - Directional Light
   - Mine
   - Spectrum Lucent
+  - Cannon Lucent
+  - Spec. Lucent Spawner
   layers:
   - Default
   - TransparentFX

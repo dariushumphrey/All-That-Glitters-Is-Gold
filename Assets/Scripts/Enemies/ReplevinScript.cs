@@ -77,12 +77,16 @@ public class ReplevinScript : MonoBehaviour
     public Transform jumpCheck; //Transform used to determine if grounded
 
     [Header("Boss Settings")]
+    public float collectionTimer = 7f;
     public int phaseTwoAttackLimit = 3;
     public GameObject phaseTwoAppearance;
     public GameObject[] appendages;
     public GameObject stunningLucent; //Harmful Lucent Cluster game object
+    public GameObject[] spectrumLucentTracker;
+    public GameObject[] spectrumSpawners;
+    internal GameObject spectrumCannon;
     private GameObject directionalLight;
-
+    internal float collectionTimerReset;
     private EnemyManagerScript manager;
     private Color attackTell = Color.white;
     private int materialIndex = 1; //Index used to find Material
@@ -151,6 +155,7 @@ public class ReplevinScript : MonoBehaviour
     private bool lockOn = false; //Affirms Jump Enemy is lerping to Players if true
     internal bool addWave = false; //Affirms Boss has spawned Enemies if true
     internal bool interrupted = false; //Affirms Boss can be damaged if true
+    private bool done = false;
 
     // Start is called before the first frame update
     void Start()
@@ -168,6 +173,7 @@ public class ReplevinScript : MonoBehaviour
         berthJumpTimerReset = berthJumpCarpetBombTimer;
         strafeReset = strafeTimer;
         meleeCooldown = meleeTimeout;
+        collectionTimerReset = collectionTimer;
 
         self = GetComponent<NavMeshAgent>();
         waypoint = GameObject.FindGameObjectsWithTag("Waypoint");
@@ -686,6 +692,59 @@ public class ReplevinScript : MonoBehaviour
             distance = player.transform.position - transform.position;
             Vector3 rayOrigin = attackStartPoint.transform.position;
             RaycastHit hit;
+
+            if(amBoss)
+            {
+                if(spectrumCannon == null)
+                {
+                    spectrumCannon = GameObject.FindGameObjectWithTag("Cannon Lucent");
+                }
+
+                else
+                {
+                    if(!done)
+                    {
+                        spectrumCannon.GetComponent<CannonLucentScript>().boss = gameObject;
+                        spectrumSpawners = GameObject.FindGameObjectsWithTag("Spec. Lucent Spawner");
+
+                        done = true;
+                    }
+                }
+
+                spectrumLucentTracker = GameObject.FindGameObjectsWithTag("Spectrum Lucent");
+                if(spectrumLucentTracker.Length >= 1)
+                {
+                    for (int s = 0; s < spectrumLucentTracker.Length; s++)
+                    {
+                        if(spectrumLucentTracker[s].GetComponent<SpectrumLucentScript>().training)
+                        {
+                            spectrumLucentTracker[s].GetComponent<SpectrumLucentScript>().StartCoroutine(spectrumLucentTracker[s].GetComponent<SpectrumLucentScript>().Shatter());
+                        }
+                    }
+                }
+
+                collectionTimer -= Time.deltaTime;
+                if(collectionTimer <= 0f)
+                {
+                    collectionTimer = collectionTimerReset;
+
+                    if (spectrumLucentTracker.Length >= 1)
+                    {
+                        for (int s = 0; s < spectrumLucentTracker.Length; s++)
+                        {
+                            spectrumLucentTracker[s].GetComponent<BoxCollider>().isTrigger = true;
+                            spectrumLucentTracker[s].AddComponent<LerpScript>();
+
+                            spectrumLucentTracker[s].GetComponent<LerpScript>().positionOne = spectrumLucentTracker[s].gameObject.transform;
+                            spectrumLucentTracker[s].GetComponent<LerpScript>().positionTwo = gameObject.transform;
+                            spectrumLucentTracker[s].GetComponent<LerpScript>().thing = spectrumLucentTracker[s].gameObject;
+
+                            spectrumLucentTracker[s].GetComponent<LerpScript>().rate = 1f;
+                            spectrumLucentTracker[s].GetComponent<LerpScript>().automated = true;
+                        }
+                    }
+                }
+            }
 
             if (distance.magnitude <= rangeEngagementDistance && CanSeePlayer())
             {
@@ -2514,6 +2573,14 @@ public class ReplevinScript : MonoBehaviour
             }
 
             rangeTimeout = true;
+        }
+    }
+
+    public void RestartSpectrumSpawners()
+    {
+        for(int l = 0; l < spectrumSpawners.Length; l++)
+        {
+            spectrumSpawners[l].GetComponent<SpectrumLucentSpawnerScript>().active = true;
         }
     }
 

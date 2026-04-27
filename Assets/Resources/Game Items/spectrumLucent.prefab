@@ -83,6 +83,7 @@ MonoBehaviour:
   convertedPrimary: {fileID: 2100000, guid: b20e8d325efdec64d875825f90da9f44, type: 2}
   convertedSecondary: {fileID: 2100000, guid: 214fec18e06e63648a731966039f1918, type: 2}
   shatterEffect: {fileID: 8036011574378228872, guid: f0e64055bfbd2c24aa479856cd64c1f9, type: 3}
+  threatShatterEffect: {fileID: 1247370024031467272, guid: 2a0fcb8c37fa5484f92be6be5d7a3b33, type: 3}
 --- !u!1 &5990498802556826391
 GameObject:
   m_ObjectHideFlags: 0

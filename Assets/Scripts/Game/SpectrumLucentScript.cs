@@ -10,6 +10,7 @@ public class SpectrumLucentScript : MonoBehaviour
     public GameObject secondaryColorChange;
     public Material convertedPrimary, convertedSecondary;
     public GameObject shatterEffect; //VFX that plays on condition
+    public GameObject threatShatterEffect; //VFX that plays on condition
 
     // Start is called before the first frame update
     void Start()
@@ -41,13 +42,71 @@ public class SpectrumLucentScript : MonoBehaviour
         }
     }
 
-    IEnumerator Shatter()
+    public IEnumerator Shatter()
     {
         yield return new WaitForSeconds(1f);
 
-        GameObject effect = Instantiate(shatterEffect, transform.position, Quaternion.identity);
+        GameObject effect;
+
+        if(!converted)
+        {
+            effect = Instantiate(threatShatterEffect, transform.position, Quaternion.identity);
+        }
+
+        else
+        {
+            effect = Instantiate(shatterEffect, transform.position, Quaternion.identity);
+        }
+
         effect.name = "Shatter VFX";
 
         Destroy(gameObject);
+    }
+
+    public void ShatterImmediate()
+    {
+
+        GameObject effect;
+
+        if (!converted)
+        {
+            effect = Instantiate(threatShatterEffect, transform.position, Quaternion.identity);
+        }
+
+        else
+        {
+            effect = Instantiate(shatterEffect, transform.position, Quaternion.identity);
+        }
+
+        effect.name = "Shatter VFX";
+
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Enemy"))
+        {
+            if (other.gameObject.GetComponent<ReplevinScript>())
+            {
+                if (other.gameObject.GetComponent<ReplevinScript>().amBoss)
+                {
+                    if (!converted)
+                    {
+                        other.gameObject.GetComponent<ReplevinScript>().spectrumCannon.GetComponent<CannonLucentScript>().spectrumThreatCount++;
+                    }
+
+                    else
+                    {
+                        other.gameObject.GetComponent<ReplevinScript>().spectrumCannon.GetComponent<CannonLucentScript>().spectrumLucentCount++;
+                    }
+                }
+
+                other.gameObject.GetComponent<ReplevinScript>().spectrumCannon.GetComponent<CannonLucentScript>().clusterCount++;
+
+            }
+
+            ShatterImmediate();
+        }
     }
 }
