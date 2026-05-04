@@ -705,6 +705,9 @@ public class ReplevinScript : MonoBehaviour
                     if(!done)
                     {
                         spectrumCannon.GetComponent<CannonLucentScript>().boss = gameObject;
+                        spectrumCannon.GetComponent<CannonLucentScript>().damage = damage;
+                        spectrumCannon.GetComponent<CannonLucentScript>().DamageCalculation();
+
                         spectrumSpawners = GameObject.FindGameObjectsWithTag("Spec. Lucent Spawner");
 
                         done = true;
@@ -739,137 +742,175 @@ public class ReplevinScript : MonoBehaviour
                             spectrumLucentTracker[s].GetComponent<LerpScript>().positionTwo = gameObject.transform;
                             spectrumLucentTracker[s].GetComponent<LerpScript>().thing = spectrumLucentTracker[s].gameObject;
 
-                            spectrumLucentTracker[s].GetComponent<LerpScript>().rate = 1f;
+                            spectrumLucentTracker[s].GetComponent<LerpScript>().rate = 0.025f;
+                            spectrumLucentTracker[s].GetComponent<LerpScript>().lerpSpeed = 0.025f;
                             spectrumLucentTracker[s].GetComponent<LerpScript>().automated = true;
                         }
                     }
                 }
-            }
 
-            if (distance.magnitude <= rangeEngagementDistance && CanSeePlayer())
-            {
-                if (amSentry)
+                if (interrupted)
                 {
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
-                }
-
-                else
-                {
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
-
-                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeATKMin) && !recorded)
+                    addWave = true;
+                    self.speed = 0;
+                    meleeTimeout -= Time.deltaTime;
+                    if (meleeTimeout <= 0f)
                     {
-                        if (hit.collider.tag == "Player")
+                        self.speed = moveSpeedReset;
+                        interrupted = false;
+                        enemy.isImmune = true;
+
+                        if (boss != null && addWave == true)
                         {
-                            if (strafeTimer != strafeReset)
+                            if (enemy.healthCurrent >= 1)
                             {
-                                strafeTimer = strafeReset;
-                            } //Resets strafe timer
+                                boss.TriggerAdds();
+                                addWave = false;
 
-                            self.ResetPath();
+                                collectionTimer = collectionTimerReset;
+                                RestartSpectrumSpawners();
+                            }
 
-                            int strafeAction = Random.Range(0, 4);
-                            if(strafeAction == 0)
-                            {
-                                strafeCalc = Vector3.Cross(distance, transform.up);
-                                strafePos = transform.position + strafeCalc * strafeDistance;
-                            } //Strafes to the right
-
-                            else if (strafeAction == 1)
-                            {
-                                strafeCalc = Vector3.Cross(distance, -transform.up);
-                                strafePos = transform.position + strafeCalc * strafeDistance;
-                            } //Strafes to the left
-
-                            else if(strafeAction == 2)
-                            {
-                                strafePos = transform.position + distance * strafeDistance / 2;
-                            } //Moves forward
-                            
                             else
                             {
-                                strafePos = transform.position - distance * strafeDistance;
-                            } //Moves backwards
+                                boss.isAlive = false;
+                                addWave = false;
+                            }
+                        }
 
-                            Vector3 strafeDirection = strafePos - transform.position;
-                            if (!Physics.Raycast(rayOrigin, strafeDirection.normalized, out hit, strafeDirection.magnitude, contactOnly))
+                        meleeTimeout = 4f;
+                        
+                    }
+                }
+            }
+
+            if(!interrupted)
+            {
+                if (distance.magnitude <= rangeEngagementDistance && CanSeePlayer())
+                {
+                    if (amSentry)
+                    {
+                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
+                    }
+
+                    else
+                    {
+                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
+
+                        if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeATKMin) && !recorded)
+                        {
+                            if (hit.collider.tag == "Player")
                             {
-                                self.SetDestination(strafePos);
-                                recorded = true;
+                                if (strafeTimer != strafeReset)
+                                {
+                                    strafeTimer = strafeReset;
+                                } //Resets strafe timer
+
+                                self.ResetPath();
+
+                                int strafeAction = Random.Range(0, 4);
+                                if (strafeAction == 0)
+                                {
+                                    strafeCalc = Vector3.Cross(distance, transform.up);
+                                    strafePos = transform.position + strafeCalc * strafeDistance;
+                                } //Strafes to the right
+
+                                else if (strafeAction == 1)
+                                {
+                                    strafeCalc = Vector3.Cross(distance, -transform.up);
+                                    strafePos = transform.position + strafeCalc * strafeDistance;
+                                } //Strafes to the left
+
+                                else if (strafeAction == 2)
+                                {
+                                    strafePos = transform.position + distance * strafeDistance / 2;
+                                } //Moves forward
+
+                                else
+                                {
+                                    strafePos = transform.position - distance * strafeDistance;
+                                } //Moves backwards
+
+                                Vector3 strafeDirection = strafePos - transform.position;
+                                if (!Physics.Raycast(rayOrigin, strafeDirection.normalized, out hit, strafeDirection.magnitude, contactOnly))
+                                {
+                                    self.SetDestination(strafePos);
+                                    recorded = true;
+                                }
+                            }
+                        }
+
+                        lastKnownDistance = strafePos - transform.position;
+                        //Debug.Log(lastKnownDistance.magnitude + " | " + strafeLimit);
+
+                        //Enemy resets recorded state when within previous strafe position for a duration
+                        if (lastKnownDistance.magnitude <= strafeLimit)
+                        {
+                            strafeTimer -= Time.deltaTime;
+                            if (strafeTimer <= 0f)
+                            {
+                                recorded = false;
+                            }
+                        }
+
+                        //Debug.DrawRay(transform.position, distance, Color.red);
+                        //Debug.DrawRay(transform.position, transform.up, Color.blue);
+                        //Debug.DrawLine(transform.position, strafePos, Color.white);
+
+                    }
+
+                    if (!attackLock)
+                    {
+                        if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeEngagementDistance, contactOnly))
+                        {
+                            if (hit.collider.tag == "Player")
+                            {
+                                //Selects a random duration to delay next attack, then initiates attack
+                                int randomTime = 0;
+
+                                float[] delays = { 1f, 1.25f, 1.5f, 2f };
+                                randomTime = Random.Range(0, delays.Length);
+                                rangeCooldown = delays[randomTime];
+
+                                StartCoroutine(RangeAttackShot());
+                                //burstAttack = true;
+                                attackLock = true;
+                            }
+
+                            if (hit.collider.tag == "Enemy")
+                            {
+                                Task.current.Fail();
                             }
                         }
                     }
 
-                    lastKnownDistance = strafePos - transform.position;
-                    //Debug.Log(lastKnownDistance.magnitude + " | " + strafeLimit);
-
-                    //Enemy resets recorded state when within previous strafe position for a duration
-                    if (lastKnownDistance.magnitude <= strafeLimit)
+                    //Delays attack behavior until timer expires
+                    if (attackLock && rangeTimeout)
                     {
-                        strafeTimer -= Time.deltaTime;
-                        if (strafeTimer <= 0f)
+                        attackAgain += Time.deltaTime;
+                        if (attackAgain >= rangeCooldown)
                         {
-                            recorded = false;
+                            attackAgain = 0.0f;
+                            attackLock = false;
+                            rangeTimeout = false;
                         }
                     }
-
-                    //Debug.DrawRay(transform.position, distance, Color.red);
-                    //Debug.DrawRay(transform.position, transform.up, Color.blue);
-                    //Debug.DrawLine(transform.position, strafePos, Color.white);
-                  
-                }
-
-                if(!attackLock)
-                {
-                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeEngagementDistance, contactOnly))
-                    {
-                        if (hit.collider.tag == "Player")
-                        {
-                            //Selects a random duration to delay next attack, then initiates attack
-                            int randomTime = 0;
-
-                            float[] delays = { 1f, 1.25f, 1.5f, 2f };
-                            randomTime = Random.Range(0, delays.Length);
-                            rangeCooldown = delays[randomTime];
-
-                            StartCoroutine(RangeAttackShot());
-                            //burstAttack = true;
-                            attackLock = true;
-                        }
-
-                        if (hit.collider.tag == "Enemy")
-                        {
-                            Task.current.Fail();
-                        }
-                    }
-                }
-                
-                //Delays attack behavior until timer expires
-                if(attackLock && rangeTimeout)
-                {
-                    attackAgain += Time.deltaTime;
-                    if(attackAgain >= rangeCooldown)
-                    {
-                        attackAgain = 0.0f;
-                        attackLock = false;
-                        rangeTimeout = false;
-                    }
-                }
-            }
-
-            else
-            {
-                if (amSentry)
-                {
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
                 }
 
                 else
                 {
-                    recorded = false;
-                    self.SetDestination(player.transform.position);
+                    if (amSentry)
+                    {
+                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
+                    }
+
+                    else
+                    {
+                        recorded = false;
+                        self.SetDestination(player.transform.position);
+                    }
                 }
-            }
+            }         
         }
 
         else

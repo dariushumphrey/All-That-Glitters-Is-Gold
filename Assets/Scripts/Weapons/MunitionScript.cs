@@ -125,6 +125,14 @@ public class MunitionScript : MonoBehaviour
                 }
             }
 
+            if (hit.collider.gameObject.GetComponent<SpectrumLucentScript>())
+            {
+                if (!hit.collider.gameObject.GetComponent<SpectrumLucentScript>().converted)
+                {
+                    hit.collider.gameObject.GetComponent<SpectrumLucentScript>().ConvertCluster();
+                }
+            }
+
             if (hit.collider.gameObject.layer == 11) //If this Weapon strikes an object with the "Mine" layer
             {
                 if (gameObject.GetComponent<MiningPlatform>())
@@ -236,6 +244,14 @@ public class MunitionScript : MonoBehaviour
                 if (contact.gameObject.GetComponent<StalactiteLucentScript>().hostCrystal)
                 {
                     contact.gameObject.GetComponent<StalactiteLucentScript>().LucentPassive();
+                }
+            }
+
+            if (contact.gameObject.GetComponent<SpectrumLucentScript>())
+            {
+                if (!contact.gameObject.GetComponent<SpectrumLucentScript>().converted)
+                {
+                    contact.gameObject.GetComponent<SpectrumLucentScript>().ConvertCluster();
                 }
             }
         }

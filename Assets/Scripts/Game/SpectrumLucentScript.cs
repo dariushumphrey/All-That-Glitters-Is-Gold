@@ -100,13 +100,11 @@ public class SpectrumLucentScript : MonoBehaviour
                     {
                         other.gameObject.GetComponent<ReplevinScript>().spectrumCannon.GetComponent<CannonLucentScript>().spectrumLucentCount++;
                     }
-                }
 
-                other.gameObject.GetComponent<ReplevinScript>().spectrumCannon.GetComponent<CannonLucentScript>().clusterCount++;
-
-            }
-
-            ShatterImmediate();
+                    other.gameObject.GetComponent<ReplevinScript>().spectrumCannon.GetComponent<CannonLucentScript>().clusterCount++;
+                    ShatterImmediate();
+                }               
+            }       
         }
     }
 }

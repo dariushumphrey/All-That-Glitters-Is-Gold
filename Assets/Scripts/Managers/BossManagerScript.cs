@@ -36,14 +36,7 @@ public class BossManagerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Assigns Boss difficulty from Enemy manager, initializes Chest rarity, Weapon focus
-        bossDifficulty = enemyManager.dropRarity;
-        for (int c = 0; c < chestRewards.Count; c++)
-        {
-            chestRewards[c].GetComponent<LootScript>().raritySpawn = bossDifficulty;
-            chestRewards[c].GetComponent<LootScript>().lootSpamMax = bossDifficulty;
-            chestRewards[c].GetComponent<LootScript>().focusTarget = levelManager.weaponFocus;
-        }
+        StartCoroutine(InitializeManager());
     }
 
     // Update is called once per frame
@@ -72,6 +65,18 @@ public class BossManagerScript : MonoBehaviour
         }
 
         enemyManager.CatalogEnemies();
+    }
+
+    public void ManagerInitializer()
+    {
+        //Assigns Boss difficulty from Enemy manager, initializes Chest rarity, Weapon focus
+        bossDifficulty = enemyManager.dropRarity;
+        for (int c = 0; c < chestRewards.Count; c++)
+        {
+            chestRewards[c].GetComponent<LootScript>().raritySpawn = bossDifficulty;
+            chestRewards[c].GetComponent<LootScript>().lootSpamMax = bossDifficulty;
+            chestRewards[c].GetComponent<LootScript>().focusTarget = levelManager.weaponFocus;
+        }
     }
     
     /// <summary>
@@ -116,5 +121,11 @@ public class BossManagerScript : MonoBehaviour
     {
         yield return new WaitForSeconds(30f);
         levelManager.ReturnToMainMenu();
+    }
+
+    public IEnumerator InitializeManager()
+    {
+        yield return new WaitForSeconds(0.1f);
+        ManagerInitializer();
     }
 }

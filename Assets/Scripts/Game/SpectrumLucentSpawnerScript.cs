@@ -25,6 +25,7 @@ public class SpectrumLucentSpawnerScript : MonoBehaviour
     {
         if(active)
         {
+            //Debug.Log(spawnCount + " | " + spawnMax);
             LucentPassive();
         }
     }
@@ -36,31 +37,31 @@ public class SpectrumLucentSpawnerScript : MonoBehaviour
         {
             lucentProduceTimer = produceReset;
 
-            spawnField = field.bounds;
-            Vector3 spawnSite = spawnField.center + new Vector3(Random.Range(-spawnField.extents.x, spawnField.extents.x),
-                                                                Random.Range(-spawnField.extents.y, spawnField.extents.y),
-                                                                Random.Range(-spawnField.extents.z, spawnField.extents.z));
-
-            miniLucent = Instantiate(spectrumLucent, spawnSite, transform.rotation);
-            miniLucent.name = spectrumLucent.name;
-
-            miniLucent.GetComponent<Rigidbody>().AddForce(transform.forward * 10f, ForceMode.Impulse);
-            if (spawnCount <= spawnMax)
+            if(spawnCount != spawnMax)
             {
                 spawnCount++;
+
+                spawnField = field.bounds;
+                Vector3 spawnSite = spawnField.center + new Vector3(Random.Range(-spawnField.extents.x, spawnField.extents.x),
+                                                                    Random.Range(-spawnField.extents.y, spawnField.extents.y),
+                                                                    Random.Range(-spawnField.extents.z, spawnField.extents.z));
+
+                miniLucent = Instantiate(spectrumLucent, spawnSite, transform.rotation);
+                miniLucent.name = spectrumLucent.name;
+
+                miniLucent.GetComponent<Rigidbody>().AddForce(transform.forward * 10f, ForceMode.Impulse);
             }
 
             else
             {
                 active = false;
-                StartCoroutine(ResetCount());
+                ResetCount();
             }
         }
     }
 
-    public IEnumerator ResetCount()
+    public void ResetCount()
     {
-        yield return new WaitForSeconds(1f);
         spawnCount = 0;
     }
 }
