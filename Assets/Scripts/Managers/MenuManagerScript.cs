@@ -15,7 +15,7 @@ public class MenuManagerScript : MonoBehaviour
 
     //ca, vcThumbnail - Image UI that displays Campaign, Viricide level pictures
     public Image caThumbnail, vcThumbnail;
-    public Sprite caLevelOne, caLevelTwo, caLevelThree, caLevelFour, caLevelFive, vcLevelOne, vcLevelTwo; //Images of Level thumbnails
+    public Sprite caLevelOne, caLevelTwo, caLevelThree, caLevelFour, caLevelFive, vcLevelOne, vcLevelTwo, vcLevelThree; //Images of Level thumbnails
     public Text caDiffText, vcDiffText, caLevelText, vcLevelText, vcWepFocusText, caObjectiveText, caCheckpointText; //Texts that displays difficulty number, level name, or Weapon focus
     public Button vcButton; //Viricide navigation button
     public Slider vcDifficulty, vcLevel, vcWepFocus, caDifficulty, caLevel, caCheckpoint; //Sliders used to select Weapon type, level, or difficulty
@@ -125,7 +125,7 @@ public class MenuManagerScript : MonoBehaviour
 
             else
             {
-                caObjectiveText.text = "At last, the apex of Replevin terror is found." + '\n' +
+                caObjectiveText.text = "An apex of Replevin terror is found." + '\n' +
                     "Objective: Kill the Replevin Keystone.";
                 caThumbnail.sprite = caLevelFive;
 
@@ -151,6 +151,11 @@ public class MenuManagerScript : MonoBehaviour
             else if (vcLevel.value == 7)
             {
                 vcThumbnail.sprite = vcLevelTwo;
+            }
+
+            else
+            {
+                vcThumbnail.sprite = vcLevelThree;
             }
 
             //Changes Campaign/Viricide difficulty, level text by slider value
@@ -245,7 +250,9 @@ public class MenuManagerScript : MonoBehaviour
         levelManager.setting = LevelManagerScript.Setting.Campaign;
         levelManager.gameSettingState = (int)caDifficulty.value;
         levelManager.level = (int)caLevel.value;
-        if(caCheckpoint.value == 1)
+        levelManager.weaponFocus = -1;
+
+        if (caCheckpoint.value == 1)
         {
             levelManager.lvlProgressSaved = true;
         }
