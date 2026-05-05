@@ -41,6 +41,7 @@ public class PlayerStatusScript : MonoBehaviour
     private float rechargePercent = 1f;
     private float regenShieldResetSeconds;
     private bool done = false; //Prevents operation from repeating if true
+    private GameObject respawnPosition;
     internal PlayerMoveScript move;
     internal PlayerCameraScript cam;
     internal PlayerInventoryScript inv;
@@ -338,8 +339,22 @@ public class PlayerStatusScript : MonoBehaviour
     {
         isDead = false;
 
-        transform.position = transform.position + Vector3.up;
-        transform.rotation = Quaternion.identity;
+        if(!respawnPosition)
+        {
+            respawnPosition = GameObject.Find("RespawnPoint");
+        }
+
+        if(respawnPosition != null)
+        {
+            transform.position = respawnPosition.transform.position + Vector3.up;
+            transform.rotation = respawnPosition.transform.rotation;
+        }
+
+        else
+        {
+            transform.position = transform.position + Vector3.up;
+            transform.rotation = Quaternion.identity;
+        }
 
         gameObject.GetComponent<Rigidbody>().freezeRotation = true;
         move.enabled = true;

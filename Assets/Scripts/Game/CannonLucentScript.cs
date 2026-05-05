@@ -17,13 +17,15 @@ public class CannonLucentScript : MonoBehaviour
     public Transform raycastPoint;
     public LayerMask contactOnly;
     public RaycastHit hit;
+    public Material normalMaterial, threatMaterial;
+    public GameObject[] objectVisualChanges;
 
-    public GameObject threatActivation; //VFX used to convey activity
+    private GameObject threatActivation; //VFX used to convey activity
     private GameObject threatActivationAOE; //VFX used around Player
     private Material spectrumThreat; //LineRenderer Material for bullet visual
     private GameObject threatLight; //Light object used to visualize charge
 
-    public Material spectrumNormal; //LineRenderer Material for bullet visual
+    private Material spectrumNormal; //LineRenderer Material for bullet visual
     private GameObject normalActivation; //VFX used to convey activity
     private GameObject normalAOE; //VFX used around Player
     private GameObject spectrumLight; //Light object used to visualize charge
@@ -31,7 +33,6 @@ public class CannonLucentScript : MonoBehaviour
     private GameObject light; //Holds reference to spawned light
     private float intensityMax = 50f; //Maximum light intensity for Superweapon charge
     private GameObject shatterEffect; //VFX that plays on condition
-
 
     private Vector3 distance, bossDistance;
     private float superweaponCharge = 0f; //Current charge of Superweapon attack
@@ -214,6 +215,24 @@ public class CannonLucentScript : MonoBehaviour
             if(clusterCount >= allowableLucent)
             {
                 clusterCount = allowableLucent;
+
+                if (spectrumThreatCount > spectrumLucentCount)
+                {
+                    for(int i = 0; i < objectVisualChanges.Length; i++)
+                    {
+                        objectVisualChanges[i].GetComponent<MeshRenderer>().material = threatMaterial;
+                    }
+                }
+
+
+                else
+                {
+                    for (int i = 0; i < objectVisualChanges.Length; i++)
+                    {
+                        objectVisualChanges[i].GetComponent<MeshRenderer>().material = normalMaterial;
+                    }
+                }
+
                 active = true;
             }
         }
