@@ -170,15 +170,15 @@ public class PlayerMoveScript : MonoBehaviour
             //Provides controls, VFX visuals for Zero Gravity movement. Otherwise, provides downward force if Player is airborne
             if(zeroGravity)
             {
-                if(Input.GetKey(KeyCode.Z))
-                {
-                    playerRigid.AddForce(transform.up * speed * speedAccelerant);
-                }
+                //if(Input.GetKey(KeyCode.Z))
+                //{
+                //    playerRigid.AddForce(transform.up * speed * speedAccelerant);
+                //}
 
-                if (Input.GetKey(KeyCode.C))
-                {
-                    playerRigid.AddForce(-transform.up * speed * speedAccelerant);
-                }
+                //if (Input.GetKey(KeyCode.C))
+                //{
+                //    playerRigid.AddForce(-transform.up * speed * speedAccelerant);
+                //}
 
                 if(vertInput == 1 || volant)
                 {
