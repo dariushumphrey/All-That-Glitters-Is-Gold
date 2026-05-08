@@ -152,7 +152,7 @@ NavMeshAgent:
   avoidancePriority: 50
   m_AngularSpeed: 240
   m_StoppingDistance: 1.5
-  m_AutoTraverseOffMeshLink: 1
+  m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
@@ -218,9 +218,14 @@ MonoBehaviour:
   berthJumpCarpetBombTimer: 0.15
   jumpTakeoff: {fileID: 0}
   jumpCheck: {fileID: 3142191004654545031}
+  throwTimer: 2
+  collectionTimer: 7
   phaseTwoAttackLimit: 3
   phaseTwoAppearance: {fileID: 0}
-  stunningLucent: {fileID: 130336942800207938, guid: 258ebae35e746864fab23c14795d4ec1, type: 3}
+  appendages: []
+  stunningLucent: {fileID: 2215758749297007905, guid: c9fd1a7194e29aa488874d1bd2ad517d, type: 3}
+  spectrumLucentTracker: []
+  spectrumSpawners: []
 --- !u!114 &5849227831087065623
 MonoBehaviour:
   m_ObjectHideFlags: 0

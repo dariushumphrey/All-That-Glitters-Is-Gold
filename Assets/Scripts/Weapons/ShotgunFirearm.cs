@@ -428,6 +428,17 @@ public class ShotgunFirearm: FirearmScript
                         Instantiate(sparks, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
                     }
 
+                    if (hit.collider.gameObject.layer == 9) //If this Weapon strikes an object with the "Lucent" layer
+                    {
+                        if (hit.collider.gameObject.GetComponent<StunningLucentScript>())
+                        {
+                            hit.collider.gameObject.GetComponent<StunningLucentScript>().currentHitCount++;
+
+                            GameObject miniCluster = Instantiate(hit.collider.gameObject.GetComponent<StunningLucentScript>().shotEffect, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+                            miniCluster.name = hit.collider.gameObject.GetComponent<StunningLucentScript>().shotEffect.name;
+                        }
+                    }
+
                     if (hit.collider.gameObject.layer == 11) //If this Weapon strikes an object with the "Mine" layer
                     {
                         if (gameObject.GetComponent<MiningPlatform>())

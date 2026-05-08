@@ -77,6 +77,7 @@ public class ReplevinScript : MonoBehaviour
     public Transform jumpCheck; //Transform used to determine if grounded
 
     [Header("Boss Settings")]
+    public float throwTimer = 2f;
     public float collectionTimer = 7f;
     public int phaseTwoAttackLimit = 3;
     public GameObject phaseTwoAppearance;
@@ -134,6 +135,7 @@ public class ReplevinScript : MonoBehaviour
     private float gapCloseReset; //Holds starting Pounce attack speed
     private float strafeReset; //Holds starting strafe time delay
     private float berthJumpTimerReset; //Holds starting Berth Jump cluster timer
+    private float throwTimeReset;
     private float rangeCooldown; //Time to wait before next range attack
     private float meleeCooldown; //Time to wait before next melee attack
     private float playerDetected; //Timer spent seeing Player
@@ -174,6 +176,7 @@ public class ReplevinScript : MonoBehaviour
         strafeReset = strafeTimer;
         meleeCooldown = meleeTimeout;
         collectionTimerReset = collectionTimer;
+        throwTimeReset = throwTimer;
 
         self = GetComponent<NavMeshAgent>();
         waypoint = GameObject.FindGameObjectsWithTag("Waypoint");
@@ -202,7 +205,9 @@ public class ReplevinScript : MonoBehaviour
         if(jumpCheck != null)
         {
             AmIGrounded();
-        }        
+        }
+
+        AmOnNavMeshLink();
     }
 
     /// <summary>
@@ -276,6 +281,42 @@ public class ReplevinScript : MonoBehaviour
         return false;
     }
 
+    public void AmOnNavMeshLink()
+    {
+        if(self.isOnOffMeshLink)
+        {
+            StartCoroutine(ManualNavMeshLinkTraversal());
+            self.CompleteOffMeshLink();
+        }
+    }
+
+    IEnumerator ManualNavMeshLinkTraversal()
+    {
+
+        OffMeshLinkData info = self.currentOffMeshLinkData;
+        Vector3 start = self.transform.position;
+        Vector3 finish = info.endPos + Vector3.up * self.baseOffset;
+
+        float elapsedTime = Vector3.Distance(start, finish) / (self.speed * 3f);
+        float time = 0;
+
+        while(time < elapsedTime)
+        {
+            time += Time.deltaTime;
+            float normalizedTime = time / elapsedTime;
+
+            Vector3 activePos = Vector3.Lerp(start, finish, normalizedTime);
+            activePos.y += Mathf.Sin(normalizedTime * Mathf.PI) * 1.5f;
+            transform.position = activePos;
+            yield return null;
+        }
+
+        //self.CompleteOffMeshLink();
+        transform.position = finish;
+        yield return new WaitForSeconds(0.2f);
+
+    }
+
     /// <summary>
     /// Controls Melee attack behaviors between Boss and non-Boss Enemies
     /// </summary>
@@ -299,6 +340,8 @@ public class ReplevinScript : MonoBehaviour
                     waypointNext = Random.Range(0, waypoint.Length);
                     self.SetDestination(waypoint[waypointNext].transform.position);
                     destinationSet = true;
+
+                    meleeAttackTimer = meleeReset;
                 }
 
                 if (Vector3.Distance(waypoint[waypointNext].transform.position, self.transform.position) < accuracy)
@@ -311,8 +354,11 @@ public class ReplevinScript : MonoBehaviour
                 {
                     if (hit.collider.tag == "Hard Lucent" && !gathered)
                     {
-                        stunMechanic = Instantiate(stunningLucent, attackStartPoint.transform.position + transform.forward, attackStartPoint.transform.rotation, gameObject.transform);
+                        stunMechanic = Instantiate(stunningLucent, attackStartPoint.transform.position + (transform.forward * 2f) + Vector3.up * 0.5f, attackStartPoint.transform.rotation);
                         stunMechanic.name = stunningLucent.name;
+                        stunMechanic.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                        stunMechanic.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+                        stunMechanic.transform.parent = gameObject.transform;
 
                         if (stunMechanic.GetComponent<Rigidbody>())
                         {
@@ -321,6 +367,8 @@ public class ReplevinScript : MonoBehaviour
 
                         gathered = true;
                         throwTarget = true;
+
+                        //boss.TriggerAdds();
                     }
                 }
 
@@ -364,55 +412,51 @@ public class ReplevinScript : MonoBehaviour
                     if(CanSeePlayer())
                     {
                         self.SetDestination(player.transform.position);
-                        self.speed = moveSpeed;                  
+                        self.speed = boostSpeed;                  
 
                         if (distance.magnitude <= meleeRangeCheck)
                         {
-                            if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeCheck) && !recorded && stunMechanic != null)
+                            if(!attackLock)
                             {
-                                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-distance, Vector3.up), rotationStrength);
-
-                                lastPlayerPosition = (hit.point - transform.position).normalized;
-                                recorded = true;
-
-                                if (stunMechanic.GetComponent<Rigidbody>() == null)
-                                {
-                                    stunMechanic.AddComponent<Rigidbody>();
-                                }
-
-                                stunMechanic.GetComponent<LucentScript>().shatterDelayTime = 0.6f;
-                                stunMechanic.GetComponent<LucentScript>().threat = true;
-                                stunMechanic.GetComponent<LucentScript>().StartCoroutine(stunMechanic.GetComponent<LucentScript>().Shatter());
-
-                                stunMechanic.transform.parent = null;
-                                stunMechanic.GetComponent<Rigidbody>().AddForce((lastPlayerPosition + Vector3.up) * jumpForce, ForceMode.Impulse);
-                                stunMechanic.GetComponent<Rigidbody>().AddForce((transform.forward * forwardForce), ForceMode.Impulse);
-                                stunMechanic = null;
-
-                                attackLock = true;
+                                self.ResetPath();
                             }
 
+                            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-distance, Vector3.up), rotationStrength);
+
+                            throwTimer -= Time.deltaTime;
+                            if(throwTimer <= 0f)
+                            {
+                                throwTimer = 0f;
+
+                                if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeCheck) && !recorded && stunMechanic != null)
+                                {
+                                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-distance, Vector3.up), rotationStrength);
+
+                                    lastPlayerPosition = (hit.point - transform.position).normalized;
+                                    recorded = true;
+
+                                    if (stunMechanic.GetComponent<Rigidbody>() == null)
+                                    {
+                                        stunMechanic.AddComponent<Rigidbody>();
+                                    }
+
+                                    stunMechanic.GetComponent<StunningLucentScript>().shatterDelayTime = 0.6f;
+                                    //stunMechanic.GetComponent<StunningLucentScript>().threat = true;
+                                    stunMechanic.GetComponent<StunningLucentScript>().StartCoroutine(stunMechanic.GetComponent<StunningLucentScript>().Shatter());
+
+                                    stunMechanic.transform.parent = null;
+                                    stunMechanic.GetComponent<Rigidbody>().AddForce((lastPlayerPosition + Vector3.up) * jumpForce, ForceMode.Impulse);
+                                    stunMechanic.GetComponent<Rigidbody>().AddForce((transform.forward * forwardForce), ForceMode.Impulse);
+                                    stunMechanic = null;
+
+                                    self.SetDestination(player.transform.position);
+                                    attackLock = true;
+                                }
+                            }
+                            
                             //self.speed = moveSpeed / 2;
                             //self.acceleration = enemyAcceleration / 2;
-
-                            
-                            if (meleeAttackTimer <= 0f)
-                            {
-                                attackLock = false;
-                                meleeAttackTimer = meleeReset;
-
-                                destinationSet = false;
-                                gathered = false;
-                                recorded = false;
-                                throwTarget = false;
-
-                                self.speed = moveSpeed;
-                                self.acceleration = accelReset;
-
-                                subject.materials[materialIndex].color = Color.red;
-                              
-                            }
-
+                                                    
                             if (attackLock)
                             {
                                 meleeAttackTimer -= Time.deltaTime;
@@ -460,8 +504,10 @@ public class ReplevinScript : MonoBehaviour
 
                         else
                         {
-                            meleeAttackTimer = meleeReset;
-                        }
+                            self.SetDestination(player.transform.position);
+                            throwTimer = throwTimeReset;
+                            //meleeAttackTimer = meleeReset;
+                        }                       
                     }
 
                     else
@@ -470,6 +516,25 @@ public class ReplevinScript : MonoBehaviour
                         self.SetDestination(player.transform.position);
                         self.acceleration = accelReset;
                     }
+                }
+
+                if (meleeAttackTimer <= 0f)
+                {
+                    meleeAttackTimer = 0f;
+
+                    attackLock = false;
+
+                    destinationSet = false;
+                    gathered = false;
+                    recorded = false;
+                    throwTarget = false;
+                    throwTimer = throwTimeReset;
+
+                    self.speed = moveSpeed;
+                    self.acceleration = accelReset;
+
+                    subject.materials[materialIndex].color = Color.red;
+
                 }
             }
 

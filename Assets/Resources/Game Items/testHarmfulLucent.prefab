@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8684978899766203630}
   - component: {fileID: 6596647129459924659}
   - component: {fileID: 6717978798027658738}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1371639928800879526}
   - component: {fileID: 2907671955082782167}
-  m_Layer: 0
+  - component: {fileID: -3670057178031339931}
+  m_Layer: 9
   m_Name: testHarmfulLucent
   m_TagString: Hard Lucent
   m_Icon: {fileID: 0}
@@ -128,6 +129,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.98, y: 2.83, z: 5.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3670057178031339931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2215758749297007905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cc6bd5207cc73440a8ed573caa82de5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lucentGift: 300
+  hitTriggerGoal: 8
+  currentHitCount: 0
+  shotEffect: {fileID: 1247370024031467272, guid: 2a0fcb8c37fa5484f92be6be5d7a3b33, type: 3}
+  shatterEffect: {fileID: 565221094426037751, guid: 5136ca1bc12873b4087292b4250ffbf8, type: 3}
+  threatCluster: {fileID: 130336942800207938, guid: 258ebae35e746864fab23c14795d4ec1, type: 3}
+  threat: 1
 --- !u!1 &8982687937582831028
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,7 +159,7 @@ GameObject:
   - component: {fileID: 7194983067381580691}
   - component: {fileID: 1401039331397740598}
   - component: {fileID: 9083807315094165674}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
