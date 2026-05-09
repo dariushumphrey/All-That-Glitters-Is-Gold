@@ -54,7 +54,12 @@ public class LightLerpScript : MonoBehaviour
             if(forColor)
             {
                 light.GetComponent<Light>().color = Color.Lerp(colorOne, colorTwo, Mathf.PingPong(Time.time, progress * accelerant));
-            }           
+            }
+
+            if (forIntensity)
+            {
+                light.GetComponent<Light>().intensity = Mathf.Lerp(originalIntensity, newIntensity, Mathf.PingPong(Time.time, progress * accelerant));
+            }
         }
     }
 

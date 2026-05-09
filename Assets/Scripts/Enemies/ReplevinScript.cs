@@ -505,7 +505,7 @@ public class ReplevinScript : MonoBehaviour
                         else
                         {
                             self.SetDestination(player.transform.position);
-                            throwTimer = throwTimeReset;
+                            //throwTimer = throwTimeReset;
                             //meleeAttackTimer = meleeReset;
                         }                       
                     }
