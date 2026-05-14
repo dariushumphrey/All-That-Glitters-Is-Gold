@@ -9,7 +9,8 @@ public class ActivatorDrone : MonoBehaviour
     private PlayerCameraScript camera;
     internal GameObject proc; //Text UI that records Cheat activity
 
-    private float damagePercent = 75f;
+    private float baseDamagePercent = 10f;
+    private float damagePercent = 25f;
     private int damageAssign;
     private GameObject adDrone; //Drone game object
     private GameObject adInstance;
@@ -24,30 +25,107 @@ public class ActivatorDrone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(InitializeDrone());
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(camera)
+        {
+            forwardDirection = (camera.playerCamera.transform.position - transform.position);
+        }
+
+        if (Time.timeScale == 1)
+        {
+            if(adInstance)
+            {
+                if (Input.GetButton("Fire2"))
+                {
+                    adInstance.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(camera.playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
+                    //adInstance.transform.eulerAngles = new Vector3(0f, camera.yaw, 0.0f);
+                    proc.GetComponent<Text>().text = "AD: Targeting";
+                }
+
+                else if (adInstance.GetComponent<ADDrone>().CanSeeEnemy())
+                {
+                    adInstance.transform.rotation = Quaternion.Lerp(adInstance.transform.rotation,
+                        Quaternion.LookRotation(adInstance.GetComponent<ADDrone>().targetVector, Vector3.up), characterTurnSpeed);
+                    proc.GetComponent<Text>().text = "AD: Engaging";
+                }
+
+                else
+                {
+                    proc.GetComponent<Text>().text = "AD: Standby";
+                }
+            }          
+        }      
+    }
+
+    void FixedUpdate()
+    {
+        droneOrbitRate = Mathf.PingPong(Time.time, 1f);
+        adOffset = new Vector3(1.3f, 1.5f + droneOrbitRate * 0.1f, 0f);
+
+        if(adInstance)
+        {
+            adInstance.transform.position = Vector3.Lerp(adInstance.transform.position,
+            camera.transform.position + (Quaternion.Euler(0f, camera.yaw, camera.pitch)) * adOffset, (droneFollowSpeed * Time.deltaTime) * droneFollowAccelerant);
+        }
+       
+        //adInstance.transform.position = firearm.transform.parent.root.transform.position + (Quaternion.Euler(0f, camera.yaw, 0f) * adOffset);
+    }
+
+    public void ActivateSiphonicPlatform()
+    {
+        firearm.GetComponent<SiphonicPlatform>().RemoteProc();
+    }
+
+    public void ActivateMiningPlatform()
+    {
+        firearm.GetComponent<MiningPlatform>().RemoteProc();
+    }
+
+    public void ActivateTrenchantPlatform()
+    {
+        firearm.GetComponent<TrenchantPlatform>().RemoteProc();
+    }
+
+    public IEnumerator InitializeDrone()
+    {
+        yield return null;
+
         firearm = GetComponent<FirearmScript>();
         camera = FindObjectOfType<PlayerCameraScript>();
 
-        if(proc)
+        if (proc)
         {
             proc.GetComponent<Text>().text = "";
         }
 
         damageReset = damagePercent;
 
-        if(!adInstance)
+        if (!adInstance)
         {
             adDrone = Resources.Load<GameObject>("Game Items/adDrone");
-            damagePercent /= 100;
-            damagePercent *= firearm.damage;
-            //damagePercent *= firearm.weaponRarity;
-            damageAssign = (int)damagePercent;
-
-            damagePercent = damageReset;
 
             adInstance = Instantiate(adDrone, transform.position, transform.rotation);
             adInstance.name = adDrone.name;
             adInstance.GetComponent<ADDrone>().hostWeapon = gameObject;
-            adInstance.GetComponent<ADDrone>().damage = damageAssign;
+
+            baseDamagePercent /= 100;
+            baseDamagePercent *= firearm.weaponRarity;
+            baseDamagePercent *= adInstance.GetComponent<ADDrone>().damage;
+            damageAssign = (int)baseDamagePercent;
+
+            damagePercent /= 100;
+            damagePercent *= firearm.damage;
+            //damagePercent *= firearm.weaponRarity;
+            damageAssign += (int)damagePercent;
+
+            damagePercent = damageReset;
+
+            adInstance.GetComponent<ADDrone>().damage += damageAssign;
 
             if (firearm.GetComponent<SiphonicPlatform>())
             {
@@ -70,65 +148,11 @@ public class ActivatorDrone : MonoBehaviour
                 adInstance.GetComponent<ADDrone>().fireRate = 0.2f;
             }
 
-            if(firearm.weaponRarity == 5 && !firearm.isExotic)
+            if (firearm.weaponRarity == 5 && !firearm.isExotic)
             {
                 adInstance.GetComponent<ADDrone>().fatedFlag = true;
             }
-        }      
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        forwardDirection = (camera.playerCamera.transform.position - transform.position);
-
-        if(Time.timeScale == 1)
-        {
-            if (Input.GetButton("Fire2"))
-            {
-                adInstance.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(camera.playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
-                //adInstance.transform.eulerAngles = new Vector3(0f, camera.yaw, 0.0f);
-                proc.GetComponent<Text>().text = "AD: Targeting";
-            }
-
-            else if (adInstance.GetComponent<ADDrone>().CanSeeEnemy())
-            {
-                adInstance.transform.rotation = Quaternion.Lerp(adInstance.transform.rotation,
-                    Quaternion.LookRotation(adInstance.GetComponent<ADDrone>().targetVector, Vector3.up), characterTurnSpeed);
-                proc.GetComponent<Text>().text = "AD: Engaging";
-            }
-
-            else
-            {
-                proc.GetComponent<Text>().text = "AD: Standby";
-            }
-        }      
-    }
-
-    void FixedUpdate()
-    {
-        droneOrbitRate = Mathf.PingPong(Time.time, 1f);
-        adOffset = new Vector3(1.3f, 1.5f + droneOrbitRate * 0.1f, 0f);
-
-        adInstance.transform.position = Vector3.Lerp(adInstance.transform.position,
-            camera.transform.position + (Quaternion.Euler(0f, camera.yaw, camera.pitch)) * adOffset, (droneFollowSpeed * Time.deltaTime) * droneFollowAccelerant);
-
-        //adInstance.transform.position = firearm.transform.parent.root.transform.position + (Quaternion.Euler(0f, camera.yaw, 0f) * adOffset);
-    }
-
-    public void ActivateSiphonicPlatform()
-    {
-        firearm.GetComponent<SiphonicPlatform>().RemoteProc();
-    }
-
-    public void ActivateMiningPlatform()
-    {
-        firearm.GetComponent<MiningPlatform>().RemoteProc();
-    }
-
-    public void ActivateTrenchantPlatform()
-    {
-        firearm.GetComponent<TrenchantPlatform>().RemoteProc();
+        }
     }
 
     private void OnEnable()
@@ -144,9 +168,12 @@ public class ActivatorDrone : MonoBehaviour
         }
 
         if(adInstance)
-        {
+        {          
             adInstance.SetActive(false);
             Destroy(adInstance);
         }
+
+        damagePercent = 25f;
+        baseDamagePercent = 10f;
     }
 }

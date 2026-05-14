@@ -8,7 +8,7 @@ public class ADDrone : MonoBehaviour
 {
     public GameObject hostWeapon;
     public GameObject munition;
-    public int damage = 2;
+    public int damage = 500;
     public LayerMask contactOnly; //Ensures Raycast accounts for Surfaces
     public List<GameObject> targets = new List<GameObject>();
     public Material bulletTrail;
@@ -86,7 +86,7 @@ public class ADDrone : MonoBehaviour
 
             if (Physics.Raycast(transform.position, targetVector, out hit, Mathf.Infinity, contactOnly))
             {
-                if(hit.collider.gameObject == engagedTarget)
+                if(hit.collider.gameObject == engagedTarget && !engagedTarget.GetComponent<EnemyHealthScript>().isImmune)
                 {
                     return true;
                 }

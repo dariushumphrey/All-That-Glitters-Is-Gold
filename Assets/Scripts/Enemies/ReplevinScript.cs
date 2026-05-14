@@ -297,7 +297,7 @@ public class ReplevinScript : MonoBehaviour
         Vector3 start = self.transform.position;
         Vector3 finish = info.endPos + Vector3.up * self.baseOffset;
 
-        float elapsedTime = Vector3.Distance(start, finish) / (self.speed * 3f);
+        float elapsedTime = Vector3.Distance(start, finish) / (self.speed * 2.25f);
         float time = 0;
 
         while(time < elapsedTime)
@@ -1270,6 +1270,14 @@ public class ReplevinScript : MonoBehaviour
                 if(primedLucent)
                 {
                     lucentPrimed = (primedLucent.transform.position - transform.position).normalized;
+
+                    for (int o = 0; o < combustibleLucent.Length; o++)
+                    {
+                        if (combustibleLucent[o].GetComponent<CombustibleLucentScript>().primed && combustibleLucent[o] != primedLucent)
+                        {
+                            combustibleLucent[o].GetComponent<CombustibleLucentScript>().ResetIlluminationState();
+                        }
+                    }
                 }
 
                 if (self.enabled == true)

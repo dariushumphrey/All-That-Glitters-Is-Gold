@@ -105,9 +105,12 @@ public class PlayerMoveScript : MonoBehaviour
         horizInput = Input.GetAxisRaw("Horizontal");
         vertInput = Input.GetAxisRaw("Vertical");
 
-        Vector3 forward = transform.forward * vertInput;
-        Vector3 sideways = transform.right * horizInput;
+        Vector3 trajectory = new Vector3(horizInput, 0f, vertInput);
+        trajectory = trajectory.normalized;
 
+        Vector3 forward = transform.forward * trajectory.z;
+        Vector3 sideways = transform.right * trajectory.x;
+      
         //Disables gravity and zeroes downward pull during Melees or Zero Gravity play
         if(melee.meleeLock || zeroGravity)
         {
@@ -126,8 +129,7 @@ public class PlayerMoveScript : MonoBehaviour
 
         if (Input.GetButton("Horizontal"))
         {
-            playerRigid.AddForce(sideways * speed * speedAccelerant);
-                           
+            playerRigid.AddForce(sideways * speed * speedAccelerant);                         
         }
 
         if (Input.GetButton("Vertical"))
@@ -260,11 +262,18 @@ public class PlayerMoveScript : MonoBehaviour
             playerRigid.velocity = Vector3.zero;
 
             //Not moving or moving backwards will make the Player dodge backwards
-            if (horizInput == 0 && vertInput == 0 || vertInput < 0)
+            if (horizInput == 0 && vertInput == 0)
             {
                 playerRigid.AddForce(-transform.forward * evasionForwardForce, ForceMode.Impulse);
-                playerRigid.AddForce(Vector3.up * evasionUpForce, ForceMode.Impulse);
+                for (int p = 0; p < frontThrust.Count; p++)
+                {
+                    frontThrust[p].Play();
+                }
+            }
 
+            else if(vertInput < 0)
+            {
+                playerRigid.AddForce(forward * evasionForwardForce, ForceMode.Impulse);
                 for (int p = 0; p < frontThrust.Count; p++)
                 {
                     frontThrust[p].Play();
@@ -274,9 +283,7 @@ public class PlayerMoveScript : MonoBehaviour
             //Moving forward will make the Player dodge forwards
             if (vertInput > 0)
             {
-                playerRigid.AddForce(transform.forward * evasionForwardForce, ForceMode.Impulse);
-                playerRigid.AddForce(Vector3.up * evasionUpForce, ForceMode.Impulse);
-
+                playerRigid.AddForce(forward * evasionForwardForce, ForceMode.Impulse);
                 for (int p = 0; p < backThrust.Count; p++)
                 {
                     backThrust[p].Play();
@@ -286,9 +293,7 @@ public class PlayerMoveScript : MonoBehaviour
             //Moving left will make the Player dodge left
             if (horizInput < 0)
             {
-                playerRigid.AddForce(-transform.right * evasionForwardForce, ForceMode.Impulse);
-                playerRigid.AddForce(Vector3.up * evasionUpForce, ForceMode.Impulse);
-
+                playerRigid.AddForce(sideways * evasionForwardForce, ForceMode.Impulse);
                 for (int p = 0; p < rightThrust.Count; p++)
                 {
                     rightThrust[p].Play();
@@ -298,14 +303,14 @@ public class PlayerMoveScript : MonoBehaviour
             //Moving right will make the Player dodge right
             if (horizInput > 0)
             {
-                playerRigid.AddForce(transform.right * evasionForwardForce, ForceMode.Impulse);
-                playerRigid.AddForce(Vector3.up * evasionUpForce, ForceMode.Impulse);
-
+                playerRigid.AddForce(sideways * evasionForwardForce, ForceMode.Impulse);
                 for (int p = 0; p < leftThrust.Count; p++)
                 {
                     leftThrust[p].Play();
                 }
             }
+
+            playerRigid.AddForce(Vector3.up * evasionUpForce, ForceMode.Impulse);
 
             evaded = true;
             StartCoroutine(ResetEvade());

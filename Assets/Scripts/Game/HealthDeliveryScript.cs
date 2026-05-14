@@ -8,6 +8,7 @@ public class HealthDeliveryScript : MonoBehaviour
     public int healthAdd;
     public LayerMask contactOnly;
     public ParticleSystem acceptEffect;
+    public GameObject lootFocusCircle;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +34,17 @@ public class HealthDeliveryScript : MonoBehaviour
         }
 
         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, contactOnly))
+        {
+            if (hit.point != null)
+            {
+                GameObject deliveryItemCircle = Instantiate(lootFocusCircle, hit.point + (hit.normal * 0.01f), Quaternion.FromToRotation(Vector3.up, hit.normal));
+                deliveryItemCircle.GetComponent<Renderer>().material.color = Color.green;
+                deliveryItemCircle.name = lootFocusCircle.name;
+                deliveryItemCircle.transform.parent = gameObject.transform;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)

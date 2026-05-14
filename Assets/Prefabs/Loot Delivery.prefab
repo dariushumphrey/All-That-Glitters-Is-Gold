@@ -325,7 +325,6 @@ MonoBehaviour:
   spamLoot: 0
   spawnRate: 0.08
   drop: {fileID: 0}
-  exoticDrop: {fileID: 0}
   lootSpawn: {fileID: 0}
   withinVolume: 0
 --- !u!1001 &6441401121530572161

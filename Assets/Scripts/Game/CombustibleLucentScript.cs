@@ -6,11 +6,12 @@ public class CombustibleLucentScript : MonoBehaviour
 {
     public Light lucentLight;
     public GameObject shatterEffect; //VFX that plays on condition
-    public int lightIntensity = 1;
+    public float lightIntensity = 1f;
     public int primedIntensity = 4;
     public int totalUses = 2;
     public bool limitedUse = false;
     public bool training = false;
+    public float combustDelayTime = 1f;
     internal bool primed = false;
 
     // Start is called before the first frame update
@@ -43,6 +44,17 @@ public class CombustibleLucentScript : MonoBehaviour
         if(training)
         {
             StartCoroutine(CombustOnDelay());
+        }
+    }
+
+    public void ResetIlluminationState()
+    {
+        lucentLight.intensity = lightIntensity;
+        primed = false;
+
+        if(gameObject.GetComponent<SphereCollider>())
+        {
+            Destroy(gameObject.GetComponent<SphereCollider>());
         }
     }
 
@@ -79,7 +91,7 @@ public class CombustibleLucentScript : MonoBehaviour
 
     public IEnumerator CombustOnDelay()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(combustDelayTime);
 
         GameObject effect = Instantiate(shatterEffect, transform.position, Quaternion.identity);
         effect.name = "Shatter VFX";

@@ -116,10 +116,16 @@ public class AmmoScript : MonoBehaviour
         //lightSource.name = lootLight.name;
         //lightSource.transform.parent = gameObject.transform;
 
-        GameObject deliveryItemCircle = Instantiate(lootFocusCircle, transform.position + Vector3.down * 1.2f, Quaternion.identity);
-        deliveryItemCircle.GetComponent<Renderer>().material.color = Color.white;
-        deliveryItemCircle.name = lootFocusCircle.name;
-        deliveryItemCircle.transform.parent = gameObject.transform;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, contactOnly))
+        {
+            if (hit.point != null)
+            {
+                GameObject deliveryItemCircle = Instantiate(lootFocusCircle, hit.point + (hit.normal * 0.01f), Quaternion.FromToRotation(Vector3.up, hit.normal));
+                deliveryItemCircle.GetComponent<Renderer>().material.color = Color.white;
+                deliveryItemCircle.name = lootFocusCircle.name;
+                deliveryItemCircle.transform.parent = gameObject.transform;
+            }
+        }
 
         lootModel.AddComponent<RotateScript>();
         lootModel.GetComponent<RotateScript>().rotationAccelerant = 1;

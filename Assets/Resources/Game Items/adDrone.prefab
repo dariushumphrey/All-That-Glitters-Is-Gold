@@ -243,7 +243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hostWeapon: {fileID: 0}
   munition: {fileID: 8623149544147230018, guid: 93252757b25b01e459e14114789b69d0, type: 3}
-  damage: 1
+  damage: 500
   contactOnly:
     serializedVersion: 2
     m_Bits: 2880

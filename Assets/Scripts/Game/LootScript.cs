@@ -738,6 +738,8 @@ public class LootScript : MonoBehaviour
 
     public void RarityEnforcement()
     {
+        RaycastHit hit;
+
         if (raritySpawn == 1)
         {
             for (int r = 0; r < rarityIdentification.Count; r++)
@@ -750,11 +752,17 @@ public class LootScript : MonoBehaviour
             lightSource.name = lootLight.name;
             lightSource.transform.parent = gameObject.transform;
 
-            GameObject deliveryItemCircle = Instantiate(lootFocusCircle, transform.position + Vector3.down * 1.2f, Quaternion.identity);
-            deliveryItemCircle.GetComponent<Renderer>().material.color = Color.white;
-            deliveryItemCircle.name = lootFocusCircle.name;
-            deliveryItemCircle.transform.parent = gameObject.transform;
-
+            
+            if(Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, contactOnly))
+            {
+                if(hit.point != null)
+                {
+                    GameObject deliveryItemCircle = Instantiate(lootFocusCircle, hit.point + (hit.normal * 0.01f), Quaternion.FromToRotation(Vector3.up, hit.normal));
+                    deliveryItemCircle.GetComponent<Renderer>().material.color = Color.white;
+                    deliveryItemCircle.name = lootFocusCircle.name;
+                    deliveryItemCircle.transform.parent = gameObject.transform;
+                }
+            }          
         }
 
         else if (raritySpawn == 2)
@@ -769,10 +777,16 @@ public class LootScript : MonoBehaviour
             lightSource.name = lootLight.name;
             lightSource.transform.parent = gameObject.transform;
 
-            GameObject deliveryItemCircle = Instantiate(lootFocusCircle, transform.position + Vector3.down * 1.2f, Quaternion.identity);
-            deliveryItemCircle.GetComponent<Renderer>().material.color = Color.green;
-            deliveryItemCircle.name = lootFocusCircle.name;
-            deliveryItemCircle.transform.parent = gameObject.transform;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, contactOnly))
+            {
+                if (hit.point != null)
+                {
+                    GameObject deliveryItemCircle = Instantiate(lootFocusCircle, hit.point + (hit.normal * 0.01f), Quaternion.FromToRotation(Vector3.up, hit.normal));
+                    deliveryItemCircle.GetComponent<Renderer>().material.color = Color.green;
+                    deliveryItemCircle.name = lootFocusCircle.name;
+                    deliveryItemCircle.transform.parent = gameObject.transform;
+                }
+            }
 
         }
 
@@ -788,10 +802,16 @@ public class LootScript : MonoBehaviour
             lightSource.name = lootLight.name;
             lightSource.transform.parent = gameObject.transform;
 
-            GameObject deliveryItemCircle = Instantiate(lootFocusCircle, transform.position + Vector3.down * 1.2f, Quaternion.identity);
-            deliveryItemCircle.GetComponent<Renderer>().material.color = Color.red;
-            deliveryItemCircle.name = lootFocusCircle.name;
-            deliveryItemCircle.transform.parent = gameObject.transform;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, contactOnly))
+            {
+                if (hit.point != null)
+                {
+                    GameObject deliveryItemCircle = Instantiate(lootFocusCircle, hit.point + (hit.normal * 0.01f), Quaternion.FromToRotation(Vector3.up, hit.normal));
+                    deliveryItemCircle.GetComponent<Renderer>().material.color = Color.red;
+                    deliveryItemCircle.name = lootFocusCircle.name;
+                    deliveryItemCircle.transform.parent = gameObject.transform;
+                }
+            }
 
         }
 
@@ -807,10 +827,16 @@ public class LootScript : MonoBehaviour
             lightSource.name = lootLight.name;
             lightSource.transform.parent = gameObject.transform;
 
-            GameObject deliveryItemCircle = Instantiate(lootFocusCircle, transform.position + Vector3.down * 1.2f, Quaternion.identity);
-            deliveryItemCircle.GetComponent<Renderer>().material.color = Color.yellow;
-            deliveryItemCircle.name = lootFocusCircle.name;
-            deliveryItemCircle.transform.parent = gameObject.transform;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, contactOnly))
+            {
+                if (hit.point != null)
+                {
+                    GameObject deliveryItemCircle = Instantiate(lootFocusCircle, hit.point + (hit.normal * 0.01f), Quaternion.FromToRotation(Vector3.up, hit.normal));
+                    deliveryItemCircle.GetComponent<Renderer>().material.color = Color.yellow;
+                    deliveryItemCircle.name = lootFocusCircle.name;
+                    deliveryItemCircle.transform.parent = gameObject.transform;
+                }
+            }
 
             GameObject particles = Instantiate(lootEffect, lootModel.transform.position + Vector3.down * 1.2f, Quaternion.identity);
             particles.name = lootEffect.name;
@@ -849,14 +875,20 @@ public class LootScript : MonoBehaviour
                 lightSource.gameObject.GetComponent<LightLerpScript>().colorOne = Color.cyan;
                 lightSource.gameObject.GetComponent<LightLerpScript>().colorTwo = Color.white;
 
-                GameObject deliveryItemCircle = Instantiate(lootFocusCircle, transform.position + Vector3.down * 1.2f, Quaternion.identity);
-                //deliveryItemCircle.GetComponent<Renderer>().material.color = Color.cyan;
-                deliveryItemCircle.name = lootFocusCircle.name;
-                deliveryItemCircle.transform.parent = gameObject.transform;
+                if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, contactOnly))
+                {
+                    if (hit.point != null)
+                    {
+                        GameObject deliveryItemCircle = Instantiate(lootFocusCircle, hit.point + (hit.normal * 0.01f), Quaternion.FromToRotation(Vector3.up, hit.normal));
+                        //deliveryItemCircle.GetComponent<Renderer>().material.color = Color.cyan;
+                        deliveryItemCircle.name = lootFocusCircle.name;
+                        deliveryItemCircle.transform.parent = gameObject.transform;
 
-                deliveryItemCircle.AddComponent<ColorLerpScript>();
-                deliveryItemCircle.GetComponent<ColorLerpScript>().colorOne = Color.cyan;
-                deliveryItemCircle.GetComponent<ColorLerpScript>().colorTwo = Color.white;
+                        deliveryItemCircle.AddComponent<ColorLerpScript>();
+                        deliveryItemCircle.GetComponent<ColorLerpScript>().colorOne = Color.cyan;
+                        deliveryItemCircle.GetComponent<ColorLerpScript>().colorTwo = Color.white;
+                    }
+                }             
 
                 GameObject particles = Instantiate(lootEffect, lootModel.transform.position + Vector3.down * 1.2f, Quaternion.identity);
                 particles = Instantiate(lootEffect, lootModel.transform.position + Vector3.down * 1.2f, Quaternion.identity);
@@ -881,10 +913,16 @@ public class LootScript : MonoBehaviour
                 lightSource.name = lootLight.name;
                 lightSource.transform.parent = gameObject.transform;
 
-                GameObject deliveryItemCircle = Instantiate(lootFocusCircle, transform.position + Vector3.down * 1.2f, Quaternion.identity);
-                deliveryItemCircle.GetComponent<Renderer>().material.color = Color.cyan;
-                deliveryItemCircle.name = lootFocusCircle.name;
-                deliveryItemCircle.transform.parent = gameObject.transform;
+                if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, contactOnly))
+                {
+                    if (hit.point != null)
+                    {
+                        GameObject deliveryItemCircle = Instantiate(lootFocusCircle, hit.point + (hit.normal * 0.01f), Quaternion.FromToRotation(Vector3.up, hit.normal));
+                        deliveryItemCircle.GetComponent<Renderer>().material.color = Color.cyan;
+                        deliveryItemCircle.name = lootFocusCircle.name;
+                        deliveryItemCircle.transform.parent = gameObject.transform;
+                    }
+                }
 
                 GameObject particles = Instantiate(lootEffect, lootModel.transform.position + Vector3.down * 1.2f, Quaternion.identity);
                 particles = Instantiate(lootEffect, lootModel.transform.position + Vector3.down * 1.2f, Quaternion.identity);

@@ -221,9 +221,14 @@ MonoBehaviour:
   berthJumpCarpetBombTimer: 0.15
   jumpTakeoff: {fileID: 0}
   jumpCheck: {fileID: 0}
+  throwTimer: 2
+  collectionTimer: 7
   phaseTwoAttackLimit: 3
   phaseTwoAppearance: {fileID: 0}
+  appendages: []
   stunningLucent: {fileID: 0}
+  spectrumLucentTracker: []
+  spectrumSpawners: []
 --- !u!114 &78844624512772188
 MonoBehaviour:
   m_ObjectHideFlags: 0

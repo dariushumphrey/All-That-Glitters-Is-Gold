@@ -468,12 +468,16 @@ MonoBehaviour:
   berthJumpCarpetBombTimer: 0.05
   jumpTakeoff: {fileID: 2056866271575102109, guid: e436b8ce7e2020e47a954d998deb3c8d, type: 3}
   jumpCheck: {fileID: 9046807996112585156}
+  throwTimer: 2
+  collectionTimer: 7
   phaseTwoAttackLimit: 3
   phaseTwoAppearance: {fileID: 7219842435835573862}
   appendages:
   - {fileID: 5522117163257905992}
   - {fileID: 9103125900900846582}
   stunningLucent: {fileID: 130336942800207938, guid: 258ebae35e746864fab23c14795d4ec1, type: 3}
+  spectrumLucentTracker: []
+  spectrumSpawners: []
 --- !u!114 &521107327305974612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,7 +490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b4fa109f4ef7141b00f5657e3beeef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficultyValue: 4
+  difficultyValue: 1
   healthCurrent: 4000
   healthMax: 100000
   healthPercent: 20
