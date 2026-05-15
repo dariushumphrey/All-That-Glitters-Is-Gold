@@ -7,17 +7,53 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 999625909389735038, guid: 3f4df3b443f259746949c8b0fd6168fe, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242840118331898790, guid: 3f4df3b443f259746949c8b0fd6168fe, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4221928478634662968, guid: 3f4df3b443f259746949c8b0fd6168fe, type: 3}
       propertyPath: saved
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4221928478634662968, guid: 3f4df3b443f259746949c8b0fd6168fe, type: 3}
+      propertyPath: display
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4221928478634662968, guid: 3f4df3b443f259746949c8b0fd6168fe, type: 3}
       propertyPath: contactOnly.m_Bits
       value: 2880
       objectReference: {fileID: 0}
+    - target: {fileID: 4339914621463982812, guid: 3f4df3b443f259746949c8b0fd6168fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518395733888938834, guid: 3f4df3b443f259746949c8b0fd6168fe, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5877446791347854588, guid: 3f4df3b443f259746949c8b0fd6168fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6132017854543559869, guid: 3f4df3b443f259746949c8b0fd6168fe, type: 3}
       propertyPath: m_Name
       value: Semi Fire Rifle
+      objectReference: {fileID: 0}
+    - target: {fileID: 6132017854543559869, guid: 3f4df3b443f259746949c8b0fd6168fe, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232591210310420096, guid: 3f4df3b443f259746949c8b0fd6168fe, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669854269440052558, guid: 3f4df3b443f259746949c8b0fd6168fe, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8162629741130002465, guid: 3f4df3b443f259746949c8b0fd6168fe, type: 3}
       propertyPath: m_RootOrder

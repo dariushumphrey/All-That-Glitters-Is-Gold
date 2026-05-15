@@ -1,20 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Wilberforce;
 
 public class PlayerPrefsManagerScript : MonoBehaviour
 {
     private KioskScript kiosk;
     private MenuManagerScript menu;
+    private GameObject camToUse;
+
     void Awake()
     {
         kiosk = FindObjectOfType<KioskScript>();
         menu = FindObjectOfType<MenuManagerScript>();
+        camToUse = GameObject.FindGameObjectWithTag("UICamera");
 
         LevelEntitlement();
         DifficultyEntitlement();
         ViricideEntitlement();
         LucentEntitlement();
+
+        StartCoroutine(AccessibilityAssignment());
         //Debug.Log(PlayerPrefs.GetInt("unlockLevel02"));
         //Debug.Log(PlayerPrefs.GetInt("unlockLevel03"));
 
@@ -118,6 +124,12 @@ public class PlayerPrefsManagerScript : MonoBehaviour
     void LucentEntitlement()
     {
         kiosk.lucentFunds = PlayerPrefs.GetInt("lucentBalance");
+    }
+
+    IEnumerator AccessibilityAssignment()
+    {
+        yield return null;
+        camToUse.GetComponent<Colorblind>().Type = PlayerPrefs.GetInt("colorblindSetting");
     }
 
     /// <summary>

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4700924496227702257}
   - component: {fileID: 3926192821441785598}
   - component: {fileID: 1180754870614738860}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7696681327373029990}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: semiFireBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 4711240010162276622}
   - component: {fileID: 1851048754813967137}
   - component: {fileID: 5246327798243483576}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 8162629741130002465}
   - component: {fileID: 1620275558545221743}
   - component: {fileID: 4221928478634662968}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Semi Fire Rifle
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -318,6 +318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 752
   damagePercent: 10
+  favorite: 0
   currentAmmo: 0
   ammoSize: 27
   reserveAmmo: 0
@@ -357,7 +358,7 @@ GameObject:
   - component: {fileID: 7967858905394134113}
   - component: {fileID: 6262819027685873268}
   - component: {fileID: 4579187290915027248}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +454,7 @@ GameObject:
   - component: {fileID: 3845068878279947421}
   - component: {fileID: 8192003966634287997}
   - component: {fileID: 844318584866942832}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -555,6 +556,10 @@ PrefabInstance:
     - target: {fileID: 18442299356477699, guid: 9640a4fd974fe2a4faf73ded3c2136d2, type: 3}
       propertyPath: m_Name
       value: muzzleFlashSemiAutomatic
+      objectReference: {fileID: 0}
+    - target: {fileID: 18442299356477699, guid: 9640a4fd974fe2a4faf73ded3c2136d2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 18442299356477702, guid: 9640a4fd974fe2a4faf73ded3c2136d2, type: 3}
       propertyPath: m_RootOrder

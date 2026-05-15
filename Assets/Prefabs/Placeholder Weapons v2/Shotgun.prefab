@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 699337692253126376}
   - component: {fileID: 699337692253126377}
   - component: {fileID: 699337692253126378}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 699337692606514474}
   - component: {fileID: 699337692606514475}
   - component: {fileID: 699337692606514476}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 699337692789952376}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: shotgunBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 699337693104839778}
   - component: {fileID: 699337693104839779}
   - component: {fileID: 699337693104839781}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Shotgun
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -286,6 +286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 810
   damagePercent: 10
+  favorite: 0
   currentAmmo: 0
   ammoSize: 9
   reserveAmmo: 0
@@ -326,7 +327,7 @@ GameObject:
   - component: {fileID: 699337693747348049}
   - component: {fileID: 699337693747348050}
   - component: {fileID: 699337693747348051}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -451,6 +452,10 @@ PrefabInstance:
     - target: {fileID: 1603306932154732585, guid: f1fbf6f9c150fc647aefaed10afdd499, type: 3}
       propertyPath: m_Name
       value: muzzleFlashShotgun
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603306932154732585, guid: f1fbf6f9c150fc647aefaed10afdd499, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1603306932154732586, guid: f1fbf6f9c150fc647aefaed10afdd499, type: 3}
       propertyPath: InitialModule.startSize.scalar

@@ -27,6 +27,7 @@ TagManager:
   - Spectrum Lucent
   - Cannon Lucent
   - Spec. Lucent Spawner
+  - UICamera
   layers:
   - Default
   - TransparentFX
@@ -40,7 +41,7 @@ TagManager:
   - Lucent
   - Setpiece
   - Mine
-  - 
+  - Weapon
   - 
   - 
   - 

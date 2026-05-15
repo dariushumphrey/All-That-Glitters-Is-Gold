@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 using UnityEngine.UI;
+using Wilberforce;
 
 public class LevelManagerScript : MonoBehaviour
 {
@@ -33,6 +34,7 @@ public class LevelManagerScript : MonoBehaviour
     //resultsMenu - Menu UI that houses game end statistics
     public GameObject pauseMenu, resultsMenu, controlsMenu;
 
+    private GameObject uiCamera;
     private TransitionManagerScript transition;
     private CheckpointManagerScript checkpoint;
     private float gameEndDelay = 20f;
@@ -96,6 +98,9 @@ public class LevelManagerScript : MonoBehaviour
         player.playerScaling = gameSettingState;
         player.StatusCorrections();
         player.StatusScaling();
+
+        uiCamera = GameObject.FindGameObjectWithTag("UICamera");
+        StartCoroutine(InitializeAccessibility());
 
         manager = FindObjectOfType<EnemyManagerScript>();
         manager.dropRarity = gameSettingState;
@@ -466,5 +471,16 @@ public class LevelManagerScript : MonoBehaviour
     public void ClosePage(GameObject page)
     {
         page.gameObject.SetActive(false);
+    }
+
+    IEnumerator InitializeAccessibility()
+    {
+        yield return null;
+        if(!uiCamera.GetComponent<Colorblind>())
+        {
+            uiCamera.AddComponent<Colorblind>();
+        }
+
+        uiCamera.GetComponent<Colorblind>().Type = PlayerPrefs.GetInt("colorblindSetting");
     }
 }

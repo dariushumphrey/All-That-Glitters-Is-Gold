@@ -191,8 +191,8 @@ Canvas:
   m_GameObject: {fileID: 273123}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 349572875}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -14375,7 +14375,7 @@ GameObject:
   - component: {fileID: 349572875}
   m_Layer: 3
   m_Name: UI Camera
-  m_TagString: Untagged
+  m_TagString: UICamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40041,7 +40041,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -131.08, y: -150}
+  m_AnchoredPosition: {x: -131.08002, y: -150}
   m_SizeDelta: {x: 262.15, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &921436859
@@ -51479,7 +51479,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -131.08, y: -250}
+  m_AnchoredPosition: {x: -131.08002, y: -250}
   m_SizeDelta: {x: 262.15, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1206572075
@@ -58293,6 +58293,7 @@ MonoBehaviour:
   caLevelFive: {fileID: 0}
   vcLevelOne: {fileID: 21300000, guid: 580435a41c7471a4c8fe39d71fbdaf18, type: 3}
   vcLevelTwo: {fileID: 0}
+  vcLevelThree: {fileID: 0}
   caDiffText: {fileID: 0}
   vcDiffText: {fileID: 0}
   caLevelText: {fileID: 0}
@@ -67649,7 +67650,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -601.25464, y: 50.335938}
+  m_AnchoredPosition: {x: -601.2546, y: 50.335938}
   m_SizeDelta: {x: -1282.234, y: -300.67}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1619851376

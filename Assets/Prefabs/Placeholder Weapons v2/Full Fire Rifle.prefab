@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 4036329082084970876}
   - component: {fileID: 4036329082084970879}
   - component: {fileID: 4036329082084970878}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4036329082904990596}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: fullFireBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 4036329082999486626}
   - component: {fileID: 4036329082999486629}
   - component: {fileID: 4036329082999486631}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Full Fire Rifle
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 4036329083052133167}
   - component: {fileID: 4036329083052133166}
   - component: {fileID: 4036329083052133169}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 4036329083395983488}
   - component: {fileID: 4036329083395983491}
   - component: {fileID: 4036329083395983490}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -502,6 +502,10 @@ PrefabInstance:
     - target: {fileID: 2946884816300663775, guid: d6ac82efaf934634b8da088a9188c53f, type: 3}
       propertyPath: m_Name
       value: muzzleFlashAuto
+      objectReference: {fileID: 0}
+    - target: {fileID: 2946884816300663775, guid: d6ac82efaf934634b8da088a9188c53f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6ac82efaf934634b8da088a9188c53f, type: 3}

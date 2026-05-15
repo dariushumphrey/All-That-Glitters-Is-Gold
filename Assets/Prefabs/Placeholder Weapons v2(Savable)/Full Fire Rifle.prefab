@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2219357549653718258, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329082084970752, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329082904990599, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4036329082999486626, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -55,8 +67,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Full Fire Rifle
       objectReference: {fileID: 0}
+    - target: {fileID: 4036329082999486630, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4036329082999486631, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
       propertyPath: saved
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329082999486631, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: display
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4036329082999486631, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
@@ -66,6 +86,18 @@ PrefabInstance:
     - target: {fileID: 4036329082999486631, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
       propertyPath: contactOnly.m_Bits
       value: 2880
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329083052133171, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036329083395983492, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357573842794471166, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2528b365871386747b8d73e91279a4f0, type: 3}

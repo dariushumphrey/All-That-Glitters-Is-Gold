@@ -1712,7 +1712,7 @@ public class KioskScript : MonoBehaviour
 
                 if (fcTwoStr == "6")
                 {
-                    cheatTraitOne.text = "Positive-Negative" + '\n' +
+                    cheatTraitTwo.text = "Positive-Negative" + '\n' +
                         "Moving generates a charge. While halfway charged, Enemy hits applies 100% of Weapon damage as damage-over-time for ten seconds.";
                 } //Flashpoint pairing
 

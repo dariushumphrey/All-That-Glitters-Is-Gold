@@ -7,17 +7,61 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1565454708136832314, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571627521092124220, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831817379708753071, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 3233880727260595515, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
       propertyPath: m_Name
       value: Grenade Launcher
+      objectReference: {fileID: 0}
+    - target: {fileID: 3233880727260595515, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475897125549115891, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3773119934276788108, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3831572390264352804, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6306833894733797269, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
       propertyPath: saved
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6306833894733797269, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
+      propertyPath: display
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6306833894733797269, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
       propertyPath: contactOnly.m_Bits
       value: 2880
+      objectReference: {fileID: 0}
+    - target: {fileID: 7801978969899219547, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8587605868889966251, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657457283812982259, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8659612913535348992, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
       propertyPath: m_RootOrder

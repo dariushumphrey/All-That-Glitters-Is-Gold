@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1640342961540458347}
   - component: {fileID: 1640342961540458346}
   - component: {fileID: 1640342961540458345}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 1640342962016243639}
   - component: {fileID: 1640342962016243638}
   - component: {fileID: 1640342962016243637}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 1640342962202232341}
   - component: {fileID: 1640342962202232340}
   - component: {fileID: 1640342962202232330}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Single Fire Rifle
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -257,6 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 2088
   damagePercent: 10
+  favorite: 0
   currentAmmo: 0
   ammoSize: 16
   reserveAmmo: 0
@@ -295,7 +296,7 @@ GameObject:
   - component: {fileID: 1640342962337783894}
   - component: {fileID: 1640342962337783893}
   - component: {fileID: 1640342962337783892}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -391,7 +392,7 @@ GameObject:
   - component: {fileID: 1640342962496512400}
   - component: {fileID: 1640342962496512407}
   - component: {fileID: 1640342962496512406}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +485,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1640342963350316065}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: singleFireBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -602,6 +603,10 @@ PrefabInstance:
     - target: {fileID: 6649340631570645262, guid: fab259bab93b1ac489b7e575c28cf024, type: 3}
       propertyPath: m_Name
       value: muzzleFlashSingleFire
+      objectReference: {fileID: 0}
+    - target: {fileID: 6649340631570645262, guid: fab259bab93b1ac489b7e575c28cf024, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fab259bab93b1ac489b7e575c28cf024, type: 3}

@@ -7,12 +7,28 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1640342961540458351, guid: deeff10e063288b49b130d02369c127e, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640342962016243627, guid: deeff10e063288b49b130d02369c127e, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 1640342962202232329, guid: deeff10e063288b49b130d02369c127e, type: 3}
       propertyPath: m_Name
       value: Single Fire Rifle
       objectReference: {fileID: 0}
+    - target: {fileID: 1640342962202232329, guid: deeff10e063288b49b130d02369c127e, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 1640342962202232330, guid: deeff10e063288b49b130d02369c127e, type: 3}
       propertyPath: saved
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640342962202232330, guid: deeff10e063288b49b130d02369c127e, type: 3}
+      propertyPath: display
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1640342962202232330, guid: deeff10e063288b49b130d02369c127e, type: 3}
@@ -61,6 +77,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1640342962202232341, guid: deeff10e063288b49b130d02369c127e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640342962337783882, guid: deeff10e063288b49b130d02369c127e, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640342962496512404, guid: deeff10e063288b49b130d02369c127e, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640342963350316064, guid: deeff10e063288b49b130d02369c127e, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6146184996233615754, guid: deeff10e063288b49b130d02369c127e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350690256889942708, guid: deeff10e063288b49b130d02369c127e, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

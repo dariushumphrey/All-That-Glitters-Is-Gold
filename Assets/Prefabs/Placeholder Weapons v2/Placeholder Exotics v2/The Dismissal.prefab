@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4677409490183303690}
   - component: {fileID: 8504602914094039597}
   - component: {fileID: 2505689442717205402}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: The Dismissal
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -67,6 +67,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 600
   damagePercent: 10
+  favorite: 0
   currentAmmo: 0
   ammoSize: 100
   reserveAmmo: 0
@@ -106,7 +107,7 @@ GameObject:
   - component: {fileID: 1177946701495935595}
   - component: {fileID: 4684196934786358705}
   - component: {fileID: 299389509287861945}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +203,7 @@ GameObject:
   - component: {fileID: 7772659165646725645}
   - component: {fileID: 8735276382816345561}
   - component: {fileID: 3433924008532045442}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +299,7 @@ GameObject:
   - component: {fileID: 928773414543300068}
   - component: {fileID: 1284093812805683332}
   - component: {fileID: 7182877437128445020}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -422,7 +423,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5875407823686912471}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: machineGunBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -455,7 +456,7 @@ GameObject:
   - component: {fileID: 5421330706168497481}
   - component: {fileID: 339845060429756574}
   - component: {fileID: 107657748962761293}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -551,7 +552,7 @@ GameObject:
   - component: {fileID: 6496122791625767832}
   - component: {fileID: 4664080422064241743}
   - component: {fileID: 6115372485066828583}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -647,7 +648,7 @@ GameObject:
   - component: {fileID: 6429559621784767597}
   - component: {fileID: 3806805111545826414}
   - component: {fileID: 7563658646961726560}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -769,6 +770,10 @@ PrefabInstance:
     - target: {fileID: 2946884816300663772, guid: d6ac82efaf934634b8da088a9188c53f, type: 3}
       propertyPath: ShapeModule.randomPositionAmount
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2946884816300663775, guid: d6ac82efaf934634b8da088a9188c53f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6ac82efaf934634b8da088a9188c53f, type: 3}

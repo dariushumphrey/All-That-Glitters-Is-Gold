@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 699337692253126380, guid: f98f6c9d0c1ed314ea455548a43ddf89, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 699337692606514478, guid: f98f6c9d0c1ed314ea455548a43ddf89, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 699337692789952377, guid: f98f6c9d0c1ed314ea455548a43ddf89, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 699337693104839778, guid: f98f6c9d0c1ed314ea455548a43ddf89, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -56,12 +68,32 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 699337693104839781, guid: f98f6c9d0c1ed314ea455548a43ddf89, type: 3}
+      propertyPath: display
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 699337693104839781, guid: f98f6c9d0c1ed314ea455548a43ddf89, type: 3}
       propertyPath: contactOnly.m_Bits
       value: 2880
       objectReference: {fileID: 0}
     - target: {fileID: 699337693104839782, guid: f98f6c9d0c1ed314ea455548a43ddf89, type: 3}
       propertyPath: m_Name
       value: Shotgun
+      objectReference: {fileID: 0}
+    - target: {fileID: 699337693104839782, guid: f98f6c9d0c1ed314ea455548a43ddf89, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 699337693747348053, guid: f98f6c9d0c1ed314ea455548a43ddf89, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176546416414673357, guid: f98f6c9d0c1ed314ea455548a43ddf89, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7890184668673658880, guid: f98f6c9d0c1ed314ea455548a43ddf89, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f98f6c9d0c1ed314ea455548a43ddf89, type: 3}

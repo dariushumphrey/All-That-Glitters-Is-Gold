@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 8409764783635760882}
   - component: {fileID: 8409764783635760883}
   - component: {fileID: 8409764783635760884}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8409764785027914004}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: testPistolBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 8409764785068852341}
   - component: {fileID: 8409764785068852342}
   - component: {fileID: 8409764785068852343}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 8409764785146193108}
   - component: {fileID: 8409764785146193109}
   - component: {fileID: 8409764785146193111}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Pistol
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -316,6 +316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1060
   damagePercent: 10
+  favorite: 0
   currentAmmo: 0
   ammoSize: 9
   reserveAmmo: 0
@@ -408,6 +409,10 @@ PrefabInstance:
     - target: {fileID: 6649340631570645262, guid: fab259bab93b1ac489b7e575c28cf024, type: 3}
       propertyPath: m_Name
       value: muzzleFlashSingleFire
+      objectReference: {fileID: 0}
+    - target: {fileID: 6649340631570645262, guid: fab259bab93b1ac489b7e575c28cf024, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fab259bab93b1ac489b7e575c28cf024, type: 3}

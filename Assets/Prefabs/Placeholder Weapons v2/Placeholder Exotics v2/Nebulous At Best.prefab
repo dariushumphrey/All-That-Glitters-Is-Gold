@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 7034746518423727929}
   - component: {fileID: 9026358633537526729}
   - component: {fileID: 2130195507821493032}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1953288617503070150}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LauncherBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 8659612913535348992}
   - component: {fileID: 3427213653086019297}
   - component: {fileID: 6306833894733797269}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Nebulous At Best
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6938629814409865326}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Appearance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 1956298023015442808}
   - component: {fileID: 5182553284131828778}
   - component: {fileID: 4642939160568877133}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cylinder (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 5592322018866169144}
   - component: {fileID: 1819876546678161849}
   - component: {fileID: 2954862661687386930}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 8238066761018419681}
   - component: {fileID: 2043450320236224431}
   - component: {fileID: 4367604235885106490}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -585,7 +585,7 @@ GameObject:
   - component: {fileID: 6563279655903215462}
   - component: {fileID: 3469724429713543954}
   - component: {fileID: 3879651338086416389}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -680,6 +680,10 @@ PrefabInstance:
     - target: {fileID: 2226015776433168419, guid: dc76dc46f0c39dd4781fabde742ae707, type: 3}
       propertyPath: m_Name
       value: muzzleFlashLauncher
+      objectReference: {fileID: 0}
+    - target: {fileID: 2226015776433168419, guid: dc76dc46f0c39dd4781fabde742ae707, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2226015776433168420, guid: dc76dc46f0c39dd4781fabde742ae707, type: 3}
       propertyPath: m_RootOrder

@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 4946270342631530878}
   - component: {fileID: 4946270342631530873}
   - component: {fileID: 4946270342631530872}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4946270342749705521}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: testSMGBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 4946270343591226274}
   - component: {fileID: 4946270343591226301}
   - component: {fileID: 4946270343591226303}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Underfoot
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -221,6 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 330
   damagePercent: 10
+  favorite: 0
   currentAmmo: 0
   ammoSize: 39
   reserveAmmo: 0
@@ -239,6 +240,8 @@ MonoBehaviour:
   contactOnly:
     serializedVersion: 2
     m_Bits: 832
+  saved: 0
+  display: 0
   gunCam: {fileID: 0}
   bulletTrail: {fileID: 2100000, guid: 6eb7043751433984592b6e728e79a720, type: 2}
   barrel: {fileID: 4946270342749705521}
@@ -246,8 +249,6 @@ MonoBehaviour:
   reticle: {fileID: 21300000, guid: bf0954672952bed4bac2f60319debf44, type: 3}
   muzzleFlash: {fileID: 2742002769419549049}
   sparks: {fileID: 7193588280022282015, guid: 7e86620f782720041b9300eda8cfef98, type: 3}
-  saved: 0
-  display: 0
 --- !u!1 &4946270343868550004
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +261,7 @@ GameObject:
   - component: {fileID: 4946270343868550008}
   - component: {fileID: 4946270343868550011}
   - component: {fileID: 4946270343868550010}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +357,7 @@ GameObject:
   - component: {fileID: 4946270343889958324}
   - component: {fileID: 4946270343889958327}
   - component: {fileID: 4946270343889958326}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -478,6 +479,10 @@ PrefabInstance:
     - target: {fileID: 2946884816300663772, guid: d6ac82efaf934634b8da088a9188c53f, type: 3}
       propertyPath: ShapeModule.randomPositionAmount
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2946884816300663775, guid: d6ac82efaf934634b8da088a9188c53f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6ac82efaf934634b8da088a9188c53f, type: 3}
