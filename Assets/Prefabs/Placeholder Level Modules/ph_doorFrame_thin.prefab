@@ -67,6 +67,10 @@ MonoBehaviour:
   locked: 0
   elevator: 0
   invert: 0
+  vertical: 0
+  horizontal: 0
+  diagonal: 0
+  overrideOpen: 0
 --- !u!54 &497097420428499557
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -258,6 +262,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 7f869884c598ad0419473dac07b6faec, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 7f869884c598ad0419473dac07b6faec, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: aca51fc703008ac42a9c88b4a82b802d, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 7f869884c598ad0419473dac07b6faec, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: aca51fc703008ac42a9c88b4a82b802d, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 7f869884c598ad0419473dac07b6faec, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 2870712995921806759, guid: c13b86a789ff2d14084e4804f505ed4f, type: 3}
     - target: {fileID: 919132149155446097, guid: 7f869884c598ad0419473dac07b6faec, type: 3}
       propertyPath: m_Name
       value: ph_doorFrame_thin_door

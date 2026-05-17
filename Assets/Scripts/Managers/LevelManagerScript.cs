@@ -65,7 +65,9 @@ public class LevelManagerScript : MonoBehaviour
             //Resets game settings when on Main Menu
             if(setting == Setting.Navigation)
             {
-                if(gameComplete)
+                Cursor.lockState = CursorLockMode.None;
+
+                if (gameComplete)
                 {
                     gameComplete = false;
                 }
@@ -94,6 +96,8 @@ public class LevelManagerScript : MonoBehaviour
     /// </summary>
     void GameSet()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+
         player = FindObjectOfType<PlayerStatusScript>();
         player.playerScaling = gameSettingState;
         player.StatusCorrections();
@@ -184,8 +188,7 @@ public class LevelManagerScript : MonoBehaviour
         //Permanently unlocks Cursor when on Main Menu
         if(setting == Setting.Navigation)
         {
-            Cursor.lockState = CursorLockMode.None;
-            return;
+            //Cursor.lockState = CursorLockMode.None;
         }
 
         else
@@ -244,17 +247,22 @@ public class LevelManagerScript : MonoBehaviour
                     {
                         pauseMenu.gameObject.SetActive(true);
                     }
+
+                    StartCoroutine(UnlockCursor());
                     paused = true;
                 }
 
                 else if (paused)
                 {
                     Time.timeScale = 1;
-                    paused = false;
+
                     if (pauseMenu.gameObject.activeSelf != false)
                     {
                         pauseMenu.gameObject.SetActive(false);
                     }
+
+                    StartCoroutine(LockCursor());
+                    paused = false;
                 }
             }
 
@@ -471,6 +479,18 @@ public class LevelManagerScript : MonoBehaviour
     public void ClosePage(GameObject page)
     {
         page.gameObject.SetActive(false);
+    }
+
+    public IEnumerator LockCursor()
+    {
+        yield return null;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public IEnumerator UnlockCursor()
+    {
+        yield return null;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     IEnumerator InitializeAccessibility()

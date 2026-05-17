@@ -57,15 +57,15 @@ public class PlayerCameraScript : MonoBehaviour
     void Update()
     {
         //Locks the cursor on number inputs
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
+        //if(Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    Cursor.lockState = CursorLockMode.Locked;
+        //}
         
-        if(Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
+        //if(Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    Cursor.lockState = CursorLockMode.None;
+        //}
 
     }
 
