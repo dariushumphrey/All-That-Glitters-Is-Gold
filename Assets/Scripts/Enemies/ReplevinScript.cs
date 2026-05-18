@@ -360,6 +360,10 @@ public class ReplevinScript : MonoBehaviour
                         stunMechanic.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
                         stunMechanic.transform.parent = gameObject.transform;
 
+                        stunMechanic.GetComponent<StunningLucentScript>().boss = gameObject;
+                        stunMechanic.GetComponent<StunningLucentScript>().throwTimerReference = throwTimer;
+                        stunMechanic.GetComponent<StunningLucentScript>().TimeExtensionCalculation();
+
                         if (stunMechanic.GetComponent<Rigidbody>())
                         {
                             Destroy(stunMechanic.GetComponent<Rigidbody>());
@@ -384,6 +388,8 @@ public class ReplevinScript : MonoBehaviour
                         gathered = false;
                         recorded = false;
                         throwTarget = false;
+                        throwTimer = throwTimeReset;
+
                         interrupted = false;
                         enemy.isImmune = true;
 

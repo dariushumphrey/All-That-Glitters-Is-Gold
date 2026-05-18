@@ -5,6 +5,8 @@ using UnityEngine;
 public class DoorScript : MonoBehaviour
 {
     public GameObject door;
+    public MeshRenderer doorObject;
+    public Material unlockMaterial;
     public List<GameObject> console = new List<GameObject>();
     public float openConstraint = 4f; //Value to stop door when opening
     public float closedConstraint = 0f; //Value to stop door when closing
@@ -17,18 +19,39 @@ public class DoorScript : MonoBehaviour
     public bool horizontal = false; //Opens door on X-axis if true
     public bool diagonal = false; //Opens door on Z-axis if true
     public bool overrideOpen = false; //Forces Door to open if true
-
+    public bool manualVisualChange = false;
+    public int unlockIndex = 1;
     private float state = 0f; //Float to manipulate X,Y, or Z position of door
-
+    private Material[] doorMaterials;
+    private bool done = false;
     // Start is called before the first frame update
     void Start()
     {
-
+        if(doorObject)
+        {
+            doorMaterials = doorObject.materials;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(locked)
+        {
+            for (int i = 0; i < console.Count; i++)
+            {
+                if (console[i].GetComponent<DoorConsoleScript>().accepted == true)
+                {
+                    console.Remove(console[i]);                   
+                }
+
+                if (console.Count <= 0)
+                {
+                    locked = false;
+                }
+            }
+        }
+
         //Closes door when Player/Enemy is not nearby
         if (!proximity)
         {
@@ -65,6 +88,17 @@ public class DoorScript : MonoBehaviour
             proximity = true;
             ForceOpen();
         }
+
+        if(doorObject)
+        {
+            if(console.Count <= 0)
+            {
+                if(!done)
+                {
+                    VisualUnlockStateChange();
+                }
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -76,40 +110,42 @@ public class DoorScript : MonoBehaviour
         }
 
         //Checks for consoles with accepted keys and unlocks doors when Player enters trigger
-        if (other.gameObject.tag == "Player" && locked)
-        {
-            for (int i = 0; i < console.Count; i++)
-            {
-                if (console[i].GetComponent<DoorConsoleScript>().accepted == true)
-                {
-                    console.Remove(console[i]);
-                    if (console.Count <= 0)
-                    {
-                        locked = false;
-                    }
-                }
-            }
-        }
+        //if (other.gameObject.tag == "Player" && locked)
+        //{
+        //    for (int i = 0; i < console.Count; i++)
+        //    {
+        //        if (console[i].GetComponent<DoorConsoleScript>().accepted == true)
+        //        {
+        //            console.Remove(console[i]);
+        //            if (console.Count <= 0)
+        //            {
+        //                locked = false;
+        //            }
+        //        }
+        //    }
+        //}
+
+        
     }
 
     private void OnTriggerStay(Collider other)
     {
         //Checks for consoles with accepted keys and unlocks doors when Player remains in trigger
-        if (other.gameObject.tag == "Player" && locked && console.Count >= 1)
-        {
-            for (int i = 0; i < console.Count; i++)
-            {
-                if (console[i].GetComponent<DoorConsoleScript>().accepted == true)
-                {
-                    console.Remove(console[i]);                   
-                }
+        //if (other.gameObject.tag == "Player" && locked && console.Count >= 1)
+        //{
+        //    for (int i = 0; i < console.Count; i++)
+        //    {
+        //        if (console[i].GetComponent<DoorConsoleScript>().accepted == true)
+        //        {
+        //            console.Remove(console[i]);                   
+        //        }
 
-                if (console.Count <= 0)
-                {
-                    locked = false;
-                }
-            }
-        }
+        //        if (console.Count <= 0)
+        //        {
+        //            locked = false;
+        //        }
+        //    }
+        //}
 
         //Opens door for Players/Enemies when present within trigger
         if (other.gameObject.tag == "Player" && !locked && !overrideOpen || other.gameObject.tag == "Enemy" && !locked && !overrideOpen)
@@ -143,7 +179,12 @@ public class DoorScript : MonoBehaviour
             {
                 door.transform.position = new Vector3(door.transform.position.x, door.transform.position.y, state);
             }
-        }      
+        }
+        
+        //else if(other.gameObject.tag == "Corpse")
+        //{
+        //    proximity = false;
+        //}
     }
 
     private void OnTriggerExit(Collider other)
@@ -193,5 +234,28 @@ public class DoorScript : MonoBehaviour
         {
             door.transform.position = new Vector3(door.transform.position.x, door.transform.position.y, state);
         }
+    }
+
+    public void VisualUnlockStateChange()
+    {
+        if (manualVisualChange)
+        {
+            //doorMaterials = doorObject.materials;
+            doorMaterials[unlockIndex] = unlockMaterial;
+            doorObject.materials = doorMaterials;
+        }
+
+        else
+        {
+            //doorMaterials = doorObject.materials;
+            for (int u = 1; u < doorMaterials.Length; u++)
+            {
+                doorMaterials[u] = unlockMaterial;
+            }
+
+            doorObject.materials = doorMaterials;
+        }
+
+        done = true;
     }
 }

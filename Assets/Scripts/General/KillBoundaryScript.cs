@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class KillBoundaryScript : MonoBehaviour
 {
+    public bool killPlayer, killEnemy;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,13 +19,13 @@ public class KillBoundaryScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player"))
+        if(other.gameObject.CompareTag("Player") && killPlayer)
         {
             other.gameObject.GetComponent<PlayerStatusScript>().playerShield = 0;
             other.gameObject.GetComponent<PlayerStatusScript>().InflictDamage(9999);
         }
 
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") && killEnemy)
         {
             if (other.gameObject.GetComponent<EnemyHealthScript>().healthCurrent != 0)
             {

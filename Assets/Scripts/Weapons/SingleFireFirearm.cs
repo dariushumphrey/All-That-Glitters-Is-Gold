@@ -423,6 +423,7 @@ public class SingleFireFirearm : FirearmScript
                     if (hit.collider.gameObject.GetComponent<StunningLucentScript>())
                     {
                         hit.collider.gameObject.GetComponent<StunningLucentScript>().currentHitCount += 2;
+                        hit.collider.gameObject.GetComponent<StunningLucentScript>().ExtendThrowTimer();
 
                         GameObject miniCluster = Instantiate(hit.collider.gameObject.GetComponent<StunningLucentScript>().shotEffect, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
                         miniCluster.name = hit.collider.gameObject.GetComponent<StunningLucentScript>().shotEffect.name;

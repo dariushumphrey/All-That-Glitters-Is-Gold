@@ -12,7 +12,10 @@ public class StunningLucentScript : MonoBehaviour
     public GameObject threatCluster;
     public bool threat = true; //Grants ability to damage Player if true
     internal float shatterDelayTime = 0.3f; //Time to wait before detonation
-
+    internal GameObject boss;
+    internal float throwTimerReference;
+    internal float extensionPercent = 2.5f;
+    internal float extensionAdd;
     private float shatterPercent = 150f; //Percent that cluster damage increases by
     private int shatterDamage; //Lucent cluster damage
 
@@ -157,5 +160,20 @@ public class StunningLucentScript : MonoBehaviour
         GameObject effect = Instantiate(shatterEffect, transform.position, Quaternion.identity);
         effect.name = "Shatter VFX";
         Destroy(gameObject);
+    }
+
+    public void TimeExtensionCalculation()
+    {
+        extensionPercent /= 100;
+        extensionPercent *= throwTimerReference;
+        extensionAdd = extensionPercent;
+    }
+
+    public void ExtendThrowTimer()
+    {
+        if(boss)
+        {
+            boss.GetComponent<ReplevinScript>().throwTimer += extensionAdd;
+        }
     }
 }
