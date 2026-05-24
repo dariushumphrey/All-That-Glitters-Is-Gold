@@ -826,7 +826,7 @@ public class KioskScript : MonoBehaviour
 
                     if (fcTwoStr == "6")
                     {
-                        functionOnes[p].text = "Positive-Negative\n" +
+                        functionTwos[p].text = "Positive-Negative\n" +
                         "<i>Apply damage-over-time.</i>";
 
                     } //Flashpoint pairing
