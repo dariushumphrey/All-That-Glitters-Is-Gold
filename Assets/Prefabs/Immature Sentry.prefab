@@ -218,9 +218,14 @@ MonoBehaviour:
   berthJumpCarpetBombTimer: 0.15
   jumpTakeoff: {fileID: 0}
   jumpCheck: {fileID: 0}
+  throwTimer: 2
+  collectionTimer: 7
   phaseTwoAttackLimit: 3
   phaseTwoAppearance: {fileID: 0}
+  appendages: []
   stunningLucent: {fileID: 0}
+  spectrumLucentTracker: []
+  spectrumSpawners: []
 --- !u!114 &78844624512772188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,8 +257,8 @@ MonoBehaviour:
   slowNotice: {fileID: 6922874208706507378}
   enemyName: {fileID: 8488547680442457855}
   blood: {fileID: 7072170553810055041, guid: 9f892db6ca1cf5d4e9b62828e30f13c5, type: 3}
-  ammoRewardThreshold: 95
-  healthRewardThreshold: 95
+  ammoRewardThreshold: 98
+  healthRewardThreshold: 98
 --- !u!114 &6590982941324376749
 MonoBehaviour:
   m_ObjectHideFlags: 0

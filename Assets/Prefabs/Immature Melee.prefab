@@ -257,8 +257,8 @@ MonoBehaviour:
   slowNotice: {fileID: 1009603726888818311}
   enemyName: {fileID: 2007841756343269898}
   blood: {fileID: 7072170553810055041, guid: 9f892db6ca1cf5d4e9b62828e30f13c5, type: 3}
-  ammoRewardThreshold: 95
-  healthRewardThreshold: 95
+  ammoRewardThreshold: 98
+  healthRewardThreshold: 98
 --- !u!114 &6590982941324376749
 MonoBehaviour:
   m_ObjectHideFlags: 0
