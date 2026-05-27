@@ -107,8 +107,8 @@ public class MenuManagerScript : MonoBehaviour
             else if (caLevel.value == 4)
             {
                 caThumbnail.sprite = caLevelFour;
-                caObjectiveText.text = "The epicenter is upwards, through the miasmic hordes." + '\n' +
-                    "Objective: Reach the building's elevator.";
+                caObjectiveText.text = "Miasmic hordes worsen as Lucent propagates outward." + '\n' +
+                    "Objective: Approach the Replevin lair.";
 
                 if (PlayerPrefs.GetInt("lvl04Checkpoint") == 1)
                 {
@@ -125,7 +125,7 @@ public class MenuManagerScript : MonoBehaviour
 
             else
             {
-                caObjectiveText.text = "An apex of Replevin terror is found." + '\n' +
+                caObjectiveText.text = "The apex of Replevin terror is found." + '\n' +
                     "Objective: Kill the Replevin Keystone.";
                 caThumbnail.sprite = caLevelFive;
 
