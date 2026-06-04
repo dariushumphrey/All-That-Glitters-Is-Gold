@@ -33,6 +33,7 @@ public class PlayerCameraScript : MonoBehaviour
     private Vector3 distance; //Used to determine length between Enemy and screen center; used for Aim Assist
     private RaycastHit hit;
     internal Camera playerCamera;
+    public Camera uiCamera;
     private PlayerInventoryScript player;
     private PlayerMoveScript move;
     private PlayerMeleeScript melee;
@@ -284,10 +285,18 @@ public class PlayerCameraScript : MonoBehaviour
             {
                 melee.meleeTarget = hit.collider.gameObject;
 
+                Vector3 targetToScreenPos = playerCamera.WorldToViewportPoint(melee.meleeTarget.transform.position);
+                RectTransform canvasRect = meleeReticle.canvas.GetComponent<RectTransform>();
+
+                Vector2 localPos = new Vector2((targetToScreenPos.x - 0.5f) * canvasRect.sizeDelta.x, (targetToScreenPos.y - 0.5f) * canvasRect.sizeDelta.y);
+                meleeReticle.rectTransform.anchoredPosition = localPos;
+
+
                 meleeReticle.sprite = meleeSprite;
                 meleeReticle.color = Color.yellow;
-                Vector3 reticlePos = Camera.main.WorldToScreenPoint(melee.meleeTarget.transform.position);
-                meleeReticle.rectTransform.position = reticlePos;
+
+                //Vector3 reticlePos = Camera.main.WorldToScreenPoint(melee.meleeTarget.transform.position);
+                //meleeReticle.rectTransform.position = targetToScreenPos;
                 
             }          
         }

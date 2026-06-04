@@ -1469,6 +1469,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56140120234fce469c046380e551960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killPlayer: 0
+  killEnemy: 0
 --- !u!1001 &38447413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19876,6 +19878,10 @@ PrefabInstance:
       value: testPlayerV2
       objectReference: {fileID: 0}
     - target: {fileID: 722000160554778762, guid: 7f844c855b4288f45a69611ce3f1531b, type: 3}
+      propertyPath: uiCamera
+      value: 
+      objectReference: {fileID: 2058483531}
+    - target: {fileID: 722000160554778762, guid: 7f844c855b4288f45a69611ce3f1531b, type: 3}
       propertyPath: meleeReticle
       value: 
       objectReference: {fileID: 1210632841}
@@ -34000,6 +34006,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56140120234fce469c046380e551960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killPlayer: 0
+  killEnemy: 0
 --- !u!1001 &1141691775
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44175,6 +44183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56140120234fce469c046380e551960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killPlayer: 0
+  killEnemy: 0
 --- !u!64 &1530075310
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -44832,6 +44842,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56140120234fce469c046380e551960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killPlayer: 0
+  killEnemy: 0
 --- !u!64 &1538760771
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -47674,6 +47686,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56140120234fce469c046380e551960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killPlayer: 0
+  killEnemy: 0
 --- !u!64 &1612834903
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -62091,6 +62105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56140120234fce469c046380e551960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killPlayer: 0
+  killEnemy: 0
 --- !u!64 &2062836944
 MeshCollider:
   m_ObjectHideFlags: 0
