@@ -813,8 +813,8 @@ public class ReplevinScript : MonoBehaviour
                             spectrumLucentTracker[s].GetComponent<LerpScript>().positionTwo = gameObject.transform;
                             spectrumLucentTracker[s].GetComponent<LerpScript>().thing = spectrumLucentTracker[s].gameObject;
 
-                            spectrumLucentTracker[s].GetComponent<LerpScript>().rate = 0.025f;
-                            spectrumLucentTracker[s].GetComponent<LerpScript>().lerpSpeed = 0.025f;
+                            spectrumLucentTracker[s].GetComponent<LerpScript>().rate = 0.001f;
+                            spectrumLucentTracker[s].GetComponent<LerpScript>().lerpSpeed = 0.25f;
                             spectrumLucentTracker[s].GetComponent<LerpScript>().automated = true;
                         }
                     }
