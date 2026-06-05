@@ -328,6 +328,7 @@ public class LootScript : MonoBehaviour
                 reward.name = "Nebulous At Best";
                 reward.GetComponent<FirearmScript>().cheatOverride = -8;
                 reward.GetComponent<FirearmScript>().Awake();
+                reward.GetComponent<FirearmScript>().flavorText = "Just when you thought you understood how the world works.";
             }
 
         }

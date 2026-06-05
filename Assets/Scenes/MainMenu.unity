@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.20806521, g: 0.20837578, b: 0.4477616, a: 1}
+  m_IndirectSpecularColor: {r: 0.2084797, g: 0.20933151, b: 0.44687182, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -23443,7 +23443,7 @@ MonoBehaviour:
   caThumbnail: {fileID: 1707311916}
   vcThumbnail: {fileID: 820031278}
   caLevelOne: {fileID: 21300000, guid: 2a08c0120866b5e4e94383a1cfe729df, type: 3}
-  caLevelTwo: {fileID: 21300000, guid: 93e8f8082ebde684398466a61afbf03c, type: 3}
+  caLevelTwo: {fileID: 21300000, guid: 73c3efd3d15f19140bf2436c348d69a8, type: 3}
   caLevelThree: {fileID: 21300000, guid: f5842be3a7741fd4291e012d78b164ff, type: 3}
   caLevelFour: {fileID: 21300000, guid: 5bd699295802aac41bd71d8fbdf94f36, type: 3}
   caLevelFive: {fileID: 21300000, guid: 546816bdee1eef34fbcd3c5c1ea9338b, type: 3}

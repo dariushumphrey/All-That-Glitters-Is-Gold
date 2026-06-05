@@ -685,7 +685,12 @@ public class PlayerInventoryScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.X))
         {
-            if(inventory[selection].GetComponent<FirearmScript>().favorite)
+            if(!weaponPage.gameObject.activeInHierarchy)
+            {
+                return;
+            } //Weapons cannot be dismantled if the Weapon page is not open
+
+            else if(inventory[selection].GetComponent<FirearmScript>().favorite)
             {
                 return;
             } //Favorite Weapons cannot be dismantled

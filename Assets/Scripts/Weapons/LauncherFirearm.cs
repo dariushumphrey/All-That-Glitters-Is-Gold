@@ -58,6 +58,11 @@ public class LauncherFirearm : FirearmScript
             {
                 launched.GetComponent<MunitionScript>().isExoticMunition = true;
                 launched.GetComponent<MunitionScript>().isMine = true;
+
+                if(GetComponent<Flashpoint>())
+                {
+                    GetComponent<Flashpoint>().minesActive.Add(launched);
+                }
             }
 
             launched.GetComponent<Rigidbody>().AddForce(estLandingPos * shotForceForward + Vector3.up * shotForceUp, ForceMode.VelocityChange);

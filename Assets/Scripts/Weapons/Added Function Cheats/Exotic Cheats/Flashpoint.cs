@@ -7,8 +7,7 @@ public class Flashpoint : MonoBehaviour
 {
     private LauncherFirearm firearm;
     private GameObject lucentMine;
-    private GameObject[] minesActive;
-    private List<GameObject> minesDetonate = new List<GameObject>();
+    public List<GameObject> minesActive = new List<GameObject>();
     internal GameObject proc; //Text UI that records Cheat activity
 
     // Start is called before the first frame update
@@ -28,37 +27,60 @@ public class Flashpoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        minesActive = GameObject.FindGameObjectsWithTag("Mine");
+       // minesActive = GameObject.FindGameObjectsWithTag("Mine");
 
-        if(minesActive.Length >= 1)
+        if(minesActive.Count >= 1)
         {
-            proc.GetComponent<Text>().text = "Mines: " + minesActive.Length;
+            proc.GetComponent<Text>().text = "Mines: " + minesActive.Count;
         }
 
-
-        if (Input.GetKeyDown(KeyCode.E) && minesActive.Length >= 1)
+        else
         {
-            foreach (GameObject mine in minesActive)
-            {
-                minesDetonate.Add(mine);
-            }
-        }
-
-        if(minesDetonate.Count >= 1)
-        {
-            for(int m = 0; m < minesDetonate.Count; m++)
-            {
-                minesDetonate[m].GetComponent<MunitionScript>().TriggerMunition();
-                Destroy(minesDetonate[m], 1f);
-            }
-
-            for (int m = 0; m < minesDetonate.Count; m++)
-            {
-                minesDetonate.Remove(minesDetonate[m]);
-            }
-
             proc.GetComponent<Text>().text = "";
         }
+
+        if (Input.GetKeyDown(KeyCode.E) && minesActive.Count >= 1)
+        {
+            for (int m = 0; m < minesActive.Count; m++)
+            {
+                minesActive[m].GetComponent<MunitionScript>().TriggerMunition();
+                Destroy(minesActive[m], 1f);
+            }
+
+            ClearMineList();
+
+            //foreach (GameObject mine in minesActive)
+            //{
+            //    minesDetonate.Add(mine);
+            //}
+        }
+
+        if(minesActive.Count >= 11)
+        {
+            minesActive[0].GetComponent<MunitionScript>().TriggerMunition();
+            Destroy(minesActive[0], 1f);
+            minesActive.Remove(minesActive[0]);
+        }
+
+        //if(minesDetonate.Count >= 1)
+        //{
+        //    for(int m = 0; m < minesDetonate.Count; m++)
+        //    {
+        //        minesDetonate[m].GetComponent<MunitionScript>().TriggerMunition();
+        //        Destroy(minesDetonate[m], 1f);
+        //    }
+
+        //    for (int m = 0; m < minesDetonate.Count; m++)
+        //    {
+        //        minesDetonate.Remove(minesDetonate[m]);
+        //    }
+
+        //}
+    }
+
+    public void ClearMineList()
+    {
+        minesActive.Clear();
     }
 
     private void OnDisable()

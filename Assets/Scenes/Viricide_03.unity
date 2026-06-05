@@ -44183,8 +44183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56140120234fce469c046380e551960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  killPlayer: 0
-  killEnemy: 0
+  killPlayer: 1
+  killEnemy: 1
 --- !u!64 &1530075310
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -44842,8 +44842,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56140120234fce469c046380e551960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  killPlayer: 0
-  killEnemy: 0
+  killPlayer: 1
+  killEnemy: 1
 --- !u!64 &1538760771
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -47686,8 +47686,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56140120234fce469c046380e551960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  killPlayer: 0
-  killEnemy: 0
+  killPlayer: 1
+  killEnemy: 1
 --- !u!64 &1612834903
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -62105,8 +62105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56140120234fce469c046380e551960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  killPlayer: 0
-  killEnemy: 0
+  killPlayer: 1
+  killEnemy: 1
 --- !u!64 &2062836944
 MeshCollider:
   m_ObjectHideFlags: 0

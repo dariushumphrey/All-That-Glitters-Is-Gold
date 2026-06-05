@@ -14,7 +14,7 @@ public class PositiveNegative : MonoBehaviour
     private int chargeAccelerant = 20; //Multipler used to increase charge rate
     private float dotPercent = 100f; //% of Weapon damage used for damage-over-time
     private int dotStrength; //Damage used for damage-over-time
-    internal List<GameObject> applyOn = new List<GameObject>();
+    public List<GameObject> applyOn = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -121,6 +121,17 @@ public class PositiveNegative : MonoBehaviour
                     firearm.targetHit = null;
                 }
             }          
+        }
+
+        if (applyOn.Count >= 1)
+        {
+            for (int a = 0; a < applyOn.Count; a++)
+            {
+                if (applyOn[a].gameObject.CompareTag("Corpse"))
+                {
+                    applyOn.Remove(applyOn[a]);
+                }
+            }
         }
     }
 
