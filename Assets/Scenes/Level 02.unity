@@ -52103,7 +52103,9 @@ MonoBehaviour:
     D - Right
 
     Space
-    - Evade'
+    - Evade
+
+    L. Shift - Sprint'
 --- !u!222 &2116543655
 CanvasRenderer:
   m_ObjectHideFlags: 0
