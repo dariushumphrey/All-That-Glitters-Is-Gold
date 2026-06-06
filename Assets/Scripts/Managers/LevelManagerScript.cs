@@ -460,6 +460,7 @@ public class LevelManagerScript : MonoBehaviour
             pauseMenu.gameObject.SetActive(false);
         }
 
+        gameEndDelay = 20f;
         transition.fadeToBlack = true;
         StartAsyncSceneLoad();
         //LoadScene();
