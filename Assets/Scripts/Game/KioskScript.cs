@@ -335,7 +335,7 @@ public class KioskScript : MonoBehaviour
             if (wepTypeStr == "3")
             {
                 weaponPrice = 1500f;
-                names[p].text = "Semi Fire Rifle";              
+                names[p].text = "Burst Fire Rifle";              
             }
 
             if (wepTypeStr == "4")
@@ -1181,7 +1181,7 @@ public class KioskScript : MonoBehaviour
 
         if (wepTypeStr == "3")
         {
-            wepName.text = "Semi Fire Rifle";
+            wepName.text = "Burst Fire Rifle";
             item = Instantiate(playerInventory.weapons[3], playerInventory.transform.position, playerInventory.transform.rotation);
             item.name = playerInventory.weapons[3].name;
             //flavor.text = item.GetComponent<FirearmScript>().flavorText;           
@@ -1390,38 +1390,13 @@ public class KioskScript : MonoBehaviour
             }
         }
 
-        if (wepTypeStr == "0" || wepTypeStr == "1" || wepTypeStr == "6")
-        {
-            stats.text = "Damage: " + item.GetComponent<FirearmScript>().damage.ToString() + "\n" +
+        stats.text = "Damage: " + item.GetComponent<FirearmScript>().damage.ToString() + "\n" +
                          "Reload Speed: " + item.GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +
                          "Effective Range " + item.GetComponent<FirearmScript>().effectiveRange.ToString() + "m" + "\n" +
                          "Total Range: " + item.GetComponent<FirearmScript>().range.ToString() + "m" + "\n" +
                          "Magazine: " + item.GetComponent<FirearmScript>().ammoSize.ToString() + "\n" +
                          "Max Reserves: " + item.GetComponent<FirearmScript>().reserveSize.ToString() + "\n" +
-                         "Rate of Fire: " + Mathf.Round(item.GetComponent<FirearmScript>().fireRate * 10000).ToString() + " RPM";
-        }
-
-        else if (wepTypeStr == "2" || wepTypeStr == "3" || wepTypeStr == "5")
-        {
-            stats.text = "Damage: " + item.GetComponent<FirearmScript>().damage.ToString() + "\n" +
-                         "Reload Speed: " + item.GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +
-                         "Effective Range " + item.GetComponent<FirearmScript>().effectiveRange.ToString() + "m" + "\n" +
-                         "Total Range: " + item.GetComponent<FirearmScript>().range.ToString() + "m" + "\n" +
-                         "Magazine: " + item.GetComponent<FirearmScript>().ammoSize.ToString() + "\n" +
-                         "Max Reserves: " + item.GetComponent<FirearmScript>().reserveSize.ToString() + "\n" +
-                         "Rate of Fire: " + Mathf.Round(item.GetComponent<FirearmScript>().fireRate * 1000).ToString() + " RPM";
-        }
-
-        else if (wepTypeStr == "4" || wepTypeStr == "7")
-        {
-            stats.text = "Damage: " + item.GetComponent<FirearmScript>().damage.ToString() + "\n" +
-                         "Reload Speed: " + item.GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +
-                         "Effective Range " + item.GetComponent<FirearmScript>().effectiveRange.ToString() + "m" + "\n" +
-                         "Total Range: " + item.GetComponent<FirearmScript>().range.ToString() + "m" + "\n" +
-                         "Magazine: " + item.GetComponent<FirearmScript>().ammoSize.ToString() + "\n" +
-                         "Max Reserves: " + item.GetComponent<FirearmScript>().reserveSize.ToString() + "\n" +
-                         "Rate of Fire: " + Mathf.Round(item.GetComponent<FirearmScript>().fireRate * 100).ToString() + " RPM";
-        }
+                         "Rate of Fire: " + Mathf.Round(60f / item.GetComponent<FirearmScript>().fireRate).ToString() + " RPM";
 
         if (kioskWares[q].Length >= 9)
         {

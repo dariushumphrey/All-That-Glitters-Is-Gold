@@ -215,41 +215,14 @@ public class PlayerInventoryScript : MonoBehaviour
 
             wepName.text = inventory[selection].name;
 
-            //Stats for Single Fire or Semi Fire Firearms
-            if (inventory[selection].GetComponent<SingleFireFirearm>() != null || inventory[selection].GetComponent<SemiFireFirearm>() != null)
-            {
-                wepStats.text = "Damage: " + inventory[selection].GetComponent<FirearmScript>().damage.ToString() + "\n" +
+            //Stats for Weapons
+            wepStats.text = "Damage: " + inventory[selection].GetComponent<FirearmScript>().damage.ToString() + "\n" +
                           "Reload Speed: " + inventory[selection].GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +
                           "Effective Range " + inventory[selection].GetComponent<FirearmScript>().effectiveRange.ToString() + "m" + "\n" +
                           "Total Range: " + inventory[selection].GetComponent<FirearmScript>().range.ToString() + "m" + "\n" +
                           "Magazine: " + inventory[selection].GetComponent<FirearmScript>().ammoSize.ToString() + "\n" +
                           "Max Reserves: " + inventory[selection].GetComponent<FirearmScript>().reserveSize.ToString() + "\n" +
-                          "Rate of Fire: " + Mathf.Round(inventory[selection].GetComponent<FirearmScript>().fireRate * 1000).ToString() + " RPM";
-            }
-
-            //Stats for Shotguns
-            else if(inventory[selection].GetComponent<ShotgunFirearm>() != null || inventory[selection].GetComponent<LauncherFirearm>() != null)
-            {
-                wepStats.text = "Damage: " + inventory[selection].GetComponent<FirearmScript>().damage.ToString() + "\n" +
-                          "Reload Speed: " + inventory[selection].GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +
-                          "Effective Range " + inventory[selection].GetComponent<FirearmScript>().effectiveRange.ToString() + "m" + "\n" +
-                          "Total Range: " + inventory[selection].GetComponent<FirearmScript>().range.ToString() + "m" + "\n" +
-                          "Magazine: " + inventory[selection].GetComponent<FirearmScript>().ammoSize.ToString() + "\n" +
-                          "Max Reserves: " + inventory[selection].GetComponent<FirearmScript>().reserveSize.ToString() + "\n" +
-                          "Rate of Fire: " + Mathf.Round(inventory[selection].GetComponent<FirearmScript>().fireRate * 100).ToString() + " RPM";
-            }
-
-            //Stats for all other Firearms
-            else
-            {
-                wepStats.text = "Damage: " + inventory[selection].GetComponent<FirearmScript>().damage.ToString() + "\n" +
-                         "Reload Speed: " + inventory[selection].GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +
-                         "Effective Range " + inventory[selection].GetComponent<FirearmScript>().effectiveRange.ToString() + "m" + "\n" +
-                         "Total Range: " + inventory[selection].GetComponent<FirearmScript>().range.ToString() + "m" + "\n" +
-                         "Magazine: " + inventory[selection].GetComponent<FirearmScript>().ammoSize.ToString() + "\n" +
-                         "Max Reserves: " + inventory[selection].GetComponent<FirearmScript>().reserveSize.ToString() + "\n" +
-                         "Rate of Fire: " + Mathf.Round(inventory[selection].GetComponent<FirearmScript>().fireRate * 10000).ToString() + " RPM";
-            }
+                          "Rate of Fire: " + Mathf.Round(60f / inventory[selection].GetComponent<FirearmScript>().fireRate).ToString() + " RPM";
 
             flavor.text = inventory[selection].GetComponent<FirearmScript>().flavorText;
             
@@ -1578,7 +1551,7 @@ public class PlayerInventoryScript : MonoBehaviour
                         write.Write("2");                    
                     }
 
-                    if (inventory[i].name == "Semi Fire Rifle" || inventory[i].name == "Mercies")
+                    if (inventory[i].name == "Burst Fire Rifle" || inventory[i].name == "Mercies")
                     {
                         write.Write("3");                       
                     }

@@ -1047,7 +1047,7 @@ public class LootScript : MonoBehaviour
 
             else if (wepTypeStr == "3")
             {
-                clpLtType.GetComponent<Text>().text = "Semi Fire Rifle";
+                clpLtType.GetComponent<Text>().text = "Burst Fire Rifle";
             }
 
             else if (wepTypeStr == "4")

@@ -211,7 +211,7 @@ public class MenuManagerScript : MonoBehaviour
 
             else if (vcWepFocus.value == 3)
             {
-                vcWepFocusText.text = "Targeted Weapons: " + "\n" + "Semi Fire Rifles";
+                vcWepFocusText.text = "Targeted Weapons: " + "\n" + "Burst Fire Rifles";
             }
 
             else if (vcWepFocus.value == 4)

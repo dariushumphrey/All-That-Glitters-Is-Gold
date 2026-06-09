@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 1620275558545221743}
   - component: {fileID: 4221928478634662968}
   m_Layer: 12
-  m_Name: Semi Fire Rifle
+  m_Name: Burst Fire Rifle
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
