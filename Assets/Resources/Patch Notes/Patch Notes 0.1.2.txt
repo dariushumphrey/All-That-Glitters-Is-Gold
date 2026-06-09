@@ -1,0 +1,41 @@
+<size=48>Player</size>
+- The Player’s Camera has been improved: 
+	When the Player-Character’s back or sides face a surface, their Camera is now offset a distance from that surface, preventing most instances of wall clipping. This naturally fixes the issue where Weapons could shoot walls after the Camera had clipped through it. This system does not trigger on Enemies, their projectiles and corpses, Lucent, and Ammo pickups. 
+- The Camera now orbits the Player-Character with full 360-degree rotation on the Y-axis. The Camera rotates above and below the Player-Character slightly less than before. 
+- <color=yellow>[IMPLEMENT]</color> Aim Assist has now been introduced, with values ranging from 0.1 to 0.3: 
+	Full Fire Rifle: 0.15
+	Machine Gun: 0.1
+	Pistol: 0.2
+	Semi Fire Rifle: 0.25
+	Shotgun: 0.1
+	Single Fire Rifle: 0.3
+	SMG: 0.15
+	All Exotic Weapon Aim Assist Values have 0.5 points more than their default Weapon counterparts.
+- The Player-Character now rotates on movement input or Weapon discharge in the direction that the Camera faces.
+- The Player’s Camera Zoom speed has increased to 100 (up from 0.2)
+- The Arrow Keys no longer move the Player (as they are primarily used for Inventory interactions).    
+<size=48>Weapons</size>
+- <color=cyan>[FIX]</color> Social Distance Please (Exotic Shotgun) 
+	Killing an Enemy that has been debuffed now spreads 400% of Weapon damage to all combatants within a radius.  
+<size=48>World</size>
+- The World now has a starry Skybox. 
+<size=48>Game</size>
+- <color=cyan>[FIX]</color> 200 Lucent is now earned on Enemy kills. 40% Bonus Lucent is earned on kills starting on Difficulty 2, increasing by 20% until Difficulty 5, where 100% Bonus Lucent is earned on kills.  
+- <color=cyan>[FIX]</color> The Kiosk has been adjusted: 
+	The Kiosk will now ask a Player to pay 60% of its asking price for a higher rarity Weapon instead of forfeiting the full currency. Paying this price will still deactivate the Kiosk.  
+- <color=cyan>[FIX]</color> 500 Lucent is now rewarded on pickups from Enemy kills (down from 5000). This value is multiplied as the Difficulty increases. 
+- Lucent can no longer be collected by physical contact. Instead, to collect Lucent pickups, Players must shoot them. Shooting Lucent pickups near combatants will damage them for 75% of the Lucent’s worth.  
+- <color=cyan>[FIX]</color> The cylindrical Loot delivery item now has a box collider to prevent passive rolling in the play-space. These items now have colors that denote their rarity. 
+- <color=cyan>[FIX]</color> Ammo drops no longer obstruct an enemy’s ability to move if one spawns in front of them.
+- Drop rates for Lucent and Loot pickups have been adjusted and now change on difficulties: 
+	Loot has a 30% chance to spawn on Difficulty 1: 
+		24% on Difficulty 2
+		21% on Difficulty 3 
+		18% on Difficulty 4
+		15% on Difficulty 5
+	Lucent has a 20% chance to spawn on Difficulty 1: 
+		24% on Difficulty 2
+		26% on Difficulty 3
+		28% on Difficulty 4
+		30% on Difficulty 5 
+- Starting from Difficulty 4, Exotic Weapons can drop as Loot pickups. They have a 3% chance to spawn.

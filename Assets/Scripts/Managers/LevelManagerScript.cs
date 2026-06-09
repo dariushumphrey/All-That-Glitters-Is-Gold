@@ -32,7 +32,7 @@ public class LevelManagerScript : MonoBehaviour
     public GameObject resultsNotice; //Informs player of imminent results display
 
     //resultsMenu - Menu UI that houses game end statistics
-    public GameObject pauseMenu, resultsMenu, controlsMenu;
+    public GameObject pauseMenu, resultsMenu, controlsMenu, howToPlayMenu;
 
     private GameObject uiCamera;
     private TransitionManagerScript transition;
@@ -160,6 +160,9 @@ public class LevelManagerScript : MonoBehaviour
         controlsMenu = GameObject.Find("controlsPage");
         controlsMenu.gameObject.SetActive(false);
 
+        howToPlayMenu = GameObject.Find("howToPlayPage");
+        howToPlayMenu.gameObject.SetActive(false);
+
         pauseMenu.gameObject.SetActive(false);
 
         resultsMenu = GameObject.Find("completeBG");
@@ -233,9 +236,9 @@ public class LevelManagerScript : MonoBehaviour
             weaponFocus = Mathf.Clamp(weaponFocus, -1, 8); //Locks weaponFocus within a range to prevent incorrect focusing
 
             //Pauses game if game is incomplete & controls page is hidden
-            if (Input.GetKeyDown(KeyCode.Escape) && !gameComplete && controlsMenu.activeInHierarchy == false)
+            if (Input.GetKeyDown(KeyCode.Escape) && !gameComplete)
             {
-                if (player.isDead)
+                if (player.isDead || controlsMenu.activeInHierarchy == true || howToPlayMenu.activeInHierarchy == true)
                 {
                     return;
                 }

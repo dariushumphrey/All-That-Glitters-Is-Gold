@@ -1,0 +1,96 @@
+<size=48>Player</size>
+- <color=yellow>[Implement]</color> The Inventory now has a sorting type that changes between "All" and "Favorite" using the 'Up' arrow.
+- Shield now recharges by 1% of max Shield. 
+- <color=cyan>[FIX]</color> Fixed an issue where Shield recharges were inconsistent in builds.  
+- <color=cyan>[FIX]</color> Fixed an issue where moving, evading diagonally would yield farther traversal than moving in single directions.
+<size=48>Weapons</size>
+- <color=yellow>[Implement]</color> Weapons can be favorited using the 'F' key on the Inventory page (Main Menu, in-game).
+- Weapons can no longer be switched during reloads.
+- <color=yellow>[Implement]</color> Weapons roll with a new RNG element: Platforms
+	- Default: Leaves base Weapon performance unchanged.
+	- Efficient: Increases damage, zoom, aim assist, reduces fire rate, recoil.
+	- Chatter: Reduces damage, aim assist, zoom, increases fire rate, recoil.
+	- Tempered: Increases damage, fire rate, zoom, aim assist, reduces recoil.
+	- Siphonic: Adds 1% of Health, Shield on hits, 15% on Melee kills.
+	- Mining: Spawns, shatters a Lucent cluster on weapon impacts.
+	- Trenchant: Weapon hits apply Health debuffs.
+		Melee hits apply Damage Over Time.
+		Evading applies Slowed.
+	- Cache: Regenerates +1 Grenade charge every 2s.
+- Weapon Rarity changes: 
+	- Rarity 1: Platforms only.
+	- Rarity 2: Platforms + Stat Cheats.
+	- Rarity 3: Platforms + Stat Cheats + 1 Functional Cheat.
+	- Rarity 4, 5: Platforms + Stat Cheats + 2 Functional Cheats.
+- <color=yellow>[Implement]</color> Added new Weapon type: Grenade Launcher
+- <color=yellow>[Implement]</color> Added new Functional Cheat: Activator Drone
+	- Selects targets at random or through manual aim to attack
+	- Attacks trigger passive-based Platforms.
+	- Its weapon launches rockets on Cache platform weapons.
+	- (Fated) Attacks activate "Wait! Now I'm Ready!", Efficacy
+	Inoculated, Cadence, and Enshroud.
+- <color=yellow>[Implement]</color> Added new Exotic Functional Cheat: Flashpoint (Exotic Grenade Launcher)
+	- Fires floating Lucent mines for manual detonation.
+	- Switching Weapons leaves mines intact.
+	- Companion Cheat is Positive-Negative.
+-Improved Superweapon (Exotic Pistol) Firing VFX.
+- <color=cyan>[FIX]</color> Fixed an issue where Weapons would subtract from reserves instead of their magazines when firing immediately after auto-reloads.
+- <color=cyan>[FIX]</color> Fixed an issue where Forager (Fated) was activating on Underfoot (Exotic SMG).
+- Mercies (Exotic Semi Fire Rifle) 
+	Player Camera vertical clamp increased to 89.
+<size=48>Enemies</size>
+- <color=yellow>[Implement]</color> Combatants now possess additional identifiers:
+	- Melee enemies now use appendages that extend/retract during attacks.
+	- Range, Jump enemies, Replevin Keystone boss now use mandibles that open/close during attacks.
+	- Pounce enemies' front graft colors take after Lucent cluster colors.
+-Replevin Gatherer fight has been improved: 
+	-Now throws full Lucent crystals instead of clusters, requiring multiple hits to shatter.
+	-Gathers its crystals by jumping through the ceiling, returning to the arena after collection.
+	-Shooting the crystal slightly delays the throw timer.
+	- <color=cyan>[FIX]</color> Fixed an issue where their attack window could be reset perpetually by approaching, retreating from the boss.
+- <color=cyan>[FIX]</color> Fixed an issue where Replevin Charger boss refused to attack while living enemies remained on higher floors.
+- Replevin Ambuscade now prevents other crystals from priming if another crystal is already primed.
+<size=48>World</size>
+- Level 03: Reduced prop density, slightly increased light brightness in boss arena. Removed level geometry suspected of blocking Boss ability to see Combustible Lucent crystals.
+- Level 05: Replevin Keystone boss health clamped to 50% until 
+Phase II starts.
+- All Levels (Campaign, Viricide) have been updated:
+	- Levels are more "linear", telegraphing clearer paths
+	- Levels 02, 03, 04, Viricide 01, 02, 03 introduce Environmental Hazards
+	- Enemies can spawn through floors, walls, ceilings, or use jumps to reach Players faster.
+	- Level 02: Number of Tram cars reduced
+	- Level 03: Residential hallways cordoned off to improve level pacing.
+- Level 05: Barred access to platforms, preventing boss cheesing.
+- <color=yellow>[Implement]</color> Door models have been improved: 
+	- Doors now use bright green or red coloring to denote locked, unlocked state
+	- Consoles can change the colors of a specific door side.
+	- Console models have been improved: 
+		-Consoles are now grey constructs with dark red or blue coloring. Approaching with a matching key changes its design to a bright red or blue color.
+- Level 05: Improved Elevator shaft design to remove lightmap baking artifacts.
+- Level 04: Fixed Tram room ceiling region lightmap baking artifacts.
+- <color=yellow>[Implement]</color> Added Viricide 03 to Viricide mode.
+<size=48>Game</size>
+- Damage sources are now color-coded
+	-Weapon: White
+	-Melee: <color=purple>Purple</color>
+	-Destruct Grenade: <color=orange>Orange</color>
+	-Damage-over-time: <color=green>Green</color>
+		-Positive-Negative: <color=blue>Blue</color>
+	-Lucent: <color=cyan>Cyan</color>
+	-Activator Drone: <color=yellow>Yellow</color>
+	-Superweapon (Exotic Pistol): <color=red>Red</color>
+	-Old damage: <color=silver>Silver</color>
+	- Recent damage font size is higher; older damage is smaller. 
+- <color=yellow>[Implement]</color> Loot Delivery items have been updated:
+	Gray Lucent clusters spawn that use rarity-based colors
+	Approaching reveals UI detailing weapon attributes
+	-'2' adds the Weapon; 'Down' arrow adds as favorite
+- <color=cyan>[FIX]</color> Fixed an issue where deaths after boss clears would reload the 
+level by checkpoint, soft-locking progression.
+- <color=yellow>[Implement]</color> Added Health pickups. Collecting one restores Health to 100%. 
+- Improved Ammo pickup visual appeal.
+- <color=yellow>[Implement]</color> Added Colorblind support settings on the Main Menu.
+- Improved Controls page readability:
+	Movement, Inventory, and Combat behavior are structured into blocks with their respective inputs.
+- Added new Transition Backgrounds when loading Campaign, Viricide games.
+- <color=cyan>[FIX]</color> Fixed an issue where the Game End Timer would not reset after the first Viricide clear, revealing the results page immediately on later clears. 

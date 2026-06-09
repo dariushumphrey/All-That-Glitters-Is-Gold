@@ -1,0 +1,36 @@
+<size=48>Player</size>
+- Slope traversal travel time has been reduced, and proper upward, downward force is applied dependent on orientation. 
+- Player movement speed decreased to 100 (down from 150)
+<size=48>Weapons</size>
+- The Semi-fire Rifle now fires one round at a time with a short delay. 
+- Each Weapon behavior type now has a unique reticle:
+	Shotguns have a Circle reticle. 
+	Full Fire Weapons have an Arrow reticle.
+	Single Fire Weapons have a Cross reticle.
+	Semi-Fire Weapons have a Dot reticle.
+- The Machine Gun has been nerfed:
+	Base damage is now 275 (down from 400). 
+	Fire Rate is now 0.1 (up from 0.07)
+	Magazine size is now 100 (down from 150). 
+	Reserve size is now 720 (down from 840).
+- The Shotgun has been buffed:
+	Base damage is now 300 (up from 225)
+	Spread has decreased to 0.4 (down from 0.65)
+	Effective range is now 8 (down from 15)
+	Maximum range is now 15 (down from 20)
+- Semi-fire Rifle reserves is now 282 (down from 288)
+- Statistical Cheats have been changed: 
+	Hasty Hands - Increases Reload by 15%
+	Hastier Hands - Increases Reload by 25%
+	Far Sight - Increases Effective Range by 10% of maximum Range
+	Farther Sight - Increases Effective Range by 20% of maximum Range
+	Deep Yield - Increases active Mag by 12%
+	Deeper Yield - Increases active Mag by 24%
+	Deep Stores - Increases Reserve ammo by 15%
+	Deeper Stores - Increases Reserve ammo by 30%
+- Statistical Cheats no longer negatively impact a Weapon’s performance.
+- Pay to Win (Exotic Machine Gun) 
+	No longer creates stacks if the Player’s Lucent funds are below asking price.
+<size=48>Game</size>
+- The text that displays a Player’s numerical Health no longer cuts off on 1920 x 1080 (or similar) displays.
+- The Kiosk’s purchase price has been decreased to 5,000 (down from 10,000). Its asking price now increases on Difficulty 2 by 100%, up to 500% on Difficulty 5. It no longer creates a higher rarity Weapon if the Player’s funds are zero.

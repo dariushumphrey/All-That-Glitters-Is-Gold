@@ -1,0 +1,92 @@
+<size=48>Player</size>
+- Player Camera now looks at Player-Character when they are defeated. The game now restarts after five seconds.
+- <color=cyan>[FIX]</color> Fixed instances where the Player Camera could briefly clip into a wall before the anti-clipping system could activate.
+<size=48>Weapons</size>
+- Exotic Functional Cheat "Shelter in Place" (Exotic Pistol) renamed, reworked as "Superweapon"
+	Kills grant stacks of 10% damage resistance, up to 8x. 
+	'E' toggles a single-shot attack that charges by aiming. Inflicts 1000% of Weapon damage per stack.
+	Companion Cheat changed to Counterplay.
+- Exotic Functional Cheat "Off your own Supply" (Exotic Semi Fire Rifle) renamed, reworked as "Volant"
+	'E' toggles Character flight until toggled off or until Shield is broken.
+	Companion Cheat changed to "Wait! Now I'm Ready!".
+- Equivalent Exchange (Exotic Full Fire Rifle) 
+	Companion Cheat changed to Inoculated.
+- Pay to Win (Exotic Machine Gun) 
+	Lucent cost increased to 30,000 (up from 5,280).
+- Non-exotic Weapons' flavor text changes slightly dependent on rarity. All Exotic Weapons' flavor text have changed.
+- Exotic Weapons now have names:
+	Full Fire Rifle_Exotic -> <b>Outstanding Warrant</b>
+	Machine Gun_Exotic -> <b>The Dismissal</b>
+	Pistol_Exotic -> <b>Apathetic</b>
+	Semi Fire Rifle_Exotic -> <b>Mercies</b>
+	Shotgun_Exotic -> <b>Viral Shadow</b>
+	Single Fire Rifle_Exotic -> <b>Contempt For Fellows</b>
+	SMG_Exotic -> <b>Underfoot</b>
+- Full Fire Rifle:
+	Damage increased by 60% to 560 (up from 350)
+	Current magazine size reduced to 25 (down from 48)
+	Reserve ammo size reduced to 280 (down from 384)
+	Range decreased to 50 (down from 70)
+- Machine Gun:
+	Current magazine size reduced to 75 (down from 100)
+	Reserve ammo size reduced to 420 (down from 720)
+	Effective range decreased to 40 (down from 45)
+	Range decreased to 50 (down from 90)
+- Pistol:
+	Damage increased by 100% to 1060 (up from 580)
+	Current magazine size reduced to 9 (down from 16)
+	Reserve ammo size reduced to 108 (down from 174)
+	Fire rate set to 0.15, resulting in slower firing
+	Effective range increased to 30 (up from 25)
+	Range increased to 40 (up from 35)
+	Reload speed set to 0.9, resulting in faster reload
+- Semi Fire Rifle:
+	Damage increased by 60% to 752 (up from 470)
+	Effective range increased to 45 (up from 40)
+	Range decreased to 60 (down from 80)
+- Shotgun:
+	Damage increased by 170% to 810 (up from 300)
+	Fire rate set to 0.75, resulting in slower firing
+	Effective range increased to 12 (up from 8)
+	Range increased to 20 (up from 15)
+- Single Fire Rifle:
+	Damage increased by 100% to 2088 (up from 1044)
+	Current magazine size reduced to 16 (down from 24)
+	Reserve ammo size reduced to 80 (down from 192)
+	Fire rate set to 0.2, resulting in slower firing
+	Range decreased to 70 (down from 80)
+- SMG:
+	Damage increased by 60% to 528 (up from 330)
+	Reserve ammo size increased to 350 (up from 312)
+	Fire rate set to 0.06, resulting in faster firing
+	Effective range increased to 25 (up from 20)
+	Reload speed set to 1.25, resulting in faster reloads
+- Equipped Grenades now appear on the Player-Character's waist (provided they have at least one grenade of that type).
+<size=48>Enemies</size>
+- Minor enemy names have changed:
+	testEnemy(_Melee, _Range, _Charge) -> <b>Immature (Melee, Range, Charge)</b>
+- Major enemy names have changed:
+	testEnemy(_Pounce, _Jump) -> <b>Mature (Pounce, Jumper)</b>
+- Boss enemy names have changed:
+	testEnemyBoss(_Charge, Melee) -> <b>Replevin (Charger, Gatherer, Ambuscade, Keystone)</b>
+- Immature Range Enemies now strafe to their sides, move forward or backward while in combat. They can now move and shoot simultaneously. Ranged attacks can fire a burst of two (by difficulty, up to 7) projectiles with variable cooldowns between volleys.
+- Immature Melee Enemies now encircle the Player for a set time before attacking.
+- Non-berth Enemies' eyes now glow white when actively attacking as a visual tell.
+- Immature Horde enemy max Health increased to 1000 (from 500).
+- Replevin Charger, Gatherer graft colors now match their Immature attack type counterparts. Replevin Charger, Gatherer max Health increased to 50,000 (up from 40,000). 
+- Max Health increases by 50% per difficulty (up from 30%).
+- All bosses' damage increased to 330 (up from 220). All bosses' damage increased by 30% per difficulty (up from 25%).
+- Replevin Gatherer boss now commits a melee attack for five seconds after throwing its Lucent cluster, afterwards resetting its state to gather another cluster.		
+<size=48>World</size>
+- Level 01 Placeholder tram now replaced with Tram palette level assets.
+- Level 03 now ends in a boss encounter with the enemy "Replevin Ambuscade".
+- Campaign has received two new levels:
+	Level 04
+	Level 05. This level ends in a boss encounter with the enemy "Replevin Keystone".
+- Viricide 02 Boss arena enemy spawner count reduced to 3 (down from 4). 
+<size=48>Game</size>
+- Initiating Campaign or Viricide games now transition to background images while the levels load in the background. Completed games now fade to black. Black screens now fade to gameplay when a game starts.
+- Campaign now displays end-game statistics.
+- Campaign and Viricide games now use a Checkpoint system that moves Player starting position and restores Key ownerships. The Main Menu's Campaign page now has a Checkpoint slider, allowing missions to be played from a checkpoint (provided that the Player earned the checkpoint first).
+- <color=cyan>[FIX]</color> Fixed an issue where game time would continue to increment between scenes.
+- Main Menu Campaign page now displays objectives unique to each level.

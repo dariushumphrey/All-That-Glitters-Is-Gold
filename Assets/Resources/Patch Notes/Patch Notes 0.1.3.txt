@@ -1,0 +1,75 @@
+<size=48>Player</size>
+- <color=cyan>[FIX]</color> The Player’s Inventory page has been adjusted to accommodate the presence of an additional Functional Cheat. The space dedicated to a Weapon’s flavor text has been increased to allow for more words. 
+<size=48>Weapons</size>
+- <color=cyan>[FIX]</color> Functional Cheats no longer affect the status text if they are not being actively held.
+- <color=cyan>[FIX]</color> Weapons can no longer fire while reloading.
+- <color=cyan>[FIX]</color> Weapons now subtract from what remains in reserves if they have too few rounds to fill a full magazine.
+- <color=cyan>[FIX]</color> Shelter In Place (Exotic Pistol)
+	No longer increases Shield and Health beyond their max capacities after Damage Reduction calculations.
+- <color=cyan>[FIX]</color> Weapons now automatically reload after emptying their magazines. 
+- <color=cyan>[FIX]</color> The following Weapons have received a base Damage increase:
+	Full Fire Rifle: 350 (100% up from 175)
+	Machine Gun: 600 (118% up from 275)
+	Pistol: 580 (100% up from 290)
+	Semi-Fire Rifle: 470 (100% up from 235)
+	Single-Fire Rifle: 1044 (200% up from 348)
+	SMG: 330 (100% up from 165) 	
+- <color=cyan>[FIX]</color> Good Things Come: Being in combat (either by shooting an enemy or being damaged by one) bestows three benefits after three seconds:
+	15% Movement Speed increase
+	20% Damage reduction
+	45% Recoil reduction
+	Fated Good Things Come: Combat benefits are doubled and are granted instantly. Being in combat grants infinite ammo. 
+- <color=cyan>[FIX]</color> Positive-Negative: Moving generates a charge. Shooting an enemy will apply a DOT effect on that enemy, activating once every second. Effect lasts for ten seconds. Inflicts 100% of Weapon Damage per tick. 
+	Fated Positive-Negative: DOT damage increases to 200%. Damage ticks every half-second (as this Cheat is paired with Shelter in Place, the rate of charge decrease is halved). 
+- <color=cyan>[FIX]</color> All Else Fails: When the Player’s Shield is depleted, all incoming Enemy damage is nullified for three seconds. 20 second cooldown.
+	Fated All Else Fails: Immunity duration increased to five seconds. Cooldown reduced by ten seconds.
+- <color=cyan>[FIX]</color> Rude Awakening: Kills grant up to three stacks of a lethal AOE blast. [Space] - Cast Blast
+	Fated Rude Awakening: Total stacks increased from three to six. One kill acts as two stacks. Having any stack increases Weapon damage by 20%.
+- <color=cyan>[FIX]</color> Cadence: Every third Kill spawns a Lucent cluster. 
+	Fated Cadence: Every third shot spawns a Lucent cluster.
+- <color=cyan>[FIX]</color> Wait! Now I’m Ready
+	Fated: Kills restore 20% of Shield capacity.
+- <color=cyan>[FIX]</color> Efficacy
+	Fated: Weapon hits increase Weapon damage by 2%. Reloading no longer resets the bonus, but damage can only increase up to 125% of Weapon damage.
+- <color=cyan>[FIX]</color> Inoculated
+	Fated: Kills restore 10% of Health capacity.
+- <color=cyan>[FIX]</color> Malicious Wind-Up
+	Fated: Kills refunds 5% of Weapon reserves capacity.
+- <color=cyan>[FIX]</color> Not With a Stick
+	Fated: Maximizing Effective Range pushes Aim Assist halfway to full strength. Reloading no longer resets the bonus, but now lasts 20 seconds.
+- <color=cyan>[FIX]</color> Early Berth gets the Hearst (Exotic Single Fire Rifle)
+	Explosive force decreased to 30 on detonations (down from 50).
+- <color=cyan>[FIX]</color> For Rarity 4-5 Weapons’ Cheat pools, they are split as such:
+	Pool 01 
+		All Else Fails
+		Not with a Stick
+		Malicious Wind-up
+		Positive-Negative
+		Good Things Come
+	Pool 02 
+		"Wait! Now I’m Ready!" 
+		Efficacy 
+		Inoculated
+		Cadence	
+		Rude Awakening
+- <color=cyan>[FIX]</color> Weapons begin receiving Functional Cheats on Rarity 2. Weapons begin receiving double Functional Cheats on Rarity 4.
+<size=48>Enemies</size>
+- <color=yellow>[Implement]</color> Major-class Enemies have been introduced, with double the Health points and Damage of a normal enemy. They have increased size to distinguish them from standard combatants. They have access to new attack behaviors: 
+	Pounce: Enemies will travel to a set distance from the Player, to then make a pouncing motion to the Player’s last position. Successful attacks inflict knockback. 
+	Jump: Enemies will travel to a set distance from the Player and leap towards the Player’s direction. Successful attacks inflict knockback. If the Player is too close to them while airborne, this enemy will seek onto them, scoring a guaranteed hit. 
+	They are currently set to spawn in varying densities starting from Encounter two. 
+- <color=cyan>[FIX]</color> Corpses have been deprecated; Enemies that die remain where they are and are deleted after four seconds.
+- <color=cyan>[FIX]</color> Enemies are now visually distinguished by differing colors: 
+	Melee - Red
+	Charge - Magenta
+	Range - Orange
+	Jump - Metallic Red
+	Pounce - Metallic Orange
+- <color=cyan>[FIX]</color> The Line Renderers used to visualize enemy engagement ranges has been deactivated.
+<size=48>Game</size>
+- <color=cyan>[FIX]</color> The two starting Chests disappear starting on Difficulty 2. 
+- <color=cyan>[FIX]</color> Weapons now only drop as delivery items from Chests and Kiosks. 
+- <color=cyan>[FIX]</color> The third encounter spawns ten combatants (down from 15). The fourth encounter spawns fifteen combatants (down from 30). 
+- <color=cyan>[FIX]</color> Shattering Lucent clusters inflict 150% of its worth in Damage (up from 75%). 
+- <color=cyan>[FIX]</color> On Difficulty 5, purchasing from a Kiosk the regular way will spawn an Exotic Weapon. The alternative “Raise Rarity” option now offers Fated-rarity Weapons. The prices for either option are left unchanged from how they are regularly altered.
+- <color=cyan>[FIX]</color> Damage numbers that appear from enemy hits have higher resolution.

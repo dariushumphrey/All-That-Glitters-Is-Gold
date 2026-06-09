@@ -1,0 +1,63 @@
+<size=48>Player</size>
+- <color=cyan>[FIX]</color> Fixed an issue where the immunity visual aid game object would inconsistently appear on evasions.
+- Revised the Camera clip countermeasure system. It now casts a ray between an origin point and the camera's position. Registered collisions offset the camera relative to the collision point's normal direction.
+- <color=cyan>[FIX]</color> Fixed an issue where Sprinting and Evasion were possible to use if airborne.
+- The Player's melee attack now applies Rigidbody force if it detects the defeated enemy no longer has health.
+- The Player-character, after collecting a Red or Blue Key, will now have that key displayed on their body.
+- An 'X' shaped reticle is now overlaid on enemies that are in Melee range.
+- Melee range reduced (Players can initiate a Melee from farther away, but the ray-cast that applies the hit is now shorter than the allowable melee range length.
+- <color=yellow>[Implement]</color> Players now have access to Sprint. Holding shift increases Movement Speed and deactivates Weapons (if they are not reloading).
+- <color=yellow>[Implement]</color> Players now have access to Evade. Pressing Space with directional input will initiate a dodge in that direction. Evades with no move input is a back-step. Evades have a quick immune window at the ability's start. Enemies that hit an immune Player during an Evade receive a Health debuff.
+- It is now possible to reach the end of the Inventory from the front when swapping weapons from the left, and to the front from the end when swapping weapons from the right. The Main Menu Inventory page's button navigation takes after the improved in-game Inventory navigation.
+<size=48>Weapons</size>
+- Early Berth gets the Hearst (Exotic Single Fire Rifle) 
+	Now activates on every other Enemy hit instead of a 10% chance. It now inflicts 200% of Weapon damage.
+- Good Things Come no longer prevents ammo consumption of the current magazine. It now prevents ammo consumption of reserves.
+- Functionality for Rigidbody force application on Enemy defeats by Firearms have been reinstated. Lucent Clusters, Rude Awakening, and Destruct Grenades now inflict upwards Rigidbody force on Enemy defeats.
+- Changed Cheat Activation button input to 'E'.
+- Fixed an issue where Positive-Negative DOT (damage-over-time) and Solution Grenade DOT were activating and deactivating the DOT Notice button simultaneously on Enemy health canvases.
+- <color=yellow>[Implement]</color> Created three Grenades:
+	- Fogger Grenade, casts a smoke area that slows enemies' speed by 50%.
+	- Solution Grenade, casts an acidic pool that inflicts damage-over-time.
+	- Destruct Grenade, inflicts heavy damage if in proximity of blast.
+	- Ammo delivery items restore one use for all Grenade types. The Player-Character rotates when a Player attempts a Grenade throw. Grenade throw strength is chargeable while holding the throw input ('G').
+-Pay to Win (Exotic Machine Gun) 
+	Lucent cost reduced to 5,280 (down from 10,000).
+- <color=cyan>[FIX]</color> Malicious Wind-Up no longer affects Cheat status text if Reload Speed is unchanged.
+<size=48>Enemies</size>
+- Berth explosive damage increased to 375 (up from 75). It now no longer scales from difficulty, cannot damage Players, and has had its radius reduced to 5m (down from 10m). It can now detonate Lucent clusters.
+- Viricide 01 Boss Health increased to 40000 (up from 30000), percent of Health gained by difficulty increased to 30% (up from 20%).
+- <color=yellow>[Implement]</color> Imported Capsule Character "models" to update generic capsules. Enemies are now all black with grafted meshes attached, of which their colors correspond to their original assignments by attack type. Their "facial expressions" are all red.
+- Viricide 01 Boss arena Hard Lucent objects replaced with Hard Lucent wall variants.
+- Lucent gained from Major kills decreased to 200 (down from 400). 
+- Lucent gained from Minor kills decreased to 100 (down from 200).
+- Enemies with the Jump-attack style now have forward force applied as well as upwards force, resulting in faster in-air flight.
+- Range attack-style enemies' fire rate increases as Difficulty rises. 
+- Charge attack-style enemies' base damage increased to 190 (up from 110). 
+- Melee attack-style enemies' damage percent increased to 50% (up from 20%). 
+- All enemy health increases by 30% (up from 20%) per difficulty, roughly adding 1k-2k Health by Difficulty 5.
+<size=48>World</size>
+- Level 01 has been reconstructed with module pieces used to make Level 02 and Viricide 01. Level 02 and Viricide 01 have been updated with props and scenic module pieces.
+- <color=cyan>[FIX]</color> The Planet's sphere mesh found on the Main Menu, Level 02 and Viricide 01 has higher resolution to decrease visible vertices.
+<size=48>Game</size>
+- <color=cyan>[FIX]</color> The Level Manager now resumes the game's time scale when returning to the Main Menu (if it hasn't been restored) or through menu buttons. This fixes an issue where functions reliant on a game running (such as the sell button timer decrementing when pressing its shortcut key) would not occur.
+- Drop threshold for Viricide reduced to 4% (down from 10%). Drop threshold for Campaign reduced to 3% (down from 7.5%). Exotic drop chance reduced to 2% (down from 3%).
+- <color=cyan>[FIX]</color> Fixed an issue where Lucent funds were reduced to zero upon Player death and being saved when restarting a level in response.
+- Updated thumbnails for Level 01, Level 02 and Viricide 01.
+- Lucent Clusters can now detonate other nearby clusters. Destruct Grenades, Solution Grenades (on a 1s delay), and Rude Awakening AOE casts can now detonate clusters.
+- Controls button on Main Menu now converted to "Settings" button. Takes the user to a new Button hub for options to display controls or reset saved progress (Level 02, Viricide, Difficulty 5 unlock, Lucent balance).	
+- Loot and Lucent delivery items, as well as Cadence's Lucent clusters, now spawn above an Enemy.
+- Lucent gained from cluster detonation decreased to 350 (down from 500).
+- <color=yellow>[Implement]</color> The Main Menu's Inventory page is now fully functional. Weapons can be previewed with full Cheat descriptions and comes with an option to sell the viewed weapon at 80% of its worth. 
+- <color=yellow>[Implement]</color> The Main Menu now has a Requisitions page. This page sells six random Weapons, of which can be previewed before purchase, and changes its stock on every return visit to the Main Menu. Until Viricide is completed for the first time, the page will sell Weapons with rarities between Usual and Coveted. Afterwards, the page will sell Weapons between Treasured and Exotic.
+- <color=yellow>[Implement]</color> The UI has been refreshed: 
+	Enemies have an updated Canvas that holds their name, current health (and a second bar that visualizes damage taken), and status effect notices that appear when their conditions are met. 
+	Players have a Diegetic UI style with Health/Shield as bars on the character itself. 
+	Weapons have a floating ammo counter, reload progress bar, and Cheat activity texts to their right. Underneath the reload progress bar is a grenade throw strength bar, Lucent balance counter and an active grenade count.
+	- Lucent is now a persistent resource, saved upon level completion or quit, Weapon purchase, Weapon sell, or respawn after death. Lucent balance is now capped to 100,000.
+- <color=cyan>[FIX]</color> Weapons can no longer shoot through doors or walls. Their raycasts now only interact with Enemies, Surfaces or Lucent clusters.
+- The gameplay Inventory page is smaller, and its Cheat descriptions have been shortened to be more succinct.
+- <color=cyan>[FIX]</color> Fixed an issue where the Player's Aim Assist system turned the reticle red and refused to revert back to white when aiming away from an in-range enemy.
+- <color=cyan>[FIX]</color> The Weapon Manager now respawns a Player's Inventory on a delay, returning Weapons in the order that they are recorded. It now follows moving Players until it finishes reproducing their Inventory.
+- The Pause menu now has a Controls page.
+- <color=cyan>[FIX]</color> Fixed an issue where the gameplay Inventory page could be summoned when the game was paused.

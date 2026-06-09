@@ -13,12 +13,23 @@ public class MenuManagerScript : MonoBehaviour
 
     public Setting setting;
 
-    //ca, vcThumbnail - Image UI that displays Campaign, Viricide level pictures
-    public Image caThumbnail, vcThumbnail;
-    public Sprite caLevelOne, caLevelTwo, caLevelThree, caLevelFour, caLevelFive, vcLevelOne, vcLevelTwo, vcLevelThree; //Images of Level thumbnails
-    public Text caDiffText, vcDiffText, caLevelText, vcLevelText, vcWepFocusText, caObjectiveText, caCheckpointText; //Texts that displays difficulty number, level name, or Weapon focus
+    [Header("Campaign Variables")]
+    public Image caThumbnail; //caThumbnail - Image UI that displays Campaign level pictures
+    public Sprite caLevelOne, caLevelTwo, caLevelThree, caLevelFour, caLevelFive; //Images of Level thumbnails
+    public Text caDiffText, caLevelText, caObjectiveText, caCheckpointText; //Texts that displays difficulty number, level name, or Weapon focus
+    public Slider caDifficulty, caLevel, caCheckpoint; //Sliders used to select Weapon type, level, or difficulty
+
+    [Header("Viricide Variables")]
+    public Image vcThumbnail; //vcThumbnail - Image UI that displays Viricide level pictures
+    public Sprite vcLevelOne, vcLevelTwo, vcLevelThree; //Images of Level thumbnails
+    public Text vcDiffText, vcLevelText, vcWepFocusText; //Texts that displays difficulty number, level name, or Weapon focus
     public Button vcButton; //Viricide navigation button
-    public Slider vcDifficulty, vcLevel, vcWepFocus, caDifficulty, caLevel, caCheckpoint; //Sliders used to select Weapon type, level, or difficulty
+    public Slider vcDifficulty, vcLevel, vcWepFocus; //Sliders used to select Weapon type, level, or difficulty
+
+    [Header("How To Play guide Variables")]
+    public Image activeTab;
+    public Image[] tabs;
+
     private LevelManagerScript levelManager;
     private WeaponManagerScript weaponManager;
 
@@ -29,7 +40,9 @@ public class MenuManagerScript : MonoBehaviour
             levelManager = FindObjectOfType<LevelManagerScript>();
             weaponManager = FindObjectOfType<WeaponManagerScript>();
         }
-        
+
+        activeTab = tabs[0];
+
     }
 
     // Start is called before the first frame update
@@ -333,5 +346,18 @@ public class MenuManagerScript : MonoBehaviour
         {
             vcButton.interactable = false;
         }
+    }
+
+    /// <summary>
+    /// For use with How to Play guide -- opens and closes tabs
+    /// </summary>
+    /// <param name="i"></param>
+    public void OpenTab(int i)
+    {
+        activeTab.gameObject.SetActive(false);
+        activeTab = null;
+
+        activeTab = tabs[i];
+        activeTab.gameObject.SetActive(true);
     }
 }

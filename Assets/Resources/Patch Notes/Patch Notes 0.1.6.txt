@@ -1,0 +1,83 @@
+<size=48>Player</size>
+- <color=cyan>[FIX]</color> Fixed an issue where Players could lock off targets during a Melee attack, causing a stutter effect during the action.
+- Player Camera vertical clamp increased to 30 (up from 20). 
+<size=48>Weapons</size>
+- <color=yellow>[Implement]</color> Functional Cheats' pools have received new additions: 
+	Pool 1:
+		- Fulminate
+		- The Most Resplendent
+		- Forager
+	Pool 2: 
+		- Gale Force Winds
+		- Counterplay
+		- Enshroud
+- Weapons no longer disappear when Sprinting, though they still cannot be fired.
+- Malicious Wind-Up, Efficacy, Cadence (Fated), Good Things Come, Early Berth gets the Hearst, Pay to Win, Fulminate, Enshroud, and Gale Force Winds can no longer register confirmed hits on immune Enemies.
+- "Absolutely no Stops!" (Exotic SMG) 
+	Companion Cheat has changed to Forager.
+- Pay to Win (Exotic Machine Gun) 
+	Companion Cheat has changed to The Most Resplendent.
+- Solution Grenades now produce a green-blue cloud that applies damage-over-time, inflicting 7000 damage over two seconds. Arming time reduced to one second (down from two). 
+<size=48>Enemies</size>
+- <color=yellow>[Implement]</color> Enemies can now spawn with the "Berth" condition: 
+	- Enemies explode in a 4m radius upon defeat.
+	- Enemies' eyes pulse between red and yellow.
+	- Enemies have a 20% chance to spawn with this condition.
+	Attack changes: 
+		- Range-enemy attacks apply brief damage-over-time.
+		- Charge-enemy attacks detonate on direct hit and bypass Shield.
+		- Jump-enemy attacks drop harmful Lucent clusters while airborne.
+- <color=cyan>[FIX]</color> Fixed an issue where Enemies' difficulty value was higher than the default, spawning tougher than intended.
+- <color=cyan>[FIX]</color> Fixed an issue where Jump enemies could freeze mid-attack if initiated in doorways. 
+- Adjusted certain Enemy behaviors: 
+	-Knockback is only applied on non-immune Player hits.
+	-If Jump enemies were locked into a guided attack but are physically grounded, their state now resets if grounded for too long.
+	-Jump enemies no longer anomalously seek Players when the game is paused.
+	-Increased time to wait before next jump for Jump-attack enemies, cutting down instances where they could jump again after jumping once.	
+	-Enemies' bodies are now destroyed after five seconds.
+- <color=cyan>[FIX]</color> Fixed an issue where Boss-level Charge enemies could move while out of immunity after striking a Hard Lucent wall.
+- Adjusted Boss-level Charge enemy behavior: 
+	- They now stare at a Player for one second before charging their last recorded position at full speed.
+	- Contact with Hard Lucent walls stagger them backwards. This fixes an issue where, due to their intersection with the wall collider, Destruct Grenades could not apply damage.
+<size=48>World</size>
+- <color=yellow>[Implement]</color> Added a third level to Campaign, placed between Level 01 and what was originally Level 02.
+- <color=yellow>[Implement]</color> Added a second level to Viricide.  
+<size=48>Game</size>
+- <color=yellow>[Implement]</color> VFX is now available in various areas: 
+	Player
+		- Thrusters (when Evading, Sprinting or in Zero Gravity)
+		- Shield damage (when hit)
+		- Shield sparks (when Shield is depleted)
+		- Shield charge (when Shield begins recharging)
+	Weapons
+		- Muzzle Flash (all Weapon types)
+		- Bullet (all Weapon types)
+		- Sparks (when hitting a Surface)
+		Cheats
+			- "Proc" ("Wait! Now I'm Ready!", Inoculated, 
+			Malicious Wind-Up, Pay to Win,
+			Equivalent Exchange).
+			- Electricity (Positive-Negative)
+			- Halo (All Else Fails)
+			- Detonation Wave (Rude Awakening)
+			- Fire (Absolutely no Stops!, Fulminate)
+			- Effluvium ("Social Distance, Please!")
+			- Smoke (Enshroud)
+			- Wind Gusts (Gale Force Winds)
+	Enemies
+		- Blood (when damaged by Weapons)
+		- Bile (Projectiles from Range enemies)
+		- Dust (Pounce, Jump, and Boss-level Charge enemies)
+		- Combustion (defeated with the Berth condition)
+	Game
+		- Shatter VFX (Lucent clusters; Blue--normal, red--harmful)
+		- Intensity Light (Destruct Grenades, Lucent clusters)
+		- Burst Cloud (Solution Grenades)
+	- Smoke VFX for Fogger Grenades were adjusted to be more visually appealing.
+- The Requisitions Kiosk can now sell Weapons that possess newly added Functional Cheats. The Kiosk's stock now alternates every 30 seconds, and can be paused when inspecting Weapons.
+- Updated Level 02, Level 03, Viricide 01 thumbnails with new images to reflect level changes.
+- Reduced total particle count for Fogger and Solution Grenades.
+- The Viricide menu now allows for Weapon focusing. Unless set to default, Enemy defeats, chests, and level end rewards only produce the focused Weapon type.
+- Time to wait before game end for Viricide increased to 15 seconds (up from ten).
+- Firearm and Melee attacks apply force to defeated Enemies in the direction from where they were hit on their body.
+- <color=cyan>[FIX]</color> Fixed a build issue where the UI Camera on Viricide 02 was marked as a Main Camera, preventing the primary Camera from moving with Players.

@@ -1,0 +1,27 @@
+<size=48>Player</size>
+- <color=cyan>[FIX]</color> The Player now receives downward force when walking off a surface or downward incline.
+- <color=yellow>[Implement]</color> Reconstructed the system that determines what directional force is applied when a Player travels upward, downward, or sideward on a slope. The result is a smoother, and somewhat faster, slope traversal.
+- Reverted Camera-clipping countermeasure system to original behavior, pushing the camera forward and sideways when detecting a surface that is too close.
+- <color=yellow>[Implement]</color> The Player can now melee attack combatants for heavy damage. 
+<size=48>Weapons</size>
+- <color=cyan>[FIX]</color> Ammo pickups now restore 40% of a Weapon's maximum reserves.
+- <color=cyan>[FIX]</color> Fixed an issue where Inoculated & "Wait! Now I'm Ready!" performed its Health/Shield return calculation on current Health/Shield instead of max Health/Shield, returning dramatically less Health/Shield than intended.
+- <color=cyan>[FIX]</color> Ammo pickups should no longer clip through the floor/ceiling upon spawning.
+- <color=cyan>[FIX]</color> The Line Renderers for Full Fire, Single Fire, and Semi Fire Weapons take after the Shotgun behavior, appearing and disappearing after a quick period.
+- <color=yellow>[Implement]</color> Damage numbers for Weapons now say "Immune" when attacking an invulnerable target.
+<size=48>Enemies</size>
+- <color=cyan>[FIX]</color> Fixed an issue where Enemies with the Jump attack-style could not be attacked when outside engagement range.
+- <color=cyan>[FIX]</color> Fixed an issue where Enemies could ignore walls when checking whether they can see the Player or not.
+- Lowered attack force from Charge, Melee, Pounce, and Jump enemies to discourage involuntary wall clipping when a Player is hit.
+- <color=cyan>[FIX]</color> Fixed an issue where the List that tracks living Enemies did not fully clear, tracking more combatants than what currently existed and resulting in a missing reference when all combatants died.
+- <color=yellow>[Implement]</color> Melee attack-style Enemies now enter range, slow their speed for one second, and then attack. Their behavior was altered to allow for a safer melee attack by a Player. 
+- <color=yellow>[Implement]</color> Charge attack-style Enemies now enter range, record the Player's last position, and rams that location, pausing for one second before committing another charge. Their behavior was altered to allow for a safer melee attack by a Player. 
+<size=48>Game</size>
+- <color=yellow>[Implement]</color> There is now a Main Menu with options to launch Campaign with tunable Difficulty, launch Viricide with tunable Difficulty, allow for Inventory management (coming soon), display Controls, and to quit the game.
+- <color=yellow>[Implement]</color> There is now a Pause Menu with options to unpause the game, restart the current level, return to the Main Menu, or to quit the game.
+- <color=yellow>[Implement]</color> DPS numbers now appear to the right of a Weapon's reticle. New numbers appear at the top, and are indented downwards when newer numbers appear.
+- Campaign Loot drop rate reduced to 7.5% (down from 10%)
+- Viricide Loot drop rate reduced to 10% (down from 20%)
+- <color=cyan>[FIX]</color> Chests no longer spawn Loot deliverables the moment the game starts.
+- Adjusted Chest force when spawning Loot Delivery items.
+- <color=cyan>[FIX]</color> Fixed an issue where enemies could not spawn on higher elevations.
