@@ -64,6 +64,7 @@ public class FirearmScript : MonoBehaviour
     internal float dpsLinesReset;
     internal int cheatRNG; // Number used to randomly generate Cheats
     internal int platformRNG; //Number used to randomly generate Platforms
+    internal Transform weaponAnchor;
 
     public void Awake()
     {       
@@ -102,7 +103,7 @@ public class FirearmScript : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {       
         if (display)
         {
@@ -121,11 +122,16 @@ public class FirearmScript : MonoBehaviour
 
             currentAmmo = ammoSize;
             reserveAmmo = reserveSize;
+
+            //if(!weaponAnchor && transform.parent != null)
+            //{
+            //    weaponAnchor = gameObject.transform.parent;
+            //}
         }      
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         if(display)
         {
@@ -152,6 +158,17 @@ public class FirearmScript : MonoBehaviour
                         currentDPSLine = "";
                         dpsLinesClear = dpsLinesReset;
                     }
+                }
+
+                if (!weaponAnchor && transform.parent != null)
+                {
+                    weaponAnchor = gameObject.transform.parent;
+                }
+
+                if(weaponAnchor)
+                {
+                    weaponAnchor.GetComponent<WeaponAnchorScript>().fireRateInsert = fireRate;
+                    weaponAnchor.GetComponent<WeaponAnchorScript>().reloadSpeedInsert = reloadSpeed;
                 }
 
                 AmmoReloadCheck();
@@ -826,6 +843,7 @@ public class FirearmScript : MonoBehaviour
                 {
                     //isReloading = true;
                     StartCoroutine(ReloadWep());
+                    weaponAnchor.GetComponent<WeaponAnchorScript>().PauseIdleTimerForReload();
                 }
             }
         }     
@@ -1270,6 +1288,7 @@ public class FirearmScript : MonoBehaviour
             }
 
             muzzleFlash.Play();
+            weaponAnchor.GetComponent<WeaponAnchorScript>().SimulateRecoil();
         }    
     }
 

@@ -1576,6 +1576,11 @@ public class PlayerInventoryScript : MonoBehaviour
                         write.Write("7");
                     }
 
+                    if (inventory[i].name == "Opening Shot")
+                    {
+                        write.Write("8");
+                    }
+
                     if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
                     {
                         write.Write("1");

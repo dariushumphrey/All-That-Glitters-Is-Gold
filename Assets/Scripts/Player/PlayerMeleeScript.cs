@@ -9,6 +9,9 @@ public class PlayerMeleeScript : MonoBehaviour
     public int meleeDamage = 5000;
     public float meleeRange = 4f;
     public float meleeSpeed = 3f;
+    public Transform weaponAnchor;
+    public GameObject guard;
+    public GameObject staggerZone;
 
     private PlayerInventoryScript inv;
     private PlayerMoveScript move;
@@ -27,6 +30,9 @@ public class PlayerMeleeScript : MonoBehaviour
     internal int indentSpace = 0; //Amount of applied indentation
     internal float dpsLinesClear = 2f; //Clears damage history after this time
     internal float dpsLinesReset;
+    public bool multiWeapon = false;
+    public bool guarding = false;
+    public bool guardCooldown = false;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +46,7 @@ public class PlayerMeleeScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && !multiWeapon)
         {
             //Melee attacks cannot occur if a target is not found
             //Otherwise, Player is locked into attack
@@ -63,6 +69,17 @@ public class PlayerMeleeScript : MonoBehaviour
 
             MeleeStrike();
         }
+
+        if(multiWeapon)
+        {
+            if(Input.GetKeyDown(KeyCode.F) && !guardCooldown)
+            {
+                guard.gameObject.SetActive(true);
+                guarding = true;
+                guardCooldown = true;
+                StartCoroutine(CancelGuard());
+            }
+        }
     }
 
     /// <summary>
@@ -80,14 +97,46 @@ public class PlayerMeleeScript : MonoBehaviour
                 currentIteration = Regex.Replace(dpsText.GetComponent<Text>().text, "<.*?>", string.Empty);
 
                 newDPSLine = "<size=36><color=purple>" + indent + meleeDamage.ToString() + "</color></size>";
-                currentDPSLine = newDPSLine + "\n" + "<size=24><color=silver>" + currentIteration + "</color></size>";               
+                currentDPSLine = newDPSLine + "\n" + "<size=24><color=silver>" + currentIteration + "</color></size>";
+
+                GameObject field = Instantiate(staggerZone, hit.point, transform.rotation);
+                field.name = staggerZone.name;
 
                 hit.collider.gameObject.GetComponent<EnemyHealthScript>().inflictDamage(meleeDamage);
+
+                if (multiWeapon && gameObject.GetComponentInChildren<MiningPlatform>())
+                {
+                    gameObject.GetComponentInChildren<MiningPlatform>().confirmedHit = true;
+                    gameObject.GetComponentInChildren<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
+                }
 
                 if (gameObject.GetComponentInChildren<TrenchantPlatform>())
                 {
                     gameObject.GetComponentInChildren<TrenchantPlatform>().confirmedMeleeHit = true;
                     gameObject.GetComponentInChildren<TrenchantPlatform>().enemy = hit.collider.gameObject;
+                }
+
+                if (multiWeapon && gameObject.GetComponentInChildren<GaleForceWinds>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
+                {
+                    if (gameObject.GetComponentInChildren<GaleForceWinds>().chargeCount >= 1 && gameObject.GetComponentInChildren<GaleForceWinds>().toggle)
+                    {
+                        GameObject torrent = Instantiate(gameObject.GetComponentInChildren<GaleForceWinds>().applicator, hit.point + (hit.normal * 0.01f), Quaternion.identity);
+                        torrent.name = gameObject.GetComponentInChildren<GaleForceWinds>().applicator.name;
+
+                        if (gameObject.GetComponentInChildren<MultiWeaponFirearm>().weaponRarity == 5)
+                        {
+                            torrent.GetComponent<GFWStatusApplicator>().fatedFlag = true;
+                            torrent.GetComponent<GFWStatusApplicator>().debuffMultiplier *= 1.43f;
+                            torrent.GetComponent<GFWStatusApplicator>().travelRadius *= 1.5f;
+                            torrent.GetComponent<GFWStatusApplicator>().travelLerpSpeed *= 2f;
+                        }
+
+                        gameObject.GetComponentInChildren<GaleForceWinds>().chargeCount--;
+                        gameObject.GetComponentInChildren<GaleForceWinds>().chargePercentage = 0f;
+                        gameObject.GetComponentInChildren<GaleForceWinds>().done = false;
+                        gameObject.GetComponentInChildren<GaleForceWinds>().toggle = false;
+
+                    }
                 }
 
                 if (hit.collider.gameObject.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
@@ -97,8 +146,29 @@ public class PlayerMeleeScript : MonoBehaviour
                         gameObject.GetComponentInChildren<SiphonicPlatform>().confirmedMeleeKill = true;
                     }
 
+                    if (multiWeapon && gameObject.GetComponentInChildren<WaitNowImReady>())
+                    {
+                        gameObject.GetComponentInChildren<WaitNowImReady>().killConfirmed = true;
+                    }
+
+                    if (multiWeapon && gameObject.GetComponentInChildren<Inoculated>())
+                    {
+                        gameObject.GetComponentInChildren<Inoculated>().killConfirmed = true;
+                    }
+
+                    if (multiWeapon && gameObject.GetComponentInChildren<RudeAwakening>())
+                    {
+                        gameObject.GetComponentInChildren<RudeAwakening>().killConfirmed = true;
+                    }
+
+                    if (multiWeapon && gameObject.GetComponentInChildren<Cadence>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
+                    {
+                        gameObject.GetComponentInChildren<Cadence>().killConfirmed = true;
+                        gameObject.GetComponentInChildren<Cadence>().clusterPosition = hit.collider.transform.position;
+                    }
+
                     //Produces a Destruct Grenade that detonates instantly
-                    if(fulminateCheat != null)
+                    if (fulminateCheat != null)
                     {
                         GameObject free = Instantiate(inv.grenades[2], hit.point, transform.rotation);
                         free.GetComponent<DestructGrenadeScript>().armingTime = 0.0f;
@@ -153,6 +223,18 @@ public class PlayerMeleeScript : MonoBehaviour
 
                 meleeLock = false;
             }
+
+            weaponAnchor.GetComponent<WeaponAnchorScript>().restorePoseFromMelee = true;
         }
+    }
+
+    public IEnumerator CancelGuard()
+    {
+        yield return new WaitForSeconds(0.3f);
+        guarding = false;
+        guardCooldown = false;
+        guard.gameObject.SetActive(false);
+
+        weaponAnchor.GetComponent<WeaponAnchorScript>().restorePoseFromGuard = true;
     }
 }

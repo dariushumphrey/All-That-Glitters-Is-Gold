@@ -450,6 +450,7 @@ public class SingleFireFirearm : FirearmScript
             }
 
             muzzleFlash.Play();
+            weaponAnchor.GetComponent<WeaponAnchorScript>().SimulateRecoil();
         }
     }
 }

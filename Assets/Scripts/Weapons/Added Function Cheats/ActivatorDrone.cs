@@ -42,7 +42,7 @@ public class ActivatorDrone : MonoBehaviour
             {
                 if (Input.GetButton("Fire2"))
                 {
-                    adInstance.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(camera.playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
+                    adInstance.transform.rotation = Quaternion.Lerp(gameObject.transform.root.transform.rotation, Quaternion.LookRotation(camera.playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
                     //adInstance.transform.eulerAngles = new Vector3(0f, camera.yaw, 0.0f);
                     proc.GetComponent<Text>().text = "AD: Targeting";
                 }
@@ -109,7 +109,7 @@ public class ActivatorDrone : MonoBehaviour
         {
             adDrone = Resources.Load<GameObject>("Game Items/adDrone");
 
-            adInstance = Instantiate(adDrone, transform.position, transform.rotation);
+            adInstance = Instantiate(adDrone, transform.position, Quaternion.identity);
             adInstance.name = adDrone.name;
             adInstance.GetComponent<ADDrone>().hostWeapon = gameObject;
 

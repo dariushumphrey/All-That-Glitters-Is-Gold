@@ -337,6 +337,15 @@ public class WeaponManagerScript : MonoBehaviour
             //flavor.text = item.GetComponent<FirearmScript>().flavorText;         
         }
 
+        if (wepStr == "8")
+        {
+            //Debug.Log("Displaying Opening Shot");
+            item = Instantiate(weapons[8], transform.position, transform.rotation);
+            item.name = weapons[8].name;
+            wepName.text = "Opening Shot";
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;         
+        }
+
         item.transform.parent = gameObject.transform;
 
         if (pltStr == "1")
@@ -1153,6 +1162,13 @@ public class WeaponManagerScript : MonoBehaviour
                 //Debug.Log("Respawning Grenade Launcher");
                 item = Instantiate(weapons[7], transform.position, transform.rotation);
                 item.name = weapons[7].name;
+            }
+
+            if (wepStr == "8")
+            {
+                //Debug.Log("Respawning Opening Shot");
+                item = Instantiate(weapons[8], transform.position, transform.rotation);
+                item.name = weapons[8].name;
             }
 
             if (rarStr == "1")

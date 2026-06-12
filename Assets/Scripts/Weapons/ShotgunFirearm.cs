@@ -461,6 +461,7 @@ public class ShotgunFirearm: FirearmScript
             }
 
             muzzleFlash.Play();
+            weaponAnchor.GetComponent<WeaponAnchorScript>().SimulateRecoil();
         }
     }  
 }

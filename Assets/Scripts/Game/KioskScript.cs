@@ -98,7 +98,7 @@ public class KioskScript : MonoBehaviour
         for (int w = 0; w < kioskWares.Count; w++)
         {
             //Determines Weapon Type
-            determinate = UnityEngine.Random.Range(0, 8);
+            determinate = UnityEngine.Random.Range(0, 9);
             //determinate = 1;
             wepTypeStr = determinate.ToString();
 
@@ -360,6 +360,12 @@ public class KioskScript : MonoBehaviour
             {
                 weaponPrice = 1800f;
                 names[p].text = "Grenade Launcher";
+            }
+
+            if (wepTypeStr == "8")
+            {
+                weaponPrice = 1900f;
+                names[p].text = "Opening Shot";
             }
 
             if (wepRarStr == "1")
@@ -975,6 +981,11 @@ public class KioskScript : MonoBehaviour
                 weaponPrice = 1800f;
             }
 
+            if (wepTypeStr == "8")
+            {
+                weaponPrice = 1900f;
+            }
+
             if (wepPlatStr == "1")
             {
                 weaponPrice += 350f;
@@ -1216,6 +1227,14 @@ public class KioskScript : MonoBehaviour
             wepName.text = "Grenade Launcher";
             item = Instantiate(playerInventory.weapons[7], playerInventory.transform.position, playerInventory.transform.rotation);
             item.name = playerInventory.weapons[7].name;
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;          
+        }
+
+        if (wepTypeStr == "8")
+        {
+            wepName.text = "Opening Shot";
+            item = Instantiate(playerInventory.weapons[8], playerInventory.transform.position, playerInventory.transform.rotation);
+            item.name = playerInventory.weapons[8].name;
             //flavor.text = item.GetComponent<FirearmScript>().flavorText;          
         }
 

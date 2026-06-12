@@ -229,9 +229,14 @@ public class MenuManagerScript : MonoBehaviour
                 vcWepFocusText.text = "Targeted Weapons: " + "\n" + "Submachine Guns";
             }
 
-            else
+            else if (vcWepFocus.value == 7)
             {
                 vcWepFocusText.text = "Targeted Weapons: " + "\n" + "Grenade Launchers";
+            }
+
+            else
+            {
+                vcWepFocusText.text = "Targeted Weapons: " + "\n" + "Opening Shots";
             }
         }    
     }

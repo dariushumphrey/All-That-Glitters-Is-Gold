@@ -469,6 +469,8 @@ public class SemiFireFirearm : FirearmScript
         }
 
         muzzleFlash.Play();
+        weaponAnchor.GetComponent<WeaponAnchorScript>().SimulateRecoil();
+
         fireAgain = 0.0f;
         yield return new WaitForSeconds(fireRate / 2);
 

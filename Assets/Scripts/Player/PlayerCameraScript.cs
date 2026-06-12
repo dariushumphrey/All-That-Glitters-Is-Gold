@@ -21,7 +21,6 @@ public class PlayerCameraScript : MonoBehaviour
     public Image reticleSprite;
     public Image meleeReticle;
     public Sprite meleeSprite;
-
     //contactOnly - LayerMask that only interacts with Enemies and Surfaces; used for Aim Assist, Melee attacks and Canvas reveals
     //cameraOnly - LayerMask that only interacts with Surfaces; used for Camera clipping checks
     public LayerMask contactOnly, cameraOnly;
@@ -39,6 +38,9 @@ public class PlayerCameraScript : MonoBehaviour
     private PlayerMeleeScript melee;
     internal float yaw = 0.0f; //Value that rotates Player, Camera on Y-axis
     internal float pitch = 0.0f; //Value that rotates Player, Camera on X-axis
+    internal bool activeAction = false;
+    public bool multiWeapon = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -82,13 +84,14 @@ public class PlayerCameraScript : MonoBehaviour
             //Controls Camera rotation
             yaw += rotateH * Input.GetAxis("Mouse X");
             pitch -= rotateV * Input.GetAxis("Mouse Y");
-            pitch = Mathf.Clamp(pitch, -vClamp, vClamp);
+            pitch = Mathf.Clamp(pitch, -vClamp, vClamp);         
 
             //Offsets Camera around Player shoulder if camera clipping protections are inactive
-            if(!SurfaceIntersection())
+            if (!SurfaceIntersection())
             {
                 playerCamera.transform.position = transform.position + (Quaternion.Euler(pitch, yaw, 0) * cameraPosition);
                 playerCamera.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+
 
                 //Debug.DrawRay(offsetCheckPos.transform.position, (playerCamera.transform.position - offsetCheckPos.transform.position).normalized * slider, Color.blue);
             }
@@ -98,6 +101,12 @@ public class PlayerCameraScript : MonoBehaviour
             if (move.horizInput != 0 || move.vertInput != 0 || Input.GetButton("Fire1") || player.throwing)
             {
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
+                activeAction = true;
+            }
+
+            else
+            {
+                activeAction = false;
             }
 
             //Rotates Player-character every frame towards Camera forward direction
@@ -124,10 +133,13 @@ public class PlayerCameraScript : MonoBehaviour
         if (Input.GetButton("Fire2"))
         {
             //Zooms camera until it reaches max zoom
-            zoomDefault -= zoomSpeed * Time.deltaTime;
-            if (zoomDefault <= zoomMax)
+            if(!multiWeapon)
             {
-                zoomDefault = zoomMax;
+                zoomDefault -= zoomSpeed * Time.deltaTime;
+                if (zoomDefault <= zoomMax)
+                {
+                    zoomDefault = zoomMax;
+                }
             }
 
             //Rotates Player-character in Camera forward direction

@@ -69,7 +69,9 @@ public class LauncherFirearm : FirearmScript
 
 
             
-            muzzleFlash.Play();          
+            muzzleFlash.Play();
+            weaponAnchor.GetComponent<WeaponAnchorScript>().SimulateRecoil();
+
         }
     }
 }

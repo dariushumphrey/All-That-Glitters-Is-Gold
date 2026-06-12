@@ -5652,7 +5652,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1462491679}
   m_Direction: 0
   m_MinValue: -1
-  m_MaxValue: 7
+  m_MaxValue: 8
   m_WholeNumbers: 1
   m_Value: -1
   m_OnValueChanged:
@@ -21810,6 +21810,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 0}
   resultsMenu: {fileID: 0}
   controlsMenu: {fileID: 0}
+  howToPlayMenu: {fileID: 0}
 --- !u!4 &1192333462
 Transform:
   m_ObjectHideFlags: 0
@@ -23238,6 +23239,7 @@ MonoBehaviour:
   - {fileID: 1159995926337233731, guid: 716a970ee3c4bb94cafb43282393dea8, type: 3}
   - {fileID: 5773068687688571801, guid: c36126a6959d9a34fa7725dc886f8d85, type: 3}
   - {fileID: 883762224521340949, guid: 7c25b9758ebd22a45bfdbec864281f4e, type: 3}
+  - {fileID: 5355684467214820260, guid: ee5cfb878ca621e4c9d681fb84d65416, type: 3}
   observedWeps: []
   filepath: inventory.txt
   wepName: {fileID: 1559429537}
