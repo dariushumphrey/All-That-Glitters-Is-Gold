@@ -253,10 +253,16 @@ public class LootScript : MonoBehaviour
                 reward.name = loot[7].name;
             }
 
-            else
+            else if (wepTypeStr == "8")
             {
                 reward = Instantiate(loot[8], player.transform.position, player.transform.rotation);
                 reward.name = loot[8].name;
+            }
+
+            else
+            {
+                reward = Instantiate(loot[9], player.transform.position, player.transform.rotation);
+                reward.name = loot[9].name;
             }
                   
         }
@@ -960,7 +966,7 @@ public class LootScript : MonoBehaviour
 
         if(focusTarget <= -1)
         {
-            determinate = UnityEngine.Random.Range(0, 9);
+            determinate = UnityEngine.Random.Range(0, 10);
         }
 
         else
@@ -1076,9 +1082,14 @@ public class LootScript : MonoBehaviour
                 clpLtType.GetComponent<Text>().text = "Grenade Launcher";
             }
 
-            else
+            else if (wepTypeStr == "8")
             {
                 clpLtType.GetComponent<Text>().text = "Opening Shot";
+            }
+
+            else
+            {
+                clpLtType.GetComponent<Text>().text = "AMLR";
             }
 
             if (wepRarStr == "1")

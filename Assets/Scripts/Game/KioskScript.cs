@@ -98,7 +98,7 @@ public class KioskScript : MonoBehaviour
         for (int w = 0; w < kioskWares.Count; w++)
         {
             //Determines Weapon Type
-            determinate = UnityEngine.Random.Range(0, 9);
+            determinate = UnityEngine.Random.Range(0, 10);
             //determinate = 1;
             wepTypeStr = determinate.ToString();
 
@@ -366,6 +366,12 @@ public class KioskScript : MonoBehaviour
             {
                 weaponPrice = 1900f;
                 names[p].text = "Opening Shot";
+            }
+
+            if (wepTypeStr == "9")
+            {
+                weaponPrice = 2000f;
+                names[p].text = "AMLR";
             }
 
             if (wepRarStr == "1")
@@ -986,6 +992,11 @@ public class KioskScript : MonoBehaviour
                 weaponPrice = 1900f;
             }
 
+            if (wepTypeStr == "9")
+            {
+                weaponPrice = 2000f;
+            }
+
             if (wepPlatStr == "1")
             {
                 weaponPrice += 350f;
@@ -1234,7 +1245,17 @@ public class KioskScript : MonoBehaviour
         {
             wepName.text = "Opening Shot";
             item = Instantiate(playerInventory.weapons[8], playerInventory.transform.position, playerInventory.transform.rotation);
+            item.transform.localPosition = new Vector3(playerInventory.transform.position.x, 2.1f, 0.4f);
             item.name = playerInventory.weapons[8].name;
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;          
+        }
+
+        if (wepTypeStr == "9")
+        {
+            wepName.text = "AMLR";
+            item = Instantiate(playerInventory.weapons[9], playerInventory.transform.position, playerInventory.transform.rotation);
+            item.transform.localPosition = new Vector3(playerInventory.transform.position.x, 1.8f, -0.25f);
+            item.name = playerInventory.weapons[9].name;
             //flavor.text = item.GetComponent<FirearmScript>().flavorText;          
         }
 

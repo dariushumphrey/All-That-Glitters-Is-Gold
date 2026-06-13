@@ -140,14 +140,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac6186277bd84f419daf9d3c647fb76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lootString: 
   raritySpawn: 1
-  lootSpamMax: 3
   focusTarget: -1
+  exoticDelivery: 0
+  debug: 0
   isDrop: 0
-  isChest: 1
-  spawnRate: 0.08
-  drop: {fileID: 0}
-  exoticDrop: {fileID: 0}
   loot:
   - {fileID: 4036329082999486630, guid: 2528b365871386747b8d73e91279a4f0, type: 3}
   - {fileID: 1358942852155973169, guid: 377cbf7d40de48b429110cefefee5025, type: 3}
@@ -156,6 +154,33 @@ MonoBehaviour:
   - {fileID: 699337693104839782, guid: f98f6c9d0c1ed314ea455548a43ddf89, type: 3}
   - {fileID: 1640342962202232329, guid: deeff10e063288b49b130d02369c127e, type: 3}
   - {fileID: 4946270343591226302, guid: 0f94d84fb9e4eb045aa6b520d55410ab, type: 3}
-  lootSpawn: {fileID: 8233089632965830859}
-  debug: 0
+  - {fileID: 3233880727260595515, guid: 91e2dcf359c3fd1429a351214edaffae, type: 3}
+  - {fileID: 161720342756965662, guid: 9f0d563678cc36a4cacbc9f0e200c182, type: 3}
+  - {fileID: 4564169447370591592, guid: 8a94bcbf073110c4482f1c0c349ca16f, type: 3}
+  rarityIdentification: []
+  lootFocusCircle: {fileID: 0}
+  lootLight: {fileID: 0}
+  lootModel: {fileID: 0}
+  lootEffect: {fileID: 0}
+  acceptEffect: {fileID: 0}
+  collapsedLootInfo: {fileID: 0}
+  collapsedLootImage: {fileID: 0}
+  clpLtType: {fileID: 0}
+  clpLtRarity: {fileID: 0}
+  clpLtPlatform: {fileID: 0}
+  clpLtStChtOne: {fileID: 0}
+  clpLtStChtTwo: {fileID: 0}
+  clpLtStChtThree: {fileID: 0}
+  clpLtStChtFour: {fileID: 0}
+  clpLtFncChtOne: {fileID: 0}
+  clpLtFncChtTwo: {fileID: 0}
+  contactOnly:
+    serializedVersion: 2
+    m_Bits: 0
+  isChest: 1
+  lootSpamMax: 3
   spamLoot: 0
+  spawnRate: 0.08
+  drop: {fileID: 0}
+  lootSpawn: {fileID: 8233089632965830859}
+  withinVolume: 0

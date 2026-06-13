@@ -69,7 +69,6 @@ public class PlayerCameraScript : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
         }
-
     }
 
     private void LateUpdate()
@@ -98,7 +97,7 @@ public class PlayerCameraScript : MonoBehaviour
 
             //Rotates Player-character when moving, firing, or throwing grenades
             forwardDirection = (playerCamera.transform.position - transform.position);
-            if (move.horizInput != 0 || move.vertInput != 0 || Input.GetButton("Fire1") || player.throwing)
+            if (move.horizInput != 0 || move.vertInput != 0 || Input.GetButton("Fire1") || Input.GetButton("Fire2") || player.throwing)
             {
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
                 activeAction = true;
@@ -143,8 +142,8 @@ public class PlayerCameraScript : MonoBehaviour
             }
 
             //Rotates Player-character in Camera forward direction
-            forwardDirection = (playerCamera.transform.position - transform.position);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
+            //forwardDirection = (playerCamera.transform.position - transform.position);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
 
             //Reveals Enemy canvas when zooming into them
             rayOrigin = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));

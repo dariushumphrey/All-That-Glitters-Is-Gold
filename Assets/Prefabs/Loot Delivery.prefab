@@ -300,6 +300,7 @@ MonoBehaviour:
   - {fileID: 5773068687688571801, guid: c36126a6959d9a34fa7725dc886f8d85, type: 3}
   - {fileID: 883762224521340949, guid: 7c25b9758ebd22a45bfdbec864281f4e, type: 3}
   - {fileID: 5355684467214820260, guid: ee5cfb878ca621e4c9d681fb84d65416, type: 3}
+  - {fileID: 6585437930463543896, guid: edb80b22d3280e04e85a51738ef77920, type: 3}
   rarityIdentification:
   - {fileID: 1484061334514207278}
   lootFocusCircle: {fileID: 2533056709950078601, guid: 293bafe1455f76a4ea8a1ac8cba925a3, type: 3}

@@ -99,8 +99,11 @@ public class PlayerMeleeScript : MonoBehaviour
                 newDPSLine = "<size=36><color=purple>" + indent + meleeDamage.ToString() + "</color></size>";
                 currentDPSLine = newDPSLine + "\n" + "<size=24><color=silver>" + currentIteration + "</color></size>";
 
-                GameObject field = Instantiate(staggerZone, hit.point, transform.rotation);
-                field.name = staggerZone.name;
+                if(multiWeapon)
+                {
+                    GameObject field = Instantiate(staggerZone, hit.point, transform.rotation);
+                    field.name = staggerZone.name;
+                }
 
                 hit.collider.gameObject.GetComponent<EnemyHealthScript>().inflictDamage(meleeDamage);
 

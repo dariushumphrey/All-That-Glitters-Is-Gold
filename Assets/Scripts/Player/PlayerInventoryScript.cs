@@ -1581,6 +1581,11 @@ public class PlayerInventoryScript : MonoBehaviour
                         write.Write("8");
                     }
 
+                    if (inventory[i].name == "AMLR")
+                    {
+                        write.Write("9");
+                    }
+
                     if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
                     {
                         write.Write("1");

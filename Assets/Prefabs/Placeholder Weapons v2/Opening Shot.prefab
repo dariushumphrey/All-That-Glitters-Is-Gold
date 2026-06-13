@@ -847,7 +847,7 @@ MonoBehaviour:
   range: 30
   reloadSpeed: 1.25
   wepRecoil: 0.4
-  aimAssistStrength: 0.2
+  aimAssistStrength: 0.25
   isExotic: 0
   flavorText: An axe & auto-sidearm combo. For when revelry is the goal.
   contactOnly:

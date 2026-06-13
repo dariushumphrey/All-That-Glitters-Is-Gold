@@ -13,11 +13,13 @@ public class MunitionScript : MonoBehaviour
     public float hitDetectionLength = 2f;
     public bool isExoticMunition;
     public bool isMine;
+    public bool highVelocity = false; 
     public Transform hitDetection;
     public GameObject detonationEffect; //VFX for munition
     public LayerMask contactOnly; //Ensures Raycast accounts for Surfaces
     public List<GameObject> targets = new List<GameObject>();
 
+    private Vector3 recentPosition;
     internal bool activatorDroneFlag = false;
     internal bool fatedActivatorDrone = false;
     internal int activatorDroneDamage;
@@ -41,122 +43,125 @@ public class MunitionScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(hitDetection.position, hitDetection.forward, out hit, hitDetectionLength, contactOnly))
-        {
-            if(activatorDroneFlag)
+        if(!highVelocity)
+        {        
+            RaycastHit hit;
+            if (Physics.Raycast(hitDetection.position, hitDetection.forward, out hit, hitDetectionLength, contactOnly))
             {
-                ActivatorDroneTriggerMunition();
-            }
-
-            else
-            {
-                if (!isMine)
+                if (activatorDroneFlag)
                 {
-                    TriggerMunition();
+                    ActivatorDroneTriggerMunition();
                 }
-            }
 
-            if (hostLauncher.gameObject.GetComponent<MiningPlatform>())
-            {
-                hostLauncher.gameObject.GetComponent<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
-                hostLauncher.gameObject.GetComponent<MiningPlatform>().RemoteProc();
-            }
-
-            if (hostLauncher.gameObject.GetComponent<TheMostResplendent>())
-            {
-                if (hostLauncher.gameObject.GetComponent<TheMostResplendent>().stackCount >= 1 && hostLauncher.gameObject.GetComponent<TheMostResplendent>().toggle)
+                else
                 {
-                    GameObject lucentHard = Instantiate(hostLauncher.gameObject.GetComponent<TheMostResplendent>().hardLucent, hit.point + (hit.normal * 0.01f), 
-                        Quaternion.LookRotation(hit.normal));
-                    lucentHard.name = hostLauncher.gameObject.GetComponent<TheMostResplendent>().hardLucent.name;
-
-                    if (hostLauncher.GetComponent<FirearmScript>().weaponRarity == 5 && !hostLauncher.GetComponent<FirearmScript>().isExotic)
+                    if (!isMine)
                     {
-                        lucentHard.GetComponent<TMRHardLucentScript>().fatedCrystal = true;
+                        TriggerMunition();
+                    }
+                }
+
+                if (hostLauncher.gameObject.GetComponent<MiningPlatform>())
+                {
+                    hostLauncher.gameObject.GetComponent<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
+                    hostLauncher.gameObject.GetComponent<MiningPlatform>().RemoteProc();
+                }
+
+                if (hostLauncher.gameObject.GetComponent<TheMostResplendent>())
+                {
+                    if (hostLauncher.gameObject.GetComponent<TheMostResplendent>().stackCount >= 1 && hostLauncher.gameObject.GetComponent<TheMostResplendent>().toggle)
+                    {
+                        GameObject lucentHard = Instantiate(hostLauncher.gameObject.GetComponent<TheMostResplendent>().hardLucent, hit.point + (hit.normal * 0.01f),
+                            Quaternion.LookRotation(hit.normal));
+                        lucentHard.name = hostLauncher.gameObject.GetComponent<TheMostResplendent>().hardLucent.name;
+
+                        if (hostLauncher.GetComponent<FirearmScript>().weaponRarity == 5 && !hostLauncher.GetComponent<FirearmScript>().isExotic)
+                        {
+                            lucentHard.GetComponent<TMRHardLucentScript>().fatedCrystal = true;
+                        }
+
+                        hostLauncher.gameObject.GetComponent<TheMostResplendent>().stackCount--;
+                        hostLauncher.gameObject.GetComponent<TheMostResplendent>().toggle = false;
+                    }
+                }
+
+                if (hit.collider.gameObject.GetComponent<TMRHardLucentScript>())
+                {
+                    GameObject miniCluster = Instantiate(hit.collider.gameObject.GetComponent<TMRHardLucentScript>().lucentCluster, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+                    miniCluster.name = hit.collider.gameObject.GetComponent<TMRHardLucentScript>().lucentCluster.name;
+                    miniCluster.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+                    miniCluster.GetComponent<LucentScript>().lucentGift /= 2;
+                    miniCluster.GetComponent<LucentScript>().lucentGift *= hostLauncher.GetComponent<FirearmScript>().weaponRarity;
+                    miniCluster.GetComponent<LucentScript>().ShatterCalculation();
+
+                    hit.collider.gameObject.GetComponent<TMRHardLucentScript>().shockwaveBuildup += hostLauncher.GetComponent<FirearmScript>().damage;
+                }
+
+                if (hostLauncher.gameObject.GetComponent<GaleForceWinds>())
+                {
+                    if (hostLauncher.gameObject.GetComponent<GaleForceWinds>().chargeCount >= 1 && hostLauncher.gameObject.GetComponent<GaleForceWinds>().toggle)
+                    {
+                        GameObject torrent = Instantiate(hostLauncher.gameObject.GetComponent<GaleForceWinds>().applicator, hit.point + (hit.normal * 0.01f), Quaternion.identity);
+                        torrent.name = hostLauncher.gameObject.GetComponent<GaleForceWinds>().applicator.name;
+
+                        if (hostLauncher.gameObject.GetComponent<FirearmScript>().weaponRarity == 5)
+                        {
+                            torrent.GetComponent<GFWStatusApplicator>().fatedFlag = true;
+                            torrent.GetComponent<GFWStatusApplicator>().debuffMultiplier *= 1.43f;
+                            torrent.GetComponent<GFWStatusApplicator>().travelRadius *= 1.5f;
+                            torrent.GetComponent<GFWStatusApplicator>().travelLerpSpeed *= 2f;
+                        }
+
+                        hostLauncher.gameObject.GetComponent<GaleForceWinds>().chargeCount--;
+                        hostLauncher.gameObject.GetComponent<GaleForceWinds>().chargePercentage = 0f;
+                        hostLauncher.gameObject.GetComponent<GaleForceWinds>().done = false;
+                        hostLauncher.gameObject.GetComponent<GaleForceWinds>().toggle = false;
+
+                    }
+                }
+
+                if (hit.collider.gameObject.GetComponent<StalactiteLucentScript>())
+                {
+                    if (hit.collider.gameObject.GetComponent<StalactiteLucentScript>().hostCrystal)
+                    {
+                        hit.collider.gameObject.GetComponent<StalactiteLucentScript>().LucentPassive();
+                    }
+                }
+
+                if (hit.collider.gameObject.GetComponent<SpectrumLucentScript>())
+                {
+                    if (!hit.collider.gameObject.GetComponent<SpectrumLucentScript>().converted)
+                    {
+                        hit.collider.gameObject.GetComponent<SpectrumLucentScript>().ConvertCluster();
+                    }
+                }
+
+                if (hit.collider.gameObject.layer == 9) //If this Weapon strikes an object with the "Lucent" layer
+                {
+                    if (hit.collider.gameObject.GetComponent<StunningLucentScript>())
+                    {
+                        hit.collider.gameObject.GetComponent<StunningLucentScript>().currentHitCount += 4;
+                        hit.collider.gameObject.GetComponent<StunningLucentScript>().ExtendThrowTimer();
+
+                        GameObject miniCluster = Instantiate(hit.collider.gameObject.GetComponent<StunningLucentScript>().shotEffect, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+                        miniCluster.name = hit.collider.gameObject.GetComponent<StunningLucentScript>().shotEffect.name;
+                    }
+                }
+
+                if (hit.collider.gameObject.layer == 11) //If this Weapon strikes an object with the "Mine" layer
+                {
+                    if (gameObject.GetComponent<MiningPlatform>())
+                    {
+                        gameObject.GetComponent<MiningPlatform>().confirmedHit = true;
+                        gameObject.GetComponent<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
+
                     }
 
-                    hostLauncher.gameObject.GetComponent<TheMostResplendent>().stackCount--;
-                    hostLauncher.gameObject.GetComponent<TheMostResplendent>().toggle = false;
+                    hit.collider.gameObject.GetComponent<MunitionScript>().TriggerMunition();
                 }
             }
-
-            if (hit.collider.gameObject.GetComponent<TMRHardLucentScript>())
-            {
-                GameObject miniCluster = Instantiate(hit.collider.gameObject.GetComponent<TMRHardLucentScript>().lucentCluster, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
-                miniCluster.name = hit.collider.gameObject.GetComponent<TMRHardLucentScript>().lucentCluster.name;
-                miniCluster.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-
-                miniCluster.GetComponent<LucentScript>().lucentGift /= 2;
-                miniCluster.GetComponent<LucentScript>().lucentGift *= hostLauncher.GetComponent<FirearmScript>().weaponRarity;
-                miniCluster.GetComponent<LucentScript>().ShatterCalculation();
-
-                hit.collider.gameObject.GetComponent<TMRHardLucentScript>().shockwaveBuildup += hostLauncher.GetComponent<FirearmScript>().damage;
-            }
-
-            if (hostLauncher.gameObject.GetComponent<GaleForceWinds>())
-            {
-                if (hostLauncher.gameObject.GetComponent<GaleForceWinds>().chargeCount >= 1 && hostLauncher.gameObject.GetComponent<GaleForceWinds>().toggle)
-                {
-                    GameObject torrent = Instantiate(hostLauncher.gameObject.GetComponent<GaleForceWinds>().applicator, hit.point + (hit.normal * 0.01f), Quaternion.identity);
-                    torrent.name = hostLauncher.gameObject.GetComponent<GaleForceWinds>().applicator.name;
-
-                    if (hostLauncher.gameObject.GetComponent<FirearmScript>().weaponRarity == 5)
-                    {
-                        torrent.GetComponent<GFWStatusApplicator>().fatedFlag = true;
-                        torrent.GetComponent<GFWStatusApplicator>().debuffMultiplier *= 1.43f;
-                        torrent.GetComponent<GFWStatusApplicator>().travelRadius *= 1.5f;
-                        torrent.GetComponent<GFWStatusApplicator>().travelLerpSpeed *= 2f;
-                    }
-
-                    hostLauncher.gameObject.GetComponent<GaleForceWinds>().chargeCount--;
-                    hostLauncher.gameObject.GetComponent<GaleForceWinds>().chargePercentage = 0f;
-                    hostLauncher.gameObject.GetComponent<GaleForceWinds>().done = false;
-                    hostLauncher.gameObject.GetComponent<GaleForceWinds>().toggle = false;
-
-                }
-            }
-
-            if(hit.collider.gameObject.GetComponent<StalactiteLucentScript>())
-                    {
-                if (hit.collider.gameObject.GetComponent<StalactiteLucentScript>().hostCrystal)
-                {
-                    hit.collider.gameObject.GetComponent<StalactiteLucentScript>().LucentPassive();
-                }
-            }
-
-            if (hit.collider.gameObject.GetComponent<SpectrumLucentScript>())
-            {
-                if (!hit.collider.gameObject.GetComponent<SpectrumLucentScript>().converted)
-                {
-                    hit.collider.gameObject.GetComponent<SpectrumLucentScript>().ConvertCluster();
-                }
-            }
-
-            if (hit.collider.gameObject.layer == 9) //If this Weapon strikes an object with the "Lucent" layer
-            {
-                if (hit.collider.gameObject.GetComponent<StunningLucentScript>())
-                {
-                    hit.collider.gameObject.GetComponent<StunningLucentScript>().currentHitCount += 4;
-                    hit.collider.gameObject.GetComponent<StunningLucentScript>().ExtendThrowTimer();
-
-                    GameObject miniCluster = Instantiate(hit.collider.gameObject.GetComponent<StunningLucentScript>().shotEffect, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
-                    miniCluster.name = hit.collider.gameObject.GetComponent<StunningLucentScript>().shotEffect.name;
-                }
-            }
-
-            if (hit.collider.gameObject.layer == 11) //If this Weapon strikes an object with the "Mine" layer
-            {
-                if (gameObject.GetComponent<MiningPlatform>())
-                {
-                    gameObject.GetComponent<MiningPlatform>().confirmedHit = true;
-                    gameObject.GetComponent<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
-
-                }
-
-                hit.collider.gameObject.GetComponent<MunitionScript>().TriggerMunition();
-            }
-        }
+        }   
 
         //if (isExoticMunition && isMine)
         //{
@@ -228,6 +233,17 @@ public class MunitionScript : MonoBehaviour
             Vector3 velocityRest = Vector3.zero;
 
             GetComponent<Rigidbody>().velocity = Vector3.Lerp(velocityActive, velocityRest, 1 - Mathf.Exp(speedDampening * Time.deltaTime));
+        }
+
+        if(highVelocity)
+        {
+            recentPosition = transform.position;
+            Vector3 trajectory = transform.up * hostLauncher.GetComponent<LauncherFirearm>().shotForceForward * Time.deltaTime;
+            float newRayLength = trajectory.magnitude;
+
+            HighVelocityInsurance(newRayLength);
+
+            Debug.DrawRay(recentPosition, transform.up, Color.white);
         }
     }
 
@@ -408,6 +424,116 @@ public class MunitionScript : MonoBehaviour
 
         gameObject.SetActive(false);
 
+    }
+
+    public void HighVelocityInsurance(float distance)
+    {
+
+        RaycastHit hit;
+        if (Physics.Raycast(recentPosition, transform.up, out hit, distance, contactOnly))
+        {
+            TriggerMunition();
+
+            if (hostLauncher.gameObject.GetComponent<MiningPlatform>())
+            {
+                hostLauncher.gameObject.GetComponent<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
+                hostLauncher.gameObject.GetComponent<MiningPlatform>().RemoteProc();
+            }
+
+            if (hostLauncher.gameObject.GetComponent<TheMostResplendent>())
+            {
+                if (hostLauncher.gameObject.GetComponent<TheMostResplendent>().stackCount >= 1 && hostLauncher.gameObject.GetComponent<TheMostResplendent>().toggle)
+                {
+                    GameObject lucentHard = Instantiate(hostLauncher.gameObject.GetComponent<TheMostResplendent>().hardLucent, hit.point + (hit.normal * 0.01f),
+                        Quaternion.LookRotation(hit.normal));
+                    lucentHard.name = hostLauncher.gameObject.GetComponent<TheMostResplendent>().hardLucent.name;
+
+                    if (hostLauncher.GetComponent<FirearmScript>().weaponRarity == 5 && !hostLauncher.GetComponent<FirearmScript>().isExotic)
+                    {
+                        lucentHard.GetComponent<TMRHardLucentScript>().fatedCrystal = true;
+                    }
+
+                    hostLauncher.gameObject.GetComponent<TheMostResplendent>().stackCount--;
+                    hostLauncher.gameObject.GetComponent<TheMostResplendent>().toggle = false;
+                }
+            }
+
+            if (hit.collider.gameObject.GetComponent<TMRHardLucentScript>())
+            {
+                GameObject miniCluster = Instantiate(hit.collider.gameObject.GetComponent<TMRHardLucentScript>().lucentCluster, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+                miniCluster.name = hit.collider.gameObject.GetComponent<TMRHardLucentScript>().lucentCluster.name;
+                miniCluster.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+                miniCluster.GetComponent<LucentScript>().lucentGift /= 2;
+                miniCluster.GetComponent<LucentScript>().lucentGift *= hostLauncher.GetComponent<FirearmScript>().weaponRarity;
+                miniCluster.GetComponent<LucentScript>().ShatterCalculation();
+
+                hit.collider.gameObject.GetComponent<TMRHardLucentScript>().shockwaveBuildup += hostLauncher.GetComponent<FirearmScript>().damage;
+            }
+
+            if (hostLauncher.gameObject.GetComponent<GaleForceWinds>())
+            {
+                if (hostLauncher.gameObject.GetComponent<GaleForceWinds>().chargeCount >= 1 && hostLauncher.gameObject.GetComponent<GaleForceWinds>().toggle)
+                {
+                    GameObject torrent = Instantiate(hostLauncher.gameObject.GetComponent<GaleForceWinds>().applicator, hit.point + (hit.normal * 0.01f), Quaternion.identity);
+                    torrent.name = hostLauncher.gameObject.GetComponent<GaleForceWinds>().applicator.name;
+
+                    if (hostLauncher.gameObject.GetComponent<FirearmScript>().weaponRarity == 5)
+                    {
+                        torrent.GetComponent<GFWStatusApplicator>().fatedFlag = true;
+                        torrent.GetComponent<GFWStatusApplicator>().debuffMultiplier *= 1.43f;
+                        torrent.GetComponent<GFWStatusApplicator>().travelRadius *= 1.5f;
+                        torrent.GetComponent<GFWStatusApplicator>().travelLerpSpeed *= 2f;
+                    }
+
+                    hostLauncher.gameObject.GetComponent<GaleForceWinds>().chargeCount--;
+                    hostLauncher.gameObject.GetComponent<GaleForceWinds>().chargePercentage = 0f;
+                    hostLauncher.gameObject.GetComponent<GaleForceWinds>().done = false;
+                    hostLauncher.gameObject.GetComponent<GaleForceWinds>().toggle = false;
+
+                }
+            }
+
+            if (hit.collider.gameObject.GetComponent<StalactiteLucentScript>())
+            {
+                if (hit.collider.gameObject.GetComponent<StalactiteLucentScript>().hostCrystal)
+                {
+                    hit.collider.gameObject.GetComponent<StalactiteLucentScript>().LucentPassive();
+                }
+            }
+
+            if (hit.collider.gameObject.GetComponent<SpectrumLucentScript>())
+            {
+                if (!hit.collider.gameObject.GetComponent<SpectrumLucentScript>().converted)
+                {
+                    hit.collider.gameObject.GetComponent<SpectrumLucentScript>().ConvertCluster();
+                }
+            }
+
+            if (hit.collider.gameObject.layer == 9) //If this Weapon strikes an object with the "Lucent" layer
+            {
+                if (hit.collider.gameObject.GetComponent<StunningLucentScript>())
+                {
+                    hit.collider.gameObject.GetComponent<StunningLucentScript>().currentHitCount += 4;
+                    hit.collider.gameObject.GetComponent<StunningLucentScript>().ExtendThrowTimer();
+
+                    GameObject miniCluster = Instantiate(hit.collider.gameObject.GetComponent<StunningLucentScript>().shotEffect, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+                    miniCluster.name = hit.collider.gameObject.GetComponent<StunningLucentScript>().shotEffect.name;
+                }
+            }
+
+            if (hit.collider.gameObject.layer == 11) //If this Weapon strikes an object with the "Mine" layer
+            {
+                if (gameObject.GetComponent<MiningPlatform>())
+                {
+                    gameObject.GetComponent<MiningPlatform>().confirmedHit = true;
+                    gameObject.GetComponent<MiningPlatform>().clusterPosition = hit.point + (hit.normal * 0.01f);
+
+                }
+
+                hit.collider.gameObject.GetComponent<MunitionScript>().TriggerMunition();
+            }
+        }
     }
 
     /// <summary>

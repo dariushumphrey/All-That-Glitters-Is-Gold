@@ -341,8 +341,19 @@ public class WeaponManagerScript : MonoBehaviour
         {
             //Debug.Log("Displaying Opening Shot");
             item = Instantiate(weapons[8], transform.position, transform.rotation);
+            item.transform.localPosition = new Vector3(transform.position.x, 2.1f, 0.4f);
             item.name = weapons[8].name;
             wepName.text = "Opening Shot";
+            //flavor.text = item.GetComponent<FirearmScript>().flavorText;         
+        }
+
+        if (wepStr == "9")
+        {
+            //Debug.Log("Displaying AMLR");
+            item = Instantiate(weapons[9], transform.position, transform.rotation);
+            item.transform.localPosition = new Vector3(transform.position.x, 1.8f, -0.25f);
+            item.name = weapons[9].name;
+            wepName.text = "AMLR";
             //flavor.text = item.GetComponent<FirearmScript>().flavorText;         
         }
 
@@ -1169,6 +1180,13 @@ public class WeaponManagerScript : MonoBehaviour
                 //Debug.Log("Respawning Opening Shot");
                 item = Instantiate(weapons[8], transform.position, transform.rotation);
                 item.name = weapons[8].name;
+            }
+
+            if (wepStr == "9")
+            {
+                //Debug.Log("Respawning AMLR");
+                item = Instantiate(weapons[9], transform.position, transform.rotation);
+                item.name = weapons[9].name;
             }
 
             if (rarStr == "1")
