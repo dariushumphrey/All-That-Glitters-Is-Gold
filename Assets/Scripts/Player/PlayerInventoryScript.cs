@@ -1291,9 +1291,18 @@ public class PlayerInventoryScript : MonoBehaviour
                     "Moving generates a charge. While halfway charged, Enemy hits apply damage-over-time.";
         } //Flashpoint + Positive-Negative
 
+        if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -9)
+        {
+            cheatTraitOne.text = "Defiance" + '\n' +
+                "Increases Melee range and damage by 100%. Guarding reflects 1000% of damage towards the attacker.";
+
+            cheatTraitTwo.text = "All Else Fails" + '\n' +
+                    "When Shield depletes, all incoming Enemy damage is nullified for three seconds.";
+        } //Defiance + All Else Fails
+
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -10)
         {
-            cheatTraitOne.text = "Repurposed Form" + '\n' +
+            cheatTraitOne.text = "It Writhes" + '\n' +
                 "Fires Replevin capsules. Hits produce staggering Berth explosions that inflict 10% of Weapon damage.";
 
             cheatTraitTwo.text = "Gale Force Winds" + '\n' +
@@ -1585,7 +1594,7 @@ public class PlayerInventoryScript : MonoBehaviour
                         write.Write("7");
                     }
 
-                    if (inventory[i].name == "Opening Shot")
+                    if (inventory[i].name == "Opening Shot" || inventory[i].name == "Deleterious")
                     {
                         write.Write("8");
                     }
@@ -1989,6 +1998,17 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<PositiveNegative>())
                                 {
                                     write.WriteLine("6");
+                                }
+
+                                //Exotic Opening Shot
+                                if (inventory[i].GetComponent<Defiance>())
+                                {
+                                    write.Write("I");
+                                }
+
+                                if (inventory[i].GetComponent<AllElseFails>())
+                                {
+                                    write.WriteLine("9");
                                 }
 
                                 //Exotic AMLR

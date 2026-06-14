@@ -21,6 +21,8 @@ public class PlayerMeleeScript : MonoBehaviour
     internal GameObject fulminateCheat; //Confirms presence of Weapon with Fulminate if not null
     internal GameObject foragerCheat; //Confirms presence of Weapon with Forager if not null
     internal GameObject enshroudCheat; //Confirms presence of Weapon with Enshroud if not null
+    internal bool defiancePresent = false; //Confirms presence of Exotic Opening Shot if true
+    internal bool effectSignal = false; //Informs Cheat of successful proc if true
 
     internal GameObject dpsText; //Text objects that track Cheat, Damage activity
     internal string indent; //Used to produce new lines

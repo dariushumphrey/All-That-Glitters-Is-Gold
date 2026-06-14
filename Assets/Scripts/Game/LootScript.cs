@@ -343,12 +343,20 @@ public class LootScript : MonoBehaviour
                 reward.GetComponent<FirearmScript>().flavorText = "Just when you thought you understood how the world works.";
             }
 
+            else if (wepTypeStr == "8")
+            {
+                reward.name = "Deleterious";
+                reward.GetComponent<FirearmScript>().cheatOverride = -9;
+                reward.GetComponent<FirearmScript>().Awake();
+                reward.GetComponent<FirearmScript>().flavorText = "''The Resplendent is too large to be fully lost. What Lucent has already consumed, however, may take years to chisel away.''";
+            }
+
             else
             {
                 reward.name = "Bad Grief";
                 reward.GetComponent<FirearmScript>().cheatOverride = -10;
                 reward.GetComponent<FirearmScript>().Awake();
-                reward.GetComponent<FirearmScript>().flavorText = "'LOOK at what they have done to MY Resplendent! MINE! [REDACTED] cannot be allowed to survive! NO MORE!'" + "\n" + "-Unknown";
+                reward.GetComponent<FirearmScript>().flavorText = "''LOOK at what they have done to MY Resplendent! MINE! [REDACTED] cannot be allowed to survive! NO MORE!''" + "\n" + "-Unknown";
             }
 
         }
@@ -1042,6 +1050,11 @@ public class LootScript : MonoBehaviour
             else if (wepTypeStr == "7")
             {
                 clpLtType.GetComponent<Text>().text = "Nebulous At Best";
+            }
+
+            else if (wepTypeStr == "8")
+            {
+                clpLtType.GetComponent<Text>().text = "Deleterious";
             }
 
             else
@@ -1787,6 +1800,19 @@ public class LootScript : MonoBehaviour
                         "<i>Apply damage-over-time.</i>";
             }
 
+            if (wepTypeStr == "8")
+            {
+                wepPltStr = "5";
+                fcOneStr = "I";
+                fcTwoStr = "J";
+                clpLtPlatform.GetComponent<Text>().text = "Siphonic\n" +
+                        "<i>1% Health, Shield on hits.</i>";
+                clpLtFncChtOne.GetComponent<Text>().text = "Defiance\n" +
+                        "<i>Guards reflect 1000% damage.</i>";
+                clpLtFncChtTwo.GetComponent<Text>().text = "All Else Fails\n" +
+                        "<i>Immmuity on Shield breaks.</i>";
+            }
+
             if (wepTypeStr == "9")
             {
                 wepPltStr = "4";
@@ -1794,7 +1820,7 @@ public class LootScript : MonoBehaviour
                 fcTwoStr = "^";
                 clpLtPlatform.GetComponent<Text>().text = "Tempered\n" +
                         "<i>Optimal damage, control.</i>";
-                clpLtFncChtOne.GetComponent<Text>().text = "Repurposed Form\n" +
+                clpLtFncChtOne.GetComponent<Text>().text = "It Writhes\n" +
                         "<i>Fire Replevin capsules.</i>";
                 clpLtFncChtTwo.GetComponent<Text>().text = "Gale Force Winds\n" +
                         "<i>Cast debuffing winds.</i>";

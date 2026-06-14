@@ -33,7 +33,7 @@
 	- Fires floating Lucent mines for manual detonation.
 	- Switching Weapons leaves mines intact.
 	- Companion Cheat is Positive-Negative.
--Improved Superweapon (Exotic Pistol) Firing VFX.
+-Improved Superweapon Firing VFX (Apathetic - Exotic Pistol).
 - <color=cyan>[FIX]</color> Fixed an issue where Weapons would subtract from reserves instead of their magazines when firing immediately after auto-reloads.
 - <color=cyan>[FIX]</color> Fixed an issue where Forager (Fated) was activating on Underfoot (Exotic SMG).
 - Mercies (Exotic Semi Fire Rifle) 

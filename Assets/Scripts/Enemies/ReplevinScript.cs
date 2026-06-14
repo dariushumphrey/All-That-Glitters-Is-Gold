@@ -699,6 +699,12 @@ public class ReplevinScript : MonoBehaviour
                                                 hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
                                             }
 
+                                            if (hit.collider.GetComponent<PlayerMeleeScript>().defiancePresent)
+                                            {
+                                                enemy.inflictDamage((damage * 10));
+                                                hit.collider.GetComponent<PlayerMeleeScript>().effectSignal = true;
+                                            }
+
                                             if (!staggered)
                                             {
                                                 self.ResetPath();
@@ -1867,6 +1873,12 @@ public class ReplevinScript : MonoBehaviour
                                             hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
                                         }
 
+                                        if (hit.collider.GetComponent<PlayerMeleeScript>().defiancePresent)
+                                        {
+                                            enemy.inflictDamage((damage * 10));
+                                            hit.collider.GetComponent<PlayerMeleeScript>().effectSignal = true;
+                                        }
+
                                         if (!staggered)
                                         {
                                             if (gameObject.GetComponent<ReplevinScript>().self.isOnNavMesh)
@@ -2562,6 +2574,12 @@ public class ReplevinScript : MonoBehaviour
                                         hit.collider.GetComponent<PlayerStatusScript>().cam.multiWeapon)
                                     {
                                         hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
+                                    }
+
+                                    if (hit.collider.GetComponent<PlayerMeleeScript>().defiancePresent)
+                                    {
+                                        enemy.inflictDamage((damage * 10));
+                                        hit.collider.GetComponent<PlayerMeleeScript>().effectSignal = true;
                                     }
 
                                     if (!staggered)

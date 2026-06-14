@@ -568,6 +568,19 @@ public class WeaponManagerScript : MonoBehaviour
                     item.name = weapons[7].name + "_Exotic";
                 }
 
+                if (wepStr == "8")
+                {
+                    wepName.text = "Deleterious";
+                    rarityCheck.text = "Exotic";
+
+                    item.GetComponent<FirearmScript>().isExotic = true;
+                    //item.GetComponent<FirearmScript>().damagePercent = 60f;
+                    item.GetComponent<FirearmScript>().RarityAugment();
+                    item.GetComponent<FirearmScript>().flavorText = "''The Resplendent is too large to be fully lost. What Lucent has already consumed, however, may take years to chisel away.''";
+                    flavor.text = item.GetComponent<FirearmScript>().flavorText;
+                    item.name = weapons[8].name + "_Exotic";
+                }
+
                 if (wepStr == "9")
                 {
                     wepName.text = "Bad Grief";
@@ -831,8 +844,14 @@ public class WeaponManagerScript : MonoBehaviour
 
                 if (cFiveStr == "J")
                 {
-                    cheatTraitOne.text = "Repurposed Form" + '\n' +
+                    cheatTraitOne.text = "It Writhes" + '\n' +
                         "Fires Replevin capsules. Hits produce staggering Berth explosions that inflict 10% of Weapon damage.";
+                }
+
+                if (cFiveStr == "I")
+                {
+                    cheatTraitOne.text = "Defiance" + '\n' +
+                        "Increases Melee range and Melee damage by 100%. Guarding reflects 1000% of damage towards the attacker.";
                 }
 
 
@@ -977,6 +996,13 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Positive-Negative" + '\n' +
                         "Moving generates a charge. While halfway charged, Enemy hits applies 100% of Weapon damage as damage-over-time for ten seconds.";
+                }
+
+                //Defiance pairing
+                if (cSixStr == "9")
+                {
+                    cheatTraitTwo.text = "All Else Fails" + '\n' +
+                        "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
                 }
 
                 //Volant pairing
@@ -1302,11 +1328,19 @@ public class WeaponManagerScript : MonoBehaviour
                         item.name = "Nebulous At Best";
                     }
 
+                    if (wepStr == "8")
+                    {
+                        item.GetComponent<FirearmScript>().isExotic = true;
+                        item.GetComponent<FirearmScript>().RarityAugment();
+                        item.GetComponent<FirearmScript>().flavorText = "''The Resplendent is too large to be fully lost. What Lucent has already consumed, however, may take years to chisel away.''";
+                        item.name = "Deleterious";
+                    }
+
                     if (wepStr == "9")
                     {
                         item.GetComponent<FirearmScript>().isExotic = true;
                         item.GetComponent<FirearmScript>().RarityAugment();
-                        item.GetComponent<FirearmScript>().flavorText = "'LOOK at what they have done to MY Resplendent! MINE! [REDACTED] cannot be allowed to survive! NO MORE!'" + "\n" + "-Unknown";
+                        item.GetComponent<FirearmScript>().flavorText = "''LOOK at what they have done to MY Resplendent! MINE! [REDACTED] cannot be allowed to survive! NO MORE!''" + "\n" + "-Unknown";
                         item.name = "Bad Grief";
                     }
                 }
@@ -1592,6 +1626,13 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<Flashpoint>().proc = item.GetComponent<FirearmScript>().procOne;
                 }
 
+                if (cFiveStr == "I")
+                {
+                    item.GetComponent<FirearmScript>().cheatRNG = -9;
+                    item.AddComponent<Defiance>();
+                    item.GetComponent<Defiance>().proc = item.GetComponent<FirearmScript>().procOne;
+                }
+
                 if (cFiveStr == "J")
                 {
                     item.GetComponent<FirearmScript>().cheatRNG = -10;
@@ -1679,6 +1720,12 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     item.AddComponent<PositiveNegative>();
                     item.GetComponent<PositiveNegative>().proc = item.GetComponent<FirearmScript>().procTwo;
+                }
+
+                if (cSixStr == "9")
+                {
+                    item.AddComponent<AllElseFails>();
+                    item.GetComponent<AllElseFails>().proc = item.GetComponent<FirearmScript>().procTwo;
                 }
 
                 //Volant pairing

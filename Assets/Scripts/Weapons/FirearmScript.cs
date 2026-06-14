@@ -77,6 +77,8 @@ public class FirearmScript : MonoBehaviour
         //Applies Rarity effects and generates Cheats
         else
         {
+            inv = FindObjectOfType<PlayerInventoryScript>();
+
             procOne = GameObject.Find("weaponCheatText (1)");
             if (procOne.GetComponent<Text>() != null)
             {
@@ -114,7 +116,7 @@ public class FirearmScript : MonoBehaviour
         //Initializes hit and kill statuses, saves starting Reload Speed
         else
         {
-            inv = FindObjectOfType<PlayerInventoryScript>();
+            //inv = FindObjectOfType<PlayerInventoryScript>();
             gunCam = Camera.main;
             confirmHit = false;
             confirmKill = false;
@@ -185,15 +187,15 @@ public class FirearmScript : MonoBehaviour
     {
         if (isExotic == true)
         {
-            if (cheatOverride == -1)
+            if (cheatOverride == -1 || cheatOverride == -9)
             {
                 gameObject.AddComponent<SiphonicPlatform>();
-            } //Exotic Full Fire Rifle receives the Siphonic platform
+            } //Exotic Full Fire Rifle, Exotic Opening Shot receives the Siphonic platform
 
-            if (cheatOverride == -2)
+            if (cheatOverride == -2 || cheatOverride == -8)
             {
                 gameObject.AddComponent<ChatterPlatform>();
-            } //Exotic SMG receives the Chatter platform
+            } //Exotic SMG, Exotic Grenade Launcher receives the Chatter platform
 
             if (cheatOverride == -3)
             {
@@ -213,17 +215,12 @@ public class FirearmScript : MonoBehaviour
             if (cheatOverride == -6)
             {
                 gameObject.AddComponent<TrenchantPlatform>();
-            } //Exotic Burst Fire Rifle receives the Trenchant platform
+            } //Exotic Burst Fire Riflereceives the Trenchant platform
 
             if (cheatOverride == -7)
             {
                 gameObject.AddComponent<MiningPlatform>();
             } //Exotic Machine Gun receives the Mining platform
-
-            if (cheatOverride == -8)
-            {
-                gameObject.AddComponent<ChatterPlatform>();
-            } //Exotic Grenade Launcher receives the Chatter platform
 
             return;
         }
@@ -527,6 +524,15 @@ public class FirearmScript : MonoBehaviour
                 gameObject.GetComponent<Flashpoint>().proc = procOne;
                 gameObject.GetComponent<PositiveNegative>().proc = procTwo;
             } //Flashpoint + Positive-Negative
+
+            if (cheatRNG == -9)
+            {
+                gameObject.AddComponent<Defiance>();
+                gameObject.AddComponent<AllElseFails>();
+
+                gameObject.GetComponent<Defiance>().proc = procOne;
+                gameObject.GetComponent<AllElseFails>().proc = procTwo;
+            } //Defiance + All Else Fails
 
             if (cheatRNG == -10)
             {

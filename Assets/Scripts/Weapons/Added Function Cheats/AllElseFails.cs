@@ -34,7 +34,7 @@ public class AllElseFails : MonoBehaviour
 
         //Rarity 5 Weapons increase immunity duration and decrease cooldown
         //VFX duration is increased to match effect duration
-        if (firearm.weaponRarity == 5)
+        if (!firearm.isExotic && firearm.weaponRarity == 5)
         {
             nullifyTimer = 5f;
             cooldownTimer = 10f;
@@ -92,7 +92,7 @@ public class AllElseFails : MonoBehaviour
                 if(!done)
                 {
                     GameObject effect = Instantiate(activation, gameObject.transform.root.gameObject.transform.position + (Vector3.up * 1.5f), transform.rotation, gameObject.transform.root.gameObject.transform);
-                    if (firearm.weaponRarity == 5)
+                    if (!firearm.isExotic && firearm.weaponRarity == 5)
                     {
                         effect.AddComponent<DestroyScript>();
                         effect.GetComponent<DestroyScript>().destroyTimer = 6f;

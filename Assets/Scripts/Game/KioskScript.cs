@@ -261,6 +261,13 @@ public class KioskScript : MonoBehaviour
                     fcTwoStr = "6";
                 }
 
+                if (wepTypeStr == "8")
+                {
+                    wepPlatStr = "5";
+                    fcOneStr = "I";
+                    fcTwoStr = "9";
+                }
+
                 if (wepTypeStr == "9")
                 {
                     wepPlatStr = "4";
@@ -470,6 +477,11 @@ public class KioskScript : MonoBehaviour
                     if (wepTypeStr == "7")
                     {
                         names[p].text = "Nebulous At Best";
+                    }
+
+                    if (wepTypeStr == "8")
+                    {
+                        names[p].text = "Deleterious";
                     }
 
                     if (wepTypeStr == "9")
@@ -765,8 +777,15 @@ public class KioskScript : MonoBehaviour
 
                     if (fcOneStr == "J")
                     {
-                        functionOnes[p].text = "Repurposed Form\n" +
+                        functionOnes[p].text = "It Writhes\n" +
                         "<i>Fire Replevin capsules.</i>";
+
+                    }
+
+                    if (fcOneStr == "I")
+                    {
+                        functionOnes[p].text = "Defiance\n" +
+                        "<i>Guards reflect 1000% damage.</i>";
 
                     }
 
@@ -861,6 +880,12 @@ public class KioskScript : MonoBehaviour
                         "<i>Apply damage-over-time.</i>";
 
                     } //Flashpoint pairing
+
+                    if (fcTwoStr == "9")
+                    {
+                        functionTwos[p].text = "All Else Fails\n" +
+                        "<i>Immmuity on Shield breaks.</i>";
+                    }
 
                     if (fcTwoStr == "0")
                     {
@@ -1438,10 +1463,17 @@ public class KioskScript : MonoBehaviour
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }
 
+                if (wepTypeStr == "8")
+                {
+                    wepName.text = "Deleterious";
+                    item.GetComponent<FirearmScript>().flavorText = "''The Resplendent is too large to be fully lost. What Lucent has already consumed, however, may take years to chisel away.''";
+                    flavor.text = item.GetComponent<FirearmScript>().flavorText;
+                }
+
                 if (wepTypeStr == "9")
                 {
                     wepName.text = "Bad Grief";
-                    item.GetComponent<FirearmScript>().flavorText = "'LOOK at what they have done to MY Resplendent! MINE! [REDACTED] cannot be allowed to survive! NO MORE!'" + "\n" + "-Unknown";
+                    item.GetComponent<FirearmScript>().flavorText = "''LOOK at what they have done to MY Resplendent! MINE! [REDACTED] cannot be allowed to survive! NO MORE!''" + "\n" + "-Unknown";
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }
 
@@ -1679,8 +1711,14 @@ public class KioskScript : MonoBehaviour
 
                 if (fcOneStr == "J")
                 {
-                    cheatTraitOne.text = "Repurposed Form" + '\n' +
+                    cheatTraitOne.text = "It Writhes" + '\n' +
                         "Fires Replevin capsules. Hits produce staggering Berth explosions that inflict 10% of Weapon damage.";
+                }
+
+                if (fcOneStr == "I")
+                {
+                    cheatTraitOne.text = "Defiance" + '\n' +
+                        "Increases Melee range and Melee damage by 100%. Guarding reflects 1000% of damage towards the attacker.";
                 }
 
 
@@ -1762,6 +1800,12 @@ public class KioskScript : MonoBehaviour
                     cheatTraitTwo.text = "Positive-Negative" + '\n' +
                         "Moving generates a charge. While halfway charged, Enemy hits applies 100% of Weapon damage as damage-over-time for ten seconds.";
                 } //Flashpoint pairing
+
+                if (fcTwoStr == "9")
+                {
+                    cheatTraitTwo.text = "All Else Fails" + '\n' +
+                        "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
+                }
 
                 if (fcTwoStr == "0")
                 {
