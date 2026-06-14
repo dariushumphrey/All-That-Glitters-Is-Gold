@@ -27,7 +27,7 @@ public class GaleForceWinds : MonoBehaviour
         applicator = Resources.Load<GameObject>("Game Items/GaleForceWindsApply");
 
         //Non-exotic Rarity 5 Weapons double the charge multiplier from Sprinting
-        if(firearm.weaponRarity == 5)
+        if(!firearm.isExotic && firearm.weaponRarity == 5)
         {
             sprintAccelerant *= 2;
         }

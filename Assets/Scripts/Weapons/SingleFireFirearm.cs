@@ -144,7 +144,7 @@ public class SingleFireFirearm : FirearmScript
                             GameObject torrent = Instantiate(gameObject.GetComponent<GaleForceWinds>().applicator, hit.point + (hit.normal * 0.01f), Quaternion.identity);
                             torrent.name = gameObject.GetComponent<GaleForceWinds>().applicator.name;
 
-                            if (weaponRarity == 5)
+                            if (!isExotic && weaponRarity == 5)
                             {
                                 torrent.GetComponent<GFWStatusApplicator>().fatedFlag = true;
                                 torrent.GetComponent<GFWStatusApplicator>().debuffMultiplier *= 1.43f;
@@ -383,7 +383,7 @@ public class SingleFireFirearm : FirearmScript
                             GameObject torrent = Instantiate(gameObject.GetComponent<GaleForceWinds>().applicator, hit.point + (hit.normal * 0.01f), Quaternion.identity);
                             torrent.name = gameObject.GetComponent<GaleForceWinds>().applicator.name;
 
-                            if (weaponRarity == 5)
+                            if (!isExotic && weaponRarity == 5)
                             {
                                 torrent.GetComponent<GFWStatusApplicator>().fatedFlag = true;
                                 torrent.GetComponent<GFWStatusApplicator>().debuffMultiplier *= 1.43f;

@@ -56,12 +56,24 @@ public class LauncherFirearm : FirearmScript
 
             if(isExotic)
             {
-                launched.GetComponent<MunitionScript>().isExoticMunition = true;
-                launched.GetComponent<MunitionScript>().isMine = true;
-
-                if(GetComponent<Flashpoint>())
+                if(!launched.GetComponent<MunitionScript>().isExoticMunition)
                 {
+                    launched.GetComponent<MunitionScript>().isExoticMunition = true;
+                }
+
+                if (GetComponent<Flashpoint>())
+                {
+                    if(!launched.GetComponent<MunitionScript>().isMine)
+                    {
+                        launched.GetComponent<MunitionScript>().isMine = true;
+                    }
+
                     GetComponent<Flashpoint>().minesActive.Add(launched);
+                }
+
+                if(GetComponent<RepurposedForm>())
+                {
+                    launched.GetComponent<MunitionScript>().repurposedFormFlag = true;
                 }
             }
 

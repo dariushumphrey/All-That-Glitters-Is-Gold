@@ -200,10 +200,10 @@ public class FirearmScript : MonoBehaviour
                 gameObject.AddComponent<EfficientPlatform>();
             } //Exotic Pistol receives the Efficient platform
 
-            if (cheatOverride == -4)
+            if (cheatOverride == -4 || cheatOverride == -10)
             {
                 gameObject.AddComponent<TemperedPlatform>();
-            } //Exotic Shotgun receives the Tempered platform
+            } //Exotic Shotgun, Exotic AMLR receives the Tempered platform
 
             if (cheatOverride == -5)
             {
@@ -526,6 +526,15 @@ public class FirearmScript : MonoBehaviour
 
                 gameObject.GetComponent<Flashpoint>().proc = procOne;
                 gameObject.GetComponent<PositiveNegative>().proc = procTwo;
+            } //Flashpoint + Positive-Negative
+
+            if (cheatRNG == -10)
+            {
+                gameObject.AddComponent<RepurposedForm>();
+                gameObject.AddComponent<GaleForceWinds>();
+
+                gameObject.GetComponent<RepurposedForm>().proc = procOne;
+                gameObject.GetComponent<GaleForceWinds>().proc = procTwo;
             } //Flashpoint + Positive-Negative
 
             return;
@@ -988,7 +997,7 @@ public class FirearmScript : MonoBehaviour
                             GameObject torrent = Instantiate(gameObject.GetComponent<GaleForceWinds>().applicator, hit.point + (hit.normal * 0.01f), Quaternion.identity);
                             torrent.name = gameObject.GetComponent<GaleForceWinds>().applicator.name;
 
-                            if (weaponRarity == 5)
+                            if (!isExotic && weaponRarity == 5)
                             {
                                 torrent.GetComponent<GFWStatusApplicator>().fatedFlag = true;
                                 torrent.GetComponent<GFWStatusApplicator>().debuffMultiplier *= 1.43f;
@@ -1219,7 +1228,7 @@ public class FirearmScript : MonoBehaviour
                             GameObject torrent = Instantiate(gameObject.GetComponent<GaleForceWinds>().applicator, hit.point + (hit.normal * 0.01f), Quaternion.identity);
                             torrent.name = gameObject.GetComponent<GaleForceWinds>().applicator.name;
 
-                            if(weaponRarity == 5)
+                            if(!isExotic && weaponRarity == 5)
                             {
                                 torrent.GetComponent<GFWStatusApplicator>().fatedFlag = true;
                                 torrent.GetComponent<GFWStatusApplicator>().debuffMultiplier *= 1.43f;

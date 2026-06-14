@@ -1290,6 +1290,15 @@ public class PlayerInventoryScript : MonoBehaviour
             cheatTraitTwo.text = "Positive-Negative" + '\n' +
                     "Moving generates a charge. While halfway charged, Enemy hits apply damage-over-time.";
         } //Flashpoint + Positive-Negative
+
+        if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -10)
+        {
+            cheatTraitOne.text = "Repurposed Form" + '\n' +
+                "Fires Replevin capsules. Hits produce staggering Berth explosions that inflict 10% of Weapon damage.";
+
+            cheatTraitTwo.text = "Gale Force Winds" + '\n' +
+                    "[E] - Cast traveling winds that applies Health and Slowed debuffs to in-range Enemies. Lasts 45s.";
+        } //Repurposed Form + Gale Force Winds
     }
 
     /// <summary>
@@ -1581,7 +1590,7 @@ public class PlayerInventoryScript : MonoBehaviour
                         write.Write("8");
                     }
 
-                    if (inventory[i].name == "AMLR")
+                    if (inventory[i].name == "AMLR" || inventory[i].name == "Bad Grief")
                     {
                         write.Write("9");
                     }
@@ -1980,6 +1989,17 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<PositiveNegative>())
                                 {
                                     write.WriteLine("6");
+                                }
+
+                                //Exotic AMLR
+                                if (inventory[i].GetComponent<RepurposedForm>())
+                                {
+                                    write.Write("J");
+                                }
+
+                                if (inventory[i].GetComponent<GaleForceWinds>())
+                                {
+                                    write.WriteLine("^");
                                 }
                             }
 

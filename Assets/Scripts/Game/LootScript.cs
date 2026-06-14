@@ -335,12 +335,20 @@ public class LootScript : MonoBehaviour
                 reward.GetComponent<FirearmScript>().flavorText = "Using this Weapon feels like a perpetual Calvary charge. For where you're going, you won't be needing any breaks.";
             }
 
-            else
+            else if (wepTypeStr == "7")
             {
                 reward.name = "Nebulous At Best";
                 reward.GetComponent<FirearmScript>().cheatOverride = -8;
                 reward.GetComponent<FirearmScript>().Awake();
                 reward.GetComponent<FirearmScript>().flavorText = "Just when you thought you understood how the world works.";
+            }
+
+            else
+            {
+                reward.name = "Bad Grief";
+                reward.GetComponent<FirearmScript>().cheatOverride = -10;
+                reward.GetComponent<FirearmScript>().Awake();
+                reward.GetComponent<FirearmScript>().flavorText = "'LOOK at what they have done to MY Resplendent! MINE! [REDACTED] cannot be allowed to survive! NO MORE!'" + "\n" + "-Unknown";
             }
 
         }
@@ -1031,9 +1039,14 @@ public class LootScript : MonoBehaviour
                 clpLtType.GetComponent<Text>().text = "Underfoot";
             }
 
-            else
+            else if (wepTypeStr == "7")
             {
                 clpLtType.GetComponent<Text>().text = "Nebulous At Best";
+            }
+
+            else
+            {
+                clpLtType.GetComponent<Text>().text = "Bad Grief";
             }
 
         }
@@ -1772,6 +1785,19 @@ public class LootScript : MonoBehaviour
                         "<i>Fire Lucent mines.</i>";
                 clpLtFncChtTwo.GetComponent<Text>().text = "Positive-Negative\n" +
                         "<i>Apply damage-over-time.</i>";
+            }
+
+            if (wepTypeStr == "9")
+            {
+                wepPltStr = "4";
+                fcOneStr = "J";
+                fcTwoStr = "^";
+                clpLtPlatform.GetComponent<Text>().text = "Tempered\n" +
+                        "<i>Optimal damage, control.</i>";
+                clpLtFncChtOne.GetComponent<Text>().text = "Repurposed Form\n" +
+                        "<i>Fire Replevin capsules.</i>";
+                clpLtFncChtTwo.GetComponent<Text>().text = "Gale Force Winds\n" +
+                        "<i>Cast debuffing winds.</i>";
             }
 
             lootString = wepTypeStr + wepRarStr + wepExoStr + wepFavStr + wepPltStr +

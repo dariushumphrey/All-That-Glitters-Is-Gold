@@ -261,6 +261,13 @@ public class KioskScript : MonoBehaviour
                     fcTwoStr = "6";
                 }
 
+                if (wepTypeStr == "9")
+                {
+                    wepPlatStr = "4";
+                    fcOneStr = "J";
+                    fcTwoStr = "^";
+                }
+
                 weaponIdentity = wepTypeStr + wepRarStr + wepExoStr + wepFavStr + wepPlatStr +
                     stOneStr + stTwoStr + stThreeStr + stFourStr +
                     fcOneStr + fcTwoStr;
@@ -463,6 +470,11 @@ public class KioskScript : MonoBehaviour
                     if (wepTypeStr == "7")
                     {
                         names[p].text = "Nebulous At Best";
+                    }
+
+                    if (wepTypeStr == "9")
+                    {
+                        names[p].text = "Bad Grief";
                     }
                 }
 
@@ -751,6 +763,13 @@ public class KioskScript : MonoBehaviour
 
                     }
 
+                    if (fcOneStr == "J")
+                    {
+                        functionOnes[p].text = "Repurposed Form\n" +
+                        "<i>Fire Replevin capsules.</i>";
+
+                    }
+
 
                     if (fcOneStr == "9")
                     {
@@ -896,7 +915,7 @@ public class KioskScript : MonoBehaviour
                         functionTwos[p].text = "Gale Force Winds\n" +
                         "<i>Cast debuffing winds.</i>";
 
-                    }
+                    } //Repurposed Form pairing
                 }
             }                   
 
@@ -1419,6 +1438,13 @@ public class KioskScript : MonoBehaviour
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                 }
 
+                if (wepTypeStr == "9")
+                {
+                    wepName.text = "Bad Grief";
+                    item.GetComponent<FirearmScript>().flavorText = "'LOOK at what they have done to MY Resplendent! MINE! [REDACTED] cannot be allowed to survive! NO MORE!'" + "\n" + "-Unknown";
+                    flavor.text = item.GetComponent<FirearmScript>().flavorText;
+                }
+
                 item.GetComponent<FirearmScript>().RarityAugment();
             }
 
@@ -1649,6 +1675,12 @@ public class KioskScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Flashpoint" + '\n' +
                         "Fires floating Lucent mines. [E] - Detonates all active mines.";
+                }
+
+                if (fcOneStr == "J")
+                {
+                    cheatTraitOne.text = "Repurposed Form" + '\n' +
+                        "Fires Replevin capsules. Hits produce staggering Berth explosions that inflict 10% of Weapon damage.";
                 }
 
 

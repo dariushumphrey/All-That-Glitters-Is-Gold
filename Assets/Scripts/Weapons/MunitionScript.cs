@@ -7,12 +7,14 @@ using System.Text.RegularExpressions;
 public class MunitionScript : MonoBehaviour
 {
     public GameObject hostLauncher;
+    public GameObject staggerZone;
 
     public int explosiveDamage;
     public float explosiveRange;
     public float hitDetectionLength = 2f;
     public bool isExoticMunition;
     public bool isMine;
+    public bool repurposedFormFlag = false;
     public bool highVelocity = false; 
     public Transform hitDetection;
     public GameObject detonationEffect; //VFX for munition
@@ -29,14 +31,17 @@ public class MunitionScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(!isExoticMunition)
+        if(!isExoticMunition || isExoticMunition && hostLauncher.GetComponent<RepurposedForm>())
         {
             Destroy(gameObject, 3f);
         }
 
         else
         {
-            Destroy(gameObject, 60f);
+            if(hostLauncher.GetComponent<Flashpoint>())
+            {
+                Destroy(gameObject, 60f);
+            }
         }
     }
 
@@ -105,7 +110,7 @@ public class MunitionScript : MonoBehaviour
                         GameObject torrent = Instantiate(hostLauncher.gameObject.GetComponent<GaleForceWinds>().applicator, hit.point + (hit.normal * 0.01f), Quaternion.identity);
                         torrent.name = hostLauncher.gameObject.GetComponent<GaleForceWinds>().applicator.name;
 
-                        if (hostLauncher.gameObject.GetComponent<FirearmScript>().weaponRarity == 5)
+                        if (!hostLauncher.gameObject.GetComponent<FirearmScript>().isExotic && hostLauncher.gameObject.GetComponent<FirearmScript>().weaponRarity == 5)
                         {
                             torrent.GetComponent<GFWStatusApplicator>().fatedFlag = true;
                             torrent.GetComponent<GFWStatusApplicator>().debuffMultiplier *= 1.43f;
@@ -207,7 +212,7 @@ public class MunitionScript : MonoBehaviour
                     GameObject torrent = Instantiate(hostLauncher.gameObject.GetComponent<GaleForceWinds>().applicator, transform.position, Quaternion.identity);
                     torrent.name = hostLauncher.gameObject.GetComponent<GaleForceWinds>().applicator.name;
 
-                    if (hostLauncher.gameObject.GetComponent<FirearmScript>().weaponRarity == 5)
+                    if (!hostLauncher.gameObject.GetComponent<FirearmScript>().isExotic && hostLauncher.gameObject.GetComponent<FirearmScript>().weaponRarity == 5)
                     {
                         torrent.GetComponent<GFWStatusApplicator>().fatedFlag = true;
                         torrent.GetComponent<GFWStatusApplicator>().debuffMultiplier *= 1.43f;
@@ -422,6 +427,14 @@ public class MunitionScript : MonoBehaviour
         GameObject effect = Instantiate(detonationEffect, transform.position, Quaternion.identity);
         effect.name = "Munition VFX";
 
+        if(repurposedFormFlag)
+        {
+            GameObject field = Instantiate(staggerZone, transform.position, transform.rotation);
+            field.name = staggerZone.name;
+            field.GetComponent<InduceStaggerScript>().repurposedFormPresent = true;
+            field.GetComponent<InduceStaggerScript>().repurposedFormDamage = hostLauncher.GetComponent<RepurposedForm>().damageApply;
+        }
+
         gameObject.SetActive(false);
 
     }
@@ -478,7 +491,7 @@ public class MunitionScript : MonoBehaviour
                     GameObject torrent = Instantiate(hostLauncher.gameObject.GetComponent<GaleForceWinds>().applicator, hit.point + (hit.normal * 0.01f), Quaternion.identity);
                     torrent.name = hostLauncher.gameObject.GetComponent<GaleForceWinds>().applicator.name;
 
-                    if (hostLauncher.gameObject.GetComponent<FirearmScript>().weaponRarity == 5)
+                    if (!hostLauncher.gameObject.GetComponent<FirearmScript>().isExotic && hostLauncher.gameObject.GetComponent<FirearmScript>().weaponRarity == 5)
                     {
                         torrent.GetComponent<GFWStatusApplicator>().fatedFlag = true;
                         torrent.GetComponent<GFWStatusApplicator>().debuffMultiplier *= 1.43f;

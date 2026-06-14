@@ -5,6 +5,8 @@ using UnityEngine;
 public class InduceStaggerScript : MonoBehaviour
 {
     Vector3 epicenterDistance;
+    public bool repurposedFormPresent;
+    public int repurposedFormDamage;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,11 @@ public class InduceStaggerScript : MonoBehaviour
                 other.gameObject.GetComponent<ReplevinScript>().staggerPosition = transform.position - epicenterDistance * 3f;
 
                 other.gameObject.GetComponent<ReplevinScript>().staggered = true;
+
+                if(repurposedFormPresent)
+                {
+                    other.gameObject.GetComponent<EnemyHealthScript>().inflictDamage(repurposedFormDamage);
+                }
 
                 StartCoroutine(DeactivateImmediate());
             }       

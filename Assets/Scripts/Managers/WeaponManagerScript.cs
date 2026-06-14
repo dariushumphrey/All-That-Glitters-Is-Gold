@@ -567,6 +567,19 @@ public class WeaponManagerScript : MonoBehaviour
                     flavor.text = item.GetComponent<FirearmScript>().flavorText;
                     item.name = weapons[7].name + "_Exotic";
                 }
+
+                if (wepStr == "9")
+                {
+                    wepName.text = "Bad Grief";
+                    rarityCheck.text = "Exotic";
+
+                    item.GetComponent<FirearmScript>().isExotic = true;
+                    //item.GetComponent<FirearmScript>().damagePercent = 60f;
+                    item.GetComponent<FirearmScript>().RarityAugment();
+                    item.GetComponent<FirearmScript>().flavorText = "'LOOK at what they have done to MY Resplendent! MINE! [REDACTED] cannot be allowed to survive! NO MORE!'" + "\n" + "-Unknown";
+                    flavor.text = item.GetComponent<FirearmScript>().flavorText;
+                    item.name = weapons[9].name + "_Exotic";
+                }
             }
 
             else
@@ -816,6 +829,12 @@ public class WeaponManagerScript : MonoBehaviour
                         "Fires floating Lucent mines. [E] - Detonates all active mines.";
                 }
 
+                if (cFiveStr == "J")
+                {
+                    cheatTraitOne.text = "Repurposed Form" + '\n' +
+                        "Fires Replevin capsules. Hits produce staggering Berth explosions that inflict 10% of Weapon damage.";
+                }
+
 
                 if (cFiveStr == "9")
                 {
@@ -980,7 +999,7 @@ public class WeaponManagerScript : MonoBehaviour
                     cheatTraitTwo.text = "Efficacy" + '\n' +
                          "Enemy hits increases this Weapon's base damage by 1%. Reloading resets its base damage.";
 
-                    if (rarStr == "5")
+                    if (exoStr != "1" && rarStr == "5")
                     {
                         cheatTraitTwo.text = "Efficacy" + " (Fated)" + '\n' +
                         "Enemy hits increases this Weapon's base damage by 2%. Base damage can increase up to 125%, and cannot be reset on reloads.";
@@ -994,7 +1013,7 @@ public class WeaponManagerScript : MonoBehaviour
                     cheatTraitTwo.text = "Inoculated" + '\n' +
                         "Kills with this Weapon restore 5% of Health.";
 
-                    if (rarStr == "5")
+                    if (exoStr != "1" && rarStr == "5")
                     {
                         cheatTraitTwo.text = "Inoculated" + " (Fated)" + '\n' +
                         "Kills with this Weapon restore 10% of Health.";
@@ -1035,7 +1054,7 @@ public class WeaponManagerScript : MonoBehaviour
                     cheatTraitTwo.text = "Counterplay" + '\n' +
                     "Hits taken while immune during Evasions casts two Lucent clusters and permanently increases Weapon damage by 10%. Stacks 3x.";
 
-                    if (rarStr == "5")
+                    if (exoStr != "1" && rarStr == "5")
                     {
                         cheatTraitTwo.text = "Counterplay" + " (Fated)" + '\n' +
                         "Hits taken during Evasions casts two Lucent clusters, a Solution Grenade, and permanently increases Weapon damage by 10%. Stacks 10x.";
@@ -1055,13 +1074,14 @@ public class WeaponManagerScript : MonoBehaviour
                     }
                 }
 
+                //Repurposed Form pairing
                 if (cSixStr == "^")
                 {
                     cheatTraitTwo.text = "Gale Force Winds" + '\n' +
                     "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
                     "'[E]' - Toggle cast";
 
-                    if (rarStr == "5")
+                    if (exoStr != "1" && rarStr == "5")
                     {
                         cheatTraitTwo.text = "Gale Force Winds" + " (Fated)" + '\n' +
                         "Cast faster traveling winds that applies Slowed and stronger Health debuffs to Enemies. " +
@@ -1280,6 +1300,14 @@ public class WeaponManagerScript : MonoBehaviour
                         item.GetComponent<FirearmScript>().RarityAugment();
                         item.GetComponent<FirearmScript>().flavorText = "Just when you thought you understood how the world works.";
                         item.name = "Nebulous At Best";
+                    }
+
+                    if (wepStr == "9")
+                    {
+                        item.GetComponent<FirearmScript>().isExotic = true;
+                        item.GetComponent<FirearmScript>().RarityAugment();
+                        item.GetComponent<FirearmScript>().flavorText = "'LOOK at what they have done to MY Resplendent! MINE! [REDACTED] cannot be allowed to survive! NO MORE!'" + "\n" + "-Unknown";
+                        item.name = "Bad Grief";
                     }
                 }
 
@@ -1564,6 +1592,13 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<Flashpoint>().proc = item.GetComponent<FirearmScript>().procOne;
                 }
 
+                if (cFiveStr == "J")
+                {
+                    item.GetComponent<FirearmScript>().cheatRNG = -10;
+                    item.AddComponent<RepurposedForm>();
+                    item.GetComponent<RepurposedForm>().proc = item.GetComponent<FirearmScript>().procOne;
+                }
+
 
                 if (cFiveStr == "9")
                 {
@@ -1692,6 +1727,7 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<Enshroud>().proc = item.GetComponent<FirearmScript>().procTwo;
                 }
 
+                //Repurposed Form pairing
                 if (cSixStr == "^")
                 {
                     item.AddComponent<GaleForceWinds>();
