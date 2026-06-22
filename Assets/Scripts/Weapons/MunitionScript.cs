@@ -372,6 +372,11 @@ public class MunitionScript : MonoBehaviour
                         hostLauncher.GetComponent<Enshroud>().RemoteProc();
                     }
 
+                    if (hostLauncher.GetComponent<Ossify>() && !targets[t].GetComponent<EnemyHealthScript>().isImmune)
+                    {
+                        hostLauncher.GetComponent<Ossify>().RemoteProc();
+                    }
+
                     if (targets[t].GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                     {
                         if (hostLauncher.GetComponent<WaitNowImReady>())

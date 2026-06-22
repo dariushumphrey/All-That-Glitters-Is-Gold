@@ -553,7 +553,7 @@ public class FirearmScript : MonoBehaviour
 
         if(weaponRarity == 3)
         {
-            cheatRNG = Random.Range(400, 1251);
+            cheatRNG = Random.Range(400, 1301);
             //cheatRNG = 1151;
             if (cheatRNG <= 450)
             {
@@ -677,17 +677,24 @@ public class FirearmScript : MonoBehaviour
                 procTwo.GetComponent<Text>().text = " ";
             }
 
-            if (cheatRNG > 1200)
+            if (cheatRNG > 1200 && cheatRNG <= 1250)
             {
                 gameObject.AddComponent<ActivatorDrone>();
                 gameObject.GetComponent<ActivatorDrone>().proc = procOne;
+                procTwo.GetComponent<Text>().text = " ";
+            }
+
+            if (cheatRNG > 1250)
+            {
+                gameObject.AddComponent<Ossify>();
+                gameObject.GetComponent<Ossify>().proc = procOne;
                 procTwo.GetComponent<Text>().text = " ";
             }
         }
         
         if(weaponRarity >= 4)
         {
-            cheatRNG = Random.Range(400, 491);
+            cheatRNG = Random.Range(400, 501);
             if(cheatRNG <= 410)
             {
                 gameObject.AddComponent<AllElseFails>();
@@ -740,10 +747,16 @@ public class FirearmScript : MonoBehaviour
                 gameObject.GetComponent<Forager>().proc = procOne;
             }
 
-            if (cheatRNG > 480)
+            if (cheatRNG > 480 && cheatRNG <= 490)
             {
                 gameObject.AddComponent<ActivatorDrone>();
                 gameObject.GetComponent<ActivatorDrone>().proc = procOne;
+            }
+
+            if (cheatRNG > 490)
+            {
+                gameObject.AddComponent<Ossify>();
+                gameObject.GetComponent<Ossify>().proc = procOne;
             }
 
             cheatRNG = Random.Range(480, 561);
@@ -1017,6 +1030,11 @@ public class FirearmScript : MonoBehaviour
                             gameObject.GetComponent<GaleForceWinds>().toggle = false;
 
                         }
+                    }
+
+                    if (gameObject.GetComponent<Ossify>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
+                    {
+                        gameObject.GetComponent<Ossify>().hitConfirmed = true;
                     }
 
                     StartCoroutine(DeconfirmHit());

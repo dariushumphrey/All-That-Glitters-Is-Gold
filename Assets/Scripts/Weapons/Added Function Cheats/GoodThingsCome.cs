@@ -53,10 +53,6 @@ public class GoodThingsCome : MonoBehaviour
         movementPercent *= move.speed;
         moveNew = move.speed + (int)movementPercent;
 
-        resistancePercent /= 100;
-        resistancePercent *= dmgReduce;
-        resistanceAdd = (int)resistancePercent;
-
         recoilPercent /= 100;
         recoilPercent *= firearm.wepRecoil;
         recoilNew = firearm.wepRecoil - recoilPercent;
@@ -149,6 +145,12 @@ public class GoodThingsCome : MonoBehaviour
     /// </summary>
     void DamageResistConversion()
     {
+        resistancePercent /= 100;
+        resistancePercent *= dmgReduce;
+        resistanceAdd = (int)resistancePercent;
+
+        resistancePercent = resistanceReset;
+
         if (player.playerShield <= 0)
         {
             if (player.playerHealth >= player.playerHealthMax)

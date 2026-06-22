@@ -173,6 +173,11 @@ public class ShotgunFirearm: FirearmScript
                             }
                         }
 
+                        if (gameObject.GetComponent<Ossify>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
+                        {
+                            gameObject.GetComponent<Ossify>().hitConfirmed = true;
+                        }
+
                         StartCoroutine(DeconfirmHit());
                         targetHit = hit.transform.gameObject;
 

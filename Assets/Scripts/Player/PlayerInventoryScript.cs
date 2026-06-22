@@ -984,6 +984,13 @@ public class PlayerInventoryScript : MonoBehaviour
                     "Passively attacks enemies, or can receive a target by aiming. Attacks trigger weapon passives.";
             }
 
+            //Ossify
+            if (inventory[selection].GetComponent<Ossify>())
+            {
+                cheatTraitOne.text = "Ossify" + '\n' +
+                    "Enemy hits increase Damage Resistance by 3%, up to 30%. Lasts 10s.";
+            }
+
             cheatTraitTwo.text = " ";
         }
 
@@ -1107,6 +1114,18 @@ public class PlayerInventoryScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Activator Drone" + " (Fated)" + '\n' +
                     "The drone can activate Cheats ''Wait! Now I'm Ready!'', Efficacy, Inoculated, Cadence, and Enshroud.";
+                }
+            }
+
+            if (inventory[selection].GetComponent<Ossify>())
+            {
+                cheatTraitOne.text = "Ossify" + '\n' +
+                    "Enemy hits increase Damage Resistance by 3%, up to 30%. Lasts 10s.";
+
+                if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
+                {
+                    cheatTraitOne.text = "Ossify" + " (Fated)" + '\n' +
+                    "Enemy hits increase Damage Resistance by 5%, up to 50%. Lasts 20s.";
                 }
             }
 
@@ -1895,6 +1914,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             {
                                 write.WriteLine("&");
                             }
+
+                            if (inventory[i].GetComponent<Ossify>())
+                            {
+                                write.WriteLine("*");
+                            }
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -2068,6 +2092,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<ActivatorDrone>())
                                 {
                                     write.Write("&");
+                                }
+
+                                if (inventory[i].GetComponent<Ossify>())
+                                {
+                                    write.Write("*");
                                 }
 
                                 if (inventory[i].GetComponent<WaitNowImReady>())
