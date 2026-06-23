@@ -991,6 +991,13 @@ public class PlayerInventoryScript : MonoBehaviour
                     "Enemy hits increase Damage Resistance by 3%, up to 30%. Lasts 10s.";
             }
 
+            //Bolster
+            if (inventory[selection].GetComponent<Bolster>())
+            {
+                cheatTraitOne.text = "Bolster" + '\n' +
+                    "Kills with this weapon reduce Shield recharge delay time by 30%. Lasts 20s.";
+            }
+
             cheatTraitTwo.text = " ";
         }
 
@@ -1113,7 +1120,7 @@ public class PlayerInventoryScript : MonoBehaviour
                 if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
                 {
                     cheatTraitOne.text = "Activator Drone" + " (Fated)" + '\n' +
-                    "The drone can activate Cheats ''Wait! Now I'm Ready!'', Efficacy, Inoculated, Cadence, and Enshroud.";
+                    "The drone can activate Cheats ''Wait! Now I'm Ready!'', Efficacy, Inoculated, Cadence, Enshroud, and Bolster.";
                 }
             }
 
@@ -1232,6 +1239,19 @@ public class PlayerInventoryScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Gale Force Winds" + " (Fated)" + '\n' +
                     "[E] - Cast faster traveling winds that applies stronger Health debuffs. Applies low damage-over-time to tracked Enemies.";
+                }
+            }
+
+            //Bolster
+            if (inventory[selection].GetComponent<Bolster>())
+            {
+                cheatTraitTwo.text = "Bolster" + '\n' +
+                    "Kills with this weapon reduce Shield recharge delay time by 30%. Lasts 20s.";
+
+                if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
+                {
+                    cheatTraitTwo.text = "Bolster" + " (Fated)" + '\n' +
+                    "Kills with this weapon reduce Shield recharge delay time by 30%. Lasts indefinitely.";
                 }
             }
         }
@@ -1919,6 +1939,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             {
                                 write.WriteLine("*");
                             }
+
+                            if (inventory[i].GetComponent<Bolster>())
+                            {
+                                write.WriteLine("+");
+                            }
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -2137,6 +2162,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<GaleForceWinds>())
                                 {
                                     write.WriteLine("^");
+                                }
+
+                                if (inventory[i].GetComponent<Bolster>())
+                                {
+                                    write.WriteLine("+");
                                 }
                             }
                         }

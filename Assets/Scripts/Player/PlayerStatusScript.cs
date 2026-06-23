@@ -39,7 +39,7 @@ public class PlayerStatusScript : MonoBehaviour
     private int shieldAdd; //Player Shield is added onto by this value
     private int rechargeAdd; //Player Shield is recharged by this value
     private float rechargePercent = 1f;
-    private float regenShieldResetSeconds;
+    internal float regenShieldResetSeconds;
     private bool done = false; //Prevents operation from repeating if true
     private GameObject respawnPosition;
     internal PlayerMoveScript move;
@@ -238,6 +238,15 @@ public class PlayerStatusScript : MonoBehaviour
                 shieldHit.Play();
                 playerShield -= dmgReceived;
                 regenShieldSeconds = regenShieldResetSeconds;
+
+                if (gameObject.GetComponentInChildren<Bolster>())
+                {
+                    if (gameObject.GetComponentInChildren<Bolster>().maxed)
+                    {
+                        gameObject.GetComponentInChildren<Bolster>().vfxToggle = true;
+                    }
+                }
+
                 StopCoroutine(RechargeShield());
             }
 
@@ -294,6 +303,15 @@ public class PlayerStatusScript : MonoBehaviour
                 if (regenShieldSeconds <= 0.0f)
                 {
                     regenShieldSeconds = 0f;
+
+                    if(gameObject.GetComponentInChildren<Bolster>())
+                    {
+                        if(gameObject.GetComponentInChildren<Bolster>().maxed)
+                        {
+                            gameObject.GetComponentInChildren<Bolster>().PlayVFX();
+                        }
+                    }
+
                     playerShield += rechargeAdd * rechargeAccelerant;
                     if (playerShield >= playerShieldMax)
                     {

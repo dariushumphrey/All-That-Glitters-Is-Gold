@@ -243,6 +243,11 @@ public class ShotgunFirearm: FirearmScript
                                     gameObject.GetComponent<Forager>().burstPosition = hit.collider.transform.position + Vector3.up;
                                 }
 
+                                if (gameObject.GetComponent<Bolster>())
+                                {
+                                    gameObject.GetComponent<Bolster>().killConfirmed = true;
+                                }
+
                                 if (hit.collider.GetComponent<Rigidbody>() == null)
                                 {
                                     hit.collider.gameObject.AddComponent<Rigidbody>();
@@ -315,6 +320,11 @@ public class ShotgunFirearm: FirearmScript
                                 {
                                     gameObject.GetComponent<Forager>().killConfirmed = true;
                                     gameObject.GetComponent<Forager>().burstPosition = hit.collider.transform.position + Vector3.up;
+                                }
+
+                                if (gameObject.GetComponent<Bolster>())
+                                {
+                                    gameObject.GetComponent<Bolster>().killConfirmed = true;
                                 }
 
                                 if (hit.collider.GetComponent<Rigidbody>() == null)

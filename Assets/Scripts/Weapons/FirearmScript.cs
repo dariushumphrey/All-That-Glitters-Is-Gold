@@ -553,7 +553,7 @@ public class FirearmScript : MonoBehaviour
 
         if(weaponRarity == 3)
         {
-            cheatRNG = Random.Range(400, 1301);
+            cheatRNG = Random.Range(400, 1351);
             //cheatRNG = 1151;
             if (cheatRNG <= 450)
             {
@@ -684,10 +684,17 @@ public class FirearmScript : MonoBehaviour
                 procTwo.GetComponent<Text>().text = " ";
             }
 
-            if (cheatRNG > 1250)
+            if (cheatRNG > 1250 && cheatRNG <= 1300)
             {
                 gameObject.AddComponent<Ossify>();
                 gameObject.GetComponent<Ossify>().proc = procOne;
+                procTwo.GetComponent<Text>().text = " ";
+            }
+
+            if (cheatRNG > 1300)
+            {
+                gameObject.AddComponent<Bolster>();
+                gameObject.GetComponent<Bolster>().proc = procOne;
                 procTwo.GetComponent<Text>().text = " ";
             }
         }
@@ -759,7 +766,7 @@ public class FirearmScript : MonoBehaviour
                 gameObject.GetComponent<Ossify>().proc = procOne;
             }
 
-            cheatRNG = Random.Range(480, 561);
+            cheatRNG = Random.Range(480, 571);
             if (cheatRNG <= 490)
             {
                 gameObject.AddComponent<WaitNowImReady>();
@@ -809,10 +816,17 @@ public class FirearmScript : MonoBehaviour
 
             }
 
-            if (cheatRNG > 550)
+            if (cheatRNG > 550 & cheatRNG <= 560)
             {
                 gameObject.AddComponent<GaleForceWinds>();
                 gameObject.GetComponent<GaleForceWinds>().proc = procTwo;
+            }
+
+            if (cheatRNG > 560)
+            {
+                gameObject.AddComponent<Bolster>();
+                gameObject.GetComponent<Bolster>().proc = procTwo;
+                procTwo.GetComponent<Text>().text = " ";
             }
         }
     }
@@ -1101,6 +1115,11 @@ public class FirearmScript : MonoBehaviour
                                 gameObject.GetComponent<Forager>().burstPosition = hit.collider.transform.position + Vector3.up;
                             }
 
+                            if(gameObject.GetComponent<Bolster>())
+                            {
+                                gameObject.GetComponent<Bolster>().killConfirmed = true;
+                            }
+
                             if (hit.collider.GetComponent<Rigidbody>() == null)
                             {
                                 hit.collider.gameObject.AddComponent<Rigidbody>();
@@ -1173,6 +1192,11 @@ public class FirearmScript : MonoBehaviour
                             {
                                 gameObject.GetComponent<Forager>().killConfirmed = true;
                                 gameObject.GetComponent<Forager>().burstPosition = hit.collider.transform.position + Vector3.up;
+                            }
+
+                            if (gameObject.GetComponent<Bolster>())
+                            {
+                                gameObject.GetComponent<Bolster>().killConfirmed = true;
                             }
 
                             if (hit.collider.GetComponent<Rigidbody>() == null)

@@ -234,6 +234,11 @@ public class SingleFireFirearm : FirearmScript
                                 gameObject.GetComponent<Superweapon>().killConfirmed = true;
                             }
 
+                            if (gameObject.GetComponent<Bolster>())
+                            {
+                                gameObject.GetComponent<Bolster>().killConfirmed = true;
+                            }
+
                             if (hit.collider.GetComponent<Rigidbody>() == null)
                             {
                                 hit.collider.gameObject.AddComponent<Rigidbody>();
@@ -310,6 +315,11 @@ public class SingleFireFirearm : FirearmScript
                             if (gameObject.GetComponent<Superweapon>())
                             {
                                 gameObject.GetComponent<Superweapon>().killConfirmed = true;
+                            }
+
+                            if (gameObject.GetComponent<Bolster>())
+                            {
+                                gameObject.GetComponent<Bolster>().killConfirmed = true;
                             }
 
                             if (hit.collider.GetComponent<Rigidbody>() == null)

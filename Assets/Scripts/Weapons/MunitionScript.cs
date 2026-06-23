@@ -411,6 +411,11 @@ public class MunitionScript : MonoBehaviour
                             hostLauncher.GetComponent<Forager>().RemoteProc();
                         }
 
+                        if (hostLauncher.gameObject.GetComponent<Bolster>())
+                        {
+                            hostLauncher.gameObject.GetComponent<Bolster>().RemoteProc();
+                        }
+
                         if (targets[t].GetComponent<Rigidbody>() == null)
                         {
                             targets[t].gameObject.AddComponent<Rigidbody>();
@@ -643,6 +648,11 @@ public class MunitionScript : MonoBehaviour
                         if (hostLauncher.GetComponent<Inoculated>() && fatedActivatorDrone)
                         {
                             hostLauncher.GetComponent<Inoculated>().RemoteProc();
+                        }
+
+                        if (hostLauncher.gameObject.GetComponent<Bolster>() && fatedActivatorDrone)
+                        {
+                            hostLauncher.gameObject.GetComponent<Bolster>().ActivatorDroneRemoteProc();
                         }
 
                         if (targets[t].GetComponent<Rigidbody>() == null)

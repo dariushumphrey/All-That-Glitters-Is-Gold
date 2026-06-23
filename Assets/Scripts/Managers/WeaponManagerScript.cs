@@ -1572,6 +1572,13 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<Ossify>().proc = item.GetComponent<FirearmScript>().procOne;
                     item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                 }
+
+                if (cFiveStr == "+")
+                {
+                    item.AddComponent<Bolster>();
+                    item.GetComponent<Bolster>().proc = item.GetComponent<FirearmScript>().procOne;
+                    item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                }
             }
 
             if (player.readdedWeps[s].Length == 11)
@@ -1792,6 +1799,12 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     item.AddComponent<GaleForceWinds>();
                     item.GetComponent<GaleForceWinds>().proc = item.GetComponent<FirearmScript>().procTwo;
+                }
+
+                if (cSixStr == "+")
+                {
+                    item.AddComponent<Bolster>();
+                    item.GetComponent<Bolster>().proc = item.GetComponent<FirearmScript>().procTwo;
                 }
             }
 

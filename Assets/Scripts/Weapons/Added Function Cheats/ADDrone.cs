@@ -211,7 +211,11 @@ public class ADDrone : MonoBehaviour
                                 {
                                     hostWeapon.GetComponent<Inoculated>().RemoteProc();
                                 }
-                               
+
+                                if (fatedFlag && hostWeapon.GetComponent<Bolster>())
+                                {
+                                    hostWeapon.GetComponent<Bolster>().ActivatorDroneRemoteProc();
+                                }
                             }
                         }
 
