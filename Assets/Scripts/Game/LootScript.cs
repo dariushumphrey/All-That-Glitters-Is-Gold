@@ -548,10 +548,28 @@ public class LootScript : MonoBehaviour
                         reward.GetComponent<GaleForceWinds>().proc = reward.GetComponent<FirearmScript>().procOne;
                     }
 
-                    else
+                    else if (fcOneStr == "&")
                     {
                         reward.AddComponent<ActivatorDrone>();
                         reward.GetComponent<ActivatorDrone>().proc = reward.GetComponent<FirearmScript>().procOne;
+                    }
+
+                    else if (fcOneStr == "*")
+                    {
+                        reward.AddComponent<Ossify>();
+                        reward.GetComponent<Ossify>().proc = reward.GetComponent<FirearmScript>().procOne;
+                    }
+
+                    else if (fcOneStr == "+")
+                    {
+                        reward.AddComponent<Bolster>();
+                        reward.GetComponent<Bolster>().proc = reward.GetComponent<FirearmScript>().procOne;
+                    }
+
+                    else
+                    {
+                        reward.AddComponent<PerfectRecord>();
+                        reward.GetComponent<PerfectRecord>().proc = reward.GetComponent<FirearmScript>().procOne;
                     }
 
                     reward.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
@@ -607,10 +625,16 @@ public class LootScript : MonoBehaviour
                         reward.GetComponent<Forager>().proc = reward.GetComponent<FirearmScript>().procOne;
                     }
 
-                    else
+                    else if (fcOneStr == "&")
                     {
                         reward.AddComponent<ActivatorDrone>();
                         reward.GetComponent<ActivatorDrone>().proc = reward.GetComponent<FirearmScript>().procOne;
+                    }
+
+                    else
+                    {
+                        reward.AddComponent<Ossify>();
+                        reward.GetComponent<Ossify>().proc = reward.GetComponent<FirearmScript>().procOne;
                     }
 
 
@@ -657,10 +681,22 @@ public class LootScript : MonoBehaviour
                         reward.GetComponent<Enshroud>().proc = reward.GetComponent<FirearmScript>().procTwo;
                     }
 
-                    else
+                    else if (fcTwoStr == "^")
                     {
                         reward.AddComponent<GaleForceWinds>();
                         reward.GetComponent<GaleForceWinds>().proc = reward.GetComponent<FirearmScript>().procTwo;
+                    }
+
+                    else if (fcTwoStr == "+")
+                    {
+                        reward.AddComponent<Bolster>();
+                        reward.GetComponent<Bolster>().proc = reward.GetComponent<FirearmScript>().procTwo;
+                    }
+
+                    else
+                    {
+                        reward.AddComponent<PerfectRecord>();
+                        reward.GetComponent<PerfectRecord>().proc = reward.GetComponent<FirearmScript>().procTwo;
                     }
                 }
             }
@@ -1292,7 +1328,7 @@ public class LootScript : MonoBehaviour
             {
                 int act = 0;
 
-                char[] newPool = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '@', '#', '$', '%', '^', '&' };
+                char[] newPool = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '@', '#', '$', '%', '^', '&', '*', '+', '-' };
                 act = UnityEngine.Random.Range(0, newPool.Length);
                 fcOneStr = newPool[act].ToString();
 
@@ -1396,10 +1432,28 @@ public class LootScript : MonoBehaviour
                         "<i>Cast debuffing winds.</i>";
                 }
 
-                else
+                else if (fcOneStr == "&")
                 {
                     clpLtFncChtOne.GetComponent<Text>().text = "Activator Drone\n" +
                         "<i>Drone attacks, triggers effects.</i>";
+                }
+
+                else if (fcOneStr == "*")
+                {
+                    clpLtFncChtOne.GetComponent<Text>().text = "Ossify\n" +
+                        "<i>3% Damage Resist on hits.</i>";
+                }
+
+                else if (fcOneStr == "+")
+                {
+                    clpLtFncChtOne.GetComponent<Text>().text = "Bolster\n" +
+                        "<i>Kills reduce Shield delay.</i>";
+                }
+
+                else
+                {
+                    clpLtFncChtOne.GetComponent<Text>().text = "Perfect Record\n" +
+                        "<i>Avoiding damage grants damage.</i>";
                 }
 
                 clpLtFncChtTwo.GetComponent<Text>().text = "";
@@ -1409,11 +1463,11 @@ public class LootScript : MonoBehaviour
             {
                 int choice = 0;
 
-                char[] poolOne = { '9', '4', '5', '6', '8', '!', '@', '#', '&' };
+                char[] poolOne = { '9', '4', '5', '6', '8', '!', '@', '#', '&', '*' };
                 choice = UnityEngine.Random.Range(0, poolOne.Length);
                 fcOneStr = poolOne[choice].ToString();
 
-                char[] poolTwo = { '0', '1', '2', '7', '3', '$', '%', '^' };
+                char[] poolTwo = { '0', '1', '2', '7', '3', '$', '%', '^', '+', '-' };
                 choice = UnityEngine.Random.Range(0, poolTwo.Length);
                 fcTwoStr = poolTwo[choice].ToString();
 
@@ -1545,7 +1599,7 @@ public class LootScript : MonoBehaviour
                     }
                 }
 
-                else
+                else if (fcOneStr == "&")
                 {
                     if (wepRarStr == "5")
                     {
@@ -1557,6 +1611,22 @@ public class LootScript : MonoBehaviour
                     {
                         clpLtFncChtOne.GetComponent<Text>().text = "Activator Drone\n" +
                         "<i>Drone attacks, triggers effects.</i>";
+
+                    }
+                }
+
+                else
+                {
+                    if (wepRarStr == "5")
+                    {
+                        clpLtFncChtOne.GetComponent<Text>().text = "Ossify (Fated)\n" +
+                        "<i>5% Damage Resist on hits.</i>";
+                    }
+
+                    else
+                    {
+                        clpLtFncChtOne.GetComponent<Text>().text = "Ossify\n" +
+                        "<i>3% Damage Resist on hits.</i>";
 
                     }
                 }
@@ -1667,7 +1737,7 @@ public class LootScript : MonoBehaviour
                     }
                 }
 
-                else
+                else if (fcTwoStr == "^")
                 {
                     if (wepRarStr == "5")
                     {
@@ -1679,6 +1749,36 @@ public class LootScript : MonoBehaviour
                     {
                         clpLtFncChtTwo.GetComponent<Text>().text = "Gale Force Winds\n" +
                         "<i>Cast debuffing winds.</i>";
+                    }
+                }
+
+                else if (fcTwoStr == "+")
+                {
+                    if (wepRarStr == "5")
+                    {
+                        clpLtFncChtTwo.GetComponent<Text>().text = "Bolster (Fated)\n" +
+                        "<i>Permanent low Shield delay.</i>";
+                    }
+
+                    else
+                    {
+                        clpLtFncChtTwo.GetComponent<Text>().text = "Bolster\n" +
+                        "<i>Kills reduce Shield delay.</i>";
+                    }
+                }
+
+                else
+                {
+                    if (wepRarStr == "5")
+                    {
+                        clpLtFncChtTwo.GetComponent<Text>().text = "Perfect Record (Fated)\n" +
+                        "<i>Permanent damage increase.</i>";
+                    }
+
+                    else
+                    {
+                        clpLtFncChtTwo.GetComponent<Text>().text = "Perfect Record\n" +
+                        "<i>Avoiding damage grants damage.</i>";
                     }
                 }
             }          

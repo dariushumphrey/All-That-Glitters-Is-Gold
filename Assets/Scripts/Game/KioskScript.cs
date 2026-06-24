@@ -175,7 +175,7 @@ public class KioskScript : MonoBehaviour
             {
                 int act = 0;
 
-                char[] newPool = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '@', '#', '$', '%', '^', '&' };
+                char[] newPool = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '@', '#', '$', '%', '^', '&', '*', '+', '-' };
                 act = UnityEngine.Random.Range(0, newPool.Length);
                 fcOneStr = newPool[act].ToString();
 
@@ -189,11 +189,11 @@ public class KioskScript : MonoBehaviour
             {
                 int choice = 0;
 
-                char[] poolOne = {'9', '4', '5', '6', '8', '!', '@', '#'};
+                char[] poolOne = {'9', '4', '5', '6', '8', '!', '@', '#', '&', '*'};
                 choice = UnityEngine.Random.Range(0, poolOne.Length);
                 fcOneStr = poolOne[choice].ToString();
 
-                char[] poolTwo = {'0', '1', '2', '7', '3', '$', '%', '^'};
+                char[] poolTwo = {'0', '1', '2', '7', '3', '$', '%', '^', '+', '-'};
                 choice = UnityEngine.Random.Range(0, poolOne.Length);
                 fcTwoStr = poolTwo[choice].ToString();
 
@@ -711,6 +711,24 @@ public class KioskScript : MonoBehaviour
                         "<i>Drone attacks, triggers effects.</i>";
                     }
 
+                    if (fcOneStr == "*")
+                    {
+                        functionOnes[p].GetComponent<Text>().text = "Ossify\n" +
+                            "<i>3% Damage Resist on hits.</i>";
+                    }
+
+                    if (fcOneStr == "+")
+                    {
+                        functionOnes[p].GetComponent<Text>().text = "Bolster\n" +
+                            "<i>Kills reduce Shield delay.</i>";
+                    }
+
+                    if (fcOneStr == "-")
+                    {
+                        functionOnes[p].GetComponent<Text>().text = "Perfect Record\n" +
+                            "<i>Avoiding damage grants damage.</i>";
+                    }
+
                     functionTwos[p].text = " ";
                 }
 
@@ -850,7 +868,12 @@ public class KioskScript : MonoBehaviour
                     {
                         functionOnes[p].text = "Activator Drone\n" +
                         "<i>Drone attacks, triggers effects.</i>";
+                    }
 
+                    if (fcOneStr == "*")
+                    {
+                        functionOnes[p].GetComponent<Text>().text = "Ossify\n" +
+                            "<i>3% Damage Resist on hits.</i>";
                     }
 
 
@@ -941,6 +964,20 @@ public class KioskScript : MonoBehaviour
                         "<i>Cast debuffing winds.</i>";
 
                     } //Repurposed Form pairing
+
+                    if (fcTwoStr == "+")
+                    {
+                        functionTwos[p].text = "Bolster\n" +
+                        "<i>Kills reduce Shield delay.</i>";
+
+                    }
+
+                    if (fcTwoStr == "-")
+                    {
+                        functionTwos[p].text = "Perfect Record\n" +
+                        "<i>Avoiding damage grants damage.</i>";
+
+                    }
                 }
             }                   
 
@@ -1654,6 +1691,24 @@ public class KioskScript : MonoBehaviour
                         "Passively attacks enemies, or can receive a target by aiming. Attacks trigger weapon passives.";
                 }
 
+                if (fcOneStr == "*")
+                {
+                    cheatTraitOne.text = "Ossify" + '\n' +
+                    "Enemy hits increase Damage Resistance by 3%, up to 30%. Lasts 10s.";
+                }
+
+                if (fcOneStr == "+")
+                {
+                    cheatTraitOne.text = "Bolster" + '\n' +
+                    "Kills with this weapon reduce Shield recharge delay time by 30%. Lasts 20s.";
+                }
+
+                if (fcOneStr == "-")
+                {
+                    cheatTraitOne.text = "Perfect Record" + '\n' +
+                    "Avoiding damage increases Weapon & Melee damage by 40% until damage is taken.";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -1777,6 +1832,12 @@ public class KioskScript : MonoBehaviour
                         "Passively attacks enemies, or can receive a target by aiming. Attacks trigger weapon passives.";
                 }
 
+                if (fcOneStr == "*")
+                {
+                    cheatTraitOne.text = "Ossify" + '\n' +
+                    "Enemy hits increase Damage Resistance by 3%, up to 30%. Lasts 10s.";
+                }
+
                 if (fcTwoStr == "!")
                 {
                     cheatTraitTwo.text = "The Most Resplendent" + '\n' +
@@ -1855,6 +1916,18 @@ public class KioskScript : MonoBehaviour
                     cheatTraitTwo.text = "Gale Force Winds" + '\n' +
                     "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
                     "'[E]' - Toggle cast";
+                }
+
+                if (fcTwoStr == "+")
+                {
+                    cheatTraitTwo.text = "Bolster" + '\n' +
+                    "Kills with this weapon reduce Shield recharge delay time by 30%. Lasts 20s.";
+                }
+
+                if (fcTwoStr == "-")
+                {
+                    cheatTraitTwo.text = "Perfect Record" + '\n' +
+                    "Avoiding damage increases Weapon & Melee damage by 40% until damage is taken.";
                 }
             }
         }

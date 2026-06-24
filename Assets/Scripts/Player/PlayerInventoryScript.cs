@@ -998,6 +998,13 @@ public class PlayerInventoryScript : MonoBehaviour
                     "Kills with this weapon reduce Shield recharge delay time by 30%. Lasts 20s.";
             }
 
+            //Perfect Record
+            if (inventory[selection].GetComponent<PerfectRecord>())
+            {
+                cheatTraitOne.text = "Perfect Record" + '\n' +
+                    "Avoiding damage increases Weapon & Melee damage by 40% until damage is taken.";
+            }
+
             cheatTraitTwo.text = " ";
         }
 
@@ -1124,6 +1131,7 @@ public class PlayerInventoryScript : MonoBehaviour
                 }
             }
 
+            //Ossify
             if (inventory[selection].GetComponent<Ossify>())
             {
                 cheatTraitOne.text = "Ossify" + '\n' +
@@ -1252,6 +1260,19 @@ public class PlayerInventoryScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Bolster" + " (Fated)" + '\n' +
                     "Kills with this weapon reduce Shield recharge delay time by 30%. Lasts indefinitely.";
+                }
+            }
+
+            //Perfect Record
+            if (inventory[selection].GetComponent<PerfectRecord>())
+            {
+                cheatTraitTwo.text = "Perfect Record" + '\n' +
+                    "Avoiding damage increases Weapon & Melee damage by 40% until damage is taken.";
+
+                if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
+                {
+                    cheatTraitTwo.text = "Perfect Record" + " (Fated)" + '\n' +
+                    "Avoiding damage permanently increases Weapon & Melee damage by 80%.";
                 }
             }
         }
@@ -1944,6 +1965,11 @@ public class PlayerInventoryScript : MonoBehaviour
                             {
                                 write.WriteLine("+");
                             }
+
+                            if (inventory[i].GetComponent<PerfectRecord>())
+                            {
+                                write.WriteLine("-");
+                            }
                         }
 
                         if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
@@ -2167,6 +2193,11 @@ public class PlayerInventoryScript : MonoBehaviour
                                 if (inventory[i].GetComponent<Bolster>())
                                 {
                                     write.WriteLine("+");
+                                }
+
+                                if (inventory[i].GetComponent<PerfectRecord>())
+                                {
+                                    write.WriteLine("-");
                                 }
                             }
                         }

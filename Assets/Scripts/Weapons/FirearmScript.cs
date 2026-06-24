@@ -553,7 +553,7 @@ public class FirearmScript : MonoBehaviour
 
         if(weaponRarity == 3)
         {
-            cheatRNG = Random.Range(400, 1351);
+            cheatRNG = Random.Range(400, 1401);
             //cheatRNG = 1151;
             if (cheatRNG <= 450)
             {
@@ -691,10 +691,17 @@ public class FirearmScript : MonoBehaviour
                 procTwo.GetComponent<Text>().text = " ";
             }
 
-            if (cheatRNG > 1300)
+            if (cheatRNG > 1300 && cheatRNG <= 1350)
             {
                 gameObject.AddComponent<Bolster>();
                 gameObject.GetComponent<Bolster>().proc = procOne;
+                procTwo.GetComponent<Text>().text = " ";
+            }
+
+            if (cheatRNG > 1350)
+            {
+                gameObject.AddComponent<PerfectRecord>();
+                gameObject.GetComponent<PerfectRecord>().proc = procOne;
                 procTwo.GetComponent<Text>().text = " ";
             }
         }
@@ -766,7 +773,7 @@ public class FirearmScript : MonoBehaviour
                 gameObject.GetComponent<Ossify>().proc = procOne;
             }
 
-            cheatRNG = Random.Range(480, 571);
+            cheatRNG = Random.Range(480, 581);
             if (cheatRNG <= 490)
             {
                 gameObject.AddComponent<WaitNowImReady>();
@@ -816,16 +823,23 @@ public class FirearmScript : MonoBehaviour
 
             }
 
-            if (cheatRNG > 550 & cheatRNG <= 560)
+            if (cheatRNG > 550 && cheatRNG <= 560)
             {
                 gameObject.AddComponent<GaleForceWinds>();
                 gameObject.GetComponent<GaleForceWinds>().proc = procTwo;
             }
 
-            if (cheatRNG > 560)
+            if (cheatRNG > 560 && cheatRNG <= 570)
             {
                 gameObject.AddComponent<Bolster>();
                 gameObject.GetComponent<Bolster>().proc = procTwo;
+                procTwo.GetComponent<Text>().text = " ";
+            }
+
+            if (cheatRNG > 570)
+            {
+                gameObject.AddComponent<PerfectRecord>();
+                gameObject.GetComponent<PerfectRecord>().proc = procTwo;
                 procTwo.GetComponent<Text>().text = " ";
             }
         }

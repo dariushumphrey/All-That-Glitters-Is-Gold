@@ -787,6 +787,24 @@ public class WeaponManagerScript : MonoBehaviour
                         "Passively attacks enemies, or can receive a target by aiming. Attacks trigger weapon passives.";
                 }
 
+                if (cFiveStr == "*")
+                {
+                    cheatTraitOne.text = "Ossify" + '\n' +
+                    "Enemy hits increase Damage Resistance by 3%, up to 30%. Lasts 10s.";
+                }
+
+                if (cFiveStr == "+")
+                {
+                    cheatTraitOne.text = "Bolster" + '\n' +
+                    "Kills with this weapon reduce Shield recharge delay time by 30%. Lasts 20s.";
+                }
+
+                if (cFiveStr == "-")
+                {
+                    cheatTraitOne.text = "Perfect Record" + '\n' +
+                    "Avoiding damage increases Weapon & Melee damage by 40% until damage is taken.";
+                }
+
                 cheatTraitTwo.text = " ";
             }
 
@@ -969,6 +987,18 @@ public class WeaponManagerScript : MonoBehaviour
                     }
                 }
 
+                if (cFiveStr == "*")
+                {
+                    cheatTraitOne.text = "Ossify" + '\n' +
+                    "Enemy hits increase Damage Resistance by 3%, up to 30%. Lasts 10s.";
+
+                    if (rarStr == "5")
+                    {
+                        cheatTraitOne.text = "Ossify" + " (Fated)" + '\n' +
+                        "Enemy hits increase Damage Resistance by 5%, up to 50%. Lasts 20s.";
+                    }
+                }
+
 
                 //Pay to Win pairing
                 if (cSixStr == "!")
@@ -1112,6 +1142,30 @@ public class WeaponManagerScript : MonoBehaviour
                         cheatTraitTwo.text = "Gale Force Winds" + " (Fated)" + '\n' +
                         "Cast faster traveling winds that applies Slowed and stronger Health debuffs to Enemies. " +
                         "Applies damage-over-time to tracked Enemies.";
+                    }
+                }
+
+                if (cSixStr == "+")
+                {
+                    cheatTraitTwo.text = "Bolster" + '\n' +
+                    "Kills with this weapon reduce Shield recharge delay time by 30%. Lasts 20s.";
+
+                    if (exoStr != "1" && rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Bolster" + " (Fated)" + '\n' +
+                        "Kills with this weapon reduce Shield recharge delay time by 30%. Lasts indefinitely.";
+                    }
+                }
+
+                if (cSixStr == "-")
+                {
+                    cheatTraitTwo.text = "Perfect Record" + '\n' +
+                    "Avoiding damage increases Weapon & Melee damage by 40% until damage is taken.";
+
+                    if (exoStr != "1" && rarStr == "5")
+                    {
+                        cheatTraitTwo.text = "Perfect Record" + " (Fated)" + '\n' +
+                        "Avoiding damage permanently increases Weapon & Melee damage by 80%.";
                     }
                 }
             }
@@ -1579,6 +1633,13 @@ public class WeaponManagerScript : MonoBehaviour
                     item.GetComponent<Bolster>().proc = item.GetComponent<FirearmScript>().procOne;
                     item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
                 }
+
+                if (cFiveStr == "-")
+                {
+                    item.AddComponent<PerfectRecord>();
+                    item.GetComponent<PerfectRecord>().proc = item.GetComponent<FirearmScript>().procOne;
+                    item.GetComponent<FirearmScript>().procTwo.GetComponent<Text>().text = " ";
+                }
             }
 
             if (player.readdedWeps[s].Length == 11)
@@ -1805,6 +1866,12 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     item.AddComponent<Bolster>();
                     item.GetComponent<Bolster>().proc = item.GetComponent<FirearmScript>().procTwo;
+                }
+
+                if (cSixStr == "-")
+                {
+                    item.AddComponent<PerfectRecord>();
+                    item.GetComponent<PerfectRecord>().proc = item.GetComponent<FirearmScript>().procTwo;
                 }
             }
 
