@@ -15,9 +15,9 @@ public class ShotgunFirearm: FirearmScript
     /// </summary>
     public override void FireWeapon()
     {
-        fireAgain = fireAgain + Time.deltaTime;
+        //fireAgain = fireAgain + Time.deltaTime;
       
-        if (Input.GetButtonDown("Fire1") && currentAmmo >= 1 && fireAgain >= fireRate && !isReloading)
+        if (currentAmmo >= 1 && fireAgain >= fireRate && !isReloading)
         {
             //Firing timer resets, Ammo decrements/records number of shots
             fireAgain = 0.0f;

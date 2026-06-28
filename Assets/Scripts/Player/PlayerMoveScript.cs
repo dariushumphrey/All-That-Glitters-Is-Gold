@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class PlayerMoveScript : MonoBehaviour
 {
+    public PlayerInput input;
+    private InputAction move;
+    private InputAction sprint;
+    private InputAction evade;
+
     public int speed = 20;
     public int sprintSpeed = 22;
     public float speedDampening = -1f; //Governs time taken to slow to a stop after letting go of movement input.
@@ -37,10 +43,24 @@ public class PlayerMoveScript : MonoBehaviour
     internal float horizInput;
     internal float vertInput;
     internal bool volant = false; //Functional Cheat Volant is active if true
-
+    internal Vector2 moveFloat;
     // Start is called before the first frame update
     void Start()
     {
+        move = input.actions["Move"];
+        sprint = input.actions["Sprint"];
+        evade = input.actions["Evade"];
+
+        sprint.performed += ctx =>
+        {
+            if (moveFloat.y > 0 && !Airborne())
+            {
+                sprinting = true;
+            }
+        };
+
+        //sprint.canceled += ctx => sprinting = false;
+
         playerRigid = GetComponent<Rigidbody>();
         playerCamera = Camera.main;
 
@@ -56,7 +76,7 @@ public class PlayerMoveScript : MonoBehaviour
     void Update()
     {
         //Inititates Evasion behavior when Player is grounded and can evade again
-        if (Input.GetKeyDown(KeyCode.Space) && !evading && !evaded && !Airborne())
+        if (evade.triggered && !evading && !evaded && !Airborne())
         {
             evading = true;
             status.isInvincible = true;
@@ -66,19 +86,19 @@ public class PlayerMoveScript : MonoBehaviour
         }
 
         //Disengages sprinting if Player lets go of input or if they stop moving forward
-        if (Input.GetKeyUp(KeyCode.LeftShift) && sprinting || vertInput == 0)
+        if (moveFloat.y == 0)
         {
             sprinting = false;
 
-            if(inventory.inventory.Count >= 1)
+            if (inventory.inventory.Count >= 1)
             {
                 if (!inventory.inventory[inventory.selection].GetComponent<FirearmScript>().enabled)
                 {
                     inventory.inventory[inventory.selection].GetComponent<FirearmScript>().enabled = true;
                 }
             }
-            
-            if(inventory.inventory.Count >= 1)
+
+            if (inventory.inventory.Count >= 1)
             {
                 inventory.reticleSprite.sprite = inventory.inventory[inventory.selection].GetComponent<FirearmScript>().reticle;
             }
@@ -102,17 +122,21 @@ public class PlayerMoveScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        horizInput = Input.GetAxisRaw("Horizontal");
-        vertInput = Input.GetAxisRaw("Vertical");
+        //horizInput = Input.GetAxisRaw("Horizontal");
+        //vertInput = Input.GetAxisRaw("Vertical");
 
-        Vector3 trajectory = new Vector3(horizInput, 0f, vertInput);
+        moveFloat = move.ReadValue<Vector2>();
+
+        Vector3 trajectory = new Vector3(moveFloat.x, 0f, moveFloat.y);
         trajectory = trajectory.normalized;
 
+        Vector3 localTrajectory = transform.TransformDirection(trajectory);
+
         Vector3 forward = transform.forward * trajectory.z;
-        Vector3 sideways = transform.right * trajectory.x;
-      
+        Vector3 sideways = transform.right * trajectory.x;     
+
         //Disables gravity and zeroes downward pull during Melees or Zero Gravity play
-        if(melee.meleeLock || zeroGravity)
+        if (melee.meleeLock || zeroGravity)
         {
             playerRigid.useGravity = false;
             airbornePull = 0f;
@@ -125,49 +149,49 @@ public class PlayerMoveScript : MonoBehaviour
             sideways.y = 0f;
             playerRigid.useGravity = true;
             airbornePull = airbornePullReset;
-        }     
-
-        if (Input.GetButton("Horizontal"))
-        {
-            playerRigid.AddForce(sideways * speed * speedAccelerant);                         
         }
 
-        if (Input.GetButton("Vertical"))
+        //if (Input.GetButton("Horizontal"))
+        //{
+        //    //playerRigid.AddForce(sideways * speed * speedAccelerant);                         
+        //}
+
+        if (sprinting)
         {
             //Applies additional force if Player is sprinting. Otherwise, applies standard force
-            if (Input.GetKey(KeyCode.LeftShift) && vertInput == 1 && !Airborne())
-            {
-                sprinting = true;
-                playerRigid.AddForce(forward * sprintSpeed * speedAccelerant);
+            playerRigid.AddForce(localTrajectory * sprintSpeed * speedAccelerant);
 
-                if(!inventory.inventory[inventory.selection].GetComponent<FirearmScript>().isReloading)
+            if (!inventory.inventory[inventory.selection].GetComponent<FirearmScript>().isReloading)
+            {
+                inventory.inventory[inventory.selection].GetComponent<FirearmScript>().enabled = false;
+            }
+
+            inventory.reticleSprite.sprite = blankReticle;
+
+            if (!done)
+            {
+                for (int p = 0; p < backThrust.Count; p++)
                 {
-                    inventory.inventory[inventory.selection].GetComponent<FirearmScript>().enabled = false;
+                    var main = backThrust[p].GetComponent<ParticleSystem>().main;
+                    main.loop = true;
+                    backThrust[p].Play();
                 }
 
-                inventory.reticleSprite.sprite = blankReticle;
-
-                if(!done)
-                {
-                    for(int p = 0; p < backThrust.Count; p++)
-                    {
-                        var main = backThrust[p].GetComponent<ParticleSystem>().main;
-                        main.loop = true;
-                        backThrust[p].Play();
-                    }
-
-                    done = true;
-                }               
-
+                done = true;
             }
 
             else
             {
-                playerRigid.AddForce(forward * speed * speedAccelerant);              
+                //playerRigid.AddForce(forward * speed * speedAccelerant);              
             }
         }
 
-        if(Airborne())
+        else
+        {
+            playerRigid.AddForce(localTrajectory * speed * speedAccelerant);
+        }
+
+        if (Airborne())
         {
             //Provides controls, VFX visuals for Zero Gravity movement. Otherwise, provides downward force if Player is airborne
             if(zeroGravity)
@@ -182,7 +206,7 @@ public class PlayerMoveScript : MonoBehaviour
                 //    playerRigid.AddForce(-transform.up * speed * speedAccelerant);
                 //}
 
-                if(vertInput == 1 || volant)
+                if(moveFloat.y == 1 || volant)
                 {
                     for (int p = 0; p < backThrust.Count; p++)
                     {
@@ -198,7 +222,7 @@ public class PlayerMoveScript : MonoBehaviour
                     }
                 }
 
-                if (vertInput == -1 || volant)
+                if (moveFloat.y == -1 || volant)
                 {
                     for (int p = 0; p < frontThrust.Count; p++)
                     {
@@ -214,7 +238,7 @@ public class PlayerMoveScript : MonoBehaviour
                     }
                 }
 
-                if (horizInput == 1)
+                if (moveFloat.x == 1)
                 {
                     leftThrust[0].Play();
                 }
@@ -224,7 +248,7 @@ public class PlayerMoveScript : MonoBehaviour
                     leftThrust[0].Stop();
                 }
 
-                if (horizInput == -1)
+                if (moveFloat.x == -1)
                 {
                     rightThrust[0].Play();
                 }
@@ -242,7 +266,7 @@ public class PlayerMoveScript : MonoBehaviour
         }
 
         //Slows Player-character movement to zero if Player stops moving
-        if (horizInput == 0 && vertInput == 0)
+        if (moveFloat.x == 0 && moveFloat.y == 0)
         {
             Vector3 velocityActive = playerRigid.velocity;
             Vector3 velocityRest = Vector3.zero;
@@ -252,7 +276,7 @@ public class PlayerMoveScript : MonoBehaviour
         //Airborne();
         //Debug.Log(Airborne());
 
-        if ((horizInput != 0 || vertInput != 0) && OnSlope())
+        if ((moveFloat.x != 0 || moveFloat.y != 0) && OnSlope())
         {
             SlopeVector();
         }
@@ -262,7 +286,7 @@ public class PlayerMoveScript : MonoBehaviour
             playerRigid.velocity = Vector3.zero;
 
             //Not moving or moving backwards will make the Player dodge backwards
-            if (horizInput == 0 && vertInput == 0)
+            if (moveFloat.x == 0 && moveFloat.y == 0)
             {
                 playerRigid.AddForce(-transform.forward * evasionForwardForce, ForceMode.Impulse);
                 for (int p = 0; p < frontThrust.Count; p++)
@@ -271,7 +295,7 @@ public class PlayerMoveScript : MonoBehaviour
                 }
             }
 
-            else if(vertInput < 0)
+            else if(moveFloat.y < 0)
             {
                 playerRigid.AddForce(forward * evasionForwardForce, ForceMode.Impulse);
                 for (int p = 0; p < frontThrust.Count; p++)
@@ -281,7 +305,7 @@ public class PlayerMoveScript : MonoBehaviour
             }
 
             //Moving forward will make the Player dodge forwards
-            if (vertInput > 0)
+            if (moveFloat.y > 0)
             {
                 playerRigid.AddForce(forward * evasionForwardForce, ForceMode.Impulse);
                 for (int p = 0; p < backThrust.Count; p++)
@@ -291,7 +315,7 @@ public class PlayerMoveScript : MonoBehaviour
             }
 
             //Moving left will make the Player dodge left
-            if (horizInput < 0)
+            if (moveFloat.x < 0)
             {
                 playerRigid.AddForce(sideways * evasionForwardForce, ForceMode.Impulse);
                 for (int p = 0; p < rightThrust.Count; p++)
@@ -301,7 +325,7 @@ public class PlayerMoveScript : MonoBehaviour
             }
 
             //Moving right will make the Player dodge right
-            if (horizInput > 0)
+            if (moveFloat.x > 0)
             {
                 playerRigid.AddForce(sideways * evasionForwardForce, ForceMode.Impulse);
                 for (int p = 0; p < leftThrust.Count; p++)
@@ -380,7 +404,7 @@ public class PlayerMoveScript : MonoBehaviour
             //Handles vertical slope traversal
             if (Vector3.Dot(hit.normal, transform.forward) < 0)
             {
-                if (vertInput < 0)
+                if (moveFloat.y < 0)
                 {
                     playerRigid.AddForce(-Vector3.up * slopeForce);
                 }
@@ -394,7 +418,7 @@ public class PlayerMoveScript : MonoBehaviour
 
             else if (Vector3.Dot(hit.normal, transform.forward) > 0)
             {
-                if (vertInput < 0)
+                if (moveFloat.y < 0)
                 {
                     playerRigid.AddForce(Vector3.up * slopeForce);
                 }
@@ -409,7 +433,7 @@ public class PlayerMoveScript : MonoBehaviour
             //Handles Horizontal slope traversal
             if (Vector3.Dot(sideVector, transform.forward) > 0)
             {
-                if (horizInput > 0)
+                if (moveFloat.x > 0)
                 {
                     playerRigid.AddForce(-Vector3.up * slopeForce);
                 }
@@ -424,7 +448,7 @@ public class PlayerMoveScript : MonoBehaviour
 
             else if (Vector3.Dot(sideVector, transform.forward) < 0)
             {
-                if (horizInput < 0)
+                if (moveFloat.x < 0)
                 {
                     playerRigid.AddForce(-Vector3.up * slopeForce);
                 }

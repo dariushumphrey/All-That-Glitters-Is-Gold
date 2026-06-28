@@ -67,7 +67,7 @@ public class PositiveNegative : MonoBehaviour
         }
 
         //Movement input generates charge, up to 100%. 
-        if(move.horizInput != 0 || move.vertInput != 0)
+        if(move.moveFloat.x != 0 || move.moveFloat.y != 0)
         {
             chargePercentage += Time.deltaTime * chargeAccelerant;
                       

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class GaleForceWinds : MonoBehaviour
 {
@@ -15,13 +16,19 @@ public class GaleForceWinds : MonoBehaviour
     internal int chargeCount = 0; //Number of current uses
     internal float chargePercentage = 0f; //% of current Charge
     internal bool done = false; //Permits one operation if true
-    internal bool toggle = false; //Enables/Disables effect if true/false
+    internal bool toggle = false; //Enables/Disables effect if true/false\
+
+    private PlayerInput input;
+    internal InputAction useCheat;
 
     // Start is called before the first frame update
     void Start()
     {
         firearm = GetComponent<FirearmScript>();
         move = FindObjectOfType<PlayerMoveScript>();
+
+        input = move.gameObject.GetComponent<PlayerInput>();
+        useCheat = input.actions["Use Cheat"];
 
         proc.GetComponent<Text>().text = " ";
         applicator = Resources.Load<GameObject>("Game Items/GaleForceWindsApply");
@@ -40,7 +47,7 @@ public class GaleForceWinds : MonoBehaviour
         //___.text = Sprinting or moving generates a charge. The next charged shot casts severe winds that applies Health and Slowed debuffs to in-range Enemies.
 
         //Moving or Sprinting generates a charge, granting a use when reaching 100%
-        if(move.horizInput != 0 || move.vertInput != 0)
+        if(move.moveFloat.x != 0 || move.moveFloat.y != 0)
         {
             if(move.sprinting)
             {
@@ -89,7 +96,7 @@ public class GaleForceWinds : MonoBehaviour
         }
 
         //Toggles Cheat effects upon input at full charge
-        if (Input.GetKeyDown(KeyCode.E) && chargePercentage >= 100f)
+        if (useCheat.triggered && chargePercentage >= 100f)
         {
             if (!toggle)
             {

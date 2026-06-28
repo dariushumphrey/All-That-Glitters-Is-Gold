@@ -24,6 +24,7 @@ public class ADDrone : MonoBehaviour
     private float fireAgain = 0.0f;
     private RaycastHit hit;
     internal Vector3 targetVector;
+    internal bool targeting = false;
 
     private int targetChoice;
     // Start is called before the first frame update
@@ -40,7 +41,7 @@ public class ADDrone : MonoBehaviour
 
         if(Time.timeScale == 1)
         {
-            if (Input.GetButton("Fire2"))
+            if (hostWeapon.GetComponent<ActivatorDrone>().IsTargetingActive())
             {
                 if (Physics.Raycast(attackPoint.transform.position, attackPoint.transform.forward, out hit, range, contactOnly))
                 {

@@ -2,9 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class PlayerCameraScript : MonoBehaviour
 {
+    public PlayerInput input;
+    private InputAction look;
+    internal InputAction aim;
+    private InputAction fire;
+    private InputAction cursor;
+
     public float rotateH = 2.0f; //Strength of horizontal rotation
     public float rotateV = 2.0f; //Strength of vertical rotation
     public float vClamp = 30f; //Extent of up/down rotation
@@ -12,6 +19,8 @@ public class PlayerCameraScript : MonoBehaviour
     public float zoomDefault = 60f;
     public float zoomMax = 40f;
     public float zoomSpeed = 0.2f;
+    public bool zoomToggle = false; //Toggles zoom effect if true
+    public bool enableZoomToggle = false; //Enables the ability to toggle zoom if true
     public float collideCheck = 3.0f; //Governs Ray length to check for threats of surface clipping
     public float offsetMult = 2.0f; //Governs additional distance for Camera offset from surface
     public float offsetPushZ = 1.0f; //Governs physical pushing of Camera in the 'Z' direction of offset point
@@ -25,6 +34,12 @@ public class PlayerCameraScript : MonoBehaviour
     //cameraOnly - LayerMask that only interacts with Surfaces; used for Camera clipping checks
     public LayerMask contactOnly, cameraOnly;
 
+    private float lookSensHorizReset;
+    private float lookSensVertReset;
+    private float aaPercent = 80f; //Look sensitivity is reduced by % of starting value when looking at an enemy
+    private float aaPercentReset;
+    private float aaHoriz;
+    private float aaVert;
     private float zoomReset;
     private Vector3 forwardDirection; //Used to determine where Camera is looking when compared to the body
     private Vector3 camPosReset; //Starting position of Camera 
@@ -40,11 +55,39 @@ public class PlayerCameraScript : MonoBehaviour
     internal float pitch = 0.0f; //Value that rotates Player, Camera on X-axis
     internal bool activeAction = false;
     public bool multiWeapon = false;
-
-
+    private Vector2 lookFloat;
+    private bool cursorUse;
     // Start is called before the first frame update
     void Start()
     {
+        look = input.actions["Look"];
+        aim = input.actions["Aim"];
+        fire = input.actions["Fire"];
+        cursor = input.actions["Cursor"];
+
+        aim.performed += ctx =>
+        {
+            if(enableZoomToggle)
+            {
+                ZoomToggle();
+            }
+        };
+
+        lookSensHorizReset = rotateH;
+        lookSensVertReset = rotateV;
+
+        aaPercentReset = aaPercent;
+        aaPercent /= 100;
+        aaPercent *= rotateH;
+        aaHoriz = aaPercent;
+
+        aaPercent = aaPercentReset;
+        aaPercent /= 100;
+        aaPercent *= rotateV;
+        aaVert = aaPercent;
+
+        aaPercent = aaPercentReset;
+
         camPosReset = cameraPosition;
         playerCamera = Camera.main;
         player = FindObjectOfType<PlayerInventoryScript>();
@@ -60,14 +103,29 @@ public class PlayerCameraScript : MonoBehaviour
     void Update()
     {
         //Locks the cursor on number inputs
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    Cursor.lockState = CursorLockMode.Locked;
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        //if (Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    Cursor.lockState = CursorLockMode.None;
+        //}
+
+        if(cursor.triggered)
         {
-            Cursor.lockState = CursorLockMode.None;
+            if(!cursorUse)
+            {
+                cursorUse = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
+
+            else
+            {
+                cursorUse = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
     }
 
@@ -81,8 +139,14 @@ public class PlayerCameraScript : MonoBehaviour
         else
         {
             //Controls Camera rotation
-            yaw += rotateH * Input.GetAxis("Mouse X");
-            pitch -= rotateV * Input.GetAxis("Mouse Y");
+            lookFloat = look.ReadValue<Vector2>();
+
+            //yaw += rotateH * Input.GetAxis("Mouse X");
+            //pitch -= rotateV * Input.GetAxis("Mouse Y");
+
+            yaw += rotateH * lookFloat.x;
+            pitch -= rotateV * lookFloat.y;
+
             pitch = Mathf.Clamp(pitch, -vClamp, vClamp);         
 
             //Offsets Camera around Player shoulder if camera clipping protections are inactive
@@ -97,7 +161,7 @@ public class PlayerCameraScript : MonoBehaviour
 
             //Rotates Player-character when moving, firing, or throwing grenades
             forwardDirection = (playerCamera.transform.position - transform.position);
-            if (move.horizInput != 0 || move.vertInput != 0 || Input.GetButton("Fire1") || Input.GetButton("Fire2") || player.throwing)
+            if (move.moveFloat.x != 0 || move.moveFloat.y != 0 || fire.ReadValue<float>() > 0 || aim.ReadValue<float>() > 0 || player.throwing)
             {
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
                 activeAction = true;
@@ -129,7 +193,7 @@ public class PlayerCameraScript : MonoBehaviour
     {
         playerCamera.fieldOfView = zoomDefault;
 
-        if (Input.GetButton("Fire2"))
+        if(aim.ReadValue<float>() > 0 || zoomToggle)
         {
             //Zooms camera until it reaches max zoom
             if(!multiWeapon)
@@ -265,11 +329,14 @@ public class PlayerCameraScript : MonoBehaviour
                     {
                         playerCamera.transform.rotation = Quaternion.Lerp(playerCamera.transform.rotation, Quaternion.LookRotation(distance), player.inventory[player.selection].GetComponent<FirearmScript>().aimAssistStrength);
                         reticleSprite.color = Color.red;
+
+                        rotateH = aaHoriz;
+                        rotateV = aaVert;
                     }
 
                     else
                     {
-                        reticleSprite.color = Color.white;
+                        reticleSprite.color = Color.white;                    
                     }
 
                 }
@@ -277,6 +344,9 @@ public class PlayerCameraScript : MonoBehaviour
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Surface"))
                 {
                     reticleSprite.color = Color.white;
+
+                    rotateH = lookSensHorizReset;
+                    rotateV = lookSensVertReset;
                 }
             }
         }           
@@ -331,5 +401,21 @@ public class PlayerCameraScript : MonoBehaviour
                 }
             }
         }       
+    }
+
+    /// <summary>
+    /// Toggles the zoom effect if option is checked
+    /// </summary>
+    private void ZoomToggle()
+    {
+        if (!zoomToggle)
+        {
+            zoomToggle = true;
+        }
+
+        else if (zoomToggle)
+        {
+            zoomToggle = false;
+        }
     }
 }

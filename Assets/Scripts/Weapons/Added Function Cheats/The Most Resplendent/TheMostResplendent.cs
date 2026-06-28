@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class TheMostResplendent : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class TheMostResplendent : MonoBehaviour
     internal bool toggle = false; //Enables/Disables effect if true/false
     internal bool hitConfirmed = false; //Affirms achieved hit if true
 
+    private PlayerInput input;
+    internal InputAction useCheat;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,8 +31,11 @@ public class TheMostResplendent : MonoBehaviour
         hardLucent = Resources.Load<GameObject>("Game Items/testHardLucent");
         proc.GetComponent<Text>().text = " ";
 
+        input = firearm.input;
+        useCheat = input.actions["Use Cheat"];
+
         //Non-exotic Rarity 5 Weapons increase maximum stacks to 2
-        if(firearm.weaponRarity == 5 && !firearm.isExotic)
+        if (firearm.weaponRarity == 5 && !firearm.isExotic)
         {
             stackMax = 2;
         }
@@ -81,7 +88,7 @@ public class TheMostResplendent : MonoBehaviour
         }
 
         //Enables effect upon input with at least one stacks
-        if(Input.GetKeyDown(KeyCode.E) && stackCount >= 1)
+        if(useCheat.triggered && stackCount >= 1)
         {
             if(!toggle)
             {

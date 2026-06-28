@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Flashpoint : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class Flashpoint : MonoBehaviour
     public List<GameObject> minesActive = new List<GameObject>();
     internal GameObject proc; //Text UI that records Cheat activity
 
+    private PlayerInput input;
+    internal InputAction useCheat;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +21,9 @@ public class Flashpoint : MonoBehaviour
         lucentMine = Resources.Load<GameObject>("Game Items/Munition (GL_Exotic)");
 
         firearm.GetComponent<LauncherFirearm>().munition = lucentMine;
+
+        input = firearm.input;
+        useCheat = input.actions["Use Cheat"];
 
         if (proc)
         {
@@ -39,7 +46,7 @@ public class Flashpoint : MonoBehaviour
             proc.GetComponent<Text>().text = "";
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && minesActive.Count >= 1)
+        if (useCheat.triggered && minesActive.Count >= 1)
         {
             for (int m = 0; m < minesActive.Count; m++)
             {

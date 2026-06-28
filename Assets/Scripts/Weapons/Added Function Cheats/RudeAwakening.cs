@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class RudeAwakening : MonoBehaviour
 {
     private FirearmScript firearm;
-    private PlayerStatusScript player;
     private GameObject activation; //VFX used to convey activity
     internal GameObject proc; //Text UI that records Cheat activity
 
@@ -20,16 +20,21 @@ public class RudeAwakening : MonoBehaviour
     private int dmgReset; //Hold starting damage
     internal bool killConfirmed; //Affirms achieved kill if true
 
+    private PlayerInput input;
+    internal InputAction useCheat;
+
     // Start is called before the first frame update
     void Start()
     {
         firearm = GetComponent<FirearmScript>();
-        player = firearm.GetComponentInParent<PlayerStatusScript>();
         activation = Resources.Load<GameObject>("Particles/RudeAwakeningActive");
         proc.GetComponent<Text>().text = " ";
 
+        input = firearm.input;
+        useCheat = input.actions["Use Cheat"];
+
         //Rarity 5 Weapons increase max stacks and calculates a fixed Weapon damage amount
-        if(firearm.weaponRarity == 5)
+        if (firearm.weaponRarity == 5)
         {
             waveStacksMax = 6;
 
@@ -97,7 +102,7 @@ public class RudeAwakening : MonoBehaviour
         }       
 
         //Pressing 'E' casts an AOE wave if Player has at least one stack
-        if(Input.GetKeyDown(KeyCode.E) && waveStacks >= 1)
+        if(useCheat.triggered && waveStacks >= 1)
         {
             waveStacks--;
             if(waveStacks <= 0)

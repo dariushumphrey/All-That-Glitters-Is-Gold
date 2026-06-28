@@ -237,6 +237,7 @@ MonoBehaviour:
     m_Bits: 832
   saved: 0
   display: 0
+  fireOnce: 0
   gunCam: {fileID: 0}
   bulletTrail: {fileID: 0}
   barrel: {fileID: 1953288617503070150}

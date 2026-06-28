@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
+using UnityEngine.InputSystem;
 
 public class PlayerMeleeScript : MonoBehaviour
 {
+    public PlayerInput input;
+    internal InputAction melee;
+    private InputAction guardAction;
+
     public int meleeDamage = 5000;
     public float meleeRange = 4f;
     public float meleeSpeed = 3f;
@@ -39,6 +44,9 @@ public class PlayerMeleeScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        melee = input.actions["Melee Attack"];
+        guardAction = input.actions["Guard (Opening Shot)"];
+
         dpsText = GameObject.Find("dpsText");
 
         inv = gameObject.GetComponent<PlayerInventoryScript>();
@@ -48,7 +56,7 @@ public class PlayerMeleeScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && !multiWeapon)
+        if (melee.triggered && !multiWeapon)
         {
             //Melee attacks cannot occur if a target is not found
             //Otherwise, Player is locked into attack
@@ -74,7 +82,7 @@ public class PlayerMeleeScript : MonoBehaviour
 
         if(multiWeapon)
         {
-            if(Input.GetKeyDown(KeyCode.F) && !guardCooldown)
+            if(guardAction.triggered && !guardCooldown)
             {
                 guard.gameObject.SetActive(true);
                 guarding = true;

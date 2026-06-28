@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class PayToWin : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class PayToWin : MonoBehaviour
     private int dmgReset; //Holds starting Weapon damage
     internal bool hitConfirmed = false; //Affirms achieved hit if true
 
+    private PlayerInput input;
+    internal InputAction useCheat;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +29,9 @@ public class PayToWin : MonoBehaviour
         proc.GetComponent<Text>().text = " ";
         player = FindObjectOfType<PlayerInventoryScript>();
         activation = Resources.Load<GameObject>("Particles/cheatProcEffect");
+
+        input = firearm.input;
+        useCheat = input.actions["Use Cheat"];
 
         damageBuff /= 100;
         damageBuff *= firearm.damage;
@@ -79,7 +86,7 @@ public class PayToWin : MonoBehaviour
     /// </summary>
     void StackGranter()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (useCheat.triggered)
         {
             if (stackNum >= 1)
             {

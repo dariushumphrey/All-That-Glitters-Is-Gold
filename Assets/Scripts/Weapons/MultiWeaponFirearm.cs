@@ -26,7 +26,7 @@ public class MultiWeaponFirearm : FirearmScript
 
     public void MultiWeaponAttack()
     {
-        if(Input.GetButtonDown("Fire2"))
+        if(inv.GetComponent<PlayerMeleeScript>().melee.triggered)
         {
             if(inv.GetComponent<PlayerMeleeScript>().meleeTarget != null)
             {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Volant : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class Volant : MonoBehaviour
     internal bool cheatOverride = false; //Prevents Cheat deactivation if true -- Zero Gravity sections only
     private float startingVClamp, fixedVClamp;
 
+    private PlayerInput input;
+    internal InputAction useCheat;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +30,9 @@ public class Volant : MonoBehaviour
         cam = FindObjectOfType<PlayerCameraScript>();
         status = FindObjectOfType<PlayerStatusScript>();
         enemy = FindObjectOfType<EnemyManagerScript>();
+
+        input = firearm.input;
+        useCheat = input.actions["Use Cheat"];
 
         startingVClamp = cam.vClamp;
         fixedVClamp = 89f;
@@ -46,7 +52,7 @@ public class Volant : MonoBehaviour
 
         if (status.playerShield > 0 && !move.zgOverride)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (useCheat.triggered)
             {
                 if (!toggle)
                 {

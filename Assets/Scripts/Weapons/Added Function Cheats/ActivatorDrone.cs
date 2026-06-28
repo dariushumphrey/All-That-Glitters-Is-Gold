@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class ActivatorDrone : MonoBehaviour
 {
@@ -22,15 +23,21 @@ public class ActivatorDrone : MonoBehaviour
     private float droneFollowAccelerant = 2f;
     private float damageReset;
 
+    private PlayerInput input;
+    internal InputAction aim;
+
     // Start is called before the first frame update
     void Start()
     {
+        
+
         StartCoroutine(InitializeDrone());
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if(camera)
         {
             forwardDirection = (camera.playerCamera.transform.position - transform.position);
@@ -40,10 +47,11 @@ public class ActivatorDrone : MonoBehaviour
         {
             if(adInstance)
             {
-                if (Input.GetButton("Fire2"))
+                if (IsTargetingActive())
                 {
                     adInstance.transform.rotation = Quaternion.Lerp(gameObject.transform.root.transform.rotation, Quaternion.LookRotation(camera.playerCamera.transform.forward, Vector3.up), Time.deltaTime * characterTurnSpeed);
                     //adInstance.transform.eulerAngles = new Vector3(0f, camera.yaw, 0.0f);
+                    //adInstance.GetComponent<ADDrone>().targeting = true;
                     proc.GetComponent<Text>().text = "AD: Targeting";
                 }
 
@@ -97,6 +105,9 @@ public class ActivatorDrone : MonoBehaviour
 
         firearm = GetComponent<FirearmScript>();
         camera = FindObjectOfType<PlayerCameraScript>();
+
+        input = camera.gameObject.GetComponent<PlayerInput>();
+        aim = input.actions["Aim"];
 
         if (proc)
         {
@@ -175,5 +186,15 @@ public class ActivatorDrone : MonoBehaviour
 
         damagePercent = 25f;
         baseDamagePercent = 10f;
+    }
+
+    public bool IsTargetingActive()
+    {
+        if(aim.ReadValue<float>() > 0 || camera.zoomToggle)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

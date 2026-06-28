@@ -9,11 +9,12 @@ public class LauncherFirearm : FirearmScript
     public float shotForceForward, shotForceUp;
 
     internal List<GameObject> detectedTargets = new List<GameObject>();
+
     public override void FireWeapon()
     {
-        fireAgain += Time.deltaTime;
+        //fireAgain += Time.deltaTime;
 
-        if(Input.GetButton("Fire1") && currentAmmo >= 1 && fireAgain >= fireRate && !isReloading)
+        if(firing && currentAmmo >= 1 && fireAgain >= fireRate && !isReloading)
         {
             //Firing timer resets, Ammo decrements/ records number of shots
             fireAgain = 0.0f;

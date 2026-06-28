@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class AbsolutelyNoStops : MonoBehaviour
 {
@@ -16,12 +17,20 @@ public class AbsolutelyNoStops : MonoBehaviour
     private int dmgReset; //Holds starting Weapon damage
     private float rldReset; //Holds starting Weapon Reload Speed
 
+    private PlayerInput input;
+    internal InputAction fire;
+    internal InputAction reload;
+
     // Start is called before the first frame update
     void Start()
     {
         firearm = GetComponent<FirearmScript>();
         proc.GetComponent<Text>().text = " ";
         activation = Resources.Load<GameObject>("Particles/AbsolutelyNoBreaksActive");
+
+        input = firearm.input;
+        fire = input.actions["Fire"];
+        reload = input.actions["Reload"];
 
         tick = false;
 
@@ -72,7 +81,7 @@ public class AbsolutelyNoStops : MonoBehaviour
         }
 
         //Restores attributes to default when reserve ammo is empty or if Weapon ceases firing
-        if (firearm.reserveAmmo <= 0 || Input.GetButtonUp("Fire1") && tick)
+        if (firearm.reserveAmmo <= 0 || !firearm.firing && tick)
         {
             tick = false;
             firearm.damage = dmgReset;
@@ -81,7 +90,7 @@ public class AbsolutelyNoStops : MonoBehaviour
             proc.GetComponent<Text>().text = " ";
         }
 
-        if (tick && Input.GetKeyDown(KeyCode.R))
+        if (tick && reload.triggered)
         {
             Debug.Log("Reload canceled");
         }

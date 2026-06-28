@@ -3,11 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.InputSystem;
 
 public class PlayerInventoryScript : MonoBehaviour
 {
     //Optional
     public string filepath = "inventory.txt";
+
+    public PlayerInput input;
+    private InputAction switchGrenade;
+    private InputAction throwGrenade;
+    private InputAction inventoryOpen;
+    private InputAction inventorySortToggle;
+    private InputAction inventoryClose;
+    private InputAction weaponSwitchLeft;
+    private InputAction weaponSwitchRight;
+    private InputAction weaponFavoriteToggle;
+    private InputAction weaponDismantle;
 
     public bool sortToggle = false; //Sorts between favorite Weapons and all Weapons if true
     public int lucentFunds;
@@ -44,6 +56,7 @@ public class PlayerInventoryScript : MonoBehaviour
     private bool automateLeft; //Automatically increments selection value if true
     private bool automateRight;
     private int automateSelection = 0; //Searches for favorite Weapons on behalf of selection (variable)
+    private bool dismantleState = false; //Dismantle input is actively being pressed if true
     internal int selection, grenadeSelection; //index values used to select Weapons/Grenades
     private float dismantleTimer = 1f;
     private float dismantleTimerReset;
@@ -59,7 +72,29 @@ public class PlayerInventoryScript : MonoBehaviour
     
     // Start is called before the first frame update
     void Start()
-    {      
+    {
+        switchGrenade = input.actions["Switch Grenade"];
+        throwGrenade = input.actions["Charge, Throw Grenade"];
+        inventoryOpen = input.actions["Open Inventory"];
+        inventorySortToggle = input.actions["Change Inventory Sort Type"];
+        inventoryClose = input.actions["Close Inventory"];
+        weaponSwitchLeft = input.actions["Switch Weapon Left"];
+        weaponSwitchRight = input.actions["Switch Weapon Right"];
+        weaponFavoriteToggle = input.actions["Favorite (Inventory)"];
+        weaponDismantle = input.actions["Dismantle (Inventory)"];
+
+        weaponDismantle.performed += ctx =>
+        {
+            if (weaponPage.gameObject.activeInHierarchy && !inventory[selection].GetComponent<FirearmScript>().favorite)
+            {
+                dismantleState = true;
+            }
+        };
+
+        weaponDismantle.canceled += ctx => dismantleState = false;
+
+        throwGrenade.performed += ctx => throwing = true;
+        throwGrenade.canceled += ctx => ThrowGrenade();
 
         selection = -1;
         grenadeSelection = 0;
@@ -121,7 +156,7 @@ public class PlayerInventoryScript : MonoBehaviour
             SwitchInv();
             DismantleInv();
             SwitchGrenades();
-            ThrowGrenade();
+            ChargeGrenade();
         }
 
         //Hides Weapon ammo page after timer reaches zero
@@ -138,7 +173,7 @@ public class PlayerInventoryScript : MonoBehaviour
         //WriteInventory();
 
         //Reveals Inventory page if game is running and at least one Weapon is in inventory
-        if (Input.GetKeyDown(KeyCode.UpArrow) && Time.timeScale != 0)
+        if (inventoryOpen.triggered && Time.timeScale != 0)
         {
             if(inventory.Count <= 0)
             {
@@ -153,7 +188,7 @@ public class PlayerInventoryScript : MonoBehaviour
 
         if(weaponPage.gameObject.activeInHierarchy == true)
         {
-            if(Input.GetKeyDown(KeyCode.F))
+            if(weaponFavoriteToggle.triggered)
             {
                 if(!inventory[selection].GetComponent<FirearmScript>().favorite)
                 {
@@ -191,7 +226,7 @@ public class PlayerInventoryScript : MonoBehaviour
         }
 
         //Hides Inventory page if game is running
-        if (Input.GetKeyDown(KeyCode.DownArrow) && Time.timeScale != 0)
+        if (inventoryClose.triggered && Time.timeScale != 0)
         {
             weaponPage.gameObject.SetActive(false);
         }
@@ -406,7 +441,7 @@ public class PlayerInventoryScript : MonoBehaviour
     {
         if (weaponPage.gameObject.activeInHierarchy == true)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (inventorySortToggle.triggered)
             {
                 if (sortToggle)
                 {
@@ -482,7 +517,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
         } //Automates Inventory navigation right until a favorite Weapon is found
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (weaponSwitchLeft.triggered)
         {
             //Prevents switching when inventory is empty
             if(selection <= -1)
@@ -566,7 +601,7 @@ public class PlayerInventoryScript : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (weaponSwitchRight.triggered)
         {
             //Prevents switching when inventory is empty
             if (selection <= -1)
@@ -655,94 +690,80 @@ public class PlayerInventoryScript : MonoBehaviour
     /// Removes Weapon at index position after short period
     /// </summary>
     private void DismantleInv()
-    {
-        if (Input.GetKey(KeyCode.X))
+    {     
+        if (dismantleState)
         {
-            if(!weaponPage.gameObject.activeInHierarchy)
-            {
-                return;
-            } //Weapons cannot be dismantled if the Weapon page is not open
+            dismantleTimer -= Time.deltaTime;
+            dismantleText.text = "Dismantling...";
+            dismantleText.color = Color.Lerp(Color.red, Color.black, dismantleTimer);
 
-            else if(inventory[selection].GetComponent<FirearmScript>().favorite)
+            if (dismantleTimer <= 0.0f)
             {
-                return;
-            } //Favorite Weapons cannot be dismantled
-
-            else
-            {
-                dismantleTimer -= Time.deltaTime;
-                dismantleText.text = "Dismantling...";
-                dismantleText.color = Color.Lerp(Color.red, Color.black, dismantleTimer);
-
-                if (dismantleTimer <= 0.0f)
+                if (selection <= -1 && inventory.Count <= 0)
                 {
+                    //Debug.Log("Cannot dismantle; no items in inventory");
+                    return;
+                }
+
+                //Creats, assigns gameObject "rid" to disposed Weapon
+                //Inventory removes selected Weapon, "rid" is destroyed
+                GameObject rid = inventory[selection];
+                inventory.RemoveAt(selection);
+                Destroy(rid);
+
+                //selection decrements if equal to or higher than Inventory size
+                if (selection >= inventory.Count)
+                {
+                    selection--;
+
+                    //selection returns to -1 if Inventory size is zero
+                    //Otherwise, activates next Weapon
                     if (selection <= -1 && inventory.Count <= 0)
                     {
-                        //Debug.Log("Cannot dismantle; no items in inventory");
+                        selection = -1;
                         return;
                     }
 
-                    //Creats, assigns gameObject "rid" to disposed Weapon
-                    //Inventory removes selected Weapon, "rid" is destroyed
-                    GameObject rid = inventory[selection];
-                    inventory.RemoveAt(selection);
-                    Destroy(rid);
-
-                    //selection decrements if equal to or higher than Inventory size
-                    if (selection >= inventory.Count)
-                    {
-                        selection--;
-
-                        //selection returns to -1 if Inventory size is zero
-                        //Otherwise, activates next Weapon
-                        if (selection <= -1 && inventory.Count <= 0)
-                        {
-                            selection = -1;
-                            return;
-                        }
-
-                        else
-                        {
-                            inventory[selection].GetComponent<FirearmScript>().enabled = true;
-                            inventory[selection].gameObject.SetActive(true);
-                            reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-
-                        }
-                    }
-
-                    //selection activates first Weapon in inventory
-                    if (selection <= -1 && inventory.Count >= 1)
-                    {
-                        selection = 0;
-                        inventory[selection].GetComponent<FirearmScript>().enabled = true;
-                        inventory[selection].gameObject.SetActive(true);
-                        reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
-                    }
-
-                    //selection activates current Weapon in inventory
                     else
                     {
                         inventory[selection].GetComponent<FirearmScript>().enabled = true;
                         inventory[selection].gameObject.SetActive(true);
                         reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
+
                     }
-
-                    dismantleTimer = dismantleTimerReset;
-
-                    weaponAmmoPage.gameObject.SetActive(true);
-                    lucentText.gameObject.SetActive(true);
-                    wepStateTimer = wepStateTimerReset;
-
                 }
-            }           
+
+                //selection activates first Weapon in inventory
+                if (selection <= -1 && inventory.Count >= 1)
+                {
+                    selection = 0;
+                    inventory[selection].GetComponent<FirearmScript>().enabled = true;
+                    inventory[selection].gameObject.SetActive(true);
+                    reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
+                }
+
+                //selection activates current Weapon in inventory
+                else
+                {
+                    inventory[selection].GetComponent<FirearmScript>().enabled = true;
+                    inventory[selection].gameObject.SetActive(true);
+                    reticleSprite.sprite = inventory[selection].GetComponent<FirearmScript>().reticle;
+                }
+
+                dismantleTimer = dismantleTimerReset;
+
+                weaponAmmoPage.gameObject.SetActive(true);
+                lucentText.gameObject.SetActive(true);
+                wepStateTimer = wepStateTimerReset;
+
+            }        
         }
 
-        if (Input.GetKeyUp(KeyCode.X))
+        else
         {
             dismantleTimer = dismantleTimerReset;
             dismantleText.text = " ";
             dismantleText.color = Color.black;
-            return;
         }
     }
 
@@ -1375,7 +1396,7 @@ public class PlayerInventoryScript : MonoBehaviour
     /// </summary>
     private void SwitchGrenades()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
+        if(switchGrenade.triggered)
         {
             if(grenadeSelection >= grenades.Count - 1)
             {
@@ -1394,169 +1415,169 @@ public class PlayerInventoryScript : MonoBehaviour
         }
     }
 
+    private void ChargeGrenade()
+    {
+        if (throwing)
+        {
+            if (grenadeSelection == 0)
+            {
+                if (fogGrenadeCharges <= 0)
+                {
+                    Debug.Log("Cannot throw Fogger Grenade; No charges available");
+                }
+
+                else
+                {
+                    //throwing = true;
+                    grenadeThrow.maxValue = throwMax;
+                    grenadeThrow.minValue = throwMin;
+
+                    throwStrength = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
+                    grenadeThrow.value = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
+
+                }
+            } //Fogger Grenade
+
+            if (grenadeSelection == 1)
+            {
+                if (solGrenadeCharges <= 0)
+                {
+                    Debug.Log("Cannot throw Solution Grenade; No charges available");
+                }
+
+                else
+                {
+                    //throwing = true;
+                    grenadeThrow.maxValue = throwMax;
+                    grenadeThrow.minValue = throwMin;
+
+                    throwStrength = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
+                    grenadeThrow.value = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
+
+                }
+            } //Solution Grenade
+
+            if (grenadeSelection == 2)
+            {
+                if (desGrenadeCharges <= 0)
+                {
+                    Debug.Log("Cannot throw Destruct Grenade; No charges available");
+                }
+
+                else
+                {
+                    //throwing = true;
+                    grenadeThrow.maxValue = throwMax;
+                    grenadeThrow.minValue = throwMin;
+
+                    throwStrength = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
+                    grenadeThrow.value = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
+
+                }
+            } //Destruct Grenade
+        }
+    }
+
     /// <summary>
     /// Charges, throws selected grenade
     /// </summary>
     private void ThrowGrenade()
     {
-        if(Input.GetKey(KeyCode.G))
+        if (grenadeSelection == 0)
         {
-            if(grenadeSelection == 0)
+            if (fogGrenadeCharges <= 0)
             {
-                if (fogGrenadeCharges <= 0)
-                {
-                    Debug.Log("Cannot throw Fogger Grenade; No charges available");
-                }
+                Debug.Log("Cannot throw Fogger Grenade; No charges available");
+            }
 
-                else
-                {
-                    throwing = true;
-                    grenadeThrow.maxValue = throwMax;
-                    grenadeThrow.minValue = throwMin;
-
-                    throwStrength = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
-                    grenadeThrow.value = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
-
-                }
-            } //Fogger Grenade
-
-            if (grenadeSelection == 1)
+            else
             {
-                if (solGrenadeCharges <= 0)
+                fogGrenadeCharges--;
+                GameObject brand = Instantiate(grenades[grenadeSelection], transform.position + transform.forward, transform.rotation);
+                brand.name = grenades[grenadeSelection].name;
+                brand.GetComponent<Rigidbody>().AddForce(transform.forward * throwStrength, ForceMode.Impulse);
+
+                if (enshroudPresent)
                 {
-                    Debug.Log("Cannot throw Solution Grenade; No charges available");
+                    brand.GetComponent<FoggerGrenadeScript>().enshroudFlag = true;
                 }
 
-                else
-                {
-                    throwing = true;
-                    grenadeThrow.maxValue = throwMax;
-                    grenadeThrow.minValue = throwMin;
+                throwing = false;
 
-                    throwStrength = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
-                    grenadeThrow.value = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
+                throwStrength = 0;
+                grenadeThrow.value = throwMin;
 
-                }
-            } //Solution Grenade
+                grenadeText.gameObject.SetActive(true);
+                wepStateTimer = wepStateTimerReset;
+            }
+        } //Fogger Grenade
 
-            if (grenadeSelection == 2)
-            {
-                if (desGrenadeCharges <= 0)
-                {
-                    Debug.Log("Cannot throw Destruct Grenade; No charges available");
-                }
-
-                else
-                {
-                    throwing = true;
-                    grenadeThrow.maxValue = throwMax;
-                    grenadeThrow.minValue = throwMin;
-
-                    throwStrength = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
-                    grenadeThrow.value = Mathf.PingPong(Time.time * 50f, throwMax - throwMin) + throwMin;
-
-                }
-            } //Destruct Grenade
-        }
-
-        if (Input.GetKeyUp(KeyCode.G))
+        if (grenadeSelection == 1)
         {
-            if(grenadeSelection == 0)
+            if (solGrenadeCharges <= 0)
             {
-                if (fogGrenadeCharges <= 0)
-                {
-                    Debug.Log("Cannot throw Fogger Grenade; No charges available");
-                }
+                Debug.Log("Cannot throw Solution Grenade; No charges available");
+            }
 
-                else
-                {
-                    fogGrenadeCharges--;
-                    GameObject brand = Instantiate(grenades[grenadeSelection], transform.position + transform.forward, transform.rotation);
-                    brand.name = grenades[grenadeSelection].name;
-                    brand.GetComponent<Rigidbody>().AddForce(transform.forward * throwStrength, ForceMode.Impulse);
+            else
+            {
+                solGrenadeCharges--;
+                GameObject brand = Instantiate(grenades[grenadeSelection], transform.position + transform.forward, transform.rotation);
+                brand.name = grenades[grenadeSelection].name;
+                brand.GetComponent<Rigidbody>().AddForce(transform.forward * throwStrength, ForceMode.Impulse);
+                throwing = false;
 
-                    if(enshroudPresent)
+                throwStrength = 0;
+                grenadeThrow.value = throwMin;
+
+                grenadeText.gameObject.SetActive(true);
+                wepStateTimer = wepStateTimerReset;
+            }
+        } //Solution Grenade
+
+        if (grenadeSelection == 2)
+        {
+            if (desGrenadeCharges <= 0)
+            {
+                Debug.Log("Cannot throw Destruct Grenade; No charges available");
+            }
+
+            else
+            {
+                desGrenadeCharges--;
+                GameObject brand = Instantiate(grenades[grenadeSelection], transform.position + transform.forward, transform.rotation);
+                brand.name = grenades[grenadeSelection].name;
+                brand.GetComponent<Rigidbody>().AddForce(transform.forward * throwStrength, ForceMode.Impulse);
+
+                if (fulminatePresent)
+                {
+                    if (fulminateBuff == brand.GetComponent<DestructGrenadeScript>().explosiveDamage)
                     {
-                        brand.GetComponent<FoggerGrenadeScript>().enshroudFlag = true;
+                        //Debug.Log("No buff was applied; Damage has not changed");
                     }
 
-                    throwing = false;
-
-                    throwStrength = 0;
-                    grenadeThrow.value = throwMin;
-
-                    grenadeText.gameObject.SetActive(true);
-                    wepStateTimer = wepStateTimerReset;
-                }
-            } //Fogger Grenade
-
-            if (grenadeSelection == 1)
-            {
-                if (solGrenadeCharges <= 0)
-                {
-                    Debug.Log("Cannot throw Solution Grenade; No charges available");
-                }
-
-                else
-                {
-                    solGrenadeCharges--;
-                    GameObject brand = Instantiate(grenades[grenadeSelection], transform.position + transform.forward, transform.rotation);
-                    brand.name = grenades[grenadeSelection].name;
-                    brand.GetComponent<Rigidbody>().AddForce(transform.forward * throwStrength, ForceMode.Impulse);
-                    throwing = false;
-
-                    throwStrength = 0;
-                    grenadeThrow.value = throwMin;
-
-                    grenadeText.gameObject.SetActive(true);
-                    wepStateTimer = wepStateTimerReset;
-                }
-            } //Solution Grenade
-
-            if (grenadeSelection == 2)
-            {
-                if (desGrenadeCharges <= 0)
-                {
-                    Debug.Log("Cannot throw Destruct Grenade; No charges available");
-                }
-
-                else
-                {
-                    desGrenadeCharges--;
-                    GameObject brand = Instantiate(grenades[grenadeSelection], transform.position + transform.forward, transform.rotation);
-                    brand.name = grenades[grenadeSelection].name;
-                    brand.GetComponent<Rigidbody>().AddForce(transform.forward * throwStrength, ForceMode.Impulse);
-
-                    if(fulminatePresent)
+                    else
                     {
-                        if(fulminateBuff == brand.GetComponent<DestructGrenadeScript>().explosiveDamage)
-                        {
-                            //Debug.Log("No buff was applied; Damage has not changed");
-                        }
-
-                        else
-                        {
-                            brand.GetComponent<DestructGrenadeScript>().explosiveDamage = fulminateBuff;
-                            //Debug.Log(fulminateBuff);
-                        }
-
-                        if(fulminateFated)
-                        {
-                            StartCoroutine(FatedFulminateFreeGrenade(throwStrength, fulminateBuff));
-                        }
-
+                        brand.GetComponent<DestructGrenadeScript>().explosiveDamage = fulminateBuff;
+                        //Debug.Log(fulminateBuff);
                     }
 
-                    throwing = false;
+                    if (fulminateFated)
+                    {
+                        StartCoroutine(FatedFulminateFreeGrenade(throwStrength, fulminateBuff));
+                    }
 
-                    throwStrength = 0;
-                    grenadeThrow.value = throwMin;
-
-                    grenadeText.gameObject.SetActive(true);
-                    wepStateTimer = wepStateTimerReset;
                 }
-            } //Destruct Grenade
-        }
+
+                throwing = false;
+
+                throwStrength = 0;
+                grenadeThrow.value = throwMin;
+
+                grenadeText.gameObject.SetActive(true);
+                wepStateTimer = wepStateTimerReset;
+            }
+        } //Destruct Grenade
     }
 
     /// <summary>
@@ -2214,7 +2235,7 @@ public class PlayerInventoryScript : MonoBehaviour
     }
 
     /// <summary>
-    /// Records Inventory on input
+    /// Records Inventory on input (Deprecated)
     /// </summary>
     private void WriteInventory()
     {

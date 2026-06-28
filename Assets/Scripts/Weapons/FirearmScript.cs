@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
+using UnityEngine.InputSystem;
 
 public class FirearmScript : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class FirearmScript : MonoBehaviour
     public LayerMask contactOnly; //Ensures Raycast contact with specified layers
     public bool saved; // If checked, weapon will not generate cheats for itself -- savable weapons only
     public bool display; //If checked, Weapon will not do anything -- for Inventory screen only
+    public bool fireOnce; //Reconfigures firing behavior to trigger once on input if true
     private int damageAdd; //adds additional damage onto total damage
     private float dmgPctReset; //Holds starting damage percent
 
@@ -66,6 +68,12 @@ public class FirearmScript : MonoBehaviour
     internal int platformRNG; //Number used to randomly generate Platforms
     internal Transform weaponAnchor;
 
+    internal PlayerInput input;
+    internal InputAction fire;
+    internal InputAction reload;
+    private InputAction useCheat;
+    internal bool firing = false;
+
     public void Awake()
     {       
         if (display)
@@ -78,6 +86,11 @@ public class FirearmScript : MonoBehaviour
         else
         {
             inv = FindObjectOfType<PlayerInventoryScript>();
+
+            input = inv.gameObject.GetComponent<PlayerInput>();
+            fire = input.actions["Fire"];
+            reload = input.actions["Reload"];
+            useCheat = input.actions["Use Cheat"];
 
             procOne = GameObject.Find("weaponCheatText (1)");
             if (procOne.GetComponent<Text>() != null)
@@ -174,7 +187,12 @@ public class FirearmScript : MonoBehaviour
                 }
 
                 AmmoReloadCheck();
-                FireWeapon();
+                fireAgain += Time.deltaTime;
+                if (!fireOnce)
+                {
+                    FireWeapon();
+                }
+
                 IsFiring();
             }
         }       
@@ -852,9 +870,9 @@ public class FirearmScript : MonoBehaviour
     {
         if(!isReloading)
         {
-            if (Input.GetKeyDown(KeyCode.R) && currentAmmo != 0 || Input.GetButtonUp("Fire1") && currentAmmo <= 0 && reserveAmmo != 0)
+            if (reload.triggered && currentAmmo != 0 || !firing && currentAmmo <= 0 && reserveAmmo != 0)
             {
-                if (Input.GetButton("Fire1") || Input.GetButtonDown("Fire1"))
+                if(firing)
                 {
                     Debug.Log("Cannot reload; Weapon is being actively fired!");
 
@@ -911,9 +929,7 @@ public class FirearmScript : MonoBehaviour
     /// </summary>
     public virtual void FireWeapon()
     {
-        fireAgain += Time.deltaTime;
-
-        if (Input.GetButton("Fire1") && currentAmmo >= 1 && fireAgain >= fireRate && !isReloading)
+        if (firing && currentAmmo >= 1 && fireAgain >= fireRate && !isReloading)
         {
             //Firing timer resets, Ammo decrements/records number of shots
             fireAgain = 0.0f;
@@ -1365,7 +1381,7 @@ public class FirearmScript : MonoBehaviour
 
     public virtual bool IsFiring()
     {
-        if(Input.GetButtonDown("Fire1") && !isReloading && currentAmmo >= 1)
+        if(fire.triggered && !isReloading && currentAmmo >= 1)
         {
             return true;
         }
@@ -1441,5 +1457,37 @@ public class FirearmScript : MonoBehaviour
     {
         yield return new WaitForSeconds(0.01f);
         confirmHit = false;
+    }
+
+    public virtual void FireBehavior(InputAction.CallbackContext ctx)
+    {    
+        if (!fireOnce)
+        {
+            firing = true;
+        }
+
+        else
+        {
+            FireWeapon();
+        }
+    }
+
+    public virtual void CancelBehavior(InputAction.CallbackContext ctx)
+    {
+        firing = false;
+    }
+
+    public virtual void OnEnable()
+    {
+        fire.performed += FireBehavior;
+        fire.canceled += CancelBehavior;
+    }
+
+    public virtual void OnDisable()
+    {
+        fire.performed -= FireBehavior;
+        fire.canceled -= CancelBehavior;
+
+        firing = false;
     }
 }

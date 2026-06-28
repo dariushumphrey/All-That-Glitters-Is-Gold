@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
+using UnityEngine.InputSystem;
 
 public class SemiFireFirearm : FirearmScript
 {
@@ -12,36 +13,45 @@ public class SemiFireFirearm : FirearmScript
     private bool semiAuto; //Affirms active state of Semi Auto mode if true
     private int shotTotal = 0; //Total number of shots fired
 
-    /// <summary>
-    /// Triggers Semi-automatic behavior
-    /// </summary>
-    public override void FireWeapon()
+    public override void FireBehavior(InputAction.CallbackContext ctx)
     {
-        if(semiAuto == true)
+        if(fireOnce)
         {
+            if (currentAmmo >= 1 && !isReloading)
+            {
+                semiAuto = true;
+            }
+        }
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if (currentAmmo >= 1 && fireAgain == 0 && !isReloading)
+        {
+            semiAuto = true;
+        }
+
+        if (semiAuto == true)
+        {
+            if (currentAmmo < 0)
+            {
+                currentAmmo = 0;
+            }
+
             fireAgain = fireAgain + Time.deltaTime;
-            if(fireAgain >= fireRate)
+            if (fireAgain >= fireRate)
             {
                 StartCoroutine(Shoot());
                 shotTotal++;
 
-                if(shotTotal >= maximumShots)
+                if (shotTotal >= maximumShots)
                 {
                     shotTotal = 0;
                     semiAuto = false;
                 }
             }
-        }
-
-        if (currentAmmo < 0)
-        {
-            currentAmmo = 0;
-            return;
-        }
-
-        if (Input.GetButtonDown("Fire1") && currentAmmo >= 1 && fireAgain == 0 && !isReloading)
-        {
-            semiAuto = true;        
         }
     }
 

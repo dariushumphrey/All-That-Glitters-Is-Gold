@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
+using UnityEngine.InputSystem;
 
 public class Superweapon : MonoBehaviour
 {
@@ -34,6 +35,9 @@ public class Superweapon : MonoBehaviour
     internal bool killConfirmed = false; //Affirms an achieved kill if true
     internal bool toggle = false; //Enables/Disables effect if true/false
 
+    private PlayerInput input;
+    internal InputAction useCheat;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +45,9 @@ public class Superweapon : MonoBehaviour
         player = FindObjectOfType<PlayerStatusScript>();
         proc.GetComponent<Text>().text = " ";
         contactOnly = LayerMask.GetMask("Enemy", "Surface");
+
+        input = firearm.input;
+        useCheat = input.actions["Use Cheat"];
 
         superweaponShotMaterial = Resources.Load<Material>("Materials/Weapons/SuperweaponShotMaterial");
         destructGrenade = Resources.Load<GameObject>("Game Items/DestructGrenade");
@@ -64,9 +71,9 @@ public class Superweapon : MonoBehaviour
             proc.GetComponent<Text>().text = "Superweapon Charge: " + superweaponCharge.ToString("F0") + "%";
 
             //Charges Superweapon attack, fires when 100%. Charge stops if input is released.
-            if (Input.GetButton("Fire2"))
+            if (player.GetComponent<PlayerCameraScript>().aim.ReadValue<float>() > 0 || player.GetComponent<PlayerCameraScript>().zoomToggle)
             {
-                if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
+                if (player.GetComponent<PlayerMoveScript>().moveFloat.x != 0 || player.GetComponent<PlayerMoveScript>().moveFloat.y != 0)
                 {
                     superweaponCharge += Time.deltaTime * chargeAccelerant;
                 }
@@ -187,7 +194,7 @@ public class Superweapon : MonoBehaviour
         }
 
         //Toggles Cheat effects
-        if (Input.GetKeyDown(KeyCode.E) && stackCount >= 1)
+        if (useCheat.triggered && stackCount >= 1)
         {
             if (!toggle)
             {
