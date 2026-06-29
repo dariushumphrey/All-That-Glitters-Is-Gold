@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class MenuManagerScript : MonoBehaviour
 {
@@ -29,6 +30,12 @@ public class MenuManagerScript : MonoBehaviour
     [Header("How To Play guide Variables")]
     public Image activeTab;
     public Image[] tabs;
+
+    [Header("Controls page Variables")]
+    public Image controllerLayout;
+    public Image mnkLayout;
+    private enum InputType { MNK, Controller }
+    private InputType lastInput = InputType.MNK;
 
     private LevelManagerScript levelManager;
     private WeaponManagerScript weaponManager;
@@ -369,5 +376,51 @@ public class MenuManagerScript : MonoBehaviour
 
         activeTab = tabs[i];
         activeTab.gameObject.SetActive(true);
+    }
+
+    private void OnEnable()
+    {
+        InputSystem.onActionChange += OnActionChange;
+    }
+
+    private void OnDisable()
+    {
+        InputSystem.onActionChange -= OnActionChange;
+    }
+
+    /// <summary>
+    /// Changes collection text based on last device input
+    /// </summary>
+    /// <param name="obj">Holds information of input state change</param>
+    /// <param name="change">Represents logged device action</param>
+    private void OnActionChange(object obj, InputActionChange change)
+    {
+        if (change == InputActionChange.ActionStarted || change == InputActionChange.ActionPerformed)
+        {
+            var action = (InputAction)obj;
+            if (action.activeControl != null)
+            {
+                InputDevice current = action.activeControl.device;
+                if (current is Gamepad)
+                {
+                    if (lastInput != InputType.Controller)
+                    {
+                        lastInput = InputType.Controller;
+                        controllerLayout.gameObject.SetActive(true);
+                        mnkLayout.gameObject.SetActive(false);
+                    }
+                }
+
+                else if (current is Keyboard || current is Mouse)
+                {
+                    if (lastInput != InputType.MNK)
+                    {
+                        lastInput = InputType.MNK;
+                        mnkLayout.gameObject.SetActive(true);
+                        controllerLayout.gameObject.SetActive(false);
+                    }
+                }
+            }
+        }
     }
 }

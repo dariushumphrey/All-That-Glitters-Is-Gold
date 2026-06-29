@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class LootScript : MonoBehaviour
 {
@@ -12,6 +13,12 @@ public class LootScript : MonoBehaviour
     public int focusTarget = -1; //Represent Weapon type focus by number
     public bool exoticDelivery = false;
     public bool debug; //Allows manual trigger of SpawnLoot() if true
+    public PlayerInput input;
+    private InputAction addLootNormal;
+    private InputAction addLootFavorite;
+
+    private enum InputType { MNK, Controller}
+    private InputType lastInput = InputType.MNK;
 
     [Header("Loot Delivery Settings")]
 
@@ -22,6 +29,8 @@ public class LootScript : MonoBehaviour
     public ParticleSystem acceptEffect;
     public Canvas collapsedLootInfo;
     public Image collapsedLootImage;
+    public Image collapsedLootDeviceController;
+    public Image collapsedLootDeviceMNK;
     public Text clpLtType, clpLtRarity, clpLtPlatform,
         clpLtStChtOne, clpLtStChtTwo, clpLtStChtThree, clpLtStChtFour, clpLtFncChtOne, clpLtFncChtTwo;
     public LayerMask contactOnly;
@@ -50,6 +59,8 @@ public class LootScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = FindObjectOfType<PlayerMoveScript>();
+
         spawnAgain = 0.0f;
 
         RarityCorrection();
@@ -65,13 +76,18 @@ public class LootScript : MonoBehaviour
 
         if(isDrop)
         {
+            input = player.GetComponent<PlayerInput>();
+            if (input)
+            {
+                addLootNormal = input.actions["Add Loot Normal"];
+                addLootFavorite = input.actions["Add Loot Favorite"];
+
+            }
+
             collapsedLootInfo.gameObject.SetActive(false);
             RarityCorrection();
-            StartCoroutine(SetupDelivery());       
+            StartCoroutine(SetupDelivery());      
         }
-
-        player = FindObjectOfType<PlayerMoveScript>();
-
     }
 
     // Update is called once per frame
@@ -120,12 +136,12 @@ public class LootScript : MonoBehaviour
             {
                 if (collapsedLootInfo.gameObject.activeInHierarchy)
                 {
-                    if (Input.GetKeyDown(KeyCode.Alpha2))
+                    if (addLootNormal.triggered)
                     {
                         SpawnLoot();
                     }
 
-                    if (Input.GetKeyDown(KeyCode.DownArrow))
+                    if (addLootFavorite.triggered)
                     {
                         addAsFavorite = true;
                         SpawnLoot();
@@ -1960,5 +1976,73 @@ public class LootScript : MonoBehaviour
 
         RarityEnforcement();
         GenerateWeapon();
+    }
+
+    private void OnEnable()
+    {
+        if(isDrop)
+        {
+            InputSystem.onActionChange += OnActionChange;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (isDrop)
+        {
+            InputSystem.onActionChange -= OnActionChange;
+        }
+    }
+
+    /// <summary>
+    /// Changes collection text based on last device input
+    /// </summary>
+    /// <param name="obj">Holds information of input state change</param>
+    /// <param name="change">Represents logged device action</param>
+    private void OnActionChange(object obj, InputActionChange change)
+    {
+        if(change == InputActionChange.ActionStarted || change == InputActionChange.ActionPerformed)
+        {
+            var action = (InputAction)obj;
+            if(action.activeControl != null)
+            {
+                InputDevice current = action.activeControl.device;
+                if(current is Gamepad)
+                {
+                    if(lastInput != InputType.Controller)
+                    {
+                        lastInput = InputType.Controller;
+                        if(!collapsedLootDeviceController.gameObject.activeInHierarchy)
+                        {
+                            collapsedLootDeviceController.gameObject.SetActive(true);
+                        }
+
+                        if(collapsedLootDeviceMNK.gameObject.activeInHierarchy)
+                        {
+                            collapsedLootDeviceMNK.gameObject.SetActive(false);
+                        }
+                        Debug.Log("Controller!");
+                    }
+                }
+
+                else if (current is Keyboard || current is Mouse)
+                {
+                    if (lastInput != InputType.MNK)
+                    {
+                        lastInput = InputType.MNK;
+                        if (!collapsedLootDeviceMNK.gameObject.activeInHierarchy)
+                        {
+                            collapsedLootDeviceMNK.gameObject.SetActive(true);
+                        }
+
+                        if (collapsedLootDeviceController.gameObject.activeInHierarchy)
+                        {
+                            collapsedLootDeviceController.gameObject.SetActive(false);
+                        }
+                        Debug.Log("Mouse & Keyboard!");
+                    }
+                }
+            }
+        }
     }
 }

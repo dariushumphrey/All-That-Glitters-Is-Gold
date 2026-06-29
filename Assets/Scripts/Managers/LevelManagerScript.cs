@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using UnityEngine.UI;
 using Wilberforce;
+using UnityEngine.InputSystem;
 
 public class LevelManagerScript : MonoBehaviour
 {
@@ -21,6 +22,11 @@ public class LevelManagerScript : MonoBehaviour
 
     public PlayerStatusScript player;
     public EnemyManagerScript manager;
+
+    public PlayerInput input;
+    private InputAction pause;
+    private InputAction cursor;
+
 
     public GameObject[] chests; //Array of Chest items
     public GameObject[] spawners; //Array of Enemy spawners
@@ -95,13 +101,23 @@ public class LevelManagerScript : MonoBehaviour
     /// Initializes Player, Enemy, Loot quality, and finds UI elements
     /// </summary>
     void GameSet()
-    {
+    {       
         Cursor.lockState = CursorLockMode.Locked;
 
         player = FindObjectOfType<PlayerStatusScript>();
         player.playerScaling = gameSettingState;
         player.StatusCorrections();
         player.StatusScaling();
+
+        input = player.GetComponent<PlayerInput>();
+        if(input)
+        {
+            pause = input.actions["Pause Game"];
+            pause.performed += PauseToggle;
+
+            cursor = input.actions["Cursor"];
+
+        }
 
         uiCamera = GameObject.FindGameObjectWithTag("UICamera");
         StartCoroutine(InitializeAccessibility());
@@ -233,49 +249,15 @@ public class LevelManagerScript : MonoBehaviour
                 gameTime += Time.deltaTime;
             }
 
-            weaponFocus = Mathf.Clamp(weaponFocus, -1, 8); //Locks weaponFocus within a range to prevent incorrect focusing
-
-            //Pauses game if game is incomplete & controls page is hidden
-            if (Input.GetKeyDown(KeyCode.Escape) && !gameComplete)
-            {
-                if (player.isDead || controlsMenu.activeInHierarchy == true || howToPlayMenu.activeInHierarchy == true)
-                {
-                    return;
-                }
-
-                if (!paused)
-                {
-                    Time.timeScale = 0;
-                    if (pauseMenu.gameObject.activeSelf == false)
-                    {
-                        pauseMenu.gameObject.SetActive(true);
-                    }
-
-                    StartCoroutine(UnlockCursor());
-                    paused = true;
-                }
-
-                else if (paused)
-                {
-                    Time.timeScale = 1;
-
-                    if (pauseMenu.gameObject.activeSelf != false)
-                    {
-                        pauseMenu.gameObject.SetActive(false);
-                    }
-
-                    StartCoroutine(LockCursor());
-                    paused = false;
-                }
-            }
+            weaponFocus = Mathf.Clamp(weaponFocus, -1, 8); //Locks weaponFocus within a range to prevent incorrect focusing       
 
             //Produces game results on a delay (Viricide)
             if(gameComplete && setting == Setting.Viricide)
             {
                 gameEndDelay -= Time.deltaTime;
-                resultsNotice.gameObject.GetComponent<Text>().text = "Results in " + gameEndDelay.ToString("F0") + "s or [Tab]";
+                resultsNotice.gameObject.GetComponent<Text>().text = "Results in " + gameEndDelay.ToString("F0") + "s or [Pause]";
 
-                if(gameEndDelay <= 0f || Input.GetKeyDown(KeyCode.Tab))
+                if(gameEndDelay <= 0f || pause.triggered)
                 {
                     gameEndDelay = 0f;
                     //Time.timeScale = 0;
@@ -483,6 +465,73 @@ public class LevelManagerScript : MonoBehaviour
     public void ClosePage(GameObject page)
     {
         page.gameObject.SetActive(false);
+    }
+
+    public void PauseToggle(InputAction.CallbackContext ctx)
+    {
+        //Pauses game if game is incomplete & controls page is hidden
+        if (!gameComplete)
+        {
+            if (player.isDead || controlsMenu.activeInHierarchy == true || howToPlayMenu.activeInHierarchy == true)
+            {
+                return;
+            }
+
+            if (!paused)
+            {
+                Time.timeScale = 0;
+                if (pauseMenu.gameObject.activeSelf == false)
+                {
+                    pauseMenu.gameObject.SetActive(true);
+                }
+
+                StartCoroutine(UnlockCursor());
+                paused = true;
+            }
+
+            else if (paused)
+            {
+                Time.timeScale = 1;
+
+                if (pauseMenu.gameObject.activeSelf != false)
+                {
+                    pauseMenu.gameObject.SetActive(false);
+                }
+
+                StartCoroutine(LockCursor());
+                paused = false;
+            }
+        }
+    }
+
+    public void OnSceneUnloaded(Scene current)
+    {
+        CleanUpInputEvents();
+    }
+
+    public void CleanUpInputEvents()
+    {
+        if(pause != null)
+        {
+            pause.canceled -= PauseToggle;
+            pause = null;
+        }
+
+        if(input)
+        {
+            input = null;
+        }
+    }
+
+    public void OnEnable()
+    {
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    public void OnDisable()
+    {
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+        CleanUpInputEvents();
     }
 
     public IEnumerator LockCursor()

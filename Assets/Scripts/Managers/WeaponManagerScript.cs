@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.InputSystem;
 
 public class WeaponManagerScript : MonoBehaviour
 {
@@ -13,6 +14,13 @@ public class WeaponManagerScript : MonoBehaviour
     }
 
     public Setting setting;
+
+    public PlayerInput input;
+    private InputAction inventorySortToggle;
+    private InputAction weaponSwitchLeft;
+    private InputAction weaponSwitchRight;
+    private InputAction weaponFavoriteToggle;
+    private InputAction weaponDismantle;
 
     public List<GameObject> weapons = new List<GameObject>(); //List of Weapon variants used for attribute assignment, spawning
 
@@ -27,6 +35,7 @@ public class WeaponManagerScript : MonoBehaviour
     public Text lucentText, sortingText, favoriteText;
     public GameObject invNavigation; //Collection of on-screen Inventory page navigation buttons
     public float dismantleTimer;
+    private bool dismantleState = false; //Dismantle input is actively being pressed if true
 
     internal int selection; //Index used to select Inventory weapons
     private GameObject item; //GameObject that receives Weapons 
@@ -72,7 +81,20 @@ public class WeaponManagerScript : MonoBehaviour
 
             menu = FindObjectOfType<MenuManagerScript>();
             kiosk = FindObjectOfType<KioskScript>();
-            if(observedWeps.Count <= 0)
+
+            if(input)
+            {
+                inventorySortToggle = input.actions["Change Inventory Sort Type"];
+                weaponSwitchLeft = input.actions["Switch Weapon Left"];
+                weaponSwitchRight = input.actions["Switch Weapon Right"];
+                weaponFavoriteToggle = input.actions["Favorite (Inventory)"];
+                weaponDismantle = input.actions["Dismantle (Inventory)"];
+
+                weaponDismantle.performed += ctx => dismantleState = true;
+                weaponDismantle.canceled += ctx => dismantleState = false;
+            }
+
+            if (observedWeps.Count <= 0)
             {
                 ObserveOnLoad();
             }
@@ -1887,7 +1909,7 @@ public class WeaponManagerScript : MonoBehaviour
     /// </summary>
     private void SwitchInv()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (inventorySortToggle.triggered)
         {
             if (sortToggle)
             {
@@ -1954,7 +1976,7 @@ public class WeaponManagerScript : MonoBehaviour
             }
         } //Automates Inventory navigation right until a favorite Weapon is found
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (weaponSwitchLeft.triggered)
         {
             //Prevents switching when inventory is empty
             if (selection <= -1)
@@ -2011,7 +2033,7 @@ public class WeaponManagerScript : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (weaponSwitchRight.triggered)
         {
             //Prevents switching when inventory is empty
             if (selection <= -1)
@@ -2074,7 +2096,7 @@ public class WeaponManagerScript : MonoBehaviour
     /// </summary>
     private void DismantleInv()
     {
-        if (Input.GetKey(KeyCode.X))
+        if (dismantleState)
         {
             string d = observedWeps[selection];
             favCheck = d[3].ToString();
@@ -2144,18 +2166,17 @@ public class WeaponManagerScript : MonoBehaviour
             }                
         }
 
-        if (Input.GetKeyUp(KeyCode.X))
+        else
         {
             dismantleTimer = dismantleTimerReset;
             dismantleText.text = " ";
             dismantleText.color = Color.black;
-            return;
         }
     }
 
     private void ChangeFavoriteState()
     {
-        if(Input.GetKeyDown(KeyCode.F))
+        if(weaponFavoriteToggle.triggered)
         {
             ModifyFavoriteState();
         }

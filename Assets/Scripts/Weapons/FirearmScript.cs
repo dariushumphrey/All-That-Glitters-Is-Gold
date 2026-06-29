@@ -1479,15 +1479,21 @@ public class FirearmScript : MonoBehaviour
 
     public virtual void OnEnable()
     {
-        fire.performed += FireBehavior;
-        fire.canceled += CancelBehavior;
+        if(!display)
+        {
+            fire.performed += FireBehavior;
+            fire.canceled += CancelBehavior;
+        }
     }
 
     public virtual void OnDisable()
     {
-        fire.performed -= FireBehavior;
-        fire.canceled -= CancelBehavior;
+        if(!display)
+        {
+            fire.performed -= FireBehavior;
+            fire.canceled -= CancelBehavior;
 
-        firing = false;
+            firing = false;
+        }
     }
 }

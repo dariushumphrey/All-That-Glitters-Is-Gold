@@ -289,6 +289,7 @@ MonoBehaviour:
   focusTarget: -1
   exoticDelivery: 0
   debug: 0
+  input: {fileID: 0}
   isDrop: 1
   loot:
   - {fileID: 507183975337907774, guid: 562693c0f8bedb24695f7ae143fdc135, type: 3}
@@ -310,6 +311,8 @@ MonoBehaviour:
   acceptEffect: {fileID: 5553826763328851431, guid: 185f1817fe2224b40a973d47b5f4d640, type: 3}
   collapsedLootInfo: {fileID: 9147717792125823443}
   collapsedLootImage: {fileID: 6687503918078966412}
+  collapsedLootDeviceController: {fileID: 1698550231179137698}
+  collapsedLootDeviceMNK: {fileID: 142670690254099073}
   clpLtType: {fileID: 6828203263980562008}
   clpLtRarity: {fileID: 56928599435385107}
   clpLtPlatform: {fileID: 157489074569922095}
@@ -584,6 +587,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1698550231179137698 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5689737784969330467, guid: ef1b603841c33a147a98dd24d1b8c8fe, type: 3}
+  m_PrefabInstance: {fileID: 6441401121530572161}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &142670690254099073 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6385728296832040704, guid: ef1b603841c33a147a98dd24d1b8c8fe, type: 3}
+  m_PrefabInstance: {fileID: 6441401121530572161}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &4859403290950930807 stripped

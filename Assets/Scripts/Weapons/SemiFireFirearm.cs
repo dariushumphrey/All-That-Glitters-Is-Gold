@@ -25,34 +25,37 @@ public class SemiFireFirearm : FirearmScript
     }
 
     public override void Update()
-    {
+    {       
         base.Update();
 
-        if (currentAmmo >= 1 && fireAgain == 0 && !isReloading)
+        if (!display)
         {
-            semiAuto = true;
-        }
-
-        if (semiAuto == true)
-        {
-            if (currentAmmo < 0)
+            if (currentAmmo >= 1 && fireAgain == 0 && !isReloading)
             {
-                currentAmmo = 0;
+                semiAuto = true;
             }
 
-            fireAgain = fireAgain + Time.deltaTime;
-            if (fireAgain >= fireRate)
+            if (semiAuto == true)
             {
-                StartCoroutine(Shoot());
-                shotTotal++;
-
-                if (shotTotal >= maximumShots)
+                if (currentAmmo < 0)
                 {
-                    shotTotal = 0;
-                    semiAuto = false;
+                    currentAmmo = 0;
+                }
+
+                fireAgain = fireAgain + Time.deltaTime;
+                if (fireAgain >= fireRate)
+                {
+                    StartCoroutine(Shoot());
+                    shotTotal++;
+
+                    if (shotTotal >= maximumShots)
+                    {
+                        shotTotal = 0;
+                        semiAuto = false;
+                    }
                 }
             }
-        }
+        }    
     }
 
     /// <summary>

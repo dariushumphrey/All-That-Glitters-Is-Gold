@@ -160,7 +160,7 @@
                 {
                     "name": "Pause Game",
                     "type": "Button",
-                    "id": "d0c8f542-ad83-4964-bedd-726dcaba9aff",
+                    "id": "ea9e391d-a693-4acf-a40b-1540e0d5ad06",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -168,7 +168,23 @@
                 {
                     "name": "Cursor",
                     "type": "Button",
-                    "id": "84d4f42b-0d4a-4524-ba7a-ee84d76c52c8",
+                    "id": "c4935728-39fb-4077-80e4-3386323e8d26",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Add Loot Normal",
+                    "type": "Button",
+                    "id": "63a7e6e7-e88d-4027-b50c-c776fa407c6c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Add Loot Favorite",
+                    "type": "Button",
+                    "id": "4ad70dd7-fb2d-4091-bbc7-a6b59d4beeff",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -639,18 +655,7 @@
                 },
                 {
                     "name": "",
-                    "id": "bf2d1a3f-390d-48a6-ba68-8d40da056140",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Pause Game",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "303cf675-5fa4-46d4-9d99-9fe0843d402b",
+                    "id": "e2acb8be-0f15-4e69-a2be-f85241b1ae70",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
@@ -661,7 +666,29 @@
                 },
                 {
                     "name": "",
-                    "id": "9231479d-daa6-4419-bf7a-fcdfd2e034a3",
+                    "id": "16b1ab64-1919-431b-9301-57f8eaebe200",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Pause Game",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8d6cb6e0-23fb-40d3-8fb2-ff19adf2bc7b",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Cursor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c2fb0e4-6b76-490b-96d5-e082d3dce6db",
                     "path": "<Gamepad>/select",
                     "interactions": "",
                     "processors": "",
@@ -672,12 +699,45 @@
                 },
                 {
                     "name": "",
-                    "id": "3ebf6c1e-277c-46c1-9f63-eb20b8be92ee",
-                    "path": "<Keyboard>/1",
+                    "id": "8c3ed5ad-fadd-4f0a-9a53-bd5e46fade78",
+                    "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Cursor",
+                    "action": "Add Loot Normal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6e87651b-c845-4bb3-98db-a1ace2c88797",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Add Loot Normal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "38c16437-3f9a-4607-9b9a-4cc867f1e96b",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Add Loot Favorite",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "de509aaf-dc55-46e8-a4cc-130eee4c37c9",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Add Loot Favorite",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -764,6 +824,22 @@
                     "type": "PassThrough",
                     "id": "ee948b55-ebff-4747-8daa-ea3a3e03c651",
                     "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "0d401001-b662-4344-a0de-1ad50b76af6d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Cursor",
+                    "type": "Button",
+                    "id": "583b4d18-2dc6-4c8d-ac12-28932e478b25",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
@@ -1184,6 +1260,50 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c353993a-ca61-488a-8b52-d845ba59cc14",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0d0acee5-0daf-4ebc-a418-8960ffd47e16",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "26182fd6-3720-4c29-ad82-08e47b2feace",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Cursor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c68eb9a2-7ac8-4fb8-a328-e28c339c60ad",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Cursor",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
