@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 2
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 448a0ef6803262c4cba42b96611b1035, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 4e569eb4dd16fe44ab018fbb065a4c83, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.20806521, g: 0.20837578, b: 0.4477616, a: 1}
+  m_IndirectSpecularColor: {r: 0.19398662, g: 0.16455245, b: 0.18134543, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -21092,31 +21092,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b96c40b2a0165e746bc61cc293e7649b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.49873295
+      value: 0.56423855
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b96c40b2a0165e746bc61cc293e7649b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0052122604
+      value: -0.17555732
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b96c40b2a0165e746bc61cc293e7649b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.8656581
+      value: -0.80616075
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b96c40b2a0165e746bc61cc293e7649b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.043294057
+      value: -0.030320577
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b96c40b2a0165e746bc61cc293e7649b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -4
+      value: -14.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b96c40b2a0165e746bc61cc293e7649b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -120
+      value: -111.9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b96c40b2a0165e746bc61cc293e7649b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -3
+      value: 14.88
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b96c40b2a0165e746bc61cc293e7649b, type: 3}
       propertyPath: m_Name
@@ -24369,23 +24369,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7191551581581102591, guid: c1df6bc72d24e154e95547431527e309, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.91917425
+      value: 0.9760308
       objectReference: {fileID: 0}
     - target: {fileID: 7191551581581102591, guid: c1df6bc72d24e154e95547431527e309, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.13148287
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7191551581581102591, guid: c1df6bc72d24e154e95547431527e309, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.18313146
+      value: -0.21763223
       objectReference: {fileID: 0}
     - target: {fileID: 7191551581581102591, guid: c1df6bc72d24e154e95547431527e309, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.32294568
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7191551581581102591, guid: c1df6bc72d24e154e95547431527e309, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -7.09
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7191551581581102591, guid: c1df6bc72d24e154e95547431527e309, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -24393,7 +24393,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7191551581581102591, guid: c1df6bc72d24e154e95547431527e309, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 40.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7531802685016250181, guid: c1df6bc72d24e154e95547431527e309, type: 3}
       propertyPath: m_Name
@@ -35161,8 +35161,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 74a253d76046b084ca16c70a48f1b95d, type: 3}
   - {fileID: 21300000, guid: 500abc1f4ea371948b59a6f1a5278940, type: 3}
   - {fileID: 21300000, guid: 3a19ce49763e0f641a0242e5f95ae7a2, type: 3}
-  - {fileID: 21300000, guid: 9f946c4e6847d9b4daeda440940b9e48, type: 3}
-  - {fileID: 21300000, guid: 0cf47ecf465214347b3805e96a574b43, type: 3}
+  - {fileID: 21300000, guid: 0ac366c2d8757224ca03582c000220b2, type: 3}
+  - {fileID: 21300000, guid: bc8b8755b572faf488b9ce9e929b8f47, type: 3}
+  - {fileID: 21300000, guid: 7efee6c134ebec148b63afa33fefbb43, type: 3}
 --- !u!1 &1671000393
 GameObject:
   m_ObjectHideFlags: 0
@@ -35563,7 +35564,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 100000
-  field of view: 21
+  field of view: 50
   orthographic: 0
   orthographic size: 2500
   m_Depth: 0
@@ -35588,13 +35589,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1697815293}
-  m_LocalRotation: {x: 0.1270658, y: -0.10765105, z: 0.2247244, w: 0.9600857}
-  m_LocalPosition: {x: 0, y: 8078, z: -10}
+  m_LocalRotation: {x: -0.06383989, y: 0.7834304, z: 0.060693964, w: 0.61520535}
+  m_LocalPosition: {x: -25526.42, y: -5017.076, z: 40614.805}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 17, y: -9, z: 25}
+  m_LocalEulerAnglesHint: {x: -10, y: 103.846, z: -1.475}
 --- !u!1 &1706457340
 GameObject:
   m_ObjectHideFlags: 0
@@ -39439,52 +39440,24 @@ MonoBehaviour:
     m_ActionName: Player/Add Loot Favorite[/Keyboard/downArrow,/XInputControllerWindows/dpad/down]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 37c22e83-9e66-41b0-b1c8-f19f8b2240f1
-    m_ActionName: UI/Navigate[/XInputControllerWindows/leftStick/up,/XInputControllerWindows/rightStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows/rightStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/rightStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows/rightStick/right,/XInputControllerWindows/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e817593d-9992-46e3-b8c8-3fc48652b404
-    m_ActionName: UI/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c265c42b-dc47-4a33-b398-e6eca073d991
-    m_ActionName: UI/Cancel[/Keyboard/escape,/XInputControllerWindows/buttonEast]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: dc73b08c-4713-4b11-8884-4e050fa3667b
-    m_ActionName: UI/Point[/Mouse/position]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9e7ca745-48b9-4571-9eb9-7a212a56290d
-    m_ActionName: UI/Click[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e8d64e47-9009-4215-ba0f-af732a2cb7e8
-    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 2311e45b-e6cc-42e2-b96d-1dc39fd95010
-    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 1d94d528-f1f0-4db6-ac4d-74c7e2c00f61
-    m_ActionName: UI/RightClick[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 726a89cb-38dd-4aed-b40d-84f44ab92893
-    m_ActionName: UI/TrackedDevicePosition
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ee948b55-ebff-4747-8daa-ea3a3e03c651
-    m_ActionName: UI/TrackedDeviceOrientation
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 0d401001-b662-4344-a0de-1ad50b76af6d
     m_ActionName: UI/Pause[/Keyboard/escape,/XInputControllerWindows/start]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 583b4d18-2dc6-4c8d-ac12-28932e478b25
     m_ActionName: UI/Cursor[/Keyboard/1,/XInputControllerWindows/select]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0cd77c02-a216-4f58-8355-170a68956a56
+    m_ActionName: UI/Cursor Move
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 85b1626e-3427-4e30-9a88-c51fff8a275d
+    m_ActionName: UI/Cursor Scroll
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e82bd30f-5eae-4a96-a151-33c47e47b305
+    m_ActionName: UI/L. Click
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -42824,7 +42797,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 3
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -42881,13 +42854,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2079084162}
-  m_LocalRotation: {x: 0, y: 0.9659258, z: 0, w: 0.2588191}
+  m_LocalRotation: {x: 0, y: -0.21643952, z: 0, w: 0.97629607}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 150, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -25, z: 0}
 --- !u!1 &2080235408
 GameObject:
   m_ObjectHideFlags: 0

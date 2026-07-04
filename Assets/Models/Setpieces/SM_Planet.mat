@@ -56,15 +56,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _cloudsTexture:
-        m_Texture: {fileID: 2800000, guid: c5f2427206338424385d085c93769674, type: 3}
+        m_Texture: {fileID: 2800000, guid: 65a44b67ee8f4894e8d0e968d98f36f4, type: 3}
         m_Scale: {x: 3, y: 3}
         m_Offset: {x: 0, y: 0}
     - _planetNormals:
-        m_Texture: {fileID: 2800000, guid: 5346902546a43a343ac637bdd8a2d0dd, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 2, y: 2}
         m_Offset: {x: -1.37, y: -0.45}
     - _planetTex:
-        m_Texture: {fileID: 2800000, guid: 66ee336bf2dda1746bc997a25a19e2a2, type: 3}
+        m_Texture: {fileID: 2800000, guid: 90abd5ce467eed848996afc5b7ef167a, type: 3}
         m_Scale: {x: 2, y: 2}
         m_Offset: {x: -1.37, y: -0.45}
     m_Ints: []
@@ -85,13 +85,13 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _cloudStrength: 2
-    - _planetNormalStrength: 0.1
-    - _rimPower: 5
+    - _cloudStrength: 1
+    - _planetNormalStrength: 0
+    - _rimPower: 3
     - _xScroll: 0.05
     - _yScroll: 0
     m_Colors:
     - _Color: {r: 0.82097983, g: 0.82097983, b: 0.82097983, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _rim: {r: 0, g: 0.5, b: 0.5, a: 0}
+    - _rim: {r: 0.0028924954, g: 0.6132076, b: 0.6132076, a: 0}
   m_BuildTextureStacks: []
