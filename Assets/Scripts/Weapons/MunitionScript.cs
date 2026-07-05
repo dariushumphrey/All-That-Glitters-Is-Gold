@@ -21,6 +21,7 @@ public class MunitionScript : MonoBehaviour
     public LayerMask contactOnly; //Ensures Raycast accounts for Surfaces
     public List<GameObject> targets = new List<GameObject>();
 
+    private bool disableDetonationChecks = false;
     private Vector3 recentPosition;
     internal bool activatorDroneFlag = false;
     internal bool fatedActivatorDrone = false;
@@ -43,12 +44,21 @@ public class MunitionScript : MonoBehaviour
                 Destroy(gameObject, 60f);
             }
         }
+
+        if (disableDetonationChecks)
+        {
+            highVelocity = false;
+            if (GetComponent<CapsuleCollider>())
+            {
+                Destroy(GetComponent<CapsuleCollider>());
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!highVelocity)
+        if(!highVelocity && !disableDetonationChecks)
         {        
             RaycastHit hit;
             if (Physics.Raycast(hitDetection.position, hitDetection.forward, out hit, hitDetectionLength, contactOnly))
@@ -442,7 +452,19 @@ public class MunitionScript : MonoBehaviour
             GameObject field = Instantiate(staggerZone, transform.position, transform.rotation);
             field.name = staggerZone.name;
             field.GetComponent<InduceStaggerScript>().repurposedFormPresent = true;
-            field.GetComponent<InduceStaggerScript>().repurposedFormDamage = hostLauncher.GetComponent<RepurposedForm>().damageApply;
+            //field.GetComponent<InduceStaggerScript>().repurposedFormDamage = hostLauncher.GetComponent<RepurposedForm>().damageApply;
+
+            GameObject second = Instantiate(hostLauncher.GetComponent<RepurposedForm>().replevinMunition, transform.position - transform.up * 1.2f, Quaternion.Euler(Vector3.zero));
+            second.name = gameObject.name;
+
+            second.GetComponent<MunitionScript>().disableDetonationChecks = true;
+            second.GetComponent<MunitionScript>().isExoticMunition = true;
+            second.GetComponent<MunitionScript>().hostLauncher = hostLauncher;
+            second.GetComponent<MunitionScript>().explosiveDamage = explosiveDamage / 2;
+            second.GetComponent<MunitionScript>().explosiveRange = 4f;
+            second.GetComponent<MunitionScript>().repurposedFormFlag = false;
+
+            second.GetComponent<MunitionScript>().StartCoroutine(second.GetComponent<MunitionScript>().RepurposedFormSecondDetonation());
         }
 
         gameObject.SetActive(false);
@@ -675,6 +697,13 @@ public class MunitionScript : MonoBehaviour
         effect.name = "Munition VFX";
 
         gameObject.SetActive(false);
+
+    }
+
+    public IEnumerator RepurposedFormSecondDetonation()
+    {
+        yield return new WaitForSeconds(0.3f);            
+        gameObject.GetComponent<MunitionScript>().TriggerMunition();
 
     }
 }

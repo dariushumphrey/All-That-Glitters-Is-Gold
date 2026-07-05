@@ -11,7 +11,7 @@ public class AbsolutelyNoStops : MonoBehaviour
     private GameObject activation; //VFX used to convey activity
 
     private bool tick; //Affirms Cheat is active if true
-    private int dmgIncrease; //Fixed Weapon damage
+    //private int dmgIncrease; //Fixed Weapon damage
     private float rofPercent = 50f; //% of Weapon Rate of Fire
     private float rofReset; //Holds starting Weapon Rate of Fire
     private int dmgReset; //Holds starting Weapon damage
@@ -35,7 +35,7 @@ public class AbsolutelyNoStops : MonoBehaviour
         tick = false;
 
         dmgReset = firearm.damage;
-        dmgIncrease = firearm.damage * 3;
+        //dmgIncrease = firearm.damage;
 
         rofReset = firearm.fireRate;
         rofPercent /= 100;
@@ -71,7 +71,7 @@ public class AbsolutelyNoStops : MonoBehaviour
             else
             {
                 tick = true;
-                firearm.damage = dmgIncrease;
+                //firearm.damage = dmgIncrease;
                 firearm.reloadSpeed = 0.0f;
                 firearm.ReloadWeapon();
                 firearm.fireRate = rofPercent;
@@ -84,7 +84,7 @@ public class AbsolutelyNoStops : MonoBehaviour
         if (firearm.reserveAmmo <= 0 || !firearm.firing && tick)
         {
             tick = false;
-            firearm.damage = dmgReset;
+            //firearm.damage = dmgReset;
             firearm.reloadSpeed = rldReset;
             firearm.fireRate = rofReset;
             proc.GetComponent<Text>().text = " ";

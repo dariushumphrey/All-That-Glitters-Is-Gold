@@ -114,4 +114,16 @@ public class BerthScript : MonoBehaviour
     {
         Gizmos.DrawWireSphere(transform.position, explodeRadius);
     }
+
+    public IEnumerator RepurposedFormBerthExplosionChance()
+    {
+        yield return new WaitForSeconds(1f);
+        int instantDeathChance = Random.Range(0, 2);
+        if(instantDeathChance != 0)
+        {
+            Explode();
+        }
+
+        Destroy(this);
+    }
 }

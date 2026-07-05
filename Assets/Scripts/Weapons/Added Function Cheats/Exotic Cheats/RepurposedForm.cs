@@ -8,7 +8,7 @@ public class RepurposedForm : MonoBehaviour
     private float damagePercent = 10f;
     internal int damageApply;
     private LauncherFirearm firearm;
-    private GameObject replevinMunition;
+    internal GameObject replevinMunition;
     internal GameObject proc; //Text UI that records Cheat activity
 
     // Start is called before the first frame update

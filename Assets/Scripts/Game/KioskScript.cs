@@ -796,7 +796,7 @@ public class KioskScript : MonoBehaviour
                     if (fcOneStr == "J")
                     {
                         functionOnes[p].text = "It Writhes\n" +
-                        "<i>Fire Replevin capsules.</i>";
+                        "<i>Fire Replevin larvae.</i>";
 
                     }
 
@@ -1349,42 +1349,42 @@ public class KioskScript : MonoBehaviour
         else if (wepPlatStr == "2")
         {
             item.AddComponent<EfficientPlatform>();
-            item.GetComponent<EfficientPlatform>().Start();
+            //item.GetComponent<EfficientPlatform>().Start();
             platform.text = "Efficient Platform - Configured for slow-firing, high-damage.";
         }
 
         else if (wepPlatStr == "3")
         {
             item.AddComponent<ChatterPlatform>();
-            item.GetComponent<ChatterPlatform>().Start();
+            //item.GetComponent<ChatterPlatform>().Start();
             platform.text = "Chatter Platform - Configured for fast-firing, low-damage.";
         }
 
         else if (wepPlatStr == "4")
         {
             item.AddComponent<TemperedPlatform>();
-            item.GetComponent<TemperedPlatform>().Start();
+            //item.GetComponent<TemperedPlatform>().Start();
             platform.text = "Tempered Platform - Tuned for highest damage, improved firing and control.";
         }
 
         else if (wepPlatStr == "5")
         {
             item.AddComponent<SiphonicPlatform>();
-            item.GetComponent<SiphonicPlatform>().Start();
+            //item.GetComponent<SiphonicPlatform>().Start();
             platform.text = "Siphonic Platform - Weapon hits restore 1% Health & Shield. Melee Kills restore 15% Health & Shield.";
         }
 
         else if (wepPlatStr == "6")
         {
             item.AddComponent<MiningPlatform>();
-            item.GetComponent<MiningPlatform>().Start();
+            //item.GetComponent<MiningPlatform>().Start();
             platform.text = "Mining Platform - Fires Lucent explosive rounds.";
         }
 
         else if (wepPlatStr == "7")
         {
             item.AddComponent<TrenchantPlatform>();
-            item.GetComponent<TrenchantPlatform>().Start();
+            //item.GetComponent<TrenchantPlatform>().Start();
             platform.text = "Trenchant Platform -" + "\n" +
                 "Evasions slow enemies." + "\n" +
                 "Melees apply damage-over-time." + "\n" +
@@ -1394,7 +1394,7 @@ public class KioskScript : MonoBehaviour
         else
         {
             item.AddComponent<CachePlatform>();
-            item.GetComponent<CachePlatform>().Start();
+            //item.GetComponent<CachePlatform>().Start();
             platform.text = "Cache Platform - Regenerates all grenades every two seconds." + "\n" +
                 "Activator Drones fire mini-Rockets.";
         }
@@ -1443,6 +1443,7 @@ public class KioskScript : MonoBehaviour
             if (wepExoStr == "1")
             {
                 rarityCheck.text = "Exotic";
+                item.GetComponent<FirearmScript>().isExotic = true;
 
                 if (wepTypeStr == "0")
                 {
@@ -1525,13 +1526,13 @@ public class KioskScript : MonoBehaviour
             }
         }
 
-        stats.text = "Damage: " + item.GetComponent<FirearmScript>().damage.ToString() + "\n" +
-                         "Reload Speed: " + item.GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +
-                         "Effective Range " + item.GetComponent<FirearmScript>().effectiveRange.ToString() + "m" + "\n" +
-                         "Total Range: " + item.GetComponent<FirearmScript>().range.ToString() + "m" + "\n" +
-                         "Magazine: " + item.GetComponent<FirearmScript>().ammoSize.ToString() + "\n" +
-                         "Max Reserves: " + item.GetComponent<FirearmScript>().reserveSize.ToString() + "\n" +
-                         "Rate of Fire: " + Mathf.Round(60f / item.GetComponent<FirearmScript>().fireRate).ToString() + " RPM";
+        //stats.text = "Damage: " + item.GetComponent<FirearmScript>().damage.ToString() + "\n" +
+        //                 "Reload Speed: " + item.GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +
+        //                 "Effective Range " + item.GetComponent<FirearmScript>().effectiveRange.ToString() + "m" + "\n" +
+        //                 "Total Range: " + item.GetComponent<FirearmScript>().range.ToString() + "m" + "\n" +
+        //                 "Magazine: " + item.GetComponent<FirearmScript>().ammoSize.ToString() + "\n" +
+        //                 "Max Reserves: " + item.GetComponent<FirearmScript>().reserveSize.ToString() + "\n" +
+        //                 "Rate of Fire: " + Mathf.Round(60f / item.GetComponent<FirearmScript>().fireRate).ToString() + " RPM";
 
         if (kioskWares[q].Length >= 9)
         {
@@ -1767,7 +1768,7 @@ public class KioskScript : MonoBehaviour
                 if (fcOneStr == "J")
                 {
                     cheatTraitOne.text = "It Writhes" + '\n' +
-                        "Fires Replevin capsules. Hits produce staggering Berth explosions that inflict 10% of Weapon damage.";
+                        "Fires tandem Replevin larvae that explodes twice. Hits stagger Enemies for a 50% chance to trigger a Berth detonation.";
                 }
 
                 if (fcOneStr == "I")
@@ -1934,6 +1935,8 @@ public class KioskScript : MonoBehaviour
 
         item.transform.parent = playerInventory.gameObject.transform;
 
+        StartCoroutine(UpdateWeaponStats());
+
         purchaseConfirmText.text = "Trade your Lucent for this Weapon?" + "\n" +
                                     warePrices[q].ToString("N0") + " [You have: " + lucentFunds.ToString("N0") + "]";
     } 
@@ -2038,5 +2041,17 @@ public class KioskScript : MonoBehaviour
     public void ResumeRefreshTimer()
     {
         paused = false;
+    }
+
+    public IEnumerator UpdateWeaponStats()
+    {
+        yield return null;
+        stats.text = "Damage: " + item.GetComponent<FirearmScript>().damage.ToString() + "\n" +
+                         "Reload Speed: " + item.GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +
+                         "Effective Range " + item.GetComponent<FirearmScript>().effectiveRange.ToString() + "m" + "\n" +
+                         "Total Range: " + item.GetComponent<FirearmScript>().range.ToString() + "m" + "\n" +
+                         "Magazine: " + item.GetComponent<FirearmScript>().ammoSize.ToString() + "\n" +
+                         "Max Reserves: " + item.GetComponent<FirearmScript>().reserveSize.ToString() + "\n" +
+                         "Rate of Fire: " + Mathf.Round(60f / item.GetComponent<FirearmScript>().fireRate).ToString() + " RPM";
     }
 }

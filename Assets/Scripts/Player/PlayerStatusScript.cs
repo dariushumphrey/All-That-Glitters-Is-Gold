@@ -49,6 +49,7 @@ public class PlayerStatusScript : MonoBehaviour
     internal bool playerHit; //Confirms Player has been damaged if true
     internal GameObject counterplayCheat; //Confirms Weapon with Counterplay is present if not null
     internal bool counterplayFlag = false; //Confirms the Cheat Counterplay' condition has been met if true
+    internal bool allElseFailsFlag = false; //Confirms the Cheat "All Else Fails" condition has been met if true
 
     // Start is called before the first frame update
     void Start()
@@ -224,7 +225,7 @@ public class PlayerStatusScript : MonoBehaviour
     {
         playerHit = true;
 
-        if(isInvincible || isDead)
+        if(isInvincible || isDead || allElseFailsFlag)
         {        
             return;
         }

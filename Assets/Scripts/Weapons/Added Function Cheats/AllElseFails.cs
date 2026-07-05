@@ -19,7 +19,7 @@ public class AllElseFails : MonoBehaviour
 
     //invulnerable - Affirms Player immunity if true
     //cooldown - Affirms effect timeout if true
-    private bool invulnerable, cooldown = false;
+    private bool cooldown = false;
     private bool done = false; //Allows an effect once if true;
 
     // Start is called before the first frame update
@@ -53,70 +53,39 @@ public class AllElseFails : MonoBehaviour
 
         if(player.playerShield <= 0 && !cooldown)
         {
-            invulnerable = true;
+            player.allElseFailsFlag = true;
 
-            if(invulnerable)
+            nullifyTimer -= Time.deltaTime;
+            proc.GetComponent<Text>().text = "All Else Fails: " + nullifyTimer.ToString("F0") + "s";
+
+            //Produces VFX and childs effect to Player
+            if (!done)
             {
-                //Taking damage adds the full value back as Shield/Health
-                if (player.playerHit == true)
+                GameObject effect = Instantiate(activation, gameObject.transform.root.gameObject.transform.position + (Vector3.up * 1.5f), transform.rotation, gameObject.transform.root.gameObject.transform);
+                if (!firearm.isExotic && firearm.weaponRarity == 5)
                 {
-                    dmgNullify = player.dmgReceived;
-                    player.dmgReceived = 0;
-
-                    if (player.playerShield <= 0)
-                    {
-                        if (player.playerHealth >= player.playerHealthMax)
-                        {
-                            player.playerHealth = player.playerHealthMax;
-                        }
-
-                        else
-                        {
-                            player.playerHealth += dmgNullify;
-                        }
-                    }
-
-                    else
-                    {
-                        player.playerShield += dmgNullify;
-                    }
-
-                    player.playerHit = false;
+                    effect.AddComponent<DestroyScript>();
+                    effect.GetComponent<DestroyScript>().destroyTimer = 6f;
                 }
 
-
-                nullifyTimer -= Time.deltaTime;
-                proc.GetComponent<Text>().text = "All Else Fails: " + nullifyTimer.ToString("F0") + "s";
-
-                //Produces VFX and childs effect to Player
-                if(!done)
+                else
                 {
-                    GameObject effect = Instantiate(activation, gameObject.transform.root.gameObject.transform.position + (Vector3.up * 1.5f), transform.rotation, gameObject.transform.root.gameObject.transform);
-                    if (!firearm.isExotic && firearm.weaponRarity == 5)
-                    {
-                        effect.AddComponent<DestroyScript>();
-                        effect.GetComponent<DestroyScript>().destroyTimer = 6f;
-                    }
-
-                    else
-                    {
-                        effect.AddComponent<DestroyScript>();
-                        effect.GetComponent<DestroyScript>().destroyTimer = 4f;
-                    }
-
-                    done = true;
+                    effect.AddComponent<DestroyScript>();
+                    effect.GetComponent<DestroyScript>().destroyTimer = 4f;
                 }
-                
 
-                //Effect expires and enters cooldown
-                if (nullifyTimer <= 0f)
-                {
-                    nullifyTimer = nullifyReset;
-                    invulnerable = false;
-                    //player.StartCoroutine(player.CancelInvulnerable());
-                    cooldown = true;
-                }
+                done = true;
             }
+
+
+            //Effect expires and enters cooldown
+            if (nullifyTimer <= 0f)
+            {
+                nullifyTimer = nullifyReset;
+                player.allElseFailsFlag = false;
+                //player.StartCoroutine(player.CancelInvulnerable());
+                cooldown = true;
+            }           
         }
 
         if(cooldown)

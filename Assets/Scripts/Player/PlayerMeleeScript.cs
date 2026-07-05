@@ -232,6 +232,12 @@ public class PlayerMeleeScript : MonoBehaviour
                 meleeLock = false;
             }
 
+            else if(hit.collider.tag == "Corpse")
+            {
+                meleeTarget = null;
+                meleeLock = false;
+            }
+
             if(hit.collider.tag == "Combustible Lucent")
             {
                 if(!hit.collider.gameObject.GetComponent<CombustibleLucentScript>().primed)

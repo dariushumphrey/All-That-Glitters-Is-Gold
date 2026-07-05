@@ -1920,7 +1920,7 @@ public class LootScript : MonoBehaviour
             {
                 wepPltStr = "5";
                 fcOneStr = "I";
-                fcTwoStr = "J";
+                fcTwoStr = "9";
                 clpLtPlatform.GetComponent<Text>().text = "Siphonic\n" +
                         "<i>1% Health, Shield on hits.</i>";
                 clpLtFncChtOne.GetComponent<Text>().text = "Defiance\n" +
@@ -1937,7 +1937,7 @@ public class LootScript : MonoBehaviour
                 clpLtPlatform.GetComponent<Text>().text = "Tempered\n" +
                         "<i>Optimal damage, control.</i>";
                 clpLtFncChtOne.GetComponent<Text>().text = "It Writhes\n" +
-                        "<i>Fire Replevin capsules.</i>";
+                        "<i>Fire Replevin larvae.</i>";
                 clpLtFncChtTwo.GetComponent<Text>().text = "Gale Force Winds\n" +
                         "<i>Cast debuffing winds.</i>";
             }

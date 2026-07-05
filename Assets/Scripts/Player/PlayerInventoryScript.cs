@@ -458,7 +458,7 @@ public class PlayerInventoryScript : MonoBehaviour
         if (automateLeft)
         {
             inventory[selection].GetComponent<FirearmScript>().enabled = false;
-            inventory[selection].gameObject.SetActive(false);
+            //inventory[selection].gameObject.SetActive(false);
 
             if (automateSelection <= 0 && inventory.Count >= 1)
             {
@@ -472,6 +472,7 @@ public class PlayerInventoryScript : MonoBehaviour
 
             if (inventory[automateSelection].GetComponent<FirearmScript>().favorite)
             {
+                inventory[selection].gameObject.SetActive(false);
                 selection = automateSelection;
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
@@ -489,7 +490,7 @@ public class PlayerInventoryScript : MonoBehaviour
         if (automateRight)
         {
             inventory[selection].GetComponent<FirearmScript>().enabled = false;
-            inventory[selection].gameObject.SetActive(false);
+            //inventory[selection].gameObject.SetActive(false);
 
             if (automateSelection >= inventory.Count - 1 && inventory.Count >= 1)
             {
@@ -503,6 +504,7 @@ public class PlayerInventoryScript : MonoBehaviour
 
             if (inventory[automateSelection].GetComponent<FirearmScript>().favorite)
             {
+                inventory[selection].gameObject.SetActive(false);
                 selection = automateSelection;
 
                 inventory[selection].GetComponent<FirearmScript>().enabled = true;
@@ -1384,7 +1386,7 @@ public class PlayerInventoryScript : MonoBehaviour
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -10)
         {
             cheatTraitOne.text = "It Writhes" + '\n' +
-                "Fires Replevin capsules. Hits produce staggering Berth explosions that inflict 10% of Weapon damage.";
+                "Fires tandem Replevin larvae. Hits stagger Enemies for a 50% chance to trigger a Berth detonation.";
 
             cheatTraitTwo.text = "Gale Force Winds" + '\n' +
                     "[E] - Cast traveling winds that applies Health and Slowed debuffs to in-range Enemies. Lasts 45s.";

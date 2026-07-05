@@ -391,35 +391,35 @@ public class WeaponManagerScript : MonoBehaviour
         {
             wepPlatform.text = "Efficient Platform - Configured for slow-firing, high-damage.";
             item.AddComponent<EfficientPlatform>();
-            item.GetComponent<EfficientPlatform>().Start();
+            //item.GetComponent<EfficientPlatform>().Start();
         }
 
         if (pltStr == "3")
         {
             wepPlatform.text = "Chatter Platform - Configured for fast-firing, low-damage.";
             item.AddComponent<ChatterPlatform>();
-            item.GetComponent<ChatterPlatform>().Start();
+            //item.GetComponent<ChatterPlatform>().Start();
         }
 
         if (pltStr == "4")
         {
             wepPlatform.text = "Tempered Platform - Tuned for highest damage, improved firing and control.";
             item.AddComponent<TemperedPlatform>();
-            item.GetComponent<TemperedPlatform>().Start();
+            //item.GetComponent<TemperedPlatform>().Start();
         }
 
         if (pltStr == "5")
         {
             wepPlatform.text = "Siphonic Platform - Weapon hits restore 1% Health & Shield. Melee Kills restore 15% Health & Shield.";
             item.AddComponent<SiphonicPlatform>();
-            item.GetComponent<SiphonicPlatform>().Start();
+            //item.GetComponent<SiphonicPlatform>().Start();
         }
 
         if (pltStr == "6")
         {
             wepPlatform.text = "Mining Platform - Fires Lucent explosive rounds.";
             item.AddComponent<MiningPlatform>();
-            item.GetComponent<MiningPlatform>().Start();
+            //item.GetComponent<MiningPlatform>().Start();
         }
 
         if (pltStr == "7")
@@ -429,7 +429,7 @@ public class WeaponManagerScript : MonoBehaviour
                 "Melees apply damage-over-time." + "\n" + 
                 "Weapon hits apply Health debuffs.";
             item.AddComponent<TrenchantPlatform>();
-            item.GetComponent<TrenchantPlatform>().Start();
+            //item.GetComponent<TrenchantPlatform>().Start();
         }
 
         if (pltStr == "8")
@@ -437,7 +437,7 @@ public class WeaponManagerScript : MonoBehaviour
             wepPlatform.text = "Cache Platform - Regenerates all grenades every two seconds." + "\n" +
                 "Activator Drones fire mini-Rockets.";
             item.AddComponent<CachePlatform>();
-            item.GetComponent<CachePlatform>().Start();
+            //item.GetComponent<CachePlatform>().Start();
         }
 
         if (rarStr == "1")
@@ -643,13 +643,13 @@ public class WeaponManagerScript : MonoBehaviour
         }
 
         
-        stats.text = "Damage: " + item.GetComponent<FirearmScript>().damage.ToString() + "\n" +
-                         "Reload Speed: " + item.GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +
-                         "Effective Range " + item.GetComponent<FirearmScript>().effectiveRange.ToString() + "m" + "\n" +
-                         "Total Range: " + item.GetComponent<FirearmScript>().range.ToString() + "m" + "\n" +
-                         "Magazine: " + item.GetComponent<FirearmScript>().ammoSize.ToString() + "\n" +
-                         "Max Reserves: " + item.GetComponent<FirearmScript>().reserveSize.ToString() + "\n" +
-                         "Rate of Fire: " + Mathf.Round(60f / item.GetComponent<FirearmScript>().fireRate).ToString() + " RPM";
+        //stats.text = "Damage: " + item.GetComponent<FirearmScript>().damage.ToString() + "\n" +
+        //                 "Reload Speed: " + item.GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +
+        //                 "Effective Range " + item.GetComponent<FirearmScript>().effectiveRange.ToString() + "m" + "\n" +
+        //                 "Total Range: " + item.GetComponent<FirearmScript>().range.ToString() + "m" + "\n" +
+        //                 "Magazine: " + item.GetComponent<FirearmScript>().ammoSize.ToString() + "\n" +
+        //                 "Max Reserves: " + item.GetComponent<FirearmScript>().reserveSize.ToString() + "\n" +
+        //                 "Rate of Fire: " + Mathf.Round(60f / item.GetComponent<FirearmScript>().fireRate).ToString() + " RPM";
 
         if (observedWeps[selection].Length >= 9)
         {
@@ -885,7 +885,7 @@ public class WeaponManagerScript : MonoBehaviour
                 if (cFiveStr == "J")
                 {
                     cheatTraitOne.text = "It Writhes" + '\n' +
-                        "Fires Replevin capsules. Hits produce staggering Berth explosions that inflict 10% of Weapon damage.";
+                        "Fires tandem Replevin larvae that explodes twice. Hits stagger Enemies for a 50% chance to trigger a Berth detonation.";
                 }
 
                 if (cFiveStr == "I")
@@ -1192,8 +1192,8 @@ public class WeaponManagerScript : MonoBehaviour
                 }
             }
         }
-        
-        
+
+        StartCoroutine(UpdateWeaponStats());
     }
 
     /// <summary>
@@ -2538,5 +2538,17 @@ public class WeaponManagerScript : MonoBehaviour
                 Destroy(child.gameObject);
             }
         }
+    }
+
+    public IEnumerator UpdateWeaponStats()
+    {
+        yield return null;
+        stats.text = "Damage: " + item.GetComponent<FirearmScript>().damage.ToString() + "\n" +
+                         "Reload Speed: " + item.GetComponent<FirearmScript>().reloadSpeed.ToString("F2") + "s" + "\n" +
+                         "Effective Range " + item.GetComponent<FirearmScript>().effectiveRange.ToString() + "m" + "\n" +
+                         "Total Range: " + item.GetComponent<FirearmScript>().range.ToString() + "m" + "\n" +
+                         "Magazine: " + item.GetComponent<FirearmScript>().ammoSize.ToString() + "\n" +
+                         "Max Reserves: " + item.GetComponent<FirearmScript>().reserveSize.ToString() + "\n" +
+                         "Rate of Fire: " + Mathf.Round(60f / item.GetComponent<FirearmScript>().fireRate).ToString() + " RPM";
     }
 }

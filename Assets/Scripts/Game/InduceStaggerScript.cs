@@ -41,11 +41,18 @@ public class InduceStaggerScript : MonoBehaviour
 
                 if(repurposedFormPresent)
                 {
-                    other.gameObject.GetComponent<EnemyHealthScript>().inflictDamage(repurposedFormDamage);
+                    //other.gameObject.GetComponent<EnemyHealthScript>().inflictDamage(repurposedFormDamage);
+
+                    if(!other.gameObject.GetComponent<BerthScript>())
+                    {
+                        other.gameObject.AddComponent<BerthScript>();
+                        other.gameObject.GetComponent<BerthScript>().exoticOverride = true;
+                        other.gameObject.GetComponent<BerthScript>().StartCoroutine(other.gameObject.GetComponent<BerthScript>().RepurposedFormBerthExplosionChance());
+                    }
                 }
 
                 StartCoroutine(DeactivateImmediate());
-            }       
+            }          
         }
     }
 
