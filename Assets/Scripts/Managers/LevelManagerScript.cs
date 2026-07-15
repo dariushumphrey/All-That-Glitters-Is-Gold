@@ -479,25 +479,31 @@ public class LevelManagerScript : MonoBehaviour
 
             if (!paused)
             {
+                player.GetComponent<PlayerCameraScript>().enabled = false;
+                player.GetComponent<PlayerMoveScript>().enabled = false;
+
                 Time.timeScale = 0;
                 if (pauseMenu.gameObject.activeSelf == false)
                 {
                     pauseMenu.gameObject.SetActive(true);
                 }
-
+              
                 StartCoroutine(UnlockCursor());
                 paused = true;
             }
 
             else if (paused)
             {
+                player.GetComponent<PlayerCameraScript>().enabled = true;
+                player.GetComponent<PlayerMoveScript>().enabled = true;
+
                 Time.timeScale = 1;
 
                 if (pauseMenu.gameObject.activeSelf != false)
                 {
                     pauseMenu.gameObject.SetActive(false);
                 }
-
+               
                 StartCoroutine(LockCursor());
                 paused = false;
             }

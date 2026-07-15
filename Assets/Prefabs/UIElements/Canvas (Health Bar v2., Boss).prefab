@@ -559,7 +559,6 @@ GameObject:
   - component: {fileID: 4821691107712512789}
   - component: {fileID: 1362739047089622214}
   - component: {fileID: 1524638753162731013}
-  - component: {fileID: 2409080223128396283}
   m_Layer: 5
   m_Name: Canvas (Health Bar v2., Boss)
   m_TagString: Untagged
@@ -652,18 +651,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2409080223128396283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4515905272839612925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46c5a31140a9dce409144c017ff36051, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4819076487991021241
 GameObject:
   m_ObjectHideFlags: 0
