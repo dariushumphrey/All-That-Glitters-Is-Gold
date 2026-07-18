@@ -84,8 +84,12 @@ MonoBehaviour:
   - {fileID: 8887488837565642099}
   - {fileID: 2539815947159699105}
   - {fileID: 6433899681752735446}
+  replacementFlash: {fileID: 0}
+  replacementBulletTrail: {fileID: 0}
   relocateBarrel: 1
   relocateBarrelExotic: 0
+  replaceMuzzleEffect: 0
+  replaceTrailEffect: 0
   atRarity: 4
   relocationPos: {x: 0, y: 0, z: 1.2}
   relocationExoticPos: {x: 0, y: 0, z: 0.72}
@@ -676,6 +680,14 @@ PrefabInstance:
     - target: {fileID: 4579400972167358979, guid: cfb7f135aa5961d4e8c7fc64e5b05b26, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953736222789675784, guid: cfb7f135aa5961d4e8c7fc64e5b05b26, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4980185645027934862, guid: cfb7f135aa5961d4e8c7fc64e5b05b26, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5042831337939044980, guid: cfb7f135aa5961d4e8c7fc64e5b05b26, type: 3}
       propertyPath: m_IsActive

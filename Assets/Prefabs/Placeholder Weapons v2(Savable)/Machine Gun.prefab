@@ -95,6 +95,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 7744375213909669751, guid: 377cbf7d40de48b429110cefefee5025, type: 3}
+      propertyPath: LightsModule.intensityCurve.scalar
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 8076073635389291559, guid: 377cbf7d40de48b429110cefefee5025, type: 3}
       propertyPath: m_Layer
       value: 12

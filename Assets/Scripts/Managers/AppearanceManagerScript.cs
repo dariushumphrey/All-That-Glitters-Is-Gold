@@ -7,8 +7,10 @@ public class AppearanceManagerScript : MonoBehaviour
     public FirearmScript weapon;
     public GameObject weaponModel, exoticWeaponModel;
     public GameObject[] rarityAddons;
+    public ParticleSystem replacementFlash;
+    public Material replacementBulletTrail;
 
-    public bool relocateBarrel, relocateBarrelExotic;
+    public bool relocateBarrel, relocateBarrelExotic, replaceMuzzleEffect, replaceTrailEffect;
     public int atRarity;
     public Vector3 relocationPos, relocationExoticPos;
 
@@ -50,7 +52,17 @@ public class AppearanceManagerScript : MonoBehaviour
                 weapon.barrel.transform.localPosition = relocationExoticPos;
                 weapon.muzzleFlash.transform.localPosition = relocationExoticPos;
             }
-        }
+
+            if (replaceMuzzleEffect)
+            {
+                weapon.muzzleFlash = replacementFlash;
+            }
+
+            if (replaceMuzzleEffect)
+            {
+                weapon.bulletTrail = replacementBulletTrail;
+            }
+        }     
     }
 
     // Update is called once per frame

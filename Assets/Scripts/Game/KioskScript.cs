@@ -1194,12 +1194,17 @@ public class KioskScript : MonoBehaviour
 
             }
 
-            if (playerInventory.observedWeps[p].Length == 8)
+            if (playerInventory.observedWeps[p].Length == 9)
+            {
+                weaponPrice += 5000f;
+            }
+
+            if (playerInventory.observedWeps[p].Length == 10)
             {
                 weaponPrice += 10000f;
             }
 
-            if (playerInventory.observedWeps[p].Length == 9)
+            if (playerInventory.observedWeps[p].Length == 11)
             {
                 weaponPrice += 20000f;
             }
