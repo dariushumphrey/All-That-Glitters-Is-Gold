@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4564169447370591592, guid: 8a94bcbf073110c4482f1c0c349ca16f, type: 3}
       propertyPath: m_Name
-      value: AMLR Variant
+      value: AMLR
       objectReference: {fileID: 0}
     - target: {fileID: 4564169447370591593, guid: 8a94bcbf073110c4482f1c0c349ca16f, type: 3}
       propertyPath: saved
