@@ -10,8 +10,8 @@ public class AllElseFails : MonoBehaviour
     private PlayerStatusScript player;
     private GameObject activation; //VFX used to convey activity
     private int dmgNullify = 0; //Receives damage taken
-    private float nullifyTimer = 3f; //Timer used to keep effects active
-    private float cooldownTimer = 20f; //Duration of effect cooldown
+    private float nullifyTimer = 5f; //Timer used to keep effects active
+    private float cooldownTimer = 10f; //Duration of effect cooldown
 
     //nullifyReset - holds starting effect duration
     //cooldownReset - holds starting cooldown duration
@@ -31,15 +31,16 @@ public class AllElseFails : MonoBehaviour
         proc.GetComponent<Text>().text = "";
 
         var main = activation.GetComponent<ParticleSystem>().main;
+        main.startLifetime = 5f;
 
         //Rarity 5 Weapons increase immunity duration and decrease cooldown
         //VFX duration is increased to match effect duration
-        if (!firearm.isExotic && firearm.weaponRarity == 5)
-        {
-            nullifyTimer = 5f;
-            cooldownTimer = 10f;
-            main.startLifetime = 5f;
-        }
+        //if (!firearm.isExotic && firearm.weaponRarity == 5)
+        //{
+        //    nullifyTimer = 5f;
+        //    cooldownTimer = 10f;
+            
+        //}
 
         nullifyReset = nullifyTimer;
         cooldownReset = cooldownTimer;
@@ -51,17 +52,17 @@ public class AllElseFails : MonoBehaviour
         //All Else Fails
         //___.text = When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds. 
 
-        if(player.playerShield <= 0 && !cooldown)
+        if (player.playerShield <= 0 && !cooldown)
         {
-            player.allElseFailsFlag = true;
+            player.allElseFailsFlag = true;       
+        }
 
-            nullifyTimer -= Time.deltaTime;
-            proc.GetComponent<Text>().text = "All Else Fails: " + nullifyTimer.ToString("F0") + "s";
-
+        if (player.allElseFailsFlag)
+        {
             //Produces VFX and childs effect to Player
             if (!done)
             {
-                GameObject effect = Instantiate(activation, gameObject.transform.root.gameObject.transform.position + (Vector3.up * 1.5f), transform.rotation, gameObject.transform.root.gameObject.transform);
+                GameObject effect = Instantiate(activation, gameObject.transform.root.gameObject.transform.position + (Vector3.up * 1.5f), Quaternion.identity, gameObject.transform.root.gameObject.transform);
                 if (!firearm.isExotic && firearm.weaponRarity == 5)
                 {
                     effect.AddComponent<DestroyScript>();
@@ -77,6 +78,8 @@ public class AllElseFails : MonoBehaviour
                 done = true;
             }
 
+            nullifyTimer -= Time.deltaTime;
+            proc.GetComponent<Text>().text = "All Else Fails: " + nullifyTimer.ToString("F0") + "s";
 
             //Effect expires and enters cooldown
             if (nullifyTimer <= 0f)
@@ -85,20 +88,30 @@ public class AllElseFails : MonoBehaviour
                 player.allElseFailsFlag = false;
                 //player.StartCoroutine(player.CancelInvulnerable());
                 cooldown = true;
-            }           
-        }
+            }
+        }     
 
-        if(cooldown)
+        if (cooldown)
         {
-            cooldownTimer -= Time.deltaTime;
-            proc.GetComponent<Text>().text = "Cooldown: " + cooldownTimer.ToString("F0") + "s";
-
-            if (cooldownTimer <= 0f)
+            if (!firearm.isExotic && firearm.weaponRarity == 5)
             {
                 done = false;
-                cooldownTimer = cooldownReset;
                 cooldown = false;
                 proc.GetComponent<Text>().text = "";
+            }
+
+            else
+            {
+                cooldownTimer -= Time.deltaTime;
+                proc.GetComponent<Text>().text = "Cooldown: " + cooldownTimer.ToString("F0") + "s";
+
+                if (cooldownTimer <= 0f)
+                {
+                    done = false;
+                    cooldownTimer = cooldownReset;
+                    cooldown = false;
+                    proc.GetComponent<Text>().text = "";
+                }
             }
         }
     }

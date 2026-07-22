@@ -519,7 +519,7 @@ public class LevelManagerScript : MonoBehaviour
     {
         if(pause != null)
         {
-            pause.canceled -= PauseToggle;
+            pause.performed -= PauseToggle;
             pause = null;
         }
 

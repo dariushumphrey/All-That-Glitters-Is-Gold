@@ -65,13 +65,7 @@ public class PlayerCameraScript : MonoBehaviour
         fire = input.actions["Fire"];
         cursor = input.actions["Cursor"];
 
-        aim.performed += ctx =>
-        {
-            if(enableZoomToggle)
-            {
-                ZoomToggle();
-            }
-        };
+        aim.started += OnAim;
 
         lookSensHorizReset = rotateH;
         lookSensVertReset = rotateV;
@@ -87,6 +81,11 @@ public class PlayerCameraScript : MonoBehaviour
         aaVert = aaPercent;
 
         aaPercent = aaPercentReset;
+
+        if(PlayerPrefs.GetInt("toggleAim") != 0)
+        {
+            enableZoomToggle = true;
+        }
 
         camPosReset = cameraPosition;
         playerCamera = Camera.main;
@@ -417,5 +416,36 @@ public class PlayerCameraScript : MonoBehaviour
         {
             zoomToggle = false;
         }
+    }
+
+    public void OnAim(InputAction.CallbackContext ctx)
+    {
+        if (enableZoomToggle)
+        {
+            ZoomToggle();
+        }
+    }
+
+    public void SensitivityAssignment()
+    {
+        lookSensHorizReset = rotateH;
+        lookSensVertReset = rotateV;
+
+        aaPercentReset = aaPercent;
+        aaPercent /= 100;
+        aaPercent *= rotateH;
+        aaHoriz = aaPercent;
+
+        aaPercent = aaPercentReset;
+        aaPercent /= 100;
+        aaPercent *= rotateV;
+        aaVert = aaPercent;
+
+        aaPercent = aaPercentReset;
+    }
+
+    private void OnDestroy()
+    {
+        aim.started -= OnAim;
     }
 }

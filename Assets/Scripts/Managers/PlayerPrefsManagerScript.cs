@@ -150,6 +150,11 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         PlayerPrefs.SetInt("unlockViricide", 0);
         PlayerPrefs.SetInt("lucentBalance", 0);
         PlayerPrefs.SetInt("firstViricideClear", 0);
+        PlayerPrefs.SetInt("toggleAim", 0);
+        PlayerPrefs.SetFloat("aimControllerX", 5f);
+        PlayerPrefs.SetFloat("aimControllerY", 5f);
+        PlayerPrefs.SetFloat("aimMouseX", 10f);
+        PlayerPrefs.SetFloat("aimMouseY", 10f);
 
         LucentEntitlement();
         menu.Progression();

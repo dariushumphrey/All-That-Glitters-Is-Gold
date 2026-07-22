@@ -908,7 +908,7 @@ public class KioskScript : MonoBehaviour
                     {
                         functionTwos[p].text = "All Else Fails\n" +
                         "<i>Immmuity on Shield breaks.</i>";
-                    }
+                    } //Defiance pairing
 
                     if (fcTwoStr == "0")
                     {
@@ -1613,8 +1613,7 @@ public class KioskScript : MonoBehaviour
                 if (fcOneStr == "3")
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
-                        "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'E' - Cast Blast";
+                        "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
                 }
 
                 if (fcOneStr == "4")
@@ -1650,14 +1649,13 @@ public class KioskScript : MonoBehaviour
                 if (fcOneStr == "9")
                 {
                     cheatTraitOne.text = "All Else Fails" + '\n' +
-                        "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
+                        "All Enemy damage is nullified for five seconds when Shield depletes. Cooldown: 10 Seconds.";
                 }
 
                 if (fcOneStr == "!")
                 {
                     cheatTraitOne.text = "The Most Resplendent" + '\n' +
-                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
-                    "'[E]' - Toggle cast";
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot.";
                 }
 
                 if (fcOneStr == "@")
@@ -1687,8 +1685,7 @@ public class KioskScript : MonoBehaviour
                 if (fcOneStr == "^")
                 {
                     cheatTraitOne.text = "Gale Force Winds" + '\n' +
-                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
-                    "'[E]' - Toggle cast";
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies.";
                 }
 
                 if (fcOneStr == "&")
@@ -1730,20 +1727,19 @@ public class KioskScript : MonoBehaviour
                 if (fcOneStr == "G")
                 {
                     cheatTraitOne.text = "Pay to Win" + '\n' +
-                        "Consume 30,000 Lucent to grant stacks of a 50% Weapon damage increase. Stacks 150x." + "\n" +
-                        "'E' - Consume Lucent";
+                        "Consume 30,000 Lucent to grant stacks of a 50% Weapon damage increase. Stacks 150x.";
                 }
 
                 if (fcOneStr == "C")
                 {
                     cheatTraitOne.text = "Superweapon" + '\n' +
-                        "Kills grant stacks of damage resistance. Stacks 8x. [E] - Charge an extreme-damage shot, inflicting 1000% of Weapon damage per stack.";
+                        "Kills grant stacks of damage resistance. Stacks 8x. Charge a high-damage laser while aiming, inflicting 1000% of Weapon damage per stack.";
                 }
 
                 if (fcOneStr == "F")
                 {
                     cheatTraitOne.text = "Volant" + '\n' +
-                        "[E] - Enables character flight until Shield is broken or disenaged.";
+                        "Enables character flight until Shield is broken or disenaged.";
                 }
 
                 if (fcOneStr == "D")
@@ -1767,7 +1763,7 @@ public class KioskScript : MonoBehaviour
                 if (fcOneStr == "H")
                 {
                     cheatTraitOne.text = "Flashpoint" + '\n' +
-                        "Fires floating Lucent mines. [E] - Detonates all active mines.";
+                        "Fires floating Lucent mines. Mines persist when weapon is stowed.";
                 }
 
                 if (fcOneStr == "J")
@@ -1786,7 +1782,7 @@ public class KioskScript : MonoBehaviour
                 if (fcOneStr == "9")
                 {
                     cheatTraitOne.text = "All Else Fails" + '\n' +
-                        "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
+                        "All Enemy damage is nullified for five seconds when Shield depletes.. Cooldown: 10 Seconds.";
                 }
 
                 if (fcOneStr == "4")
@@ -1816,8 +1812,7 @@ public class KioskScript : MonoBehaviour
                 if (fcOneStr == "!")
                 {
                     cheatTraitOne.text = "The Most Resplendent" + '\n' +
-                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
-                    "'[E]' - Toggle cast";
+                    "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot.";
                 }
 
                 if (fcOneStr == "@")
@@ -1847,7 +1842,7 @@ public class KioskScript : MonoBehaviour
                 if (fcTwoStr == "!")
                 {
                     cheatTraitTwo.text = "The Most Resplendent" + '\n' +
-                            "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
+                            "Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
                 } //Pay to Win pairing         
 
                 if (fcTwoStr == "4")
@@ -1871,7 +1866,7 @@ public class KioskScript : MonoBehaviour
                 if (fcTwoStr == "9")
                 {
                     cheatTraitTwo.text = "All Else Fails" + '\n' +
-                        "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
+                        "All Enemy damage is nullified for five seconds when Shield depletes. Cooldown: 10 Seconds.";
                 }
 
                 if (fcTwoStr == "0")
@@ -1901,8 +1896,7 @@ public class KioskScript : MonoBehaviour
                 if (fcTwoStr == "3")
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
-                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'E' - Cast Blast";
+                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
                 }
 
                 if (fcTwoStr == "$")
@@ -1920,8 +1914,7 @@ public class KioskScript : MonoBehaviour
                 if (fcTwoStr == "^")
                 {
                     cheatTraitTwo.text = "Gale Force Winds" + '\n' +
-                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
-                    "'[E]' - Toggle cast";
+                    "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies.";
                 }
 
                 if (fcTwoStr == "+")

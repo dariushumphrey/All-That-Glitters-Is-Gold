@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PlayerInventoryScript : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class PlayerInventoryScript : MonoBehaviour
     private InputAction weaponSwitchRight;
     private InputAction weaponFavoriteToggle;
     private InputAction weaponDismantle;
+
+    internal enum InputType { MNK, Controller }
+    internal InputType lastInput = InputType.MNK;
+    public PlayerCameraScript view;
 
     public bool sortToggle = false; //Sorts between favorite Weapons and all Weapons if true
     public int lucentFunds;
@@ -44,11 +49,14 @@ public class PlayerInventoryScript : MonoBehaviour
     //grenadeThrow - slider that represent Grenade throw strength
     public Slider weaponLoad, grenadeThrow;
     public Image weaponAmmoPage;
+    private TMP_SpriteAsset mnkInput, controllerInput;
+    private string activeInput;
 
     private Image weaponPage; //In-game Inventory page
     internal Image reticleSprite;
     private Text wepName, wepStats, flavor, platformText;
-    private Text cheatOne, cheatTwo, cheatThree, cheatFour, cheatTraitOne, cheatTraitTwo;
+    private Text cheatOne, cheatTwo, cheatThree, cheatFour;
+    private TextMeshProUGUI cheatTraitOne, cheatTraitTwo;
 
     //invMonitor - text that displays inventory position/total inventory size
     //rarityCheck - text that displays Weapon rarity
@@ -69,7 +77,7 @@ public class PlayerInventoryScript : MonoBehaviour
     internal bool enshroudPresent; //Weapon with Enshroud is present if true
 
     internal List<string> readdedWeps = new List<string>(10); //List of Weapons (in string form)
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -83,18 +91,14 @@ public class PlayerInventoryScript : MonoBehaviour
         weaponFavoriteToggle = input.actions["Favorite (Inventory)"];
         weaponDismantle = input.actions["Dismantle (Inventory)"];
 
-        weaponDismantle.performed += ctx =>
-        {
-            if (weaponPage.gameObject.activeInHierarchy && !inventory[selection].GetComponent<FirearmScript>().favorite)
-            {
-                dismantleState = true;
-            }
-        };
+        mnkInput = Resources.Load<TMP_SpriteAsset>("Input Icons/mnkCheat");
+        controllerInput = Resources.Load<TMP_SpriteAsset>("Input Icons/controllerCheat");
 
-        weaponDismantle.canceled += ctx => dismantleState = false;
+        weaponDismantle.performed += OnDismantleStart;
+        weaponDismantle.canceled += CancelDismantle;
 
-        throwGrenade.performed += ctx => throwing = true;
-        throwGrenade.canceled += ctx => ThrowGrenade();
+        throwGrenade.performed += OnGrenadeThrowStart;
+        throwGrenade.canceled += ReleaseGrenade;
 
         selection = -1;
         grenadeSelection = 0;
@@ -108,8 +112,8 @@ public class PlayerInventoryScript : MonoBehaviour
         cheatTwo = GameObject.Find("weaponCheat (2)").GetComponent<Text>();
         cheatThree = GameObject.Find("weaponCheat (3)").GetComponent<Text>();
         cheatFour = GameObject.Find("weaponCheat (4)").GetComponent<Text>();
-        cheatTraitOne = GameObject.Find("weaponCheat (5)").GetComponent<Text>();
-        cheatTraitTwo = GameObject.Find("weaponCheat (6)").GetComponent<Text>();
+        cheatTraitOne = GameObject.Find("weaponCheat (5)").GetComponent<TextMeshProUGUI>();
+        cheatTraitTwo = GameObject.Find("weaponCheat (6)").GetComponent<TextMeshProUGUI>();
         invMonitor = GameObject.Find("invMonitor").GetComponent<Text>();
         favoriteMark = GameObject.Find("favoriteWepMark").GetComponent<Text>();
         sortingMonitor = GameObject.Find("sortingMonitor").GetComponent<Text>();
@@ -300,6 +304,20 @@ public class PlayerInventoryScript : MonoBehaviour
 
             //Text for [active item / inventory size]
             invMonitor.text = (selection + 1) + " / " + inventory.Count;
+
+            if (lastInput == InputType.Controller)
+            {
+                cheatTraitOne.spriteAsset = controllerInput;
+                cheatTraitTwo.spriteAsset = controllerInput;
+                activeInput = "controllerCheat";
+            }
+
+            if (lastInput == InputType.MNK)
+            {
+                cheatTraitOne.spriteAsset = mnkInput;
+                cheatTraitTwo.spriteAsset = mnkInput;
+                activeInput = "mnkCheat";
+            }
 
             DisplayCheats();
         }
@@ -913,7 +931,7 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<RudeAwakening>())
             {
                 cheatTraitOne.text = "Rude Awakening" + '\n' +
-                    "[E] - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
+                    "<voffset=0.2em><sprite index=0></voffset> - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
             }
 
             //Not with a Stick
@@ -955,14 +973,14 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<AllElseFails>())
             {
                 cheatTraitOne.text = "All Else Fails" + '\n' +
-                    "When Shield depletes, all incoming Enemy damage is nullified for three seconds.";
+                    "All Enemy damage is nullified for five seconds when Shield depletes.";
             }
 
             //The Most Resplendent
             if (inventory[selection].GetComponent<TheMostResplendent>())
             {
                 cheatTraitOne.text = "The Most Resplendent" + '\n' +
-                    "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
+                    "<voffset=0.2em><sprite index=0></voffset> - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
             }
 
             //Fulminate
@@ -997,7 +1015,7 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<GaleForceWinds>())
             {
                 cheatTraitOne.text = "Gale Force Winds" + '\n' +
-                    "[E] - Cast traveling winds that applies Health and Slowed debuffs to in-range Enemies. Lasts 45s.";
+                    "<voffset=0.2em><sprite index=0></voffset> - Cast traveling winds that applies Health and Slowed debuffs to in-range Enemies. Lasts 45s.";
             }
 
             //Activator Drone
@@ -1039,12 +1057,12 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<AllElseFails>())
             {
                 cheatTraitOne.text = "All Else Fails" + '\n' +
-                    "When Shield depletes, all incoming Enemy damage is nullified for three seconds.";
+                    "All Enemy damage is nullified for five seconds when Shield depletes.";
 
                 if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
                 {
                     cheatTraitOne.text = "All Else Fails" + " (Fated)" + '\n' +
-                    "When Shield depletes, all incoming Enemy damage is nullified for five seconds.";
+                    "All Enemy damage is nullified for five seconds when Shield depletes. Effect cooldown is disabled.";
                 }
             }
 
@@ -1105,13 +1123,13 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<TheMostResplendent>())
             {
                 cheatTraitOne.text = "The Most Resplendent" + '\n' +
-                    "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
+                    "<voffset=0.2em><sprite index=0></voffset> - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
 
                 if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
                 {
 
                     cheatTraitOne.text = "The Most Resplendent" + " (Fated)" + '\n' +
-                    "[E] - Create a Hard Lucent crystal. Stacks 2x. Physically shattering the crystal restores 35% of Health.";
+                    "<voffset=0.2em><sprite index=0></voffset> - Create a Hard Lucent crystal. Stacks 2x. Physically shattering the crystal restores 35% of Health.";
                 }
             }
 
@@ -1225,12 +1243,12 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<RudeAwakening>())
             {
                 cheatTraitTwo.text = "Rude Awakening" + '\n' +
-                    "[E] - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
+                    "<voffset=0.2em><sprite index=0></voffset> - Cast a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x.";
 
                 if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
                 {
                     cheatTraitTwo.text = "Rude Awakening" + " (Fated)" + '\n' +
-                    "[E] - Cast a lethal AOE blast. Stacks 6x. Having stacks increases base damage by 20%.";
+                    "<voffset=0.2em><sprite index=0></voffset> - Cast a lethal AOE blast. Stacks 6x. Having stacks increases base damage by 20%.";
                 }
             } 
 
@@ -1264,12 +1282,12 @@ public class PlayerInventoryScript : MonoBehaviour
             if (inventory[selection].GetComponent<GaleForceWinds>())
             {
                 cheatTraitTwo.text = "Gale Force Winds" + '\n' +
-                    "[E] - Cast traveling winds that applies Health and Slowed debuffs to in-range Enemies. Lasts 45s.";
+                    "<voffset=0.2em><sprite index=0></voffset> - Cast traveling winds that applies Health and Slowed debuffs to in-range Enemies. Lasts 45s.";
 
                 if (inventory[selection].GetComponent<FirearmScript>().weaponRarity == 5)
                 {
                     cheatTraitTwo.text = "Gale Force Winds" + " (Fated)" + '\n' +
-                    "[E] - Cast faster traveling winds that applies stronger Health debuffs. Applies low damage-over-time to tracked Enemies.";
+                    "<voffset=0.2em><sprite index=0></voffset> - Cast faster traveling winds that applies stronger Health debuffs. Applies low damage-over-time to tracked Enemies.";
                 }
             }
 
@@ -1323,7 +1341,7 @@ public class PlayerInventoryScript : MonoBehaviour
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -3)
         {
             cheatTraitOne.text = "Superweapon" + '\n' +
-                "Kills grant stacks of damage resistance. Stacks 8x. [E] - Charge an extreme-damage shot, inflicting 1000% of Weapon damage per stack.";
+                "Kills grant stacks of damage resistance. Stacks 8x." + '\n' + "<voffset=0.2em><sprite index=0></voffset> - Charge a high-damage laser while aiming, inflicting 1000% of Weapon damage per stack.";
 
             cheatTraitTwo.text = "Counterplay" + '\n' +
                     "Hits taken during Evasions casts two Lucent clusters and increases Weapon damage by 10%. Stacks 3x.";
@@ -1350,7 +1368,7 @@ public class PlayerInventoryScript : MonoBehaviour
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -6)
         {
             cheatTraitOne.text = "Volant" + '\n' +
-                "[E] - Enables character flight until Shield is broken or disenaged.";
+                "<voffset=0.2em><sprite index=0></voffset> - Enables character flight until Shield is broken or disenaged.";
 
             cheatTraitTwo.text = "Wait! Now I'm Ready!" + '\n' +
                     "Kills with this weapon restore 10% of Shield strength.";
@@ -1359,16 +1377,17 @@ public class PlayerInventoryScript : MonoBehaviour
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -7)
         {
             cheatTraitOne.text = "Pay to Win" + '\n' +
-                "[E] - Consume 30,000 Lucent for a 50% Weapon damage increase. Stacks 150x.";
+                "<voffset=0.2em><sprite index=0></voffset> - Consume 30,000 Lucent for a 50% Weapon damage increase. Stacks 150x.";
 
             cheatTraitTwo.text = "The Most Resplendent" + '\n' +
-                    "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
+                    "<voffset=0.2em><sprite index=0></voffset> - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
         } //Pay to Win + The Most Resplendent
 
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -8)
         {
             cheatTraitOne.text = "Flashpoint" + '\n' +
-                "Fires floating Lucent mines. [E] - Detonates all active mines.";
+                "Fires floating Lucent mines." + '\n' +
+                "<voffset=0.2em><sprite index=0></voffset> - Detonates all active mines.";
 
             cheatTraitTwo.text = "Positive-Negative" + '\n' +
                     "Moving generates a charge. While halfway charged, Enemy hits apply damage-over-time.";
@@ -1380,7 +1399,7 @@ public class PlayerInventoryScript : MonoBehaviour
                 "Increases Melee range and damage by 100%. Guarding reflects 1000% of damage towards the attacker.";
 
             cheatTraitTwo.text = "All Else Fails" + '\n' +
-                    "When Shield depletes, all incoming Enemy damage is nullified for three seconds.";
+                    "When Shield depletes, all incoming Enemy damage is nullified for five seconds.";
         } //Defiance + All Else Fails
 
         if (inventory[selection].GetComponent<FirearmScript>().cheatRNG == -10)
@@ -1389,7 +1408,7 @@ public class PlayerInventoryScript : MonoBehaviour
                 "Fires tandem Replevin larvae. Hits stagger Enemies for a 50% chance to trigger a Berth detonation.";
 
             cheatTraitTwo.text = "Gale Force Winds" + '\n' +
-                    "[E] - Cast traveling winds that applies Health and Slowed debuffs to in-range Enemies. Lasts 45s.";
+                    "<voffset=0.2em><sprite index=0></voffset> - Cast traveling winds that applies Health and Slowed debuffs to in-range Enemies. Lasts 45s.";
         } //Repurposed Form + Gale Force Winds
     }
 
@@ -2271,5 +2290,101 @@ public class PlayerInventoryScript : MonoBehaviour
 
         another.GetComponent<DestructGrenadeScript>().explosiveDamage = fulminateBuff;
 
+    }
+
+    private void OnEnable()
+    {
+        InputSystem.onActionChange += OnActionChange;
+    }
+
+    private void OnDisable()
+    {
+        InputSystem.onActionChange -= OnActionChange;
+        CleanUpInputEvents();
+    }
+
+    public void CleanUpInputEvents()
+    {
+        if(weaponDismantle != null)
+        {
+            weaponDismantle.performed -= OnDismantleStart;
+            weaponDismantle.canceled -= CancelDismantle;
+        }
+
+        if(throwGrenade != null)
+        {
+            throwGrenade.performed -= OnGrenadeThrowStart;
+            throwGrenade.canceled -= ReleaseGrenade;
+        }
+
+        weaponDismantle = null;
+        throwGrenade = null;
+
+        if(input)
+        {
+            input.actions.Disable();
+            input = null;
+        }
+    }
+
+    public void OnDismantleStart(InputAction.CallbackContext ctx)
+    {
+        if (weaponPage.gameObject.activeInHierarchy && !inventory[selection].GetComponent<FirearmScript>().favorite)
+        {
+            dismantleState = true;
+        }
+    }
+
+    public void CancelDismantle(InputAction.CallbackContext ctx)
+    {
+        dismantleState = false;
+    }
+
+    public void OnGrenadeThrowStart(InputAction.CallbackContext ctx)
+    {
+        throwing = true;
+    }
+
+    public void ReleaseGrenade(InputAction.CallbackContext ctx)
+    {
+        ThrowGrenade();
+    }
+
+    /// <summary>
+    /// Changes collection text based on last device input
+    /// </summary>
+    /// <param name="obj">Holds information of input state change</param>
+    /// <param name="change">Represents logged device action</param>
+    private void OnActionChange(object obj, InputActionChange change)
+    {
+        if (change == InputActionChange.ActionStarted || change == InputActionChange.ActionPerformed)
+        {
+            var action = (InputAction)obj;
+            if (action.activeControl != null)
+            {
+                InputDevice current = action.activeControl.device;
+                if (current is Gamepad)
+                {
+                    if (lastInput != InputType.Controller)
+                    {
+                        lastInput = InputType.Controller;
+                        view.rotateH = (PlayerPrefs.GetFloat("aimControllerX") / 10f);
+                        view.rotateV = (PlayerPrefs.GetFloat("aimControllerY") / 10f);
+                        view.SensitivityAssignment();
+                    }
+                }
+
+                else if (current is Keyboard || current is Mouse)
+                {
+                    if (lastInput != InputType.MNK)
+                    {
+                        lastInput = InputType.MNK;
+                        view.rotateH = (PlayerPrefs.GetFloat("aimMouseX") / 10f);
+                        view.rotateV = (PlayerPrefs.GetFloat("aimMouseY") / 10f);
+                        view.SensitivityAssignment();
+                    }
+                }
+            }
+        }
     }
 }

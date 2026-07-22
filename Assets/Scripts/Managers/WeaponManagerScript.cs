@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class WeaponManagerScript : MonoBehaviour
 {
@@ -22,12 +23,18 @@ public class WeaponManagerScript : MonoBehaviour
     private InputAction weaponFavoriteToggle;
     private InputAction weaponDismantle;
 
+    private enum InputType { MNK, Controller }
+    private InputType lastInput = InputType.MNK;
+
     public List<GameObject> weapons = new List<GameObject>(); //List of Weapon variants used for attribute assignment, spawning
 
     public List<string> observedWeps = new List<string>(10); //List of Weapons from inventory.txt
     public string filepath = "inventory.txt"; //Inventory file name
     public Text wepName, flavor, rarityCheck, invMonitor, stats, dismantleText, appraisal, favNotice, wepPlatform; //Texts that display Weapon stats, worth, and dismantle notices
-    public Text cheatOne, cheatTwo, cheatThree, cheatFour, cheatTraitOne, cheatTraitTwo; //Texts that displays Weapon cheats
+    public Text cheatOne, cheatTwo, cheatThree, cheatFour; //Texts that displays Weapon cheats
+    public TextMeshProUGUI cheatTraitOne, cheatTraitTwo;
+    private TMP_SpriteAsset mnkInput, controllerInput;
+    private string activeInput;
     public Button sellButton;
 
     //lucentText - Displays Player Lucent balance
@@ -90,8 +97,8 @@ public class WeaponManagerScript : MonoBehaviour
                 weaponFavoriteToggle = input.actions["Favorite (Inventory)"];
                 weaponDismantle = input.actions["Dismantle (Inventory)"];
 
-                weaponDismantle.performed += ctx => dismantleState = true;
-                weaponDismantle.canceled += ctx => dismantleState = false;
+                weaponDismantle.performed += OnDismantleStart;
+                weaponDismantle.canceled += CancelDismantle;
             }
 
             if (observedWeps.Count <= 0)
@@ -106,6 +113,9 @@ public class WeaponManagerScript : MonoBehaviour
             {
                 weapons[i].GetComponent<FirearmScript>().display = true;
             }
+
+            mnkInput = Resources.Load<TMP_SpriteAsset>("Input Icons/mnkCheat");
+            controllerInput = Resources.Load<TMP_SpriteAsset>("Input Icons/controllerCheat");
         }
     }
 
@@ -183,6 +193,20 @@ public class WeaponManagerScript : MonoBehaviour
             }
 
             lucentText.text = "Lucent: " + kiosk.lucentFunds.ToString("N0");
+
+            if (lastInput == InputType.Controller)
+            {
+                cheatTraitOne.spriteAsset = controllerInput;
+                cheatTraitTwo.spriteAsset = controllerInput;
+                activeInput = "controllerCheat";
+            }
+
+            if (lastInput == InputType.MNK)
+            {
+                cheatTraitOne.spriteAsset = mnkInput;
+                cheatTraitTwo.spriteAsset = mnkInput;
+                activeInput = "mnkCheat";
+            }
 
         }
 
@@ -726,7 +750,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Rude Awakening" + '\n' +
                         "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'E' - Cast Blast";
+                        "<voffset=0.2em><sprite index=0></voffset> - Cast Blast";
                 }
 
                 if (cFiveStr == "4")
@@ -762,14 +786,14 @@ public class WeaponManagerScript : MonoBehaviour
                 if (cFiveStr == "9")
                 {
                     cheatTraitOne.text = "All Else Fails" + '\n' +
-                        "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
+                        "All Enemy damage is nullified for five seconds when Shield depletes. Cooldown: 10 Seconds.";
                 }
 
                 if (cFiveStr == "!")
                 {
                     cheatTraitOne.text = "The Most Resplendent" + '\n' +
                     "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
-                    "'[E]' - Toggle cast";
+                    "<voffset=0.2em><sprite index=0></voffset> - Toggle cast";
                 }
 
                 if (cFiveStr == "@")
@@ -800,7 +824,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Gale Force Winds" + '\n' +
                     "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
-                    "'[E]' - Toggle cast";
+                    "<voffset=0.2em><sprite index=0></voffset> - Toggle cast";
                 }
 
                 if (cFiveStr == "&")
@@ -843,19 +867,20 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "Pay to Win" + '\n' +
                         "Consume 30,000 Lucent to grant stacks of a 50% Weapon damage increase. Stacks 150x." + "\n" +
-                        "'E' - Consume Lucent";
+                        "<voffset=0.2em><sprite index=0></voffset> - Consume Lucent";
                 }
 
                 if (cFiveStr == "C")
                 {
                     cheatTraitOne.text = "Superweapon" + '\n' +
-                        "Kills grant stacks of damage resistance. Stacks 8x. [E] - Charge an extreme-damage shot, inflicting 1000% of Weapon damage per stack.";
+                        "Kills grant stacks of damage resistance. Stacks 8x." + '\n' + 
+                        "<voffset=0.2em><sprite index=0></voffset> - Charge a high-damage laser, inflicting 1000% of Weapon damage per stack.";
                 }
 
                 if (cFiveStr == "F")
                 {
                     cheatTraitOne.text = "Volant" + '\n' +
-                        "[E] - Enables character flight until Shield is broken or disenaged.";
+                        "<voffset=0.2em><sprite index=0></voffset> - Enables character flight until Shield is broken or disenaged.";
                 }
 
                 if (cFiveStr == "D")
@@ -879,7 +904,8 @@ public class WeaponManagerScript : MonoBehaviour
                 if (cFiveStr == "H")
                 {
                     cheatTraitOne.text = "Flashpoint" + '\n' +
-                        "Fires floating Lucent mines. [E] - Detonates all active mines.";
+                        "Fires floating Lucent mines. Mines persist when weapon is stowed." + '\n' +
+                        "<voffset=0.2em><sprite index=0></voffset> - Detonates all active mines.";
                 }
 
                 if (cFiveStr == "J")
@@ -898,12 +924,12 @@ public class WeaponManagerScript : MonoBehaviour
                 if (cFiveStr == "9")
                 {
                     cheatTraitOne.text = "All Else Fails" + '\n' +
-                        "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
+                        "All Enemy damage is nullified for five seconds when Shield depletes. Cooldown: 10 Seconds.";
 
                     if (rarStr == "5")
                     {
                         cheatTraitOne.text = "All Else Fails" + " (Fated)" + '\n' +
-                        "When Shield is depleted, all incoming Enemy damage is nullified for five seconds. Cooldown: 10 Seconds.";
+                        "All Enemy damage is nullified for five seconds when Shield depletes, and no longers enters cooldown when effect ends.";
                     }
                 }
 
@@ -961,7 +987,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitOne.text = "The Most Resplendent" + '\n' +
                     "Create a Hard Lucent crystal on surfaces or Enemies that produces Lucent clusters passively or when shot." + '\n' +
-                    "'[E]' - Toggle cast";
+                    "<voffset=0.2em><sprite index=0></voffset> - Toggle cast";
 
                     if (rarStr == "5")
                     {
@@ -1026,7 +1052,7 @@ public class WeaponManagerScript : MonoBehaviour
                 if (cSixStr == "!")
                 {
                     cheatTraitTwo.text = "The Most Resplendent" + '\n' +
-                            "[E] - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
+                            "<voffset=0.2em><sprite index=0></voffset> - Create a Hard Lucent crystal that produces Lucent clusters passively or when shot. Stacks 1x.";
                 }
 
                 //Social Distance, Please! pairing
@@ -1054,7 +1080,7 @@ public class WeaponManagerScript : MonoBehaviour
                 if (cSixStr == "9")
                 {
                     cheatTraitTwo.text = "All Else Fails" + '\n' +
-                        "When Shield is depleted, all incoming Enemy damage is nullified for three seconds. Cooldown: 20 Seconds.";
+                        "All Enemy damage is nullified for five seconds when Shield depletes. Cooldown: 10 Seconds.";
                 }
 
                 //Volant pairing
@@ -1116,7 +1142,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Rude Awakening" + '\n' +
                          "Kills grant casts of a lethal AOE blast that inflicts 1,000% of Weapon damage. Stacks 3x." + '\n' +
-                        "'E' - Cast Blast";
+                        "<voffset=0.2em><sprite index=0></voffset> - Cast Blast";
 
                     if (rarStr == "5")
                     {
@@ -1157,7 +1183,7 @@ public class WeaponManagerScript : MonoBehaviour
                 {
                     cheatTraitTwo.text = "Gale Force Winds" + '\n' +
                     "Cast traveling winds from Sprinting or moving that applies Health and Slowed debuffs to Enemies." + '\n' +
-                    "'[E]' - Toggle cast";
+                    "<voffset=0.2em><sprite index=0></voffset> - Toggle cast";
 
                     if (exoStr != "1" && rarStr == "5")
                     {
@@ -2550,5 +2576,63 @@ public class WeaponManagerScript : MonoBehaviour
                          "Magazine: " + item.GetComponent<FirearmScript>().ammoSize.ToString() + "\n" +
                          "Max Reserves: " + item.GetComponent<FirearmScript>().reserveSize.ToString() + "\n" +
                          "Rate of Fire: " + Mathf.Round(60f / item.GetComponent<FirearmScript>().fireRate).ToString() + " RPM";
+    }
+
+    private void OnEnable()
+    {
+        InputSystem.onActionChange += OnActionChange;
+    }
+
+    private void OnDisable()
+    {
+        InputSystem.onActionChange -= OnActionChange;
+        if(input)
+        {
+            weaponDismantle.performed -= OnDismantleStart;
+            weaponDismantle.canceled -= CancelDismantle;
+            input = null;
+        }      
+    }
+
+    public void OnDismantleStart(InputAction.CallbackContext ctx)
+    {
+        dismantleState = true;
+    }
+
+    public void CancelDismantle(InputAction.CallbackContext ctx)
+    {
+        dismantleState = false;
+    }
+
+    /// <summary>
+    /// Changes collection text based on last device input
+    /// </summary>
+    /// <param name="obj">Holds information of input state change</param>
+    /// <param name="change">Represents logged device action</param>
+    private void OnActionChange(object obj, InputActionChange change)
+    {
+        if (change == InputActionChange.ActionStarted || change == InputActionChange.ActionPerformed)
+        {
+            var action = (InputAction)obj;
+            if (action.activeControl != null)
+            {
+                InputDevice current = action.activeControl.device;
+                if (current is Gamepad)
+                {
+                    if (lastInput != InputType.Controller)
+                    {
+                        lastInput = InputType.Controller;
+                    }
+                }
+
+                else if (current is Keyboard || current is Mouse)
+                {
+                    if (lastInput != InputType.MNK)
+                    {
+                        lastInput = InputType.MNK;
+                    }
+                }
+            }
+        }
     }
 }

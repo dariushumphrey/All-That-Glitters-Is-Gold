@@ -148,6 +148,18 @@ public class LootScript : MonoBehaviour
                     }
                 }
             }
+
+            if (lastInput == InputType.Controller)
+            {
+                collapsedLootDeviceController.gameObject.SetActive(true);
+                collapsedLootDeviceMNK.gameObject.SetActive(false);
+            }
+
+            if (lastInput == InputType.MNK)
+            {
+                collapsedLootDeviceMNK.gameObject.SetActive(true);
+                collapsedLootDeviceController.gameObject.SetActive(false);
+            }
         }        
     }
 
@@ -1496,7 +1508,7 @@ public class LootScript : MonoBehaviour
                     if(wepRarStr == "5")
                     {
                         clpLtFncChtOne.GetComponent<Text>().text = "All Else Fails (Fated)\n" +
-                        "<i>Immmune longer on Shield breaks.</i>";
+                        "<i>Immunity cooldown disabled.</i>";
                     }
 
                     else
@@ -2012,15 +2024,6 @@ public class LootScript : MonoBehaviour
                     if(lastInput != InputType.Controller)
                     {
                         lastInput = InputType.Controller;
-                        if(!collapsedLootDeviceController.gameObject.activeInHierarchy)
-                        {
-                            collapsedLootDeviceController.gameObject.SetActive(true);
-                        }
-
-                        if(collapsedLootDeviceMNK.gameObject.activeInHierarchy)
-                        {
-                            collapsedLootDeviceMNK.gameObject.SetActive(false);
-                        }
                         Debug.Log("Controller!");
                     }
                 }
@@ -2030,15 +2033,6 @@ public class LootScript : MonoBehaviour
                     if (lastInput != InputType.MNK)
                     {
                         lastInput = InputType.MNK;
-                        if (!collapsedLootDeviceMNK.gameObject.activeInHierarchy)
-                        {
-                            collapsedLootDeviceMNK.gameObject.SetActive(true);
-                        }
-
-                        if (collapsedLootDeviceController.gameObject.activeInHierarchy)
-                        {
-                            collapsedLootDeviceController.gameObject.SetActive(false);
-                        }
                         Debug.Log("Mouse & Keyboard!");
                     }
                 }

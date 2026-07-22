@@ -34,6 +34,15 @@ public class MenuManagerScript : MonoBehaviour
     [Header("Controls page Variables")]
     public Image controllerLayout;
     public Image mnkLayout;
+
+    [Header("Gameplay Settings page Variables")]
+    public Slider ctrX;
+    public Slider ctrY;
+    public Slider mkX;
+    public Slider mkY;
+    public Text controllerX, controllerY, mouseX, mouseY;
+    public Toggle aimToggle;
+
     private enum InputType { MNK, Controller }
     private InputType lastInput = InputType.MNK;
 
@@ -250,7 +259,39 @@ public class MenuManagerScript : MonoBehaviour
             {
                 vcWepFocusText.text = "Targeted Weapons: " + "\n" + "AMLRs";
             }
+
+            controllerX.text = (ctrX.value / 10).ToString();
+            controllerY.text = (ctrY.value / 10).ToString();
+            mouseX.text = (mkX.value / 10).ToString();
+            mouseY.text = (mkY.value / 10).ToString();
         }    
+    }
+
+    public void FormatGameplaySettings()
+    {
+        ctrX.value = 5;
+        ctrY.value = 5;
+        mkX.value = 10;
+        mkY.value = 10;
+        aimToggle.isOn = false;
+    }
+
+    public void SaveGameplaySettings()
+    {
+        if(aimToggle.isOn)
+        {
+            PlayerPrefs.SetInt("toggleAim", 1);
+        }
+
+        else
+        {
+            PlayerPrefs.SetInt("toggleAim", 0);
+        }
+
+        PlayerPrefs.SetFloat("aimControllerX", ctrX.value);
+        PlayerPrefs.SetFloat("aimControllerY", ctrY.value);
+        PlayerPrefs.SetFloat("aimMouseX", mkX.value);
+        PlayerPrefs.SetFloat("aimMouseY", mkY.value);
     }
 
     /// <summary>

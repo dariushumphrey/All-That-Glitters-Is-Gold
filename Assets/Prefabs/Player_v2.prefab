@@ -802,6 +802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   filepath: inventory.txt
   input: {fileID: 9096920498657774187}
+  view: {fileID: 722000160554778762}
   sortToggle: 0
   lucentFunds: 0
   fogGrenadeCharges: 3
@@ -988,52 +989,40 @@ MonoBehaviour:
     m_ActionName: Player/Dismantle (Inventory)[/XInputControllerWindows/buttonWest,/Keyboard/x]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: d0c8f542-ad83-4964-bedd-726dcaba9aff
-    m_ActionName: Player/Pause Game[/XInputControllerWindows/start,/Keyboard/escape]
+    m_ActionId: ea9e391d-a693-4acf-a40b-1540e0d5ad06
+    m_ActionName: Player/Pause Game[/Keyboard/escape,/XInputControllerWindows/start]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 84d4f42b-0d4a-4524-ba7a-ee84d76c52c8
-    m_ActionName: Player/Cursor[/XInputControllerWindows/select,/Keyboard/1]
+    m_ActionId: c4935728-39fb-4077-80e4-3386323e8d26
+    m_ActionName: Player/Cursor[/Keyboard/1,/XInputControllerWindows/select]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 37c22e83-9e66-41b0-b1c8-f19f8b2240f1
-    m_ActionName: UI/Navigate[/XInputControllerWindows/leftStick/up,/XInputControllerWindows/rightStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows/rightStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/rightStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows/rightStick/right,/XInputControllerWindows/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+    m_ActionId: 63a7e6e7-e88d-4027-b50c-c776fa407c6c
+    m_ActionName: Player/Add Loot Normal[/Keyboard/2,/XInputControllerWindows/select]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: e817593d-9992-46e3-b8c8-3fc48652b404
-    m_ActionName: UI/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth]
+    m_ActionId: 4ad70dd7-fb2d-4091-bbc7-a6b59d4beeff
+    m_ActionName: Player/Add Loot Favorite[/Keyboard/downArrow,/XInputControllerWindows/dpad/down]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: c265c42b-dc47-4a33-b398-e6eca073d991
-    m_ActionName: UI/Cancel[/Keyboard/escape,/XInputControllerWindows/buttonEast]
+    m_ActionId: 0d401001-b662-4344-a0de-1ad50b76af6d
+    m_ActionName: UI/Pause[/Keyboard/escape,/XInputControllerWindows/start]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: dc73b08c-4713-4b11-8884-4e050fa3667b
-    m_ActionName: UI/Point[/Mouse/position]
+    m_ActionId: 583b4d18-2dc6-4c8d-ac12-28932e478b25
+    m_ActionName: UI/Cursor[/Keyboard/1,/XInputControllerWindows/select]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 9e7ca745-48b9-4571-9eb9-7a212a56290d
-    m_ActionName: UI/Click[/Mouse/leftButton]
+    m_ActionId: 0cd77c02-a216-4f58-8355-170a68956a56
+    m_ActionName: UI/Cursor Move[/XInputControllerWindows/leftStick]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: e8d64e47-9009-4215-ba0f-af732a2cb7e8
-    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+    m_ActionId: 85b1626e-3427-4e30-9a88-c51fff8a275d
+    m_ActionName: UI/Cursor Scroll[/XInputControllerWindows/rightStick]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 2311e45b-e6cc-42e2-b96d-1dc39fd95010
-    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 1d94d528-f1f0-4db6-ac4d-74c7e2c00f61
-    m_ActionName: UI/RightClick[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 726a89cb-38dd-4aed-b40d-84f44ab92893
-    m_ActionName: UI/TrackedDevicePosition
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ee948b55-ebff-4747-8daa-ea3a3e03c651
-    m_ActionName: UI/TrackedDeviceOrientation
+    m_ActionId: e82bd30f-5eae-4a96-a151-33c47e47b305
+    m_ActionName: UI/L. Click[/XInputControllerWindows/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

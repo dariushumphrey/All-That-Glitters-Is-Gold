@@ -51,13 +51,7 @@ public class PlayerMoveScript : MonoBehaviour
         sprint = input.actions["Sprint"];
         evade = input.actions["Evade"];
 
-        sprint.performed += ctx =>
-        {
-            if (moveFloat.y > 0 && !Airborne())
-            {
-                sprinting = true;
-            }
-        };
+        sprint.performed += OnSprintAction;
 
         //sprint.canceled += ctx => sprinting = false;
 
@@ -86,7 +80,7 @@ public class PlayerMoveScript : MonoBehaviour
         }
 
         //Disengages sprinting if Player lets go of input or if they stop moving forward
-        if (moveFloat.y == 0)
+        if (moveFloat.y <= 0)
         {
             sprinting = false;
 
@@ -469,5 +463,18 @@ public class PlayerMoveScript : MonoBehaviour
     {
         yield return new WaitForSeconds(evasionTimeout);
         evaded = false;
+    }
+
+    public void OnSprintAction(InputAction.CallbackContext ctx)
+    {
+        if (moveFloat.y > 0 && !Airborne())
+        {
+            sprinting = true;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        sprint.performed -= OnSprintAction;
     }
 }
