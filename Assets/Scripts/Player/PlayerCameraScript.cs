@@ -67,6 +67,9 @@ public class PlayerCameraScript : MonoBehaviour
 
         aim.started += OnAim;
 
+        rotateH *= 200;
+        rotateV *= 200;
+
         lookSensHorizReset = rotateH;
         lookSensVertReset = rotateV;
 
@@ -138,22 +141,23 @@ public class PlayerCameraScript : MonoBehaviour
         else
         {
             //Controls Camera rotation
-            lookFloat = look.ReadValue<Vector2>();
+            Vector2 rawInput = look.ReadValue<Vector2>();
+            lookFloat = Vector2.ClampMagnitude(rawInput, 1f);
 
             //yaw += rotateH * Input.GetAxis("Mouse X");
             //pitch -= rotateV * Input.GetAxis("Mouse Y");
 
-            yaw += rotateH * lookFloat.x;
-            pitch -= rotateV * lookFloat.y;
+            yaw += rotateH * lookFloat.x * Time.deltaTime;
+            pitch -= rotateV * lookFloat.y * Time.deltaTime;
 
             pitch = Mathf.Clamp(pitch, -vClamp, vClamp);         
 
             //Offsets Camera around Player shoulder if camera clipping protections are inactive
             if (!SurfaceIntersection())
             {
-                playerCamera.transform.position = transform.position + (Quaternion.Euler(pitch, yaw, 0) * cameraPosition);
-                playerCamera.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
-
+                Quaternion controlledRotation = Quaternion.Euler(pitch, yaw, 0f);
+                playerCamera.transform.position = transform.position + (controlledRotation * cameraPosition);
+                playerCamera.transform.rotation = controlledRotation;
 
                 //Debug.DrawRay(offsetCheckPos.transform.position, (playerCamera.transform.position - offsetCheckPos.transform.position).normalized * slider, Color.blue);
             }
@@ -428,6 +432,9 @@ public class PlayerCameraScript : MonoBehaviour
 
     public void SensitivityAssignment()
     {
+        rotateH *= 200;
+        rotateV *= 200;
+
         lookSensHorizReset = rotateH;
         lookSensVertReset = rotateV;
 

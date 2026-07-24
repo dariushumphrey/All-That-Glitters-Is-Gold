@@ -19,6 +19,7 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         DifficultyEntitlement();
         ViricideEntitlement();
         LucentEntitlement();
+        GameplayAssignment();
 
         StartCoroutine(AccessibilityAssignment());
         //Debug.Log(PlayerPrefs.GetInt("unlockLevel02"));
@@ -132,8 +133,26 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         camToUse.GetComponent<Colorblind>().Type = PlayerPrefs.GetInt("colorblindSetting");
     }
 
+    void GameplayAssignment()
+    {
+        menu.ctrX.value = PlayerPrefs.GetFloat("aimControllerX");
+        menu.ctrY.value = PlayerPrefs.GetFloat("aimControllerY");
+        menu.mkX.value = PlayerPrefs.GetFloat("aimMouseX");
+        menu.mkY.value = PlayerPrefs.GetFloat("aimMouseY");
+
+        if(PlayerPrefs.GetInt("toggleAim") == 1)
+        {
+            menu.aimToggle.isOn = true;
+        }
+
+        else
+        {
+            menu.aimToggle.isOn = false;
+        }
+    }
+
     /// <summary>
-    /// Resets Player progess (all PlayerPrefs, zeroes Lucent balance)
+    /// Resets Player progress (all PlayerPrefs, zeroes Lucent balance)
     /// </summary>
     public void FormatProgression()
     {

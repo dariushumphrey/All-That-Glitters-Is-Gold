@@ -35,8 +35,10 @@ public class MultiWeaponFirearm : FirearmScript
         }
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
+
         if(inv != null)
         {
             inv.GetComponent<PlayerCameraScript>().multiWeapon = false;

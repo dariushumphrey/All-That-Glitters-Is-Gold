@@ -255,7 +255,7 @@ public class LevelManagerScript : MonoBehaviour
             if(gameComplete && setting == Setting.Viricide)
             {
                 gameEndDelay -= Time.deltaTime;
-                resultsNotice.gameObject.GetComponent<Text>().text = "Results in " + gameEndDelay.ToString("F0") + "s or [Pause]";
+                resultsNotice.gameObject.GetComponent<Text>().text = "Results in " + gameEndDelay.ToString("F0") + "s or Pause";
 
                 if(gameEndDelay <= 0f || pause.triggered)
                 {
