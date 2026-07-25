@@ -349,7 +349,7 @@ public class LootScript : MonoBehaviour
 
             else if (wepTypeStr == "5")
             {
-                reward.name = "Contempt for Fellows";
+                reward.name = "Contempt For Fellows";
                 reward.GetComponent<FirearmScript>().cheatOverride = -5;
                 reward.GetComponent<FirearmScript>().Awake();
                 reward.GetComponent<FirearmScript>().flavorText = "''Force-feeding Replevin Lucent, a resource known to modify behavior on ingestion, defies most known interstellar laws.''";
