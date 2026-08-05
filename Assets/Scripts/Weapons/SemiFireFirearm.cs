@@ -275,17 +275,21 @@ public class SemiFireFirearm : FirearmScript
                             gameObject.GetComponent<Bolster>().killConfirmed = true;
                         }
 
-                        if (hit.collider.GetComponent<Rigidbody>() == null)
+                        if (hit.collider.GetComponent<ReplevinScript>().state != ReplevinScript.Mode.Target)
                         {
-                            hit.collider.gameObject.AddComponent<Rigidbody>();
-                            Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
-                            hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 10f, ForceMode.Impulse);
-                        }
+                            if (hit.collider.GetComponent<Rigidbody>() == null)
+                            {
+                                hit.collider.gameObject.AddComponent<Rigidbody>();
 
-                        else
-                        {
-                            Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
-                            hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 10f, ForceMode.Impulse);
+                                Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 10f, ForceMode.Impulse);
+                            }
+
+                            else
+                            {
+                                Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 10f, ForceMode.Impulse);
+                            }
                         }
                     }
                 } //For damage falloff checks/kill triggers within Effective Range
@@ -354,17 +358,21 @@ public class SemiFireFirearm : FirearmScript
                             gameObject.GetComponent<Bolster>().killConfirmed = true;
                         }
 
-                        if (hit.collider.GetComponent<Rigidbody>() == null)
+                        if (hit.collider.GetComponent<ReplevinScript>().state != ReplevinScript.Mode.Target)
                         {
-                            hit.collider.gameObject.AddComponent<Rigidbody>();
-                            Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
-                            hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 5f, ForceMode.Impulse);
-                        }
+                            if (hit.collider.GetComponent<Rigidbody>() == null)
+                            {
+                                hit.collider.gameObject.AddComponent<Rigidbody>();
 
-                        else
-                        {
-                            Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
-                            hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 5f, ForceMode.Impulse);
+                                Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 5f, ForceMode.Impulse);
+                            }
+
+                            else
+                            {
+                                Vector3 shotForceDistance = barrel.transform.position - hit.collider.transform.position;
+                                hit.collider.GetComponent<Rigidbody>().AddForce(-shotForceDistance.normalized * 5f, ForceMode.Impulse);
+                            }
                         }
                     }
                 } //For damage falloff checks/kill triggers while out of Effective Range

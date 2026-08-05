@@ -377,6 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd140123654490f409cc4836d25b8033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 1
   damage: 330
   damagePercent: 30
   moveSpeed: 8
@@ -389,6 +390,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 264
   attackStartPoint: {fileID: 5849227831947121303}
+  staggered: 0
+  staggerTimer: 1
   meleeEngagementDistance: 0
   meleeRangeCheck: 15
   meleeRangeMin: 2

@@ -844,6 +844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eff61ccc911cb0489b9ed3f4344527e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 1
   playerScaling: 0
   playerHealth: 500
   playerHealthMax: 500

@@ -6,6 +6,13 @@ using Panda;
 
 public class ReplevinScript : MonoBehaviour
 {
+    public enum Mode
+    {
+        Active = 1, Target = 2
+    }
+
+    public Mode state;
+
     public int damage;
     //This value buffs enemy damage:
     //-Increasing this number adds a percentage of current damage onto itself
@@ -165,52 +172,58 @@ public class ReplevinScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        moveSpeedReset = moveSpeed;
-        boostSpeedReset = boostSpeed;
-        accelReset = enemyAcceleration;
-        gapCloseReset = gapClose;
-        meleeReset = meleeAttackTimer;
-        chargeReset = chargeTimeout;
-        punchReset = punchTimeout;
-        jumpReset = jumpTimeout;
-        airtimeReset = airtimeShort;
-        buildupReset = chargeBuildup;
-        berthJumpTimerReset = berthJumpCarpetBombTimer;
-        strafeReset = strafeTimer;
-        meleeCooldown = meleeTimeout;
-        collectionTimerReset = collectionTimer;
-        throwTimeReset = throwTimer;
-
-        self = GetComponent<NavMeshAgent>();
-        waypoint = GameObject.FindGameObjectsWithTag("Waypoint");
-        waypointNext = Random.Range(0, waypoint.Length);
-        player = GameObject.FindGameObjectWithTag("Player");
-        enemy = GetComponent<EnemyHealthScript>();
-        manager = FindObjectOfType<EnemyManagerScript>();
-
-        subject = GetComponent<Renderer>();
-        materials = subject.materials;
-
-        if (amBoss)
+        if(state != Mode.Target)
         {
-            boss = FindObjectOfType<BossManagerScript>();
-        }
+            moveSpeedReset = moveSpeed;
+            boostSpeedReset = boostSpeed;
+            accelReset = enemyAcceleration;
+            gapCloseReset = gapClose;
+            meleeReset = meleeAttackTimer;
+            chargeReset = chargeTimeout;
+            punchReset = punchTimeout;
+            jumpReset = jumpTimeout;
+            airtimeReset = airtimeShort;
+            buildupReset = chargeBuildup;
+            berthJumpTimerReset = berthJumpCarpetBombTimer;
+            strafeReset = strafeTimer;
+            meleeCooldown = meleeTimeout;
+            collectionTimerReset = collectionTimer;
+            throwTimeReset = throwTimer;
 
-        AttackScaling();
+            self = GetComponent<NavMeshAgent>();
+            waypoint = GameObject.FindGameObjectsWithTag("Waypoint");
+            waypointNext = Random.Range(0, waypoint.Length);
+            player = GameObject.FindGameObjectWithTag("Player");
+            enemy = GetComponent<EnemyHealthScript>();
+            manager = FindObjectOfType<EnemyManagerScript>();
+
+            subject = GetComponent<Renderer>();
+            materials = subject.materials;
+
+            if (amBoss)
+            {
+                boss = FindObjectOfType<BossManagerScript>();
+            }
+
+            AttackScaling();
+        }     
     }
 
     // Update is called once per frame
     void Update()
     {
-        CanSeePlayer();
-        HaveIDied();
-
-        if(jumpCheck != null)
+        if(state != Mode.Target)
         {
-            AmIGrounded();
-        }
+            CanSeePlayer();
+            HaveIDied();
 
-        AmOnNavMeshLink();
+            if (jumpCheck != null)
+            {
+                AmIGrounded();
+            }
+
+            AmOnNavMeshLink();
+        }     
     }
 
     /// <summary>

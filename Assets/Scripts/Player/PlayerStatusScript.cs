@@ -5,6 +5,12 @@ using UnityEngine.UI;
 
 public class PlayerStatusScript : MonoBehaviour
 {
+    public enum Mode
+    {
+        Gameplay = 1, Training = 2
+    }
+
+    public Mode state;
 
     public int playerScaling; //Increases Player Health and Shield by Difficulty number
     public int playerHealth = 500;
@@ -256,8 +262,17 @@ public class PlayerStatusScript : MonoBehaviour
                 playerHealth -= dmgReceived;
                 if(playerHealth <= 0f)
                 {
-                    isDead = true;
-                    PlayerDeath();
+                    if(state == PlayerStatusScript.Mode.Training)
+                    {
+                        playerHealth = playerHealthMax;
+                        playerShield = playerShieldMax;
+                    }
+
+                    else
+                    {
+                        isDead = true;
+                        PlayerDeath();
+                    }
                 }
             }
         }      

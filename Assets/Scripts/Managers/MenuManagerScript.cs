@@ -43,6 +43,14 @@ public class MenuManagerScript : MonoBehaviour
     public Text controllerX, controllerY, mouseX, mouseY;
     public Toggle aimToggle;
 
+    [Header("Firing Range setting, page Variables")]
+    public DamageTestingScript[] lanes;
+    public int targetDifficulty = 1;
+    public Text difficultyText, damageWindowText;
+    public Slider diffSlider;
+    private float[] testWindows = { -1f, 4f, 8f, 10f, 20f };
+    public int testWindowIndex = 0;
+
     private enum InputType { MNK, Controller }
     private InputType lastInput = InputType.MNK;
 
@@ -264,7 +272,22 @@ public class MenuManagerScript : MonoBehaviour
             controllerY.text = (ctrY.value / 10).ToString();
             mouseX.text = (mkX.value / 10).ToString();
             mouseY.text = (mkY.value / 10).ToString();
-        }    
+        }
+        
+        if(lanes.Length >= 1)
+        {
+            difficultyText.text = diffSlider.value.ToString();
+
+            if(testWindowIndex == 0)
+            {
+                damageWindowText.text = "INF";
+            }
+
+            else
+            {
+                damageWindowText.text = testWindows[testWindowIndex].ToString("F1") + "s";
+            }      
+        }
     }
 
     public void FormatGameplaySettings()
@@ -417,6 +440,47 @@ public class MenuManagerScript : MonoBehaviour
 
         activeTab = tabs[i];
         activeTab.gameObject.SetActive(true);
+    }
+
+    public void FiringRangeApplySettings()
+    {
+        if(lanes.Length >= 1)
+        {
+            for(int l = 0; l < lanes.Length; l++)
+            {
+                lanes[l].dpsTestEnd = testWindows[testWindowIndex];
+                lanes[l].ModifyTestDuration(testWindows[testWindowIndex]);
+
+                lanes[l].targetDiff = (int)diffSlider.value;
+                lanes[l].ModifyTargetDifficulty();
+            }
+        }
+    }
+
+    public void FiringRangeDifficultyLeft()
+    {      
+        if(testWindowIndex <= 0)
+        {
+            testWindowIndex = testWindows.Length - 1;
+        }
+
+        else
+        {
+            testWindowIndex--;
+        }
+    }
+
+    public void FiringRangeDifficultyRight()
+    {
+        if (testWindowIndex >= testWindows.Length - 1)
+        {
+            testWindowIndex = 0;
+        }
+
+        else
+        {
+            testWindowIndex++;
+        }
     }
 
     private void OnEnable()

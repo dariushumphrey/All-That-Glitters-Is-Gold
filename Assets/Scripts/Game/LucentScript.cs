@@ -72,11 +72,15 @@ public class LucentScript : MonoBehaviour
                         currentDPSLine = newDPSLine + "\n" + "<size=24><color=silver>" + currentIteration + "</color></size>";
 
                         hit.GetComponent<EnemyHealthScript>().inflictDamage(shatterDamage);
-                        if (hit.GetComponent<EnemyHealthScript>().healthCurrent <= 0 && hit.GetComponent<Rigidbody>() == null)
+
+                        if (hit.GetComponent<ReplevinScript>().state != ReplevinScript.Mode.Target)
                         {
-                            hit.gameObject.AddComponent<Rigidbody>();
-                            hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
-                        }
+                            if (hit.GetComponent<EnemyHealthScript>().healthCurrent <= 0 && hit.GetComponent<Rigidbody>() == null)
+                            {
+                                hit.gameObject.AddComponent<Rigidbody>();
+                                hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
+                            }
+                        }             
                     }
 
                     dpsText.GetComponent<Text>().text = currentDPSLine;
@@ -151,11 +155,15 @@ public class LucentScript : MonoBehaviour
                 if (hit.GetComponent<EnemyHealthScript>() != null)
                 {
                     hit.GetComponent<EnemyHealthScript>().inflictDamage(shatterDamage);
-                    if (hit.GetComponent<EnemyHealthScript>().healthCurrent <= 0 && hit.GetComponent<Rigidbody>() == null)
+
+                    if (hit.GetComponent<ReplevinScript>().state != ReplevinScript.Mode.Target)
                     {
-                        hit.gameObject.AddComponent<Rigidbody>();
-                        hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
-                    }
+                        if (hit.GetComponent<EnemyHealthScript>().healthCurrent <= 0 && hit.GetComponent<Rigidbody>() == null)
+                        {
+                            hit.gameObject.AddComponent<Rigidbody>();
+                            hit.gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
+                        }
+                    }             
                 }
             }
 

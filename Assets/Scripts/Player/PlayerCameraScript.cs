@@ -30,6 +30,7 @@ public class PlayerCameraScript : MonoBehaviour
     public Image reticleSprite;
     public Image meleeReticle;
     public Sprite meleeSprite;
+    public Text enemyDistance; //Null in all areas except Firing Range - Reports distance of enemy from Player
     //contactOnly - LayerMask that only interacts with Enemies and Surfaces; used for Aim Assist, Melee attacks and Canvas reveals
     //cameraOnly - LayerMask that only interacts with Surfaces; used for Camera clipping checks
     public LayerMask contactOnly, cameraOnly;
@@ -328,6 +329,12 @@ public class PlayerCameraScript : MonoBehaviour
                 if (hit.collider.tag == "Enemy")
                 {
                     distance = (hit.transform.position - rayOrigin);
+
+                    if(enemyDistance != null)
+                    {
+                        enemyDistance.text = distance.magnitude.ToString("F0") + "m";
+                    }
+
                     if (distance.magnitude <= player.inventory[player.selection].GetComponent<FirearmScript>().effectiveRange)
                     {
                         playerCamera.transform.rotation = Quaternion.Lerp(playerCamera.transform.rotation, Quaternion.LookRotation(distance), player.inventory[player.selection].GetComponent<FirearmScript>().aimAssistStrength);
@@ -346,11 +353,29 @@ public class PlayerCameraScript : MonoBehaviour
 
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Surface"))
                 {
+                    if (enemyDistance != null)
+                    {
+                        enemyDistance.text = "";
+                    }
+
                     reticleSprite.color = Color.white;
 
                     rotateH = lookSensHorizReset;
                     rotateV = lookSensVertReset;
                 }
+            }
+
+            else
+            {
+                if (enemyDistance != null)
+                {
+                    enemyDistance.text = "";
+                }
+
+                reticleSprite.color = Color.white;
+
+                rotateH = lookSensHorizReset;
+                rotateV = lookSensVertReset;
             }
         }           
     }

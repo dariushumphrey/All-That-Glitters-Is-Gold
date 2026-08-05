@@ -159,7 +159,7 @@ public class PlayerMeleeScript : MonoBehaviour
 
                 if (hit.collider.gameObject.GetComponent<EnemyHealthScript>().healthCurrent <= 0)
                 {
-                    if(gameObject.GetComponentInChildren<SiphonicPlatform>())
+                    if (gameObject.GetComponentInChildren<SiphonicPlatform>())
                     {
                         gameObject.GetComponentInChildren<SiphonicPlatform>().confirmedMeleeKill = true;
                     }
@@ -194,7 +194,7 @@ public class PlayerMeleeScript : MonoBehaviour
                     }
 
                     //Triggers Forager's pickup burst
-                    if(foragerCheat != null)
+                    if (foragerCheat != null)
                     {
                         foragerCheat.GetComponent<Forager>().burstPosition = hit.collider.transform.position + Vector3.up;
                         foragerCheat.GetComponent<Forager>().ForagerBurst();
@@ -208,7 +208,7 @@ public class PlayerMeleeScript : MonoBehaviour
                         free.GetComponent<FoggerGrenadeScript>().armingTime = 0.0f;
                         free.GetComponent<FoggerGrenadeScript>().StartCoroutine(free.GetComponent<FoggerGrenadeScript>().SetupGrenade());
 
-                        if(enshroudCheat.GetComponent<FirearmScript>().weaponRarity == 5)
+                        if (enshroudCheat.GetComponent<FirearmScript>().weaponRarity == 5)
                         {
                             free.GetComponent<FoggerGrenadeScript>().enshroudFlag = true;
                         }
@@ -216,12 +216,15 @@ public class PlayerMeleeScript : MonoBehaviour
                         enshroudCheat.GetComponent<Enshroud>().cooldown = true;
                     }
 
-                    //Applies Rigidbody force on Enemy defeats
-                    if (hit.collider.gameObject.GetComponent<Rigidbody>() == null)
+                    if (hit.collider.GetComponent<ReplevinScript>().state != ReplevinScript.Mode.Target)
                     {
-                        hit.collider.gameObject.AddComponent<Rigidbody>();
-                        Vector3 meleeForceDistance = transform.position - hit.collider.transform.position;
-                        hit.collider.GetComponent<Rigidbody>().AddForce(-meleeForceDistance.normalized * 20f, ForceMode.Impulse);
+                        //Applies Rigidbody force on Enemy defeats
+                        if (hit.collider.gameObject.GetComponent<Rigidbody>() == null)
+                        {
+                            hit.collider.gameObject.AddComponent<Rigidbody>();
+                            Vector3 meleeForceDistance = transform.position - hit.collider.transform.position;
+                            hit.collider.GetComponent<Rigidbody>().AddForce(-meleeForceDistance.normalized * 20f, ForceMode.Impulse);
+                        }
                     }
                 }
 

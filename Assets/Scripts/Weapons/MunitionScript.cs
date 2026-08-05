@@ -426,14 +426,21 @@ public class MunitionScript : MonoBehaviour
                             hostLauncher.gameObject.GetComponent<Bolster>().RemoteProc();
                         }
 
-                        if (targets[t].GetComponent<Rigidbody>() == null)
+                        if (targets[t].GetComponent<ReplevinScript>().state != ReplevinScript.Mode.Target)
                         {
-                            targets[t].gameObject.AddComponent<Rigidbody>();
-                            targets[t].gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
+                            if (targets[t].GetComponent<Rigidbody>() == null)
+                            {
+                                targets[t].gameObject.AddComponent<Rigidbody>();
+                                targets[t].gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
+                            }
+
+                            else
+                            {
+                                targets[t].gameObject.AddComponent<Rigidbody>();
+                                targets[t].gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
+                            }
                         }
                     }
-
-
                 }
 
                 hostLauncher.GetComponent<FirearmScript>().dpsText.GetComponent<Text>().text = hostLauncher.GetComponent<FirearmScript>().currentDPSLine;
@@ -677,10 +684,19 @@ public class MunitionScript : MonoBehaviour
                             hostLauncher.gameObject.GetComponent<Bolster>().ActivatorDroneRemoteProc();
                         }
 
-                        if (targets[t].GetComponent<Rigidbody>() == null)
+                        if (targets[t].GetComponent<ReplevinScript>().state != ReplevinScript.Mode.Target)
                         {
-                            targets[t].gameObject.AddComponent<Rigidbody>();
-                            targets[t].gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
+                            if (targets[t].GetComponent<Rigidbody>() == null)
+                            {
+                                targets[t].gameObject.AddComponent<Rigidbody>();
+                                targets[t].gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
+                            }
+
+                            else
+                            {
+                                targets[t].gameObject.AddComponent<Rigidbody>();
+                                targets[t].gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
+                            }
                         }
                     }              
                 }

@@ -63,11 +63,15 @@ public class DestructGrenadeScript : MonoBehaviour
                         currentDPSLine = newDPSLine + "\n" + "<size=24><color=silver>" + currentIteration + "</color></size>";
 
                         contact.GetComponent<EnemyHealthScript>().inflictDamage(explosiveDamage);
-                        if(contact.GetComponent<EnemyHealthScript>().healthCurrent <= 0 && contact.GetComponent<Rigidbody>() == null)                    
+
+                        if(contact.GetComponent<ReplevinScript>().state != ReplevinScript.Mode.Target)
                         {
-                            contact.gameObject.AddComponent<Rigidbody>();
-                            contact.gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
-                        }
+                            if (contact.GetComponent<EnemyHealthScript>().healthCurrent <= 0 && contact.GetComponent<Rigidbody>() == null)
+                            {
+                                contact.gameObject.AddComponent<Rigidbody>();
+                                contact.gameObject.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 10f, 500f);
+                            }
+                        }                  
                     }
 
                     dpsText.GetComponent<Text>().text = currentDPSLine;

@@ -40,6 +40,8 @@ public class EnemyHealthScript : MonoBehaviour
     public float ammoRewardThreshold = 80f; //Goal number to be at or above to spawn Ammunition.
     public float healthRewardThreshold = 50f; //Goal number to be at or above to spawn Health Delivery
 
+    public DamageTestingScript lane;
+
     private float lhUpdateTimer = 1f; //Duration to wait before updating lost Health slider
     private float lhUpdateReset; //Holds starting lost health update duration
     internal float canvasTimer = 2f; //Duration before Canvas disappears
@@ -56,6 +58,7 @@ public class EnemyHealthScript : MonoBehaviour
     internal bool enemyHit; //Affirms Enemy has been hit if true
     internal int damageHit; //Holds received damage taken
     private bool done = false; //Permits one execution if true
+    internal int shotsToKill = 0;
 
     // Start is called before the first frame update
     public void Start()
@@ -99,29 +102,55 @@ public class EnemyHealthScript : MonoBehaviour
             healthLost.value = healthCurrent;
         }
 
+        
+
         //For bosses, Canvas is active on-screen
-        if(attack.boss && healthCurrent > 0)
+        if (attack.amBoss)
         {
-            canvasTimer = canvasTimerReset;
-            visual.gameObject.SetActive(true);
-        }
-
-        //Canvas disappears when timer expires
-        canvasTimer -= Time.deltaTime;
-        if (canvasTimer <= 0f)
-        {
-            canvasTimer = 0f;
-            if (visual.gameObject.activeInHierarchy == true)
+            if(attack.state != ReplevinScript.Mode.Target)
             {
-                visual.gameObject.SetActive(false);
+                if (healthCurrent > 0)
+                {
+                    canvasTimer = canvasTimerReset;
+                    visual.gameObject.SetActive(true);
+                }
             }
-
+            
             else
             {
-                visual.gameObject.SetActive(false);
+                if (visual.gameObject.activeInHierarchy == true)
+                {
+                    //Canvas disappears when timer expires
+                    canvasTimer -= Time.deltaTime;
+                    if (canvasTimer <= 0f)
+                    {
+                        canvasTimer = 0f;
+                        if (visual.gameObject.activeInHierarchy != false)
+                        {
+                            visual.gameObject.SetActive(false);
+                        }
+                    }
+                }
             }
         }
 
+        else
+        {
+            if (visual.gameObject.activeInHierarchy == true)
+            {
+                //Canvas disappears when timer expires
+                canvasTimer -= Time.deltaTime;
+                if (canvasTimer <= 0f)
+                {
+                    canvasTimer = 0f;
+                    if (visual.gameObject.activeInHierarchy != false)
+                    {
+                        visual.gameObject.SetActive(false);
+                    }
+                }
+            }
+        }
+     
         //Effect images (damage-over-time, Health debuff, slowed) appear, disappear if component is detected
         if (GetComponent<PosNegDOT>() != null || GetComponent<DamageOverTimeScript>() != null)
         {
@@ -165,8 +194,16 @@ public class EnemyHealthScript : MonoBehaviour
     
         if (healthCurrent <= 0)
         {
+            if(attack.state == ReplevinScript.Mode.Target)
+            {
+                shotsToKill = Mathf.CeilToInt((float)healthMax / damageHit);
+                healthCurrent = healthMax;              
+            }
 
-            EnemyDeath();
+            else
+            {
+                EnemyDeath();
+            }
         }
     }
 
@@ -280,6 +317,40 @@ public class EnemyHealthScript : MonoBehaviour
         enemyHit = true;
         damageHit = damageTaken;
         manager.damageReceived += damageHit;
+
+        if(attack.state == ReplevinScript.Mode.Target)
+        {
+            if(lane.indefiniteTest)
+            {
+                lane.testPauseTimer = lane.testPauseReset;
+            }
+
+            if(!lane.testStarted)
+            {
+                FormatRangeData();
+
+                if (!lane.indefiniteTest)
+                {
+                    if (!lane.testTimeout)
+                    {
+                        
+                        lane.totalDamage += damageHit;
+                        lane.testStarted = true;
+                    }
+                }
+
+                else
+                {
+                    lane.totalDamage += damageHit;
+                    lane.testStarted = true;
+                }                       
+            }
+
+            else
+            {
+                lane.totalDamage += damageHit;
+            }
+        }
 
         if (GetComponent<SDPHealthDebuff>() != null)
         {
@@ -400,5 +471,12 @@ public class EnemyHealthScript : MonoBehaviour
         }
 
         Destroy(gameObject, 5f);
+    }
+
+    void FormatRangeData()
+    {
+        lane.damagePerSecond = 0f;
+        lane.totalDamage = 0;
+        lane.ttkText.text = "";
     }
 }
