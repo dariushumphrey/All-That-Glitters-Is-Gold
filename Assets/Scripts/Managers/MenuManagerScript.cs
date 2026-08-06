@@ -274,7 +274,7 @@ public class MenuManagerScript : MonoBehaviour
             mouseY.text = (mkY.value / 10).ToString();
         }
         
-        if(lanes.Length >= 1)
+        if(lanes.Length >= 1 || setting == MenuManagerScript.Setting.Menu)
         {
             difficultyText.text = diffSlider.value.ToString();
 
@@ -357,6 +357,19 @@ public class MenuManagerScript : MonoBehaviour
         }
 
         //levelManager.LoadScene();
+        levelManager.StartCoroutine(levelManager.LoadAsyncedSceneDelay());
+    }
+
+    /// <summary>
+    /// Initializes Firing Range game settings on slider, button values and loads scene
+    /// </summary>
+    public void InitializeFiringRangeGame()
+    {
+        levelManager.setting = LevelManagerScript.Setting.Training;
+
+        levelManager.firingRangeDifficulty = (int)diffSlider.value;
+        levelManager.frDamageDurationIndex = testWindowIndex;
+        levelManager.level = 9;
         levelManager.StartCoroutine(levelManager.LoadAsyncedSceneDelay());
     }
 
@@ -447,6 +460,23 @@ public class MenuManagerScript : MonoBehaviour
         if(lanes.Length >= 1)
         {
             for(int l = 0; l < lanes.Length; l++)
+            {
+                lanes[l].dpsTestEnd = testWindows[testWindowIndex];
+                lanes[l].ModifyTestDuration(testWindows[testWindowIndex]);
+
+                lanes[l].targetDiff = (int)diffSlider.value;
+                lanes[l].ModifyTargetDifficulty();
+            }
+        }
+    }
+
+    public IEnumerator FiringRangeApplySettingsDelay()
+    {
+        yield return null;
+
+        if (lanes.Length >= 1)
+        {
+            for (int l = 0; l < lanes.Length; l++)
             {
                 lanes[l].dpsTestEnd = testWindows[testWindowIndex];
                 lanes[l].ModifyTestDuration(testWindows[testWindowIndex]);

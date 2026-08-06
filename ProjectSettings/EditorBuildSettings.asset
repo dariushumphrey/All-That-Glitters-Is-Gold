@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Viricide_03.unity
     guid: 1eff0696051ed314dbbf8b402c5f43fc
+  - enabled: 1
+    path: Assets/Scenes/FiringRange.unity
+    guid: 44112f71ca513bb49927aa25f9d1acd0
   m_configObjects: {}

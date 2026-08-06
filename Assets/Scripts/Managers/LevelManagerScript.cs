@@ -14,7 +14,7 @@ public class LevelManagerScript : MonoBehaviour
     //Configuration for Main Menu, Campaign, or Viricide behavior
     public enum Setting
     {
-        Navigation = 0, Campaign = 1, Viricide = 2
+        Navigation = 0, Campaign = 1, Viricide = 2, Training = 3
     }
 
     public Setting setting;
@@ -43,6 +43,7 @@ public class LevelManagerScript : MonoBehaviour
     private GameObject uiCamera;
     private TransitionManagerScript transition;
     private CheckpointManagerScript checkpoint;
+    private MenuManagerScript menu;
     private float gameEndDelay = 20f;
     private float gameRetryDelay = 5f;
     private bool paused = false; //Zeroes game time if true
@@ -52,6 +53,8 @@ public class LevelManagerScript : MonoBehaviour
     internal AsyncOperation async;
     internal Text levelLoadText; //Text that displays Async level load progress
     internal bool lvlProgressSaved = false;
+    public int firingRangeDifficulty = 1;
+    public int frDamageDurationIndex = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -188,6 +191,15 @@ public class LevelManagerScript : MonoBehaviour
         {
             resultsNotice = GameObject.Find("resultsNotice");
             resultsNotice.gameObject.GetComponent<Text>().text = "";
+        }
+
+        if(setting == Setting.Training)
+        {
+            menu = FindObjectOfType<MenuManagerScript>();
+            menu.diffSlider.value = firingRangeDifficulty;
+            menu.targetDifficulty = firingRangeDifficulty;
+            menu.testWindowIndex = frDamageDurationIndex;
+            menu.StartCoroutine(menu.FiringRangeApplySettingsDelay());
         }
 
         menuReturnButton = GameObject.Find("menuReturnButton");
@@ -397,8 +409,7 @@ public class LevelManagerScript : MonoBehaviour
 
     public void ResumeGame()
     {
-        Time.timeScale = 1;
-        VanishPauseMenu();
+        PauseToggleButton();
     }
 
     /// <summary>
@@ -504,6 +515,49 @@ public class LevelManagerScript : MonoBehaviour
                     pauseMenu.gameObject.SetActive(false);
                 }
                
+                StartCoroutine(LockCursor());
+                paused = false;
+            }
+        }
+    }
+
+    public void PauseToggleButton()
+    {
+        //Pauses game if game is incomplete & controls page is hidden
+        if (!gameComplete)
+        {
+            if (player.isDead || controlsMenu.activeInHierarchy == true || howToPlayMenu.activeInHierarchy == true)
+            {
+                return;
+            }
+
+            if (!paused)
+            {
+                player.GetComponent<PlayerCameraScript>().enabled = false;
+                player.GetComponent<PlayerMoveScript>().enabled = false;
+
+                Time.timeScale = 0;
+                if (pauseMenu.gameObject.activeSelf == false)
+                {
+                    pauseMenu.gameObject.SetActive(true);
+                }
+
+                StartCoroutine(UnlockCursor());
+                paused = true;
+            }
+
+            else if (paused)
+            {
+                player.GetComponent<PlayerCameraScript>().enabled = true;
+                player.GetComponent<PlayerMoveScript>().enabled = true;
+
+                Time.timeScale = 1;
+
+                if (pauseMenu.gameObject.activeSelf != false)
+                {
+                    pauseMenu.gameObject.SetActive(false);
+                }
+
                 StartCoroutine(LockCursor());
                 paused = false;
             }

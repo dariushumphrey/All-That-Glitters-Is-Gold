@@ -25,7 +25,7 @@ public class SpawnObjectScript : MonoBehaviour
             GameObject spawned = Instantiate(item, place.position, Quaternion.identity);
             spawned.name = item.name;
             spawned.AddComponent<DestroyScript>();
-            spawned.GetComponent<DestroyScript>().destroyTimer = 30f;
+            spawned.GetComponent<DestroyScript>().destroyTimer = 10f;
 
             if (item.GetComponent<AmmoScript>())
             {

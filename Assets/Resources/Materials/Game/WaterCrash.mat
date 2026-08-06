@@ -7,14 +7,15 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Water
-  m_Shader: {fileID: 4800000, guid: 1662916caf4709648af408d7aa02bd68, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_Name: WaterCrash
+  m_Shader: {fileID: 211, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: EFFECT_BUMP _ALPHABLEND_ON _EMISSION _FADING_ON
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -40,7 +41,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: e6306dc95c8eb5348bc8e10e359942ce, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -55,59 +56,44 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _bump01:
-        m_Texture: {fileID: 2800000, guid: c4b8551258bfe9d47b61082ac4e1e1b4, type: 3}
-        m_Scale: {x: 40, y: 40}
-        m_Offset: {x: 0, y: 0}
-    - _bump02:
-        m_Texture: {fileID: 2800000, guid: c4b8551258bfe9d47b61082ac4e1e1b4, type: 3}
-        m_Scale: {x: 40, y: 40}
-        m_Offset: {x: 0, y: 0}
-    - _cloudsTexture:
-        m_Texture: {fileID: 2800000, guid: c5f2427206338424385d085c93769674, type: 3}
-        m_Scale: {x: 5, y: 5}
-        m_Offset: {x: 0, y: 0}
-    - _planetNormals:
-        m_Texture: {fileID: 2800000, guid: 5346902546a43a343ac637bdd8a2d0dd, type: 3}
-        m_Scale: {x: 0.75, y: 0.75}
-        m_Offset: {x: -0.6, y: -0.45}
-    - _planetTex:
-        m_Texture: {fileID: 2800000, guid: 66ee336bf2dda1746bc997a25a19e2a2, type: 3}
-        m_Scale: {x: 0.75, y: 0.75}
-        m_Offset: {x: -0.6, y: -0.45}
     m_Ints: []
     m_Floats:
+    - _BlendOp: 0
     - _BumpScale: 1
+    - _CameraFadingEnabled: 1
+    - _CameraFarFadeDistance: 3
+    - _CameraNearFadeDistance: 1
+    - _ColorMode: 0
+    - _Cull: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DstBlend: 0
+    - _DistortionBlend: 0
+    - _DistortionEnabled: 1
+    - _DistortionStrength: 1
+    - _DistortionStrengthScaled: 0.1
+    - _DstBlend: 10
+    - _EmissionEnabled: 1
+    - _FlipbookMode: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _LightingEnabled: 0
     - _Metallic: 0
-    - _Mode: 0
+    - _Mode: 2
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
+    - _SoftParticlesEnabled: 0
+    - _SoftParticlesFarFadeDistance: 25
+    - _SoftParticlesNearFadeDistance: 1
     - _SpecularHighlights: 1
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _UVSec: 0
-    - _ZWrite: 1
-    - _cloudStrength: 1.5
-    - _metallic: 0.7
-    - _normalStrength: 0.075
-    - _planetNormalStrength: 0.5
-    - _rimPower: 3
-    - _roughness: 0.95
-    - _xScroll: 0.05
-    - _xScrollTex01: 0.2
-    - _xScrollTex02: -0.2
-    - _yScroll: 0
-    - _yScrollTex01: 0.2
-    - _yScrollTex02: 0.2
+    - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _rim: {r: 0.23137255, g: 0.59530056, b: 0.89411765, a: 0}
-    - _tint: {r: 0.4269758, g: 0.67479223, b: 0.9528302, a: 1}
+    - _CameraFadeParams: {r: 1, g: 0.5, b: 0, a: 0}
+    - _Color: {r: 3.8289042, g: 3.8289042, b: 3.8289042, a: 0.09411765}
+    - _ColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
+    - _EmissionColor: {r: 0.57254905, g: 0.57254905, b: 0.57254905, a: 1}
+    - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
