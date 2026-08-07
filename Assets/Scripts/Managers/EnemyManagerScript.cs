@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class EnemyManagerScript : MonoBehaviour
 {
+    public enum Configuration
+    {
+        Campaign = 1, Viricide = 2
+    }
+
+    public Configuration behavior;
+
     public int dropRarity;
     public float dropThreshold; //A goal number to be at or below in order to spawn Loot
     //This value governs the escalation or de-escalation of Loot drop rates as Rarity increases
@@ -121,7 +128,7 @@ public class EnemyManagerScript : MonoBehaviour
     /// <summary>
     /// Randomly generates Loot, Lucent upon Enemy defeat
     /// </summary>
-    /// <param name="deathPos">losition of Enemy defeat</param>
+    /// <param name="deathPos">position of Enemy defeat</param>
     public void DeathReward(Vector3 deathPos)
     {
         deathRewardChance = Random.Range(0, 101);
@@ -130,7 +137,30 @@ public class EnemyManagerScript : MonoBehaviour
         if (deathRewardChance <= dropThreshold)
         {
             GameObject reward = Instantiate(loot, deathPos + Vector3.up, loot.transform.rotation);
-            reward.GetComponent<LootScript>().raritySpawn = dropRarity;
+
+            if(behavior == Configuration.Campaign)
+            {
+                if(dropRarity >= 5)
+                {
+                    reward.GetComponent<LootScript>().raritySpawn = dropRarity - 1;
+                    int possibleUpgrade = Random.Range(0, 2);
+                    if(possibleUpgrade == 1)
+                    {
+                        reward.GetComponent<LootScript>().initiateUpgrade = true;
+                    }
+                }
+
+                else
+                {
+                    reward.GetComponent<LootScript>().raritySpawn = dropRarity;
+                }
+            }
+
+            else
+            {
+                reward.GetComponent<LootScript>().raritySpawn = dropRarity;
+            }
+
             reward.GetComponent<LootScript>().focusTarget = lootFocus;
 
             //Removes (Clone) from name

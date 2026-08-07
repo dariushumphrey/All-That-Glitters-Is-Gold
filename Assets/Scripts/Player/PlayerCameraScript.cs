@@ -390,7 +390,7 @@ public class PlayerCameraScript : MonoBehaviour
         rayOrigin = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
         if (Physics.Raycast(rayOrigin, playerCamera.transform.forward, out hit, melee.meleeRange, contactOnly))
         {
-            if (hit.collider.tag == "Enemy" || hit.collider.tag == "Combustible Lucent")
+            if (hit.collider.tag == "Enemy")
             {
                 melee.meleeTarget = hit.collider.gameObject;
 
@@ -407,7 +407,31 @@ public class PlayerCameraScript : MonoBehaviour
                 //Vector3 reticlePos = Camera.main.WorldToScreenPoint(melee.meleeTarget.transform.position);
                 //meleeReticle.rectTransform.position = targetToScreenPos;
                 
-            }          
+            }
+            
+            else if(hit.collider.tag == "Combustible Lucent")
+            {
+                if(!hit.collider.gameObject.GetComponent<CombustibleLucentScript>().protection)
+                {
+                    melee.meleeTarget = hit.collider.gameObject;
+
+                    Vector3 targetToScreenPos = playerCamera.WorldToViewportPoint(melee.meleeTarget.transform.position);
+                    RectTransform canvasRect = meleeReticle.canvas.GetComponent<RectTransform>();
+
+                    Vector2 localPos = new Vector2((targetToScreenPos.x - 0.5f) * canvasRect.sizeDelta.x, (targetToScreenPos.y - 0.5f) * canvasRect.sizeDelta.y);
+                    meleeReticle.rectTransform.anchoredPosition = localPos;
+
+                    meleeReticle.sprite = meleeSprite;
+                    meleeReticle.color = Color.yellow;
+                }
+
+                else
+                {
+                    melee.meleeTarget = null;
+                    meleeReticle.color = Color.white;
+                    meleeReticle.sprite = move.blankReticle;
+                }
+            }
         }
 
         else
@@ -449,6 +473,11 @@ public class PlayerCameraScript : MonoBehaviour
 
     public void OnAim(InputAction.CallbackContext ctx)
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
         if (enableZoomToggle)
         {
             ZoomToggle();

@@ -27,6 +27,7 @@ public class LootScript : MonoBehaviour
     public List<GameObject> rarityIdentification = new List<GameObject>();
     public GameObject lootFocusCircle, lootLight, lootModel, lootEffect;
     public ParticleSystem acceptEffect;
+    public GameObject upgradeEffect;
     public Canvas collapsedLootInfo;
     public Image collapsedLootImage;
     public Image collapsedLootDeviceController;
@@ -55,6 +56,8 @@ public class LootScript : MonoBehaviour
     private bool addAsFavorite = false;
     public bool withinVolume = false;
     private GameObject reward;
+    internal bool initiateUpgrade = false;
+    internal bool campaignDFiveChestFlag = false;
 
     // Start is called before the first frame update
     void Start()
@@ -83,6 +86,8 @@ public class LootScript : MonoBehaviour
                 addLootFavorite = input.actions["Add Loot Favorite"];
 
             }
+
+            upgradeEffect = Resources.Load<GameObject>("Particles/LucentShatterEffect");
 
             collapsedLootInfo.gameObject.SetActive(false);
             RarityCorrection();
@@ -186,7 +191,21 @@ public class LootScript : MonoBehaviour
     {
         GameObject reward = Instantiate(drop, lootSpawn.transform.position, lootSpawn.transform.rotation);
 
-        reward.GetComponent<LootScript>().raritySpawn = raritySpawn;
+        if(campaignDFiveChestFlag)
+        {
+            reward.GetComponent<LootScript>().raritySpawn = raritySpawn - 1;
+            int possibleUpgrade = Random.Range(0, 2);
+            if (possibleUpgrade == 1)
+            {
+                reward.GetComponent<LootScript>().initiateUpgrade = true;
+            }
+        }
+
+        else
+        {
+            reward.GetComponent<LootScript>().raritySpawn = raritySpawn;
+        }
+
         reward.GetComponent<LootScript>().focusTarget = focusTarget;
         reward.name = drop.name;
 
@@ -1984,6 +2003,12 @@ public class LootScript : MonoBehaviour
         {
             gameObject.GetComponent<BoxCollider>().isTrigger = true;
             gameObject.GetComponent<BoxCollider>().size = new Vector3(3f, 3f, 3f);
+        }
+
+        if(initiateUpgrade)
+        {
+            raritySpawn = 5;
+            Instantiate(upgradeEffect, transform.position, Quaternion.identity);
         }
 
         RarityEnforcement();

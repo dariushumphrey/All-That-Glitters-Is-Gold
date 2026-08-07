@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PatchNotesManagerScript : MonoBehaviour
 {
-    public Text displayText;
+    public Text displayText, versionNotice;
     public TextAsset[] patchNotes;
     public ScrollRect inspectScroll;
 
@@ -16,6 +16,9 @@ public class PatchNotesManagerScript : MonoBehaviour
     {
         patchText = patchNotes[patchNotes.Length - 1].text;
         displayText.text = patchText;
+
+        versionNotice.text = "Reading: " + patchNotes[patchNotes.Length - 1].name;
+
     }
 
     // Update is called once per frame
@@ -30,6 +33,8 @@ public class PatchNotesManagerScript : MonoBehaviour
         displayText.text = patchText;
 
         inspectScroll.verticalNormalizedPosition = 1f;
+
+        versionNotice.text = "Reading: " + patchNotes[note].name;
 
     }
 }

@@ -44,7 +44,12 @@ public class Volant : MonoBehaviour
         //Volant
         //___.text = "[E] - Enables character flight until Shield is broken or disenaged."
 
-        if(move.zgOverride)
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
+        if (move.zgOverride)
         {
             move.volant = false;
             proc.GetComponent<Text>().text = "";

@@ -46,8 +46,13 @@ public class GaleForceWinds : MonoBehaviour
         //Gale Force Winds
         //___.text = Sprinting or moving generates a charge. The next charged shot casts severe winds that applies Health and Slowed debuffs to in-range Enemies.
 
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
         //Moving or Sprinting generates a charge, granting a use when reaching 100%
-        if(move.moveFloat.x != 0 || move.moveFloat.y != 0)
+        if (move.moveFloat.x != 0 || move.moveFloat.y != 0)
         {
             if(move.sprinting)
             {

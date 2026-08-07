@@ -14,6 +14,11 @@ public class SingleFireFirearm : FirearmScript
     {
         //fireAgain += Time.deltaTime;
 
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
         if (currentAmmo >= 1 && fireAgain >= fireRate && !isReloading)
         {
             //Firing timer resets, Ammo decrements/records number of shots

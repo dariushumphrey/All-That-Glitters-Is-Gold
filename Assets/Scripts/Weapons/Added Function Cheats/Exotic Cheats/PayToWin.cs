@@ -48,7 +48,12 @@ public class PayToWin : MonoBehaviour
         //Pay to Win
         //___.text = 'Space' - Consume 30,000 Lucent to create 150 stacks of a 50% base damage increase. Enemy hits removes three stacks.
 
-        if(stackNum >= 1 && firearm.enabled == true)
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
+        if (stackNum >= 1 && firearm.enabled == true)
         {
             proc.GetComponent<Text>().text = "Pay to Win x" + stackNum;
         }

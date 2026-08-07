@@ -76,6 +76,11 @@ public class BossManagerScript : MonoBehaviour
             chestRewards[c].GetComponent<LootScript>().raritySpawn = bossDifficulty;
             chestRewards[c].GetComponent<LootScript>().lootSpamMax = bossDifficulty;
             chestRewards[c].GetComponent<LootScript>().focusTarget = levelManager.weaponFocus;
+
+            if(enemyManager.behavior == EnemyManagerScript.Configuration.Campaign && bossDifficulty == 5)
+            {
+                chestRewards[c].GetComponent<LootScript>().campaignDFiveChestFlag = true;
+            }
         }
     }
     

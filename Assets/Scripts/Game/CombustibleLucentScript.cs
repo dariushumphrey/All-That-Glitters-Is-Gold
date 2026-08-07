@@ -13,7 +13,7 @@ public class CombustibleLucentScript : MonoBehaviour
     public bool training = false;
     public float combustDelayTime = 1f;
     internal bool primed = false;
-
+    internal bool protection = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +36,7 @@ public class CombustibleLucentScript : MonoBehaviour
     {
         lucentLight.intensity = primedIntensity;
         primed = true;
+        protection = true;
 
         gameObject.AddComponent<SphereCollider>();
         gameObject.GetComponent<SphereCollider>().radius = 4f;
@@ -51,8 +52,9 @@ public class CombustibleLucentScript : MonoBehaviour
     {
         lucentLight.intensity = lightIntensity;
         primed = false;
+        protection = false;
 
-        if(gameObject.GetComponent<SphereCollider>())
+        if (gameObject.GetComponent<SphereCollider>())
         {
             Destroy(gameObject.GetComponent<SphereCollider>());
         }
@@ -80,12 +82,14 @@ public class CombustibleLucentScript : MonoBehaviour
         effect.name = "Shatter VFX";
 
         primed = false;
+
         lucentLight.intensity = lightIntensity;
         Destroy(gameObject.GetComponent<SphereCollider>());
 
         if(limitedUse)
         {
             totalUses--;
+            protection = false;
         }
     }
 
@@ -97,12 +101,14 @@ public class CombustibleLucentScript : MonoBehaviour
         effect.name = "Shatter VFX";
 
         primed = false;
+
         lucentLight.intensity = lightIntensity;
         Destroy(gameObject.GetComponent<SphereCollider>());
 
         if (limitedUse)
         {
             totalUses--;
+            protection = false;
         }
     }
 }

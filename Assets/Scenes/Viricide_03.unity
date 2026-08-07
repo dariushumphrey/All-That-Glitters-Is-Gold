@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.5660378, g: 0.5366679, b: 0.5366679, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 4e569eb4dd16fe44ab018fbb065a4c83, type: 2}
   m_HaloStrength: 0.5
@@ -35335,6 +35335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06597e77b503264792fec127ea3e484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  behavior: 2
   dropRarity: 1
   dropThreshold: 4
   dropPercent: -10
@@ -52382,6 +52383,8 @@ MonoBehaviour:
   resultsMenu: {fileID: 905869173}
   controlsMenu: {fileID: 0}
   howToPlayMenu: {fileID: 0}
+  firingRangeDifficulty: 1
+  frDamageDurationIndex: 0
 --- !u!4 &1480131250
 Transform:
   m_ObjectHideFlags: 0
@@ -70487,6 +70490,21 @@ MonoBehaviour:
   - {fileID: 438822281}
   controllerLayout: {fileID: 894780108}
   mnkLayout: {fileID: 906898392}
+  ctrX: {fileID: 0}
+  ctrY: {fileID: 0}
+  mkX: {fileID: 0}
+  mkY: {fileID: 0}
+  controllerX: {fileID: 0}
+  controllerY: {fileID: 0}
+  mouseX: {fileID: 0}
+  mouseY: {fileID: 0}
+  aimToggle: {fileID: 0}
+  lanes: []
+  targetDifficulty: 1
+  difficultyText: {fileID: 0}
+  damageWindowText: {fileID: 0}
+  diffSlider: {fileID: 0}
+  testWindowIndex: 0
 --- !u!4 &1940852479
 Transform:
   m_ObjectHideFlags: 0

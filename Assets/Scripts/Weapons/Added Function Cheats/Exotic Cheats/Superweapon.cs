@@ -66,7 +66,12 @@ public class Superweapon : MonoBehaviour
         //Superweapon
         //___.text = Kills grant stacks of damage resistance. Stacks 8x. [E] - Charge an extreme-damage shot, inflicting 1000% of Weapon damage per stack. 
 
-        if(toggle)
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
+        if (toggle)
         {
             proc.GetComponent<Text>().text = "Superweapon Charge: " + superweaponCharge.ToString("F0") + "%";
 

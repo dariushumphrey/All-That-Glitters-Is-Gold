@@ -34,9 +34,14 @@ public class Flashpoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // minesActive = GameObject.FindGameObjectsWithTag("Mine");
+        // minesActive = GameObject.FindGameObjectsWithTag("Mine");
 
-        if(minesActive.Count >= 1)
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
+        if (minesActive.Count >= 1)
         {
             proc.GetComponent<Text>().text = "Mines: " + minesActive.Count;
         }

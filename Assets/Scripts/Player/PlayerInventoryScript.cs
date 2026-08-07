@@ -475,7 +475,7 @@ public class PlayerInventoryScript : MonoBehaviour
 
         if (automateLeft)
         {
-            inventory[selection].GetComponent<FirearmScript>().enabled = false;
+            //inventory[selection].GetComponent<FirearmScript>().enabled = false;
             //inventory[selection].gameObject.SetActive(false);
 
             if (automateSelection <= 0 && inventory.Count >= 1)
@@ -490,6 +490,7 @@ public class PlayerInventoryScript : MonoBehaviour
 
             if (inventory[automateSelection].GetComponent<FirearmScript>().favorite)
             {
+                inventory[selection].GetComponent<FirearmScript>().enabled = false;
                 inventory[selection].gameObject.SetActive(false);
                 selection = automateSelection;
 
@@ -507,7 +508,7 @@ public class PlayerInventoryScript : MonoBehaviour
 
         if (automateRight)
         {
-            inventory[selection].GetComponent<FirearmScript>().enabled = false;
+            //inventory[selection].GetComponent<FirearmScript>().enabled = false;
             //inventory[selection].gameObject.SetActive(false);
 
             if (automateSelection >= inventory.Count - 1 && inventory.Count >= 1)
@@ -522,6 +523,7 @@ public class PlayerInventoryScript : MonoBehaviour
 
             if (inventory[automateSelection].GetComponent<FirearmScript>().favorite)
             {
+                inventory[selection].GetComponent<FirearmScript>().enabled = false;
                 inventory[selection].gameObject.SetActive(false);
                 selection = automateSelection;
 
@@ -2329,6 +2331,11 @@ public class PlayerInventoryScript : MonoBehaviour
 
     public void OnDismantleStart(InputAction.CallbackContext ctx)
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
         if (weaponPage.gameObject.activeInHierarchy && !inventory[selection].GetComponent<FirearmScript>().favorite)
         {
             dismantleState = true;
@@ -2337,16 +2344,31 @@ public class PlayerInventoryScript : MonoBehaviour
 
     public void CancelDismantle(InputAction.CallbackContext ctx)
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
         dismantleState = false;
     }
 
     public void OnGrenadeThrowStart(InputAction.CallbackContext ctx)
     {
+        if(Time.timeScale == 0)
+        {
+            return;
+        }
+
         throwing = true;
     }
 
     public void ReleaseGrenade(InputAction.CallbackContext ctx)
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
         ThrowGrenade();
     }
 

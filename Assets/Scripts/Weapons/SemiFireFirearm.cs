@@ -15,7 +15,12 @@ public class SemiFireFirearm : FirearmScript
 
     public override void FireBehavior(InputAction.CallbackContext ctx)
     {
-        if(fireOnce)
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
+        if (fireOnce)
         {
             if (currentAmmo >= 1 && !isReloading)
             {

@@ -47,7 +47,12 @@ public class TheMostResplendent : MonoBehaviour
         //The Most Resplendent
         //___.text = [E] - Activating on a full stack from Enemy hits creates a Hard Lucent crystal at a Weapon’s hit point, producing Lucent clusters for 20 seconds or when shot.
 
-        if(stackCount <= 0)
+        if (Time.timeScale == 0)
+        {
+            return;
+
+        }
+        if (stackCount <= 0)
         {
             proc.GetComponent<Text>().text = "";
         }

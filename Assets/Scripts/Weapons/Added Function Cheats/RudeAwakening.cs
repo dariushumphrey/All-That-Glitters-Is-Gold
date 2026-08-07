@@ -53,10 +53,15 @@ public class RudeAwakening : MonoBehaviour
     void Update()
     {
         //Rude Awakening
-        //___.text = "Kills build stacks of a heavy-damage AOE blast. [Space] - Cast Blast"  
+        //___.text = "Kills build stacks of a heavy-damage AOE blast. [Space] - Cast Blast"
+
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
 
         //Confirmed kills grant stacks for AOE wave
-        if(killConfirmed)
+        if (killConfirmed)
         {
             if(firearm.weaponRarity == 5)
             {

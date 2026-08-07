@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Panda;
+using System.Linq;
 
 public class ReplevinScript : MonoBehaviour
 {
@@ -191,7 +192,7 @@ public class ReplevinScript : MonoBehaviour
             throwTimeReset = throwTimer;
 
             self = GetComponent<NavMeshAgent>();
-            waypoint = GameObject.FindGameObjectsWithTag("Waypoint");
+            waypoint = GameObject.FindGameObjectsWithTag("Waypoint").OrderBy(go => go.name).ToArray();
             waypointNext = Random.Range(0, waypoint.Length);
             player = GameObject.FindGameObjectWithTag("Player");
             enemy = GetComponent<EnemyHealthScript>();
@@ -2862,6 +2863,15 @@ public class ReplevinScript : MonoBehaviour
                                     stalactiteLucent[s].GetComponent<StalactiteLucentScript>().passiveDrops = true;
                                 }
 
+                                if(enemy.difficultyValue >= 4)
+                                {
+                                    enemy.healthCurrent = enemy.healthMax;
+                                }
+
+                                else
+                                {
+                                    enemy.healthCurrent += (enemy.healthMax / 4);
+                                }
                             }
 
                             boss.TriggerAdds();
