@@ -92,6 +92,9 @@ public class ReplevinScript : MonoBehaviour
     public float collectionTimer = 7f;
     public int phaseTwoAttackLimit = 3;
     public GameObject phaseTwoAppearance;
+    public GameObject phaseTwoAOEVFX;
+    public GameObject phaseTwoClusterJettison;
+    public float phaseTwoJettisonTimer = 1f;
     public GameObject[] appendages;
     public GameObject stunningLucent; //Harmful Lucent Cluster game object
     public GameObject[] spectrumLucentTracker;
@@ -136,6 +139,8 @@ public class ReplevinScript : MonoBehaviour
     private int burstCount = 0; //Total count of range attacks performed
     private int phaseTwoAttackCount = 1;
     private int phaseTwoAttackChoice = 0;
+    private float phaseTwoJettisonReset;
+    private bool phaseTwoJettisonPrimed = false;
     private float meleeReset; //Holds starting Melee attack timer
     private float chargeReset; //Holds starting Charge attack timer
     private float buildupReset; //Holds starting Charge attack delay timer
@@ -190,6 +195,7 @@ public class ReplevinScript : MonoBehaviour
             meleeCooldown = meleeTimeout;
             collectionTimerReset = collectionTimer;
             throwTimeReset = throwTimer;
+            phaseTwoJettisonReset = phaseTwoJettisonTimer;
 
             self = GetComponent<NavMeshAgent>();
             waypoint = GameObject.FindGameObjectsWithTag("Waypoint").OrderBy(go => go.name).ToArray();
@@ -2161,7 +2167,7 @@ public class ReplevinScript : MonoBehaviour
                                     meleeAttackTimer = 0f;
                                     recorded = false;
 
-                                    phaseTwoAttackChoice = Random.Range(0, 2);
+                                    phaseTwoAttackChoice = Random.Range(0, 3);
                                     attackLock = true;
                                 }
                             }
@@ -2237,6 +2243,8 @@ public class ReplevinScript : MonoBehaviour
                         {
                             if(phaseTwoAttackChoice == 0)
                             {
+                                //Debug.Log(lastKnownDistance.magnitude + " | " + pounceLimit + " | " + canAttackAgain);
+
                                 if (distance.magnitude <= meleeRangeMin && CanSeePlayer())
                                 {
                                     self.ResetPath();
@@ -2246,37 +2254,70 @@ public class ReplevinScript : MonoBehaviour
                                     {
                                         if (hit.collider.tag == "Player")
                                         {
-                                            lastPlayerPosition = hit.point;
+                                            lastPlayerPosition = hit.point - distance * strafeDistance;
                                             recorded = true;
                                             //Debug.Log(lastPlayerPosition);
                                             //Debug.Log(lastKnownDistance.magnitude);
                                             GameObject takeoff = Instantiate(jumpTakeoff, transform.position + Vector3.down, transform.rotation);
 
+                                            GameObject vfx = Instantiate(phaseTwoAOEVFX, transform.position, Quaternion.identity, gameObject.transform);
+                                            canAttackAgain = true;
                                         }
                                     }
 
+                                    //transform.position = Vector3.Lerp(transform.position, lastPlayerPosition, gapClose * Time.deltaTime);
                                     transform.position = Vector3.MoveTowards(transform.position, lastPlayerPosition, gapClose * Time.deltaTime);
                                     lastKnownDistance = lastPlayerPosition - transform.position;
-                                    //Debug.Log(lastKnownDistance.magnitude + " | " + pounceLimit);
+                                    //Debug.Log(lastKnownDistance.magnitude + " | " + pounceLimit);                           
 
-                                    if (recorded)
+                                    if (lastKnownDistance.magnitude <= pounceLimit)
                                     {
-                                        berthJumpCarpetBombTimer -= Time.deltaTime;
-                                        if (lastKnownDistance.magnitude > pounceLimit && berthJumpCarpetBombTimer <= 0f)
+                                        transform.position = lastPlayerPosition + Vector3.up * 1.03f;
+
+                                        if (canAttackAgain)
                                         {
-                                            berthJumpCarpetBombTimer = berthJumpTimerReset;
+                                            berthJumpCarpetBombTimer -= Time.deltaTime;
+                                            if (berthJumpCarpetBombTimer <= 0f)
+                                            {
+                                                berthJumpCarpetBombTimer = berthJumpTimerReset;
 
-                                            stunMechanic = Instantiate(stunningLucent, attackStartPoint.transform.position + (-transform.forward * 2.5f), Quaternion.identity);
-                                            stunMechanic.GetComponent<LucentScript>().threat = true;
-                                            stunMechanic.GetComponent<LucentScript>().shatterDelayTime = 3f;
-                                            stunMechanic.GetComponent<LucentScript>().StartCoroutine(stunMechanic.GetComponent<LucentScript>().Shatter());
-                                            stunMechanic.name = stunningLucent.name;
+                                                Collider[] affected = Physics.OverlapSphere(transform.position, 8f, contactOnly);
+                                                foreach (Collider contact in affected)
+                                                {
+                                                    if (contact.CompareTag("Player"))
+                                                    {
+                                                        if (contact.GetComponent<PlayerStatusScript>().isInvincible)
+                                                        {
+                                                            if (gameObject.GetComponent<DebuffScript>() == null)
+                                                            {
+                                                                gameObject.AddComponent<DebuffScript>();
+                                                            }
+
+                                                            if (contact.GetComponent<PlayerStatusScript>().counterplayCheat)
+                                                            {
+                                                                contact.GetComponent<PlayerStatusScript>().counterplayFlag = true;
+                                                            }
+
+                                                            canAttackAgain = false;
+                                                        }
+
+                                                        else
+                                                        {
+                                                            contact.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+                                                            contact.GetComponent<PlayerStatusScript>().playerHit = true;
+
+                                                            Vector3 knockbackDir = transform.forward;
+                                                            knockbackDir.y = 0;
+                                                            contact.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
+
+                                                            manager.damageDealt += damage;
+
+                                                            canAttackAgain = false;
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
-                                    }
-
-                                    if (lastKnownDistance.magnitude <= pounceLimit || !canAttackAgain)
-                                    {
-                                        transform.position = lastPlayerPosition + Vector3.up * 1.04f;
 
                                         meleeAttackTimer = meleeReset;
                                         punchTimeout -= Time.deltaTime;
@@ -2287,7 +2328,7 @@ public class ReplevinScript : MonoBehaviour
                                             punchTimeout = punchReset;
                                             berthJumpCarpetBombTimer = berthJumpTimerReset;
                                             recorded = false;
-                                            canAttackAgain = true;
+                                            canAttackAgain = false;
 
                                             if (phaseTwoAttackCount != phaseTwoAttackLimit)
                                             {
@@ -2307,42 +2348,8 @@ public class ReplevinScript : MonoBehaviour
 
                                                 meleeAttackTimer = meleeReset;
 
+                                                canAttackAgain = false;
                                                 attackLock = false;
-                                            }
-                                        }
-                                    }
-
-                                    if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hitTheSequel, 2f))
-                                    {
-                                        if (hitTheSequel.collider.tag == "Player" && canAttackAgain)
-                                        {
-                                            if (hitTheSequel.collider.GetComponent<PlayerStatusScript>().isInvincible)
-                                            {
-                                                if (gameObject.GetComponent<DebuffScript>() == null)
-                                                {
-                                                    gameObject.AddComponent<DebuffScript>();
-                                                }
-
-                                                if (hitTheSequel.collider.GetComponent<PlayerStatusScript>().counterplayCheat)
-                                                {
-                                                    hitTheSequel.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
-                                                }
-
-                                                canAttackAgain = false;
-                                            }
-
-                                            else
-                                            {
-                                                hitTheSequel.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
-                                                hitTheSequel.collider.GetComponent<PlayerStatusScript>().playerHit = true;
-
-                                                Vector3 knockbackDir = transform.forward;
-                                                knockbackDir.y = 0;
-                                                hitTheSequel.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
-
-                                                manager.damageDealt += damage;
-
-                                                canAttackAgain = false;
                                             }
                                         }
                                     }
@@ -2359,7 +2366,7 @@ public class ReplevinScript : MonoBehaviour
                                     punchTimeout = punchReset;
                                     recorded = false;
                                     attackLock = false;
-                                    canAttackAgain = true;
+                                    canAttackAgain = false;
                                     phaseTwoAttackCount = 0;
 
                                     //Selects a random duration to delay next attack, then initiates attack
@@ -2376,6 +2383,50 @@ public class ReplevinScript : MonoBehaviour
 
 
                             } //Pounce Attack for Phase 2 Combat
+
+                            else if(phaseTwoAttackChoice == 1)
+                            {
+                                if (distance.magnitude <= meleeRangeMin && CanSeePlayer())
+                                {
+                                    self.ResetPath();
+                                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
+                                    if(!phaseTwoJettisonPrimed)
+                                    {
+                                        phaseTwoJettisonPrimed = true;
+                                    }
+                                }
+
+                                if(phaseTwoJettisonPrimed)
+                                {
+                                    phaseTwoJettisonTimer -= Time.deltaTime;
+                                    if(phaseTwoJettisonTimer <= 0f)
+                                    {
+                                        phaseTwoJettisonTimer = phaseTwoJettisonReset;
+                                        GameObject field = Instantiate(phaseTwoClusterJettison, transform.position + (Vector3.up * 2f), Quaternion.Euler(-90f, 0f, 0f));
+                                        field.name = phaseTwoClusterJettison.name;
+
+                                        field.GetComponent<Rigidbody>().AddForce(Vector3.up * 350f);
+                                        field.GetComponent<GroupSpawnerScript>().spawnRepeat *= enemy.difficultyValue;
+                                        field.GetComponent<GroupSpawnerScript>().spawnDelayTime = 1f;
+                                        field.GetComponent<GroupSpawnerScript>().StartCoroutine(field.GetComponent<GroupSpawnerScript>().SpawnObjectOnDelay());
+                                        Destroy(field, 1.1f);
+
+                                        phaseTwoJettisonPrimed = false;
+                                        //Selects a random duration to delay next attack, then initiates attack
+                                        int randomTime = 0;
+
+                                        float[] delays = { 3f, 4f, 5f };
+                                        randomTime = Random.Range(0, delays.Length);
+                                        meleeReset = delays[randomTime];
+
+                                        meleeAttackTimer = meleeReset;
+
+                                        //canAttackAgain = false;
+                                        attackLock = false;
+                                    }
+                                }
+
+                            } //Cluster zoning attack for Phase 2 Combat
 
                             else
                             {

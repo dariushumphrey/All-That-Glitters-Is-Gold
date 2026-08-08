@@ -449,7 +449,7 @@ MonoBehaviour:
   rangeATKMin: 20
   rangeEngagementDistance: 35
   rangeAttackCount: 2
-  strafeDistance: 0.5
+  strafeDistance: 0.25
   strafeLimit: 1.5
   strafeTimer: 2
   rangeProjectile: {fileID: 7101181237062747686, guid: 70bd89594efeb624f9d56ec2e948ce2a, type: 3}
@@ -461,20 +461,23 @@ MonoBehaviour:
   chargeBuildup: 1
   chargeAttackForce: 5000
   gapClose: 35
-  pounceLimit: 1.5
+  pounceLimit: 1.25
   punchTimeout: 2
   jumpLimit: 8
   jumpForce: 10
   forwardForce: 14
   jumpTimeout: 1
   airtimeShort: 4
-  berthJumpCarpetBombTimer: 0.05
+  berthJumpCarpetBombTimer: 0.6
   jumpTakeoff: {fileID: 2056866271575102109, guid: e436b8ce7e2020e47a954d998deb3c8d, type: 3}
   jumpCheck: {fileID: 9046807996112585156}
   throwTimer: 2
   collectionTimer: 7
   phaseTwoAttackLimit: 3
   phaseTwoAppearance: {fileID: 7219842435835573862}
+  phaseTwoAOEVFX: {fileID: 6780673794938801312, guid: 7cc4110ef7babc64ab5ee4f142d896f9, type: 3}
+  phaseTwoClusterJettison: {fileID: 6024164104330782081, guid: ba8e4f349171f92409762cf706f319fc, type: 3}
+  phaseTwoJettisonTimer: 1
   appendages:
   - {fileID: 5522117163257905992}
   - {fileID: 9103125900900846582}
@@ -514,6 +517,7 @@ MonoBehaviour:
   blood: {fileID: 7072170553810055041, guid: 9f892db6ca1cf5d4e9b62828e30f13c5, type: 3}
   ammoRewardThreshold: 95
   healthRewardThreshold: 95
+  lane: {fileID: 0}
 --- !u!114 &6725181074624287141
 MonoBehaviour:
   m_ObjectHideFlags: 0
