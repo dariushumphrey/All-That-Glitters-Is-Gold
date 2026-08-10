@@ -200,7 +200,7 @@ public class PlayerMoveScript : MonoBehaviour
                 //    playerRigid.AddForce(-transform.up * speed * speedAccelerant);
                 //}
 
-                if(moveFloat.y == 1 || volant)
+                if(moveFloat.y > 0 || volant)
                 {
                     for (int p = 0; p < backThrust.Count; p++)
                     {
@@ -216,7 +216,7 @@ public class PlayerMoveScript : MonoBehaviour
                     }
                 }
 
-                if (moveFloat.y == -1 || volant)
+                if (moveFloat.y < 0 || volant)
                 {
                     for (int p = 0; p < frontThrust.Count; p++)
                     {
@@ -232,7 +232,7 @@ public class PlayerMoveScript : MonoBehaviour
                     }
                 }
 
-                if (moveFloat.x == 1)
+                if (moveFloat.x > 0)
                 {
                     leftThrust[0].Play();
                 }
@@ -242,7 +242,7 @@ public class PlayerMoveScript : MonoBehaviour
                     leftThrust[0].Stop();
                 }
 
-                if (moveFloat.x == -1)
+                if (moveFloat.x < 0)
                 {
                     rightThrust[0].Play();
                 }

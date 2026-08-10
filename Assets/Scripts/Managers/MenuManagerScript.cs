@@ -59,14 +59,34 @@ public class MenuManagerScript : MonoBehaviour
 
     private void Awake()
     {
-        if(setting == Setting.Menu)
+        levelManager = FindObjectOfType<LevelManagerScript>();
+        weaponManager = FindObjectOfType<WeaponManagerScript>();
+
+        if (tabs.Length >= 1)
         {
-            levelManager = FindObjectOfType<LevelManagerScript>();
-            weaponManager = FindObjectOfType<WeaponManagerScript>();
+            activeTab = tabs[0];
         }
 
-        activeTab = tabs[0];
+        //Retrieves and displays Gameplay Settings values
+        ctrX.value = PlayerPrefs.GetFloat("aimControllerX");
+        ctrY.value = PlayerPrefs.GetFloat("aimControllerY");
+        mkX.value = PlayerPrefs.GetFloat("aimMouseX");
+        mkY.value = PlayerPrefs.GetFloat("aimMouseY");
 
+        if (PlayerPrefs.GetInt("toggleAim") == 1)
+        {
+            aimToggle.isOn = true;
+        }
+
+        else
+        {
+            aimToggle.isOn = false;
+        }
+
+        controllerX.text = (ctrX.value / 10).ToString();
+        controllerY.text = (ctrY.value / 10).ToString();
+        mouseX.text = (mkX.value / 10).ToString();
+        mouseY.text = (mkY.value / 10).ToString();
     }
 
     // Start is called before the first frame update
@@ -81,6 +101,12 @@ public class MenuManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Displays Gameplay Settings values
+        controllerX.text = (ctrX.value / 10).ToString();
+        controllerY.text = (ctrY.value / 10).ToString();
+        mouseX.text = (mkX.value / 10).ToString();
+        mouseY.text = (mkY.value / 10).ToString();
+
         if (setting == Setting.Menu)
         {
             //Changes Campaign/Viricide thumbnail image by slider value
@@ -267,11 +293,6 @@ public class MenuManagerScript : MonoBehaviour
             {
                 vcWepFocusText.text = "Targeted Weapons: " + "\n" + "AMLRs";
             }
-
-            controllerX.text = (ctrX.value / 10).ToString();
-            controllerY.text = (ctrY.value / 10).ToString();
-            mouseX.text = (mkX.value / 10).ToString();
-            mouseY.text = (mkY.value / 10).ToString();
         }
         
         if(lanes.Length >= 1 || setting == MenuManagerScript.Setting.Menu)
@@ -292,8 +313,8 @@ public class MenuManagerScript : MonoBehaviour
 
     public void FormatGameplaySettings()
     {
-        ctrX.value = 5;
-        ctrY.value = 5;
+        ctrX.value = 8;
+        ctrY.value = 8;
         mkX.value = 10;
         mkY.value = 10;
         aimToggle.isOn = false;
@@ -315,6 +336,33 @@ public class MenuManagerScript : MonoBehaviour
         PlayerPrefs.SetFloat("aimControllerY", ctrY.value);
         PlayerPrefs.SetFloat("aimMouseX", mkX.value);
         PlayerPrefs.SetFloat("aimMouseY", mkY.value);
+
+        if(setting == Setting.Game)
+        {
+            if(levelManager.player.cam.lastInput == PlayerCameraScript.InputType.MNK)
+            {
+                levelManager.player.cam.rotateH = (PlayerPrefs.GetFloat("aimMouseX") / 10f);
+                levelManager.player.cam.rotateV = (PlayerPrefs.GetFloat("aimMouseY") / 10f);
+                levelManager.player.cam.SensitivityAssignment();
+            }
+
+            else
+            {
+                levelManager.player.cam.rotateH = (PlayerPrefs.GetFloat("aimControllerX") / 10f);
+                levelManager.player.cam.rotateV = (PlayerPrefs.GetFloat("aimControllerY") / 10f);
+                levelManager.player.cam.SensitivityAssignment();
+            }
+
+            if (PlayerPrefs.GetInt("toggleAim") != 0)
+            {
+                levelManager.player.cam.enableZoomToggle = true;
+            }
+
+            else
+            {
+                levelManager.player.cam.enableZoomToggle = false;
+            }
+        }
     }
 
     /// <summary>

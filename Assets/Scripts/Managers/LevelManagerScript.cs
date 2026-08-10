@@ -38,7 +38,7 @@ public class LevelManagerScript : MonoBehaviour
     public GameObject resultsNotice; //Informs player of imminent results display
 
     //resultsMenu - Menu UI that houses game end statistics
-    public GameObject pauseMenu, resultsMenu, controlsMenu, howToPlayMenu;
+    public GameObject pauseMenu, resultsMenu, controlsMenu, howToPlayMenu, gameplayMenu, rangeMenu;
 
     private GameObject uiCamera;
     private TransitionManagerScript transition;
@@ -48,7 +48,6 @@ public class LevelManagerScript : MonoBehaviour
     private float gameRetryDelay = 5f;
     private bool paused = false; //Zeroes game time if true
     private GameObject continueButton, restartButton, quitButton, mainMenuButton;
-    private GameObject menuReturnButton;
     internal bool gameComplete = false; //Certifies game completion if true
     internal AsyncOperation async;
     internal Text levelLoadText; //Text that displays Async level load progress
@@ -182,18 +181,24 @@ public class LevelManagerScript : MonoBehaviour
         howToPlayMenu = GameObject.Find("howToPlayPage");
         howToPlayMenu.gameObject.SetActive(false);
 
-        pauseMenu.gameObject.SetActive(false);
+        rangeMenu = GameObject.Find("rangeSettingsPage");
+        rangeMenu.gameObject.SetActive(false);
+
+        gameplayMenu = GameObject.Find("gameplaySettingsPage");
+        gameplayMenu.gameObject.SetActive(false);
+
+        resultsNotice = GameObject.Find("resultsNotice");
+        resultsNotice.gameObject.GetComponent<Text>().text = "";
+
+        eogStatsText = GameObject.Find("completeText");
+        eogStatsText.gameObject.GetComponent<Text>().text = "";
 
         resultsMenu = GameObject.Find("completeBG");
-        eogStatsText = GameObject.Find("completeText");
+        resultsMenu.gameObject.SetActive(false);
 
-        if(setting == Setting.Viricide)
-        {
-            resultsNotice = GameObject.Find("resultsNotice");
-            resultsNotice.gameObject.GetComponent<Text>().text = "";
-        }
+        pauseMenu.gameObject.SetActive(false);
 
-        if(setting == Setting.Training)
+        if (setting == Setting.Training)
         {
             menu = FindObjectOfType<MenuManagerScript>();
             menu.diffSlider.value = firingRangeDifficulty;
@@ -201,10 +206,6 @@ public class LevelManagerScript : MonoBehaviour
             menu.testWindowIndex = frDamageDurationIndex;
             menu.StartCoroutine(menu.FiringRangeApplySettingsDelay());
         }
-
-        menuReturnButton = GameObject.Find("menuReturnButton");
-        menuReturnButton.GetComponent<Button>().onClick.AddListener(ReturnToMainMenu);
-        resultsMenu.gameObject.SetActive(false);      
 
         //Resumes game if game was paused
         if (Time.timeScale != 1)
@@ -284,7 +285,6 @@ public class LevelManagerScript : MonoBehaviour
                     float seconds = Mathf.FloorToInt(gameTime % 60);
                     //paused = true;
                     resultsMenu.gameObject.SetActive(true);
-                    menuReturnButton.gameObject.SetActive(false);
                     eogStatsText.gameObject.GetComponent<Text>().text = "Viricide Accomplished:" + "\n" +
                         "Time: " + string.Format("{0:00}:{1:00}", minutes, seconds) + "\n" +
                         "Kills: " + manager.killCount + "\n" +
@@ -310,7 +310,6 @@ public class LevelManagerScript : MonoBehaviour
                 float seconds = Mathf.FloorToInt(gameTime % 60);
                 //paused = true;
                 resultsMenu.gameObject.SetActive(true);
-                menuReturnButton.gameObject.SetActive(false);
                 eogStatsText.gameObject.GetComponent<Text>().text = SceneManager.GetActiveScene().name + " Cleared:" + "\n" +
                     "Time: " + string.Format("{0:00}:{1:00}", minutes, seconds) + "\n" +
                     "Kills: " + manager.killCount + "\n" +
@@ -483,7 +482,11 @@ public class LevelManagerScript : MonoBehaviour
         //Pauses game if game is incomplete & controls page is hidden
         if (!gameComplete)
         {
-            if (player.isDead || controlsMenu.activeInHierarchy == true || howToPlayMenu.activeInHierarchy == true)
+            if (player.isDead || 
+                controlsMenu.activeInHierarchy == true || 
+                howToPlayMenu.activeInHierarchy == true || 
+                rangeMenu.activeInHierarchy == true || 
+                gameplayMenu.activeInHierarchy == true)
             {
                 return;
             }

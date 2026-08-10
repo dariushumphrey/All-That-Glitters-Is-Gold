@@ -2390,9 +2390,9 @@ public class PlayerInventoryScript : MonoBehaviour
                     if (lastInput != InputType.Controller)
                     {
                         lastInput = InputType.Controller;
-                        view.rotateH = (PlayerPrefs.GetFloat("aimControllerX") / 10f);
-                        view.rotateV = (PlayerPrefs.GetFloat("aimControllerY") / 10f);
-                        view.SensitivityAssignment();
+                        //view.rotateH = (PlayerPrefs.GetFloat("aimControllerX") / 10f);
+                        //view.rotateV = (PlayerPrefs.GetFloat("aimControllerY") / 10f);
+                        //view.SensitivityAssignment();
                     }
                 }
 
@@ -2401,9 +2401,9 @@ public class PlayerInventoryScript : MonoBehaviour
                     if (lastInput != InputType.MNK)
                     {
                         lastInput = InputType.MNK;
-                        view.rotateH = (PlayerPrefs.GetFloat("aimMouseX") / 10f);
-                        view.rotateV = (PlayerPrefs.GetFloat("aimMouseY") / 10f);
-                        view.SensitivityAssignment();
+                        //view.rotateH = (PlayerPrefs.GetFloat("aimMouseX") / 10f);
+                        //view.rotateV = (PlayerPrefs.GetFloat("aimMouseY") / 10f);
+                        //view.SensitivityAssignment();
                     }
                 }
             }

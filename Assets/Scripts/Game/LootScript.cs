@@ -215,7 +215,7 @@ public class LootScript : MonoBehaviour
         }
 
         //reward.GetComponent<Rigidbody>().AddForce((lootSpawn.transform.forward + lootSpawn.transform.up) * 3f, ForceMode.Impulse);
-        reward.GetComponent<Rigidbody>().AddExplosionForce(400f, lootSpawn.transform.position, 10f, 500f);
+        reward.GetComponent<Rigidbody>().AddExplosionForce(300f, lootSpawn.transform.position, 10f, 500f);
 
     }
 

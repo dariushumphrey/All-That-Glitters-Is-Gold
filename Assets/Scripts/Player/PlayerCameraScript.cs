@@ -34,6 +34,8 @@ public class PlayerCameraScript : MonoBehaviour
     //contactOnly - LayerMask that only interacts with Enemies and Surfaces; used for Aim Assist, Melee attacks and Canvas reveals
     //cameraOnly - LayerMask that only interacts with Surfaces; used for Camera clipping checks
     public LayerMask contactOnly, cameraOnly;
+    internal enum InputType { MNK, Controller }
+    internal InputType lastInput = InputType.MNK;
 
     private float lookSensHorizReset;
     private float lookSensVertReset;
@@ -67,6 +69,18 @@ public class PlayerCameraScript : MonoBehaviour
         cursor = input.actions["Cursor"];
 
         aim.started += OnAim;
+
+        if (lastInput == InputType.MNK)
+        {
+            rotateH = (PlayerPrefs.GetFloat("aimMouseX") / 10f);
+            rotateV = (PlayerPrefs.GetFloat("aimMouseY") / 10f);
+        }
+
+        else
+        {
+            rotateH = (PlayerPrefs.GetFloat("aimControllerX") / 10f);
+            rotateV = (PlayerPrefs.GetFloat("aimControllerY") / 10f);
+        }
 
         rotateH *= 200;
         rotateV *= 200;
@@ -508,5 +522,54 @@ public class PlayerCameraScript : MonoBehaviour
     private void OnDestroy()
     {
         aim.started -= OnAim;
+
+        if (input)
+        {
+            input.actions.Disable();
+            input = null;
+        }
+    }
+
+    private void OnEnable()
+    {
+        InputSystem.onActionChange += OnActionChange;
+    }
+
+    private void OnDisable()
+    {
+        InputSystem.onActionChange -= OnActionChange;
+    }
+
+    private void OnActionChange(object obj, InputActionChange change)
+    {
+        if (change == InputActionChange.ActionStarted || change == InputActionChange.ActionPerformed)
+        {
+            var action = (InputAction)obj;
+            if (action.activeControl != null)
+            {
+                InputDevice current = action.activeControl.device;
+                if (current is Gamepad)
+                {
+                    if (lastInput != InputType.Controller)
+                    {
+                        lastInput = InputType.Controller;
+                        rotateH = (PlayerPrefs.GetFloat("aimControllerX") / 10f);
+                        rotateV = (PlayerPrefs.GetFloat("aimControllerY") / 10f);
+                        SensitivityAssignment();
+                    }
+                }
+
+                else if (current is Keyboard || current is Mouse)
+                {
+                    if (lastInput != InputType.MNK)
+                    {
+                        lastInput = InputType.MNK;
+                        rotateH = (PlayerPrefs.GetFloat("aimMouseX") / 10f);
+                        rotateV = (PlayerPrefs.GetFloat("aimMouseY") / 10f);
+                        SensitivityAssignment();
+                    }
+                }
+            }
+        }
     }
 }
