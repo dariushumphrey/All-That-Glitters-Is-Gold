@@ -103,19 +103,38 @@ public class EnemyHealthScript : MonoBehaviour
         }
 
         
-
-        //For bosses, Canvas is active on-screen
-        if (attack.amBoss)
+        if(Time.timeScale != 0)
         {
-            if(attack.state != ReplevinScript.Mode.Target)
+            //For bosses, Canvas is active on-screen
+            if (attack.amBoss)
             {
-                if (healthCurrent > 0)
+                if (attack.state != ReplevinScript.Mode.Target)
                 {
-                    canvasTimer = canvasTimerReset;
-                    visual.gameObject.SetActive(true);
+                    if (healthCurrent > 0)
+                    {
+                        canvasTimer = canvasTimerReset;
+                        visual.gameObject.SetActive(true);
+                    }
+                }
+
+                else
+                {
+                    if (visual.gameObject.activeInHierarchy == true)
+                    {
+                        //Canvas disappears when timer expires
+                        canvasTimer -= Time.deltaTime;
+                        if (canvasTimer <= 0f)
+                        {
+                            canvasTimer = 0f;
+                            if (visual.gameObject.activeInHierarchy != false)
+                            {
+                                visual.gameObject.SetActive(false);
+                            }
+                        }
+                    }
                 }
             }
-            
+
             else
             {
                 if (visual.gameObject.activeInHierarchy == true)
@@ -136,20 +155,8 @@ public class EnemyHealthScript : MonoBehaviour
 
         else
         {
-            if (visual.gameObject.activeInHierarchy == true)
-            {
-                //Canvas disappears when timer expires
-                canvasTimer -= Time.deltaTime;
-                if (canvasTimer <= 0f)
-                {
-                    canvasTimer = 0f;
-                    if (visual.gameObject.activeInHierarchy != false)
-                    {
-                        visual.gameObject.SetActive(false);
-                    }
-                }
-            }
-        }
+            visual.gameObject.SetActive(false);
+        }       
      
         //Effect images (damage-over-time, Health debuff, slowed) appear, disappear if component is detected
         if (GetComponent<PosNegDOT>() != null || GetComponent<DamageOverTimeScript>() != null)
