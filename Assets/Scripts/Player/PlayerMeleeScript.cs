@@ -154,7 +154,7 @@ public class PlayerMeleeScript : MonoBehaviour
 
                 if (multiWeapon && gameObject.GetComponentInChildren<Ossify>() && !hit.collider.GetComponent<EnemyHealthScript>().isImmune)
                 {
-                    gameObject.GetComponent<Ossify>().hitConfirmed = true;
+                    gameObject.GetComponentInChildren<Ossify>().hitConfirmed = true;
                 }
 
                 if (hit.collider.gameObject.GetComponent<EnemyHealthScript>().healthCurrent <= 0)

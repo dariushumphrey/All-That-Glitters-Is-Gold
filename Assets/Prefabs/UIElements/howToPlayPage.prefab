@@ -3263,8 +3263,8 @@ MonoBehaviour:
 
 
     Exotic weapons
-    have a chance to drop starting from Difficulty 4. In Campaign, Rarity 4 drops
-    have a chance to upgrade to Rarity 5. '
+    can drop starting from Difficulty 4. Rarity 4 Drops receive a Rarity 5 upgrade
+    chance in Difficulty 5 Campaign.'
 --- !u!1 &4337324051210629536
 GameObject:
   m_ObjectHideFlags: 0
@@ -4846,7 +4846,7 @@ MonoBehaviour:
 
 
     Cheats followed by "(Fated)" on Rarity 5 weapons
-    are vastly stronger.'
+    are enhanced.'
 --- !u!1 &4337324051665741855
 GameObject:
   m_ObjectHideFlags: 0
@@ -7027,7 +7027,7 @@ MonoBehaviour:
 
 
     Damage
-    phases are brief. Inflict as much damage as possible.'
+    phases are brief. Inflict as much damage as possible!'
 --- !u!1 &4337324052431649763
 GameObject:
   m_ObjectHideFlags: 0
@@ -7674,7 +7674,8 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "The goal of Viricide is to unlock passage to--and eliminate--a boss. \n\nLoot
-    drop rates are slightly increased. Weapon types can be targeted for focused farming."
+    drop rates are slightly increased. Weapon types can be targeted for focused farming.
+    Rarity 5 drops are guaranteed."
 --- !u!1 &4337324052614589563
 GameObject:
   m_ObjectHideFlags: 0

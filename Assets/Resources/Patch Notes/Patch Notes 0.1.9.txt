@@ -10,9 +10,9 @@
 <size=48>Weapons</size>
 - <color=cyan>[FIX]</color> Weapons named "Semi Fire Rifle" are now renamed to "Burst Fire Rifle".
 - <color=cyan>[FIX]</color> Fixed an issue where weapon RPM was being incorrectly calculated and reported.
-- <color=yellow>[Implement]</color> Created new weapon type: Opening Shot.
+- <color=yellow>[Implement]</color> Added new weapon type: Opening Shot.
 	- Added Exotic Opening Shot: Deleterious
-- <color=yellow>[Implement]</color> Created new weapon type: Anti-materiel Laser Rifle (AMLR).
+- <color=yellow>[Implement]</color> Added new weapon type: Anti-materiel Laser Rifle (AMLR).
 	- Added Exotic AMLR: Bad Grief
 - <color=yellow>[Implement]</color> Added new Function Cheat: Ossify
 - <color=yellow>[Implement]</color> Added new Function Cheat: Bolster
@@ -40,7 +40,7 @@
 - <color=cyan>[FIX]</color> Fixed an issue where Boss enemy health canvases remained active while the game was paused.
 <size=48>World</size>
 - Planet setpiece and Space skybox textures have been updated. Created new skybox for Firing Range level.
-- <color=yellow>[Implement]</color> Created new level: Firing Range
+- <color=yellow>[Implement]</color> Added new level: Firing Range
 - Rooms just before boss encounters now have ammo dispensers.
 <size=48>Game</size>
 - <color=yellow>[Implement]</color> Game renamed to: Resplendent

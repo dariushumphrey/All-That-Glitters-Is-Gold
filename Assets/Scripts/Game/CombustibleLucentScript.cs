@@ -82,6 +82,7 @@ public class CombustibleLucentScript : MonoBehaviour
         effect.name = "Shatter VFX";
 
         primed = false;
+        protection = false;
 
         lucentLight.intensity = lightIntensity;
         Destroy(gameObject.GetComponent<SphereCollider>());
@@ -101,6 +102,7 @@ public class CombustibleLucentScript : MonoBehaviour
         effect.name = "Shatter VFX";
 
         primed = false;
+        protection = false;
 
         lucentLight.intensity = lightIntensity;
         Destroy(gameObject.GetComponent<SphereCollider>());
