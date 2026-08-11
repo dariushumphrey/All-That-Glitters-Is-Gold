@@ -1,0 +1,60 @@
+<size=48>Player</size>
+- The Evasion invulnerability effect is now more visible.
+- <color=yellow>[Implement]</color> The player-character's weapon anchor can now perform actions:
+	- Firing pushes the anchor, simulating recoil.
+	- Sprinting relocates the anchor ahead of the character.
+	- Being idle relocates the anchor to the character's side.
+	- Melee attacking or guarding rotates the anchor in a defensive motion.
+- <color=cyan>[FIX]</color> Fixed an issue where Activator Drones spawned with the rotation of the weapon.  
+- <color=cyan>[FIX]</color> Fixed an issue where Melee attacks remained locked in on enemies that died before the attack could connect. Fixed an issue where Melee attacks remained locked in on Combustible Lucent (Level 03) that disappeared before the attack could connect.
+<size=48>Weapons</size>
+- <color=cyan>[FIX]</color> Weapons named "Semi Fire Rifle" are now renamed to "Burst Fire Rifle".
+- <color=cyan>[FIX]</color> Fixed an issue where weapon RPM was being incorrectly calculated and reported.
+- <color=yellow>[Implement]</color> Created new weapon type: Opening Shot.
+	- Added Exotic Opening Shot: Deleterious
+- <color=yellow>[Implement]</color> Created new weapon type: Anti-materiel Laser Rifle (AMLR).
+	- Added Exotic AMLR: Bad Grief
+- <color=yellow>[Implement]</color> Added new Function Cheat: Ossify
+- <color=yellow>[Implement]</color> Added new Function Cheat: Bolster
+- <color=yellow>[Implement]</color> Added new Function Cheat: Perfect Record
+- <color=cyan>[FIX]</color> Fixed an issue where Cheat "Good Things Come" was not applying damage resistance when hit.
+- Removed the damage bonus from Cheat "Absolutely no Breaks!" (Exotic SMG).
+- <color=cyan>[FIX]</color> Fixed an issue where Cheat "All Else Fails" would inconsistently nullify damage when active. Fixed an issue where the timer used to disable immunity would stop decrementing, perpetuating immunity. 
+- Cheat "All Else Fails" has been buffed
+	- Now lasts for 5 seconds across all rarities. Cooldown reduced to 10 seconds for all rarities (down from 20 seconds).
+	- At Rarity 5, the cooldown is disabled.
+- <color=yellow>[Implement]</color> Weapons have received new models:
+	- Weapons receive one attachment, per rarity. 
+	- Models are switched out with an Exotic weapon model corresponding to weapon type if the weapon is Exotic.
+- <color=cyan>[FIX]</color> Fixed an issue where Exotic Single Fire Rifle "Contempt For Fellows" could not be saved due to a lowercase letter error.
+- <color=cyan>[FIX]</color> Fixed an issue where an active weapon would be disabled when searching the inventory for a favorite weapon (when no weapons are favorited).
+<size=48>Enemies</size>
+- Enemies can now be staggered, recoiling backwards for 1 second before resuming their behavior (if their attack was blocked by a guard or if damaged by a staggering attack).
+- <color=cyan>[FIX]</color> Fixed an issue where Replevin Ambuscade boss could stutter between waypoint navigation and player detection when tap-firing weapons.
+- <color=cyan>[FIX]</color> Fixed a build issue where Replevin Ambuscade (Level 03) and Replevin Keystone (Level 05) bosses traversed waypoints randomly instead of a fixed order.
+- Replevin Keystone boss has been updated:
+	- Its new pounce attack variant is a short dash that transitions into a delayed AOE attack.
+	- Can perform a third attack: Jettisons a Lucent shard from its back, detonating into 8 harmful Lucent clusters (up to 40 by Difficulty 5).
+		- <color=cyan>[FIX]</color> This attack is inspired by a fix to an issue where evading past its old pounce attack variant would force an incorrect distance reading, stalling the Keystone from moving and forcing an endless discharge of harmful Lucent clusters unless the player moved far away or decided to jump into its attack ray.
+	- Now regains 1/4 of its max Health when entering Phase II up to Difficulty 3. Starting from Difficulty 4, Keystone regains all missing health.
+- <color=cyan>[FIX]</color> Fixed an issue where Boss enemy health canvases remained active while the game was paused.
+<size=48>World</size>
+- Planet setpiece and Space skybox textures have been updated. Created new skybox for Firing Range level.
+- <color=yellow>[Implement]</color> Created new level: Firing Range
+- Rooms just before boss encounters now have ammo dispensers.
+<size=48>Game</size>
+- <color=yellow>[Implement]</color> Game renamed to: Resplendent
+- <color=yellow>[Implement]</color> Patch Notes are now readable on the Main Menu.
+- <color=yellow>[Implement]</color> Credits are now viewable on the Main Menu.
+- <color=yellow>[Implement]</color> A "How to Play" tutorial page can now be accessed on the Main Menu or during gameplay.
+- <color=cyan>[FIX]</color> Viricide 02, 03 loot drop chance increased to 4% (up from 3%).
+- <color=cyan>[FIX]</color> Fixed an issue with the Requisitions Kiosk where generated Rarity 4 weapons were unable to roll with Cheat "Activator Drone".
+- <color=yellow>[Implement]</color> Resplendent now has controller support:
+	- When outside of gameplay, the controller can only be used for Inventory page management.
+	- The "Controls" page can now display inputs based on last detected device. Cheats that activate manually have their inputs displayed on Inventory pages.
+- <color=cyan>[FIX]</color> Fixed an issue where Exotic weapon damage numbers were being incorrectly reported on the Main Menu Inventory and Requisition Kiosk pages.
+- <color=cyan>[FIX]</color> Fixed an issue where the player's Camera would forcibly rotate when the game paused.
+- <color=cyan>[FIX]</color> Fixed an issue where the Kiosk appraised the player's weapons based on an incorrect number of characters.
+- <color=yellow>[Implement]</color> A Gameplay Settings page is now available on the Main Menu or during gameplay. Controller and Mouse & Keyboard aim sensitivity and zoom toggling can be modified.
+- On Difficulty 5 Campaign games, enemies drop Rarity 4 Loot deliverables with a 50% chance for a Rarity 5 upgrade. Boss chests in this mode now drop Rarity 4 loot deliverables with the same upgrade chance.
+- Reduced Chest reward ejection force to 300 (down from 400).
