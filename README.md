@@ -669,7 +669,7 @@ else
 </details>
 
 
-https://github.com/user-attachments/assets/937d83f6-1545-4bb2-97c2-648f92b341d2
+https://github.com/user-attachments/assets/a87aede6-7b74-4057-8096-5e0a92113944
 
 
 ### Jump
@@ -830,7 +830,9 @@ else
 
 </details>
 
-https://github.com/user-attachments/assets/c0813d96-15c2-4d67-a434-18ef5f005f73
+
+https://github.com/user-attachments/assets/20f8eb31-41c5-4a69-90d7-a1e48f3d94b5
+
 
 ### Range
 Range enemies commit to combat in the following steps: 
@@ -965,6 +967,10 @@ else
 ```
 
 </details>
+
+
+https://github.com/user-attachments/assets/6d3d6c00-f491-49ad-8a73-5314971e79f5
+
 
 ### Melee
 Melee enemies commit to combat in the following steps: 
@@ -1144,7 +1150,10 @@ else
 }
 ```
 
-<details>
+</details>
+
+
+https://github.com/user-attachments/assets/a2dd9704-0662-46ba-927d-9867e237c565
 
 
 
