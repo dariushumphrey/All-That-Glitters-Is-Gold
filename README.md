@@ -181,7 +181,7 @@ if (Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, out hi
 
 ## Weapons
 ### Weapon Saving
-Resplendent's Weapon Saving system uses Stream I/O to both respawn and catalog Weapons held in a player's inventory. When advancing levels or upon defeat, the player's inventory records attributes of its weapons and saves them to a file as a string that can be 5, 9, 10, or 11 characters in length. Each value within this string represents a Weapon's constituent parts. For example:
+Resplendent's Weapon Saving system uses Stream I/O to both respawn and catalog weapons held in a player's inventory. When advancing levels or upon defeat, the player's inventory records attributes of its weapons and saves them to a file as a string that can be 5, 9, 10, or 11 characters in length. Each value within this string represents a weapon's constituent parts. For example:
 
 020151458
 * <ins>0</ins>20151458 - Denotes weapon type.
@@ -206,7 +206,7 @@ The above string describes a Weapon with these properties:
   	*  Far Sight (5)
   	*  Hastier Hands (8)
 
-String length for Weapons depends on that weapon's rarity. Rarity 1 weapons only receive Platforms. For example, "21002" represents the following traits: 
+String length for weapons depends on that weapon's rarity. Rarity 1 weapons only receive Platforms. For example, "21002" represents the following traits: 
 * Pistol (2)
 * Rarity 1 (1)
 * Non-exotic (0)
@@ -228,9 +228,21 @@ Another example, "340182468&+", details this weapon's features:
 	* Activator Drone (&)
  	* Bolster (+)
 
-When a game starts, the "WeaponManager" finds the inventory file, titled "inventory.txt", and reads its contents, creating new Weapons with the recorded characteristics attached.
+When a game starts, the "WeaponManager" finds the inventory file, titled "inventory.txt", and reads its contents, creating new weapons with the recorded characteristics attached.
 
-In its earliest form, it only recorded Weapons as strings that were eight characters long, as each Weapon was designed to have the same structure. Moreover, the system often delivered the Weapons back to the inventory out of the order in which they were added. Playtests revealed that, primarily due to the lacking strength of Functional Cheats at the time, that Weapons required a fundamental change in power. For MVP 0.1.3, Weapons could now possess double Functional Cheats, and the Weapon Saving system was upgraded to handle this new case, along with handling cases where Rarity 1 weapons lacked Functional Cheats at all. For MVP 0.1.5, the "WeaponManager" was upgraded to use a Coroutine for Weapon respawns, delaying the spawn of a new Weapon for a short time. This naturally fixed the issue of disorderly Weapon returns to the inventory. Currently, this system can handle small and large inventory sizes, some sizes beyond 100, and can return Weapons to the Player with no issue.
+History:
+* In its earliest form, it only recorded weapons as strings that were eight characters long, as each Weapon was designed to have the same structure. Moreover, without a delay time between spawns, the system often delivered the weapons back to the inventory out of order.
+* MVP 0.1.3 - Due to the lacking strength of Function Cheats at the time during a playtest, weapons required a fundamental change in power. Weapons were updated to allow two Function Cheats to roll, and to also allow no Function Cheats to roll on Rarity 1 weapons.
+* MVP 0.1.5 - The "Weapon Manager" was upgraded to use a Coroutine for weapon respawns, delaying the spawn of new weapons. This naturally fixed the issue of disorderly Weapon returns to the inventory.
+* MVP 0.1.6 - MVP 0.1.7 - Methods "WriteOnReset()" (From PlayerInventoryScript.cs) and "RespawnWeapons()" (From WeaponManagerScript.cs) received significant reductions in code length:
+	* WriteOnReset()
+ 		* Old length: 2,347 lines
+   		* New length: 401 lines (83-84% reduction)
+	* RespawnWeapons()
+		* Old length: 2,820 lines
+  		* New length: 568 lines (79-80% reduction)
+
+The changes in size made the Weapon Saving system more maintainable, making the integration of weapon types such as the Grenade Launcher (MVP 0.1.8), Opening Shot & AMLR (MVP 0.1.9) easier to perform.
 
 <details>
 <summary> snippet from PlayerInventoryScript.cs </summary>
@@ -447,9 +459,9 @@ https://github.com/user-attachments/assets/c3b1653f-7c1c-4bc8-8f8e-6d6ed61741bd
 ### Cheats
 Cheats are Resplendent's Core system, granting permanent bonuses to weapons. Explanations and visuals for what each Cheat specifically does can be found on the [Cheats](CORE_Cheats.md) file.
 
-Cheats are applied to Weapons through Random Number Generation (RNG). The moment a Weapon is created, methods are called to choose and apply what are known as Stat Cheats and Function Cheats: 
+Cheats are applied to weapons through Random Number Generation (RNG). The moment a Weapon is created, methods are called to choose and apply what are known as Stat Cheats and Function Cheats: 
 * Stat Cheats upgrade a weapon's max ammo, reload speed or range attributes.
-* Function Cheats extend a Weapon's offensive, neutral, or defensive potential through conditional triggers.
+* Function Cheats extend a weapon's offensive, neutral, or defensive potential through conditional triggers.
   	* Its sibling system, Platforms, modify a weapon's base damage, recoil, or fire rate performance or enable passive benefits.
 
 A number is randomized between a set range. The chosen Cheat is determined by where the value sits within that range. All cheats are divided into distinct pools: 
@@ -464,7 +476,11 @@ A number is randomized between a set range. The chosen Cheat is determined by wh
   	* Rarity 3 weapons can roll Platforms, Stat cheats, and only one Function cheat.
   	* Rarity 4 weapons and up can roll Platforms, Stat cheats, and two Function cheats.
 
-This system is performative, and has yet to produce instances of two of the same Cheat being generated for a Weapon. Cheats are also not weighted to generate more often than others; Every Cheat has a fair chance to be generated. Exotics are curated Weapons, and do not require random Cheat generation. Weapons being reproduced by the WeaponManager have Cheats directly added based on characters identifying its components, and also do not require Cheat generation.
+Notes:
+* Two of the same Cheat cannot be generated on a weapon.
+* Cheats are not weighted to generate more often than others; every Cheat is equally likely to be chosen.
+* Exotics are curated weapons and do not require random Cheat generation.
+* Weapons being reproduced by the Weapon Manager do not require Cheat generation, as components are chosen based on characters.
 
 <details> 
 
@@ -838,7 +854,7 @@ https://github.com/user-attachments/assets/20f8eb31-41c5-4a69-90d7-a1e48f3d94b5
 Range enemies commit to combat in the following steps: 
 * The enemy approaches the player until they reach their engagement distance.
 * When in range, they record and move towards a position to their left, right, front, or back, relative to the player's position.
-* In parallel, the enemy fires a volley of projectiles after a delay, granting them access to movement while firing.
+* In parallel, the enemy fires a volley of projectiles after a delay. Range enemies can attack and move simultaneously.
 	* After the attack, they enter an attack timeout for a set duration. The process repeats.
 
 <details>
