@@ -23,14 +23,16 @@ Current Version: MVP 0.1.9 (8/11/2026)
 * Enemy Attacks
 	* [Pounce](#pounce)
 	* [Jump](#jump)
+	* [Range](#range)
+ 	* [Melee](#melee)
 
 # Details
 ## Game Description
-All That Glitters is Gold (ATGIG) is a third-person Action game which combines high-density Horde combat, Looter-shooter attributes, and gunplay to craft a lite experience that aspires to whet the "Power-Fantasy" appetite.
-* ATGIG has an itch.io page where the game can be downloaded and played: [Link](https://dilladev.itch.io/atgig)
+Resplendent is a third-person Action game which combines horde combat, RNG, and gunplay to craft a lite experience that aspires to whet the looter-shooter appetite.
+* Resplendent can be downloaded and played on itch.io: [Link](https://dilladev.itch.io/atgig)
 ## Installation Instructions
 * Install Unity 2021, as this is the version of the Engine that I develop with: [Link](https://unity.com/releases/editor/whats-new/2021.1.29f1#installs)
-	* The link takes you to the patched version of the engine. I specifically use Unity 2021.1.16f1, but Unity has disclosed that this version is susceptible to the security flaw they detected at the start of October. As of 11/5/2025, Unity Hub refuses to finish 		installation of this patched version for me. I have no reason to believe, however, that the provided version will not load the project.
+	* The link takes you to the patched version of the engine. I specifically use Unity 2021.1.16f1, but Unity has disclosed that this version is susceptible to the security flaw they detected at the start of October. As of 11/5/2025, Unity Hub refuses to finish installation of this patched version for me. I have no reason to believe, however, that the provided version will not load the project.
 * Clone this repository.
 	* Open Github Desktop, Go to File > Clone Repository.
  	* Paste the URL link in the repository box.
@@ -40,29 +42,29 @@ All That Glitters is Gold (ATGIG) is a third-person Action game which combines h
 	* Add the provided Unity version to Unity Hub's "Installs" category (Installs > Locate > Find version)
  	* Specify the project's editor version, then open the project.
 ## Project Objective
-ATGIG's primary objective is to represent my understanding of the experiences that "looter-shooters" and similar action games provide and to translate these understandings into brief, favorable play sessions, such as:
-* The acquisition and surprise of RNG-based Weapons
-* The management and toppling of high-volume Enemies with distinct attacks
-* The employement of survival tools like evasions and immunity for Players
+Resplendent's primary objective is to provide brief, favorable play sessions by offering renditions of experiences encountered in the looter-shooter genre, such as:
+* The acquisition and surprise of weapons containing interesting traits combinations
+* The feeling of mastery in understanding a weapon's build
+* The toppling of challenges based on one's perceived increase in strength.
 
-Observations drawn from playing games like Destiny 2, The Division 2, Remnant II, and Warhammer 40K: Space Marine 2 have contributed to this attempted understanding, and serve as inspirations for how ATGIG's Player, Weapon, and Enemy experiences behave.
+Games like Destiny 2, The Division 2, Remnant II, and Warhammer 40K: Space Marine 2 each serve as inspirations. Resplendent is my interpretation of experiences learned from those games, and can be felt in the player, weapon, and enemy systems within.
 ## Technologies
 * Unity 3D (Version 2021.1.16f)
 * C#
 * Blender
 * Substance Painter
 ## Responsibilities
-I am solo-developing All That Glitters is Gold. As such, I am responsible for:
-* Player abilities (movement, evasion, melee & sprinting)
+I solo-developed Resplendent. As such, I am responsible for:
+* Player abilities (movement, evasion, melee attacks, sprinting, and guarding)
 * Player systems (Slope Traversal and Anti-camera clipping)
 * Weapon attributes (type, damage, rate of fire, etc.)
-* Weapon augmentations (rarity, cheats)
+* Weapon augmentations (rarity, Cheats & Platforms)
 * Weapon saving
-* Enemy attack types (charge, pounce, jump, etc.)
-* Gametypes (Viricide)
-* Out-of-gameplay systems (Inventory Management, Weapon Kiosk)
+* Enemy attack types (Melee, Range, Pounce, Jump)
+* Gametypes (Campaign, Viricide)
+* Out-of-gameplay systems (Main Menu Inventory management, Requisitions Kiosk)
 
-Bulleted below are detailed accounts of ATGIG's most notable pursuits, accompanied by visuals and organized by category. 
+Bulleted below are detailed accounts of Resplendent's most notable pursuits, accompanied by visuals and organized by category. 
 
 # Pursuits
 ## Player
@@ -179,53 +181,52 @@ if (Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, out hi
 
 ## Weapons
 ### Weapon Saving
-ATGIG's Weapon Saving system uses Stream reading and Stream writing to both respawn and catalog Weapons held in a Player's inventory. Upon level reset by defeat, pause menu restart, or main menu visit, the Player's Inventory records attributes of its Weapons and saves them to a file as a string that is between seven to nine characters in length. Each value within this string represents a Weapon's constituent parts. For example:
+Resplendent's Weapon Saving system uses Stream I/O to both respawn and catalog Weapons held in a player's inventory. When advancing levels or upon defeat, the player's inventory records attributes of its weapons and saves them to a file as a string that can be 5, 9, 10, or 11 characters in length. Each value within this string represents a Weapon's constituent parts. For example:
 
-12014581
-
-* <ins>1</ins>2014581 - Denotes Weapon type.
-* 1<ins>2</ins>014581 - Denotes Weapon rarity.
-* 12<ins>0</ins>14581 - Denotes Weapon Exotic property; It is either Exotic (1) or not (0).
-* 120<ins>1</ins>4581 - Denotes Statistical Cheat #1.
-* 1201<ins>4</ins>581 - Denotes Statistical Cheat #2.
-* 12014<ins>5</ins>81 - Denotes Statistical Cheat #3.
-* 120145<ins>8</ins>1 - Denotes Statistical Cheat #4.
-* 1201458<ins>1</ins> - Denotes Functional Cheat
+020151458
+* <ins>0</ins>20151458 - Denotes weapon type.
+* 0<ins>2</ins>0151458 - Denotes weapon rarity.
+* 02<ins>0</ins>151458 - Denotes weapon Exotic property; it is either Exotic (1) or not (0).
+* 020<ins>1</ins>51458 - Denotes weapon favorite property; it is either a favorite (1) or not (0).
+* 0201<ins>5</ins>1458 - Denotes weapon Platform.
+* 02015<ins>1</ins>458 - Denotes Stat Cheat #1.
+* 020151<ins>4</ins>58 - Denotes Stat Cheat #2.
+* 0201514<ins>5</ins>8 - Denotes Stat Cheat #3.
+* 02015145<ins>8</ins> - Denotes Stat Cheat #4.
 
 The above string describes a Weapon with these properties: 
-* Full Fire Rifle (1)
+* Full Fire Rifle (0)
 * Rarity 2 (2)
 * Non-exotic (0)
+* Favorite (1)
+* Siphonic Platform (5)
 * Statistical Cheats:
 	*  Deep Yield (1)
  	*  Deeper Stores (4)
   	*  Far Sight (5)
   	*  Hastier Hands (8)
-* Functional Cheat:
-	* Efficacy (1)
 
-String length for Weapons depends on that weapon's rarity. Rarity 1 weapons do not receive Functional Cheats. For example, "3102367" represents the following traits: 
-* Pistol (3)
+String length for Weapons depends on that weapon's rarity. Rarity 1 weapons only receive Platforms. For example, "21002" represents the following traits: 
+* Pistol (2)
 * Rarity 1 (1)
 * Non-exotic (0)
-* Statistical Cheats:
-	* Deeper Yield (2)
- 	* Deep Stores (3)
-  	* Farther Sight (6)
-  	* Hasty Hands (7)
+* Not a favorite (0)
+* Efficient Platform (2)
  
-Another example, "440246863", details this Weapon's features: 
-* Semi Fire Rifle (4)
+Another example, "340182468&+", details this weapon's features: 
+* Burst Fire Rifle (3)
 * Rarity 4 (4)
 * Non-exotic (0)
+* Favorite (1)
+* Cache Platform (8)
 * Statistical Cheats: 
 	* Deeper Yield (2)
 	* Deeper Stores (4)
  	* Farther Sight (6)
   	* Hastier Hands (8)
 * Functional Cheats:
-	* Positive-Negative (6)
- 	* Rude Awakening (3)
+	* Activator Drone (&)
+ 	* Bolster (+)
 
 When a game starts, the "WeaponManager" finds the inventory file, titled "inventory.txt", and reads its contents, creating new Weapons with the recorded characteristics attached.
 
@@ -243,12 +244,12 @@ using (StreamWriter write = new StreamWriter(filepath))
 	{
 		for (int i = 0; i < inventory.Count; i++)
 		{
-			if (inventory[i].name == "testFullFireRifle" || inventory[i].name == "testFullFireRifle_Exotic")
+			if (inventory[i].name == "Full Fire Rifle" || inventory[i].name == "Outstanding Warrant")
 			{
 				write.Write("1");
 			}
 
-			if (inventory[i].name == "testMachineGun" || inventory[i].name == "testMachineGun_Exotic")
+			if (inventory[i].name == "Machine Gun" || inventory[i].name == "The Dismissal")
 			//Writes "2", And so on, up to 7.
 
 			if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
@@ -265,73 +266,57 @@ using (StreamWriter write = new StreamWriter(filepath))
 			}
 
 			else
-			//Writes "0". 
+			//Writes "0".
 
-			//Statistical Cheat process
-			if (inventory[i].GetComponent<DeepYield>())
+			if (inventory[i].GetComponent<FirearmScript>().favorite)
 			{
 				write.Write("1");
 			}
 
-			if (inventory[i].GetComponent<DeeperYield>())					
-			//Writes "2" and so on, up to 6.
-
-			if (inventory[i].weaponRarity == 1)
-			{
-				if (inventory[i].GetComponent<HastyHands>())
-				{
-					write.WriteLine("7");
-				}
-
-				if (inventory[i].GetComponent<HastierHands>())
-				//Writes "8"
-			}
-
-			if(inventory[i].GetComponent<FirearmScript>().weaponRarity == 2 || inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
-			{
-				if (inventory[i].GetComponent<HastyHands>())
-				{
-					write.Write("7");
-				}
-
-				if (inventory[i].GetComponent<HastierHands>())
-				//Writes "8"
-
-				if (inventory[i].GetComponent<WaitNowImReady>())
-				//Writes "0" and so on, up to 9. Newer Cheats use special characters: (!, @, #, $, %, and ^)
-			}
-
-			if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
-			{
-				if (inventory[i].GetComponent<HastyHands>())
-				{
-					write.Write("7");
-				}
-
-				if (inventory[i].GetComponent<HastierHands>())
-				//Writes "8"
-
-				if (inventory[i].GetComponent<FirearmScript>().isExotic == true)
-				{
-					//Records Exotic Cheat character, denoted as A-G
-					if (inventory[i].GetComponent<EquivalentExchange>())
-					//Writes "A"
-
-					if (inventory[i].GetComponent<WaitNowImReady>())
-					//Writes "0"
-				}
-			}
-
 			else
-			{
-				//The next character comes from a pool between (9, 4, 5, 6, 8, !, @, or #)
-				if (inventory[i].GetComponent<AllElseFails>())
-				//Writes "9"
+			//Writes "0"
 
-				//the last character comes from a pool between (0, 1, 2, 7, 3, $, %, or ^)
-				if (inventory[i].GetComponent<Cadence>())
-				//Writes "7"
+			if(inventory[i].GetComponent<DefaultPlatform>())
+			{
+				if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 1)
+				{
+			 		write.WriteLine("1");
+				}
+
+				else
+				//Writes "1" but does not create a new line if weapon rarity is not equal to 1
 			}
+
+			if(inventory[i].GetComponent<FirearmScript>().weaponRarity >= 2)
+			{
+				if (inventory[i].GetComponent<DeepYield>())
+				{
+			 		write.Write("1");
+				}
+
+				if (inventory[i].GetComponent<DeeperYield>())
+				//Writes "2"
+
+				//Records remaining Stat cheats...
+
+				if(inventory[i].GetComponent<FirearmScript>().weaponRarity == 2)
+				{
+
+					if (inventory[i].GetComponent<HastyHands>())
+					{
+						write.WriteLine("7");
+					}
+
+					if (inventory[i].GetComponent<HastierHands>())
+					//Writes "8" and starts a new line
+				}
+
+				if (inventory[i].GetComponent<FirearmScript>().weaponRarity == 3)
+				//Records last Stat cheat and detects, records Function cheat, then starts a new line
+
+				if (inventory[i].GetComponent<FirearmScript>().weaponRarity >= 4)
+				//Records last Stat cheat and detects, records Function cheats, then starts a new line
+			}			
 		}
 	}
 }
@@ -342,6 +327,8 @@ using (StreamWriter write = new StreamWriter(filepath))
 <summary> snippet from WeaponManagerScript.cs </summary>
 	
 ```csharp
+yield return new WaitForSeconds(spawnDelayTimer); //Weapons are spawned on a delay to return weapons in recorded order
+
 string c = "Comic Sans"; //Initializing a string.
 
 for (int s = 0; s < player.readdedWeps.Count; s++)
@@ -350,29 +337,43 @@ for (int s = 0; s < player.readdedWeps.Count; s++)
 	wepStr = c[0].ToString();
 	rarStr = c[1].ToString();
 	exoStr = c[2].ToString();
-	cOneStr = c[3].ToString();
-	cTwoStr = c[4].ToString();
-	cThreeStr = c[5].ToString();
-	cFourStr = c[6].ToString();
+	favStr = c[3].ToString();
+	pltStr = c[4].ToString();
 
-	if(player.readdedWeps[s].Length == 8)
+	if (player.readdedWeps[s].Length == 9)
 	{
-		cFiveStr = c[7].ToString();
+		cOneStr = c[5].ToString();
+		cTwoStr = c[6].ToString();
+		cThreeStr = c[7].ToString();
+		cFourStr = c[8].ToString();
+	}          
+
+	if(player.readdedWeps[s].Length == 10)
+	{
+		cOneStr = c[5].ToString();
+		cTwoStr = c[6].ToString();
+		cThreeStr = c[7].ToString();
+		cFourStr = c[8].ToString();
+		cFiveStr = c[9].ToString();
 	}
 
-	if(player.readdedWeps[s].Length == 9)
+	if(player.readdedWeps[s].Length == 11)
 	{
-		cFiveStr = c[7].ToString();
-		cSixStr = c[8].ToString();
+		cOneStr = c[5].ToString();
+		cTwoStr = c[6].ToString();
+		cThreeStr = c[7].ToString();
+		cFourStr = c[8].ToString();
+		cFiveStr = c[9].ToString();
+		cSixStr = c[10].ToString();
 	}
 
-	if (wepStr == "1")
+	if (wepStr == "0")
 	{
 		GameObject item = Instantiate(weapons[0], transform.position, transform.rotation);
 		item.name = weapons[0].name;
 	}
 
-	if (wepStr == "2")
+	if (wepStr == "1")
 	//Creates a Machine Gun, and so on, up to the last Weapon type
 
 	if (rarStr == "1")
@@ -381,51 +382,57 @@ for (int s = 0; s < player.readdedWeps.Count; s++)
 	}
 	//And so on, assigning rarities up to 5 for weapons.
 
-	if (cOneStr == "1")
+	if(favStr == "1")
 	{
-		item.AddComponent<DeepYield>();
+		item.GetComponent<FirearmScript>().favorite = true;
 	}
 
-	if (cOneStr == "2")
-	//Adds the component, "Deeper Yield".
+	else
+	//Weapon favorite value is set to false
 
-	if (cTwoStr == "3")
-	//Adds the component, "Deep Stores". Adds "Deeper Stores" if cTwoStr is "4".
+	if(pltStr == "1")
+	{
+ 		item.AddComponent<DefaultPlatform>();
+	}
 
-	if (cThreeStr == "5")
-	//Adds the component, "Far Sight". Adds "Farther Sight" if cThreeStr is "6".
+	if (pltStr == "2")
+	//Adds the Efficient Platform component	
 
-	if (cFourStr == "7")
-	//Adds the component, "Hasty Hands". Adds "Hastier Hands" if cFourStr is "8".
+	if (player.readdedWeps[s].Length >= 9)
+	{
+		if (cOneStr == "2")
+		//Adds the component, "Deeper Yield".
 
-	if (player.readdedWeps[s].Length == 8)
+		if (cTwoStr == "3")
+		//Adds the component, "Deep Stores". Adds "Deeper Stores" if cTwoStr is "4".
+
+		if (cThreeStr == "5")
+		//Adds the component, "Far Sight". Adds "Farther Sight" if cThreeStr is "6".
+
+		if (cFourStr == "7")
+		//Adds the component, "Hasty Hands". Adds "Hastier Hands" if cFourStr is "8".
+	}
+
+	if (player.readdedWeps[s].Length == 10)
 	{
 		if (cFiveStr == "0")
-		{
-			item.AddComponent<WaitNowImReady>();
-		}
-		//And so on, up to 9, or special characters: (!, @, #, $, %, or ^)
+		//Adds Cheat "Wait! Now I'm Ready!"
+		
+		if (cFiveStr == "1")
+		//Adds Cheat Efficacy, and so on.
 	}
 
-	if (player.readdedWeps[s].Length == 9)
+	if (player.readdedWeps[s].Length == 11)
 	{
 		if (cFiveStr == "A")
-		{
-			item.AddComponent<EquivalentExchange>();
-		}
-		//And so on, up to "G"
-			
-		//The next component comes from a pool between (9, 4, 5, 6, 8, !, @, or #)
-		if (cFiveStr == "5")
-		{
-			item.AddComponent<MaliciousWindUp>();
-		}
+		//Adds Exotic Cheat Equivalent Exchange. Letters are always Exotic Cheats
+		//"cFiveStr" could also be: B, C, D, E, F, G, H, I, or J
 
-		//The last component comes from a pool between (0, 1, 2, 7, 3, $, %, or ^)
-		if (cSixStr == "2")
-		{
-			item.AddComponent<Inoculated>();
-		}
+		if (cFiveStr == "9")
+		//Adds Cheats All Else Fails. "cFiveStr" could also be: 4, 5, 6, 8, !, @, #, &, or *
+
+		if (cSixStr == "0")
+        //Adds Cheat "Wait! Now I'm Ready!" "cSixStr" could also be: 1, 2, 7, 3, $, %, ^, +, or -
 	}
 
 	yield return new WaitForSeconds(spawnDelayTimer);
@@ -438,21 +445,24 @@ https://github.com/user-attachments/assets/c3b1653f-7c1c-4bc8-8f8e-6d6ed61741bd
 
 
 ### Cheats
-Cheats are ATGIG's core system, everpresent in and out of gameplay, and primary contributor to this game's "Power-Fantasy" goal. Explanations and visuals for what each Cheat specifically does can be found on the [Cheats](CORE_Cheats.md) file.
+Cheats are Resplendent's Core system, granting permanent bonuses to weapons. Explanations and visuals for what each Cheat specifically does can be found on the [Cheats](CORE_Cheats.md) file.
 
-Cheats are applied to Weapons through Random Number Generation (RNG). The moment a Weapon is created, several methods are called to choose and apply what are known as Statistical Cheats and Functional Cheats: 
-* Statistical Cheats permanently upgrade a Weapon's base performance metrics, excluding base damage.
-* Functional Cheats extend a Weapon's offensive, neutral, or defensive potential through conditional triggers.
+Cheats are applied to Weapons through Random Number Generation (RNG). The moment a Weapon is created, methods are called to choose and apply what are known as Stat Cheats and Function Cheats: 
+* Stat Cheats upgrade a weapon's max ammo, reload speed or range attributes.
+* Function Cheats extend a Weapon's offensive, neutral, or defensive potential through conditional triggers.
+  	* Its sibling system, Platforms, modify a weapon's base damage, recoil, or fire rate performance or enable passive benefits.
 
-A number is randomized between a set range. The chosen Cheat is determined by what range this value sits within. All cheats are divided into distinct pools: 
-* Yields (Stat Cheats that increase active magazine sizes)
+A number is randomized between a set range. The chosen Cheat is determined by where the value sits within that range. All cheats are divided into distinct pools: 
+* Yields (Stat Cheats that increase magazine sizes)
 * Stores (Stat Cheats that increase max ammunition reserves)
 * Sights (Stat Cheats that increase effective ranges)
 * Hands (Stat Cheats that increase reload speeds)
+* Platforms (Performance modifiers or intrinsic effects)
 * Functional Cheats
-	* Rarity 1 Weapons cannot roll Cheats of this kind.
- 	* Rarity 2-3 Weapons have access to one pool of all 16 Functional Cheats
-  	* Rarity 4-5 Weapons have access to two pools of eight Functional Cheats
+	* Rarity 1 weapons can only roll Platforms
+ 	* Rarity 2 weapons can roll Platforms and Stat cheats only
+  	* Rarity 3 weapons can roll Platforms, Stat cheats, and only one Function cheat.
+  	* Rarity 4 weapons and up can roll Platforms, Stat cheats, and two Function cheats.
 
 This system is performative, and has yet to produce instances of two of the same Cheat being generated for a Weapon. Cheats are also not weighted to generate more often than others; Every Cheat has a fair chance to be generated. Exotics are curated Weapons, and do not require random Cheat generation. Weapons being reproduced by the WeaponManager have Cheats directly added based on characters identifying its components, and also do not require Cheat generation.
 
@@ -490,7 +500,7 @@ public virtual void AmmoCheats()
 	else
 	//Adds the component, "Deeper Stores".      
 }
-//Other Statistical Cheat methods operate identically.
+//The Platform method and other Stat Cheat methods operate identically.
 //...
 public virtual void CheatGenerator()
 {
