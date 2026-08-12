@@ -573,14 +573,12 @@ https://github.com/user-attachments/assets/255d3d39-c299-49a2-bcec-0ed34364f432
 
 ## Enemy Attacks
 ### Pounce
-Enemies that are assigned the Pounce attack style commit to combat in the following steps: 
-* Once the Player is both seen and the distance (the range between a Player and this enemy) is less or equal to this enemy's attack range, their NavMesh destination is cleared.
-* The enemy casts a Ray at the Player and records their last known position. 
-* After recording, the enemy employs Vector3.Lerp and dashes towards that position at high speed. A Ray is cast for the duration of this movement to check for Player detection.
-	* Another distance value between the recorded position and the enemy is being tracked and compared to their attack stopping distance. If that distance falls underneath their stopping point, their attack finishes.
- 	* Contact with a Player inflicts damage to them, applied Rigidbody force, and their attack finishes.
-
- After attacking, they enter a one-second cooldown in which they cannot move. Upon conclusion, they can commit this attack again.
+Pounce enemies commit to combat in the following steps: 
+* The enemy approaches the player until they reach their engagement distance.
+* The enemy casts a Ray at the player and records their last known position.
+* The enemy rapidly dashes towards that position using Vector3.Lerp. An attack Ray is cast for the duration of this movement to detect the player.
+	* When they reach the recorded position, they enter an attack timeout for a set duration. The process repeats.
+ 	* Confirmed hits on a player inflicts damage to them and applies Rigidbody force. They enter an attack timeout for a set duration. The process repeats.
 
  <details>
 
@@ -675,14 +673,14 @@ https://github.com/user-attachments/assets/937d83f6-1545-4bb2-97c2-648f92b341d2
 
 
 ### Jump
-Enemies that are assigned the Jump attack style commit to combat in the following steps: 
-* Once the Player is both seen and the distance from one another is less or equal to this enemy's attack range, their NavMesh destination is cleared, and their Agent component is disabled.
-* The enemy casts a Ray at the Player and records their last known position. A Rigidbody with frozen rotations is added if the component is not detected.
-* Rigidbody force is then both applied upwards, in the direction of their last recorded Player position, and forwards, resulting in a high, fast-moving jump.
-	* If they return to ground during this attack, a timer decrements, down to zero, which at that point they re-record the Player's position and initiate another jump.
- 	* If the distance between the Player and the enemy falls under its attack "limit", the action converts to a guided attack using Vector3.Lerp. They cast a Ray to check for Player detection at this stage.
-  		* Contact with a Player inflicts damage to them, applied Rigidbody force, and their attack finishes.
-    	* If they are grounded during this "lock-on" stage, the logic responsible for resetting Player position recordings after a short time will occur, permitting another jump.
+Jump enemies commit to combat in the following steps: 
+* The enemy approaches the player until they reach their engagement distance.
+* The enemy casts a Ray at the player and records their last known position. A Rigidbody with frozen rotations is added if the component is not detected.
+* Rigidbody force is applied both upwards and forwards, in the direction of the player, resulting in a high, fast-moving jump.
+	* If they return to ground during the attack, a timer decrements down to zero. Reaching zero re-records the player's position and initiates another jump.
+* If the distance between the Player and the enemy falls under its attack "limit", the action converts to a seeking attack using Vector3.Lerp.
+  * Confirmed hits on a player inflicts damage to them and applies Rigidbody force. They enter an attack timeout for a set duration. The process repeats.
+  * If they happen to be grounded during this "lock-on" stage for too long, they will re-record the player's position, restarting its jump.
 
 <details>
 
@@ -832,6 +830,321 @@ else
 
 </details>
 
-
 https://github.com/user-attachments/assets/c0813d96-15c2-4d67-a434-18ef5f005f73
+
+### Range
+Range enemies commit to combat in the following steps: 
+* The enemy approaches the player until they reach their engagement distance.
+* When in range, they record and move towards a position to their left, right, front, or back, relative to the player's position.
+* In parallel, the enemy fires a volley of projectiles after a delay, granting them access to movement while firing.
+	* After the attack, they enter an attack timeout for a set duration. The process repeats.
+
+<details>
+
+<summary> snippet from ReplevinScript.cs </summary>
+
+```csharp
+if (distance.magnitude <= rangeEngagementDistance && CanSeePlayer())
+{
+	if (amSentry)
+	{
+		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
+	}
+
+	else
+	{
+		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
+
+		if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeATKMin) && !recorded)
+		{
+			if (hit.collider.tag == "Player")
+			{
+				if (strafeTimer != strafeReset)
+				{
+					strafeTimer = strafeReset;
+				} //Resets strafe timer
+
+				self.ResetPath();
+
+				int strafeAction = Random.Range(0, 4);
+				if (strafeAction == 0)
+				{
+					strafeCalc = Vector3.Cross(distance, transform.up);
+					strafePos = transform.position + strafeCalc * strafeDistance;
+				} //Strafes to the right
+
+				else if (strafeAction == 1)
+				{
+					strafeCalc = Vector3.Cross(distance, -transform.up);
+					strafePos = transform.position + strafeCalc * strafeDistance;
+				} //Strafes to the left
+
+				else if (strafeAction == 2)
+				{
+					strafePos = transform.position + distance * strafeDistance / 2;
+				} //Moves forward
+
+				else
+				{
+					strafePos = transform.position - distance * strafeDistance;
+				} //Moves backwards
+
+				Vector3 strafeDirection = strafePos - transform.position;
+				if (!Physics.Raycast(rayOrigin, strafeDirection.normalized, out hit, strafeDirection.magnitude, contactOnly))
+				{
+					self.SetDestination(strafePos);
+					recorded = true;
+				}
+			}
+		}
+
+		lastKnownDistance = strafePos - transform.position;
+
+		//Enemy resets recorded state when within previous strafe position for a duration
+		if (lastKnownDistance.magnitude <= strafeLimit)
+		{
+			strafeTimer -= Time.deltaTime;
+			if (strafeTimer <= 0f)
+			{
+				recorded = false;
+			}
+		}
+
+	}
+
+	if (!attackLock)
+	{
+		if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, rangeEngagementDistance, contactOnly))
+		{
+			if (hit.collider.tag == "Player")
+			{
+				//Selects a random duration to delay next attack, then initiates attack
+				int randomTime = 0;
+
+				float[] delays = { 1f, 1.25f, 1.5f, 2f };
+				randomTime = Random.Range(0, delays.Length);
+				rangeCooldown = delays[randomTime];
+
+				StartCoroutine(RangeAttackShot()); //RangeAttackShot() fires a projectile volley
+				attackLock = true;
+			}
+
+			if (hit.collider.tag == "Enemy")
+			{
+				Task.current.Fail();
+			}
+		}
+	}
+
+	//Delays attack behavior until timer expires
+	if (attackLock && rangeTimeout)
+	{
+		attackAgain += Time.deltaTime;
+		if (attackAgain >= rangeCooldown)
+		{
+			attackAgain = 0.0f;
+			attackLock = false;
+			rangeTimeout = false;
+		}
+	}
+}
+
+else
+{
+	if (amSentry)
+	{
+		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
+	}
+
+	else
+	{
+		recorded = false;
+		self.SetDestination(player.transform.position);
+	}
+}
+```
+
+</details>
+
+### Melee
+Melee enemies commit to combat in the following steps: 
+* When within engagement distance from the player, an attack timer decrements to zero.
+	* While their attack is not locked in, they constantly record and move towards a strafing position to their left or right relative to the player's position. 
+ 	* Moving out of range forces them towards the player with the option to strafe left or right again.
+  	* When the attack timer reaches zero, their attack is locked in.
+* When the attack locks in, the enemy approaches for a physical attack until their timeout duration reaches zero or if they hit the player successfully.
+	* Confirmed hits or zeroed timers end the attack and randomly select a new attack timer duration. The process repeats.
+
+<details>
+
+<summary> snippet from ReplevinScript.cs </summary>
+
+```csharp
+if (distance.magnitude <= meleeEngagementDistance)
+{
+	transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(distance, Vector3.up), rotationStrength);
+
+	meleeAttackTimer -= Time.deltaTime;
+	if (meleeAttackTimer <= 0f)
+	{
+		meleeAttackTimer = 0f;
+		attackLock = true;
+	}
+}
+
+if (!attackLock)
+{
+	if (distance.magnitude <= meleeRangeCheck)
+	{
+		if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, meleeRangeMin) && !recorded)
+		{
+			if (hit.collider.tag == "Player")
+			{
+				self.ResetPath();
+
+				if (strafeRight)
+				{
+					strafeCalc = Vector3.Cross(distance, transform.up);
+					strafePos = transform.position + strafeCalc * strafeDistance;
+				}
+
+				else if (strafeLeft)
+				{
+					strafeCalc = Vector3.Cross(distance, -transform.up);
+					strafePos = transform.position + strafeCalc * strafeDistance;
+				}
+
+				self.SetDestination(strafePos);
+				recorded = true;
+			}
+		}
+	}
+
+	else
+	{
+		strafePos = transform.position + distance * strafeDistance / 2;
+		self.SetDestination(strafePos);
+
+		int strafeAction = Random.Range(0, 2);
+ 		if (strafeAction == 0)
+		{
+			strafeRight = true;
+			strafeLeft = false;
+		}
+
+		else
+		{
+			strafeLeft = true;
+			strafeRight = false;
+		}
+
+		recorded = true;
+	}
+
+	lastKnownDistance = strafePos - transform.position;
+
+	//Enemy resets recorded state when within previous strafe position for a duration
+	if (lastKnownDistance.magnitude <= strafeLimit)
+	{
+		recorded = false;
+	}
+}
+
+else
+{
+	meleeTimeout -= Time.deltaTime;
+
+	if (meleeTimeout > 0f)
+	{
+		self.SetDestination(player.transform.position);
+
+		if (!GetComponent<BerthScript>())
+		{
+			subject.materials[materialIndex].color = attackTell;
+		}
+
+		if (Physics.Raycast(rayOrigin, attackStartPoint.transform.forward, out hit, 1.25f))
+		{
+			if (hit.collider.tag == "Player")
+			{
+				if (hit.collider.GetComponent<PlayerStatusScript>().isInvincible)
+				{
+					if (gameObject.GetComponent<DebuffScript>() == null)
+					{
+						gameObject.AddComponent<DebuffScript>();
+					}
+
+					if (hit.collider.GetComponent<PlayerStatusScript>().counterplayCheat)
+					{
+						hit.collider.GetComponent<PlayerStatusScript>().counterplayFlag = true;
+					}
+                                            
+				}				
+
+				else
+				{
+					hit.collider.GetComponent<PlayerStatusScript>().InflictDamage(damage);
+					hit.collider.GetComponent<PlayerStatusScript>().playerHit = true;
+
+					//This code shoves the Player with particular force in their opposite direction.
+					//This is a melee attack, shoving the player with less force, subtly offsetting the player upwards to distinguish it from a charge.
+					Vector3 knockbackDir = -hit.collider.transform.forward;
+					hit.collider.GetComponent<Rigidbody>().AddForce(knockbackDir * meleeAttackForce);
+
+					manager.damageDealt += damage;
+				}
+
+				//Selects a random duration to delay next attack, then initiates attack
+				int randomTime = 0;
+
+				float[] delays = { 5f, 7f, 10f };
+				randomTime = Random.Range(0, delays.Length);
+				meleeReset = delays[randomTime];
+
+				meleeAttackTimer = meleeReset;
+				if (recorded)
+				{
+					recorded = false;
+				}
+
+				if (!GetComponent<BerthScript>())
+				{
+					subject.materials[materialIndex].color = Color.red;
+				}
+
+				meleeTimeout = 0f;
+				attackLock = false;
+			}
+		}
+	}
+
+	else
+	{
+		//Selects a random duration to delay next attack, then initiates attack
+ 		int randomTime = 0;
+
+		float[] delays = { 5f, 7f, 10f };
+		randomTime = Random.Range(0, delays.Length);
+		meleeReset = delays[randomTime];
+
+		meleeAttackTimer = meleeReset;
+		if (recorded)
+		{
+			recorded = false;
+		}
+
+		if (!GetComponent<BerthScript>())
+		{
+			subject.materials[materialIndex].color = Color.red;
+		}
+
+		meleeTimeout = meleeCooldown;
+		attackLock = false;
+	}
+}
+```
+
+<details>
+
+
 
