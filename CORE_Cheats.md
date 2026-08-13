@@ -351,5 +351,8 @@ Flashpoint swaps Nebulous At Best's munitions with floating Lucent mines. Mines 
 * Flashpoint is assigned to the Grenade Launcher weapon type. Its companion cheat is [Positive-Negative.](#positive-negative)
 
 ## Defiance
+Defiance increases weapon & melee damage by 100% while Deleterious is equipped. Guarding against enemy attacks reflects 1,000% of damage onto the attacker.
+
+* Defiance is assigned to the Opening Shot weapon type. Its companion cheat is [All Else Fails.](#all-else-fails)
 
 ## It Writhes
