@@ -1,6 +1,7 @@
 # Welcome!
 
-![ATGIG_again](https://github.com/user-attachments/assets/712197db-c4d8-4179-aa3e-41242f8013d4)
+<img width="600" height="337" alt="itch io landing GIF" src="https://github.com/user-attachments/assets/e92da317-60a3-47ae-8b2f-29c4a850258e" />
+
 
 Current Version: MVP 0.1.9 (8/11/2026)
 
