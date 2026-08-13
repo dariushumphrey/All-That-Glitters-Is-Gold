@@ -69,7 +69,13 @@ Bulleted below are detailed accounts of Resplendent's most notable pursuits, acc
 # Pursuits
 ## Player
 ### Camera Clipping Countermeasure
-To prevent instances of the Player's Camera clipping through walls, a Ray is cast starting from the Player-Character's rear and ending at the Camera position. When a surface intersects with the end point, the Camera is assigned an offset position, comprised of the Raycast hit point, oriented to the surface's Normal direction. Settings are in place to tune the offset further Horizontally or Vertically, and/or to increase the strength of this effect through multiplication. This approach has shown to be effective in reducing occurences of wall clipping (barring extreme cases), and is also performative when handling corners. 
+The player's camera avoids clipping through walls in the following steps: 
+* A Ray is cast starting from the player's rear and ending at the camera's position.
+* When a surface intersects with the end point of the Ray, the camera's position is assigned to the Raycast hit point, oriented to the surface's Normal direction.
+	* The position can be further pushed horizontally or vertically using an offset.
+
+This approach has shown to be effective in reducing occurrences of wall clipping (barring extreme cases).
+
 ```csharp
 //From PlayerCameraScript.cs
 Vector3 offset;
@@ -86,7 +92,7 @@ if (Physics.Raycast(offsetCheckPos.transform.position, (playerCamera.transform.p
 		else
 		{
 			offset = hit.point + (hit.normal + new Vector3(0, offsetPushY, offsetPushZ));
-			playerCamera.transform.position = offset * offsetMult;
+			playerCamera.transform.position = offset;
 
 			Debug.DrawRay(offsetCheckPos.transform.position, (playerCamera.transform.position - offsetCheckPos.transform.position).normalized * collideCheck, Color.yellow);
 			Debug.DrawLine(hit.point, offset * offsetMult, Color.red);
