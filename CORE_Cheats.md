@@ -273,13 +273,13 @@ Winds are cast by shooting surfaces or Enemies with a full charge. They can foll
 ## Equivalent Exchange
 Equivalent Exchange adds 35% of Enemy damage received directly to the Weapon's damage and the Player's current Health. Weapon damage can permanently increase up to 150% of its original damage.
 
-Equivalent Exchange is assigned to the Full Fire Rifle Weapon type. Its companion Cheat is ["Wait! Now I'm Ready!".](#wait-now-im-ready)
+Equivalent Exchange is assigned to the Full Fire Rifle Weapon type. Its companion Cheat is [Inoculated.](#inoculated)
 * [EquivalentExchange.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/EquivalentExchange.cs) can be viewed here.
 
 ![EquivalentExchange](https://github.com/user-attachments/assets/1023fa5b-6465-41a8-b7a1-7905211a3f7a)
 
 ## Pay to Win
-Pay to Win converts 5,280 of the Player's "Lucent" currency into 150 stacks of a 50% Weapon damage increase. 
+Pay to Win converts 30,000 of the Player's "Lucent" currency into 150 stacks of a 50% Weapon damage increase. 
 
 Stacks are removed three at a time when a Weapon hits an Enemy, and Lucent cannot be converted until all stacks have been removed.
 
@@ -288,7 +288,7 @@ Pay to Win is assigned to the Machine Gun Weapon type. Its companion Cheat is [T
 
 ![PayToWin](https://github.com/user-attachments/assets/59d4a25c-aadd-48dc-bd56-bc71f4f9547d)
 
-## Shelter in Place
+## Superweapon
 Shelter in Place increases Weapon damage by 100% and provides 80% damage resistance so long as a Player refrains from movement. Movement of any kind, excluding Enemy attack knockbacks, ends the effect.
 
 Shelter in Place is assigned to the Pistol Weapon type. Its companion Cheat is [Positive-Negative.](#positive-negative)
@@ -297,18 +297,12 @@ Shelter in Place is assigned to the Pistol Weapon type. Its companion Cheat is [
 
 ![ShelterInPlace](https://github.com/user-attachments/assets/5afb239e-5b3f-4ab4-9650-f0c184067e64)
 
-## Off your own Supply
-Off your own Supply provides increases to the following attributes at the expense of a sacrificed Shield for 15 seconds: 
-* Movement Speed increases by 10%.
-* Reload Speed increases by 80%.
-* Weapon damage increases by 140%.
-* Weapon recoil is zeroed.
+## Volant
+Volant activates the player's zero gravity controls, enabling character flight until their shield is broken or if Volant is manually disabled.
 
-The Player's Shield is unable to regenerate while the effects are active. 
+Volant is assigned to the Burst Fire Rifle Weapon type. Its companion Cheat is ["Wait! Now I'm Ready!".](#wait-now-im-ready)
 
-Off your own Supply is assigned to the Semi Fire Rifle Weapon type. Its companion Cheat is [Inoculated.](#inoculated)
-
-* [OffYourOwnSupply.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/OffYourOwnSupply.cs) can be viewed here.
+* [Volant.cs](Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Volant.cs) can be viewed here.
 
 ![OffYourOwnSupply](https://github.com/user-attachments/assets/f8a20342-5ebd-4f9b-8e70-93d8c752230a)
 
