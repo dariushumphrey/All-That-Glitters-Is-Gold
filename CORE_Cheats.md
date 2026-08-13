@@ -1,4 +1,4 @@
-Welcome!
+# Welcome!
 
 # Resplendent: Cheats
 
@@ -288,11 +288,15 @@ Manually aiming will use the Activator Drone's laser designator. Aiming at an en
  
 * [ActivatorDrone.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/ActivatorDrone.cs) can be viewed here. [ADDrone.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/ADDrone.cs), the code for the physical drone, can be viewed here.
 
+<img width="600" height="337" alt="ActivatorDrone" src="https://github.com/user-attachments/assets/f7be4481-a203-4f30-ad99-388cbba6693b" />
+
 ## Ossify
 Ossify increases the player's damage resistance by 3% on confirmed hits, up to 30%, for 10 seconds.
 * (Fated) Damage resistance now increases by 5% on confirmed hits, up to 50%, for 20 seconds.
 
 * [Ossify.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Ossify.cs) can be viewed here.
+
+<img width="600" height="337" alt="Ossify" src="https://github.com/user-attachments/assets/3c6b1d88-24a2-4c12-bc2f-e30784f669f2" />
 
 ## Bolster
 Bolster reduces the player's shield recharge delay time by 30% on confirmed enemy defeats, up to 90%. At max reduction, the effect remains enabled for 20 seconds.
@@ -300,11 +304,15 @@ Bolster reduces the player's shield recharge delay time by 30% on confirmed enem
 
 * [Bolster.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Bolster.cs) can be viewed here.
 
+<img width="600" height="337" alt="Bolster" src="https://github.com/user-attachments/assets/dd2364da-ed0b-4248-af9e-96e6d59f56c8" />
+
 ## Perfect Record
 Perfect Record increases weapon & melee damage by 40% after 3 seconds without taking damage. When hit, the effect is disabled for 5 seconds.
 * (Fated) Weapon and melee damage is increased by 80%. After 3 seconds without damage taken, The effect become indefinite, disabling the timeout effect when hit.
 
 * [PerfectRecord.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/PerfectRecord.cs) can be viewed here.
+
+<img width="600" height="337" alt="PerfectRecord" src="https://github.com/user-attachments/assets/efa12611-e312-4da0-b9c1-5b26ed4e7416" />
 
 # Exotic Functional Cheats
 ## Equivalent Exchange
@@ -332,7 +340,7 @@ Superweapon is assigned to the Pistol Weapon type. Its companion cheat is [Count
 
 * [Superweapon.cs](Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Superweapon.cs) can be viewed here.
 
-![ShelterInPlace](https://github.com/user-attachments/assets/5afb239e-5b3f-4ab4-9650-f0c184067e64)
+<img width="600" height="337" alt="Superweapon" src="https://github.com/user-attachments/assets/627003d7-2664-4d9d-8bee-4b753754f4b7" />
 
 ## Volant
 Volant activates the player's zero gravity controls, enabling character flight until their shield is broken or if Volant is manually disabled.
@@ -341,7 +349,7 @@ Volant is assigned to the Burst Fire Rifle Weapon type. Its companion Cheat is [
 
 * [Volant.cs](Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Volant.cs) can be viewed here.
 
-![OffYourOwnSupply](https://github.com/user-attachments/assets/f8a20342-5ebd-4f9b-8e70-93d8c752230a)
+<img width="600" height="337" alt="Volant" src="https://github.com/user-attachments/assets/6f9c5c1c-2e09-42e1-afe5-f2ca2c492109" />
 
 ## "Social Distance, Please!"
 "Social Distance, Please!" applies a 30% damage increase on Enemy hits. Damaged enemies receive a Health debuff that doubles damage taken. Defeated, debuffed Enemies spread 400% of the Weapon's damage in a 10m radius.
@@ -383,6 +391,8 @@ Flashpoint is assigned to the Grenade Launcher weapon type. Its companion cheat 
 
 * [Flashpoint.cs](Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Flashpoint.cs) can be viewed here.
 
+<img width="600" height="337" alt="Flashpoint" src="https://github.com/user-attachments/assets/85cfc337-0081-4c0e-a1a7-64d0944d78a0" />
+
 ## Defiance
 Defiance increases weapon & melee damage by 100% while Deleterious is equipped. Guarding against enemy attacks reflects 1,000% of damage onto the attacker.
 
@@ -390,9 +400,13 @@ Defiance is assigned to the Opening Shot weapon type. Its companion cheat is [Al
 
 * [Defiance.cs](Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Defiance.cs) can be viewed here.
 
+<img width="600" height="337" alt="Defiance" src="https://github.com/user-attachments/assets/70e9a7d8-5a9e-4c17-b088-5d5f8eb647ba" />
+
 ## It Writhes
 It Writhes swaps Bad Grief's munitions with tandem explosives, detonating twice on surface or enemy hits. Detonations stagger enemies, recoiling them backwards and pausing their actions for 1 second. Enemies staggered by It Writhes have a 50% chance to trigger a Berth explosion (see [Early Berth gets the Hearst](#early-berth-gets-the-hearst) for description on the Berth effect). 
 
 It Writhes is assigned to the Anti-materiel Laser Rifle (AMLR) weapon type. Its companion cheat is [Gale Force Winds.](#gale-force-winds)
 
 * Though known outwardly as "It Writhes", its script name is "Repurposed Form". [RepurposedForm.cs](Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/RepurposedForm.cs) can be viewed here.
+
+<img width="600" height="337" alt="ItWrithes" src="https://github.com/user-attachments/assets/2d93078d-ff2b-4dd4-88ce-eac8197ae525" />
