@@ -344,3 +344,12 @@ This effect remains active until the Weapon has expended all reserve ammunition 
 * [AbsolutelyNoStops.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/AbsolutelyNoStops.cs) can be viewed here.
 
 ![AbsolutelyNoStops](https://github.com/user-attachments/assets/02fe64d2-ee0d-4f84-9fad-da95ab4e928f)
+
+## Flashpoint
+Flashpoint swaps Nebulous At Best's munitions with floating Lucent mines. Mines persist for 1 minute, and all mines are detonated on manual input. Ten mines can be active at a time; additional mines detonates the oldest mine. Switching weapons does not detonate mines, though hits by other weapons can detonate a mine.
+
+* Flashpoint is assigned to the Grenade Launcher weapon type. Its companion cheat is [Positive-Negative.](#positive-negative)
+
+## Defiance
+
+## It Writhes
