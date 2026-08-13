@@ -38,7 +38,7 @@ Welcome!
   * ["Social Distance, Please!"](#social-distance-please)
   * [Early Berth gets the Hearst](#early-berth-gets-the-hearst)
   * ["Absolutely no Stops!"](#absolutely-no-stops)
-  * [Flashpoint](#flaspoint)
+  * [Flashpoint](#flashpoint)
   * [Defiance](#defiance)
   * [It Writhes](#it-writhes)
 
