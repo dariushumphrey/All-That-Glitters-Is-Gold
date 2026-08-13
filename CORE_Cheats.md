@@ -272,8 +272,16 @@ Winds are cast by shooting surfaces or Enemies with a full charge. They can foll
 ## Activator Drone
 
 ## Ossify
+Ossify increases the player's damage resistance by 3% on confirmed hits, up to 30%, for 10 seconds.
+* (Fated) Damage resistance now increases by 5% on confirmed hits, up to 50%, for 20 seconds.
+
+* [Ossify.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Ossify.cs) can be viewed here.
 
 ## Bolster
+Bolster reduces the player's shield recharge delay time by 30% on confirmed enemy defeats, up to 90%. At max reduction, the effect remains enabled for 20 seconds.
+* (Fated) At max reduction, the effect becomes indefinite until the weapon is switched.
+
+* [Bolster.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Bolster.cs) can be viewed here.
 
 ## Perfect Record
 Perfect Record increases weapon & melee damage by 40% after 3 seconds without taking damage. When hit, the effect is disabled for 5 seconds.
@@ -301,7 +309,7 @@ Pay to Win is assigned to the Machine Gun Weapon type. Its companion Cheat is [T
 ![PayToWin](https://github.com/user-attachments/assets/59d4a25c-aadd-48dc-bd56-bc71f4f9547d)
 
 ## Superweapon
-Superweapon grants one stack of 10% damage resistance on confirmed enemy defeats, up to 80& with 8 stacks. Toggling Superweapon enables the ability to charge and fire a high-damage laser while aiming. Standing still significantly increases the charge rate. The laser inflict 1,000% of weapon damage per damage resistance stack, up to 8,000% with 8 stacks. 
+Superweapon grants one stack of 10% damage resistance on confirmed enemy defeats, up to 80% with 8 stacks. Toggling Superweapon enables the ability to charge and fire a high-damage laser while aiming. Standing still significantly increases the charge rate. The laser inflict 1,000% of weapon damage per damage resistance stack, up to 8,000% with 8 stacks. 
 
 Superweapon is assigned to the Pistol Weapon type. Its companion cheat is [Counterplay.](#counterplay)
 
