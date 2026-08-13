@@ -356,3 +356,6 @@ Defiance increases weapon & melee damage by 100% while Deleterious is equipped. 
 * Defiance is assigned to the Opening Shot weapon type. Its companion cheat is [All Else Fails.](#all-else-fails)
 
 ## It Writhes
+It Writhes swaps Bad Grief's munitions with tandem explosives, detonating twice on surface or enemy hits. Detonations stagger enemies, recoiling them backwards and pausing their actions for 1 second. Enemies staggered by It Writhes have a 50% chance to trigger a Berth explosion (see [Early Berth gets the Hearst](#early-berth-gets-the-hearst) for description on the Berth effect). 
+
+* It Writhes is assigned to the Anti-materiel Laser Rifle (AMLR) weapon type. Its companion cheat is [Gale Force Winds.](#gale-force-winds)
