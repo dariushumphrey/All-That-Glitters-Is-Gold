@@ -348,14 +348,20 @@ This effect remains active until the Weapon has expended all reserve ammunition 
 ## Flashpoint
 Flashpoint swaps Nebulous At Best's munitions with floating Lucent mines. Mines persist for 1 minute, and all mines are detonated on manual input. Ten mines can be active at a time; additional mines detonates the oldest mine. Switching weapons does not detonate mines, though hits by other weapons can detonate a mine.
 
-* Flashpoint is assigned to the Grenade Launcher weapon type. Its companion cheat is [Positive-Negative.](#positive-negative)
+Flashpoint is assigned to the Grenade Launcher weapon type. Its companion cheat is [Positive-Negative.](#positive-negative)
+
+* [Flashpoint.cs](Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Flashpoint.cs) can be viewed here.
 
 ## Defiance
 Defiance increases weapon & melee damage by 100% while Deleterious is equipped. Guarding against enemy attacks reflects 1,000% of damage onto the attacker.
 
-* Defiance is assigned to the Opening Shot weapon type. Its companion cheat is [All Else Fails.](#all-else-fails)
+Defiance is assigned to the Opening Shot weapon type. Its companion cheat is [All Else Fails.](#all-else-fails)
+
+* [Defiance.cs](Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Defiance.cs) can be viewed here.
 
 ## It Writhes
 It Writhes swaps Bad Grief's munitions with tandem explosives, detonating twice on surface or enemy hits. Detonations stagger enemies, recoiling them backwards and pausing their actions for 1 second. Enemies staggered by It Writhes have a 50% chance to trigger a Berth explosion (see [Early Berth gets the Hearst](#early-berth-gets-the-hearst) for description on the Berth effect). 
 
-* It Writhes is assigned to the Anti-materiel Laser Rifle (AMLR) weapon type. Its companion cheat is [Gale Force Winds.](#gale-force-winds)
+It Writhes is assigned to the Anti-materiel Laser Rifle (AMLR) weapon type. Its companion cheat is [Gale Force Winds.](#gale-force-winds)
+
+* Though known outwardly as "It Writhes", its script name is "Repurposed Form". [RepurposedForm.cs](Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/RepurposedForm.cs) can be viewed here.
