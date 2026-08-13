@@ -270,6 +270,23 @@ Winds are cast by shooting surfaces or Enemies with a full charge. They can foll
 ![GaleForceWinds](https://github.com/user-attachments/assets/c1a57ef4-09bd-4b97-a8dc-da656a3b8cf4)
 
 ## Activator Drone
+Activator Drone creates a combat drone that orbits the player and attacks enemies within a 40m radius. Its name comes from its ability to activate a weapon's passive-based Platforms: 
+* Siphonic Platform - Confirmed hits increase the player's health and shield.
+* Mining Platform - Confirmed hits create and shatter a Lucent cluster at the hit location.
+* Trenchant Platform - Confirmed hits apply health debuffs. The drone cannot apply Trenchant's other debuffs.
+* Cache Platform - Changes its armament into a mini-rocket launcher.
+
+* (Fated) Activator Drones can trigger a weapon's second Function cheat on confirmed hits or enemy defeats:
+  * ["Wait! Now I'm Ready!"](#wait-now-im-ready)
+  * [Efficacy](#efficacy)
+  * [Inoculated](#inoculated)
+  * [Cadence](#cadence)
+  * [Enshroud](#enshroud)
+  * [Bolster](#bolster)
+
+Manually aiming will use the Activator Drone's laser designator. Aiming at an enemy will assign it as the drone's next target. Otherwise, the drone checks its array of targets and selects one at random to attack. If its target is obstructed, the drone will find another target.
+ 
+* [ActivatorDrone.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/ActivatorDrone.cs) can be viewed here. [ADDrone.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/ADDrone.cs), the code for the physical drone, can be viewed here.
 
 ## Ossify
 Ossify increases the player's damage resistance by 3% on confirmed hits, up to 30%, for 10 seconds.
