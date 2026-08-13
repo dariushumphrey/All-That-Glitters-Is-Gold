@@ -1,15 +1,15 @@
 Welcome!
 
-# All That Glitter is Gold: Cheats
+# Resplendent: Cheats
 
 ## Contents
 * [Overview](#overview) 
-* Statistical Cheats
+* Stat Cheats
   * [Yields](#yields)
   * [Stores](#stores)
   * [Sights](#sights)
   * [Hands](#hands)
-* Functional Cheats
+* Function Cheats
   * ["Wait! Now I'm Ready!"](#wait-now-im-ready)
   * [Efficacy](#efficacy)
   * [Inoculated](#inoculated)
@@ -26,17 +26,24 @@ Welcome!
   * [Counterplay](#counterplay)
   * [Enshroud](#enshroud)
   * [Gale Force Winds](#gale-force-winds)
+  * [Activator Drone](#activator-drone)
+  * [Ossify](#ossify)
+  * [Bolster](#bolster)
+  * [Perfect Record](#perfect-record)
 * Exotic Functional Cheats
   * [Equivalent Exchange](#equivalent-exchange)
   * [Pay to Win](#pay-to-win)
-  * [Shelter in Place](#shelter-in-place)
-  * [Off your own Supply](#off-your-own-supply)
+  * [Superweapon](#superweapon)
+  * [Volant](#volant)
   * ["Social Distance, Please!"](#social-distance-please)
   * [Early Berth gets the Hearst](#early-berth-gets-the-hearst)
   * ["Absolutely no Stops!"](#absolutely-no-stops)
+  * [Flashpoint](#flaspoint)
+  * [Defiance](#defiance)
+  * [It Writhes](#it-writhes)
 
 # Overview
-This document explains ATGIG's Core system, Cheats, by illustrating what each specific Cheat does passively or through conditionals. There are over 30 available Cheats. Due to the amount of Cheats and with respect to readability, direct links to each Cheat's code are provided following their descriptions and function breakdowns. Visuals will accompany explanations, but only for Functional Cheats.
+This document explains Resplendent's Core system, Cheats, by illustrating what each specific Cheat does passively or through conditionals. There are over 30 available Cheats. Due to the amount of Cheats and with respect to readability, direct links to each Cheat's code are provided following their descriptions and function breakdowns. Visuals will accompany explanations, but only for Functional Cheats.
 * It is worth noting that Functional Cheats receive upgraded behaviors on Weapons at the fifth (Fated) rarity. Points preceded with "(Fated)" discuss a Cheat's increased strength at that level.
 * Exotic Functional Cheats are powerful Cheats that are specific to one Weapon type and that come with a companion Cheat from the standard pool. The Weapon type will be specified after a Cheat's description. 
 
