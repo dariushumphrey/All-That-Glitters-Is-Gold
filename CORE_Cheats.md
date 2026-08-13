@@ -289,11 +289,11 @@ Pay to Win is assigned to the Machine Gun Weapon type. Its companion Cheat is [T
 ![PayToWin](https://github.com/user-attachments/assets/59d4a25c-aadd-48dc-bd56-bc71f4f9547d)
 
 ## Superweapon
-Shelter in Place increases Weapon damage by 100% and provides 80% damage resistance so long as a Player refrains from movement. Movement of any kind, excluding Enemy attack knockbacks, ends the effect.
+Superweapon grants one stack of 10% damage resistance on confirmed enemy defeats, up to 80& with 8 stacks. Toggling Superweapon enables the ability to charge and fire a high-damage laser while aiming. Standing still significantly increases the charge rate. The laser inflict 1,000% of weapon damage per damage resistance stack, up to 8,000% with 8 stacks. 
 
-Shelter in Place is assigned to the Pistol Weapon type. Its companion Cheat is [Positive-Negative.](#positive-negative)
+Superweapon is assigned to the Pistol Weapon type. Its companion cheat is [Counterplay.](#counterplay)
 
-* [ShelterInPlace.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/ShelterInPlace.cs) can be viewed here.
+* [Superweapon.cs](Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Superweapon.cs) can be viewed here.
 
 ![ShelterInPlace](https://github.com/user-attachments/assets/5afb239e-5b3f-4ab4-9650-f0c184067e64)
 
