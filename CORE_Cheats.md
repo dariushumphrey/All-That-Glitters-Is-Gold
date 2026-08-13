@@ -269,6 +269,18 @@ Winds are cast by shooting surfaces or Enemies with a full charge. They can foll
 
 ![GaleForceWinds](https://github.com/user-attachments/assets/c1a57ef4-09bd-4b97-a8dc-da656a3b8cf4)
 
+## Activator Drone
+
+## Ossify
+
+## Bolster
+
+## Perfect Record
+Perfect Record increases weapon & melee damage by 40% after 3 seconds without taking damage. When hit, the effect is disabled for 5 seconds.
+* (Fated) Weapon and melee damage is increased by 80%. After 3 seconds without damage taken, The effect become indefinite, disabling the timeout effect when hit.
+
+* [PerfectRecord.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/PerfectRecord.cs) can be viewed here.
+
 # Exotic Functional Cheats
 ## Equivalent Exchange
 Equivalent Exchange adds 35% of Enemy damage received directly to the Weapon's damage and the Player's current Health. Weapon damage can permanently increase up to 150% of its original damage.
