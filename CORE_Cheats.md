@@ -3,7 +3,16 @@
 # Resplendent: Cheats
 
 ## Contents
-* [Overview](#overview) 
+* [Overview](#overview)
+* Platforms
+  * [Default Platform](#default-platform)
+  * [Efficient Platform](#efficient-platform)
+  * [Chatter Platform](#chatter-platform)
+  * [Tempered Platform](#tempered-platform)
+  * [Siphonic Platform](#siphonic-platform)
+  * [Mining Platform](#mining-platform)
+  * [Trenchant Platform](#trenchant-platform)
+  * [Cache Platform](#cache-platform)
 * Stat Cheats
   * [Yields](#yields)
   * [Stores](#stores)
@@ -30,7 +39,7 @@
   * [Ossify](#ossify)
   * [Bolster](#bolster)
   * [Perfect Record](#perfect-record)
-* Exotic Functional Cheats
+* Exotic Function Cheats
   * [Equivalent Exchange](#equivalent-exchange)
   * [Pay to Win](#pay-to-win)
   * [Superweapon](#superweapon)
@@ -43,11 +52,21 @@
   * [It Writhes](#it-writhes)
 
 # Overview
-This document explains Resplendent's Core system, Cheats, by illustrating what each specific Cheat does passively or through conditionals. There are over 30 available Cheats. Due to the amount of Cheats and with respect to readability, direct links to each Cheat's code are provided following their descriptions and function breakdowns. Visuals will accompany explanations, but only for Functional Cheats.
-* It is worth noting that Functional Cheats receive upgraded behaviors on Weapons at the fifth (Fated) rarity. Points preceded with "(Fated)" discuss a Cheat's increased strength at that level.
-* Exotic Functional Cheats are powerful Cheats that are specific to one Weapon type and that come with a companion Cheat from the standard pool. The Weapon type will be specified after a Cheat's description. 
+This document explains Resplendent's Core system, Cheats, by illustrating what each specific Cheat does passively or through conditions. There are 8 Stat cheats, 30 Function cheats, and 8 Platforms. With respect to readability, direct links to each Cheat's code are provided following their descriptions and function breakdowns. Visuals are only provided for Function cheats and passive-based Platforms. Sections are structured in the order that they are generated in-game.
+* Points preceded with "(Fated)" discuss a Function cheat's enhanced strength while at that rarity.
+* Exotic Function cheats are specific to one weapon type.
 
-# Statistical Cheats
+# Platforms
+## Default Platform
+## Efficient Platform
+## Chatter Platform
+## Tempered Platform
+## Siphonic Platform
+## Mining Platform
+## Trenchant Platform
+## Cache Platform
+
+# Stat Cheats
 ## Yields
 Yield Statistical Cheats increase the maximums of Weapons' magazine sizes by percentages: 
 * Deep Yield provides a 12% increase.
@@ -88,7 +107,7 @@ This percentage is converted to decimal form and then multiplied by that Weapon'
 * Hasty Hands can be viewed [here.](/Assets/Scripts/Weapons/Reload%20Speed%20Cheats/HastyHands.cs)
 * Hastier Hands can be viewed [here.](/Assets/Scripts/Weapons/Reload%20Speed%20Cheats/HastierHands.cs)
 
-# Functional Cheats
+# Function Cheats
 ## "Wait! Now I'm Ready!" 
 "Wait! Now I'm Ready!" adds 10% of a Player's maximum Shield strength onto their current Shield strength when a Weapon has defeated an Enemy.
 * (Fated) "Wait! Now I'm Ready!" increases the percentage of this effect to 20%.
@@ -314,7 +333,7 @@ Perfect Record increases weapon & melee damage by 40% after 3 seconds without ta
 
 <img width="600" height="337" alt="PerfectRecord" src="https://github.com/user-attachments/assets/efa12611-e312-4da0-b9c1-5b26ed4e7416" />
 
-# Exotic Functional Cheats
+# Exotic Function Cheats
 ## Equivalent Exchange
 Equivalent Exchange adds 35% of Enemy damage received directly to the Weapon's damage and the Player's current Health. Weapon damage can permanently increase up to 150% of its original damage.
 
