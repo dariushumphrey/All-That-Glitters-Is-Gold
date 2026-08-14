@@ -403,9 +403,9 @@ Perfect Record increases weapon & melee damage by 40% after 3 seconds without ta
 
 # Exotic Function Cheats
 ## Equivalent Exchange
-Equivalent Exchange adds 35% of Enemy damage received directly to the Weapon's damage and the Player's current Health. Weapon damage can permanently increase up to 150% of its original damage.
+Equivalent Exchange adds 35% of damage received by an enemy directly to the weapon's damage and the player's current health. Weapon damage can permanently increase up to 150% of its original damage.
 
-Equivalent Exchange is assigned to the Full Fire Rifle Weapon type. Its companion Cheat is [Inoculated.](#inoculated)
+Equivalent Exchange is assigned to the Exotic Full Fire Rifle "Outstanding Warrant". Its companion cheat is [Inoculated.](#inoculated)
 * [EquivalentExchange.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/EquivalentExchange.cs) can be viewed here.
 
 ![EquivalentExchange](https://github.com/user-attachments/assets/1023fa5b-6465-41a8-b7a1-7905211a3f7a)
@@ -413,9 +413,9 @@ Equivalent Exchange is assigned to the Full Fire Rifle Weapon type. Its companio
 ## Pay to Win
 Pay to Win converts 30,000 of the Player's "Lucent" currency into 150 stacks of a 50% Weapon damage increase. 
 
-Stacks are removed three at a time when a Weapon hits an Enemy, and Lucent cannot be converted until all stacks have been removed.
+Stacks are removed three at a time on confirmed enemy hits, and additional Lucent cannot be converted until all stacks have been removed.
 
-Pay to Win is assigned to the Machine Gun Weapon type. Its companion Cheat is [The Most Resplendent.](#the-most-resplendent)
+Pay to Win is assigned to the Exotic Machine Gun "The Dismissal". Its companion cheat is [The Most Resplendent.](#the-most-resplendent)
 * [PayToWin.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/PayToWin.cs) can be viewed here.
 
 ![PayToWin](https://github.com/user-attachments/assets/59d4a25c-aadd-48dc-bd56-bc71f4f9547d)
@@ -423,7 +423,7 @@ Pay to Win is assigned to the Machine Gun Weapon type. Its companion Cheat is [T
 ## Superweapon
 Superweapon grants one stack of 10% damage resistance on confirmed enemy defeats, up to 80% with 8 stacks. Toggling Superweapon enables the ability to charge and fire a high-damage laser while aiming. Standing still significantly increases the charge rate. The laser inflict 1,000% of weapon damage per damage resistance stack, up to 8,000% with 8 stacks. 
 
-Superweapon is assigned to the Pistol Weapon type. Its companion cheat is [Counterplay.](#counterplay)
+Superweapon is assigned to the Exotic Pistol "Apathetic". Its companion cheat is [Counterplay.](#counterplay)
 
 * [Superweapon.cs](Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Superweapon.cs) can be viewed here.
 
@@ -432,40 +432,40 @@ Superweapon is assigned to the Pistol Weapon type. Its companion cheat is [Count
 ## Volant
 Volant activates the player's zero gravity controls, enabling character flight until their shield is broken or if Volant is manually disabled.
 
-Volant is assigned to the Burst Fire Rifle Weapon type. Its companion Cheat is ["Wait! Now I'm Ready!".](#wait-now-im-ready)
+Volant is assigned to the Exotic Burst Fire Rifle "Mercies". Its companion cheat is ["Wait! Now I'm Ready!".](#wait-now-im-ready)
 
 * [Volant.cs](Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Volant.cs) can be viewed here.
 
 <img width="600" height="337" alt="Volant" src="https://github.com/user-attachments/assets/6f9c5c1c-2e09-42e1-afe5-f2ca2c492109" />
 
 ## "Social Distance, Please!"
-"Social Distance, Please!" applies a 30% damage increase on Enemy hits. Damaged enemies receive a Health debuff that doubles damage taken. Defeated, debuffed Enemies spread 400% of the Weapon's damage in a 10m radius.
+"Social Distance, Please!" applies a 30% damage increase on confirmed enemy hits and a health debuff that increases damage taken. Defeated, debuffed Enemies spread 400% of the Weapon's damage in a 10m radius.
 
-The damage increase lasts for ten seconds. Upon expiration, the Weapon's damage is restored to its default value. The timer is extended when a non-debuffed Enemy has a Health debuff applied.
+The damage increase lasts for ten seconds. The timer is extended when a non-debuffed enemy receives a health debuff.
 
-"Social Distance, Please!" is assigned to the Shotgun Weapon type. Its companion Cheat is [Not with a Stick.](#not-with-a-stick)
+"Social Distance, Please!" is assigned to the Exotic Shotgun "Viral Shadow". Its companion cheat is [Not with a Stick.](#not-with-a-stick)
 
 * [SocialDistancePlease.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Social%20Distance%2C%20Please!/SocialDistancePlease.cs) can be viewed here. [EnemyHealthScript.cs](/Assets/Scripts/Enemies/EnemyHealthScript.cs#L331-L351) holds the damage spread behavior when an Enemy is defeated.
 
 ![SocialDistancePlease](https://github.com/user-attachments/assets/8f908001-ccda-4da4-bf98-e429250e1131)
 
 ## Early Berth gets the Hearst
-Early Berth gets the Hearst applies and triggers a Berth explosion on every other confirmed Enemy hit.
+Early Berth gets the Hearst applies and triggers a Berth explosion on every other confirmed enemy hit.
 
-A "Berth" is described as a status effect unique to Enemies that provides dangerous attack augmentations and induces explosions on defeats. Early Berth gets the Hearst, when the condition is met, applies the Berth condition and immediately triggers the detonation behavior.
+A "Berth" is described as a status effect unique to enemies that provides dangerous attack augmentations and triggers explosions on defeats. Early Berth gets the Hearst, when the condition is met, applies the Berth condition and immediately triggers the detonation behavior.
 
-Early Berth gets the Hearst is assigned to the Single Fire Rifle Weapon type. Its companion Cheat is [Efficacy.](#efficacy)
+Early Berth gets the Hearst is assigned to the Exotic Single Fire Rifle "Contempt For Fellows". Its companion cheat is [Efficacy.](#efficacy)
 
 * [EarlyBerthGetsTheHearst.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/EarlyBerthGetsTheHearst.cs) can be viewed here.
 
 ![EarlyBerthGetsTheHearst](https://github.com/user-attachments/assets/1514e231-ec94-4fa6-b284-bddf9de358d9)
 
 ## "Absolutely no Stops!"
-"Absolutely no Stops!" increases a Weapon's damage by 200%, Rate of Fire by 50%, and triggers an automatic reload upon expending the magazine. 
+"Absolutely no Stops!" increases Underfoot's fire rate by 50% and triggers an automatic reload upon expending the magazine. 
 
-This effect remains active until the Weapon has expended all reserve ammunition or if the Player stops firing.
+This effect remains active until Underfoot has expended all reserve ammunition or if the player stops firing.
 
-"Absolutely no Stops!" is assigned to the Submachine Gun Weapon type. Its companion Cheat is [Forager.](#forager)
+"Absolutely no Stops!" is assigned to the Exotic Submachine Gun "Underfoot". Its companion cheat is [Forager.](#forager)
 
 * [AbsolutelyNoStops.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/AbsolutelyNoStops.cs) can be viewed here.
 
@@ -474,7 +474,7 @@ This effect remains active until the Weapon has expended all reserve ammunition 
 ## Flashpoint
 Flashpoint swaps Nebulous At Best's munitions with floating Lucent mines. Mines persist for 1 minute, and all mines are detonated on manual input. Ten mines can be active at a time; additional mines detonates the oldest mine. Switching weapons does not detonate mines, though hits by other weapons can detonate a mine.
 
-Flashpoint is assigned to the Grenade Launcher weapon type. Its companion cheat is [Positive-Negative.](#positive-negative)
+Flashpoint is assigned to the Exotic Grenade Launcher "Nebulous At Best". Its companion cheat is [Positive-Negative.](#positive-negative)
 
 * [Flashpoint.cs](Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Flashpoint.cs) can be viewed here.
 
@@ -483,7 +483,7 @@ Flashpoint is assigned to the Grenade Launcher weapon type. Its companion cheat 
 ## Defiance
 Defiance increases weapon & melee damage by 100% while Deleterious is equipped. Guarding against enemy attacks reflects 1,000% of damage onto the attacker.
 
-Defiance is assigned to the Opening Shot weapon type. Its companion cheat is [All Else Fails.](#all-else-fails)
+Defiance is assigned to the Exotic Opening Shot "Deleterious". Its companion cheat is [All Else Fails.](#all-else-fails)
 
 * [Defiance.cs](Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/Defiance.cs) can be viewed here.
 
@@ -492,7 +492,7 @@ Defiance is assigned to the Opening Shot weapon type. Its companion cheat is [Al
 ## It Writhes
 It Writhes swaps Bad Grief's munitions with tandem explosives, detonating twice on surface or enemy hits. Detonations stagger enemies, recoiling them backwards and pausing their actions for 1 second. Enemies staggered by It Writhes have a 50% chance to trigger a Berth explosion (see [Early Berth gets the Hearst](#early-berth-gets-the-hearst) for description on the Berth effect). 
 
-It Writhes is assigned to the Anti-materiel Laser Rifle (AMLR) weapon type. Its companion cheat is [Gale Force Winds.](#gale-force-winds)
+It Writhes is assigned to the Exotic Anti-materiel Laser Rifle (AMLR) "Bad Grief". Its companion cheat is [Gale Force Winds.](#gale-force-winds)
 
 * Though known outwardly as "It Writhes", its script name is "Repurposed Form". [RepurposedForm.cs](Assets/Scripts/Weapons/Added%20Function%20Cheats/Exotic%20Cheats/RepurposedForm.cs) can be viewed here.
 
