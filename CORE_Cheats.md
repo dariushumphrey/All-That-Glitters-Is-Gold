@@ -76,8 +76,8 @@ For example, a Rarity 1 Burst Fire Rifle has a magazine size of 27.
 * Deep Yield increases the size from 27 to 30.
 * Deeper Yield increases the size from 27 to 33. 
 
-* Deep Yield can be viewed [here.](/Assets/Scripts/Weapons/Magazine%20Cheats/DeepYield.cs)
-* Deeper Yield can be viewed [here.](/Assets/Scripts/Weapons/Magazine%20Cheats/DeeperYield.cs)
+Deep Yield can be viewed [here.](/Assets/Scripts/Weapons/Magazine%20Cheats/DeepYield.cs)
+Deeper Yield can be viewed [here.](/Assets/Scripts/Weapons/Magazine%20Cheats/DeeperYield.cs)
 
 ## Stores
 Stores Stat cheats increase a weapon's maximum ammo reserves by percentages: 
@@ -88,8 +88,8 @@ For example, a Rarity 1 Machine Gun has a reserve size of 420.
 * Deep Stores increases the size from 420 to 483.
 * Deeper Stores increases the size from 420 to 526. 
 
-* Deep Stores can be viewed [here.](/Assets/Scripts/Weapons/Magazine%20Cheats/DeepStores.cs)
-* Deeper Stores can be viewed [here.](/Assets/Scripts/Weapons/Magazine%20Cheats/DeeperStores.cs)
+Deep Stores can be viewed [here.](/Assets/Scripts/Weapons/Magazine%20Cheats/DeepStores.cs)
+Deeper Stores can be viewed [here.](/Assets/Scripts/Weapons/Magazine%20Cheats/DeeperStores.cs)
 
 ## Sights
 Sights Stat cheats increase a weapon's effective range by a percentage of its total range: 
@@ -100,15 +100,17 @@ For example, a Rarity 1 Shotgun has an effective range of 12 meters, and a total
 * Far Sight takes 10% of 20 and increases the shotgun's effective range from 12 meters to 14 meters.
 * Farther Sight takes 20% of 20 and increases the shotgun's effective range from 12 meters to 16 meters.
 
-* Far Sight can be viewed [here.](/Assets/Scripts/Weapons/Range%20Cheats/FarSight.cs)
-* Farther Sight can be viewed [here.](/Assets/Scripts/Weapons/Range%20Cheats/FartherSight.cs)
+Far Sight can be viewed [here.](/Assets/Scripts/Weapons/Range%20Cheats/FarSight.cs)
+Farther Sight can be viewed [here.](/Assets/Scripts/Weapons/Range%20Cheats/FartherSight.cs)
 
 ## Hands
 Hands Stat cheats increase a Weapons' Reload Speed by a percentage:
 * Hasty Hands provides a 15% increase.
 * Hastier Hands provies a 25% increase.
 
-This percentage is converted to decimal form and then multiplied by that Weapon's reload speed. An integer variable is assigned the operation's result. The Weapon's Reload Speed value is subtracted by this variable.
+For example, a Rarity 1 Submachine Gun has a reload speed of 1.25 seconds.
+* Hasty Hands increases the reload speed from 1.25 seconds to 1.06 seconds.
+* Hastier Hands increases the reload speed from 1.25 seconds to 0.94 seconds.
 
 * Hasty Hands can be viewed [here.](/Assets/Scripts/Weapons/Reload%20Speed%20Cheats/HastyHands.cs)
 * Hastier Hands can be viewed [here.](/Assets/Scripts/Weapons/Reload%20Speed%20Cheats/HastierHands.cs)
