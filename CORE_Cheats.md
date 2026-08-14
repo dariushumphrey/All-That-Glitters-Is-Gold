@@ -68,37 +68,43 @@ This document explains Resplendent's Core system, Cheats, by illustrating what e
 
 # Stat Cheats
 ## Yields
-Yield Statistical Cheats increase the maximums of Weapons' magazine sizes by percentages: 
+Yield Stat cheats increase a weapon's maximum magazine size by percentages: 
 * Deep Yield provides a 12% increase.
 * Deeper Yield provides a 24% increase.
 
-This percentage is converted to decimal form and then multiplied by that Weapon's maximum magazine size. An integer variable is assigned the operation's result. The Weapon's magazine size is added onto by this variable.
+For example, a Rarity 1 Burst Fire Rifle has a magazine size of 27.
+* Deep Yield increases the size from 27 to 30.
+* Deeper Yield increases the size from 27 to 33. 
 
 * Deep Yield can be viewed [here.](/Assets/Scripts/Weapons/Magazine%20Cheats/DeepYield.cs)
 * Deeper Yield can be viewed [here.](/Assets/Scripts/Weapons/Magazine%20Cheats/DeeperYield.cs)
 
 ## Stores
-Stores Statistical Cheats increase the maximums of Weapons' ammunition reserves by percentages: 
+Stores Stat cheats increase a weapon's maximum ammo reserves by percentages: 
 * Deep Stores provides a 15% increase.
 * Deeper Stores provides a 30% increase.
 
-This percentage is converted to decimal form and then multiplied by that Weapon's maximum ammo reserve size. An integer variable is assigned the operation's result. The Weapon's reserves is added onto by this variable.
+For example, a Rarity 1 Machine Gun has a reserve size of 420. 
+* Deep Stores increases the size from 420 to 483.
+* Deeper Stores increases the size from 420 to 526. 
 
 * Deep Stores can be viewed [here.](/Assets/Scripts/Weapons/Magazine%20Cheats/DeepStores.cs)
 * Deeper Stores can be viewed [here.](/Assets/Scripts/Weapons/Magazine%20Cheats/DeeperStores.cs)
 
 ## Sights
-Sights Statistical Cheats increase the Effective Range of a Weapon by a percentage of that weapon's maximum Range: 
+Sights Stat cheats increase a weapon's effective range by a percentage of its total range: 
 * Far Sight provides a 10% increase.
 * Farther Sight provies a 20% increase.
 
-This percentage is converted to decimal form and then multiplied by that Weapon's maximum Range. An integer variable is assigned the operation's result. The Weapon's Effective Range is added onto by this variable.
+For example, a Rarity 1 Shotgun has an effective range of 12 meters, and a total range of 20 meters.
+* Far Sight takes 10% of 20 and increases the shotgun's effective range from 12 meters to 14 meters.
+* Farther Sight takes 20% of 20 and increases the shotgun's effective range from 12 meters to 16 meters.
 
 * Far Sight can be viewed [here.](/Assets/Scripts/Weapons/Range%20Cheats/FarSight.cs)
 * Farther Sight can be viewed [here.](/Assets/Scripts/Weapons/Range%20Cheats/FartherSight.cs)
 
 ## Hands
-Hands Statistical Cheats increase a Weapons' Reload Speed by a percentage:
+Hands Stat cheats increase a Weapons' Reload Speed by a percentage:
 * Hasty Hands provides a 15% increase.
 * Hastier Hands provies a 25% increase.
 
