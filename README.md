@@ -1,6 +1,6 @@
 # Welcome!
 
-<img width="600" height="337" alt="itch io landing GIF" src="https://github.com/user-attachments/assets/e92da317-60a3-47ae-8b2f-29c4a850258e" />
+<img width="1200" height="764" alt="GitHub landing GIF_large" src="https://github.com/user-attachments/assets/65984249-c418-4f7c-a29f-12456799c1d1" />
 
 
 Current Version: MVP 0.1.9 (8/11/2026)
