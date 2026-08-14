@@ -109,12 +109,14 @@ The [Mining Platform](/Assets/Scripts/Weapons/Platform%20Types/MiningPlatform.cs
 The Trenchant platform applies a health debuff on confirmed enemy hits, increasing an enemy's damage taken. Players that evade near enemies apply a movement debuff called "Slowed", reducing their speed by 50%. Players that melee attack enemies apply a "damage-over-time" debuff, inflicting damage over a duration. The Trenchant platform increases weapon damage by 5%.
 
 * The [Trenchant Platform](/Assets/Scripts/Weapons/Platform%20Types/TrenchantPlatform.cs) can be viewed here.
-* [Health debuff](/Assets/Scripts/Weapons/DebuffScript.cs) code can be viewed here.
-* [Slowed debuff](/Assets/Scripts/Weapons/SlowedScript.cs) code can be viewed here.
-* [Damage-over-time](/Assets/Scripts/Weapons/DamageOverTimeScript.cs) code can be viewed here.
-
+* The [Health debuff](/Assets/Scripts/Weapons/DebuffScript.cs) code can be viewed here.
+* The [Slowed debuff](/Assets/Scripts/Weapons/SlowedScript.cs) code can be viewed here.
+* The [Damage-over-time](/Assets/Scripts/Weapons/DamageOverTimeScript.cs) code can be viewed here.
 
 ## Cache Platform
+The Cache platform regenerates all of the player's grenades every 2 seconds (if a grenade is not already at max count). If a weapon has the Function cheat "Activator Drone", the drone's armament changes into a mini-rocket launcher. The Cache platform increases weapon damage by 5%.
+
+The [Cache Platform](/Assets/Scripts/Weapons/Platform%20Types/CachePlatform.cs) can be viewed here. The [Activator Drone](/Assets/Scripts/Weapons/Added%20Function%20Cheats/ADDrone.cs#L108C21-L131C22)'s attack conversion can be found here.
 
 # Stat Cheats
 ## Yields
