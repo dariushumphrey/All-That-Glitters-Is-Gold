@@ -233,11 +233,10 @@ Another example, "340182468&+", details this weapon's features:
 
 When a game starts, the "WeaponManager" finds the inventory file, titled "inventory.txt", and reads its contents, creating new weapons with the recorded characteristics attached.
 
-History:
-* In its earliest form, it only recorded weapons as strings that were eight characters long, as each Weapon was designed to have the same structure. Moreover, without a delay time between spawns, the system often delivered the weapons back to the inventory out of order.
-* MVP 0.1.3 - Due to the lacking strength of Function Cheats at the time during a playtest, weapons required a fundamental change in power. Weapons were updated to allow two Function Cheats to roll, and to also allow no Function Cheats to roll on Rarity 1 weapons.
-* MVP 0.1.5 - The "Weapon Manager" was upgraded to use a Coroutine for weapon respawns, delaying the spawn of new weapons. This naturally fixed the issue of disorderly Weapon returns to the inventory.
-* MVP 0.1.6 - MVP 0.1.7 - Methods "WriteOnReset()" (From PlayerInventoryScript.cs) and "RespawnWeapons()" (From WeaponManagerScript.cs) received significant reductions in code length:
+History (by MVP):
+* MVP 0.1.2-0.1.3 - The playtest of MVP 0.1.2 revealed that the insufficient strength of Function cheats required a fundamental change in power. Weapons were updated to allow two Function cheats to roll, and to also allow no Function cheats to roll on Rarity 1 weapons. The offending Function cheats themselves were revised to provide more useful and immediate benefits for combat.
+* MVP 0.1.5 - Weapons returned to the inventory were being added out of the order they were earned in. The "Weapon Manager" was upgraded to use a Coroutine to delay weapon respawns, ensuring weapons returned to the inventory in the earned order.
+* MVP 0.1.6-0.1.7 - Methods "WriteOnReset()" (From PlayerInventoryScript.cs) and "RespawnWeapons()" (From WeaponManagerScript.cs) received significant reductions in code length:
 	* WriteOnReset()
  		* Old length: 2,347 lines
    		* New length: 401 lines (83-84% reduction)
@@ -245,7 +244,7 @@ History:
 		* Old length: 2,820 lines
   		* New length: 568 lines (79-80% reduction)
 
-The changes in size made the Weapon Saving system more maintainable, making the integration of weapon types such as the Grenade Launcher (MVP 0.1.8), Opening Shot & AMLR (MVP 0.1.9) easier to perform.
+	The size reductions made the Weapon Saving system more maintainable, making the integration of weapon types such as the Grenade Launcher (MVP 0.1.8), Opening Shot & AMLR (MVP 0.1.9) easier to perform.
 
 <details>
 <summary> snippet from PlayerInventoryScript.cs </summary>
@@ -460,20 +459,20 @@ https://github.com/user-attachments/assets/c3b1653f-7c1c-4bc8-8f8e-6d6ed61741bd
 
 
 ### Cheats
-Cheats are Resplendent's Core system, granting permanent bonuses to weapons. Explanations and visuals for what each Cheat specifically does can be found on the [Cheats](CORE_Cheats.md) file.
+Cheats are Resplendent's Core system that augment a weapon's properties and grant conditional abilities. Explanations and visuals for what each Cheat specifically does can be found on the [Cheats](CORE_Cheats.md) file.
 
-Cheats are applied to weapons through Random Number Generation (RNG). The moment a Weapon is created, methods are called to choose and apply what are known as Stat Cheats and Function Cheats: 
-* Stat Cheats upgrade a weapon's max ammo, reload speed or range attributes.
-* Function Cheats extend a weapon's offensive, neutral, or defensive potential through conditional triggers.
-  	* Its sibling system, Platforms, modify a weapon's base damage, recoil, or fire rate performance or enable passive benefits.
+Cheats are applied to weapons through Random Number Generation (RNG). When a weapon is created, methods are called to choose and apply what are known as Stat Cheats and Function Cheats: 
+* Stat cheats upgrade a weapon's max ammo, reload speed or range attributes.
+* Function cheats extend a weapon's offensive, neutral, or defensive potential through conditional triggers.
+  	* Its sibling system, Platforms, modifies a weapon's base damage, recoil, or fire rate performance or enables passive benefits.
 
 A number is randomized between a set range. The chosen Cheat is determined by where the value sits within that range. All cheats are divided into distinct pools: 
-* Yields (Stat Cheats that increase magazine sizes)
-* Stores (Stat Cheats that increase max ammunition reserves)
-* Sights (Stat Cheats that increase effective ranges)
-* Hands (Stat Cheats that increase reload speeds)
+* Yields (Stat cheats that increase magazine sizes)
+* Stores (Stat cheats that increase max ammunition reserves)
+* Sights (Stat cheats that increase effective ranges)
+* Hands (Stat cheats that increase reload speeds)
 * Platforms (Performance modifiers or intrinsic effects)
-* Functional Cheats
+* Function cheats
 	* Rarity 1 weapons can only roll Platforms
  	* Rarity 2 weapons can roll Platforms and Stat cheats only
   	* Rarity 3 weapons can roll Platforms, Stat cheats, and only one Function cheat.
@@ -483,7 +482,7 @@ Notes:
 * Two of the same Cheat cannot be generated on a weapon.
 * Cheats are not weighted to generate more often than others; every Cheat is equally likely to be chosen.
 * Exotics are curated weapons and do not require random Cheat generation.
-* Weapons being reproduced by the Weapon Manager do not require Cheat generation, as components are chosen based on characters.
+* Weapons being reproduced by the Weapon Manager do not require Cheat generation, as their components are chosen based on the inventory string.
 
 <details> 
 
