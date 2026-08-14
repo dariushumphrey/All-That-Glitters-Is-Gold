@@ -94,8 +94,26 @@ The Tempered platform:
 The [Tempered Platform](/Assets/Scripts/Weapons/Platform%20Types/TemperedPlatform.cs) can be viewed here.
 
 ## Siphonic Platform
+The Siphonic platform restores a player's health and shield by 1% of their maximum health and shield on confirmed enemy hits. Melee kills by a player restore 15% of their health and shield. The Siphonic platform increases weapon damage by 5%.
+
+The [Siphonic Platform](/Assets/Scripts/Weapons/Platform%20Types/SiphonicPlatform.cs) can be viewed here.
+
 ## Mining Platform
+The Mining platform creates and detonates a Lucent cluster at the weapon's hit point, granting the weapon "explosive Lucent rounds". The Mining platform increases weapon damage by 5%.
+
+A "Lucent cluster" is a game object that detonates when shot, damaging nearby enemies.
+
+The [Mining Platform](/Assets/Scripts/Weapons/Platform%20Types/MiningPlatform.cs) can be viewed here. The code for [Lucent clusters](/Assets/Scripts/Game/LucentScript.cs) can be viewed here.
+
 ## Trenchant Platform
+The Trenchant platform applies a health debuff on confirmed enemy hits, increasing an enemy's damage taken. Players that evade near enemies apply a movement debuff called "Slowed", reducing their speed by 50%. Players that melee attack enemies apply a "damage-over-time" debuff, inflicting damage over a duration. The Trenchant platform increases weapon damage by 5%.
+
+* The [Trenchant Platform](/Assets/Scripts/Weapons/Platform%20Types/TrenchantPlatform.cs) can be viewed here.
+* [Health debuff](/Assets/Scripts/Weapons/DebuffScript.cs) code can be viewed here.
+* [Slowed debuff](/Assets/Scripts/Weapons/SlowedScript.cs) code can be viewed here.
+* [Damage-over-time](/Assets/Scripts/Weapons/DamageOverTimeScript.cs) code can be viewed here.
+
+
 ## Cache Platform
 
 # Stat Cheats
