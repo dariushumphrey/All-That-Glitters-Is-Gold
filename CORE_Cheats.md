@@ -101,9 +101,10 @@ The [Siphonic Platform](/Assets/Scripts/Weapons/Platform%20Types/SiphonicPlatfor
 <img width="600" height="337" alt="SiphonicPlatform" src="https://github.com/user-attachments/assets/e081a3e1-0b6d-49fa-80c5-ba835c211b27" />
 
 ## Mining Platform
-The Mining platform creates and detonates a Lucent cluster at the weapon's hit point, granting the weapon "explosive Lucent rounds". The Mining platform increases weapon damage by 5%.
+The Mining platform creates and detonates a Lucent Cluster at the weapon's hit point, granting the weapon "explosive Lucent rounds". The Mining platform increases weapon damage by 5%.
 
-A "Lucent cluster" is a game object that detonates when shot, damaging nearby enemies.
+A Lucent Cluster is a game object that detonates when shot, damaging nearby enemies (see [Cadence](#cadence) for description on Lucent Clusters). 
+
 
 The [Mining Platform](/Assets/Scripts/Weapons/Platform%20Types/MiningPlatform.cs) can be viewed here. The code for [Lucent clusters](/Assets/Scripts/Game/LucentScript.cs) can be viewed here.
 
@@ -177,105 +178,97 @@ Hastier Hands can be viewed [here.](/Assets/Scripts/Weapons/Reload%20Speed%20Che
 
 # Function Cheats
 ## "Wait! Now I'm Ready!" 
-"Wait! Now I'm Ready!" adds 10% of a Player's maximum Shield strength onto their current Shield strength when a Weapon has defeated an Enemy.
-* (Fated) "Wait! Now I'm Ready!" increases the percentage of this effect to 20%.
-
-If it detects that it has overhealed a Player's Shield, their current Shield value is assigned to their maximum Shield value. This Cheat does not add onto their Shield if their strength is already at maximum.
+"Wait! Now I'm Ready!" adds 10% of a player's maximum shield onto their current shield on confirmed enemy defeats. Additional shield is not added if the player's shield is full.
+* (Fated) "Wait! Now I'm Ready!" adds 20% of a player's maximum shield onto their current shield on confirmed enemy defeats.
 
 * [WaitNowImReady.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/WaitNowImReady.cs) can be viewed here.
 
 ![WaitNowImReady](https://github.com/user-attachments/assets/4b694e05-a5be-4b68-a7f6-38d17b3c4e08)
 
 ## Efficacy
-Efficacy adds 1% of a Weapon's base damage onto its current damage when it confirms a hit on an Enemy. Efficacy restores the weapon's original damage when it reloads. 
-* (Fated) Efficacy' damage percent increases to 2%. Reloads no longer restores damage to its starting value, but will allow a Weapon to increase damage up to 125% from its base value. If Efficacy has increased damage beyond the imposed damage cap, the Weapon's damage is assigned to the damage cap.
+Efficacy adds 1% of a weapon's base damage onto its current damage on confirmed enemy hits. Efficacy restores the weapon's original damage when it reloads. 
+* (Fated) Efficacy adds 2% of a weapon's base damage onto its current damage on confirmed enemy hits. Reloads no longer restores damage to its starting value, but weapon damage can only increase up to 125% from its base value.
 
 * [Efficacy.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Efficacy.cs) can be viewed here.
 
 ![Efficacy](https://github.com/user-attachments/assets/f2f17867-c787-4c38-9ccf-f88b8c3744cc)
 
 ## Inoculated
-Inoculated adds 5% of a Player's maximum Health onto their current Health when a Weapon has defeated an Enemy.
-* (Fated) Inoculated increases the percentage of this effect to 10%.
-
-If it detects that it has overhealed a Player's Health, their current Health value is assigned to their maximum Health. This Cheat does not add onto their Health if it is full.
+Inoculated adds 5% of a player's maximum health onto their current health on confirmed enemy defeats. Additional health is not added if the player's health is full.
+* (Fated) Inoculated adds 10% of a player's maximum health onto their current health on confirmed enemy defeats.
 
 * [Inoculated.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Inoculated.cs) can be viewed here.
 
 ![Inoculated](https://github.com/user-attachments/assets/72062244-f617-45dd-9c7b-67eb3b06253d)
 
 ## Rude Awakening
-Rude Awakening grants one use of an area-of-effect (AOE) projection that inflicts 1,000% of a Weapon's damage. Uses are gained when a Weapon defeats an Enemy, and can grow to a stack of three uses.
-* (Fated) Rude Awakening increases maximum stacks to six. Enemy defeats grants two uses instead of one, and Weapon damage is increased by 20% while at least one use is held.
-
-If it detects that it has granted a use beyond the maximum allowed, their current use value is assigned to their maximum use limit. 
+Rude Awakening grants one stack of an area-of-effect (AOE) attack that inflicts 1,000% of a weapon's damage on confirmed enemy defeats. Rude Awakening can stack up to 3 uses. 
+* (Fated) Rude Awakening increases maximum AOE stacks to 6. Enemy defeats grants two stacks instead of one, and weapon damage is increased by 20% while at least one stack is held.
 
 * [Rude Awakening.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/RudeAwakening.cs) can be viewed here.
 
 ![RudeAwakening](https://github.com/user-attachments/assets/e2451f42-3511-4832-a9e8-198c659b2251)
 
 ## Not with a Stick
-Not with a Stick adds 30% of a Weapon's maximum Range onto their Effective Range when a Weapon has defeated an Enemy. Not with a Stick restores the weapon's original Effective Range when it reloads.
-* (Fated) When a Weapon's Effective Range matches their maximum Range, Not with a Stick increases its Aim Assist value by 50%, producing a "lock-on" effect. Reloads no longer restores Effective Range to normal, but this effect remains active for 20 seconds.
+Not with a Stick adds 30% of a weapon's maximum range onto its current effective range on confirmed enemy defeats. Not with a Stick restores the weapon's original effective range when it reloads.
+* (Fated) When a weapon's effective range matches their maximum range, Not with a Stick increases the weapon's aim assist value by 50%. Reloads no longer restores effective range to normal, but this effect remains active for 20 seconds.
 
 * [NotWithAStick.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/NotWithAStick.cs) can be viewed here.
 
 ![NotWithAStick](https://github.com/user-attachments/assets/8bd4822a-896b-47c0-a3e1-7e8363e7b469)
 
 ## Malicious Wind-Up
-Malicious Wind-Up increases a Weapon's Reload Speed by 0.75% when it confirms a hit on an Enemy. Reloads applies the new speed, and restores the original Reload Speed when the effect ends.
-* (Fated) Malicious Wind-Up increases its effect strength to 1.5%. Enemy defeats adds 5% of a Weapon's maximum ammunition reserves to its current ammunition reserves. If it detects that it has granted reserve ammunition beyond the maximum allotted, its current reserves are assigned to its maximum reserves.
+Malicious Wind-Up increases a weapon's reload speed by 0.75% on confirmed enemy hits. Reloads apply the new speed, and restores the original reload speed when the effect ends.
+* (Fated) Malicious Wind-Up increases a weapon's reload speed by 1.5% on confirmed enemy hits. Enemy defeats adds 5% of a weapon's maximum ammo reserves to its current ammo reserves. Additional ammo is not added if its reserves are full.
 
 * [MaliciousWindUp.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/MaliciousWindUp.cs) can be viewed here.
 
 ![MaliciousWindUp](https://github.com/user-attachments/assets/fbc91120-a525-4531-82c5-f1ec9675dced)
 
 ## Positive-Negative
-Positive-Negative generates a charge through movement, up to 100%. Building charge at least halfway applies damage-over-time when a Weapon confirms a hit on an Enemy. Idling rapidly loses charge.
-* (Fated) Positive-Negative' damage-over-time strength increases, inflicting 100% more damage and applying it every half-second.
+Positive-Negative generates a charge through movement, up to 100%. When the charge is halfway full, Positive-Negative applies damage-over-time on confirmed enemy hits. Idling rapidly loses charge.
+* (Fated) Positive-Negative's damage-over-time strength increases, applying 100% more damage every half-second.
 
-The damage-over-time effect applies 100% of a Weapon's base damage as its own damage once every second, for a ten second duration.
+The damage-over-time effect uses 100% of a weapon's base damage as its own damage once every second for a ten second duration. Positive-Negative applies its own specific damage-over-time effect, allowing it to stack alongside other damage-over-time sources like from the Trenchant Platform or the player's Solution Grenades.
 
 * [PositiveNegative.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Positive-Negative/PositiveNegative.cs) can be viewed here. Its companion script, [PosNegDOT.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Positive-Negative/PosNegDOT.cs) can be viewed here.
 
 ![PositiveNegative](https://github.com/user-attachments/assets/0d32d51d-738a-474e-8c7e-37ad791848f6)
 
 ## Cadence
-Cadence produces an explosive called a "Lucent Cluster" on every third confirmed Enemy defeat by a Weapon.
-* (Fated) Cadence now produces Lucent Clusters on every third confirmed Enemy hit.
+Cadence produces an explosive called a Lucent Cluster on every third confirmed enemy defeat.
+* (Fated) Cadence now produces Lucent Clusters on every third confirmed enemy hit.
 
-Lucent Clusters periodically appear during play as both a passive damage mechanic and a contributor to Players' wealth. Destroying clusters adds onto a Player's "Lucent" balance with its full worth, while also inflicting 150% of that worth in damage to nearby Enemies. Clusters can also detonate other clusters, producing a "chain reaction" effect.
+Lucent Clusters are passive damage mechanics that inflicts damage to nearby enemies when destroyed, appearing occasionally on confirmed enemy defeats. Lucent Clusters can also detonate other clusters, producing a "chain reaction" effect.
 
 * [Cadence.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Cadence.cs) can be viewed here.
 
 ![Cadence](https://github.com/user-attachments/assets/5dd232a6-d001-4909-9e57-1ed0c4c1ea10)
 
 ## Good Things Come
-Good Things Come increases Player and Weapon attributes while being in combat for three seconds: 
-* Player Movement Speed increases by 10%.
-* Player Damage Resistance increases by 20%.
-* Weapon Recoil is reduced by 45%.
+Good Things Come increases player and weapon attributes while being in combat for three seconds: 
+* Player movement speed increases by 10%.
+* Player damage resistance increases by 20%.
+* Weapon recoil is reduced by 45%.
 
-Disengaging from combat for five seconds will restore these attributes to their default settings.
+Disengaging from combat for five seconds will restore these attributes to their default states.
 
 * (Fated) Good Things Come increases the strength of its effects and grants one more benefit:
-  * Player Movement Speed increases by 20%.
-  * Player Damage Resistance increases by 40%
-  * Weapon Recoil is reduced by 90%.
+  * Player movement speed increases by 20%.
+  * Player damage resistance increases by 40%
+  * Weapon recoil is reduced by 90%.
   * Weapon gains Infinite Ammunition, preventing consumption of its reserves on reloads.
-* Good Things Come' benefits go into effect immediately once combat begins.
+* Good Things Come triggers immediately once combat begins.
 
-Combat is defined as attacking or having been attacked in the past three seconds. If the Player hasn't been damaged or if a Weapon hasn't inflicted damage in five seconds, that is considered being out of combat.
+Combat is defined as attacking or having been attacked in the past three seconds. If the player hasn't been damaged or if a weapon hasn't inflicted damage in five seconds, Good Things Come determines that combat has been exited.
 
 * [GoodThingsCome.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/GoodThingsCome.cs) can be viewed here.
 
 ![GoodThingsCome](https://github.com/user-attachments/assets/08e0eb08-2413-4fa7-976d-a46e2668c3e7)
 
 ## All Else Fails
-All Else Fails permits invulnerability for three seconds upon the full depletion of a Player's Shield. All Else Fails then waits twenty seconds before its effect can be used again. 
-* (Fated) All Else Fails' immunity duration increases to five seconds, and its cooldown period is reduced to ten seconds.
-
-All Else Fails produces immunity by taking the full damage meant for a Player and adding the value back to them as Health.
+All Else Fails grants invulnerability for five seconds when the player's shield is depleted. All Else Fails then enters a 10 second cooldown before the effect can be used again. 
+* (Fated) All Else Fails can be activated again immediately after the effect expires.
 
 * [AllElseFails.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/AllElseFails.cs) can be viewed here.
 
