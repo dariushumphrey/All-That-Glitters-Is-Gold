@@ -54,13 +54,45 @@
 # Overview
 This document explains Resplendent's Core system, Cheats, by illustrating what each specific Cheat does passively or through conditions. There are 8 Stat cheats, 30 Function cheats, and 8 Platforms. With respect to readability, direct links to each Cheat's code are provided following their descriptions and function breakdowns. Visuals are only provided for Function cheats and passive-based Platforms. Sections are structured in the order that they are generated in-game.
 * Points preceded with "(Fated)" discuss a Function cheat's enhanced strength while at that rarity.
-* Exotic Function cheats are specific to one weapon type.
 
 # Platforms
+Platforms specifically: 
+* Modify a weapon's properties of damage, rate of fire, recoil, aim assist, and camera zoom.
+* Enable passive benefits that are active indefinitely, or activate on confirmed surface or enemy hits, confirmed enemy defeats, or certain player actions.
+
 ## Default Platform
+The Default platform does not modify any weapon property or provide any passive bonus. Weapons with the Default platform operate at base performance.
+The [Default Platform](/Assets/Scripts/Weapons/Platform%20Types/DefaultPlatform.cs) can be viewed here.
+
 ## Efficient Platform
+The Efficient platform: 
+* Increases weapon damage by 10%.
+* Reduces weapon rate of fire by 40%.
+* Reduces weapon recoil by 10%.
+* Reduces weapon aim assist by 35%.
+* Increases player camera zoom by 20%.
+
+The [Efficient Platform](/Assets/Scripts/Weapons/Platform%20Types/EfficientPlatform.cs) can be viewed here.
+
 ## Chatter Platform
+The Chatter platform: 
+* Reduces weapon damage by 10%.
+* Increases weapon rate of fire by 40%.
+* Increases weapon recoil by 10%.
+* Increases weapon aim assist by 35%.
+* Increases player camera zoom by 10%.
+
+The [Chatter Platform](/Assets/Scripts/Weapons/Platform%20Types/ChatterPlatform.cs) can be viewed here.
+
 ## Tempered Platform
+The Tempered platform: 
+* Increases weapon damage by 17.5%.
+* Increases weapon rate of fire by 20%.
+* Increases weapon aim assist by 50%.
+* Increases player camera zoom by 30%.
+
+The [Tempered Platform](/Assets/Scripts/Weapons/Platform%20Types/TemperedPlatform.cs) can be viewed here.
+
 ## Siphonic Platform
 ## Mining Platform
 ## Trenchant Platform
@@ -112,8 +144,8 @@ For example, a Rarity 1 Submachine Gun has a reload speed of 1.25 seconds.
 * Hasty Hands increases the reload speed from 1.25 seconds to 1.06 seconds.
 * Hastier Hands increases the reload speed from 1.25 seconds to 0.94 seconds.
 
-* Hasty Hands can be viewed [here.](/Assets/Scripts/Weapons/Reload%20Speed%20Cheats/HastyHands.cs)
-* Hastier Hands can be viewed [here.](/Assets/Scripts/Weapons/Reload%20Speed%20Cheats/HastierHands.cs)
+Hasty Hands can be viewed [here.](/Assets/Scripts/Weapons/Reload%20Speed%20Cheats/HastyHands.cs)
+Hastier Hands can be viewed [here.](/Assets/Scripts/Weapons/Reload%20Speed%20Cheats/HastierHands.cs)
 
 # Function Cheats
 ## "Wait! Now I'm Ready!" 
