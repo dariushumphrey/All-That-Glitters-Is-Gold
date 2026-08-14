@@ -98,12 +98,16 @@ The Siphonic platform restores a player's health and shield by 1% of their maxim
 
 The [Siphonic Platform](/Assets/Scripts/Weapons/Platform%20Types/SiphonicPlatform.cs) can be viewed here.
 
+<img width="600" height="337" alt="SiphonicPlatform" src="https://github.com/user-attachments/assets/e081a3e1-0b6d-49fa-80c5-ba835c211b27" />
+
 ## Mining Platform
 The Mining platform creates and detonates a Lucent cluster at the weapon's hit point, granting the weapon "explosive Lucent rounds". The Mining platform increases weapon damage by 5%.
 
 A "Lucent cluster" is a game object that detonates when shot, damaging nearby enemies.
 
 The [Mining Platform](/Assets/Scripts/Weapons/Platform%20Types/MiningPlatform.cs) can be viewed here. The code for [Lucent clusters](/Assets/Scripts/Game/LucentScript.cs) can be viewed here.
+
+<img width="600" height="337" alt="MiningPlatform" src="https://github.com/user-attachments/assets/8a9ad078-2df7-4a84-9c38-2e4ae671b047" />
 
 ## Trenchant Platform
 The Trenchant platform applies a health debuff on confirmed enemy hits, increasing an enemy's damage taken. Players that evade near enemies apply a movement debuff called "Slowed", reducing their speed by 50%. Players that melee attack enemies apply a "damage-over-time" debuff, inflicting damage over a duration. The Trenchant platform increases weapon damage by 5%.
@@ -113,10 +117,14 @@ The Trenchant platform applies a health debuff on confirmed enemy hits, increasi
 * The [Slowed debuff](/Assets/Scripts/Weapons/SlowedScript.cs) code can be viewed here.
 * The [Damage-over-time](/Assets/Scripts/Weapons/DamageOverTimeScript.cs) code can be viewed here.
 
+<img width="600" height="337" alt="TrenchantPlatform" src="https://github.com/user-attachments/assets/cd39b0e2-c1e3-4ff0-bdc6-e533e7a6a735" />
+
 ## Cache Platform
 The Cache platform regenerates all of the player's grenades every 2 seconds (if a grenade is not already at max count). If a weapon has the Function cheat "Activator Drone", the drone's armament changes into a mini-rocket launcher. The Cache platform increases weapon damage by 5%.
 
 The [Cache Platform](/Assets/Scripts/Weapons/Platform%20Types/CachePlatform.cs) can be viewed here. The [Activator Drone](/Assets/Scripts/Weapons/Added%20Function%20Cheats/ADDrone.cs#L108C21-L131C22)'s attack conversion can be found here.
+
+<img width="600" height="337" alt="CachePlatform" src="https://github.com/user-attachments/assets/79a495e5-c0df-4b37-9213-0c35696f77bd" />
 
 # Stat Cheats
 ## Yields
