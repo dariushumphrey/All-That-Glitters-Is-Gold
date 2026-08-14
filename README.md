@@ -43,12 +43,10 @@ Resplendent is a third-person Action game which combines horde combat, RNG, and 
 	* Add the provided Unity version to Unity Hub's "Installs" category (Installs > Locate > Find version)
  	* Specify the project's editor version, then open the project.
 ## Project Objective
-Resplendent's primary objective is to provide brief, favorable play sessions by offering renditions of experiences encountered in the looter-shooter genre, such as:
+Resplendent's primary objective is to serve as a demonstration of my programming ability by producing a fully playable game. Its secondary objective is to translate experiences observed from the looter-shooter genre into brief, favorable play sessions, such as:
 * The acquisition and surprise of weapons containing interesting traits combinations
 * The feeling of mastery in understanding a weapon's build
 * The toppling of challenges based on one's perceived increase in strength.
-
-Games like Destiny 2, The Division 2, Remnant II, and Warhammer 40K: Space Marine 2 each serve as inspirations. Resplendent is my interpretation of experiences learned from those games, and can be felt in the player, weapon, and enemy systems within.
 ## Technologies
 * Unity 3D (Version 2021.1.16f)
 * C#
