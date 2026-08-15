@@ -1,5 +1,7 @@
 # Welcome!
 
+<img width="1200" height="764" alt="GitHub cheats landing GIF_large" src="https://github.com/user-attachments/assets/15455818-5525-480f-86e0-e5517a2b3719" />
+
 # Resplendent: Cheats
 
 ## Contents
@@ -55,6 +57,26 @@
 This document explains Resplendent's Core system, Cheats, by illustrating what each specific Cheat does passively or through conditions. There are 8 Stat cheats, 30 Function cheats, and 8 Platforms. With respect to readability, direct links to each Cheat's code are provided following their descriptions and function breakdowns. Visuals are only provided for Function cheats and passive-based Platforms. Sections are structured in the order that they are generated in-game.
 * Points preceded with "(Fated)" discuss a Function cheat's enhanced strength while at that rarity.
 
+# Terminology
+Cheats will mention specific debuffs, player equipment, or game objects by names where their purpose may not be immediately understood: 
+* Berth - A status effect unique to enemies that augments their attacks and triggers explosions on defeats.
+  * Used by: [Early Berth gets the Hearst](#early-berth-gets-the-hearst), [It Writhes](#it-writhes)
+
+* Slowed - A temporary debuff that decreases an enemy's movement speed by 50%. Bosses cannot be slowed.
+  * Used by: [Trenchant Platform](#trenchant-platform), [Enshroud](#enshroud), [Gale Force Winds](#gale-force-winds)
+
+* Fogger Grenades - Gaseous munitions that apply Slowed to enemies in a 10m radius. After collision with any surface, they trigger after two seconds.
+  * Used by: [Enshroud](#enshroud)
+
+* Solution Grenades - Toxic munitions that apply damage-over-time in a 7m radius, inflicting 875 damage every 0.25 seconds over a 2 second duration. After collision with any surface, they detonate after one second.
+  * Used by: [Counterplay](#counterplay)
+
+* Destruct Grenades - Explosive munitions that inflict 9,000 damage in an 8m radius. After collision with any surface, they detonate after one second.
+  * Used by: [Fulminate](#fulminate)
+ 
+* Lucent Clusters - Explosive objects that inflict damage to nearby enemies when destroyed, appearing occasionally on confirmed enemy defeats. Lucent Clusters can also detonate other clusters, producing a "chain reaction" effect.
+  * Used by: [Mining Platform](#mining-platform), [Cadence](#cadence), [The Most Resplendent](#the-most-resplendent), [Forager](#forager)
+
 # Platforms
 Platforms specifically: 
 * Modify a weapon's properties of damage, rate of fire, recoil, aim assist, and camera zoom.
@@ -101,17 +123,14 @@ The [Siphonic Platform](/Assets/Scripts/Weapons/Platform%20Types/SiphonicPlatfor
 <img width="600" height="337" alt="SiphonicPlatform" src="https://github.com/user-attachments/assets/e081a3e1-0b6d-49fa-80c5-ba835c211b27" />
 
 ## Mining Platform
-The Mining platform creates and detonates a Lucent Cluster at the weapon's hit point, granting the weapon "explosive Lucent rounds". The Mining platform increases weapon damage by 5%.
-
-A Lucent Cluster is a game object that detonates when shot, damaging nearby enemies (see [Cadence](#cadence) for description on Lucent Clusters). 
-
+The Mining platform creates and detonates a [Lucent Cluster](#terminology) at the weapon's hit point, granting the weapon "explosive Lucent rounds". The Mining platform increases weapon damage by 5%.
 
 The [Mining Platform](/Assets/Scripts/Weapons/Platform%20Types/MiningPlatform.cs) can be viewed here. The code for [Lucent clusters](/Assets/Scripts/Game/LucentScript.cs) can be viewed here.
 
 <img width="600" height="337" alt="MiningPlatform" src="https://github.com/user-attachments/assets/8a9ad078-2df7-4a84-9c38-2e4ae671b047" />
 
 ## Trenchant Platform
-The Trenchant platform applies a health debuff on confirmed enemy hits, increasing an enemy's damage taken. Players that evade near enemies apply a movement debuff called "Slowed", reducing their speed by 50%. Players that melee attack enemies apply a "damage-over-time" debuff, inflicting damage over a duration. The Trenchant platform increases weapon damage by 5%.
+The Trenchant platform applies a health debuff on confirmed enemy hits, increasing an enemy's damage taken. Players that evade near enemies apply [Slowed](#terminology). Players that melee attack enemies apply a "damage-over-time" debuff, inflicting damage over a duration. The Trenchant platform increases weapon damage by 5%.
 
 * The [Trenchant Platform](/Assets/Scripts/Weapons/Platform%20Types/TrenchantPlatform.cs) can be viewed here.
 * The [Health debuff](/Assets/Scripts/Weapons/DebuffScript.cs) code can be viewed here.
@@ -236,10 +255,8 @@ The damage-over-time effect uses 100% of a weapon's base damage as its own damag
 ![PositiveNegative](https://github.com/user-attachments/assets/0d32d51d-738a-474e-8c7e-37ad791848f6)
 
 ## Cadence
-Cadence produces an explosive called a Lucent Cluster on every third confirmed enemy defeat.
+Cadence produces [Lucent Clusters](#terminology) on every third confirmed enemy defeat.
 * (Fated) Cadence now produces Lucent Clusters on every third confirmed enemy hit.
-
-Lucent Clusters are passive damage mechanics that inflicts damage to nearby enemies when destroyed, appearing occasionally on confirmed enemy defeats. Lucent Clusters can also detonate other clusters, producing a "chain reaction" effect.
 
 * [Cadence.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Cadence.cs) can be viewed here.
 
@@ -275,22 +292,18 @@ All Else Fails grants invulnerability for five seconds when the player's shield 
 ![AllElseFails](https://github.com/user-attachments/assets/0a8f66d2-3fda-4835-a646-97a1fb7dcb0e)
 
 ## The Most Resplendent
-The Most Resplendent grants one stack to cast a Hard Lucent crystal that can be attached to surfaces or enemies. The crystal produces Lucent Clusters passively or when shot by a weapon for 5 seconds.
+The Most Resplendent grants one stack to cast a Hard Lucent crystal that can be attached to surfaces or enemies. The crystal produces [Lucent Clusters](#terminology) passively or when shot by a weapon for 5 seconds.
 * (Fated) The Most Resplendent's stack cap increases to 2. Physically colliding with the crystal destroys it, adding 35% of the player's maximum health onto their current health.
 
 One stack is gained after ten confirmed enemy hits. Crystals attached to combatants are smaller. Inflicting 2,000 damage to the crystal or allowing the crystal to expire casts a shockwave that damages enemies and detonates Lucent Clusters. Shooting the crystal creates a miniature Lucent Cluster at the hit spot.
-
-(see [Cadence](#cadence) for description on Lucent Clusters).
 
 * [TheMostResplendent.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/The%20Most%20Resplendent/TheMostResplendent.cs) can be viewed here. Its companion script, [TMRHardLucentScript.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/The%20Most%20Resplendent/TMRHardLucentScript.cs) can be viewed here.
 
 ![TheMostResplendent](https://github.com/user-attachments/assets/7b49b4ab-4651-4641-8f8d-b97e622b1487)
 
 ## Fulminate
-Fulminate increases damage of the player's Destruct Grenade by 7%, up to a 70%, for 7 seconds. Any confirmed enemy defeat with a melee attack creates and detonates a Destruct Grenade.
+Fulminate increases damage of the player's [Destruct Grenade](#terminology) by 7%, up to a 70%, for 7 seconds. Any confirmed enemy defeat with a melee attack creates and detonates a Destruct Grenade.
 * (Fated) While active, after throwing a Destruct Grenade, Fulminate throws a delayed Destruct Grenade at no cost.
-
-Destruct Grenades are explosive munitions that inflicts 9,000 damage in an 8m radius. After collision with any surface, they detonate after one second. 
 
 Fulminates requires 35 confirmed enemy hits to reach the 70% damage cap. Any confirmed enemy hits will refresh the timer while active.
 
@@ -303,7 +316,7 @@ Forager produces a burst of pickup items on confirmed enemy defeats. The burst p
 * Health pickups that add 1% of a player's max health onto their current health.
 * Shield pickups that add 2% of a player's max shield onto their current shield.
 * Ammo pickups that add 15% of a weapon's max magazine size onto their current magazine.
-* Miniature Lucent Clusters that detonate after 0.25 seconds (see [Cadence](#cadence) for description on Lucent Clusters).
+* Miniature [Lucent Clusters](#terminology) that detonate after 0.25 seconds
 
 Forager's ammo pickups can overflow a weapon's current ammo count beyond its maximum magazine size, up to 150%. For example, a Rarity 3 Full Fire Rifle has a maximum magazine size of 28: 
  * Forager's ammo pickups add ammunition up to an overflowed max magazine size of 42.
@@ -320,21 +333,15 @@ Forager's ammo pickups can overflow a weapon's current ammo count beyond its max
 
 ## Counterplay
 Counterplay casts two Lucent Clusters that detonate after 0.25 seconds when a player is hit while immune or while guarding with an Opening Shot. When triggered, Counterplay grants one stack of a 10% weapon damage increase, up to 3 stacks for a 30% damage increase.
-* (Fated) When triggered, Counterplay now casts and detonates the player's Solution Grenade. Counterplay's max stack count is increased to 10.
-
-Solution Grenades are toxic munitions that applies damage-over-time in a 7m radius, inflicting 875 damage every 0.25 seconds. After collision with any surface, they detonate after one second. The grenade's damage-over-time effect lasts for 2 seconds.
-
-(see [Cadence](#cadence) for description on Lucent Clusters).
+* (Fated) When triggered, Counterplay casts and detonates the player's [Solution Grenade](#terminology) on their position. Counterplay's max stack count is increased to 10.
 
 * [Counterplay.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Counterplay.cs) can be viewed here. [ReplevinScript.cs](/Assets/Scripts/Enemies/ReplevinScript.cs#L695-L698) handles the condition that Counterplay requires to activate.
 
 ![Counterplay](https://github.com/user-attachments/assets/34471ad6-ac59-4c9c-8323-30936be99dab)
 
 ## Enshroud
-Enshroud increases the player's melee attack range by 15%, up to 200%, for 7 seconds. Any confirmed enemy defeat with a melee attack casts a Fogger Grenade, entering a 12 second cooldown when triggered.
+Enshroud increases the player's melee attack range by 15%, up to 200%, for 7 seconds. Any confirmed enemy defeat with a melee attack casts a [Fogger Grenade](#terminology), entering a 12 second cooldown when triggered.
 * (Fated) Enshroud now enables Fogger Grenades from any source to apply damage-over-time, inflicting 150 damage once every second for 20 seconds. Enshroud reduces the cooldown of Fogger Grenades on melee defeats to 6 seconds. 
-
-Fogger Grenades are gaseous munitions that apply the debuff "Slowed" to enemies in a 10m radius, reducing an enemy's movement speed by 50%. After collision with any surface, they trigger after two seconds. 
 
 Melee attack range is defined as the distance required to initiate a melee attack. Enshroud caps the player's melee attack range to 21m. 
 
@@ -343,7 +350,7 @@ Melee attack range is defined as the distance required to initiate a melee attac
 ![Enshroud](https://github.com/user-attachments/assets/f42258a3-93d5-4db5-a91c-ed3d1121aa84)
 
 ## Gale Force Winds
-Gale Force Winds generates a charge through movement, with improved generation from Sprinting. Having 100% charge grants a cast for torrential winds that applies health and movement speed debuffs to enemies.
+Gale Force Winds generates a charge through movement, with improved generation from Sprinting. Having 100% charge grants a cast for torrential winds that applies health and [Slowed](#terminology) debuffs to enemies.
 * (Fated) Gale Force Winds' charge generation rate is doubled. Winds can now apply damage-over-time, and their detection range and speed increases by 50%.
 
 Winds are cast by shooting surfaces or enemies when Gale Force Winds is toggled. Any enemy that walks through its volume (if it is without a target) is tracked. The winds become stationary when without a target.
@@ -436,7 +443,7 @@ Volant is assigned to the Exotic Burst Fire Rifle "Mercies". Its companion cheat
 <img width="600" height="337" alt="Volant" src="https://github.com/user-attachments/assets/6f9c5c1c-2e09-42e1-afe5-f2ca2c492109" />
 
 ## "Social Distance, Please!"
-"Social Distance, Please!" applies a 30% damage increase on confirmed enemy hits and a health debuff that increases damage taken. Defeated, debuffed Enemies spread 400% of the Weapon's damage in a 10m radius.
+"Social Distance, Please!" applies a 30% damage increase on confirmed enemy hits and a health debuff that increases their damage taken. Defeated, debuffed Enemies spread 400% of the Weapon's damage in a 10m radius.
 
 The damage increase lasts for ten seconds. The timer is extended when a non-debuffed enemy receives a health debuff.
 
@@ -447,9 +454,7 @@ The damage increase lasts for ten seconds. The timer is extended when a non-debu
 ![SocialDistancePlease](https://github.com/user-attachments/assets/8f908001-ccda-4da4-bf98-e429250e1131)
 
 ## Early Berth gets the Hearst
-Early Berth gets the Hearst applies and triggers a Berth explosion on every other confirmed enemy hit.
-
-A "Berth" is described as a status effect unique to enemies that provides dangerous attack augmentations and triggers explosions on defeats. Early Berth gets the Hearst, when the condition is met, applies the Berth condition and immediately triggers the detonation behavior.
+Early Berth gets the Hearst applies and triggers a [Berth](#terminology) explosion on every other confirmed enemy hit.
 
 Early Berth gets the Hearst is assigned to the Exotic Single Fire Rifle "Contempt For Fellows". Its companion cheat is [Efficacy.](#efficacy)
 
@@ -487,7 +492,7 @@ Defiance is assigned to the Exotic Opening Shot "Deleterious". Its companion che
 <img width="600" height="337" alt="Defiance" src="https://github.com/user-attachments/assets/70e9a7d8-5a9e-4c17-b088-5d5f8eb647ba" />
 
 ## It Writhes
-It Writhes swaps Bad Grief's munitions with tandem explosives, detonating twice on surface or enemy hits. Detonations stagger enemies, recoiling them backwards and pausing their actions for 1 second. Enemies staggered by It Writhes have a 50% chance to trigger a Berth explosion (see [Early Berth gets the Hearst](#early-berth-gets-the-hearst) for description on the Berth effect). 
+It Writhes swaps Bad Grief's munitions with tandem explosives, detonating twice on surface or enemy hits. Detonations stagger enemies, recoiling them backwards and pausing their actions for 1 second. Enemies staggered by It Writhes have a 50% chance to trigger a [Berth](#terminology) explosion.
 
 It Writhes is assigned to the Exotic Anti-materiel Laser Rifle (AMLR) "Bad Grief". Its companion cheat is [Gale Force Winds.](#gale-force-winds)
 
