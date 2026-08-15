@@ -299,7 +299,7 @@ Fulminates requires 35 confirmed enemy hits to reach the 70% damage cap. Any con
 ![Fulminate](https://github.com/user-attachments/assets/c13632e7-9c54-4a26-8bc8-dde19929ca42)
 
 ## Forager
-Forager produces a burst of items, called "pickups", on confirmed enemy defeats. The burst possesses ten of the following at random: 
+Forager produces a burst of pickup items on confirmed enemy defeats. The burst possesses ten of the following at random: 
 * Health pickups that add 1% of a player's max health onto their current health.
 * Shield pickups that add 2% of a player's max shield onto their current shield.
 * Ammo pickups that add 15% of a weapon's max magazine size onto their current magazine.
@@ -308,7 +308,7 @@ Forager produces a burst of items, called "pickups", on confirmed enemy defeats.
 Forager's ammo pickups can overflow a weapon's current ammo count beyond its maximum magazine size, up to 150%. For example, a Rarity 3 Full Fire Rifle has a maximum magazine size of 28: 
  * Forager's ammo pickups add ammunition up to an overflowed max magazine size of 42.
 
-* (Fated) Forager' item burst count increases to 20. Pickup strength becomes stronger, with one additional feature:
+* (Fated) Forager's pickup burst count increases to 20. Pickup strength becomes stronger, and Forager gains an additional feature:
   * Health pickup strength increases to 2%.
   * Shield pickup strength increases to 4%.
   * Ammo pickup strength increases to 30%.
@@ -319,33 +319,34 @@ Forager's ammo pickups can overflow a weapon's current ammo count beyond its max
 ![Forager](https://github.com/user-attachments/assets/e8507ac7-1645-4063-826e-cc95212b6443)
 
 ## Counterplay
-Counterplay casts two Lucent Clusters that detonate after 0.25 seconds and permanently increase a Weapon's damage by 10% when a Player is hit during their immunity. This damage effect can stack up to three times.
-* (Fated) Counterplay now casts the Player's "Solution Grenade" if they've been hit during their immunity. The damage effect can now stack up to ten times.
+Counterplay casts two Lucent Clusters that detonate after 0.25 seconds when a player is hit while immune or while guarding with an Opening Shot. When triggered, Counterplay grants one stack of a 10% weapon damage increase, up to 3 stacks for a 30% damage increase.
+* (Fated) When triggered, Counterplay now casts and detonates the player's Solution Grenade. Counterplay's max stack count is increased to 10.
 
-Solution Grenades are gaseous munitions that applies significant damage-over-time in a 7m radius, applying 875 damage every 0.25 seconds, for an effect duration of two seconds.
+Solution Grenades are toxic munitions that applies damage-over-time in a 7m radius, inflicting 875 damage every 0.25 seconds. After collision with any surface, they detonate after one second. The grenade's damage-over-time effect lasts for 2 seconds.
+
+(see [Cadence](#cadence) for description on Lucent Clusters).
 
 * [Counterplay.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Counterplay.cs) can be viewed here. [ReplevinScript.cs](/Assets/Scripts/Enemies/ReplevinScript.cs#L695-L698) handles the condition that Counterplay requires to activate.
 
 ![Counterplay](https://github.com/user-attachments/assets/34471ad6-ac59-4c9c-8323-30936be99dab)
 
 ## Enshroud
-Enshroud increases Melee attack range by 15%, up to a 200% cap, for seven seconds. Achieving a Melee kill casts a free Fogger Grenade.
-* (Fated) Enshroud now passively allows Fogger Grenades from any source to apply damage-over-time. 
+Enshroud increases the player's melee attack range by 15%, up to 200%, for 7 seconds. Any confirmed enemy defeat with a melee attack casts a Fogger Grenade, entering a 12 second cooldown when triggered.
+* (Fated) Enshroud now enables Fogger Grenades from any source to apply damage-over-time, inflicting 150 damage once every second for 20 seconds. Enshroud reduces the cooldown of Fogger Grenades on melee defeats to 6 seconds. 
 
-Fogger Grenades are smoke munitions that apply a Movement Speed debuff to Enemies in a 10m radius. After collision with any surface, they detonate after two seconds. 
+Fogger Grenades are gaseous munitions that apply the debuff "Slowed" to enemies in a 10m radius, reducing an enemy's movement speed by 50%. After collision with any surface, they trigger after two seconds. 
 
-Melee attack range is described as the distance required to initiate a Melee attack. Enshroud caps Melee attack range to 21m. Any Enemy hit during the duration will refresh the timer. Fogger Grenades cast on Melee kills are limited by a 12 second cooldown.
-  * (Fated) Fogger Grenade cast on Melee kills' cooldown is reduced to six seconds. Fogger Grenade casts either through Melee kills with Enshroud or throws will allow them to apply damage-over-time, applying 150 damage once every second, for an effect duration of 20 seconds.
+Melee attack range is defined as the distance required to initiate a melee attack. Enshroud caps the player's melee attack range to 21m. 
 
 * [Enshroud.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Enshroud.cs) can be viewed here. [PlayerMeleeScript.cs](/Assets/Scripts/Player/PlayerMeleeScript.cs#L84-L98) holds the remainder of Enshroud's actions (Fogger Grenade casts on Melee kills).
 
 ![Enshroud](https://github.com/user-attachments/assets/f42258a3-93d5-4db5-a91c-ed3d1121aa84)
 
 ## Gale Force Winds
-Gale Force Winds generates a charge through movement, with improved generation from Sprinting. Having 100% charge grants a use to cast torrential winds that applies Health and Movement Speed debuffs to Enemies.
-* (Fated) Gale Force Winds' charge generation rate is doubled. Winds' travel range and speed increases by 50%. Winds can now apply damage-over-time.
+Gale Force Winds generates a charge through movement, with improved generation from Sprinting. Having 100% charge grants a cast for torrential winds that applies health and movement speed debuffs to enemies.
+* (Fated) Gale Force Winds' charge generation rate is doubled. Winds can now apply damage-over-time, and their detection range and speed increases by 50%.
 
-Winds are cast by shooting surfaces or Enemies with a full charge. They can follow Enemies that walk through its volume, seeking another target to follow once their tracked enemy has been defeated. If they have no targets, the winds become stationary.
+Winds are cast by shooting surfaces or enemies when Gale Force Winds is toggled. Any enemy that walks through its volume (if it is without a target) is tracked. The winds become stationary when without a target.
 * (Fated) Winds can apply damage-over-time, applying 125 damage once every second, for an effect duration of 20 seconds.
 
 * [GaleForceWinds.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/GaleForceWinds.cs) can be viewed here. Its companion script, [GFWStatusApplicator.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/GFWStatusApplicator.cs), can be viewed here.
@@ -354,10 +355,12 @@ Winds are cast by shooting surfaces or Enemies with a full charge. They can foll
 
 ## Activator Drone
 Activator Drone creates a combat drone that orbits the player and attacks enemies within a 40m radius. Its name comes from its ability to activate a weapon's passive-based Platforms: 
-* Siphonic Platform - Confirmed hits increase the player's health and shield.
-* Mining Platform - Confirmed hits create and shatter a Lucent cluster at the hit location.
-* Trenchant Platform - Confirmed hits apply health debuffs. The drone cannot apply Trenchant's other debuffs.
-* Cache Platform - Changes its armament into a mini-rocket launcher.
+* [Siphonic Platform](#siphonic-platform)- Confirmed hits by the drone increase the player's health and shield.
+* [Mining Platform](#mining-platform) - Confirmed hits by the drone create and shatter a Lucent cluster at the hit location.
+* [Trenchant Platform](#trenchant-platform) - Confirmed hits by the drone apply health debuffs. The drone cannot apply Trenchant's other debuffs.
+* [Cache Platform](#cache-platform)- The drone's weapon is changed to a mini-rocket launcher.
+
+Manually aiming will use the Activator Drone's laser designator. Aiming at an enemy will assign it as the drone's target. Otherwise, the drone checks its array of targets and selects one at random to attack. If its target is obstructed, the drone will search for another target.
 
 * (Fated) Activator Drones can trigger a weapon's second Function cheat on confirmed hits or enemy defeats:
   * ["Wait! Now I'm Ready!"](#wait-now-im-ready)
@@ -366,8 +369,6 @@ Activator Drone creates a combat drone that orbits the player and attacks enemie
   * [Cadence](#cadence)
   * [Enshroud](#enshroud)
   * [Bolster](#bolster)
-
-Manually aiming will use the Activator Drone's laser designator. Aiming at an enemy will assign it as the drone's next target. Otherwise, the drone checks its array of targets and selects one at random to attack. If its target is obstructed, the drone will find another target.
  
 * [ActivatorDrone.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/ActivatorDrone.cs) can be viewed here. [ADDrone.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/ADDrone.cs), the code for the physical drone, can be viewed here.
 
