@@ -6,6 +6,7 @@
 
 ## Contents
 * [Overview](#overview)
+* [Terminology](#terminology)
 * Platforms
   * [Default Platform](#default-platform)
   * [Efficient Platform](#efficient-platform)
