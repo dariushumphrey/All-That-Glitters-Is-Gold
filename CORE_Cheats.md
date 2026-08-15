@@ -229,7 +229,7 @@ Malicious Wind-Up increases a weapon's reload speed by 0.75% on confirmed enemy 
 Positive-Negative generates a charge through movement, up to 100%. When the charge is halfway full, Positive-Negative applies damage-over-time on confirmed enemy hits. Idling rapidly loses charge.
 * (Fated) Positive-Negative's damage-over-time strength increases, applying 100% more damage every half-second.
 
-The damage-over-time effect uses 100% of a weapon's base damage as its own damage once every second for a ten second duration. Positive-Negative applies its own specific damage-over-time effect, allowing it to stack alongside other damage-over-time sources like from the Trenchant Platform or the player's Solution Grenades.
+The damage-over-time effect uses 100% of a weapon's base damage as its own damage once every second for a 10 second duration. Positive-Negative applies its own specific damage-over-time effect, allowing it to stack alongside other damage-over-time sources like from the Trenchant Platform or the player's Solution Grenades.
 
 * [PositiveNegative.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Positive-Negative/PositiveNegative.cs) can be viewed here. Its companion script, [PosNegDOT.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Positive-Negative/PosNegDOT.cs) can be viewed here.
 
@@ -260,7 +260,7 @@ Disengaging from combat for five seconds will restore these attributes to their 
   * Weapon gains Infinite Ammunition, preventing consumption of its reserves on reloads.
 * Good Things Come triggers immediately once combat begins.
 
-Combat is defined as attacking or having been attacked in the past three seconds. If the player hasn't been damaged or if a weapon hasn't inflicted damage in five seconds, Good Things Come determines that combat has been exited.
+Combat is defined as attacking or having been attacked in the past 3 seconds. If the player hasn't been damaged or if a weapon hasn't inflicted damage in 5 seconds, Good Things Come determines that combat has been exited.
 
 * [GoodThingsCome.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/GoodThingsCome.cs) can be viewed here.
 
@@ -275,35 +275,38 @@ All Else Fails grants invulnerability for five seconds when the player's shield 
 ![AllElseFails](https://github.com/user-attachments/assets/0a8f66d2-3fda-4835-a646-97a1fb7dcb0e)
 
 ## The Most Resplendent
-The Most Resplendent grants a use for a "Hard Lucent" crystal that can be attached to surfaces or Enemies. The crystal produces Lucent Clusters passively or when shot by a Weapon for five seconds.
-* (Fated) The Most Resplendent' use cap increases to two. Physically colliding with the crystal destroys it, adding 35% of a Player's maximum Health onto their current Health.
+The Most Resplendent grants one stack to cast a Hard Lucent crystal that can be attached to surfaces or enemies. The crystal produces Lucent Clusters passively or when shot by a weapon for 5 seconds.
+* (Fated) The Most Resplendent's stack cap increases to 2. Physically colliding with the crystal destroys it, adding 35% of the player's maximum health onto their current health.
 
-Uses are gained through achieving ten confirmed hits on Enemies. Crystals attached to combatants are smaller when compared to their full size when attached to surfaces. Applying 2,000 damage to the crystal or allowing the crystal to expire casts a shockwave that damages Enemies and detonates Lucent Clusters. Shooting the crystal creates a miniature Lucent Cluster at the hit spot, often detonating almost immediately. 
+One stack is gained after ten confirmed enemy hits. Crystals attached to combatants are smaller. Inflicting 2,000 damage to the crystal or allowing the crystal to expire casts a shockwave that damages enemies and detonates Lucent Clusters. Shooting the crystal creates a miniature Lucent Cluster at the hit spot.
+
+(see [Cadence](#cadence) for description on Lucent Clusters).
 
 * [TheMostResplendent.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/The%20Most%20Resplendent/TheMostResplendent.cs) can be viewed here. Its companion script, [TMRHardLucentScript.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/The%20Most%20Resplendent/TMRHardLucentScript.cs) can be viewed here.
 
 ![TheMostResplendent](https://github.com/user-attachments/assets/7b49b4ab-4651-4641-8f8d-b97e622b1487)
 
 ## Fulminate
-Fulminate increases damage of the Player's "Destruct Grenade" by 7%, up to a 70% cap, for seven seconds. Achieving a Melee kill casts a free Destruct Grenade.
-* (Fated) Fulminate now allows for another Destruct Grenade to be thrown when the first Destruct Grenade is thrown, in addition to its previous effects.
+Fulminate increases damage of the player's Destruct Grenade by 7%, up to a 70%, for 7 seconds. Any confirmed enemy defeat with a melee attack creates and detonates a Destruct Grenade.
+* (Fated) While active, after throwing a Destruct Grenade, Fulminate throws a delayed Destruct Grenade at no cost.
 
 Destruct Grenades are explosive munitions that inflicts 9,000 damage in an 8m radius. After collision with any surface, they detonate after one second. 
 
-It requires 35 confirmed Enemy hits to reach the 70% damage cap. Any Enemy hit during the duration will refresh the timer. Destruct Grenades cast on Melee kills is not limited by cooldowns and does not require an active timer to activate, but Fulminate is required to be active in order to throw double Destruct Grenades. 
+Fulminates requires 35 confirmed enemy hits to reach the 70% damage cap. Any confirmed enemy hits will refresh the timer while active.
 
 * [Fulminate.cs](/Assets/Scripts/Weapons/Added%20Function%20Cheats/Fulminate.cs) can be viewed here. [PlayerMeleeScript.cs](/Assets/Scripts/Player/PlayerMeleeScript.cs#L69-L75) and [PlayerInventoryScript.cs](/Assets/Scripts/Player/PlayerInventoryScript.cs#L1141-L1159) hold the remainder of Fulminate's actions (Grenade casts on Melee kills and damage application, respectively).
 
 ![Fulminate](https://github.com/user-attachments/assets/c13632e7-9c54-4a26-8bc8-dde19929ca42)
 
 ## Forager
-Forager produces a burst of items, called "pickups", on Enemy defeats. This burst possesses ten of the following at random: 
-* Health pickups that add 1% of a Player's max Health onto their current Health.
-* Shield pickups that add 2% of a Player's max Shield onto their current Shield.
-* Ammo pickups that add 15% of a Weapon's max magazine size onto their current magazine.
-* Miniature Lucent Clusters that detonate after 0.25 seconds.
+Forager produces a burst of items, called "pickups", on confirmed enemy defeats. The burst possesses ten of the following at random: 
+* Health pickups that add 1% of a player's max health onto their current health.
+* Shield pickups that add 2% of a player's max shield onto their current shield.
+* Ammo pickups that add 15% of a weapon's max magazine size onto their current magazine.
+* Miniature Lucent Clusters that detonate after 0.25 seconds (see [Cadence](#cadence) for description on Lucent Clusters).
 
-Ammo pickups can overflow a Weapon's current magazine up to 150% of its maximum size.
+Forager's ammo pickups can overflow a weapon's current ammo count beyond its maximum magazine size, up to 150%. For example, a Rarity 3 Full Fire Rifle has a maximum magazine size of 28: 
+ * Forager's ammo pickups add ammunition up to an overflowed max magazine size of 42.
 
 * (Fated) Forager' item burst count increases to 20. Pickup strength becomes stronger, with one additional feature:
   * Health pickup strength increases to 2%.
