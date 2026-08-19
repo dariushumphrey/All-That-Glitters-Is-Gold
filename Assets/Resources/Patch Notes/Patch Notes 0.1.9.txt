@@ -58,3 +58,4 @@
 - <color=yellow>[Implement]</color> A Gameplay Settings page is now available on the Main Menu or during gameplay. Controller and Mouse & Keyboard aim sensitivity and zoom toggling can be modified.
 - On Difficulty 5 Campaign games, enemies drop Rarity 4 Loot deliverables with a 50% chance for a Rarity 5 upgrade. Boss chests in this mode now drop Rarity 4 loot deliverables with the same upgrade chance.
 - Reduced Chest reward ejection force to 300 (down from 400).
+- <color=cyan>[FIX]</color> Fixed an issue where UI elements were cut off on Ultrawide 1440p displays (3440 x 1440).
