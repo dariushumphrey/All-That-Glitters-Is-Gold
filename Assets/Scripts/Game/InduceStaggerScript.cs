@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class InduceStaggerScript : MonoBehaviour
 {
     Vector3 epicenterDistance;
@@ -28,12 +28,17 @@ public class InduceStaggerScript : MonoBehaviour
             {
                 epicenterDistance = transform.position - other.gameObject.transform.position;
 
-                if(other.gameObject.GetComponent<ReplevinScript>().self.isOnNavMesh)
+                if(other.gameObject.GetComponent<NavMeshAgent>())
                 {
-                    other.gameObject.GetComponent<ReplevinScript>().self.ResetPath();
+                    if (other.gameObject.GetComponent<ReplevinScript>().self.isOnNavMesh)
+                    {
+                        other.gameObject.GetComponent<ReplevinScript>().self.ResetPath();
+                    }
+
+                    other.gameObject.GetComponent<ReplevinScript>().self.velocity = Vector3.zero;
+
                 }
 
-                other.gameObject.GetComponent<ReplevinScript>().self.velocity = Vector3.zero;
 
                 other.gameObject.GetComponent<ReplevinScript>().staggerPosition = transform.position - epicenterDistance * 3f;
 

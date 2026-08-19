@@ -19,7 +19,11 @@ public class PlayerPrefsManagerScript : MonoBehaviour
         DifficultyEntitlement();
         ViricideEntitlement();
         LucentEntitlement();
-        GameplayAssignment();
+
+        if(PlayerPrefs.GetInt("settingsSaveEnabled") == 1)
+        {
+            GameplayAssignment();
+        }
 
         StartCoroutine(AccessibilityAssignment());
         //Debug.Log(PlayerPrefs.GetInt("unlockLevel02"));

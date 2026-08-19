@@ -68,19 +68,22 @@ public class MenuManagerScript : MonoBehaviour
         }
 
         //Retrieves and displays Gameplay Settings values
-        ctrX.value = PlayerPrefs.GetFloat("aimControllerX");
-        ctrY.value = PlayerPrefs.GetFloat("aimControllerY");
-        mkX.value = PlayerPrefs.GetFloat("aimMouseX");
-        mkY.value = PlayerPrefs.GetFloat("aimMouseY");
-
-        if (PlayerPrefs.GetInt("toggleAim") == 1)
+        if(setting == MenuManagerScript.Setting.Game)
         {
-            aimToggle.isOn = true;
-        }
+            ctrX.value = PlayerPrefs.GetFloat("aimControllerX");
+            ctrY.value = PlayerPrefs.GetFloat("aimControllerY");
+            mkX.value = PlayerPrefs.GetFloat("aimMouseX");
+            mkY.value = PlayerPrefs.GetFloat("aimMouseY");
 
-        else
-        {
-            aimToggle.isOn = false;
+            if (PlayerPrefs.GetInt("toggleAim") == 1)
+            {
+                aimToggle.isOn = true;
+            }
+
+            else
+            {
+                aimToggle.isOn = false;
+            }
         }
 
         controllerX.text = (ctrX.value / 10).ToString();
@@ -313,16 +316,16 @@ public class MenuManagerScript : MonoBehaviour
 
     public void FormatGameplaySettings()
     {
-        ctrX.value = 8;
-        ctrY.value = 8;
+        ctrX.value = 7;
+        ctrY.value = 7;
         mkX.value = 10;
         mkY.value = 10;
         aimToggle.isOn = false;
     }
 
     public void SaveGameplaySettings()
-    {
-        if(aimToggle.isOn)
+    {       
+        if (aimToggle.isOn)
         {
             PlayerPrefs.SetInt("toggleAim", 1);
         }
@@ -363,6 +366,11 @@ public class MenuManagerScript : MonoBehaviour
                 levelManager.player.cam.enableZoomToggle = false;
             }
         }
+
+        if (!PlayerPrefs.HasKey("settingsSaveEnabled"))
+        {
+            PlayerPrefs.SetInt("settingsSaveEnabled", 1);
+        }
     }
 
     /// <summary>
@@ -382,6 +390,12 @@ public class MenuManagerScript : MonoBehaviour
 
         //levelManager.LoadScene();
         levelManager.StartCoroutine(levelManager.LoadAsyncedSceneDelay());
+
+        if (!PlayerPrefs.HasKey("settingSaveEnabled"))
+        {
+            SaveGameplaySettings();
+            PlayerPrefs.SetInt("settingSaveEnabled", 1);
+        }
     }
 
     /// <summary>
@@ -406,6 +420,12 @@ public class MenuManagerScript : MonoBehaviour
 
         //levelManager.LoadScene();
         levelManager.StartCoroutine(levelManager.LoadAsyncedSceneDelay());
+
+        if (!PlayerPrefs.HasKey("settingsSaveEnabled"))
+        {
+            SaveGameplaySettings();
+            PlayerPrefs.SetInt("settingsSaveEnabled", 1);
+        }
     }
 
     /// <summary>
@@ -419,6 +439,12 @@ public class MenuManagerScript : MonoBehaviour
         levelManager.frDamageDurationIndex = testWindowIndex;
         levelManager.level = 9;
         levelManager.StartCoroutine(levelManager.LoadAsyncedSceneDelay());
+
+        if (!PlayerPrefs.HasKey("settingSaveEnabled"))
+        {
+            SaveGameplaySettings();
+            PlayerPrefs.SetInt("settingSaveEnabled", 1);
+        }
     }
 
     public void OpenPage(GameObject page)

@@ -27,6 +27,7 @@ public class DamageTestingScript : MonoBehaviour
     private PlayerInventoryScript activeWeapon;
     private float timeBetweenShots = 0f;
     private float timeToKill = 0f;
+    private bool reactivateSignal = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -121,7 +122,25 @@ public class DamageTestingScript : MonoBehaviour
             {
                 StartCoroutine(CalculateTimeToKill());
             }
-        }    
+        }
+
+        if (Time.timeScale == 0)
+        {
+            if (dpsCanvas.gameObject.activeInHierarchy == true)
+            {
+                dpsCanvas.gameObject.SetActive(false);
+                reactivateSignal = true;
+            }
+        }
+
+        if(reactivateSignal)
+        {
+            if(Time.timeScale == 1)
+            {
+                dpsCanvas.gameObject.SetActive(true);
+                reactivateSignal = false;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)

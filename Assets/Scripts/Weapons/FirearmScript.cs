@@ -233,7 +233,7 @@ public class FirearmScript : MonoBehaviour
             if (cheatOverride == -6)
             {
                 gameObject.AddComponent<TrenchantPlatform>();
-            } //Exotic Burst Fire Riflereceives the Trenchant platform
+            } //Exotic Burst Fire Rifle receives the Trenchant platform
 
             if (cheatOverride == -7)
             {

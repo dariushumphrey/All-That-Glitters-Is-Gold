@@ -53,6 +53,7 @@ public class PlayerInventoryScript : MonoBehaviour
     private string activeInput;
 
     private Image weaponPage; //In-game Inventory page
+    private bool reactivateSignal = false; //Reactivates Inventory page if the game was paused if true
     internal Image reticleSprite;
     private Text wepName, wepStats, flavor, platformText;
     private Text cheatOne, cheatTwo, cheatThree, cheatFour;
@@ -161,6 +162,24 @@ public class PlayerInventoryScript : MonoBehaviour
             DismantleInv();
             SwitchGrenades();
             ChargeGrenade();
+        }
+
+        if(Time.timeScale == 0)
+        {
+            if(weaponPage.gameObject.activeInHierarchy == true)
+            {
+                weaponPage.gameObject.SetActive(false);
+                reactivateSignal = true;
+            }
+        }
+
+        if (reactivateSignal)
+        {
+            if (Time.timeScale == 1)
+            {
+                weaponPage.gameObject.SetActive(true);
+                reactivateSignal = false;
+            }
         }
 
         //Hides Weapon ammo page after timer reaches zero
